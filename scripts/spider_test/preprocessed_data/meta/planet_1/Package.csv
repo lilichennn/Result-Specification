@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Shipment,INTEGER,"[1, 2, 3]",Shipment.ShipmentID
+PackageNumber,INTEGER,"[1, 2, 3]",
+Contents,VARCHAR(255),"[""Undeclared"", ""A bucket of krill""]",
+Weight,REAL,"[1.5, 10.0, 2.0]",
+Sender,INTEGER,"[1, 2, 8]",Client.AccountNumber
+Recipient,INTEGER,"[2, 3, 7]",Client.AccountNumber

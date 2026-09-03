@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+Id,INTEGER,"[1, 2, 3]",car_names.MakeId
+MPG,TEXT,"[""18"", ""15"", ""16""]",
+Cylinders,INTEGER,"[8, 4, 6]",
+Edispl,REAL,"[307.0, 350.0, 318.0]",
+Horsepower,TEXT,"[""130"", ""165"", ""150""]",
+Weight,INTEGER,"[3504, 3693, 3436]",
+Accelerate,REAL,"[12.0, 11.5, 11.0]",
+Year,INTEGER,"[1970, 1971, 1972]",

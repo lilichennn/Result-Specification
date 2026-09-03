@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+Template_Type_Code,CHAR(15),"[""AD"", ""BK"", ""CV""]",
+Template_Type_Description,VARCHAR(255),"[""Presentation"", ""CV"", ""Advertisement""]",

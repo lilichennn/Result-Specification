@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+product_id,INTEGER,"[1, 2, 3]",
+product_type_code,VARCHAR(15),"[""Hardware"", ""Clothes""]",
+product_name,VARCHAR(80),"[""Monitor"", ""Topping"", ""Black Jeans""]",
+product_price,DOUBLE,"[2084.944172129, 26045678.098468, 7312007.4430563]",

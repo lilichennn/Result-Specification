@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+address_id,INTEGER,"[1, 2, 3]",
+line_1,VARCHAR(255),"[""2294 Grant Square Apt. 235"", ""3999 Aufderhar Ways Suite 593"", ""67942 Carlotta Ferry Apt. 686""]",
+line_2,VARCHAR(255),"[""Apt. 370"", ""Apt. 388"", ""Apt. 583""]",
+line_3,VARCHAR(255),[],
+city,VARCHAR(255),"[""Port Chelsea"", ""Lake Laishafurt"", ""Goodwinhaven""]",
+zip_postcode,VARCHAR(20),"[""148"", ""943"", ""541""]",
+state_province_county,VARCHAR(255),"[""Virginia"", ""Kentucky"", ""Kansas""]",
+country,VARCHAR(255),"[""Iceland"", ""Burundi"", ""Saudi Arabia""]",
+other_address_details,VARCHAR(255),[],

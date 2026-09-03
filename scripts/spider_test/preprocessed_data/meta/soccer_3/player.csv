@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Player_ID,REAL,"[1.0, 2.0, 3.0]",
+Name,TEXT,"[""Nick Price"", ""Paul Azinger"", ""Greg Norman""]",
+Country,TEXT,"[""Zimbabwe"", ""United States"", ""Australia""]",
+Earnings,REAL,"[1478557.0, 1458456.0, 1359653.0]",
+Events_number,INT,"[18, 24, 15]",
+Wins_count,INT,"[4, 3, 2]",
+Club_ID,INT,"[1, 3, 5]",club.Club_ID

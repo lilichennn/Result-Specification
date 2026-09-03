@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+ranking_date,DATE,"[20000101, 20000103, 20000110]",
+ranking,INT,"[3, 4, 28]",
+player_id,INT,"[200748, 200033, 200020]",players.player_id
+ranking_points,INT,"[4378, 3021, 960]",
+tours,INT,"[13, 15, 0]",

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Paragraph_ID,INTEGER,"[7, 9, 65]",
+Document_ID,INTEGER,"[2394, 3, 50123]",Documents.Document_ID
+Paragraph_Text,VARCHAR(255),"[""Korea"", ""Somalia"", ""Palestinian Territory""]",
+Other_Details,VARCHAR(255),[],

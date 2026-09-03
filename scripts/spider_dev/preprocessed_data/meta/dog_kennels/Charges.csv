@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+charge_id,INTEGER,"[1, 2, 3]",
+charge_type,VARCHAR(10),"[""Daily Accommodation"", ""Drugs"", ""Health Check""]",
+charge_amount,"DECIMAL(19,4)","[98, 322, 640]",

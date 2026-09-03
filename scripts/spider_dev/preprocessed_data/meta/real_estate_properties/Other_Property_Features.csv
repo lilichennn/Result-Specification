@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+property_id,INTEGER,"[15, 12, 6]",Properties.property_id
+feature_id,INTEGER,"[3, 4, 2]",Other_Available_Features.feature_id
+property_feature_description,VARCHAR(80),"[""dolorem"", ""earum"", ""illo""]",

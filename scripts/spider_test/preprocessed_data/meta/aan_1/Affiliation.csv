@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+affiliation_id,INTEGER,"[0, 1, 2]",
+name,varchar(255),"[""20/20 Speech Ltd."", ""3SOFT GmbH"", ""A-Life Medical, Inc.""]",
+address,varchar(255),"[""Malvern UK"", ""Erlangen Germany"", ""San Diego CA""]",

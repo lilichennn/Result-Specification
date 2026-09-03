@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+id,INTEGER,"[1, 2, 3]",
+name,TEXT,"[""Iceland"", ""Sweden"", ""Canada""]",
+overall_score,REAL,"[100.0, 99.2, 96.6]",
+justice_score,REAL,"[100.0, 90.8, 86.1]",
+health_score,REAL,"[90.5, 94.8, 92.7]",
+education_score,REAL,"[96.7, 95.5, 92.0]",
+economics_score,REAL,"[88.0, 90.3, 91.0]",
+politics_score,REAL,"[92.8, 93.1, 66.9]",

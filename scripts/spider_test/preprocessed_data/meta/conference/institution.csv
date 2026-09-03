@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Institution_ID,INT,"[1, 2, 3]",
+Institution_Name,TEXT,"[""Illinois State University"", ""Bradley University"", ""Eureka College""]",
+Location,TEXT,"[""Normal, Illinois"", ""Peoria, Illinois"", ""Eureka, Illinois""]",
+Founded,INT,"[1857, 1897, 1855]",

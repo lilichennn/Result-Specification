@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+concert_ID,INT,"[1, 2, 3]",
+concert_Name,TEXT,"[""Auditions"", ""Super bootcamp"", ""Home Visits""]",
+Theme,TEXT,"[""Free choice"", ""Free choice 2"", ""Bleeding Love""]",
+Stadium_ID,TEXT,"[""1"", ""2"", ""10""]",stadium.Stadium_ID
+Year,TEXT,"[""2014"", ""2015""]",

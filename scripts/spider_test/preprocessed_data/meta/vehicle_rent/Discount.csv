@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+name,TEXT,"[""no discount"", ""20% off"", ""40% off for over $6000""]",
+membership_credit,INT,"[0, 1000, 2000]",

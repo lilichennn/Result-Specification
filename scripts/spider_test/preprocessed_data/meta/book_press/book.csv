@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Book_ID,INT,"[1, 2, 3]",
+Title,TEXT,"[""Book Revue"", ""Baseball Bugs"", ""Holiday for Shoestrings""]",
+Book_Series,TEXT,"[""LT"", ""MM""]",
+Author_ID,INT,"[1, 2, 3]",author.Author_ID
+Press_ID,INT,"[1, 2, 3]",press.Press_ID
+Sale_Amount,TEXT,"[""1234"", ""1214"", ""714""]",
+Release_date,TEXT,"[""2016-01-05"", ""2016-02-02"", ""2016-02-23""]",

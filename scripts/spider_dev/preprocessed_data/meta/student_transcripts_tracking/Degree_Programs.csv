@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+degree_program_id,INTEGER,"[1, 2, 3]",
+department_id,INTEGER,"[13, 2, 8]",Departments.department_id
+degree_summary_name,VARCHAR(255),"[""Master"", ""Bachelor"", ""PHD""]",
+degree_summary_description,VARCHAR(255),"[""architecto"", ""cumque"", ""placeat""]",
+other_details,VARCHAR(255),[],

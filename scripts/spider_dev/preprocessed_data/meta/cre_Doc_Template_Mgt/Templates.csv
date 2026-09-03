@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Template_ID,INTEGER,"[0, 1, 4]",
+Version_Number,INTEGER,"[5, 9, 4]",
+Template_Type_Code,CHAR(15),"[""PP"", ""BK"", ""PPT""]",Ref_Template_Types.Template_Type_Code
+Date_Effective_From,DATETIME,"[""2005-11-12 07:09:48"", ""2010-09-24 01:15:11"", ""2002-03-02 14:39:49""]",
+Date_Effective_To,DATETIME,"[""2008-01-05 14:19:28"", ""1999-07-08 03:31:04"", ""2001-04-18 09:29:52""]",
+Template_Details,VARCHAR(255),"[""""]",

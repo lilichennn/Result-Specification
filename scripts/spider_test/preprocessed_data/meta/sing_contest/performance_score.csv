@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+participant_id,INT,"[1, 2, 3]",participants.id
+songs_id,INT,"[12, 13, 22]",songs.id
+voice_sound_quality,REAL,"[10.0, 8.0, 7.0]",
+rhythm_tempo,REAL,"[9.0, 8.0, 4.0]",
+stage_presence,REAL,"[8.0, 5.0, 10.0]",

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+order_item_id,INTEGER,"[1, 2, 3]",
+order_id,INTEGER,"[8, 1, 13]",Customer_Orders.order_id
+product_id,INTEGER,"[13, 10, 11]",Products.product_id
+order_quantity,VARCHAR(80),"[""2"", ""4"", ""7""]",

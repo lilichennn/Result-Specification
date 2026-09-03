@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+document_id,INTEGER,"[0, 4, 7]",Documents_Processes.document_id
+process_id,INTEGER,[9],Documents_Processes.process_id
+staff_id,INTEGER,"[3, 67, 100]",Staff.staff_id
+staff_role_code,CHAR(15),"[""MG"", ""ED"", ""HR""]",Ref_Staff_Roles.staff_role_code
+date_from,DATETIME,"[""1989-02-06 18:30:52"", ""2015-01-01 06:43:57"", ""1979-10-19 18:36:39""]",
+date_to,DATETIME,"[""2001-08-10 20:58:06"", ""1982-01-11 19:27:20"", ""1993-12-13 11:55:33""]",
+other_details,VARCHAR(255),[],

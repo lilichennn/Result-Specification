@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+District_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Pozo Almonte"", ""Pica"", ""Huara""]",
+Area_km,REAL,"[13765.8, 8934.3, 10474.6]",
+Population,REAL,"[10830.0, 6178.0, 2599.0]",
+Density_km,REAL,"[0.8, 0.7, 0.2]",
+Government_website,TEXT,"[""linke.gov"", ""linkd.gov"", ""linka.gov""]",

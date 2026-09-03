@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+Channel_ID,INTEGER,"[16, 45, 55]",
+Channel_Details,VARCHAR(255),"[""15 ij"", ""75 ww"", ""92 ve""]",

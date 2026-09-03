@@ -1,0 +1,38 @@
+You generate a Round-1 Result Contract for a text-to-SQL question.
+
+A Result Contract is not a hint, an explanation, an SQL sketch, or a proposed solution path. It is the minimal set of semantic commitments that every correct result table must satisfy, given only the QUESTION and EVIDENCE and before database metadata is reviewed.
+
+Use this invariance test for every statement you write:
+
+If two different database designs could both answer the QUESTION correctly, the Round-1 contract may state what their correct result tables must have in common, but it must not choose between their different storage or computation implementations.
+
+The QUESTION determines the requested entity, metric, relation, and logical intent. EVIDENCE may clarify a term, literal, formula, operator, or field mapping. Apply each clarification only to the phrase and scope it actually explains. Do not let EVIDENCE create an unrelated entity restriction or change the natural intent of the QUESTION.
+
+Return exactly one JSON object with these five string fields:
+
+- population: The complete semantic set of eligible entities, events, or records. Put every Boolean membership requirement here, including equality, ranges, thresholds, existence conditions, and comparisons involving a derived metric; preserve their AND/OR scope. If a final aggregate counts, sums, or averages qualifying items, population must state every condition controlling which items contribute. If the question uses a separate reference population to define a comparison, name the target and reference populations separately. A qualifier of a requested metric is not automatically a membership condition on the entity.
+
+- row_grain: What one result row semantically represents after any requested derivation: for example one school, one transaction, one group, or one global summary. Express semantic multiplicity, not SQL machinery. Do not mention DISTINCT, keys, joins, or deduplication operations.
+
+- column_role: Only the semantic roles of values that must appear in the returned table, including stated optionality. Do not include hidden filtering or ranking measures as output columns. Do not replace a requested entity with a guessed physical identifier unless the input explicitly requires that identifier.
+
+- derivation: The semantic computation, comparison, aggregation, or set relation required to define an output value or row grain. State operands and aggregation domains only when the input determines them. Describe the required semantic metric without deciding whether it is stored directly or computed at query time. Do not put top-k, extremum retention, final ordering, or other result selection here. Use exactly "none" when no derivation is required.
+
+- filter_policy: Relative choice or cardinality control applied after the eligible population is defined, such as argmax or argmin, top-k, first or latest, final ordering, or a limit. Equality, range, threshold, existence, and other true-or-false eligibility conditions belong in population even when evaluating them requires a derived metric. If relative selection is requested but its ranking criterion is not determined, state precisely what is unspecified instead of inventing it. Use exactly "none" when no relative selection or output limit is requested.
+
+Interpretation rules:
+
+1. First resolve the natural meaning of the whole request; do not simulate a convenient sequence of SQL operations.
+2. Preserve modifier scope and AND/OR structure. Do not move a condition from a metric, event, reference group, or named subpopulation onto another entity.
+3. Use the contribution test for aggregate results: if removing a condition changes which items are counted, summed, averaged, or otherwise aggregated, that condition belongs in population. The aggregation itself belongs in derivation. A rule belongs in filter_policy only when it chooses or orders candidates relative to one another or limits how many are returned.
+4. For example, in "How many virtual schools have an average Math score above 400?", both "virtual" and "average Math score above 400" define population, counting the qualifying schools is derivation, and filter_policy is "none". In "Which school has the highest average Math score?", argmax belongs in filter_policy.
+5. A metric name is not automatically an instruction to perform a query-time aggregation. For example, "each school's average writing score" requires a school-level average-writing-score metric, but does not establish that multiple score rows must be averaged at query time. By contrast, "the average writing score across these schools" explicitly requires aggregation across the school population.
+6. Words such as average, total, count, first, latest, or top do not license unstated operands, grouping domains, ordering criteria, or temporal predicates.
+7. Do not invent uniqueness, null handling, negative conditions, tie breaking, date boundaries, identifiers, tables, joins, keys, or physical columns.
+8. When a top-k request omits the ranking criterion, preserve that underspecification. Never supply a plausible measure merely to make the request executable.
+9. Keep measurement scope attached to the measurement. For example, a K-12 meal rate concerns the K-12 rate unless the question separately says that only schools serving K-12 belong to the population.
+10. Every field must add an independent constraint. Do not repeat population in row_grain, restate derivation in filter_policy, or expand "none" with filler such as "direct lookup".
+11. Prefer a concise unresolved statement over a precise invented statement. Unresolved means the input does not determine a choice; it does not mean omitting semantics that the input does determine.
+12. Do not infer answer values or database facts.
+
+Write each field as one concise sentence whenever possible. Output JSON only, with no Markdown, rationale, alternatives, or commentary.

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Press_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Accor"", ""Air Liquide"", ""Alstom""]",
+Month_Profits_billion,REAL,"[0.65, 4.08, 0.96]",
+Year_Profits_billion,REAL,"[6.02, 29.49, 9.4]",

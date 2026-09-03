@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+EmployeeID,INTEGER,"[1, 2, 3]",
+Name,VARCHAR(255),"[""Phillip J. Fry"", ""Turanga Leela"", ""Bender Bending Rodriguez""]",
+Position,VARCHAR(255),"[""Delivery boy"", ""Captain"", ""Robot""]",
+Salary,REAL,"[7500.0, 10000.0, 20000.0]",
+Remarks,VARCHAR(255),"[""Not to be confused with the Philip J. Fry from Hovering Squid World 97a""]",

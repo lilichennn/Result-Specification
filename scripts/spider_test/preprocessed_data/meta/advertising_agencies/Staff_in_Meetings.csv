@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+meeting_id,INTEGER,"[6, 14, 4]",Meetings.meeting_id
+staff_id,INTEGER,"[7, 3, 5]",Staff.staff_id

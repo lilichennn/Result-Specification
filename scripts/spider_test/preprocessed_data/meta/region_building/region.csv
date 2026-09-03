@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Region_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Abruzzo"", ""Aosta Valley"", ""Apulia""]",
+Capital,TEXT,"[""L'Aquila"", ""Aosta"", ""Bari""]",
+Area,INT,"[10763, 3263, 19358]",
+Population,INT,"[1342177, 128129, 4090577]",

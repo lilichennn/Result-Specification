@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+event_id,INTEGER,"[146, 161, 189]",
+event_type_code,CHAR(10),"[""Exam"", ""Registration""]",Ref_Event_Types.event_type_code
+student_id,INTEGER,"[287, 777, 361]",Students.student_id
+event_date,DATETIME(3),"[""2008-08-15 22:16:17.000"", ""2014-07-15 18:18:15.000"", ""2013-04-14 04:14:10.000""]",
+other_details,VARCHAR(255),"[""""]",

@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Customer_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Arthur Morris"", ""Denis Compton"", ""Donald Bradman""]",
+Nationality,TEXT,"[""Australia"", ""England""]",
+Card_Credit,REAL,"[87.0, 62.44, 72.57]",
+Level_of_Membership,INT,"[3, 2, 1]",

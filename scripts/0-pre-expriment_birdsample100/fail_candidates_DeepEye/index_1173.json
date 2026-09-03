@@ -1,0 +1,76 @@
+{
+  "index": 1173,
+  "db_id": "thrombosis_prediction",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/thrombosis_prediction/thrombosis_prediction.sqlite",
+  "complexity": 5,
+  "tier": "hard",
+  "question": "What is the most common illness that doctors identified among the patients whose lab work was done between 1/1/1985, and 12/31/1995?",
+  "evidence": "the most common illness refers to MAX(COUNT(Diagnosis)); lab work between 1/1/1985 and 12/31/1995 refers to `Examination Date` between '1985-01-01' and '1995-12-31 '",
+  "gold_sql": "SELECT T2.Diagnosis FROM Examination AS T1 INNER JOIN Patient AS T2 ON T1.ID = T2.ID WHERE T1.`Examination Date` BETWEEN '1985-01-01' AND '1995-12-31' GROUP BY T2.Diagnosis ORDER BY COUNT(T2.Diagnosis) DESC LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT e.Diagnosis\nFROM Examination e\nWHERE e.\"Examination Date\" BETWEEN '1985-01-01' AND '1995-12-31'\nGROUP BY e.Diagnosis\nORDER BY COUNT(*) DESC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Diagnosis"],
+        "rows": [
+          [null]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.317
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT Diagnosis FROM Examination WHERE \"Examination Date\" BETWEEN '1985-01-01' AND '1995-12-31' GROUP BY Diagnosis ORDER BY COUNT(*) DESC LIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Diagnosis"],
+        "rows": [
+          [null]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.315
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT e.Diagnosis\nFROM Examination e\nWHERE e.`Examination Date` BETWEEN '1985-01-01' AND '1995-12-31'\nGROUP BY e.Diagnosis\nORDER BY COUNT(*) DESC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Diagnosis"],
+        "rows": [
+          [null]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.318
+      }
+    },
+    {
+      "candidate_num": 9,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T1.Diagnosis \nFROM Examination AS T1 \nWHERE T1.\"Examination Date\" BETWEEN '1985-01-01' AND '1995-12-31' \nGROUP BY T1.Diagnosis \nORDER BY COUNT(*) DESC \nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Diagnosis"],
+        "rows": [
+          [null]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.346
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["Diagnosis"],
+    "rows": [
+      ["SLE"]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["aggregate", "join", "limit", "order"]
+}

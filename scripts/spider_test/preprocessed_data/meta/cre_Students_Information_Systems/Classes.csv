@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+class_id,INTEGER,"[114, 195, 235]",
+student_id,INTEGER,"[435, 471, 811]",Students.student_id
+teacher_id,INTEGER,"[253, 274, 282]",Teachers.teacher_id
+class_details,VARCHAR(255),"[""databases"", ""english"", ""writing""]",

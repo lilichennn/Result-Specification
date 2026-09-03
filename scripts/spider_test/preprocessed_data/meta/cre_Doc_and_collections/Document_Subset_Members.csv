@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Document_Object_ID,INTEGER,"[5, 8, 9]",Document_Objects.Document_Object_ID
+Related_Document_Object_ID,INTEGER,"[5, 8, 9]",Document_Objects.Document_Object_ID
+Document_Subset_ID,INTEGER,"[547, 183, 653]",Document_Subsets.Document_Subset_ID

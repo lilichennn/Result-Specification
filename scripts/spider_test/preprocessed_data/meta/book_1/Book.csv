@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+ISBN,CHAR(15),"[""0482174555366"", ""0853477468299"", ""1235271378662""]",
+Title,VARCHAR(60),"[""Pride and Prejudice"", ""1984"", ""The Hobbit""]",
+Author,CHAR(4),"[""2008"", ""2009"", ""2002""]",
+PurchasePrice,"NUMBER(6,2)","[9.45, 12.5, 19]",
+SalePrice,"NUMBER(6,2)","[13.45, 19.25, 33.15]",

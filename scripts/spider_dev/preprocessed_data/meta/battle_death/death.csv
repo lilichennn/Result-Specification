@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+caused_by_ship_id,INT,"[1, 2, 3]",ship.id
+id,INT,"[1, 2, 3]",
+note,TEXT,"[""Dantewada, Chhattisgarh"", ""Erraboru, Chhattisgarh"", ""East Champaran, Bihar""]",
+killed,INT,"[8, 3, 25]",
+injured,INT,"[0, 9, 5]",

@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+id,REAL,"[1.0, 2.0, 3.0]",
+Episode,TEXT,"[""A Love of a Lifetime"", ""Friendly Skies"", ""Game Three""]",
+Air_Date,TEXT,"[""September 24, 2007"", ""October 1, 2007"", ""October 8, 2007""]",
+Rating,TEXT,"[""5.8"", ""5.3"", ""4.4""]",
+Share,REAL,"[9.0, 7.0, 6.0]",
+18_49_Rating_Share,TEXT,"[""3.5/9"", ""3.2/8"", ""2.9/7""]",
+Viewers_m,TEXT,"[""9.16"", ""8.23"", ""6.94""]",
+Weekly_Rank,REAL,"[43.0, 50.0, 61.0]",
+Channel,TEXT,"[""700"", ""701"", ""707""]",TV_Channel.id

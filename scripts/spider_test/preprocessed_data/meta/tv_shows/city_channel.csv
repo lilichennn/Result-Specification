@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+ID,INT,"[1, 2, 3]",
+City,TEXT,"[""Phoenix"", ""Bakersfield, California"", ""San Diego""]",
+Station_name,TEXT,"[""KNXV-TV"", ""KERO-TV"", ""KZKC-LP""]",
+Owned_Since,REAL,"[1985.0, 2011.0, 1986.0]",
+Affiliation,TEXT,"[""ABC"", ""Azteca América"", ""NBC""]",

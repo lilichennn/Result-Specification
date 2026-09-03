@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+name,TEXT,"[""Griffiths"", ""Silluzio"", ""Woodman""]",
+age,INT,"[26, 34, 35]",
+membership_credit,INT,"[100, 1200, 2000]",

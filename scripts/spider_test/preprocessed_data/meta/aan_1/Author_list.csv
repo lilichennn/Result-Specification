@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+paper_id,varchar(25),"[""A00-1001"", ""A00-1002"", ""A00-1003""]",Paper.paper_id
+author_id,INTEGER,"[0, 50, 63]",Author.author_id
+affiliation_id,INTEGER,"[0, 1, 2]",Affiliation.affiliation_id

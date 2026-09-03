@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Game_ID,INT,"[1, 2, 3]",
+Title,TEXT,"[""Pokémon Red / Green / Blue Version"", ""Pokémon Gold / Silver Version"", ""Super Mario World""]",
+Release_Date,TEXT,"[""27 February 1996"", ""21 November 1999"", ""21 November 1990""]",
+Franchise,TEXT,"[""Pokémon"", ""Super Mario Bros."", ""Gran Turismo""]",
+Developers,TEXT,"[""Nintendo / GameFreak"", ""Nintendo/GameFreak"", ""Nintendo""]",
+Platform_ID,INT,"[1, 2, 3]",platform.Platform_ID
+Units_sold_Millions,INT,"[31.37, 23.1, 20.61]",

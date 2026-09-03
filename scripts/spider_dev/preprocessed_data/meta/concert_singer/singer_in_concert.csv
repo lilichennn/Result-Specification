@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+concert_ID,INT,"[1, 2, 3]",concert.concert_ID
+Singer_ID,TEXT,"[""2"", ""3"", ""5""]",singer.Singer_ID

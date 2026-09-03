@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Conference_ID,INT,"[1, 2, 3]",
+Conference_Name,TEXT,"[""ACL"", ""Naccl"", ""AICS""]",
+Year,INT,"[2003, 2004]",
+Location,TEXT,"[""Philippines"", ""Japan"", ""China""]",

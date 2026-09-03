@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+pilot_name,CHAR(15),"[""Celko"", ""Higgins"", ""Jones""]",
+plane_name,CHAR(15),"[""Piper Cub"", ""B-52 Bomber"", ""F-14 Fighter""]",Hangar.plane_name
+age,INTEGER,"[23, 34, 50]",

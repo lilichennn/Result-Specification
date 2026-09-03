@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Building_ID,INT,"[1, 2, 3]",
+Region_ID,INT,"[1, 2, 4]",region.Region_ID
+Name,TEXT,"[""La Renaissance Apartments"", ""Hallmark Place"", ""Saskatoon Square""]",
+Address,TEXT,"[""424 Spadina Crescent E"", ""311 6th Ave N"", ""410 22nd St E""]",
+Number_of_Stories,INT,"[24, 27, 17]",
+Completed_Year,INT,"[1983, 1984, 1979]",

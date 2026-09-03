@@ -1,0 +1,34 @@
+{
+  "index": 877,
+  "db_id": "formula_1",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/formula_1/formula_1.sqlite",
+  "complexity": 4,
+  "tier": "medium",
+  "question": "For all the drivers who finished the game in race No. 872, who is the youngest?",
+  "evidence": "race number refers to raceId; drivers who finished the race refers to time has value; the youngest is a driver where MAX(dob);",
+  "gold_sql": "SELECT T1.forename, T1.surname FROM drivers AS T1 INNER JOIN results AS T2 ON T2.driverId = T1.driverId WHERE T2.raceId = 872 AND T2.time IS NOT NULL ORDER BY T1.dob DESC LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT d.driverId\nFROM results r\nINNER JOIN drivers d ON r.driverId = d.driverId\nWHERE r.raceId = 872 AND r.time IS NOT NULL\nORDER BY d.dob DESC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["driverId"],
+        "rows": [
+          [815]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 1.054
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["forename", "surname"],
+    "rows": [
+      ["Sergio", "Pérez"]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["join", "limit", "order"]
+}

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Gonzalo Higuaín "", ""Guti Midfielder"", ""Arjen Robben""]",
+Level_of_membership,INT,"[8, 5, 1]",
+Age,INT,"[35, 28, 27]",

@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+plane_name,CHAR(15),"[""B-1 Bomber"", ""B-52 Bomber"", ""F-14 Fighter""]",
+location,CHAR(15),"[""Chicago"", ""Austin"", ""Boston""]",

@@ -1,0 +1,132 @@
+{
+  "index": 693,
+  "db_id": "codebase_community",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/codebase_community/codebase_community.sqlite",
+  "complexity": 6,
+  "tier": "hard",
+  "question": "Identify the number of posts and comments left by the user, who has the latest created user account.",
+  "evidence": "the latest created user account refers to MAX(CreationDate);",
+  "gold_sql": "SELECT COUNT(T2.Id) FROM users AS T1 INNER JOIN posts AS T2 ON T1.Id = T2.OwnerUserId INNER JOIN comments AS T3 ON T3.PostId = T2.Id ORDER BY T1.CreationDate DESC LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    (SELECT COUNT(*) FROM posts WHERE OwnerUserId = (SELECT Id FROM users ORDER BY CreationDate DESC LIMIT 1)) AS post_count,\n    (SELECT COUNT(*) FROM comments WHERE UserId = (SELECT Id FROM users ORDER BY CreationDate DESC LIMIT 1)) AS comment_count",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["post_count", "comment_count"],
+        "rows": [
+          [0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 84.866
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    (SELECT COUNT(*) FROM posts WHERE OwnerUserId = (SELECT Id FROM users WHERE CreationDate = (SELECT MAX(CreationDate) FROM users))) AS post_count,\n    (SELECT COUNT(*) FROM comments WHERE UserId = (SELECT Id FROM users WHERE CreationDate = (SELECT MAX(CreationDate) FROM users))) AS comment_count",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["post_count", "comment_count"],
+        "rows": [
+          [0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 83.553
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    COUNT(DISTINCT p.Id) AS post_count,\n    COUNT(DISTINCT c.Id) AS comment_count\nFROM (\n    SELECT Id \n    FROM users \n    WHERE CreationDate = (SELECT MAX(CreationDate) FROM users)\n    LIMIT 1\n) AS latest_user\nLEFT JOIN posts p ON latest_user.Id = p.OwnerUserId\nLEFT JOIN comments c ON latest_user.Id = c.UserId",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["post_count", "comment_count"],
+        "rows": [
+          [0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 125.792
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "WITH LatestUser AS (\n    SELECT Id\n    FROM users\n    ORDER BY CreationDate DESC\n    LIMIT 1\n)\nSELECT \n    COUNT(p.Id) AS post_count,\n    COUNT(c.Id) AS comment_count\nFROM LatestUser lu\nLEFT JOIN posts p ON lu.Id = p.OwnerUserId\nLEFT JOIN comments c ON lu.Id = c.UserId;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["post_count", "comment_count"],
+        "rows": [
+          [0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 125.593
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    u.Id,\n    u.DisplayName,\n    COUNT(p.Id) AS post_count,\n    COUNT(c.Id) AS comment_count\nFROM users u\nLEFT JOIN posts p ON u.Id = p.OwnerUserId\nLEFT JOIN comments c ON u.Id = c.UserId\nWHERE u.Id = (\n    SELECT Id \n    FROM users \n    ORDER BY CreationDate DESC \n    LIMIT 1\n)\nGROUP BY u.Id, u.DisplayName;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Id", "DisplayName", "post_count", "comment_count"],
+        "rows": [
+          [55747, "Shivam Agrawal", 0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 116.671
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    COALESCE(COUNT(p.Id), 0) AS post_count,\n    COALESCE(COUNT(c.Id), 0) AS comment_count\nFROM (\n    SELECT Id\n    FROM users\n    WHERE CreationDate = (SELECT MAX(CreationDate) FROM users)\n    LIMIT 1\n) latest_user\nLEFT JOIN posts p ON latest_user.Id = p.OwnerUserId\nLEFT JOIN comments c ON latest_user.Id = c.UserId",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["post_count", "comment_count"],
+        "rows": [
+          [0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 112.347
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    u.Id AS UserId,\n    u.DisplayName,\n    u.CreationDate,\n    (SELECT COUNT(*) FROM posts p WHERE p.OwnerUserId = u.Id) AS PostCount,\n    (SELECT COUNT(*) FROM comments c WHERE c.UserId = u.Id) AS CommentCount\nFROM users u\nWHERE u.Id = (\n    SELECT Id \n    FROM users \n    ORDER BY CreationDate DESC \n    LIMIT 1\n);",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["UserId", "DisplayName", "CreationDate", "PostCount", "CommentCount"],
+        "rows": [
+          [55747, "Shivam Agrawal", "2014-09-14 01:01:44.0", 0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 67.771
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    (SELECT COUNT(*) FROM posts WHERE OwnerUserId = (SELECT Id FROM users ORDER BY CreationDate DESC LIMIT 1)) AS post_count,\n    (SELECT COUNT(*) FROM comments WHERE UserId = (SELECT Id FROM users ORDER BY CreationDate DESC LIMIT 1)) AS comment_count;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["post_count", "comment_count"],
+        "rows": [
+          [0, 0]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 83.246
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["COUNT(T2.Id)"],
+    "rows": [
+      [171570]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["aggregate", "join", "limit", "order"]
+}

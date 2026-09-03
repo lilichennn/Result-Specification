@@ -1,0 +1,12 @@
+column_name,column_type,sample_value,ref_key
+professional_id,INTEGER,"[1, 2, 3]",
+role_code,VARCHAR(10),"[""Employee"", ""Veterenarian""]",
+first_name,VARCHAR(50),"[""Taryn"", ""Jayson"", ""Olaf""]",
+street,VARCHAR(50),"[""6915 Oberbrunner Point Suite 491\nGleasonville, LA "", ""88665 Terence Lodge Apt. 904\nCorneliusfort, NC 194"", ""68589 Bradly Manor\nNew Audrey, IN 91497""]",
+city,VARCHAR(50),"[""West Heidi"", ""North Odellfurt"", ""Jaceton""]",
+state,VARCHAR(20),"[""Indiana"", ""Connecticut"", ""Wisconsin""]",
+zip_code,VARCHAR(20),"[""06646"", ""43129"", ""77129""]",
+last_name,VARCHAR(50),"[""Braun"", ""Ullrich"", ""Watsica""]",
+email_address,VARCHAR(50),"[""deanna.schuster@example.com"", ""lucile.shanahan@example.org"", ""uboehm@example.org""]",
+home_phone,VARCHAR(20),"[""+71(6)2898266914"", ""+02(1)0259033559"", ""325-155-0801x7005""]",
+cell_number,VARCHAR(20),"[""(275)939-2435x80863"", ""889-940-2676"", ""(369)908-7311x065""]",

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Institution_ID,INT,"[1, 2, 3]",institution.Institution_ID
+Nickname,TEXT,"[""Colonials"", ""Terrapins"", ""Wildcats""]",
+Joined,REAL,"[1993.0, 1994.0, 1995.0]",
+Number_of_Championships,REAL,"[0.0, 1.0, 5.0]",

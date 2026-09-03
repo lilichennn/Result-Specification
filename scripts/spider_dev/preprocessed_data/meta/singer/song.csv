@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Song_ID,INT,"[1, 2, 3]",
+Title,TEXT,"[""Do They Know It's Christmas"", ""F**k It (I Don't Want You Back)"", ""Cha Cha Slide""]",
+Singer_ID,INT,"[1, 2, 4]",singer.Singer_ID
+Sales,REAL,"[1094000.0, 552407.0, 351421.0]",
+Highest_Position,REAL,"[1.0, 3.0]",

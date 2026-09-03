@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+document_id,INTEGER,"[0, 4, 7]",
+author_name,VARCHAR(255),"[""Malvina Metz"", ""Telly Pfannerstill"", ""Bianka Cummings""]",Authors.author_name
+document_name,VARCHAR(255),"[""Travel to Brazil"", ""Travel to China"", ""Travel to England""]",
+document_description,VARCHAR(255),"[""Nulla molestiae voluptas recusandae dolores explicabo et. Consequuntur ut autem velit eos aut."", ""Maiores suscipit earum sed iure. Quis voluptatem facilis doloremque nisi corrupti. Sed est repellendus et aut id. Nisi quis ex eligendi possimus ut ut unde."", ""Dolores beatae omnis dolorem laudantium quaerat ut. Perspiciatis explicabo est ut vel porro omnis. Aut non occaecati aut quia ut non omnis. Quia quam ea consequuntur quo aliquam.""]",
+other_details,VARCHAR(255),[],

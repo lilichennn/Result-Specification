@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Player_ID,INT,"[1976, 1977, 1978]",
+Rank_of_the_year,INT,"[1, 17, 22]",
+Player_name,TEXT,"[""Lee Roy Selmon"", ""Ricky Bell *"", ""Doug Williams""]",
+Position,TEXT,"[""Defensive end"", ""Running back"", ""Quarterback""]",
+College,TEXT,"[""Oklahoma"", ""USC"", ""Grambling""]",

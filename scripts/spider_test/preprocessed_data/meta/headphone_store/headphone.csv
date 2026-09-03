@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Headphone_ID,INT,"[1, 2, 3]",
+Model,TEXT,"[""iGrado"", ""SR60i"", ""SR80i""]",
+Class,TEXT,"[""Prestige"", ""Reference"", ""Statement""]",
+Driver-matched_dB,REAL,"[0.1, 0.05]",
+Construction,TEXT,"[""Plastic"", ""Aluminum alloy/ Plastic inner sleeve"", ""Hand-Crafted Mahogany""]",
+Earpads,TEXT,"[""Comfort Pads"", ""Bowls"", ""Circumaural Bowls""]",
+Price,INT,"[49, 79, 99]",

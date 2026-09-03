@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+staff_id,INTEGER,"[1, 2, 3]",
+agency_id,INTEGER,"[6, 7, 10]",
+staff_details,VARCHAR(255),"[""Rubie"", ""Sheridan"", ""Annabell""]",

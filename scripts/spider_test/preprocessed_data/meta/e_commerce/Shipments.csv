@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+shipment_id,INTEGER,"[1, 2, 3]",
+order_id,INTEGER,"[7, 6, 9]",Orders.order_id
+invoice_number,INTEGER,"[5, 2, 4]",Invoices.invoice_number
+shipment_tracking_number,VARCHAR(80),"[""6900"", ""3499"", ""5617""]",
+shipment_date,DATETIME,"[""2018-02-28 00:04:11"", ""2018-03-07 01:57:14"", ""2018-03-18 22:23:19""]",

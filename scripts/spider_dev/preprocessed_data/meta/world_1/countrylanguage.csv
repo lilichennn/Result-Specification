@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+CountryCode,char(3),"[""ABW"", ""AFG"", ""AGO""]",country.Code
+Language,char(30),"[""Dutch"", ""English"", ""Papiamento""]",
+IsOfficial,TEXT,"[""T"", ""F""]",
+Percentage,"float(4,1)","[5.3, 9.5, 76.7]",

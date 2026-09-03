@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+Road,INT,"[2, 3, 4]",
+Driver_ID,INT,"[1, 2, 3]",driver.Driver_ID
+Race_Name,TEXT,"[""Monterey Festival of Speed"", ""Sommet des Legends"", ""Rexall Grand Prix of Edmonton - Race 1""]",
+Pole_Position,TEXT,"[""James Hinchcliffe"", ""Junior Strous"", ""Carl Skerlong""]",
+Fastest_Lap,TEXT,"[""Douglas Soares"", ""Junior Strous"", ""David Garza Pérez""]",
+Winning_driver,TEXT,"[""James Hinchcliffe"", ""Junior Strous"", ""Jonathan Bomarito""]",
+Winning_team,TEXT,"[""Forsythe Pettit Racing"", ""Condor Motorsports"", ""Mathiasen Motorsports""]",
+Report,TEXT,"[""Report""]",

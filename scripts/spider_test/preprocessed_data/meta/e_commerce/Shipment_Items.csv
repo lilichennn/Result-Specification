@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+shipment_id,INTEGER,"[4, 6, 7]",Shipments.shipment_id
+order_item_id,INTEGER,"[4, 14, 9]",Order_Items.order_item_id

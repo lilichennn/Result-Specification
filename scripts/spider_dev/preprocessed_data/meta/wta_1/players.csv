@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+player_id,INT,"[200001, 200002, 200003]",
+first_name,TEXT,"[""Martina"", ""Mirjana"", ""Justine""]",
+last_name,TEXT,"[""Hingis"", ""Lucic"", ""Henin""]",
+hand,TEXT,"[""R"", ""L"", ""U""]",
+birth_date,DATE,"[19800930, 19820309, 19820601]",
+country_code,TEXT,"[""SUI"", ""CRO"", ""BEL""]",

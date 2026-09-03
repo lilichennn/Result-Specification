@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+sid,INTEGER,"[1, 2]",Sailors.sid
+bid,INTEGER,"[102, 103]",Boats.bid
+day,TEXT,"[""9/12"", ""9/13"", ""9/14""]",

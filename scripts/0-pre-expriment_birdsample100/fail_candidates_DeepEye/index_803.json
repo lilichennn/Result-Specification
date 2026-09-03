@@ -1,0 +1,46 @@
+{
+  "index": 803,
+  "db_id": "superhero",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/superhero/superhero.sqlite",
+  "complexity": 0,
+  "tier": "easy",
+  "question": "What is the power ID of cryokinesis?",
+  "evidence": "power ID refers to superpower.id; cryokinesis refers to power_name = 'cryokinesis';",
+  "gold_sql": "SELECT id FROM superpower WHERE power_name = 'Cryokinesis'",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT id FROM superpower WHERE power_name = 'cryokinesis'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["id"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.395
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT id\nFROM superpower\nWHERE power_name = 'cryokinesis';",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["id"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.24
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["id"],
+    "rows": [
+      [19]
+    ],
+    "row_count": 1
+  },
+  "sql_features": []
+}

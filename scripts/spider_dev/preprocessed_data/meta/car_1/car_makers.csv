@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Id,INTEGER,"[1, 2, 3]",
+Maker,TEXT,"[""amc"", ""volkswagen"", ""bmw""]",
+FullName,TEXT,"[""American Motor Company"", ""Volkswagen"", ""BMW""]",
+Country,TEXT,"[""1"", ""2"", ""3""]",countries.CountryId

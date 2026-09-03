@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Employee_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""George Chuter"", ""Lee Mears"", ""Mark Regan""]",
+Age,INT,"[23, 29, 43]",
+City,TEXT,"[""Bristol"", ""Bath"", ""Wasps""]",

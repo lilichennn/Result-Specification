@@ -1,0 +1,90 @@
+{
+  "index": 108,
+  "db_id": "financial",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/financial/financial.sqlite",
+  "complexity": 5,
+  "tier": "hard",
+  "question": "For the client who applied the biggest loan, what was his/her first amount of transaction after opened the account?",
+  "evidence": "",
+  "gold_sql": "SELECT T3.amount FROM loan AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id ORDER BY T1.amount DESC, T3.date ASC LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT t.\"amount\"\nFROM \"loan\" l\nJOIN \"account\" a ON l.\"account_id\" = a.\"account_id\"\nJOIN \"disp\" d ON a.\"account_id\" = d.\"account_id\"\nJOIN \"trans\" t ON a.\"account_id\" = t.\"account_id\"\nWHERE d.\"client_id\" = (\n    SELECT d2.\"client_id\"\n    FROM \"loan\" l2\n    JOIN \"account\" a2 ON l2.\"account_id\" = a2.\"account_id\"\n    JOIN \"disp\" d2 ON a2.\"account_id\" = d2.\"account_id\"\n    ORDER BY l2.\"amount\" DESC\n    LIMIT 1\n)\nAND t.\"date\" > a.\"date\"\nORDER BY t.\"date\" ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["amount"],
+        "rows": [
+          [15914]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 374.641
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT t.amount\nFROM loan l\nJOIN disp d ON l.account_id = d.account_id\nJOIN account a ON d.account_id = a.account_id\nJOIN trans t ON a.account_id = t.account_id\nWHERE l.amount = (SELECT MAX(amount) FROM loan)\nAND t.date > a.date\nORDER BY t.date ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["amount"],
+        "rows": [
+          [15914]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 374.703
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "WITH MaxLoanClient AS (\n    SELECT l.loan_id, l.amount, l.account_id, d.client_id\n    FROM loan l\n    JOIN account a ON l.account_id = a.account_id\n    JOIN disp d ON a.account_id = d.account_id\n    WHERE l.amount = (SELECT MAX(amount) FROM loan)\n    LIMIT 1\n)\nSELECT t.amount\nFROM trans t\nJOIN MaxLoanClient m ON t.account_id = m.account_id\nWHERE t.date > (SELECT date FROM account WHERE account_id = m.account_id)\nORDER BY t.date ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["amount"],
+        "rows": [
+          [15914]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 29.744
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T4.amount \nFROM loan AS T1 \nJOIN account AS T2 ON T1.account_id = T2.account_id \nJOIN disp AS T3 ON T2.account_id = T3.account_id \nJOIN trans AS T4 ON T2.account_id = T4.account_id \nWHERE T1.amount = (SELECT MAX(amount) FROM loan) \nAND T4.date > T2.date \nORDER BY T4.date ASC \nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["amount"],
+        "rows": [
+          [15914]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 367.58
+      }
+    },
+    {
+      "candidate_num": 10,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T3.amount \nFROM loan AS T1 \nJOIN account AS T2 ON T1.account_id = T2.account_id \nJOIN disp AS T4 ON T2.account_id = T4.account_id \nJOIN trans AS T3 ON T2.account_id = T3.account_id \nWHERE T1.loan_id = (\n    SELECT loan_id \n    FROM loan \n    ORDER BY amount DESC \n    LIMIT 1\n) \nAND T3.date > T2.date \nORDER BY T3.date ASC \nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["amount"],
+        "rows": [
+          [15914]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 376.433
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["amount"],
+    "rows": [
+      [300]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["join", "limit", "order"]
+}

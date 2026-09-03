@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+id,TEXT,"[""700"", ""701"", ""703""]",
+series_name,TEXT,"[""Sky Radio"", ""Sky Music"", ""Music Box Italia""]",
+Country,TEXT,"[""Italy"", ""United Kingdom"", ""Poland""]",
+Language,TEXT,"[""Italian"", ""English""]",
+Content,TEXT,"[""music""]",
+Pixel_aspect_ratio_PAR,TEXT,"[""4:3"", ""4:3 / 16:9"", ""16:9""]",
+Hight_definition_TV,TEXT,"[""no"", ""yes""]",
+Pay_per_view_PPV,TEXT,"[""no""]",
+Package_Option,TEXT,"[""Sky Famiglia"", ""no ( FTV )"", ""Sky Famiglia + Sky HD""]",

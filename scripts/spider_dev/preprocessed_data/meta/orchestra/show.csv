@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Show_ID,INT,"[1, 2, 3]",
+Performance_ID,INT,"[1, 2, 3]",performance.Performance_ID
+If_first_show,bool,"[""Glebe Park"", ""Fir Park"", ""St. Mirren Park""]",
+Result,TEXT,"[""T"", ""F""]",
+Attendance,REAL,"[1026.0, 695.0, 555.0]",

@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+customer_id,INTEGER,"[1, 2, 3]",
+address_id,INTEGER,"[9, 8, 3]",
+payment_method_code,VARCHAR(15),"[""Credit Card"", ""Direct Debit""]",
+customer_number,VARCHAR(20),"[""601"", ""920"", ""990""]",
+customer_name,VARCHAR(80),"[""Jeromy"", ""Edmond"", ""Twila""]",
+customer_address,VARCHAR(255),"[""422 Bode Mount Apt. 688"", ""0965 Dickens Springs"", ""878 Joy Fields Apt. 366""]",
+customer_phone,VARCHAR(80),"[""1-968-453-3485"", ""+92(8)6677749570"", ""(291)441-3432""]",
+customer_email,VARCHAR(80),"[""everett.kautzer@example.com"", ""maegan54@example.net"", ""dedric.bailey@example.org""]",

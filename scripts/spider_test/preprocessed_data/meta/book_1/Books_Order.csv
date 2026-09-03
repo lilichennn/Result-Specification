@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+ISBN,CHAR(15),"[""0482174555366"", ""1243415243666"", ""4554672899910""]",Book.ISBN
+IdOrder,CHAR(10),"[""0000002P"", ""0000003P"", ""0000005P""]",Orders.IdOrder
+amount,NUMBER(3),"[1, 2, 3]",

@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Stadium_ID,INT,"[1, 2, 3]",
+Location,TEXT,"[""Raith Rovers"", ""Ayr United"", ""East Fife""]",
+Name,TEXT,"[""Stark's Park"", ""Somerset Park"", ""Bayview Stadium""]",
+Capacity,INT,"[10104, 11998, 2000]",
+Highest,INT,"[4812, 2363, 1980]",
+Lowest,INT,"[1294, 1057, 533]",
+Average,INT,"[2106, 1477, 864]",

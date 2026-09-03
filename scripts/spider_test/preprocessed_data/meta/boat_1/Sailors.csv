@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+sid,INTEGER,"[1, 2, 3]",
+name,TEXT,"[""Eugene"", ""Luis"", ""Ken""]",
+rating,INTEGER,"[7, 2, 8]",
+age,INTEGER,"[22, 39, 27]",

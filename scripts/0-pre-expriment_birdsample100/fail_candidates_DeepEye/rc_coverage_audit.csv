@@ -1,0 +1,112 @@
+index,RC（text）,cddt检出数,cddt总数,未检出原因（gold本身质量问题 or RC没cover，为什么没cover）,RC_round1
+4,population=2000-01-01后开办且由特许体系直接资助的学校；row grain=一所学校；column role=学校电话号码,4,5,未检出1条：RC没cover缺失电话号码是否应保留为NULL；C1仅排除了Phone为空的学校。,"    ""rc_round1"": {
+      ""population"": ""Schools that are charter schools (Charter School (Y/N) = 1), are directly charter-funded (direct funding type rather than locally funded), and have an open date after 2000-01-01; all three conditions must hold together."",
+      ""row_grain"": ""One row per qualifying school."",
+      ""column_role"": ""The school's phone number."",
+      ""derivation"": ""none"",
+      ""filter_policy"": ""none""
+    }"
+27,population=1991年后开办或2000年前关闭的学校；row grain=一所学校；column role=学校名称、平均写作成绩、电话号码（可缺失）,0,9,未检出9条：RC没cover缺失写作成绩学校的保留策略；问题本身不能决定satscores应LEFT JOIN还是INNER JOIN。,"    ""rc_round1"": {
+      ""population"": ""All schools that satisfy at least one of two conditions: opened after year 1991, or closed before year 2000. The conditions are combined with OR, so a school qualifies if either holds."",
+      ""row_grain"": ""One row per qualifying school."",
+      ""column_role"": ""The school's name; the school's average writing score; the school's communication number, i.e., its phone number, included when the school has one."",
+      ""derivation"": ""For each qualifying school, compute the average of its writing scores."",
+      ""filter_policy"": ""none""
+    }"
+28,population=采用本地资助且其K-12与5-17岁入学人数之差高于同类学校平均差值的学校；row grain=一所学校；column role=学校名称、DOC类型；Derivation=逐校入学人数差并与本地资助学校的平均差比较,3,6,未检出3条：gold本身质量问题；问题要求DOC type，C2/C9/C11返回语义上的DOCType，而gold返回DOC代码。,"    ""rc_round1"": {
+      ""population"": ""Schools. The reference average is computed exclusively over the subset of schools that are locally funded; schools whose difference is compared against that average are the candidates for the answer."",
+      ""row_grain"": ""One row per qualifying school, identified by its name and DOC type."",
+      ""column_role"": ""School name: the identity of the qualifying school. DOC type: the school's DOC classification."",
+      ""derivation"": ""For each school compute the enrollment difference as Enrollment (K-12) minus Enrollment (Ages 5-17); compute the average of this difference across all locally funded schools; compare each school's difference to that average."",
+      ""filter_policy"": ""Retain only schools whose enrollment difference is strictly above the average difference of locally funded schools.""
+    }"
+32,population=所有权代码为66的学校；row grain=一所入选学校；column role=K-12免费或减价餐合格率；Derivation=K-12 FRPM人数除以K-12入学人数；filter policy=按K-12 FRPM人数降序取前5,4,4,,"    ""rc_round1"": {
+      ""population"": ""Schools with ownership code 66 that serve grades 1-12, interpreted as K-12; only schools meeting this ownership condition are eligible to contribute."",
+      ""row_grain"": ""One row per selected school; each of the top 5 qualifying schools appears exactly once."",
+      ""column_role"": ""The eligible free or reduced price meal rate for K-12 for each selected school, meaning the proportion of the school's K-12 enrollment that is eligible for free or reduced price meals."",
+      ""derivation"": ""For each school, determine the K-12 free or reduced price meal count and compute the rate as FRPM Count (K-12) divided by Enrollment (K-12); rank schools by the K-12 meal count in descending order."",
+      ""filter_policy"": ""Retain only the 5 schools with the highest K-12 free or reduced price meal count (top-5 selection on that count).""
+    }"
+59,population=由Mike Larson或Dante Alvarez管理的学校；row grain=一所学校；column role=学校网站,7,7,,"    ""rc_round1"": {
+      ""population"": ""Schools whose administrator is Mike Larson or Dante Alvarez; the administrator condition applies as a disjunction over the two named people."",
+      ""row_grain"": ""One row per school administered by either Mike Larson or Dante Alvarez."",
+      ""column_role"": ""The website address of each qualifying school."",
+      ""derivation"": ""none; a direct lookup of each qualifying school's website."",
+      ""filter_policy"": ""none; all schools in the population are returned.""
+    }"
+108,population=最大贷款所对应客户账户的完整交易历史；row grain=一笔交易；column role=交易金额；filter policy=先取最大贷款对应客户，再取其账户历史中的第一笔交易,5,5,,"    ""rc_round1"": {
+      ""population"": ""Clients who have applied for a loan, together with the accounts they hold and the transactions on those accounts; only transactions occurring after the account's opening date are eligible to contribute."",
+      ""row_grain"": ""A single row representing the earliest post-opening transaction of the account belonging to the client with the largest loan."",
+      ""column_role"": ""The monetary amount of that first transaction made after the account was opened."",
+      ""derivation"": ""Compare loan amounts across all loan applications to find the maximum; identify the client who applied for that loan and the associated account; order that account's transactions chronologically and select the first one dated after the account opening."",
+      ""filter_policy"": ""Extremum: retain only the client whose loan amount is the largest, then retain only that client's earliest transaction after the account opening date.""
+    }"
+119,population=1993年开户且结单方式为交易后出单的账户；row grain=一个账户；column role=账户ID、地区名称、地区区域,1,1,,"    ""rc_round1"": {
+      ""population"": ""Accounts opened in 1993 whose statement issuance frequency is 'after transaction' (i.e., 'POPLATEK PO OBRATU'); both conditions apply conjunctively."",
+      ""row_grain"": ""One row per qualifying account."",
+      ""column_role"": ""The account's identifier; the name of the district associated with the account; the region of that district."",
+      ""derivation"": ""none"",
+      ""filter_policy"": ""none""
+    }"
+129,population=1996年1月的非信用卡取款所关联地区；row grain=一个地区；column role=地区名称；filter policy=取10个地区,0,11,未检出11条：gold本身质量问题且RC没cover；问题没有说明top ten按次数、金额还是字母序排名，gold选择字母序，候选选择次数或金额，RC无法合法确定排名依据。,"    ""rc_round1"": {
+      ""population"": ""All withdrawal transactions classified as non-credit card (type 'VYDAJ') whose transaction date falls within January 1996, each associated with the district of the account on which the withdrawal was made."",
+      ""row_grain"": ""One row per district name; each district appears at most once."",
+      ""column_role"": ""The district name identifies each row; the total amount of January 1996 non-credit card withdrawals for that district is the measure on which districts are compared and ranked."",
+      ""derivation"": ""Aggregate the withdrawal amounts per district (sum over all qualifying January 1996 non-credit card withdrawals) and rank districts by that total in descending order."",
+      ""filter_policy"": ""Retain only the ten districts with the highest total withdrawal amount (top-10 by descending aggregate).""
+    }"
+232,population=含原子间单键且非致癌的分子；row grain=一个不同分子；column role=分子ID；filter policy=按分子ID字母序取前3个不同分子,4,4,,"    ""rc_round1"": {
+      ""population"": ""Molecules that are not carcinogenic (label = '-') and that have at least one single bond (bond_type = '-') between two atoms; both conditions must hold together."",
+      ""row_grain"": ""One row per qualifying molecule, distinct by molecule identifier."",
+      ""column_role"": ""The molecule identifier (molecule_id), which is the requested output value and also the ordering key."",
+      ""derivation"": ""none"",
+      ""filter_policy"": ""Order the qualifying molecules alphabetically by molecule_id in ascending order and keep only the first three.""
+    }"
+245,population=碘元素原子；row grain=一个汇总结果；column role=平均成键数；Derivation=每个碘原子的成键数的平均值,0,3,未检出3条：gold本身质量问题；gold的连接使COUNT(bond_id)/COUNT(atom_id)退化为1且只看connected的一侧，候选反而更接近自然语义。,"    ""rc_round1"": {
+      ""population"": ""All atoms whose element is iodine (element = 'i'), along with the bonds associated with those atoms; no other atoms or bonds contribute."",
+      ""row_grain"": ""A single summary row representing the aggregate computed over the entire set of iodine atoms."",
+      ""column_role"": ""One value: the average number of bonds per iodine atom."",
+      ""derivation"": ""Compute the ratio of the total count of bonds involving iodine atoms to the total count of iodine atoms (total bonds divided by number of iodine atoms)."",
+      ""filter_policy"": ""none""
+    }"
+252,population=与铅元素原子相连的原子；row grain=一个相邻原子；column role=相邻原子的身份,2,11,未检出9条：gold本身质量问题；自然问题只要求相邻原子，9条候选返回相邻atom_id，gold却额外返回铅原子自身ID。检出的2条返回元素类型而非原子身份。,"    ""rc_round1"": {
+      ""population"": ""All atoms that participate in a bond with at least one atom whose element is lead (element = 'pb'). The lead atoms serve as the anchor set; their bond partners constitute the answer population."",
+      ""row_grain"": ""One row per distinct atom that is bonded to a lead atom."",
+      ""column_role"": ""The identity of each atom that can bond with a lead atom (the atom identifier)."",
+      ""derivation"": ""Set relation: follow bond connections from atoms with element 'pb' to the atoms on the other side of those bonds."",
+      ""filter_policy"": ""none""
+    }"
+296,population=包含TR000_1_2且该键第一原子为TR000_1的分子；row grain=一个分子；column role=分子ID,0,10,未检出10条：gold本身质量问题；问题只要求molecule id，候选均给出该ID，gold额外输出bond_id与atom_id。仅凭指定bond_id也已能唯一定位该键，RC不能否定省略重复校验的C6。,
+392,population=稀有度为uncommon且具有ruling记录的卡牌；row grain=一张不同卡牌；column role=卡牌名称；filter policy=按ruling日期升序取前3张不同卡牌,5,5,,
+429,population=编号为206的set；row grain=一个set语言版本；column role=语言、扩展类型,0,7,未检出7条：gold本身质量问题且RC没cover；自然语义无法判断206属于sets.id还是set_translations.id，强写后者会泄露物理grounding。,
+435,population=边框颜色为黑色的卡牌；row grain=一张卡牌；column role=卡牌ID,1,1,,
+444,population=带boros watermark的卡牌及其外文版本；row grain=一个卡牌外文版本；column role=外文名称、卡牌类型,3,9,未检出6条：gold本身质量问题；这6条按问题返回foreign_data.name与cards.type，gold却返回cards.name。检出的3条把外文记录的type当成卡牌类型。,
+504,population=属于World Championship Decks 2004且converted mana cost为3的卡牌；row grain=一个汇总结果；column role=卡牌数量；Derivation=统计满足条件的卡牌数,1,1,,
+514,population=duel格式合法的卡牌；row grain=一张不同卡牌；column role=卡牌名称；filter policy=按unconverted mana cost降序取前10张不同卡牌,10,10,,
+523,population=2012-01-01至2015-12-31发布的sets及其语言版本；row grain=一个汇总结果；column role=年均发布set数、最常见语言；Derivation=区间set数按年度平均并按语言频次取众数,3,11,未检出8条：gold本身质量问题；这些候选得到自然语义下的26和Spanish，gold却计算id均值、按发布日期分组，公式与问题不一致。检出的候选分别遗漏年均值、把语言范围扩到全库或按翻译行数重复计set。,
+646,population=score大于60的评论及其所属post；row grain=一条合格评论；column role=post标题、评论作者的display name,5,8,未检出3条：gold本身质量问题；C1/C2/C6直接使用评论保存的作者display name，符合自然语义。检出的5条强制连接注册用户，排除了只有评论署名的作者。,
+667,population=具有post link的posts；row grain=一个post；column role=post标题；filter policy=取CreationDate最早的post link所指向的post,0,7,未检出7条：gold本身质量问题；全部候选按postLinks.CreationDate选最老链接，gold却按posts.CreaionDate排序。,
+693,population=创建时间最新的用户；row grain=一个用户汇总；column role=post数量、comment数量；Derivation=分别统计该用户发布的posts和comments；filter policy=取创建时间最新的用户,3,8,未检出5条：gold本身质量问题；5条候选分别独立得到两项计数，符合问题。检出的3条同时连接posts和comments，存在笛卡尔乘法导致双重计数。,
+715,population=down votes为0且至少有一条score在1到5之间评论的用户；row grain=一个用户；column role=该用户的display name,3,3,,
+772,population=Dark Horse Comics出版的女性超级英雄；row grain=一个超级英雄；column role=眼睛颜色ID、头发颜色ID、皮肤颜色ID,10,10,,
+803,population=名为cryokinesis的超能力；row grain=一个超能力；column role=power ID,0,2,未检出2条：RC没cover数据库字符串的大小写表示；候选中的cryokinesis与RC自然语义完全一致，只有物理值Cryokinesis造成执行差异。,
+852,population=2010年在亚洲和欧洲以外举行的Grand Prix races；row grain=一个汇总结果；column role=race数量；Derivation=统计满足地域与年份条件的races,9,9,,
+877,population=raceId 872中具有完赛时间的drivers；row grain=一名driver；column role=driver姓名；filter policy=按出生日期取最年轻者,1,1,,
+937,population=2008年Chinese Grand Prix中排名第二的driver；row grain=一名driver的比赛结果；column role=finish time,0,9,未检出9条：gold本身质量问题且RC没cover；自然语义中的完赛第二更支持results.position=2，gold使用的rank是另一排名字段，RC不能合法否定候选。,
+979,population=具有非空完赛时间的race results；row grain=一场race；column role=race number；Derivation=逐场统计finishers；filter policy=取finisher数量最多的race,5,12,未检出7条：gold本身质量问题且RC没cover；gold的COUNT(time IS NOT NULL)会计入所有非NULL布尔表达式，且问题未区分raceId与round。检出的5条按round跨多场race聚合，违反一场race的粒度。,
+981,population=最年轻driver参加的qualifying races；row grain=一场qualifying race；column role=年份、race名称、日期、时间；filter policy=先取最年轻driver，再取其最早qualifying race,2,2,,
+994,population=1980至2010年的Monaco Grand Prix constructor results；row grain=一个constructor汇总；column role=总分、constructor名称、国籍；Derivation=按constructor汇总points；filter policy=取总分最高者,1,1,,
+1003,population=Canadian Grand Prix中statusId为3的事故结果；row grain=一个driver汇总；column role=事故次数；Derivation=逐driver统计事故次数；filter policy=返回最大事故次数,3,3,,
+1022,population=potential有定义的player attribute记录；row grain=一名选中player；column role=preferred foot；filter policy=取potential最低者,2,2,,
+1028,population=2009/2010赛季Scotland Premier League中客队获胜的matches；row grain=一支away team；column role=team long name；Derivation=逐away team统计胜场；filter policy=取胜场最多者,0,7,未检出7条：gold本身质量问题；候选与gold语义相同，结果差异来自最高胜场并列且都用LIMIT 1而无tie-break，RC无法判定应任取哪支并列球队。,
+1076,population=Abdou Diallo与Aaron Appindangoye的player attribute记录；row grain=一个汇总结果；column role=平均ball control之差；Derivation=AVG(Abdou)-AVG(Aaron)，保留非整数精度,2,2,,
+1144,population=体重最重的player及其attribute记录；row grain=一名player的一组attributes；column role=finishing、curve；filter policy=取体重最重player,0,8,未检出8条：gold本身质量问题且RC没cover；候选返回问题明确要求的两项值，gold额外返回id；同一player存在多期attributes时问题也未指定时间快照。,
+1166,population=做过medical examination且有非空symptoms的patients；row grain=一名patient的一次选中examination；column role=observed symptoms、该patient的diagnosis；filter policy=取满足条件的最年轻patient,3,3,,
+1173,population=1985-01-01至1995-12-31做过lab work的patients；row grain=一种illness汇总；column role=patient diagnosis；Derivation=按diagnosis统计患者记录频次；filter policy=取最常见diagnosis,4,4,,
+1199,population=1997年接受检测且TP不在正常区间6到8.5内的patients；row grain=一名不同patient；column role=patient数量；Derivation=对不同patient计数,4,9,未检出5条：gold本身质量问题；这5条按TP和不同patient计数，符合问题，gold却错误过滤ALB并按Laboratory行计数。检出的候选要么错误排除边界6/8.5，要么按检测记录而非patient计数。,
+1250,population=诊断为SLE且至少一次U-PRO满足0到30开区间的patients；row grain=一名不同patient；column role=patient ID,2,2,无未检出；但gold对文本型U-PRO直接比较，错误纳入100/300等值，候选的数值转换更符合自然语义。两条候选仍因同一patient的多次检测而重复输出，违反row grain。,
+1322,population=由超过10名Student_Club成员参加且type为Meeting的events；row grain=一个汇总结果；column role=meeting数量；Derivation=先按event统计参加成员数，再统计合格meetings,1,10,未检出9条：gold本身质量问题；9条候选正确返回4个meetings，gold却返回非Meeting的event names。检出的C4按event输出多行参加人数，而非meeting总数。,
+1472,population=2012年Segment为LAM的customers；row grain=一名customer汇总；column role=customer ID；Derivation=逐customer汇总2012全年consumption；filter policy=取全年总consumption最低者,9,9,,
+1475,population=2012年Segment为KAM的customers；row grain=一名customer汇总；column role=customer数量；Derivation=逐customer汇总2012全年consumption，再统计总额低于30000的customers,10,10,,
+1501,population=至少有一笔transaction发生在2013年6月的gas stations；row grain=一个不同country；column role=gas station country,0,10,未检出10条：gold本身质量问题；候选都按transactions_1k.Date判断交易发生月份，符合自然语义。gold仅按CustomerID连接yearmonth=201306，不能保证对应transaction发生在该月。,
+1524,population=在2012-08-24发生且金额为548.4的transaction所对应customer；row grain=一名customer；column role=customer nationality,5,5,无未检出；但gold也不满足RC：gold返回gas station country，候选返回customer currency，二者都不是customer nationality。,

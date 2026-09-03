@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+author_id,INTEGER,"[0, 1, 2]",
+name,varchar(255),"["""", ""&#269"", ""&#353""]",
+email,varchar(255),[],

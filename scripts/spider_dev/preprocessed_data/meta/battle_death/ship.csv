@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+lost_in_battle,INT,"[8, 7, 6]",battle.id
+id,INT,"[1, 2, 3]",
+name,TEXT,"[""Lettice"", ""Bon Accord"", ""Mary""]",
+tonnage,TEXT,"[""t"", ""391"", ""225""]",
+ship_type,TEXT,"[""Brig"", ""18-gun Brig"", ""8 gun Brig""]",
+location,TEXT,"[""English Channel"", ""SW Approaches"", ""Mid-Atlantic""]",
+disposition_of_ship,TEXT,"[""Captured"", ""Wrecked"", ""Scuttled""]",

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Rank,INT,"[1, 2, 3]",
+University_ID,INT,"[1, 2, 3]",university.University_ID
+Major_ID,INT,"[1, 5, 3]",major.Major_ID

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+invoice_id,INTEGER,"[1, 2, 3]",
+client_id,INTEGER,"[5, 9, 15]",Clients.client_id
+invoice_status,VARCHAR(10),"[""Working"", ""Starting"", ""Finish""]",
+invoice_details,VARCHAR(255),"[""excellent"", ""good"", ""ok""]",

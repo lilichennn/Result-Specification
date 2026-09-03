@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Customers_and_Services_ID,INTEGER,"[123, 130, 203]",
+Customer_ID,INTEGER,"[12, 93, 286]",Customers.Customer_ID
+Service_ID,INTEGER,"[313, 620, 828]",Services.Service_ID
+Customers_and_Services_Details,CHAR(15),"[""Satisfied"", ""Unsatisfied""]",

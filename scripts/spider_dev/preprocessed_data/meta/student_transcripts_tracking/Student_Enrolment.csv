@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+student_enrolment_id,INTEGER,"[1, 2, 3]",
+degree_program_id,INTEGER,"[12, 4, 10]",Degree_Programs.degree_program_id
+semester_id,INTEGER,"[13, 2, 15]",Semesters.semester_id
+student_id,INTEGER,"[14, 9, 7]",Students.student_id
+other_details,VARCHAR(255),[],

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Valid_Answer_ID,INTEGER,"[1, 2, 3]",
+Question_ID,INTEGER,"[321, 721, 996]",Questions.Question_ID
+Valid_Answer_Text,VARCHAR(255),"[""ABC"", ""C""]",

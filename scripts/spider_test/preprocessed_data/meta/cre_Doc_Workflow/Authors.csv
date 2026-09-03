@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+author_name,VARCHAR(255),"[""Addison Denesik"", ""Adeline Wolff"", ""Antwon Krajcik V""]",
+other_details,VARCHAR(255),"[""""]",

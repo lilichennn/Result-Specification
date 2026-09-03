@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+id,REAL,"[1.0, 2.0, 3.0]",
+Title,TEXT,"[""The Rise of the Blue Beetle!"", ""Terror on Dinosaur Island!"", ""Evil Under the Sea!""]",
+Directed_by,TEXT,"[""Ben Jones"", ""Brandon Vietti"", ""Michael Chang""]",
+Written_by,TEXT,"[""Michael Jelenic"", ""Steven Melching"", ""Joseph Kuhr""]",
+Original_air_date,TEXT,"[""November14,2008"", ""November21,2008"", ""December5,2008""]",
+Production_code,REAL,"[101.0, 102.0, 103.0]",
+Channel,TEXT,"[""700"", ""701"", ""703""]",TV_Channel.id

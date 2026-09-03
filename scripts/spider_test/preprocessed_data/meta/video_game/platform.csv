@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Platform_ID,INT,"[1, 2, 3]",
+Platform_name,TEXT,"[""Game Boy"", ""SNES"", ""PlayStation""]",
+Market_district,TEXT,"[""Asia"", ""USA"", ""Europe""]",
+Download_rank,INT,"[2, 3, 1]",

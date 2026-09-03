@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+heat,INT,"[4, 3, 1]",
+name,TEXT,"[""Bradley Wiggins"", ""Hayden Roulston"", ""Steven Burke""]",
+nation,TEXT,"[""Great Britain"", ""New Zealand"", ""Russia""]",
+result,REAL,"[""4:16.571"", ""4:19.232"", ""4:21.558""]",

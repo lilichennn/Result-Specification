@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+feature_id,INTEGER,"[2, 3, 4]",
+feature_type_code,VARCHAR(20),"[""Amenity"", ""Security""]",Ref_Feature_Types.feature_type_code
+feature_name,VARCHAR(80),"[""AirCon"", ""Pool"", ""BurglarAlarm""]",
+feature_description,VARCHAR(80),"[""Air Conditioning."", ""Swimming Pool."", ""Burglar Alarm""]",

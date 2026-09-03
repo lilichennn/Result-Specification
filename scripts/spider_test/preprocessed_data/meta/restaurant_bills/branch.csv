@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Branch_ID,INT,"[1, 2, 3]",
+Manager,TEXT,"[""Ashby Lazale"", ""Breton Robert"", ""Campbell Jessie""]",
+Years_opened,INT,"[5, 4, 6]",
+Location_of_office,TEXT,"[""Hartford"", ""Waterbury"", ""Cheshire""]",

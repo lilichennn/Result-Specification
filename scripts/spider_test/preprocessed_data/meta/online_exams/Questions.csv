@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Question_ID,INTEGER,"[285, 321, 585]",
+Type_of_Question_Code,VARCHAR(15),"[""Single Choice"", ""Multiple Choice"", ""Free Text""]",
+Question_Text,VARCHAR(255),"[""When is middle age period"", ""Who are from Renaissance age"", ""Which are the works from Picasso""]",

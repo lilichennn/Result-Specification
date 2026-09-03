@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Teacher_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Joseph Huts"", ""Gustaaf Deloor"", ""Vicente Carretero""]",
+Age,TEXT,"[""32"", ""29"", ""26""]",
+Hometown,TEXT,"[""Blackrod Urban District"", ""Bolton County Borough"", ""Farnworth Municipal Borough""]",

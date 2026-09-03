@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+product_name,TEXT,"[""BIANCHI SPECIALISSIMA"", ""CANNONDALE SUPERSIX EVO HI-MOD DURA ACE"", ""CANYON AEROAD CF SLX 8.0 DI2""]",
+weight,INT,"[780, 850, 880]",
+price,REAL,"[9999.0, 5330.0, 3050.0]",
+material,TEXT,"[""Carbon CC"", ""carbon fiber"", ""Toray T700 and T800 carbon fiber""]",

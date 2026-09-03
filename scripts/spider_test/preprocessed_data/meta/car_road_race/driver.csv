@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Driver_ID,INT,"[1, 2, 3]",
+Driver_Name,TEXT,"[""Ernst-Günther Burggaller"", ""Hermann zu Leiningen"", ""Heinrich-Joachim von Morgen""]",
+Entrant,TEXT,"[""German Bugatti Team"", ""Private entry"", ""Automobiles Ettore Bugatti""]",
+Constructor,TEXT,"[""Bugatti"", ""Mercedes-Benz"", ""Maserati""]",
+Chassis,TEXT,"[""Bugatti T35B"", ""Bugatti T35C"", ""Mercedes-Benz SSK L""]",
+Engine,TEXT,"[""2.3 L8"", ""2.0 L8"", ""7.1 L6""]",
+Age,INT,"[18, 20, 23]",

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Collection_Subset_ID,INTEGER,"[684, 717, 741]",
+Collection_Subset_Name,VARCHAR(255),"[""UK album"", ""US album"", ""Canadian album""]",
+Collecrtion_Subset_Details,VARCHAR(255),"[""""]",

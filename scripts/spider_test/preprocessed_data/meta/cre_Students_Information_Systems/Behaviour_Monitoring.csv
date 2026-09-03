@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+behaviour_monitoring_id,INTEGER,"[142, 220, 248]",
+student_id,INTEGER,"[435, 811, 567]",Students.student_id
+behaviour_monitoring_details,VARCHAR(255),"[""A"", ""B"", ""C""]",

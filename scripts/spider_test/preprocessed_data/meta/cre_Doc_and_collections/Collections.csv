@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Collection_ID,INTEGER,"[6, 7]",
+Parent_Collection_ID,INTEGER,[6],
+Collection_Name,VARCHAR(255),"[""Best"", ""Nice""]",
+Collection_Description,VARCHAR(255),[],

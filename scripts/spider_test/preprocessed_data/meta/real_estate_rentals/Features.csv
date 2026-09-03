@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+feature_id,INTEGER,"[1, 2, 3]",
+feature_name,VARCHAR(80),"[""kichen"", ""rooftop"", ""garden""]",
+feature_description,VARCHAR(80),"[""ea"", ""vel"", ""et""]",

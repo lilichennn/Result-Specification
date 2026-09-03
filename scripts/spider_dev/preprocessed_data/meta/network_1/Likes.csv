@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+student_id,INT,"[1025, 1247, 1316]",Highschooler.ID
+liked_id,INT,"[1709, 1689, 1247]",Highschooler.ID

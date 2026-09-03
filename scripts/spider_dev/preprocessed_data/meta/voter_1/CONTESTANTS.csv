@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+contestant_number,INTEGER,"[1, 2, 3]",
+contestant_name,varchar(50),"[""Edwina Burnam"", ""Tabatha Gehling"", ""Kelly Clauss""]",

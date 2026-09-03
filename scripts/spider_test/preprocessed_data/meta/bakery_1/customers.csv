@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Id,INTEGER,"[1, 2, 3]",
+LastName,TEXT,"[""LOGAN"", ""ARZT"", ""ESPOSITA""]",
+FirstName,TEXT,"[""JULIET"", ""TERRELL"", ""TRAVIS""]",

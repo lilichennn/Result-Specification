@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+invoice_number,INTEGER,"[1, 2, 3]",
+invoice_status_code,VARCHAR(10),"[""Paid"", ""Issued""]",
+invoice_date,DATETIME,"[""2018-03-09 07:16:07"", ""2018-01-28 20:08:22"", ""2018-02-13 02:16:55""]",

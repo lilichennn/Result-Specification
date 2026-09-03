@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+PlanetID,INTEGER,"[1, 2, 3]",
+Name,VARCHAR(255),"[""Omicron Persei 8"", ""Decapod X"", ""Mars""]",
+Coordinates,REAL,"[89475345.3545, 65498463216.3466, 32435021.65468]",

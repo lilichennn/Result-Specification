@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Receipt,INTEGER,"[10013, 11548, 11891]",
+Ordinal,INTEGER,"[1, 2, 3]",
+Item,TEXT,"[""70-TU"", ""90-APIE-10"", ""90-CH-PF""]",goods.Id

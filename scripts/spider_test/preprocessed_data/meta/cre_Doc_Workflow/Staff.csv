@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+staff_id,INTEGER,"[3, 26, 52]",
+staff_details,VARCHAR(255),"[""Mrs. Aniya Klocko Sr."", ""Prof. Pietro Hudson"", ""Mr. Sid Hessel""]",

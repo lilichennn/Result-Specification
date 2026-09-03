@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+ShipmentID,INTEGER,"[1, 2, 3]",
+Date,DATE,"[""3004/05/11""]",
+Manager,INTEGER,"[1, 2, 7]",Employee.EmployeeID
+Planet,INTEGER,"[1, 2, 3]",Planet.PlanetID

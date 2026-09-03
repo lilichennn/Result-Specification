@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Book_ID,INT,"[1, 2, 3]",
+Title,TEXT,"[""A Game of Thrones"", ""A Clash of Kings"", ""A Storm of Swords""]",
+Type,TEXT,"[""Novel"", ""Poet""]",
+Pages,INT,"[704, 768, 992]",
+Chapters,INT,"[73, 70, 82]",
+Audio,TEXT,"[""33h 53m"", ""37h 17m"", ""47h 37m""]",
+Release,TEXT,"[""August 1996"", ""February 1999"", ""November 2000""]",

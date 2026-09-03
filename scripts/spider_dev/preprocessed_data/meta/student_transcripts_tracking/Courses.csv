@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+course_id,INTEGER,"[1, 2, 3]",
+course_name,VARCHAR(255),"[""ds"", ""math"", ""os""]",
+course_description,VARCHAR(255),"[""p"", ""q"", ""v""]",
+other_details,VARCHAR(255),[],

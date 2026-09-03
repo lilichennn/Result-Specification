@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+staff_role_code,CHAR(15),"[""ED"", ""HR"", ""MG""]",
+staff_role_description,VARCHAR(255),"[""Manager"", ""Editor"", ""Photo""]",

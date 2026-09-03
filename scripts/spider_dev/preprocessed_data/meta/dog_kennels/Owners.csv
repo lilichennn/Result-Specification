@@ -1,0 +1,11 @@
+column_name,column_type,sample_value,ref_key
+owner_id,INTEGER,"[1, 2, 3]",
+first_name,VARCHAR(50),"[""Nora"", ""Melisa"", ""Jaclyn""]",
+last_name,VARCHAR(50),"[""Haley"", ""DuBuque"", ""Stoltenberg""]",
+street,VARCHAR(50),"[""0647 Hintz Village Apt. 024"", ""1204 Mae Highway Apt. 107"", ""2635 Caitlyn Plains""]",
+city,VARCHAR(50),"[""Lake Tia"", ""Port Reannamouth"", ""Barrettburgh""]",
+state,VARCHAR(20),"[""Wisconsin"", ""Virginia"", ""Vermont""]",
+zip_code,VARCHAR(20),"[""93165"", ""45244"", ""02647""]",
+email_address,VARCHAR(50),"[""lynn81@example.org"", ""ykris@example.com"", ""hudson.favian@example.com""]",
+home_phone,VARCHAR(20),"[""1-682-845-0116x63235"", ""(799)563-0260x454"", ""916.976.9480x13851""]",
+cell_number,VARCHAR(20),"[""478.978.0729"", ""(722)768-5439x484"", ""481-483-9083x37986""]",

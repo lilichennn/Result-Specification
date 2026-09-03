@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Poker_Player_ID,INT,"[1, 2, 3]",
+People_ID,INT,"[1, 2, 5]",people.People_ID
+Final_Table_Made,REAL,"[42.0, 10.0, 21.0]",
+Best_Finish,REAL,"[1.0, 2.0, 3.0]",
+Money_Rank,REAL,"[68.0, 141.0, 166.0]",
+Earnings,REAL,"[476090.0, 189233.0, 104871.0]",

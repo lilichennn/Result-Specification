@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Conductor_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Antal Doráti"", ""Igor Stravinsky"", ""Colin Davis""]",
+Age,INT,"[40, 41, 42]",
+Nationality,TEXT,"[""USA"", ""UK"", ""France""]",
+Year_of_Work,INT,"[10, 11, 6]",

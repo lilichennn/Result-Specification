@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+StuID,INTEGER,"[1001, 1002, 1003]",
+LName,VARCHAR(12),"[""Smith"", ""Kim"", ""Jones""]",
+Fname,VARCHAR(12),"[""Linda"", ""Tracy"", ""Shiela""]",
+Age,INTEGER,"[18, 19, 21]",
+Sex,VARCHAR(1),"[""F"", ""M""]",
+Major,INTEGER,"[600, 520, 540]",
+Advisor,INTEGER,"[1121, 7712, 7792]",
+city_code,VARCHAR(3),"[""BAL"", ""HKG"", ""WAS""]",City.city_code

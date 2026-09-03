@@ -1,0 +1,151 @@
+{
+  "index": 1501,
+  "db_id": "debit_card_specializing",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/debit_card_specializing/debit_card_specializing.sqlite",
+  "complexity": 4,
+  "tier": "medium",
+  "question": "Please list the countries of the gas stations with transactions taken place in June, 2013.",
+  "evidence": "June 2013 refers to '201306'; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month;",
+  "gold_sql": "SELECT DISTINCT T2.Country FROM transactions_1k AS T1 INNER JOIN gasstations AS T2 ON T1.GasStationID = T2.GasStationID INNER JOIN yearmonth AS T3 ON T1.CustomerID = T3.CustomerID WHERE T3.Date = '201306'",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT g.Country\nFROM transactions_1k t\nINNER JOIN gasstations g ON t.GasStationID = g.GasStationID\nWHERE STRFTIME('%Y-%m', t.Date) = '2013-06'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.351
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT g.`Country`\nFROM `transactions_1k` t\nINNER JOIN `gasstations` g ON t.`GasStationID` = g.`GasStationID`\nWHERE STRFTIME('%Y-%m', t.`Date`) = '2013-06'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.292
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT g.Country\nFROM transactions_1k t\nJOIN gasstations g ON t.GasStationID = g.GasStationID\nWHERE STRFTIME('%Y-%m', t.Date) = '2013-06'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.319
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT gs.Country\nFROM transactions_1k t\nJOIN gasstations gs ON t.GasStationID = gs.GasStationID\nWHERE substr(t.Date, 1, 6) = '201306'\nGROUP BY gs.Country\nORDER BY gs.Country;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.189
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT gs.Country\nFROM transactions_1k t\nJOIN gasstations gs ON t.GasStationID = gs.GasStationID\nWHERE SUBSTR(t.Date, 1, 4) = '2013' \nAND SUBSTR(t.Date, 5, 2) = '06'\nGROUP BY gs.Country;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.19
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT gs.Country\nFROM gasstations gs\nJOIN transactions_1k t ON gs.GasStationID = t.GasStationID\nWHERE substr(t.Date, 1, 4) = '2013' AND substr(t.Date, 5, 2) = '06'\nGROUP BY gs.Country;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.172
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT T2.Country \nFROM transactions_1k AS T1 \nJOIN gasstations AS T2 \nON T1.GasStationID = T2.GasStationID \nWHERE strftime('%Y%m', T1.Date) = '201306'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.265
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT T2.Country \nFROM transactions_1k AS T1 \nJOIN gasstations AS T2 \nON T1.GasStationID = T2.GasStationID \nWHERE T1.Date LIKE '201306%'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.179
+      }
+    },
+    {
+      "candidate_num": 9,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT T2.Country \nFROM transactions_1k AS T1 \nINNER JOIN gasstations AS T2 \nON T1.GasStationID = T2.GasStationID \nWHERE STRFTIME('%Y-%m', T1.Date) = '2013-06'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.279
+      }
+    },
+    {
+      "candidate_num": 10,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT DISTINCT T2.Country \nFROM transactions_1k AS T1 \nJOIN gasstations AS T2 \nON T1.GasStationID = T2.GasStationID \nWHERE SUBSTR(T1.Date, 1, 6) = '201306'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Country"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.192
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["Country"],
+    "rows": [
+      ["CZE"],
+      ["SVK"]
+    ],
+    "row_count": 2
+  },
+  "sql_features": ["distinct", "join"]
+}

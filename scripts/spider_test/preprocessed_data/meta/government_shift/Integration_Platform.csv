@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Integration_Platform_ID,INTEGER,"[299, 447, 519]",
+Customer_Interaction_ID,INTEGER,"[225, 117, 607]",Customer_Interactions.Customer_Interaction_ID
+Integration_Platform_Details,VARCHAR(255),"[""Success"", ""Fail""]",

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Code,INTEGER,"[1, 2, 3]",
+Title,VARCHAR(255),"[""Citizen Kane"", ""Singin' in the Rain"", ""The Wizard of Oz""]",
+Rating,VARCHAR(255),"[""PG"", ""G"", ""NC-17""]",

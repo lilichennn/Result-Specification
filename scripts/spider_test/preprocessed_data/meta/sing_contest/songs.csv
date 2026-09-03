@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+language,TEXT,"[""English , Russian"", ""English , Hebrew , Arabic"", ""French""]",
+original_artist,TEXT,"[""Sasha Son"", ""Noa and Mira Awad"", ""Patricia Kaas""]",
+name,TEXT,"["" Love "", "" There Must Be Another Way "", "" Et s\\'il fallait le faire ""]",
+english_translation,TEXT,"[""—"", ""And if it had to be done"", ""The voice""]",

@@ -1,0 +1,12 @@
+column_name,column_type,sample_value,ref_key
+Institution_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""University of British Columbia"", ""University of Calgary"", ""University of Alberta""]",
+Team,TEXT,"[""Thunderbirds"", ""Dinos"", ""Golden Bears""]",
+City,TEXT,"[""Vancouver"", ""Calgary"", ""Edmonton""]",
+Province,TEXT,"[""BC"", ""AB"", ""SK""]",
+Founded,REAL,"[1908.0, 1966.0, 1907.0]",
+Affiliation,TEXT,"[""Public""]",
+Enrollment,REAL,"[43579.0, 28196.0, 36435.0]",
+Endowment,TEXT,"[""$1.01B"", ""$444M"", ""$751M""]",
+Stadium,TEXT,"[""Thunderbird Stadium"", ""McMahon Stadium"", ""Foote Field""]",
+Capacity,REAL,"[3500.0, 35650.0, 4997.0]",

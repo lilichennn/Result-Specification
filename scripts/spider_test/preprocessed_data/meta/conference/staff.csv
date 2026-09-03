@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+staff_ID,INT,"[1, 2, 3]",
+name,TEXT,"[""Bobby Jackson"", ""Casey Jacobsen"", ""Alexander Johnson""]",
+Age,INT,"[24, 23, 42]",
+Nationality,TEXT,"[""United States"", ""United Kindom"", ""Canada""]",
+Institution_ID,INT,"[1, 2, 3]",institution.Institution_ID

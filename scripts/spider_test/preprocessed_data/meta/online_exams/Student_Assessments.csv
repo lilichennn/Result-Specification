@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Student_Answer_ID,VARCHAR(100),"[""162"", ""172"", ""2""]",
+Valid_Answer_ID,INTEGER,"[3, 4, 2]",Valid_Answers.Valid_Answer_ID
+Student_Answer_Text,VARCHAR(255),"[""B"", ""A"", ""True""]",
+Satisfactory_YN,CHAR(1),"[""0"", ""1""]",
+Assessment,VARCHAR(40),"[""Very Good"", ""Excellent"", ""OK""]",

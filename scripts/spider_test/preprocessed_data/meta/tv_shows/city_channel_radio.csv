@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+City_channel_ID,INT,"[1, 2, 3]",city_channel.ID
+Radio_ID,INT,"[1, 2, 3]",radio.Radio_ID
+Is_online,bool,"[""T"", ""F""]",

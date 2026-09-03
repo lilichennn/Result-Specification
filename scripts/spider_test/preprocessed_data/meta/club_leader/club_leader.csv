@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Club_ID,INT,"[1, 4, 6]",club.Club_ID
+Member_ID,INT,"[1988, 1990, 1985]",member.Member_ID
+Year_Join,TEXT,"[""2018"", ""2017"", ""2015""]",

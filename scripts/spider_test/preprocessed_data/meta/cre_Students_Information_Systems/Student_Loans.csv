@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+student_loan_id,INTEGER,"[165, 169, 188]",
+student_id,INTEGER,"[777, 669, 435]",Students.student_id
+date_of_loan,DATETIME(3),"[""1980-01-06 00:00:00.000"", ""1991-03-24 00:00:00.000"", ""1983-08-01 00:00:00.000""]",
+amount_of_loan,"DECIMAL(15,4)","[2216.15, 5223.18, 3221.49]",
+other_details,VARCHAR(255),[],

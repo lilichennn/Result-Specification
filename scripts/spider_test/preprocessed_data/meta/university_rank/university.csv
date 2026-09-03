@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+University_ID,INT,"[1, 2, 3]",
+University_Name,TEXT,"[""Augustana College"", ""Aurora University"", ""Beloit College""]",
+City,TEXT,"[""Rock Island"", ""Aurora"", ""Beloit""]",
+State,TEXT,"[""Illinois"", ""Wisconsin"", ""Iowa""]",
+Team_Name,TEXT,"[""Vikings"", ""Spartans"", ""Buccaneers""]",
+Affiliation,TEXT,"[""Private_Lutheran"", ""Private_Non-sectarian"", ""Private_United Church of Christ""]",
+Enrollment,INT,"[2500, 4400, 1000]",
+Home_Conference,TEXT,"[""CCIW"", ""Northern"", ""Midwest""]",

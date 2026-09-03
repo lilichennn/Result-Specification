@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Airline,INTEGER,"[1, 2, 3]",
+FlightNo,INTEGER,"[28, 29, 44]",
+SourceAirport,TEXT,"["" APG"", "" ASY"", "" CVO""]",airports.AirportCode
+DestAirport,TEXT,"["" ASY"", "" APG"", "" ACV""]",airports.AirportCode

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+order_id,INTEGER,"[1, 2, 3]",
+customer_id,INTEGER,"[12, 3, 1]",Customers.customer_id
+order_date,DATETIME,"[""2016-05-14 22:08:41"", ""1991-02-26 11:32:39"", ""2000-06-26 05:17:11""]",
+order_status_code,VARCHAR(15),"[""Part"", ""Completed""]",

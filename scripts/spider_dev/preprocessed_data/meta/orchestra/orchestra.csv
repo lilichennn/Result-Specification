@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Orchestra_ID,INT,"[1, 2, 3]",
+Orchestra,TEXT,"[""London Symphony Orchestra"", ""Columbia Symphony Orchestra"", ""Royal Concertgebouw Orchestra""]",
+Conductor_ID,INT,"[1, 2, 3]",conductor.Conductor_ID
+Record_Company,TEXT,"[""Mercury Records"", ""Columbia Masterworks"", ""Philips""]",
+Year_of_Founded,REAL,"[2003.0, 2009.0, 2008.0]",
+Major_Record_Format,TEXT,"[""CD"", ""CD / LP"", ""DVD""]",

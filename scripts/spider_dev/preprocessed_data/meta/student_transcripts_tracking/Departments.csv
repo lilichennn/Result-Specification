@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+department_id,INTEGER,"[1, 2, 3]",
+department_name,VARCHAR(255),"[""computer science"", ""history"", ""art""]",
+department_description,VARCHAR(255),"[""error"", ""nostrum"", ""aliquam""]",
+other_details,VARCHAR(255),[],

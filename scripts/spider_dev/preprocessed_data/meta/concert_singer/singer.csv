@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Singer_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Joe Sharp"", ""Timbaland"", ""Justin Brown""]",
+Country,TEXT,"[""Netherlands"", ""United States"", ""France""]",
+Song_Name,TEXT,"[""You"", ""Dangerous"", ""Hey Oh""]",
+Song_release_year,TEXT,"[""1992"", ""2008"", ""2013""]",
+Age,INT,"[52, 32, 29]",
+Is_male,bool,"[""F"", ""T""]",

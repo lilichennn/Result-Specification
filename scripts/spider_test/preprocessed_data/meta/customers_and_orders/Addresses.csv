@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+address_id,INTEGER,"[1, 2, 3]",
+address_details,VARCHAR(255),"[""2632 Ofelia Stream Apt. 537\nRueckerborough, NV 78430-4096"", ""481 Tyrique Junction\nWest Kali, UT 16070-1379"", ""4363 Otilia Hill\nLandenshire, ND 45637""]",

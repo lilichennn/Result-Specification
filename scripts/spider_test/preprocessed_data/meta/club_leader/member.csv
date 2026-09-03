@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Member_ID,INT,"[1984, 1985, 1986]",
+Name,TEXT,"[""Wally Lewis"", ""Brett Kenny"", ""Garry Jack""]",
+Nationality,TEXT,"[""Australia"", ""New Zealand Australia"", ""England""]",
+Age,INT,"[23, 19, 18]",

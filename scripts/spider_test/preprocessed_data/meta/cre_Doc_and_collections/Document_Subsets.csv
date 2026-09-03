@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Document_Subset_ID,INTEGER,"[171, 183, 216]",
+Document_Subset_Name,VARCHAR(255),"[""Best for 2000"", ""Best for 2001"", ""Best for 2002""]",
+Document_Subset_Details,VARCHAR(255),"[""""]",

@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+artistID,INTEGER,"[111, 222, 333]",
+lname,TEXT,"[""Seurat"", ""Picasso"", ""van Gogh""]",
+fname,TEXT,"[""Georges"", ""Pablo"", ""Vincent""]",
+birthYear,INTEGER,"[1859, 1881, 1853]",
+deathYear,INTEGER,"[1891, 1973, 1890]",

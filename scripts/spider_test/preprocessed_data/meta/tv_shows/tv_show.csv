@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+tv_show_ID,INT,"[1, 2, 3]",
+tv_show_name,TEXT,"[""Peace and Quiet"", ""Box O' Fun"", ""Nighty Nightmare""]",
+Sub_tittle,TEXT,"[""Wanted: Wade"", ""Unidentified Flying Orson"", ""Banana Nose""]",
+Next_show_name,TEXT,"[""Garfield Goes an Hawaii"", ""School Daze"", ""Ode to Odie""]",
+Original_Airdate,TEXT,"[""September17,1988"", ""September24,1988"", ""October1,1988""]",

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+transcript_id,INTEGER,"[131, 138, 145]",
+student_id,INTEGER,"[669, 824, 361]",Students.student_id
+date_of_transcript,DATETIME(3),"[""1973-08-09 00:00:00.000"", ""1973-11-05 00:00:00.000"", ""2002-11-23 00:00:00.000""]",
+transcript_details,VARCHAR(255),"[""Good"", ""Pass""]",

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+city1_code,varchar(3),"[""BAL"", ""ATL"", ""BKK""]",City.city_code
+city2_code,varchar(3),"[""ATL"", ""BAL"", ""BKK""]",City.city_code
+distance,INTEGER,"[576, 0, 9631]",

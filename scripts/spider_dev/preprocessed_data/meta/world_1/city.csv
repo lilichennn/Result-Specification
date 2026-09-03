@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+ID,INTEGER,"[129, 1, 2]",
+Name,char(35),"[""Kabul"", ""Qandahar"", ""Herat""]",
+CountryCode,char(3),"[""ABW"", ""AFG"", ""AGO""]",country.Code
+District,char(20),"[""Kabol"", ""Qandahar"", ""Herat""]",
+Population,INTEGER,"[1780000, 237500, 186800]",

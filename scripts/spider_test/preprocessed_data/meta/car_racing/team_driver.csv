@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+Team_ID,INT,"[1, 2, 5]",team.Team_ID
+Driver_ID,INT,"[1, 3, 5]",driver.Driver_ID

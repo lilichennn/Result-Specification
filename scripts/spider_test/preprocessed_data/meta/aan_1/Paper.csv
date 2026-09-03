@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+paper_id,varchar(25),"[""A00-1001"", ""A00-1002"", ""A00-1003""]",
+title,varchar(255),"[""BusTUC - A Natural Language Bus Route Oracle"", ""Machine Translation Of Very Close Languages"", ""Cross-Language Multimedia Information Retrieval""]",
+venue,varchar(255),"[""NAACL"", ""ANLP"", ""COLING""]",
+year,INTEGER,"[2000, 1983, 1988]",

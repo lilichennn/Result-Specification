@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+ModelId,INTEGER,"[1, 2, 3]",
+Maker,INTEGER,"[1, 2, 3]",car_makers.Id
+Model,TEXT,"[""amc"", ""audi"", ""bmw""]",

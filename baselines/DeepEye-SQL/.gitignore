@@ -1,0 +1,44 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# vllm model commands
+.vllm_model_cmd
+
+# tests and workspace
+tests/
+workspace/
+bak_workspace/
+gemini3_flash_on_qwen3_failed_workspace/
+*workspace*/
+logs/
+
+# data
+data/
+
+# temp
+exp/
+
+# local configs
+config/local/
+config/*.toml
+
+# credentials
+bigquery_credential.json
+snowflake_credential.json
+
+# local docs
+local_docs/
+
+.codex
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/

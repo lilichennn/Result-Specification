@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+section_id,INTEGER,"[1, 2, 3]",
+course_id,INTEGER,"[9, 2, 8]",Courses.course_id
+section_name,VARCHAR(255),"[""a"", ""b"", ""c""]",
+section_description,VARCHAR(255),"[""non"", ""voluptatem"", ""qui""]",
+other_details,VARCHAR(255),[],

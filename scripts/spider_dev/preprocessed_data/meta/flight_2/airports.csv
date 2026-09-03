@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+City,TEXT,"[""Aberdeen "", ""Abilene "", ""Abingdon ""]",
+AirportCode,TEXT,"[""AAF"", ""ABI"", ""ABL""]",
+AirportName,TEXT,"[""Phillips AAF "", ""Municipal "", ""Dyess AFB ""]",
+Country,TEXT,"[""United States ""]",
+CountryAbbrev,TEXT,"[""US "", ""US""]",

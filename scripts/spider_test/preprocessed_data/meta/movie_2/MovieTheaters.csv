@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Code,INTEGER,"[1, 2, 3]",
+Name,VARCHAR(255),"[""Odeon"", ""Imperial"", ""Majestic""]",
+Movie,INTEGER,"[5, 1, 6]",Movies.Code

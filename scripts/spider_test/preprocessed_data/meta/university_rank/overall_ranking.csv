@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Rank,INT,"[1, 3, 4]",
+University_ID,INT,"[1, 2, 3]",university.University_ID
+Reputation_point,INT,"[5, 4, 1]",
+Research_point,INT,"[2, 1, 0]",
+Citation_point,INT,"[0, 1, 2]",
+Total,INT,"[7, 4, 6]",

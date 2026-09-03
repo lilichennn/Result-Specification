@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Club_ID,INT,"[1, 2, 3]",
+Overall_Ranking,INT,"[5, 57, 82]",
+Team_Leader,TEXT,"[""Mack Mitchell"", ""Oscar Roan"", ""Tony Peters""]",
+Club_Name,TEXT,"[""Houston"", ""SMU"", ""Oklahoma""]",

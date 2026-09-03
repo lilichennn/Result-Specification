@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Radio_ID,INT,"[1, 2, 3]",
+Transmitter,TEXT,"[""Cairn Hill"", ""Clermont Carn"", ""Kippure""]",
+Radio_MHz,TEXT,"[""89.8"", ""87.8"", ""89.1""]",
+2FM_MHz,TEXT,"[""N/A"", ""97.0"", ""91.3""]",
+RnaG_MHz,TEXT,"[""N/A"", ""102.7"", ""93.5""]",
+Lyric_FM_MHz,TEXT,"[""N/A"", ""95.2"", ""98.7""]",
+ERP_kW,TEXT,"[""16"", ""40"", ""160""]",

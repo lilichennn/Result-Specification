@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+IdClient,CHAR(10),"[""0000001"", ""0000002"", ""0000003""]",
+Name,VARCHAR(25),"[""James Smith"", ""Laura Jones"", ""Peter Doe""]",
+Address,VARCHAR(60),"[""Picadilly 2"", ""Holland Park 13"", ""High Street 42""]",
+NumCC,CHAR(16),"[""1234567890123456"", ""1234567756953456"", ""1237596390123456""]",

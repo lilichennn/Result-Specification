@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+Driver_ID,INT,"[1, 2, 3]",
+Driver,TEXT,"[""Kasey Kahne"", ""Matt Kenseth"", ""Tony Stewart""]",
+Country,INT,"[2, 3, 1]",country.Country_ID
+Age,INT,"[23, 21, 19]",
+Car_#,REAL,"[9.0, 17.0, 20.0]",
+Make,TEXT,"[""Dodge"", ""Ford"", ""Chevrolet""]",
+Points,TEXT,"[""185"", ""175"", ""165""]",
+Laps,REAL,[334.0],
+Winnings,TEXT,"[""$530,164"", ""$362,491"", ""$286,386""]",

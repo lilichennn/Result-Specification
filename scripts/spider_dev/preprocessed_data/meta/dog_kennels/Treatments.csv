@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+treatment_id,INTEGER,"[1, 2, 3]",
+dog_id,INTEGER,"[14, 4, 2]",Dogs.dog_id
+professional_id,INTEGER,"[9, 10, 4]",Professionals.professional_id
+treatment_type_code,VARCHAR(10),"[""WALK"", ""VAC"", ""EXAM""]",Treatment_Types.treatment_type_code
+date_of_treatment,DATETIME,"[""2018-03-19 04:39:54"", ""2018-03-15 20:25:34"", ""2018-03-08 05:26:23""]",
+cost_of_treatment,"DECIMAL(19,4)","[567, 147, 429]",

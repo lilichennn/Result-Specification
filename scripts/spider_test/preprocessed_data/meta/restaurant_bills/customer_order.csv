@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Customer_ID,INT,"[1, 2, 3]",customer.Customer_ID
+Branch_ID,INT,"[10, 9, 6]",branch.Branch_ID
+Dish_Name,TEXT,"[""Spring Rolls"", ""Kung Pao Chicken"", ""Ma Po Tofu""]",
+Quantity,INT,"[1, 2, 4]",

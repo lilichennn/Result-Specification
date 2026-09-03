@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Country_Id,INT,"[1, 2, 3]",
+Country,TEXT,"[""Japan"", ""USA"", ""Britain""]",
+Capital,TEXT,"[""Tokyo"", ""Washington"", ""London""]",
+Official_native_language,TEXT,"[""Japanese"", ""English"", ""British English""]",
+Regoin,TEXT,"[""Asia"", ""North America"", ""Europe""]",

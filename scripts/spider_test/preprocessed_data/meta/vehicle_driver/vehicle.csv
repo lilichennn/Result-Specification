@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Vehicle_ID,INT,"[1, 2, 3]",
+Model,TEXT,"[""AC4000"", ""DJ "", ""DJ1""]",
+Build_Year,TEXT,"[""1996"", ""2000"", ""2000–2001""]",
+Top_Speed,INT,"[120, 200]",
+Power,INT,"[4000, 4800, 6400]",
+Builder,TEXT,"[""Zhuzhou"", ""Zhuzhou Siemens , Germany"", ""Datong""]",
+Total_Production,TEXT,"[""1"", ""2"", ""20""]",

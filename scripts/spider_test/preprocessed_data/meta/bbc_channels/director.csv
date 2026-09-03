@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Director_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""DeSean Jackson"", ""Hank Baskett"", ""Greg Lewis""]",
+Age,INT,"[60, 90, 52]",

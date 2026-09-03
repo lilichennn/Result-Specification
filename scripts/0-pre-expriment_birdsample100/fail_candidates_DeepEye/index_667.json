@@ -1,0 +1,118 @@
+{
+  "index": 667,
+  "db_id": "codebase_community",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/codebase_community/codebase_community.sqlite",
+  "complexity": 4,
+  "tier": "medium",
+  "question": "What is the title of the post with the oldest post link?",
+  "evidence": "the oldest post link refers to MIN(CreaionDate);",
+  "gold_sql": "SELECT T1.Title FROM posts AS T1 INNER JOIN postLinks AS T2 ON T2.PostId = T1.Id ORDER BY T1.CreaionDate LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT p.Title\nFROM postLinks pl\nJOIN posts p ON pl.PostId = p.Id\nORDER BY pl.CreationDate ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 13.156
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT p.Title\nFROM postLinks pl\nINNER JOIN posts p ON pl.PostId = p.Id\nORDER BY pl.CreationDate ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 13.599
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    p.Title\nFROM \n    postLinks pl\nJOIN \n    posts p ON pl.PostId = p.Id\nORDER BY \n    pl.CreationDate ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 13.508
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT posts.Title\nFROM postLinks\nJOIN posts ON postLinks.PostId = posts.Id\nORDER BY postLinks.CreationDate ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 12.401
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT p.Title\nFROM postLinks pl\nJOIN posts p ON pl.PostId = p.Id\nWHERE pl.CreationDate = (\n    SELECT MIN(CreationDate)\n    FROM postLinks\n)\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.739
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T2.Title \nFROM postLinks AS T1 \nJOIN posts AS T2 ON T1.PostId = T2.Id \nWHERE T1.CreationDate = (SELECT MIN(CreationDate) FROM postLinks)",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 1.013
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T2.Title FROM postLinks AS T1 INNER JOIN posts AS T2 ON T1.PostId = T2.Id ORDER BY T1.CreationDate ASC LIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["Title"],
+        "rows": [
+          ["How to tell if something happened in a data set which monitors a value over time"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 9.19
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["Title"],
+    "rows": [
+      ["Assessing the significance of differences in distributions"]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["join", "limit", "order"]
+}

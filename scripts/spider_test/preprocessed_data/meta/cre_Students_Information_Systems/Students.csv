@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+student_id,INTEGER,"[276, 287, 325]",
+bio_data,VARCHAR(255),"[""Camila"", ""Dino"", ""Pansy""]",
+student_details,VARCHAR(255),"[""Suite 076"", ""Suite 970"", ""Apt. 149""]",

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+name,TEXT,"[""Freeway"", ""Biby Michael's Friend"", ""Iskren Petsov""]",
+popularity,REAL,"[30.71, 7.47, 5.81]",

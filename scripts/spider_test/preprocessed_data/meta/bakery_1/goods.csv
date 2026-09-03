@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Id,TEXT,"[""20-BC-C-10"", ""20-BC-L-10"", ""20-CA-7.5""]",
+Flavor,TEXT,"[""Chocolate"", ""Lemon"", ""Casino""]",
+Food,TEXT,"[""Cake"", ""Eclair"", ""Tart""]",
+Price,REAL,"[8.95, 15.95, 11.95]",

@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Review_ID,INT,"[1, 2, 3]",
+Book_ID,INT,"[1, 3, 4]",book.Book_ID
+Rating,REAL,"[6.6, 5.7, 5.8]",
+Readers_in_Million,REAL,"[3.3, 2.8, 2.6]",
+Rank,INT,"[16, 25, 26]",

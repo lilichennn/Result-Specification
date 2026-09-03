@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+semester_id,INTEGER,"[1, 2, 3]",
+semester_name,VARCHAR(255),"[""spring 2010"", ""summer 2010"", ""fall 2010""]",
+semester_description,VARCHAR(255),"[""x"", ""g"", ""w""]",
+other_details,VARCHAR(255),[],

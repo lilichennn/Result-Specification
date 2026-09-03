@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Conference_ID,INT,"[1, 2, 4]",conference.Conference_ID
+staff_ID,INT,"[1, 2, 4]",staff.staff_ID
+role,TEXT,"[""Speaker"", ""Sponsor"", ""Participant""]",

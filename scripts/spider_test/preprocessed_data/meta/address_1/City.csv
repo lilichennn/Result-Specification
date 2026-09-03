@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+city_code,VARCHAR(3),"[""ATL"", ""BAL"", ""BKK""]",
+city_name,VARCHAR(25),"[""Baltimore"", ""Pittsburgh"", ""Philadelphia""]",
+state,VARCHAR(2),"[""MD"", ""PA"", ""DC""]",
+country,VARCHAR(25),"[""USA"", ""CANADA"", ""INDIA""]",
+latitude,FLOAT,"[39.288, 40.437, 39.95]",
+longitude,FLOAT,"[-76.617, -80.0, -75.15]",

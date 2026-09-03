@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Team_ID,INT,"[1, 2, 3]",
+Team,TEXT,"[""Arrington Racing"", ""Benfield Racing"", ""Blue Max Racing""]",
+Make,TEXT,"[""Chrysler Imperial"", ""Buick Regal"", ""Pontiac Grand Prix""]",
+Manager,TEXT,"[""Buddy Arrington"", ""Joe Ruttman"", ""Tim Richmond""]",
+Sponsor,TEXT,"[""Arrington Racing"", ""Levi Garrett"", ""Old Milwaukee""]",
+Car_Owner,TEXT,"[""Buddy Arrington"", ""Ron Benfield"", ""Raymond Beadle""]",

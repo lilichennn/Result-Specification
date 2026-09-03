@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+Performance_ID,INT,"[1, 2, 3]",
+Orchestra_ID,INT,"[1, 2, 3]",orchestra.Orchestra_ID
+Type,TEXT,"[""Auditions 1"", ""Auditions 2"", ""Auditions 3""]",
+Date,TEXT,"[""9 June"", ""10 June"", ""11 June""]",
+Official_ratings_(millions),REAL,"[5.2, 6.73, 7.28]",
+Weekly_rank,TEXT,"[""12"", ""8"", ""15""]",
+Share,TEXT,"[""22.7%"", ""28.0%"", ""29.4%""]",

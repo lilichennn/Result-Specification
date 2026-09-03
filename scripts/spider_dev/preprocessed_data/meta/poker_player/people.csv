@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+People_ID,INT,"[1, 2, 3]",
+Nationality,TEXT,"[""Russia"", ""Bulgaria""]",
+Name,TEXT,"[""Aleksey Ostapenko"", ""Teodor Salparov"", ""Roman Bragin""]",
+Birth_Date,TEXT,"[""May 26, 1986"", ""August 16, 1982"", ""April 17, 1987""]",
+Height,REAL,"[207.0, 182.0, 187.0]",

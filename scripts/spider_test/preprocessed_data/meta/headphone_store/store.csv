@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Store_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Laurel Canyon"", ""Woodman"", ""Sepulveda""]",
+Neighborhood,TEXT,"[""Valley Village"", ""Valley Glen"", ""Van Nuys""]",
+Parking,TEXT,"[""None"", ""1,205 Spaces"", ""522 Spaces""]",
+Date_Opened,TEXT,"[""October 29, 2005"", ""June 30, 2012""]",

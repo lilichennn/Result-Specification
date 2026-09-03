@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+City_channel_ID,INT,"[1, 2, 5]",city_channel.ID
+tv_show_ID,INT,"[2, 3, 1]",tv_show.tv_show_ID
+Is_online,bool,"[""T"", ""F""]",
+Is_free,bool,"[""F"", ""T""]",

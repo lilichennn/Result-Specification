@@ -1,0 +1,160 @@
+{
+  "index": 296,
+  "db_id": "toxicology",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/toxicology/toxicology.sqlite",
+  "complexity": 2,
+  "tier": "easy",
+  "question": "Indicate the molecule id is belonging to the TR000_1_2 bond that has the first atom named TR000_1.",
+  "evidence": "",
+  "gold_sql": "SELECT T2.molecule_id, T2.bond_id, T1.atom_id FROM connected AS T1 INNER JOIN bond AS T2 ON T1.bond_id = T2.bond_id WHERE T1.atom_id = 'TR000_1' AND T2.bond_id = 'TR000_1_2'",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT b.molecule_id\nFROM bond b\nINNER JOIN connected c ON b.bond_id = c.bond_id\nWHERE b.bond_id = 'TR000_1_2' AND c.atom_id = 'TR000_1'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.249
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT b.molecule_id\nFROM connected c\nINNER JOIN bond b ON c.bond_id = b.bond_id\nWHERE c.bond_id = 'TR000_1_2' AND c.atom_id = 'TR000_1'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.425
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT b.molecule_id\nFROM bond AS b\nJOIN connected AS c ON b.bond_id = c.bond_id\nWHERE c.atom_id = 'TR000_1'\n  AND b.bond_id = 'TR000_1_2';",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.434
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    b.molecule_id\nFROM \n    bond AS b\nJOIN \n    connected AS c ON b.bond_id = c.bond_id\nJOIN \n    atom AS a ON c.atom_id = a.atom_id\nWHERE \n    b.bond_id = 'TR000_1_2'\n    AND c.atom_id = 'TR000_1';",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.367
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT b.molecule_id\nFROM bond b\nJOIN connected c ON b.bond_id = c.bond_id\nWHERE c.bond_id = 'TR000_1_2'\n  AND c.atom_id = 'TR000_1'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.359
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT molecule_id\nFROM bond\nWHERE bond_id = 'TR000_1_2'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.415
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT B.molecule_id \nFROM connected C \nJOIN bond B ON C.bond_id = B.bond_id \nWHERE C.atom_id = 'TR000_1' AND C.bond_id = 'TR000_1_2'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.303
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T1.molecule_id \nFROM bond AS T1 \nJOIN connected AS T2 ON T1.bond_id = T2.bond_id \nWHERE T1.bond_id = 'TR000_1_2' AND T2.atom_id = 'TR000_1'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.277
+      }
+    },
+    {
+      "candidate_num": 9,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T1.molecule_id \nFROM bond AS T1 \nINNER JOIN connected AS T2 ON T1.bond_id = T2.bond_id \nWHERE T1.bond_id = 'TR000_1_2' AND T2.atom_id = 'TR000_1'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.299
+      }
+    },
+    {
+      "candidate_num": 10,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT B.molecule_id \nFROM bond AS B\nJOIN connected AS C ON B.bond_id = C.bond_id\nWHERE B.bond_id = 'TR000_1_2' AND C.atom_id = 'TR000_1'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["molecule_id"],
+        "rows": [
+          ["TR000"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.355
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["molecule_id", "bond_id", "atom_id"],
+    "rows": [
+      ["TR000", "TR000_1_2", "TR000_1"]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["join"]
+}

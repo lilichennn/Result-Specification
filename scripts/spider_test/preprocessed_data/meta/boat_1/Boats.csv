@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+bid,INTEGER,"[101, 102, 103]",
+name,TEXT,"[""Legacy"", ""Melon"", ""Mars""]",
+color,TEXT,"[""red"", ""blue""]",

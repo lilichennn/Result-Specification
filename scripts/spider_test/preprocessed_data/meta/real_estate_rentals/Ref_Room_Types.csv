@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+room_type_code,VARCHAR(15),"[""2"", ""3"", ""4""]",
+room_type_description,VARCHAR(80),"[""living"", ""kitchen"", ""bath""]",

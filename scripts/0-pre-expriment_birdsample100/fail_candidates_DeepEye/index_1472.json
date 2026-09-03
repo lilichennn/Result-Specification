@@ -1,0 +1,145 @@
+{
+  "index": 1472,
+  "db_id": "debit_card_specializing",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/debit_card_specializing/debit_card_specializing.sqlite",
+  "complexity": 5,
+  "tier": "hard",
+  "question": "In 2012, who had the least consumption in LAM?",
+  "evidence": "Year 2012 can be presented as Between 201201 And 201212; The first 4 strings of the Date values in the yearmonth table can represent year.",
+  "gold_sql": "SELECT T1.CustomerID FROM customers AS T1 INNER JOIN yearmonth AS T2 ON T1.CustomerID = T2.CustomerID WHERE T1.Segment = 'LAM' AND SUBSTR(T2.Date, 1, 4) = '2012' GROUP BY T1.CustomerID ORDER BY SUM(T2.Consumption) ASC LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT c.\"CustomerID\"\nFROM \"yearmonth\" AS y\nINNER JOIN \"customers\" AS c ON y.\"CustomerID\" = c.\"CustomerID\"\nWHERE y.\"Date\" BETWEEN 201201 AND 201212\nAND c.\"Segment\" = 'LAM'\nORDER BY y.\"Consumption\" ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 34.117
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT c.CustomerID\nFROM customers c\nINNER JOIN yearmonth y ON c.CustomerID = y.CustomerID\nWHERE c.Segment = 'LAM' \nAND SUBSTR(y.Date, 1, 4) = '2012'\nORDER BY y.Consumption ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 21.429
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT c.\"CustomerID\"\nFROM \"yearmonth\" y\nINNER JOIN \"customers\" c ON y.\"CustomerID\" = c.\"CustomerID\"\nWHERE substr(y.\"Date\", 1, 4) = '2012' \nAND c.\"Segment\" = 'LAM'\nORDER BY y.\"Consumption\" ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 21.321
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT y.`CustomerID`\nFROM `yearmonth` y\nJOIN `customers` c ON y.`CustomerID` = c.`CustomerID`\nWHERE STRFTIME('%Y', y.`Date`) = '2012'\nAND c.`Segment` = 'LAM'\nORDER BY y.`Consumption` ASC\nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 59.747
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT y.CustomerID\nFROM yearmonth y\nJOIN customers c ON y.CustomerID = c.CustomerID\nWHERE substr(y.Date, 1, 4) = '2012'\nAND c.Segment = 'LAM'\nORDER BY y.Consumption ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 21.684
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    y.CustomerID,\n    y.Consumption\nFROM \n    yearmonth y\nJOIN \n    customers c ON y.CustomerID = c.CustomerID\nWHERE \n    SUBSTR(y.Date, 1, 4) = '2012'\n    AND c.Segment = 'LAM'\nORDER BY \n    y.Consumption ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID", "Consumption"],
+        "rows": [
+          [7653, -1651.79]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 21.569
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    y.CustomerID\nFROM \n    yearmonth y\n    INNER JOIN customers c ON y.CustomerID = c.CustomerID\nWHERE \n    SUBSTR(y.Date, 1, 4) = '2012'\n    AND c.Segment = 'LAM'\nORDER BY \n    y.Consumption ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 22.757
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    yearmonth.CustomerID\nFROM \n    yearmonth\nJOIN \n    customers ON yearmonth.CustomerID = customers.CustomerID\nWHERE \n    SUBSTR(yearmonth.Date, 1, 4) = '2012' \n    AND customers.Segment = 'LAM'\nORDER BY \n    yearmonth.Consumption ASC\nLIMIT 1;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 22.437
+      }
+    },
+    {
+      "candidate_num": 10,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T1.CustomerID \nFROM yearmonth AS T1 \nINNER JOIN customers AS T2 \nON T1.CustomerID = T2.CustomerID \nWHERE SUBSTR(T1.Date, 1, 4) = '2012' \nAND T2.Segment = 'LAM' \nORDER BY T1.Consumption ASC \nLIMIT 1",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["CustomerID"],
+        "rows": [
+          [7653]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 21.604
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["CustomerID"],
+    "rows": [
+      [47273]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["aggregate", "join", "limit", "order"]
+}

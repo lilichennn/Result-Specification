@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+Student_ID,INTEGER,"[5, 6, 11]",
+First_Name,VARCHAR(255),"[""Wilbert"", ""Abdul"", ""Ari""]",
+Middle_Name,VARCHAR(255),"[""Mia"", ""Era"", ""Jacinthe""]",
+Last_Name,VARCHAR(255),"[""Conroy"", ""Renner"", ""Kessler""]",
+Gender_MFU,CHAR(1),"[""F"", ""M"", ""U""]",
+Student_Address,VARCHAR(255),"[""2908 Breana Streets Suite 638"", ""009 Vandervort Ferry"", ""053 Candido Port Suite 568""]",
+Email_Adress,VARCHAR(255),"[""rjast@example.com"", ""green.jesus@example.net"", ""oschamberger@example.net""]",
+Cell_Mobile_Phone,VARCHAR(255),"[""620.962.4384x340"", ""03437137203"", ""207-458-7971""]",
+Home_Phone,VARCHAR(255),"[""017-084-5752x96504"", ""(054)515-8842x4046"", ""220.735.2352x52387""]",

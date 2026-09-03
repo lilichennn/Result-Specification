@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+process_id,INTEGER,[9],
+next_process_id,INTEGER,[9],
+process_name,VARCHAR(255),"[""process""]",
+process_description,VARCHAR(255),"[""normal""]",
+other_details,VARCHAR(255),[],

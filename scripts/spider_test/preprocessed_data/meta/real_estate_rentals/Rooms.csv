@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+property_id,INTEGER,"[14, 1, 15]",Properties.property_id
+room_number,VARCHAR(10),"[""2"", ""1"", ""7""]",
+room_type_code,VARCHAR(15),"[""8"", ""2"", ""4""]",Ref_Room_Types.room_type_code
+room_size,VARCHAR(20),"[""s"", ""l"", ""m""]",
+other_room_details,VARCHAR(255),"[""praesentium"", ""repudiandae"", ""enim""]",

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+user_id,INTEGER,"[11, 2, 8]",Users.user_id
+property_id,INTEGER,"[2, 7, 9]",Properties.property_id
+datestamp,DATETIME,"[""2014-07-18 19:21:51"", ""1992-07-19 19:34:27"", ""2005-11-02 07:47:38""]",

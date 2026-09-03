@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Code,INTEGER,"[1, 2, 3]",
+Location,VARCHAR(255),"[""Chicago"", ""New York"", ""Los Angeles""]",
+Capacity,INTEGER,"[3, 4, 7]",

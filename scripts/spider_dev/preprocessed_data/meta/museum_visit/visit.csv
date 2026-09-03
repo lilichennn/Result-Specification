@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Museum_ID,INT,"[1, 2, 4]",museum.Museum_ID
+visitor_ID,TEXT,"[""5"", ""3"", ""6""]",visitor.ID
+Num_of_Ticket,INT,"[20, 4, 10]",
+Total_spent,REAL,"[320.14, 89.98, 320.44]",

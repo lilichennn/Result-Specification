@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+cyclist_id,INT,"[1, 2, 3]",cyclist.id
+bike_id,INT,"[2, 3, 4]",bike.id
+purchase_year,INT,"[2011, 2015, 2017]",

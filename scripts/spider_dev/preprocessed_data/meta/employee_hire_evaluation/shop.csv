@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Shop_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""FC Haka"", ""HJK"", ""FC Honka""]",
+Location,TEXT,"[""Valkeakoski"", ""Helsinki"", ""Espoo""]",
+District,TEXT,"[""Tehtaan kenttä"", ""Finnair Stadium"", ""Tapiolan Urheilupuisto""]",
+Number_products,INT,"[3516, 10770, 6000]",
+Manager_name,TEXT,"[""Olli Huttunen"", ""Antti Muurinen"", ""Mika Lehkosuo""]",

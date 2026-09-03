@@ -1,0 +1,174 @@
+{
+  "index": 523,
+  "db_id": "card_games",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/card_games/card_games.sqlite",
+  "complexity": 5,
+  "tier": "hard",
+  "question": "What is the annual average number of sets that were released between 1/1/2012 to 12/31/2015? Indicate the common langugage of the card.",
+  "evidence": "AVG(id); releaseDate BETWEEN 1/1/2012 AND 12/31/2015; the common language refers to MAX(COUNT(language))",
+  "gold_sql": "SELECT (CAST(SUM(T1.id) AS REAL) / COUNT(T1.id)) / 4, T2.language FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.id = T2.id WHERE T1.releaseDate BETWEEN '2012-01-01' AND '2015-12-31' GROUP BY T1.releaseDate ORDER BY COUNT(T2.language) DESC LIMIT 1",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT AVG(yearly_counts.sets_count) AS average_sets_per_year,\n       (SELECT language \n        FROM set_translations st \n        JOIN sets s ON st.setCode = s.code \n        WHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n        GROUP BY language \n        ORDER BY COUNT(*) DESC \n        LIMIT 1) AS common_language\nFROM (\n    SELECT STRFTIME('%Y', releaseDate) AS year, \n           COUNT(*) AS sets_count\n    FROM sets \n    WHERE releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n    GROUP BY STRFTIME('%Y', releaseDate)\n) AS yearly_counts;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["average_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.863
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    AVG(yearly_count) AS annual_average_sets,\n    (SELECT language \n     FROM set_translations st \n     JOIN sets s ON st.setCode = s.code \n     WHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n     GROUP BY language \n     ORDER BY COUNT(*) DESC \n     LIMIT 1) AS common_language\nFROM (\n    SELECT \n        STRFTIME('%Y', releaseDate) AS year,\n        COUNT(*) AS yearly_count\n    FROM sets\n    WHERE releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n    GROUP BY STRFTIME('%Y', releaseDate)\n) yearly_stats",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["annual_average_sets", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.623
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT CAST(COUNT(s.id) AS FLOAT) / 4.0 AS annual_average, \n       (SELECT language \n        FROM set_translations st \n        JOIN sets s2 ON s2.code = st.setCode \n        WHERE s2.releaseDate BETWEEN '2012-01-01' AND '2015-12-31' \n        GROUP BY language \n        ORDER BY COUNT(*) DESC \n        LIMIT 1) AS common_language\nFROM sets s\nWHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["annual_average", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 1.084
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    CAST(COUNT(s.id) AS FLOAT) / 4 AS avg_sets_per_year,\n    (SELECT st.language \n     FROM sets s\n     JOIN set_translations st ON s.code = st.setCode\n     WHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n     GROUP BY st.language\n     ORDER BY COUNT(st.language) DESC\n     LIMIT 1) AS common_language\nFROM sets s\nWHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31';",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.635
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    AVG(set_count) AS avg_sets_per_year,\n    (SELECT language \n     FROM set_translations st \n     JOIN sets s ON st.setCode = s.code \n     WHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n     GROUP BY language \n     ORDER BY COUNT(*) DESC \n     LIMIT 1) AS common_language\nFROM (\n    SELECT \n        strftime('%Y', releaseDate) AS year,\n        COUNT(id) AS set_count\n    FROM sets\n    WHERE releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n    GROUP BY strftime('%Y', releaseDate)\n) yearly_counts;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.567
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    (COUNT(*) * 1.0 / COUNT(DISTINCT strftime('%Y', releaseDate))) AS avg_sets_per_year,\n    (SELECT language \n     FROM set_translations \n     GROUP BY language \n     ORDER BY COUNT(*) DESC \n     LIMIT 1) AS common_language\nFROM sets \nWHERE releaseDate >= '2012-01-01' AND releaseDate <= '2015-12-31'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.414
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "WITH yearly_counts AS (\n    SELECT \n        strftime('%Y', releaseDate) AS year,\n        COUNT(id) AS yearly_count\n    FROM sets\n    WHERE releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n    GROUP BY strftime('%Y', releaseDate)\n),\ncommon_lang AS (\n    SELECT language\n    FROM set_translations st\n    JOIN sets s ON st.setCode = s.code\n    WHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n    GROUP BY language\n    ORDER BY COUNT(*) DESC\n    LIMIT 1\n)\nSELECT \n    AVG(yearly_count) AS avg_sets_per_year,\n    (SELECT language FROM common_lang) AS common_language\nFROM yearly_counts;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.522
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T.language FROM (\n    SELECT ST.language, COUNT(S.id) AS lang_count\n    FROM sets S\n    INNER JOIN set_translations ST ON S.code = ST.setCode\n    WHERE S.releaseDate >= '2012-01-01' AND S.releaseDate <= '2015-12-31'\n    GROUP BY ST.language\n    ORDER BY lang_count DESC\n    LIMIT 1\n) AS T",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language"],
+        "rows": [
+          ["Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.496
+      }
+    },
+    {
+      "candidate_num": 9,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    CAST(COUNT(*) AS FLOAT) / 4 AS avg_sets_per_year,\n    (SELECT T2.language \n     FROM sets AS T1 \n     INNER JOIN set_translations AS T2 ON T1.code = T2.setCode \n     WHERE T1.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n     GROUP BY T2.language \n     ORDER BY COUNT(*) DESC \n     LIMIT 1) AS common_language\nFROM sets AS T1 \nINNER JOIN set_translations AS T2 ON T1.code = T2.setCode \nWHERE T1.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [82.5, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.665
+      }
+    },
+    {
+      "candidate_num": 10,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    CAST(COUNT(*) AS FLOAT) / 4.0 AS avg_sets_per_year,\n    (SELECT T2.language \n     FROM sets AS T1 \n     INNER JOIN set_translations AS T2 ON T1.code = T2.setCode \n     WHERE T1.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n     GROUP BY T2.language \n     ORDER BY COUNT(*) DESC \n     LIMIT 1) AS common_language\nFROM sets \nWHERE releaseDate BETWEEN '2012-01-01' AND '2015-12-31'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.509
+      }
+    },
+    {
+      "candidate_num": 11,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    CAST(COUNT(*) AS FLOAT) / COUNT(DISTINCT STRFTIME('%Y', s.releaseDate)) AS avg_sets_per_year,\n    (SELECT st.language \n     FROM sets s2 \n     JOIN set_translations st ON s2.code = st.setCode \n     WHERE s2.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'\n     GROUP BY st.language \n     ORDER BY COUNT(*) DESC \n     LIMIT 1) AS common_language\nFROM sets s\nWHERE s.releaseDate BETWEEN '2012-01-01' AND '2015-12-31'",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["avg_sets_per_year", "common_language"],
+        "rows": [
+          [26.0, "Spanish"]
+        ],
+        "row_count": 1,
+        "elapsed_ms": 0.51
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["(CAST(SUM(T1.id) AS REAL) / COUNT(T1.id)) / 4", "language"],
+    "rows": [
+      [66.95833333333333, "Japanese"]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["aggregate", "join", "limit", "order"]
+}

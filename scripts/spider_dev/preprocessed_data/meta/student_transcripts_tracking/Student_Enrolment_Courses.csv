@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+student_course_id,INTEGER,"[0, 1, 2]",
+course_id,INTEGER,"[6, 14, 11]",Courses.course_id
+student_enrolment_id,INTEGER,"[2, 8, 5]",Student_Enrolment.student_enrolment_id

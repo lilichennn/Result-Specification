@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Club_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Arsenal"", ""Aston Villa"", ""Blackburn Rovers""]",
+Manager,TEXT,"[""Arsène Wenger"", ""Martin O'Neill"", ""Sam Allardyce""]",
+Captain,TEXT,"[""Cesc Fàbregas"", ""Martin Laursen"", ""Ryan Nelsen""]",
+Manufacturer,TEXT,"[""Nike"", ""Umbro"", ""Reebok""]",
+Sponsor,TEXT,"[""Fly Emirates"", ""Acorns"", ""Crown Paints""]",

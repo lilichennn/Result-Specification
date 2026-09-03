@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+user_id,INTEGER,"[13, 1, 11]",Users.user_id
+search_seq,INTEGER,"[50636, 203, 5054]",
+search_datetime,DATETIME,"[""2014-04-28 20:21:54"", ""1981-11-21 22:02:12"", ""1972-04-13 22:48:13""]",
+search_string,VARCHAR(80),"[""optio"", ""assumenda"", ""consequatur""]",

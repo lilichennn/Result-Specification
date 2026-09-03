@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Driver_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Jeff Gordon"", ""Jimmie Johnson"", ""Tony Stewart""]",
+Citizenship,TEXT,"[""United States""]",
+Racing_Series,TEXT,"[""NASCAR"", ""IndyCar Series""]",

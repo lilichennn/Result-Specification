@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+meeting_id,INTEGER,"[1, 2, 3]",
+client_id,INTEGER,"[15, 3, 4]",Clients.client_id
+meeting_outcome,VARCHAR(10),"[""Report"", ""Summary"", ""Vote results""]",
+meeting_type,VARCHAR(10),"[""Team"", ""Group"", ""Company""]",
+billable_yn,VARCHAR(1),"[""0"", ""1""]",
+start_date_time,DATETIME,"[""2018-03-06 05:07:33"", ""2018-03-16 02:24:10"", ""2018-03-06 21:02:06""]",
+end_date_time,DATETIME,"[""2018-03-21 09:26:41"", ""2018-03-21 17:57:59"", ""2018-03-01 05:10:01""]",
+purpose_of_meeting,VARCHAR(255),"[""get proposal done"", ""vote for solutions"", ""weekly report""]",
+other_details,VARCHAR(255),"[""0"", ""absent staff"", """"]",

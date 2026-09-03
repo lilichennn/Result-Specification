@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Major_ID,INT,"[1, 2, 3]",
+Major_Name,TEXT,"[""Accounting"", ""Advertising"", ""Healthcare Management""]",
+Major_Code,INT,"[1054, 1053, 1154]",

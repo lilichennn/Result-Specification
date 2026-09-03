@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Employee_ID,TEXT,"[""1"", ""10"", ""2""]",employee.Employee_ID
+Year_awarded,TEXT,"[""2011"", ""2016"", ""2015""]",
+Bonus,REAL,"[3000.0, 3200.0, 2900.0]",

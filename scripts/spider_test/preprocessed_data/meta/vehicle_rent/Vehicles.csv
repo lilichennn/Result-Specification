@@ -1,0 +1,11 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+name,TEXT,"[""Chevrolet Spark EV"", ""Honda Fit EV"", ""Fiat 500e""]",
+Model_year,INT,"[2014, 2013, 2012]",
+Type_of_powertrain,TEXT,"[""Electric"", ""hybrid"", ""electric""]",
+Combined_fuel_economy_rate,INT,"[119, 118, 116]",
+City_fuel_economy_rate,INT,"[128, 132, 122]",
+Highway_fuel_economy_rate,INT,"[109, 105, 108]",
+Cost_per_25_miles,REAL,"[0.87, 0.9, 0.96]",
+Annual_fuel_cost,REAL,"[500.0, 550.0, 600.0]",
+Notes,TEXT,"[""See (1)"", ""best selling of the year"", ""See (2)""]",

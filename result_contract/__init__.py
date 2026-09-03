@@ -1,0 +1,1 @@
+"""Core Result Contract package."""

@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Spokesman_ID,INT,"[1, 3, 4]",spokesman.Spokesman_ID
+District_ID,INT,"[1, 5, 2]",district.District_ID
+Start_year,TEXT,"[""2003"", ""2004"", ""2005""]",

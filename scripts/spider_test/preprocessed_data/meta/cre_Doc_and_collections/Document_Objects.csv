@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Document_Object_ID,INTEGER,"[5, 8, 9]",
+Parent_Document_Object_ID,INTEGER,"[5, 9]",
+Owner,VARCHAR(255),"[""Ransom"", ""Marlin"", ""Braeden""]",
+Description,VARCHAR(255),"[""Ransom Collection"", ""Marlin Collection"", ""Braeden Collection""]",
+Other_Details,VARCHAR(255),[],

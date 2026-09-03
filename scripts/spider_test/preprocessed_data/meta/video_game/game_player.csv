@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Player_ID,INT,"[1976, 1981, 1986]",player.Player_ID
+Game_ID,INT,"[1, 2, 3]",game.Game_ID
+If_active,bool,"[""F"", ""T""]",

@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+property_type_code,VARCHAR(15),"[""2"", ""7"", ""8""]",
+property_type_description,VARCHAR(80),"[""flat"", ""house"", ""apt""]",

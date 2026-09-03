@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+uid,INTEGER,"[1, 2, 3]",
+Airline,TEXT,"[""United Airlines"", ""US Airways"", ""Delta Airlines""]",
+Abbreviation,TEXT,"[""UAL"", ""USAir"", ""Delta""]",
+Country,TEXT,"[""USA""]",

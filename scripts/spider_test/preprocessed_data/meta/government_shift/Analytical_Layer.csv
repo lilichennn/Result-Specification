@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Analytical_ID,INTEGER,"[11, 12, 17]",
+Customers_and_Services_ID,VARCHAR(40),"[""123"", ""203"", ""677""]",Customers_and_Services.Customers_and_Services_ID
+Pattern_Recognition,VARCHAR(255),"[""Normal"", ""Special""]",
+Analytical_Layer_Type_Code,CHAR(15),"[""Bottom"", ""Middle"", ""Top""]",

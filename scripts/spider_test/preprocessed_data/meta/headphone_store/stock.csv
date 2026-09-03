@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Store_ID,INT,"[1, 2, 3]",store.Store_ID
+Headphone_ID,INT,"[6, 2, 3]",headphone.Headphone_ID
+Quantity,INT,"[100, 170, 34]",

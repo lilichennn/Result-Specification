@@ -1,0 +1,111 @@
+{
+  "index": 429,
+  "db_id": "card_games",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/card_games/card_games.sqlite",
+  "complexity": 2,
+  "tier": "easy",
+  "question": "What is the language and expansion type of set number 206?",
+  "evidence": "set number 206 refers to id = 206",
+  "gold_sql": "SELECT T2.language, T1.type FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T2.id = 206",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT st.language, s.type \nFROM sets s \nINNER JOIN set_translations st ON s.code = st.setCode \nWHERE s.id = 206",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language", "type"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.556
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT st.language, s.type\nFROM sets s\nJOIN set_translations st ON s.code = st.setCode\nWHERE s.id = 206",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language", "type"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.291
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    st.language,\n    s.type\nFROM \n    sets s\n    JOIN set_translations st ON s.code = st.setCode\nWHERE \n    s.id = 206;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language", "type"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.294
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    st.language, \n    s.type \nFROM \n    cards c \nJOIN \n    sets s ON c.number = s.code \nJOIN \n    set_translations st ON s.code = st.setCode \nWHERE \n    c.id = 206",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language", "type"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.224
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    st.language, \n    s.type\nFROM \n    cards c\nJOIN \n    sets s ON c.number = s.id\nJOIN \n    set_translations st ON s.code = st.setCode\nWHERE \n    c.number = '206';",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language", "type"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 23.816
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T2.language, T1.type FROM sets AS T1 INNER JOIN set_translations AS T2 ON T1.code = T2.setCode WHERE T1.id = 206",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["language", "type"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.32
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T1.type, T2.language \nFROM sets AS T1 \nINNER JOIN set_translations AS T2 \nON T1.code = T2.setCode \nWHERE T1.id = 206",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["type", "language"],
+        "rows": [
+        ],
+        "row_count": 0,
+        "elapsed_ms": 0.226
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["language", "type"],
+    "rows": [
+      ["Japanese", "commander"]
+    ],
+    "row_count": 1
+  },
+  "sql_features": ["join"]
+}

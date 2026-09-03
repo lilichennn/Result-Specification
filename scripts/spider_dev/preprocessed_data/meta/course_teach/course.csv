@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+Course_ID,INT,"[1, 2, 3]",
+Staring_Date,TEXT,"[""5 May"", ""6 May"", ""7 May""]",
+Course,TEXT,"[""Language Arts"", ""Math"", ""Science""]",

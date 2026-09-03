@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+sculptureID,INTEGER,"[20, 21, 22]",
+title,TEXT,"[""Female Figure"", ""Arabesque"", ""Spanish Dance""]",
+year,INTEGER,"[1945, 1885, 1883]",
+medium,TEXT,"[""bronze""]",
+location,TEXT,"[""Gallery 226""]",
+sculptorID,INTEGER,"[222, 555]",Artists.artistID

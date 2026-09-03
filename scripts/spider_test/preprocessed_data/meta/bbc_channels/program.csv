@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Program_ID,INT,"[1, 2, 3]",
+Start_Year,REAL,"[2002.0, 2006.0, 2007.0]",
+Title,TEXT,"[""The Angry Brigade"", ""Dracula"", ""Another Country""]",
+Director_ID,INT,"[1, 2, 3]",director.Director_ID
+Channel_ID,INT,"[14, 10, 3]",channel.Channel_ID

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+document_id,INTEGER,"[0, 4, 7]",Documents.document_id
+process_id,INTEGER,[9],Business_Processes.process_id
+process_outcome_code,CHAR(15),"[""finish"", ""start"", ""working""]",Process_Outcomes.process_outcome_code
+process_status_code,CHAR(15),"[""ct"", ""pp""]",Process_Status.process_status_code

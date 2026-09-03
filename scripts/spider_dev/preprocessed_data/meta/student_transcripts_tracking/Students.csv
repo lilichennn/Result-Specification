@@ -1,0 +1,13 @@
+column_name,column_type,sample_value,ref_key
+student_id,INTEGER,"[1, 2, 3]",
+current_address_id,INTEGER,"[10, 12, 9]",Addresses.address_id
+permanent_address_id,INTEGER,"[15, 5, 11]",Addresses.address_id
+first_name,VARCHAR(80),"[""Timmothy"", ""Hobart"", ""Warren""]",
+middle_name,VARCHAR(40),"[""Anna"", ""Lorenz"", ""Violet""]",
+last_name,VARCHAR(40),"[""Ward"", ""Balistreri"", ""Gleichner""]",
+cell_mobile_number,VARCHAR(40),"[""(096)889-8954x524"", ""1-009-710-5151"", ""07661787471""]",
+email_address,VARCHAR(40),"[""erwin.zboncak@example.com"", ""swift.kolby@example.com"", ""johns.unique@example.net""]",
+ssn,VARCHAR(40),"[""965"", ""304246"", ""3""]",
+date_first_registered,DATETIME,"[""1971-02-05 07:28:23"", ""1976-10-26 02:33:06"", ""2007-08-29 23:25:41""]",
+date_left,DATETIME,"[""1971-05-17 19:28:49"", ""2013-10-05 17:41:28"", ""2007-03-31 09:53:19""]",
+other_student_details,VARCHAR(255),"[""quia"", ""autem"", ""facilis""]",

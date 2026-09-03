@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+id,INT,"[1, 2, 3]",
+name,TEXT,"[""Battle of Adrianople"", ""Battle of Serres"", ""Battle of Rusion""]",
+date,TEXT,"[""14 April 1205"", ""June 1205"", ""31 January 1206""]",
+bulgarian_commander,TEXT,"[""Kaloyan"", ""Unknown"", ""Boril""]",
+latin_commander,TEXT,"[""Baldwin I"", ""Unknown"", ""Thierry de Termond""]",
+result,TEXT,"[""Bulgarian victory"", ""Latin victory"", ""Two Year Truce""]",

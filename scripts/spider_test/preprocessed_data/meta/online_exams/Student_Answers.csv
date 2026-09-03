@@ -1,0 +1,9 @@
+column_name,column_type,sample_value,ref_key
+Student_Answer_ID,INTEGER,"[127, 149, 169]",
+Exam_ID,INTEGER,"[1, 2, 3]",Questions_in_Exams.Exam_ID
+Question_ID,INTEGER,"[321, 285, 585]",Questions_in_Exams.Question_ID
+Student_ID,INTEGER,"[52, 22, 40]",Students.Student_ID
+Date_of_Answer,DATETIME,"[""2017-08-13 06:03:03"", ""2017-07-27 06:34:17"", ""2017-07-30 12:07:59""]",
+Comments,VARCHAR(255),"[""Normal"", ""Absent""]",
+Satisfactory_YN,VARCHAR(1),"[""0"", ""1""]",
+Student_Answer_Text,VARCHAR(255),"[""D"", ""ABC"", ""BCD""]",

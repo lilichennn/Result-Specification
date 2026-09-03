@@ -1,0 +1,6 @@
+column_name,column_type,sample_value,ref_key
+Singer_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Liliane Bettencourt"", ""Christy Walton"", ""Alice Walton""]",
+Birth_Year,REAL,"[1944.0, 1948.0, 1949.0]",
+Net_Worth_Millions,REAL,"[30.0, 28.8, 26.3]",
+Citizenship,TEXT,"[""France"", ""United States"", ""Chile""]",

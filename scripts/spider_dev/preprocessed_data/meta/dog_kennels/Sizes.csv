@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+size_code,VARCHAR(10),"[""LGE"", ""MED"", ""SML""]",
+size_description,VARCHAR(80),"[""Small"", ""Medium"", ""Large""]",

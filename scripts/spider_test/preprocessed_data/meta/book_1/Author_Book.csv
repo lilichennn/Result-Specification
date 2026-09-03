@@ -1,0 +1,3 @@
+column_name,column_type,sample_value,ref_key
+ISBN,CHAR(15),"[""0482174555366"", ""0853477468299"", ""1235271378662""]",Book.ISBN
+Author,NUMBER,"[1, 2, 3]",Author.idAuthorA

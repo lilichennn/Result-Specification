@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+PetID,INTEGER,"[2001, 2002, 2003]",
+PetType,VARCHAR(20),"[""cat"", ""dog""]",
+pet_age,INTEGER,"[3, 2, 1]",
+weight,REAL,"[12.0, 13.4, 9.3]",

@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+paintingID,INTEGER,"[80, 81, 82]",
+title,TEXT,"[""A Sunday on La Grande Jatte"", ""Final Study for \""Bathers at Asnieres\"""", ""Tree Trunks (study for La Grande Jatte)""]",
+year,INTEGER,"[1884, 1883, 1930]",
+height_mm,INTEGER,"[2076, 159, 474]",
+width_mm,INTEGER,"[3080, 251, 615]",
+medium,TEXT,"[""oil"", ""conte crayon"", ""lithograph""]",
+mediumOn,TEXT,"[""canvas"", ""panel"", ""ivory laid paper""]",
+location,TEXT,"[""Gallery 240"", ""Rice Building Special Exhibition Galleries"", ""Gallery 241""]",
+painterID,INTEGER,"[111, 222, 333]",Artists.artistID

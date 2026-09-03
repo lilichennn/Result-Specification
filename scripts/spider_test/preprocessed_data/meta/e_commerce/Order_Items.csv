@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+order_item_id,INTEGER,"[1, 2, 3]",
+product_id,INTEGER,"[4, 3, 2]",Products.product_id
+order_id,INTEGER,"[8, 4, 7]",Orders.order_id
+order_item_status_code,VARCHAR(10),"[""Delivered"", ""Out of Stock""]",

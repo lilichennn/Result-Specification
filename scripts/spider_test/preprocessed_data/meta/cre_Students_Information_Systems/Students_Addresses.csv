@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+student_address_id,INTEGER,"[11, 15, 20]",
+address_id,INTEGER,"[94, 76, 97]",Addresses.address_id
+address_type_code,CHAR(10),"[""HM"", ""CO""]",Ref_Address_Types.address_type_code
+student_id,INTEGER,"[984, 415, 777]",Students.student_id
+date_from,DATETIME(3),"[""2011-06-29 09:45:39.000"", ""2011-10-04 09:58:41.000"", ""2015-02-01 00:20:42.000""]",
+date_to,DATETIME(3),"[""2018-03-22 07:50:48.000"", ""2018-03-14 18:32:37.000"", ""2018-03-04 09:58:38.000""]",

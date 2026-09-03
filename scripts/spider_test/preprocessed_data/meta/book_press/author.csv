@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Author_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Derrick Kosinski"", ""Evelyn Smith"", ""Johnny Devenanzio""]",
+Age,INT,"[45, 32, 54]",
+Gender,TEXT,"[""Male"", ""Female""]",

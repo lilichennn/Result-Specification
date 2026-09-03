@@ -1,0 +1,10 @@
+column_name,column_type,sample_value,ref_key
+address_id,INTEGER,"[1, 2, 3]",
+line_1_number_building,VARCHAR(80),"[""6207 Marks Trafficway"", ""518 Dean Village"", ""88324 Medhurst Parkway Suite 832""]",
+line_2_number_street,VARCHAR(80),"[""Apt. 516"", ""Apt. 261"", ""Suite 435""]",
+line_3_area_locality,VARCHAR(80),[],
+town_city,VARCHAR(80),"[""Port Miafurt"", ""New Juliana"", ""Jaquanmouth""]",
+zip_postcode,VARCHAR(20),"[""349"", ""979"", ""937""]",
+county_state_province,VARCHAR(80),"[""Utah"", ""Maryland"", ""RhodeIsland""]",
+country,VARCHAR(50),"[""United States Minor Outlying Islands"", ""South Georgia and the South Sandwich Islands"", ""Hungary""]",
+other_address_details,VARCHAR(255),[],

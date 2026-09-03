@@ -1,0 +1,14 @@
+column_name,column_type,sample_value,ref_key
+dog_id,INTEGER,"[1, 2, 3]",
+owner_id,INTEGER,"[3, 11, 1]",Owners.owner_id; Owners.owner_id
+abandoned_yn,VARCHAR(1),"[""1"", ""0""]",
+breed_code,VARCHAR(10),"[""ESK"", ""BUL"", ""HUS""]",Breeds.breed_code
+size_code,VARCHAR(10),"[""LGE"", ""MED"", ""SML""]",Sizes.size_code
+name,VARCHAR(50),"[""Kacey"", ""Hipolito"", ""Mavis""]",
+age,VARCHAR(20),"[""6"", ""9"", ""8""]",
+date_of_birth,DATETIME,"[""2012-01-27 05:11:53"", ""2013-02-13 05:15:21"", ""2008-05-19 15:54:49""]",
+gender,VARCHAR(1),"[""1"", ""0""]",
+weight,VARCHAR(20),"[""7.57"", ""1.72"", ""8.04""]",
+date_arrived,DATETIME,"[""2017-09-08 20:10:13"", ""2017-12-22 05:02:02"", ""2017-06-25 10:14:05""]",
+date_adopted,DATETIME,"[""2018-03-06 16:32:11"", ""2018-03-25 08:12:51"", ""2018-03-07 21:45:43""]",
+date_departed,DATETIME,"[""2018-03-25 06:58:44"", ""2018-03-25 02:11:32"", ""2018-03-25 10:25:46""]",

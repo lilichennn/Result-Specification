@@ -1,0 +1,4 @@
+column_name,column_type,sample_value,ref_key
+CountryId,INTEGER,"[1, 2, 3]",
+CountryName,TEXT,"[""usa"", ""germany"", ""france""]",
+Continent,INTEGER,"[1, 2, 3]",continents.ContId

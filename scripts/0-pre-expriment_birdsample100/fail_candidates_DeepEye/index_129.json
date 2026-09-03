@@ -1,0 +1,282 @@
+{
+  "index": 129,
+  "db_id": "financial",
+  "db_path": "/Users/ync/work/research/2027ICASSP/BIRD1.0/data/dev_original/dev_20240627/dev_databases/financial/financial.sqlite",
+  "complexity": 6,
+  "tier": "hard",
+  "question": "Which are the top ten withdrawals (non-credit card) by district names for the month of January 1996?",
+  "evidence": "Non-credit card withdraws refers to type = 'VYDAJ'; January 1996 can be found by date LIKE '1996-01%' in the database; A2 means district names",
+  "gold_sql": "SELECT DISTINCT T1.A2 FROM district AS T1 INNER JOIN account AS T2 ON T1.district_id = T2.district_id INNER JOIN trans AS T3 ON T2.account_id = T3.account_id WHERE T3.type = 'VYDAJ' AND T3.date LIKE '1996-01%' ORDER BY A2 ASC LIMIT 10",
+  "fail_candidates": [
+    {
+      "candidate_num": 1,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT d.\"A2\"\nFROM \"trans\" t\nJOIN \"account\" a ON t.\"account_id\" = a.\"account_id\"\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nWHERE t.\"type\" = 'VYDAJ' \nAND t.\"operation\" != 'VYBER KARTOU'\nAND t.\"date\" LIKE '1996-01%'\nGROUP BY d.\"A2\"\nORDER BY COUNT(*) DESC\nLIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2"],
+        "rows": [
+          ["Hl.m. Praha"],
+          ["Karvina"],
+          ["Ostrava - mesto"],
+          ["Brno - mesto"],
+          ["Zlin"],
+          ["Olomouc"],
+          ["Frydek - Mistek"],
+          ["Prerov"],
+          ["Opava"],
+          ["Pardubice"]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 59.138
+      }
+    },
+    {
+      "candidate_num": 2,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT district.A2\nFROM trans\nJOIN account ON trans.account_id = account.account_id\nJOIN district ON account.district_id = district.district_id\nWHERE trans.type = 'VYDAJ' \nAND trans.operation != 'VYBER KARTOU'\nAND trans.date LIKE '1996-01%'\nGROUP BY district.A2\nORDER BY SUM(trans.amount) DESC\nLIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2"],
+        "rows": [
+          ["Hl.m. Praha"],
+          ["Karvina"],
+          ["Ostrava - mesto"],
+          ["Zlin"],
+          ["Olomouc"],
+          ["Frydek - Mistek"],
+          ["Brno - mesto"],
+          ["Usti nad Orlici"],
+          ["Rychnov nad Kneznou"],
+          ["Brno - venkov"]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 62.235
+      }
+    },
+    {
+      "candidate_num": 3,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT district.A2, SUM(trans.amount) AS total_withdrawal\nFROM trans\nJOIN account ON trans.account_id = account.account_id\nJOIN district ON account.district_id = district.district_id\nWHERE trans.type = 'VYDAJ' \nAND trans.operation != 'VYBER KARTOU'\nAND trans.date LIKE '1996-01%'\nGROUP BY district.A2\nORDER BY SUM(trans.amount) DESC\nLIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2", "total_withdrawal"],
+        "rows": [
+          ["Hl.m. Praha", 6675778],
+          ["Karvina", 1741290],
+          ["Ostrava - mesto", 1700983],
+          ["Zlin", 1619593],
+          ["Olomouc", 1429353],
+          ["Frydek - Mistek", 1097222],
+          ["Brno - mesto", 992780],
+          ["Usti nad Orlici", 840080],
+          ["Rychnov nad Kneznou", 786415],
+          ["Brno - venkov", 768502]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 61.15
+      }
+    },
+    {
+      "candidate_num": 4,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT d.\"A2\", SUM(t.\"amount\") AS total_amount\nFROM \"trans\" t\nJOIN \"account\" a ON t.\"account_id\" = a.\"account_id\"\nJOIN \"district\" d ON a.\"district_id\" = d.\"district_id\"\nWHERE t.\"type\" = 'VYDAJ' \nAND t.\"operation\" != 'VYBER KARTOU'\nAND t.\"date\" LIKE '1996-01%'\nGROUP BY d.\"A2\"\nORDER BY total_amount DESC\nLIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2", "total_amount"],
+        "rows": [
+          ["Hl.m. Praha", 6675778],
+          ["Karvina", 1741290],
+          ["Ostrava - mesto", 1700983],
+          ["Zlin", 1619593],
+          ["Olomouc", 1429353],
+          ["Frydek - Mistek", 1097222],
+          ["Brno - mesto", 992780],
+          ["Usti nad Orlici", 840080],
+          ["Rychnov nad Kneznou", 786415],
+          ["Brno - venkov", 768502]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 63.352
+      }
+    },
+    {
+      "candidate_num": 5,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    district.A2 AS district_name,\n    COUNT(*) AS withdrawal_count\nFROM \n    trans\n    JOIN account ON trans.account_id = account.account_id\n    JOIN district ON account.district_id = district.district_id\nWHERE \n    trans.type = 'VYDAJ'\n    AND trans.date LIKE '1996-01%'\n    AND trans.operation != 'VYBER KARTOU'\nGROUP BY \n    district.A2\nORDER BY \n    withdrawal_count DESC\nLIMIT \n    10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["district_name", "withdrawal_count"],
+        "rows": [
+          ["Hl.m. Praha", 1938],
+          ["Karvina", 524],
+          ["Ostrava - mesto", 488],
+          ["Brno - mesto", 388],
+          ["Zlin", 370],
+          ["Olomouc", 357],
+          ["Frydek - Mistek", 269],
+          ["Prerov", 236],
+          ["Opava", 235],
+          ["Pardubice", 225]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 52.888
+      }
+    },
+    {
+      "candidate_num": 6,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    district.A2 AS district_name,\n    SUM(trans.amount) AS total_withdrawal\nFROM trans\nJOIN account ON trans.account_id = account.account_id\nJOIN district ON account.district_id = district.district_id\nWHERE \n    trans.type = 'VYDAJ'\n    AND trans.operation != 'VYBER KARTOU'\n    AND trans.date LIKE '1996-01%'\nGROUP BY district.A2\nORDER BY total_withdrawal DESC\nLIMIT 10;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["district_name", "total_withdrawal"],
+        "rows": [
+          ["Hl.m. Praha", 6675778],
+          ["Karvina", 1741290],
+          ["Ostrava - mesto", 1700983],
+          ["Zlin", 1619593],
+          ["Olomouc", 1429353],
+          ["Frydek - Mistek", 1097222],
+          ["Brno - mesto", 992780],
+          ["Usti nad Orlici", 840080],
+          ["Rychnov nad Kneznou", 786415],
+          ["Brno - venkov", 768502]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 62.756
+      }
+    },
+    {
+      "candidate_num": 7,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    d.A2 AS district_name,\n    SUM(t.amount) AS total_withdrawal_amount\nFROM trans t\nJOIN account a ON t.account_id = a.account_id\nJOIN district d ON a.district_id = d.district_id\nWHERE \n    t.type = 'VYDAJ'\n    AND t.operation != 'VYBER KARTOU'\n    AND t.date LIKE '1996-01%'\nGROUP BY d.A2\nORDER BY total_withdrawal_amount DESC\nLIMIT 10;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["district_name", "total_withdrawal_amount"],
+        "rows": [
+          ["Hl.m. Praha", 6675778],
+          ["Karvina", 1741290],
+          ["Ostrava - mesto", 1700983],
+          ["Zlin", 1619593],
+          ["Olomouc", 1429353],
+          ["Frydek - Mistek", 1097222],
+          ["Brno - mesto", 992780],
+          ["Usti nad Orlici", 840080],
+          ["Rychnov nad Kneznou", 786415],
+          ["Brno - venkov", 768502]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 61.95
+      }
+    },
+    {
+      "candidate_num": 8,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT \n    district.A2 AS district_name,\n    COUNT(*) AS withdrawal_count\nFROM trans\nJOIN account ON trans.account_id = account.account_id\nJOIN district ON account.district_id = district.district_id\nWHERE \n    trans.type = 'VYDAJ'\n    AND trans.operation != 'VYBER KARTOU'\n    AND trans.date LIKE '1996-01%'\nGROUP BY district.A2\nORDER BY withdrawal_count DESC\nLIMIT 10;",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["district_name", "withdrawal_count"],
+        "rows": [
+          ["Hl.m. Praha", 1938],
+          ["Karvina", 524],
+          ["Ostrava - mesto", 488],
+          ["Brno - mesto", 388],
+          ["Zlin", 370],
+          ["Olomouc", 357],
+          ["Frydek - Mistek", 269],
+          ["Prerov", 236],
+          ["Opava", 235],
+          ["Pardubice", 225]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 63.008
+      }
+    },
+    {
+      "candidate_num": 9,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T3.A2 \nFROM trans AS T1 \nINNER JOIN account AS T2 ON T1.account_id = T2.account_id \nINNER JOIN district AS T3 ON T2.district_id = T3.district_id \nWHERE T1.type = 'VYDAJ' \nAND T1.date LIKE '1996-01%' \nAND T1.operation != 'VYBER KARTOU' \nGROUP BY T3.A2 \nORDER BY COUNT(*) DESC \nLIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2"],
+        "rows": [
+          ["Hl.m. Praha"],
+          ["Karvina"],
+          ["Ostrava - mesto"],
+          ["Brno - mesto"],
+          ["Zlin"],
+          ["Olomouc"],
+          ["Frydek - Mistek"],
+          ["Prerov"],
+          ["Opava"],
+          ["Pardubice"]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 53.543
+      }
+    },
+    {
+      "candidate_num": 10,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T3.A2 FROM trans AS T1 JOIN account AS T2 ON T1.account_id = T2.account_id JOIN district AS T3 ON T2.district_id = T3.district_id WHERE T1.type = 'VYDAJ' AND T1.date LIKE '1996-01%' GROUP BY T3.A2 ORDER BY COUNT(*) DESC LIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2"],
+        "rows": [
+          ["Hl.m. Praha"],
+          ["Karvina"],
+          ["Ostrava - mesto"],
+          ["Olomouc"],
+          ["Brno - mesto"],
+          ["Zlin"],
+          ["Frydek - Mistek"],
+          ["Prerov"],
+          ["Opava"],
+          ["Pardubice"]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 54.088
+      }
+    },
+    {
+      "candidate_num": 11,
+      "failure_type": "gold_not_contained",
+      "candidate_sql": "SELECT T3.A2 \nFROM trans AS T1 \nJOIN account AS T2 ON T1.account_id = T2.account_id \nJOIN district AS T3 ON T2.district_id = T3.district_id \nWHERE T1.type = 'VYDAJ' \nAND T1.operation != 'VYBER KARTOU' \nAND T1.date LIKE '1996-01%' \nGROUP BY T3.A2 \nORDER BY COUNT(*) DESC \nLIMIT 10",
+      "candidate_table": {
+        "status": "succeeded",
+        "columns": ["A2"],
+        "rows": [
+          ["Hl.m. Praha"],
+          ["Karvina"],
+          ["Ostrava - mesto"],
+          ["Brno - mesto"],
+          ["Zlin"],
+          ["Olomouc"],
+          ["Frydek - Mistek"],
+          ["Prerov"],
+          ["Opava"],
+          ["Pardubice"]
+        ],
+        "row_count": 10,
+        "elapsed_ms": 68.684
+      }
+    }
+  ],
+  "gold_table": {
+    "columns": ["A2"],
+    "rows": [
+      ["Benesov"],
+      ["Beroun"],
+      ["Blansko"],
+      ["Breclav"],
+      ["Brno - mesto"],
+      ["Brno - venkov"],
+      ["Bruntal"],
+      ["Ceska Lipa"],
+      ["Ceske Budejovice"],
+      ["Cesky Krumlov"]
+    ],
+    "row_count": 10
+  },
+  "sql_features": ["distinct", "join", "limit", "order"]
+}

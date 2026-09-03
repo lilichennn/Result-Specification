@@ -1,0 +1,7 @@
+column_name,column_type,sample_value,ref_key
+Customer_Interaction_ID,INTEGER,"[13, 21, 71]",
+Channel_ID,INTEGER,"[16, 78, 45]",Channels.Channel_ID
+Customer_ID,INTEGER,"[98, 12, 295]",Customers.Customer_ID
+Service_ID,INTEGER,"[828, 606, 430]",Services.Service_ID
+Status_Code,CHAR(15),"[""Close"", ""Open"", ""Stuck""]",
+Services_and_Channels_Details,VARCHAR(255),"[""bad"", ""good""]",

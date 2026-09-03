@@ -1,0 +1,8 @@
+column_name,column_type,sample_value,ref_key
+detention_id,INTEGER,"[133, 141, 211]",
+detention_type_code,CHAR(10),"[""Lunch"", ""After School"", ""Break""]",Ref_Detention_Type.detention_type_code
+student_id,INTEGER,"[361, 811, 762]",Students.student_id
+datetime_detention_start,DATETIME(3),"[""2012-03-18 09:49:33.000"", ""2012-06-07 15:01:05.000"", ""2011-04-24 17:23:32.000""]",
+datetime_detention_end,DATETIME(3),"[""2011-09-15 05:58:59.000"", ""2009-05-23 17:33:31.000"", ""2013-09-06 15:49:53.000""]",
+detention_summary,VARCHAR(255),[],
+other_details,VARCHAR(255),[],

@@ -1,0 +1,5 @@
+column_name,column_type,sample_value,ref_key
+Museum_ID,INT,"[1, 2, 3]",
+Name,TEXT,"[""Plaza Museum"", ""Capital Plaza Museum"", ""Jefferson Development Museum""]",
+Num_of_Staff,INT,"[62, 25, 18]",
+Open_Year,TEXT,"[""2000"", ""2012"", ""2010""]",
