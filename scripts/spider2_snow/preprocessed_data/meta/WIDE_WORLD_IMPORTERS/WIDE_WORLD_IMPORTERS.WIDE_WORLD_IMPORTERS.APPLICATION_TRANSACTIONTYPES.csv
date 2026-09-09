@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-TransactionTypeName,TEXT,,"[""Customer Refund"", ""Supplier Invoice"", ""Stock Transfer""]",
-TransactionTypeID,NUMBER,,"[4, 5, 9]",
-ValidFrom,NUMBER,,"[1356998400000000, 1451664300000000]",
-LastEditedBy,NUMBER,,"[1, 9]",
-ValidTo,NUMBER,,[253402300799999999],

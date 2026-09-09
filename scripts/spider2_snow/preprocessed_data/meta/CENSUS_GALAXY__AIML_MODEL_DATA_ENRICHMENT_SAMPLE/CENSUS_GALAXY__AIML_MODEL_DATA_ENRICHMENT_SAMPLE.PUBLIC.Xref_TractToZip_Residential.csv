@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-FromStateCountyTractID,TEXT,"A unique identifier compound key that uses StateFIPS, CountyFIPS, and Tract for a specific within a geographic area. This field (and table) is for rolling metrics and values from the Census block group or Tract level to Zip Code.","[""36085009701"", ""36047055400"", ""36061007100""]",
-ToZipCode,TEXT,"The U.S. Postal Service Zip Code that relates to the StateCountyTractID based on the ratio of residents in that geographical region. Many Tracts can overlap parts of Zip Codes, and many Zip Codes can overlap parts of Tracts.","[""10310"", ""11229"", ""10121""]",
-ResidentialMappingRatioTZ,NUMBER,"The ratios of residents in each Tract that are made up by that connected Zip Code. “TZ” as the suffix designates the direction of the data , Tract to Zip Code (usually smaller polygons into larger ones).","[""1.000000000000000"", ""0.949859154929578"", ""0E-15""]",

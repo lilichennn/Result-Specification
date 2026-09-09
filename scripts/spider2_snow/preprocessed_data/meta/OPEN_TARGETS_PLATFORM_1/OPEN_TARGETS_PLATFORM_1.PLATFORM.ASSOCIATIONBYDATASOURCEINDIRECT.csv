@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-datatypeId,TEXT,,"[""genetic_association""]",
-diseaseId,TEXT,,"[""OTAR_0000018"", ""MONDO_0019755"", ""EFO_0000508""]",
-evidenceCount,NUMBER,,"[61, 128, 19]",
-targetId,TEXT,,"[""ENSG00000138835"", ""ENSG00000100416"", ""ENSG00000176922""]",
-score,FLOAT,,"[0.316739123497058, 0.9163440231872357, 0.30895972490317547]",
-datasourceId,TEXT,,"[""eva""]",

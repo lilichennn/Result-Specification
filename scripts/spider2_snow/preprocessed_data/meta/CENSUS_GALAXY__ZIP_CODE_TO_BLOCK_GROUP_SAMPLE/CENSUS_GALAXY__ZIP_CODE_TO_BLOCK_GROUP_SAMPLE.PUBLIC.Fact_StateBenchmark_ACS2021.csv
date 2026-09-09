@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-TotalStatePopulation,NUMBER,"Total State or territory population using MetricID = “B01003_001E”, known as “Total Population” in each Census hierarchy. This is to be used as a GroupBy or Aggregate column.",[20114745],
-MetricID,TEXT,A unique identifier for a specific metric or measurement within the American Community Survey or census data.,"[""B25075_011E"", ""B25063_023E"", ""B19051_001E""]",
-StateBenchmarkValue,FLOAT,"The Int value for the MetricID and StateAbbrev relationship. This could be aggregates or estimates of people, pets, household, etc. Refer to the Dim_CensusMetrics table for the meaning of each value. All values have been rolled up correctly according to the Census hierarchy in the Dim_CensusGeography table.","[61829.0, 366764.0, 7530150.0]",
-TotalUSPopulation,NUMBER,"Total United States population using MetricID = “B01003_001E”, known as “Total Population” in each Census hierarchy. This is to be used as a GroupBy or Aggregate column.",[333036755],
-StateFIPS,TEXT,The Federal Information Processing Standard (FIPS) code that represents the state where the block group is located.,"[""36""]",
-StateAbbrev,TEXT,The two-letter state abbreviation for each U.S. State and territory.,"[""NY""]",

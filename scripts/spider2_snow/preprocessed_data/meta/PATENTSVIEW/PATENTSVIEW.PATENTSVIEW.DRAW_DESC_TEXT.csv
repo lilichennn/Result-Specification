@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sequence,TEXT,,"[""10""]",
-patent_id,TEXT,,"[""8907906"", ""5940440"", ""10352222""]",
-text,TEXT,,"[""FIG. 1J  includes a tenth view of an embodiment of a multi-screen user device;"", ""FIG. 9 is an illustrative signal point plot illustrating the circular contour of the CMA blind equalization method;"", ""FIG. 6  is a flowchart illustrating an example of the slow regeneration control; and""]",
-uuid,TEXT,,"[""bnl69b122zl4lj951qjrsulr0"", ""2f5gqx6knnoz8hzfd535jwr6n"", ""drvo0nvdyzopac1tybiwejqa2""]",

@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Value added"", ""Female employees"", ""Employees""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""value_added_2320_refined_petroleum_products_indstat_2024_isic_revision_3_in_usd"", ""female_employees_2021_veneer_sheets_plywood_particle_board_etc_indstat_2024_isic_revision_3"", ""employees_3110_electric_motors_generators_and_transformers_indstat_2024_isic_revision_3""]",
-FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""USD"", ""Count""]",
-ISIC_ECONOMIC_ACTIVITY,TEXT,"An economic activity category within the International Standard Industrial Classification (ISIC) of All Economic Activites system, which was developed by the United Nations.","[""Refined petroleum products"", ""Veneer sheets, plywood, particle board, etc."", ""Electric motors, generators and transformers""]",
-INDSTAT_VERSION,TEXT,INDSTAT database version; INDSTAT releases new versions of INDSTAT 2 with ISIC Revision 3 on an annual basis.,"[""INDSTAT 2024, ISIC Revision 3""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Value added: 2320 Refined petroleum products (INDSTAT 2024, ISIC Revision 3) (in USD)"", ""Female employees: 2021 Veneer sheets, plywood, particle board, etc. (INDSTAT 2024, ISIC Revision 3)"", ""Employees: 3110 Electric motors, generators and transformers (INDSTAT 2024, ISIC Revision 3)""]",

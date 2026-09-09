@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-RELATED_GEO_NAME,TEXT,"Name of the place related to GEO_NAME. This is a place that overlaps or is contained within the primary geo (e.g., city within a state)","[""Northern America"", ""United States"", ""Block Group 5, Census Tract 3703, Middlesex County, Massachusetts""]",
-RELATED_GEO_ID,TEXT,A unique identifier for the related place joinable to the GEOGRAPHY_INDEX table,"[""countrySubRegion/021"", ""country/USA"", ""censusBlockGroup/250173703005""]",
-RELATED_LEVEL,TEXT,"Geographic level or hierarchy of the related place (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""CountrySubRegion"", ""Country"", ""CensusBlockGroup""]",
-RELATIONSHIP_TYPE,TEXT,"Relationship between the two places. Contains means the RELATED_GEO_ID is fully contained within the GEO_ID (e.g., relationship of state to a city) while Overlaps indicates the GEO_ID is a subpart of the RELATED_GEO_ID (e.g., relationship of city to a state)","[""Overlaps"", ""Contains""]",
-GEO_ID,TEXT,A unique identifier for a place joinable to the GEOGRAPHY_INDEX table,"[""statcanId/S051235300541"", ""zip/47878"", ""zip/48139""]",
-GEO_NAME,TEXT,Full name of the place,"[""35300541"", ""47878"", ""48139""]",
-LEVEL,TEXT,"Geographic level or hierarchy (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""DisseminationArea"", ""CensusZipCodeTabulationArea"", ""State""]",

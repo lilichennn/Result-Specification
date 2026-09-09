@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-targetId,TEXT,,"[""ENSG00000138449"", ""ENSG00000105369"", ""ENSG00000198804""]",
-score,FLOAT,,"[0.9257370696887254, 0.22489716308970872, 0.8926519465347365]",
-evidenceCount,NUMBER,,[256],
-datatypeId,TEXT,,"[""genetic_association"", ""literature"", ""animal_model""]",
-diseaseId,TEXT,,"[""MONDO_0006507"", ""EFO_0007318"", ""MONDO_0024458""]",

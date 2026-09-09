@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Id,NUMBER,,"[3147639, 3499202, 3676963]",
-KernelVersionId,NUMBER,,[83046050],
-UserId,NUMBER,,"[6437951, 7611249, 5890725]",
-VoteDate,DATE,,"[""2021-12-23"", ""2022-04-06"", ""2022-06-03""]",

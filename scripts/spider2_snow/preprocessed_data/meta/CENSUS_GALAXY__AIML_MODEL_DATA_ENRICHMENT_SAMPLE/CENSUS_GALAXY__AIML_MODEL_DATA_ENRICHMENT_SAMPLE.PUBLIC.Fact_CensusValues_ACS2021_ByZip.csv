@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CensusValueByZip,NUMBER,"The Int value for the MetricID and ZipCode relationship. This could be aggregates or estimates of people, pets, household, etc. Refer to the Dim_CensusMetrics table for the meaning of each value. All values have been rolled up correctly according to the ratios in the Xref_TractToZip_Residential table.","[""51.04"", ""47.06"", ""57.18""]",
-MetricID,TEXT,A unique identifier for a specific metric or measurement within the American Community Survey or census data.,"[""B25063_019E"", ""B08303_011E"", ""B25063_014E""]",
-ZipCode,TEXT,A unique Zip Code for a geographic area.,"[""12220"", ""14739"", ""14702""]",

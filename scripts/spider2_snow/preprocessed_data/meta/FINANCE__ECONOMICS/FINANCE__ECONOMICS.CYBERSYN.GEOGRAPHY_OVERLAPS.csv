@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-GEO_ID,TEXT,GEO_ID from GEOGRAPHY_INDEX table,"[""geoId/01001020900"", ""geoId/01003010100"", ""geoId/01003010701""]",
-OVERLAPS_WITH,TEXT,GEO_ID from GEOGRAPHY_INDEX table,"[""zip/36022"", ""zip/36480"", ""zip/36527""]",

@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
-GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""geoId/24"", ""geoId/40"", ""geoId/42""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""CW"", ""WSEIC"", ""CE""]",
-DATE,DATE,Date associated with the value.,"[""2007-04-28"", ""2016-04-09"", ""1992-11-21""]",
-VALUE,FLOAT,Value reported for the variable.,"[30739.0, 0.0, 1182846.0]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Adjusted Continued Weeks Claimed for State Unemployment Insurance"", ""Short Time Compensation (Workshare) Equivalent Initial Claims"", ""Covered Employment""]",

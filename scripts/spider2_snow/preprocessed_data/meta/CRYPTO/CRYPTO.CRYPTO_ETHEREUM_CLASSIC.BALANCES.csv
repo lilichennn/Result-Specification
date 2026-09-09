@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-eth_balance,NUMBER,Ether balance,"[""0E-9""]",
-address,TEXT,Address,"[""0xe485aee166761631ee5f0d0ce27c6f69dd7a3c5d"", ""0x2f3b226c145870235b502117358ddc09652cdbbd"", ""0xd6908376abeefc94d2eb3f698bab3e7d69e4a109""]",

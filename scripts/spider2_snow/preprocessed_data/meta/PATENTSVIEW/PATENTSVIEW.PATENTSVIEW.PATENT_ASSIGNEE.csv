@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-assignee_id,TEXT,,"[""00241bc8-9510-47c5-9ecd-62fe4ab7906c"", ""00d8ce38-147e-4f7d-81fb-5650b64bb0ad"", ""017cf470-956c-479f-8a37-13c7774a54cb""]",
-patent_id,TEXT,,"[""11179164"", ""11139018"", ""11165899""]",
-location_id,TEXT,,[],

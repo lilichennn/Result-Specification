@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SUBDIVISION,TEXT,"State, province, or other underlying geography that is specific to the holiday",[],
-HOLIDAY_NAME,TEXT,Name of the Holiday,"[""Heiliger Abend"", ""Berchtoldstag"", ""Ostersonntag""]",
-ISO_ALPHA2,TEXT,2 letter country code from International Organization for Standardization,"[""LI""]",
-IS_FINANCIAL,BOOLEAN,Boolean denoting a stock market closure for the given region,"[false, true]",
-DATE,DATE,Date associated with the event,"[""1970-12-24"", ""1971-01-02"", ""1971-04-11""]",
-GEO_ID,TEXT,GEO_ID from GEOGRAPHY_INDEX table,"[""country/LIE""]",

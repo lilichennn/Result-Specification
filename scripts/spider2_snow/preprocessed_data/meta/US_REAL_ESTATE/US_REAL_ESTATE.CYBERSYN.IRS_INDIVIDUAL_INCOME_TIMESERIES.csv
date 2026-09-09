@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SUPPRESSED,BOOLEAN,Boolean indicating whether the value has been suppressed in the underlying data for privacy purposes. Suppressed values appear as NULL,"[false, true]",
-DATE,DATE,"Date associated with the value, for individual income zip code data it is the last day of the year being reported","[""2018-12-31"", ""2011-12-31"", ""2017-12-31""]",
-VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table,"[""Total_income_-_Amount,_AGI_bin:_$100,000_under_$200,000"", ""Total_taxes_paid_-_Number_of_returns,_AGI_bin:_$100,000_under_$200,000"", ""Total_premium_tax_credit_-_Amount,_AGI_bin:_$100,000_under_$200,000""]",
-VARIABLE_NAME,TEXT,Human readable name for the variable,"[""Total income - Amount, AGI bin: $100,000 under $200,000"", ""Total taxes paid - Number of returns, AGI bin: $100,000 under $200,000"", ""Total premium tax credit - Amount, AGI bin: $100,000 under $200,000""]",
-GEO_ID,TEXT,"A unique identifier for a place (state, county, zipcode) joinable to the geography_index/relationships tables","[""zip/47578"", ""zip/88337"", ""zip/50167""]",
-UNIT,TEXT,"Unit of measure for the value, examples: USD, returns, individuals, dependents","[""USD"", ""Returns""]",
-VALUE,FLOAT,The actual numeric value for the variable.  Suprressed values are Null.,"[5096000.0, 69.0, 0.0]",

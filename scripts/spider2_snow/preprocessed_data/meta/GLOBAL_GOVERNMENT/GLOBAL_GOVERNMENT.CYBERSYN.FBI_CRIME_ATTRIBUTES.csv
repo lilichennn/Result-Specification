@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Incidents""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""annual_count_of_incidents_aggravated_assault"", ""annual_count_of_incidents_burglary"", ""annual_count_of_incidents_homicide""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Annual Count of Incidents, aggravated assault"", ""Annual Count of Incidents, burglary"", ""Annual Count of Incidents, homicide""]",
-OFFENSE_CATEGORY,TEXT,"Category of the offense, as defined by the Federal Bureau of Investigation (FBI).","[""Aggravated Assault"", ""Burglary"", ""Homicide""]",
-FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual""]",

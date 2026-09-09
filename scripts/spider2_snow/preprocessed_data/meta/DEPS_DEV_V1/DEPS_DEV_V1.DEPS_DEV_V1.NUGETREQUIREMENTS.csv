@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-DependencyGroups,VARIANT,,"[""[]""]",
-Version,TEXT,,"[""1.0.2.4"", ""1.0.1.1"", ""1.7.0""]",
-Name,TEXT,,"[""docs_sage"", ""docutainsdk.windows"", ""docx""]",
-SnapshotAt,NUMBER,,[1725915643146231],

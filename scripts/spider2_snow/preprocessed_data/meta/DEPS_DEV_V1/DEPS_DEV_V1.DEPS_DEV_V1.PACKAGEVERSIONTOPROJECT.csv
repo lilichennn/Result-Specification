@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SnapshotAt,NUMBER,,[1721768440525402],
-System,TEXT,,"[""NPM""]",
-RelationType,TEXT,,"[""SOURCE_REPO_TYPE""]",
-ProjectType,TEXT,,"[""GITHUB""]",
-ProjectName,TEXT,,"[""steven-tey/dub""]",
-Name,TEXT,,"[""@dub/ui""]",
-RelationProvenance,TEXT,,"[""UNVERIFIED_METADATA""]",
-Version,TEXT,,"[""0.0.57"", ""0.0.64"", ""0.0.44""]",

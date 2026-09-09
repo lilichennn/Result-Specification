@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-variety,TEXT,,"[""Magic Summer"", ""RUIZ012A"", ""HER2010B02""]",
-uuid,TEXT,,"[""06i082at44feqh3567o765fxg"", ""1pi7xr52gijr0g3czo4rg3mjc"", ""n0lrrdyv8um0od2s7ldl34fmc""]",
-latin_name,TEXT,,"[""Hebe"", ""Rosa"", ""Buxus""]",
-patent_id,TEXT,,"[""PP20359"", ""PP16970"", ""PP32309""]",

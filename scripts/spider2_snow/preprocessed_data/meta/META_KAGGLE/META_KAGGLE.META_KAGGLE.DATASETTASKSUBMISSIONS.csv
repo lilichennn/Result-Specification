@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-DatasetTaskId,NUMBER,,[2304],
-DatasetId,NUMBER,,[],
-SubmittedUserId,NUMBER,,"[4348228, 5986902, 5521499]",
-Id,NUMBER,,"[4719, 4743, 4761]",
-AcceptedDate,NUMBER,,[],
-KernelId,NUMBER,,"[12336275, 12373911, 12304472]",
-CreationDate,NUMBER,,"[1602941845000000, 1603110187000000, 1603290215000000]",

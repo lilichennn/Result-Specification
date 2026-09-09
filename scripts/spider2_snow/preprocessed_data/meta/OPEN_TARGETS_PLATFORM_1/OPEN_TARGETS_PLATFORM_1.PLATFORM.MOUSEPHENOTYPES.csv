@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-targetFromSourceId,TEXT,,"[""ENSG00000164458""]",
-biologicalModels,VARIANT,,[],
-modelPhenotypeLabel,TEXT,,"[""delayed heart development"", ""bleb"", ""abnormal forelimb bud morphology""]",
-modelPhenotypeClasses,VARIANT,,"[""{\n  \""list\"": [\n    {\n      \""element\"": {\n        \""id\"": \""MP:0005385\"",\n        \""label\"": \""cardiovascular system phenotype\""\n      }\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": {\n        \""id\"": \""MP:0010771\"",\n        \""label\"": \""integument phenotype\""\n      }\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": {\n        \""id\"": \""MP:0005380\"",\n        \""label\"": \""embryo phenotype\""\n      }\n    },\n    {\n      \""element\"": {\n        \""id\"": \""MP:0005371\"",\n        \""label\"": \""limbs/digits/tail phenotype\""\n      }\n    }\n  ]\n}""]",
-targetInModelMgiId,TEXT,,"[""MGI:98472""]",
-targetInModelEnsemblId,TEXT,,"[""ENSMUSG00000062327""]",
-modelPhenotypeId,TEXT,,"[""MP:0012082"", ""MP:0008854"", ""MP:0013164""]",
-targetInModel,TEXT,,"[""T""]",

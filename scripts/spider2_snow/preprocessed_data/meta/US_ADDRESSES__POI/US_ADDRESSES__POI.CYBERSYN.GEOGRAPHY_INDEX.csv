@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-LEVEL,TEXT,"Geographic level or hierarchy (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""CensusBlockGroup"", ""CensusTract""]",
-ISO_ALPHA2,TEXT,2 letter country code from International Organization for Standardization,[],
-GEO_ID,TEXT,"A unique identifier for a place (a nation, state, zip-code, etc.)","[""censusBlockGroup/470190716001"", ""geoId/04019004080"", ""geoId/48397040507""]",
-ISO_3166_2_CODE,TEXT,Full ISO-3166 code,[],
-ISO_NUMERIC_CODE,TEXT,Numeric code from International Organization for Standardization,[],
-GEO_NAME,TEXT,Full name of the place,"[""Block Group 1; Census Tract 716; Carter County; Tennessee"", ""Census Tract 40.80, Pima County, Arizona"", ""Census Tract 405.07, Rockwall County, Texas""]",
-ISO_NAME,TEXT,Country name from International Organization for Standardization,[],
-ISO_ALPHA3,TEXT,3 letter country code from International Organization for Standardization,[],

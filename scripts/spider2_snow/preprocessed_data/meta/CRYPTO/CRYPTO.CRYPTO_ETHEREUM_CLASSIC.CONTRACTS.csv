@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-address,TEXT,Address of the contract,"[""0x85d2a5e3cbc28c2cb7760227b602922b74836b82"", ""0x19aa56e5092a8f115b0951c68a0aa701c9295993"", ""0xf1b09126c6c5cdd8f80be0e10c26d3a8d205dc07""]",
-is_erc20,BOOLEAN,Whether this contract is an ERC20 contract,[false],
-function_sighashes,VARIANT,4-byte function signature hashes,"[""[\n  \""0x395ede4d\"",\n  \""0x83197ef0\"",\n  \""0x8da5cb5b\"",\n  \""0xe5225381\"",\n  \""0xffffffff\""\n]""]",
-bytecode,TEXT,Bytecode of the contract,[],
-is_erc721,BOOLEAN,Whether this contract is an ERC721 contract,[false],
-block_timestamp,NUMBER,Timestamp of the block where this contract was created,[1515253760000000],
-block_hash,TEXT,Hash of the block where this contract was created,"[""0xe589258f4b20f510e1f385e04f8e491fa1887f1fd3d65aa72a804a7b2fe8a3d2""]",
-block_number,NUMBER,Block number where this contract was created,[5156038],

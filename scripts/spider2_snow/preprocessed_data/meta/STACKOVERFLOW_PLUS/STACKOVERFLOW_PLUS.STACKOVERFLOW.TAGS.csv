@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-tag_name,TEXT,,"[""regsvr32"", ""fileserver"", ""bad-alloc""]",
-excerpt_post_id,NUMBER,,"[10051236, 9275976, 14261589]",
-id,NUMBER,,"[2136, 15213, 25272]",
-wiki_post_id,NUMBER,,"[10051235, 9275975, 14261588]",
-count,NUMBER,,[256],

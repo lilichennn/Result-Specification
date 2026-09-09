@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-pat_no,TEXT,,"[""""]",
-pub_no,TEXT,,"[""20110139645"", ""20110139646"", ""20110139648""]",
-publication_number,TEXT,,"[""US-2011139645-A1"", ""US-2011139646-A1"", ""US-2011139648-A1""]",

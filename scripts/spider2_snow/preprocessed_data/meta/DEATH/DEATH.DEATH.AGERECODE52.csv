@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Description,TEXT,,"[""3 days"", ""4 days"", ""5 days""]",
-Code,NUMBER,,"[5, 6, 7]",

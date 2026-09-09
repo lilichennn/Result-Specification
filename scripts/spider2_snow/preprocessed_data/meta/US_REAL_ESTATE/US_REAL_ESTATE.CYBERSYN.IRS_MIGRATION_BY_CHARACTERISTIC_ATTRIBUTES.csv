@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-AGE_GROUP,TEXT,The age group of the value being reported,"[""45 under 55"", ""26 under 35"", ""55 under 65""]",
-UNIT,TEXT,"Unit of measure for the value, examples: USD, returns, individuals","[""USD"", ""Individuals"", ""Returns""]",
-RETURN_GROUP,TEXT,The population group of the value being reported - please see IRS documentation for detail,"[""Outflow Returns"", ""Same State Returns"", ""Total Returns""]",
-FREQUENCY,TEXT,Frequency of the variable measurement,"[""Annual""]",
-VARIABLE,TEXT,Unique identifier code for a variable,"[""Outflow_Returns_–_adjusted_gross_income_from_Year_1,_primary_taxpayers_ages_45_under_55,_AGI_bin:_$10,000_under_$25,000"", ""Same_State_Returns_–_number_of_individuals,_primary_taxpayers_ages_26_under_35,_AGI_bin:_$75,000_under_$100,000"", ""Total_Returns_–_number_of_individuals,_primary_taxpayers_ages_55_under_65,_AGI_bin:_$100,000_under_$200,000""]",
-SEASONALLY_ADJUSTED,BOOLEAN,Indicates whether the value is seasonally adjusted,[false],
-INCOME_BRACKET,TEXT,The adjusted gross income bracket of individuals within the series,"[""$10,000 under $25,000"", ""$75,000 under $100,000"", ""$100,000 under $200,000""]",
-VARIABLE_NAME,TEXT,Human readable name for the variable,"[""Outflow Returns – adjusted gross income from Year 1, primary taxpayers ages 45 under 55, AGI bin: $10,000 under $25,000"", ""Same State Returns – number of individuals, primary taxpayers ages 26 under 35, AGI bin: $75,000 under $100,000"", ""Total Returns – number of individuals, primary taxpayers ages 55 under 65, AGI bin: $100,000 under $200,000""]",

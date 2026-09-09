@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-PRIMARY_EXCHANGE_NAME,TEXT,The exchange name for the primary trading venue of a security.,"[""NASDAQ CAPITAL MARKET"", ""NEW YORK STOCK EXCHANGE"", ""NYSE MKT LLC""]",
-ASSET_CLASS,TEXT,Type of security.,"[""Common Shares"", ""Equity"", ""ETF-Index Fund Shares""]",
-VALUE,FLOAT,Value reported for the variable.,"[1.19, 17249.0, 817.51]",
-PRIMARY_EXCHANGE_CODE,TEXT,The exchange code for the primary trading venue of a security.,"[""NAS"", ""NYS"", ""ASE""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""all-day_high"", ""nasdaq_volume"", ""post-market_close""]",
-DATE,DATE,Date associated with the value.,"[""2022-08-08"", ""2023-02-16"", ""2021-04-26""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""All-Day High"", ""Nasdaq Volume"", ""Post-Market Close""]",
-TICKER,TEXT,Alphanumeric code that represents a specific publicly traded security on the NASDAQ exchange.,"[""FAMI"", ""TIPT"", ""BLK""]",

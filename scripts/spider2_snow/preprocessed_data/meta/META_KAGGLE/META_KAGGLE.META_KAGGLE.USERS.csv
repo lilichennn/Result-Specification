@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Id,NUMBER,,"[154581, 277324, 852854]",
-Country,TEXT,,[],
-RegisterDate,TEXT,,"[""01/01/2014"", ""01/01/2015"", ""01/01/2017""]",
-PerformanceTier,NUMBER,,[0],
-DisplayName,TEXT,,"[""Aashu"", ""Adam Wyeth"", ""Lolo""]",
-UserName,TEXT,,"[""aashu154581"", ""adamwyeth"", ""lolo1995s""]",

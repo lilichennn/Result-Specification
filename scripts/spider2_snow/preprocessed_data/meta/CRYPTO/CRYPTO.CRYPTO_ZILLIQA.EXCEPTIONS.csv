@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-transaction_id,TEXT,,"[""b950420f43241bdfa73f95bfd73e7cb90fa5239dad60aa85bd5aeb6f28bb9e32"", ""d703ddf86db9e870dc49dbc851f6ec1e8460174ce97a5ea101aebbb0ff47ce44"", ""f109271aca720223364537a39254bbbab4869ed8042bf74af657cb4bba6ea4c4""]",
-block_timestamp,NUMBER,,"[1640712045000000, 1640708226000000, 1640690885000000]",
-block_number,NUMBER,,"[1697555, 1697440, 1696928]",
-line,NUMBER,,"[237, 1, 273]",
-index,NUMBER,,"[0, 1]",
-message,TEXT,,"[""Exception thrown"", ""Ran out of gas.\n"", ""Raised from Deposit""]",

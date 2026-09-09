@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE,TEXT,a unique identifier for a variable joinable to the attributes table,"[""Liabilities_and_Capital:_Total_Liabilities_and_Capital:_Total_Liabilities_and_Capital:_Wednesday_Level,_Not_seasonally_adjusted,_Weekly,_USD"", ""Bank_of_Canada_Treasury_Bills_6_month"", ""Liabilities_and_Capital:_Liabilities:_Other_Liabilities_and_Accrued_Dividends_and_Total_Deferred_Credit_Items:_Wednesday_Level_in_Federal_Reserve_District_3:_Philadelphia,_Not_seasonally_adjusted,_Weekly,_USD""]",
-VALUE,FLOAT,the actual numeric value for the variable,"[889757000000.0, 1.64, 0.0]",
-GEO_ID,TEXT,a unique identifier for a place,"[""country/USA"", ""country/CAN""]",
-DATE,DATE,"Date associated with the value, which is set to the last day of the reporting period.","[""2008-05-07"", ""2018-08-15"", ""2005-07-27""]",
-UNIT,TEXT,"Unit of measure for the value, such as dollars, percent, or ratio","[""USD"", ""Percent""]",
-VARIABLE_NAME,TEXT,English name for the variable,"[""Liabilities and Capital: Total Liabilities and Capital: Total Liabilities and Capital: Wednesday Level, Not seasonally adjusted, Weekly, USD"", ""Bank of Canada Treasury Bills: 6 month"", ""Liabilities and Capital: Liabilities: Other Liabilities and Accrued Dividends and Total Deferred Credit Items: Wednesday Level in Federal Reserve District 3: Philadelphia, Not seasonally adjusted, Weekly, USD""]",

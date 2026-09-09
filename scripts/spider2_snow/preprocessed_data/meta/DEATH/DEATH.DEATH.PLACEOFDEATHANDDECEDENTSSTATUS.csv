@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Description,TEXT,,"[""Hospital, clinic or Medical Center - Inpatient"", ""Hospital, Clinic or Medical Center - Outpatient or admitted to Emergency Room"", ""Decedent's home""]",
-Code,NUMBER,,"[1, 2, 4]",

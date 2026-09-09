@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-pgpub_doc_num,TEXT,,"[""20140007888"", ""20140007891"", ""20140007892""]",
-publication_number,TEXT,,"[""US-2014007888-A1"", ""US-2014007891-A1"", ""US-2014007892-A1""]",
-grant_doc_num,TEXT,,"[""""]",

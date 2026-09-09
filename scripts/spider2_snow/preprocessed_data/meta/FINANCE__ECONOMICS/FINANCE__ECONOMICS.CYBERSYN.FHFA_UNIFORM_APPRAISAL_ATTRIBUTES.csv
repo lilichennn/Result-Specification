@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE_GROUP,TEXT,"Overall variable grouping for the timeseries (e.g., Median Appraised Value, Count of Appraisals, etc.)","[""25% Quartile of Appraised Value"", ""Median Appraised Value""]",
-VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""Quarterly 25% Quartile of Appraised Value Property Condition (4 categories) Purchase & Refinance C1 and C2"", ""Quarterly 25% Quartile of Appraised Value Public Water Refinance Public"", ""Quarterly 25% Quartile of Appraised Value Tract Largest Race/Ethnicity Group Purchase & Refinance Black (50% or more)""]",
-CATEGORY,TEXT,"Actual category corresponding to the characteristic type. Notes important features of home (e.g. No Central Air, built between 1970 to 1979, etc.)","[""C1 and C2"", ""Public"", ""Black (50% or more)""]",
-CHARACTERISTIC,TEXT,"Characteristic for category grouping based on home features (e.g., Central Air, Type of Foundation, etc)","[""Property Condition (4 categories)"", ""Public Water"", ""Tract Largest Race/Ethnicity Group""]",
-UNIT,TEXT,"Unit of measure for the variable: (e.g., Count, Percent, Ratio, USD)","[""USD""]",
-APPRAISAL_PURPOSE,TEXT,"Reason for appraisal request (e.g., Purchase, Refinance, Purchase & Refinance)","[""Purchase & Refinance"", ""Refinance""]",
-FREQUENCY,TEXT,Frequency of aggregations (e.g. Annual).,"[""Quarterly""]",
-VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table for filtering,"[""Quarterly_25%_Quartile_of_Appraised_Value_Property_Condition_(4_categories)_Purchase_&_Refinance_C1_and_C2"", ""Quarterly_25%_Quartile_of_Appraised_Value_Public_Water_Refinance_Public"", ""Quarterly_25%_Quartile_of_Appraised_Value_Tract_Largest_Race/Ethnicity_Group_Purchase_&_Refinance_Black_(50%_or_more)""]",

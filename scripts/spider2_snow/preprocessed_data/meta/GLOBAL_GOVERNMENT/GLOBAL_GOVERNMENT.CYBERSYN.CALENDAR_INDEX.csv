@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CALENDAR_NAME,TEXT,Human-readable name for the type of calendar.,"[""Day"", ""Week - Monday Start""]",
-CALENDAR_ID,TEXT,"Unique ID denoting a type of calendar (e.g., Month, Quarter, Retail 4-5-4 Month).","[""day"", ""week_monday_start""]",
-ORDINAL_POSITION_IN_ANNUAL_PERIOD,NUMBER,The ordinal position of the period within the annual period.,"[34, 24, 177]",
-PERIOD_END_DATE,DATE,The last day of the period.,"[""2017-02-03"", ""2023-06-18"", ""2023-06-26""]",
-PERIOD_START_DATE,DATE,The first day of the period.,"[""2017-02-03"", ""2023-06-12"", ""2023-06-26""]",
-ANNUAL_PERIOD,NUMBER,The year number related to the annual calendar for the period. It reflects the calendar year for calendar periods and the 4-5-4 retail year for retail periods.,"[2017, 2023, 2019]",

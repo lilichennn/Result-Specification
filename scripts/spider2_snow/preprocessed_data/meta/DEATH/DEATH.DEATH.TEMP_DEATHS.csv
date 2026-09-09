@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Age,NUMBER,,[],
-death_count,NUMBER,,[],
-Icd10Code,TEXT,,[],
-Race,NUMBER,,[],

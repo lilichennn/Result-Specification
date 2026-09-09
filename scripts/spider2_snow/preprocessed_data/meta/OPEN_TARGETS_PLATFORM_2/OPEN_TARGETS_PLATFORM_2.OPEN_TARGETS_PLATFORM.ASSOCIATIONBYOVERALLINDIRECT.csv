@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-score,FLOAT,,"[0.06228596585786231, 0.004844130748332951, 0.007152458638679473]",
-diseaseId,TEXT,,"[""EFO_0004149"", ""EFO_0004190"", ""EFO_0004193""]",
-evidenceCount,NUMBER,,[12],
-targetId,TEXT,,"[""ENSG00000205221"", ""ENSG00000132305"", ""ENSG00000075624""]",

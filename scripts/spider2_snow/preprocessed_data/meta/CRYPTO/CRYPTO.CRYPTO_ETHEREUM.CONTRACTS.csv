@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-block_number,NUMBER,Block number where this contract was created,"[19281125, 20262832, 10700322]",
-block_timestamp,NUMBER,Timestamp of the block where this contract was created,"[1708580231000000, 1720454267000000, 1597969158000000]",
-block_hash,TEXT,Hash of the block where this contract was created,"[""0xe67cf196c8c3733cc56899a49fa9ca8c90494df6093bd3fe07451e6512306731"", ""0xbd70f365e78e8af9da1376c132a58eb9674238312ec6d92dab6e92ef352eb554"", ""0xed8ed9e18b1b12be3cb96a040eaa4adb6b233a19160937b615d96c1f20506fae""]",
-address,TEXT,Address of the contract,"[""0x1babaff436c67963582cd95c468bf7f1bfaf1cfd"", ""0xc3c64bf8778946ad819fd40c00c225408cc6782c"", ""0x80f4fa459da10fa9a9c13095f68b942bfefa1273""]",
-is_erc20,BOOLEAN,Whether this contract is an ERC20 contract,[false],
-bytecode,TEXT,Bytecode of the contract,[],
-is_erc721,BOOLEAN,Whether this contract is an ERC721 contract,[false],
-function_sighashes,VARIANT,4-byte function signature hashes,"[""[\n  \""0x30665876\"",\n  \""0x36447674\"",\n  \""0x396d4277\"",\n  \""0x47725877\"",\n  \""0x4f64576c\"",\n  \""0x59376a33\"",\n  \""0x7335416b\""\n]"", ""[\n  \""0x30f0dbe0\"",\n  \""0xbb4b5734\"",\n  \""0xc940baf8\"",\n  \""0xf12c2eb4\"",\n  \""0xf676d67a\""\n]"", ""[\n  \""0x313ce567\"",\n  \""0x70a08231\"",\n  \""0x95d89b41\"",\n  \""0xa9059cbb\"",\n  \""0xdd62ed3e\""\n]""]",

@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Count"", ""Percent"", ""USD""]",
-DATE,TEXT,Date associated with the value.,"[""2017-12-31"", ""2012-12-31""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""ECTGE100_5324_2017_00_00"", ""ESTAB_S_5312_2017_00_00"", ""CSTCNT_722513_2012""]",
-VALUE,FLOAT,Value reported for the variable.,"[0.0, 24.0]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Establishments with 100 employees or more | Commercial and industrial machinery and equipment rental and leasing (NAICS 2017 code: 5324) | Type of Operation: All establishments | Tax Status: All establishments"", ""Relative standard error of estimate of count of establishments | Offices of real estate agents and brokers (NAICS 2017 code: 5312) | Type of Operation: All establishments | Tax Status: All establishments"", ""Cost of contract work | Limited-service restaurants (NAICS 2012 code: 722513)""]",
-GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""geoId/C37740"", ""geoId/4170200"", ""geoId/1236550""]",

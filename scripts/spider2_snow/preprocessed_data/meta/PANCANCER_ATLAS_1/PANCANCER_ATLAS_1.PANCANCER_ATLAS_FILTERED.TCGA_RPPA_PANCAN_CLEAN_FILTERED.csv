@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SampleTypeLetterCode,TEXT,"Letter code of the sample type using the TCGA standards, eg TPN, EBV. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/sample-type-codes","[""TP""]",
-SampleBarcode,TEXT,"Barcode of the biospecimen sample, eg TCGA-13-1489-02A","[""TCGA-04-1335-01A""]",
-AliquotBarcode,TEXT,"TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-28","[""TCGA-04-1335-01A-21-20""]",
-Study,TEXT,"TCGA study abbreviation, eg LAML. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations","[""OV""]",
-SampleType,TEXT,"There are 10 sample types: Blood Derived Normal, Primary solid Tumor, Solid Tissue Normal, Recurrent Solid Tumor, Metastatic, Additional - New Primary, Primary Blood Derived Cancer - Peripheral Blood, Buccal Cell Normal, Additioanal Metastatic, Bone Marrrow Normal","[""Primary solid Tumor""]",
-ParticipantBarcode,TEXT,"TCGA barcode identifier for the study participant, eg TCGA-02-0001","[""TCGA-04-1335""]",
-Value,FLOAT,"Expression level of protein as measured by reverse-phase protein arrays (RPPAs).Examples: 0.204238725,-0.01826295","[0.077853, -0.91868, 0.018487]",
-Protein,TEXT,"Protein symbol and phosphorylation status (if applicable), eg P53, JNK_pT183Y185","[""PDCD1"", ""BCL2"", ""EIF4E""]",

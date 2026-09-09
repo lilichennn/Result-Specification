@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Name,TEXT,,"[""g"", ""i"", ""q""]",
-SnapshotAt,NUMBER,,[1726520453364153],
-MinimumDepth,NUMBER,,[1],
-System,TEXT,,"[""NPM""]",
-DependentIsHighestReleaseWithResolution,BOOLEAN,,[false],
-Dependent,VARIANT,,"[""{\n  \""Name\"": \""poyka\"",\n  \""System\"": \""NPM\"",\n  \""Version\"": \""0.3.18\""\n}"", ""{\n  \""Name\"": \""asmr100-com-dist\"",\n  \""System\"": \""NPM\"",\n  \""Version\"": \""0.6.0-rc.4-788-g21bfbc7\""\n}"", ""{\n  \""Name\"": \""go-design-system-search-bar\"",\n  \""System\"": \""NPM\"",\n  \""Version\"": \""0.0.118\""\n}""]",
-Version,TEXT,,"[""2.0.1"", ""0.3.7"", ""1.5.1""]",

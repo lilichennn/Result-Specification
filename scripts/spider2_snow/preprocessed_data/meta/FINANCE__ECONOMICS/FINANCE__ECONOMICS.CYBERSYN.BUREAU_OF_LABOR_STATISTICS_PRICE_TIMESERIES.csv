@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-GEO_ID,TEXT,"A unique identifier for a place, joinable to the geography_index/relationships tables","[""censusRegion/03"", ""censusRegion/01"", ""censusDivision/05""]",
-VALUE,FLOAT,Value of the metric,"[2.093, 4.556, 126.853]",
-VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table,"[""Average_Price:_All_Ham_(Excluding_Canned_Ham_and_Luncheon_Slices),_per_lb._(453.6_gm)"", ""Average_Price:_American_processed_cheese,_per_lb._(453.6_gm)"", ""CPI:_Services_less_rent_of_shelter,_Not_seasonally_adjusted,_Semi-annual,_2017-12_Index_Date""]",
-VARIABLE_NAME,TEXT,Human-readable name for a variable,"[""Average Price: All Ham (Excluding Canned Ham and Luncheon Slices), per lb. (453.6 gm)"", ""Average Price: American processed cheese, per lb. (453.6 gm)"", ""CPI: Services less rent of shelter, Not seasonally adjusted, Semi-annual, 2017-12 Index Date""]",
-DATE,DATE,"Date associated with the value, which is set to the last day of the reporting period","[""2001-06-30"", ""2007-08-31"", ""2024-06-30""]",

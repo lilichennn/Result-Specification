@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SEASONALLY_ADJUSTED,BOOLEAN,Boolean variable denoting if value is seasonally adjusted,[false],
-PRODUCT,TEXT,Consumer product being measured,"[""Household furnishings and operations"", ""Men's underwear, nightwear, swimwear and accessories"", ""Utility (piped) gas service""]",
-UNIT,TEXT,Unit of measure for the value,"[""2001-12 Index Date"", ""1982-84 Index Date"", ""1997-12 Index Date""]",
-FREQUENCY,TEXT,Frequency of the variable measurement,"[""Monthly"", ""Semi-annual"", ""Annual""]",
-BASE_TYPE,TEXT,"Base type utilized for CPI measurement, standard or alternative","[""Standard Reference Base""]",
-VARIABLE_NAME,TEXT,Human-readable name for a variable,"[""CPI: Household furnishings and operations, Not seasonally adjusted, Monthly, 2001-12 Index Date"", ""CPI: Men's underwear, nightwear, swimwear and accessories, Not seasonally adjusted, Semi-annual"", ""CPI: Utility (piped) gas service, Not seasonally adjusted, Annual, 2001-12 Index Date""]",
-REPORT,TEXT,BLS dataset the time series originates from,"[""Consumer Price Index""]",
-VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table,"[""CPI:_Household_furnishings_and_operations,_Not_seasonally_adjusted,_Monthly,_2001-12_Index_Date"", ""CPI:_Men's_underwear,_nightwear,_swimwear_and_accessories,_Not_seasonally_adjusted,_Semi-annual"", ""CPI:_Utility_(piped)_gas_service,_Not_seasonally_adjusted,_Annual,_2001-12_Index_Date""]",

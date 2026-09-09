@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-admin_pat_no_for_appno,TEXT,,[],
-appno_doc_num,TEXT,,"[""14683510"", ""14683835"", ""14683985""]",
-admin_appl_id_for_grant,TEXT,,[],
-error,TEXT,,"[""none""]",
-rf_id,TEXT,,"[""353810928"", ""395500045"", ""354060093""]",
-grant_doc_num,TEXT,,[],

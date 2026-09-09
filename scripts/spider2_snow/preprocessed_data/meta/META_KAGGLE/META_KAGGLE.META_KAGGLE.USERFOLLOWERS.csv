@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CreationDate,DATE,,"[""2020-03-08"", ""2021-08-18"", ""2020-04-27""]",
-Id,NUMBER,,"[412502, 851010, 851009]",
-UserId,NUMBER,,"[368, 421, 440]",
-FollowingUserId,NUMBER,,"[1302389, 727004, 1053193]",

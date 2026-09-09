@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-symlink_target,TEXT,,[],
-id,TEXT,,"[""64ba26a4afe649818a23565fc4ae6631eaf9d9b1"", ""b802f285fe00e6dd3b39af77e3b351d3a4343316"", ""c811289b61e21628f28d79b71f27651c39e3e024""]",
-mode,NUMBER,,[33188],
-path,TEXT,,"[""drivers/isdn/hisax/elsa.c"", ""arch/arm/mach-pxa/include/mach/smemc.h"", ""drivers/i2c/busses/i2c-eg20t.c""]",
-repo_name,TEXT,,"[""dorimanx/DORIMANX_LG_STOCK_LP_KERNEL""]",
-ref,TEXT,,"[""refs/heads/master""]",

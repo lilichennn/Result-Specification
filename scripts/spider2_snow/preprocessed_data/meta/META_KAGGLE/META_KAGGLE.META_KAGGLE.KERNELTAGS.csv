@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Id,NUMBER,,"[5867, 14387, 1008]",
-TagId,NUMBER,,[2304],
-KernelId,NUMBER,,"[90782, 160689, 358835]",

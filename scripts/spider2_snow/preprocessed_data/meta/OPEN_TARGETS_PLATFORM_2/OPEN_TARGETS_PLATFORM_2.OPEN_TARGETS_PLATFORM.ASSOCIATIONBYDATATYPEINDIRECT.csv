@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-datatypeId,TEXT,,"[""literature"", ""known_drug"", ""genetic_association""]",
-score,FLOAT,,"[0.3846470249484239, 0.8329354491971125, 0.8767228363984327]",
-diseaseId,TEXT,,"[""EFO_0000677"", ""EFO_0000512"", ""MONDO_0007576""]",
-evidenceCount,NUMBER,,[256],
-targetId,TEXT,,"[""ENSG00000187094"", ""ENSG00000204632"", ""ENSG00000101162""]",

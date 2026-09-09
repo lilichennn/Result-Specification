@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-UNIT,TEXT,"Unit of measure for the value, examples (e.g., percentage, USD)","[""Percent"", ""USD""]",
-DEFINITION,TEXT,Detailed description of the variable including calculation where applicable,"[""Retained earnings from bank operations, net unrealized holding gains (losses) on available-for-sale securities, and cumulative foreign currency translation adjustments."", ""Loan and lease financing receivables, net of unearned income, allowances, and reserves, as a percent of total assets."", ""Net amount of loans secured by junior liens on 1-4 family residential properties (which are held in domestic offices) that have been charged-off and debited to the allowance for loan and lease losses established by the institution. Prior to 2004, this item is not available for TFR Reporters . Calculated as NTRERSF2 / ASSET5""]",
-VARIABLE,TEXT,Unique identifier for a variable joinable to the timeseries table,"[""EQUP"", ""LNLSNTV"", ""NTRERSF2R""]",
-VARIABLE_NAME,TEXT,Human-readable name for the variable,"[""Undivided Profits"", ""Net Loans and Leases to Assets"", ""Secured By Junior Liens""]",
-FREQUENCY,TEXT,"Measurement period (e.g., Annual, Quarterly)","[""Quarterly"", ""YTD""]",

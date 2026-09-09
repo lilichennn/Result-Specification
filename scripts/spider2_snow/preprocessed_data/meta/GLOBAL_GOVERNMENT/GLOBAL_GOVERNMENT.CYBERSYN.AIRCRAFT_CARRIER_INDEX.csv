@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CARRIER_WORLD_AREA_CODE,NUMBER,US DOT identifier for the geographical area where the carrier is based.,"[1, 10]",
-AIRCRAFT_CARRIER_ID,TEXT,Unique ID for the aircraft carrier.,"[""01212_11"", ""01006_31"", ""06993_51""]",
-CARRIER_TYPE,TEXT,Type of carrier based on its primary operational characteristics.,"[""Domestic Carrier""]",
-CARRIER_NAME,TEXT,Name of the airport carrier.,"[""Paklook Air, Inc d/b/a/ Airlift Alaska (2017 - 2017)"", ""Virgin America (2007 - 2018)"", ""Bellair Inc. (1) (Domestic)""]",
-COUNTRY_GEO_ID,TEXT,"A unique identifier for a country, joinable to the GEOGRAPHY_INDEX table, representing the primary geography for the variable.","[""country/USA""]",
-OAI_CARRIER_TYPE,TEXT,Operating Air Carrier (OAC) type that provides a detailed classification of the type of operations conducted by the carrier.,"[""Large Regional Carrier - $20-100M in revenue"", ""Major Carrier - $1B+ in revenue"", ""Small Certified Carrier""]",
-STATE_GEO_ID,TEXT,"A unique identifier for a state, joinable to the GEOGRAPHY_INDEX table, representing the primary geography for the variable.","[""geoId/02""]",

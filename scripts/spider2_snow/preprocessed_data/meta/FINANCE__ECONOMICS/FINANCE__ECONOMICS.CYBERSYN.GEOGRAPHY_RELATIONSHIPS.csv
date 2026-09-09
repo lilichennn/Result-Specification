@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-RELATED_GEO_NAME,TEXT,"Name of the place related to GEO_NAME. This is a place that overlaps or is contained within the primary geo (e.g., city within a state)","[""Block Group 3, Census Tract 4, Sumter County, South Carolina"", ""Block Group 2; Census Tract 5035.10; Santa Clara County; California"", ""Census Tract 107.30, Sandoval County, New Mexico""]",
-RELATED_LEVEL,TEXT,"Geographic level or hierarchy of the related place (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""CensusBlockGroup"", ""CensusTract"", ""CensusDivision""]",
-RELATIONSHIP_TYPE,TEXT,"Relationship between the two places. Contains means the RELATED_GEO_ID is fully contained within the GEO_ID (e.g., relationship of state to a city) while Overlaps indicates the GEO_ID is a subpart of the RELATED_GEO_ID (e.g., relationship of city to a state)","[""Contains"", ""Overlaps""]",
-RELATED_GEO_ID,TEXT,A unique identifier for the related place joinable to the GEOGRAPHY_INDEX table,"[""censusBlockGroup/450850004003"", ""censusBlockGroup/060855035102"", ""geoId/35043010730""]",
-GEO_ID,TEXT,A unique identifier for a place joinable to the GEOGRAPHY_INDEX table,"[""geoId/45085"", ""geoId/06085503510"", ""countrySubRegion/021""]",
-GEO_NAME,TEXT,Full name of the place,"[""Sumter County"", ""Census Tract 5035.10, Santa Clara County, California"", ""Northern America""]",
-LEVEL,TEXT,"Geographic level or hierarchy (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""County"", ""CensusTract"", ""CountrySubRegion""]",

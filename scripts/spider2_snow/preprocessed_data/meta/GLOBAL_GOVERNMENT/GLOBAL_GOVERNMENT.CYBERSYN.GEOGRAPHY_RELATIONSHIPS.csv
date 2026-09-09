@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-RELATED_GEO_NAME,TEXT,"Name of the place related to GEO_NAME. This is a place that overlaps or is contained within the primary geo (e.g., city within a state)","[""61317"", ""67487"", ""24180065""]",
-RELATED_LEVEL,TEXT,"Geographic level or hierarchy of the related place (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""CensusZipCodeTabulationArea"", ""DisseminationArea"", ""CensusTract""]",
-RELATIONSHIP_TYPE,TEXT,"Relationship between the two places. Contains means the RELATED_GEO_ID is fully contained within the GEO_ID (e.g., relationship of state to a city) while Overlaps indicates the GEO_ID is a subpart of the RELATED_GEO_ID (e.g., relationship of city to a state)","[""Contains"", ""Overlaps""]",
-RELATED_GEO_ID,TEXT,A unique identifier for the related place joinable to the GEOGRAPHY_INDEX table,"[""zip/61317"", ""zip/67487"", ""statcanId/S051224180065""]",
-GEO_ID,TEXT,A unique identifier for a place joinable to the GEOGRAPHY_INDEX table,"[""geoId/17011"", ""geoId/20061000800"", ""country/CAN""]",
-LEVEL,TEXT,"Geographic level or hierarchy (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""County"", ""CensusTract"", ""Country""]",
-GEO_NAME,TEXT,Full name of the place,"[""Bureau County"", ""Census Tract 8, Geary County, Kansas"", ""Canada""]",

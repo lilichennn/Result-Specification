@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE,TEXT,Unique identifier for a variable joinable to the timeseries table,"[""P3OTHLNR"", ""DRLNLSQR"", ""CRCINUSQR""]",
-ID_RSSD,TEXT,A unique identifier assigned by the Federal Reserve for the financial institution,"[""582971"", ""1005655"", ""568470""]",
-VALUE,NUMBER,Numeric value for the given data point,"[""0E-11"", ""0.00020890000"", ""0.78737600000""]",
-DATE,DATE,Date associated with the value,"[""1991-09-30"", ""2008-06-30"", ""2015-06-30""]",
-VARIABLE_NAME,TEXT,Human-readable name for the variable,"[""Other Loans, Past Due 30 - 89 Days"", ""Total Charge-Offs"", ""To Non-U.S. Addressees""]",
-UNIT,TEXT,"Unit of measure for the value, examples (e.g., percentage, USD)","[""Percent"", ""USD""]",

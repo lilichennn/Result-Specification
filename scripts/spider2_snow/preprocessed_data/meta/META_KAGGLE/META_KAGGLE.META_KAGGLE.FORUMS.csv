@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Title,TEXT,,"[""Models"", ""Notebooks"", ""Advanced SQL""]",
-Id,NUMBER,,"[2578766, 16860, 1462513]",
-ParentForumId,NUMBER,,[],

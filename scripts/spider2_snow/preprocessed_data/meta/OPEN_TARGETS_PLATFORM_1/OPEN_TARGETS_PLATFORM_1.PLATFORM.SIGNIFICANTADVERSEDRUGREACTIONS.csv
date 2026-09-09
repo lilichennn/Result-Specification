@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-count,NUMBER,,"[43, 83, 225]",
-llr,FLOAT,,"[155.15858689508605, 86.02875766474244, 603.9267176219364]",
-event,TEXT,,"[""jaundice neonatal"", ""drug abuse"", ""drug dependence""]",
-meddraCode,TEXT,,"[""10023138"", ""10013654"", ""10013676""]",
-critval,FLOAT,,[38.961201902675384],
-chembl_id,TEXT,,"[""CHEMBL3""]",

@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-patent_id,TEXT,,"[""7329559"", ""7870461"", ""8329239""]",
-category,TEXT,,"[""cited by other"", ""cited by applicant""]",
-uuid,TEXT,,"[""xhj001ca1uk574sktzgyjbpc4"", ""wxddvgazkrhjza59ens6ajy6e"", ""qhziqthnqr8x58o6to57fw84d""]",
-sequence,NUMBER,,"[116, 1, 0]",
-date,TEXT,,"[""2002-12-01""]",
-country,TEXT,,"[""WO""]",
-number,TEXT,,"[""WO 02/099907"", ""WO 02/100026"", ""WO 02/100192""]",

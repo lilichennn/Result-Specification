@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-name,TEXT,,"[""Postal Service"", ""Denali Commission"", ""Agency for International Development""]",
-level_three,TEXT,,[],
-level_one,TEXT,,"[""Postal Service"", ""Denali Commission"", ""Department of State""]",
-level_two,TEXT,,"[""Agency for International Development"", ""Argonne National Laboratory"", ""Brookhaven National Laboratory""]",
-organization_id,NUMBER,,"[11, 4, 100]",

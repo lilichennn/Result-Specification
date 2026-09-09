@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE_NAME,TEXT,A human readable description of the variable,"[""Outbound Address Changes, Temporary"", ""Inbound Address Changes, Permanent"", ""Net Address Changes, Individuals""]",
-DATE,DATE,Date corresponding to data point. Note that dates are recorded as the period end date when measurement period is >1 day,"[""2020-08-31"", ""2023-06-30"", ""2021-08-31""]",
-VARIABLE,TEXT,A unique identifier joinable to the attributes table,"[""outbound_address_changes_temporary"", ""inbound_address_changes_permanent"", ""net_address_changes_individuals""]",
-GEO_NAME,TEXT,"Location name of the state, city, or zip code","[""55032"", ""Quincy"", ""Plaistow""]",
-GEO_ID,TEXT,"A unique identifier for a place (e.g., state, city, zip-code, etc.). Joinable to the geography_index/relationships tables for filtering region aggregation","[""zip/55032"", ""geoId/2555745"", ""geoId/3362500""]",
-VALUE,NUMBER,The numeric value of the reported variable,"[0, 582, 4]",

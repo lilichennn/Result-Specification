@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-creation_date,NUMBER,,"[1554768000000000, 1554940800000000, 1555113600000000]",
-vote_type_id,NUMBER,,[1],
-post_id,NUMBER,,"[55590362, 55530869, 55668918]",
-id,NUMBER,,"[184603528, 184743161, 184921894]",

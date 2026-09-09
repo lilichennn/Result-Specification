@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ColorName,TEXT,,"[""Black"", ""Blue"", ""Charcoal""]",
-ColorID,NUMBER,,"[3, 4, 5]",
-LastEditedBy,NUMBER,,[1],
-ValidTo,NUMBER,,[253402300799999999],
-ValidFrom,NUMBER,,[1356998400000000],

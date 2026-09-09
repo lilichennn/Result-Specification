@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-score,FLOAT,,"[0.5592963338026914, 0.18237923928348632, 0.42555155832813474]",
-targetId,TEXT,,"[""ENSG00000121075"", ""ENSG00000131778"", ""ENSG00000075891""]",
-diseaseId,TEXT,,"[""HP_0000072"", ""HP_0000079"", ""HP_0000107""]",
-datatypeId,TEXT,,"[""genetic_association""]",
-datasourceId,TEXT,,"[""eva""]",
-evidenceCount,NUMBER,,[1],

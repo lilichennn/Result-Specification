@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-neighbors_fips_code,VARIANT,,"[""[\n  \""19067\"",\n  \""19037\"",\n  \""19019\"",\n  \""19023\"",\n  \""19065\"",\n  \""19013\""\n]"", ""[\n  \""19161\"",\n  \""19027\"",\n  \""19021\"",\n  \""19187\"",\n  \""19073\"",\n  \""19151\""\n]"", ""[\n  \""19025\"",\n  \""19049\"",\n  \""19187\"",\n  \""19015\"",\n  \""19027\"",\n  \""19077\""\n]""]",
-county_fips_code,TEXT,,"[""19017"", ""19025"", ""19073""]",
-neighbors,VARIANT,,"[""[\n  \""Floyd\"",\n  \""Chickasaw\"",\n  \""Buchanan\"",\n  \""Butler\"",\n  \""Fayette\"",\n  \""Black Hawk\""\n]"", ""[\n  \""Sac\"",\n  \""Carroll\"",\n  \""Buena Vista\"",\n  \""Webster\"",\n  \""Greene\"",\n  \""Pocahontas\""\n]"", ""[\n  \""Calhoun\"",\n  \""Dallas\"",\n  \""Webster\"",\n  \""Boone\"",\n  \""Carroll\"",\n  \""Guthrie\""\n]""]",
-neighbors_state,VARIANT,,"[""[\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\""\n]""]",
-state,TEXT,,"[""Iowa""]",
-county,TEXT,,"[""Bremer County"", ""Calhoun County"", ""Greene County""]",

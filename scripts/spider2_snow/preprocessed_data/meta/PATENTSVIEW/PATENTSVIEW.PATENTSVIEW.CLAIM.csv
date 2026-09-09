@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-uuid,TEXT,,"[""f14iorboawm0ew4zxz095hkf1"", ""br6in9paqszb9k8q5qcskbwrr"", ""uo09zb52i0ms8tkn08uke4nl6""]",
-text,TEXT,,"[""The apparatus of claim 11 further comprising:means for coupling said guide rails to said support fingers and to said lateral guide means, said coupling means permitting movement of said support fingers relative to said slots in a pair of mutually orthogonal directions whereby the width and depth of the transport channel may be varied."", ""13. A fusion protein of the formula: wherein GFP is green fluorescent protein; AEQ is aequorin; and LINKER is a polypeptide of 5-63 amino acids; wherein the linker includes the amino acid sequence Ser Gly Leu Arg Ser [SEQ ID NO: 26]."", ""A seismic isolator as set forth in claim 10 wherein said first ends of second and third links are of a configuration for welding to said frame.""]",
-sequence,TEXT,,"[""13""]",
-dependent,TEXT,,"[""-1""]",
-patent_id,TEXT,,"[""5080217"", ""6936475"", ""5934028""]",
-exemplary,TEXT,,"[""False""]",

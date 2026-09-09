@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-uuid,TEXT,,"[""m9aj3t1pcki5f234kg4oo41js"", ""5jjrb6305vakuk8d1a7g29th8"", ""u8b9bozgtqs2h1dhof7ozoquw""]",
-name_first,TEXT,,"[""Christopher A"", ""Christopher D""]",
-role,TEXT,,"[""primary""]",
-group,TEXT,,"[""3762""]",
-patent_id,TEXT,,"[""9974952"", ""9839492"", ""8977356""]",
-name_last,TEXT,,"[""Flory"", ""Koharski""]",

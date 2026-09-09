@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ValidTo,NUMBER,,[253402300799999999],
-ValidFrom,NUMBER,,[1356998400000000],
-DeliveryMethodName,TEXT,,"[""Post"", ""Courier"", ""Delivery Van""]",
-DeliveryMethodID,NUMBER,,"[1, 2, 3]",
-LastEditedBy,NUMBER,,[1],

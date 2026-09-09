@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ENTREZ,TEXT,Uniprot Identifier from the UniProtKB,"[""51733"", ""954"", ""5198""]",
-PATHWAYID,TEXT,Pathway ID,"[""15869""]",
-PATHWAYNAME,TEXT,Pathway Name,"[""NUCLEOTIDE METABOLISM""]",

@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Manure left on pasture (N content) of Chickens, layers (FAO Estimated value)"", ""Emissions (CO2) of Agrifood Systems Waste Disposal (FAO Estimated value)"", ""Emissions (CO2eq) of Food Processing (Estimated value)""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Kilograms"", ""Kilotonnes""]",
-GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/NIU"", ""country/IMN"", ""countryGroup/X31""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""72380_ 1052_3050_E"", ""7273_ 6991_3050_E"", ""723113_ 6507_E""]",
-DATE,TEXT,Date associated with the value.,"[""1975-12-31"", ""1990-12-31"", ""2014-12-31""]",
-VALUE,FLOAT,Value reported for the variable.,"[145.4598, 0.0, 1363.663426]",

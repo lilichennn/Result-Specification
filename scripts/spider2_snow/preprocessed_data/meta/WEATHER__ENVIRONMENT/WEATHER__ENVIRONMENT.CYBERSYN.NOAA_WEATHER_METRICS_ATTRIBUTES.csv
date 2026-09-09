@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table.,"[""minimum_soil_temperature_for_sod_ground_cover_at_150_cm_soil_depth"", ""days_included_in_the_multiday_minimum_temperature_total"", ""maximum_soil_temperature_for_sod_ground_cover_at_20_cm_soil_depth""]",
-VARIABLE_NAME,TEXT,Human-readable name for the variable.,"[""Minimum Soil Temperature for Sod Ground Cover at 150 cm Soil Depth"", ""Days Included in the Multiday Minimum Temperature Total"", ""Maximum Soil Temperature for Sod Ground Cover at 20 cm Soil Depth""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Degrees Celsius"", ""Count of Days"", ""Millimeters""]",
-FREQUENCY,TEXT,Frequency of aggregations.,"[""Daily""]",
-MEASURE,TEXT,Broad category of the weather-related variable.,"[""Minimum Soil Temperature"", ""Days Included in the Multiday Minimum Temperature Total"", ""Maximum Soil Temperature""]",
-MEASUREMENT_TYPE,TEXT,Description of measurement sourcing.,"[""No Measurement Information Applicable"", ""Precipitation Total Formed From Four 6-Hour Totals""]",

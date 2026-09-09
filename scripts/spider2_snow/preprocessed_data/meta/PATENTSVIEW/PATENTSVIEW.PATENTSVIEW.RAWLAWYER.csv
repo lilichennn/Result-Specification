@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-organization,TEXT,,"[""Law Offices of Brian S. Steinberger"", ""Edwards & Angell, LLP"", ""Grant Patent Services""]",
-name_last,TEXT,,[],
-uuid,TEXT,,"[""5edfd333-e134-46a0-b034-e25351c51a02"", ""3cf16744-4473-46f3-9545-e642ba5d9bbd"", ""87978494-4fea-4c31-b9d1-5ca6c9ff6c89""]",
-lawyer_id,TEXT,,[],
-patent_id,TEXT,,"[""6223689"", ""6290358"", ""6060680""]",
-name_first,TEXT,,[],
-sequence,NUMBER,,"[1, 3]",
-country,TEXT,,[],

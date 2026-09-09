@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Tonnes of CO₂ equivalents"", ""Percent"", ""Tonnes""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""annual_methane_emissions_in_co2_equivalents"", ""share_of_global_cumulative_co2_emissions_including_land-use_change"", ""share_of_global_cumulative_co2_emissions_from_oil""]",
-MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Methane Emissions"", ""Carbon Dioxide Emissions"", ""Nitrous Oxide Emissions""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Annual methane emissions in CO2 equivalents"", ""Share of global cumulative CO2 emissions including land-use change"", ""Share of global cumulative CO2 emissions from oil""]",
-FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual""]",
-OUR_WORLD_IN_DATA_CHARTS,ARRAY,"An array of charts from Our World in Data (OWID) showcasing this variable. Accessible in the following URL, ourworldindata.org/grapher/{chart-id}.","[""[\n  \""methane-emissions\""\n]"", ""[\n  \""share-global-cumulative-co2-including-land\""\n]"", ""[\n  \""share-cumulative-co2-oil\""\n]""]",

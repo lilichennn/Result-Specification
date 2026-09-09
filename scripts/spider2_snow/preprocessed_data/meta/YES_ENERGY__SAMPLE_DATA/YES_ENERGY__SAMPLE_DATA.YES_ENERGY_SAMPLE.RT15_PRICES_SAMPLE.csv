@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-OBJECTID,NUMBER,,[10000697078],
-DATETIME,TIMESTAMP_NTZ,,"[""2022-07-06 09:45:00"", ""2022-07-06 10:00:00"", ""2022-07-06 10:15:00""]",
-LOADID,NUMBER,,"[875320192, 875325955, 875330075]",
-TIMEZONE,TEXT,,"[""CDT""]",
-LMP,NUMBER,,"[""33.780000"", ""35.020000"", ""35.100000""]",
-ISO,TEXT,,"[""ERCOT""]",
-CONG,NUMBER,,[],
-LOSS,NUMBER,,[],

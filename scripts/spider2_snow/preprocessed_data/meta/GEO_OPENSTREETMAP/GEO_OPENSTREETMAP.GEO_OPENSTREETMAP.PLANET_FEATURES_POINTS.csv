@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-geometry,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xef\\xa6\\xa5\\x03\\xa3\\x9a4@\\xfc\\xb4@q\\xb6^C@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xb6\\xb5\\x85\\xe7\\xa5\\x9a4@\\\\23\\xd8y^C@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00S\\x1a\\xd6\\xf9\\\\\\x9a4@e&\\x07\\xa2\\xdd]C@')""]",
-osm_timestamp,NUMBER,,"[1608386913000000, 1515821683000000, 1595683421000000]",
-osm_way_id,NUMBER,,[],
-osm_id,NUMBER,,"[8242788622, 8242788645, 8242788728]",
-osm_version,NUMBER,,[1],
-all_tags,VARIANT,,"[""[\n  {\n    \""key\"": \""id\"",\n    \""value\"": \""1\""\n  }\n]"", ""[\n  {\n    \""key\"": \""MCC\"",\n    \""value\"": \""286\""\n  },\n  {\n    \""key\"": \""communication:microwave\"",\n    \""value\"": \""yes\""\n  },\n  {\n    \""key\"": \""communication:mobile_phone\"",\n    \""value\"": \""gsm;umts\""\n  },\n  {\n    \""key\"": \""man_made\"",\n    \""value\"": \""mast\""\n  },\n  {\n    \""key\"": \""source\"",\n    \""value\"": \""DigitalGlobe\""\n  },\n  {\n    \""key\"": \""tower:type\"",\n    \""value\"": \""communication\""\n  }\n]"", ""[\n  {\n    \""key\"": \""atm\"",\n    \""value\"": \""yes\""\n  }\n]""]",

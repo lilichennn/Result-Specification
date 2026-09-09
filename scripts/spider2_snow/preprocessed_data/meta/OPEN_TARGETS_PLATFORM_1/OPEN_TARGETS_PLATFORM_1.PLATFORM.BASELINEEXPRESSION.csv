@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""ENSG00000289258"", ""ENSG00000288784"", ""ENSG00000111780""]",
-tissues,VARIANT,,[],

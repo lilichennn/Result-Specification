@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-title,TEXT,,"[""BEDS"", ""LOCKS"", ""SHIPS""]",
-id,TEXT,,"[""5"", ""70"", ""114""]",

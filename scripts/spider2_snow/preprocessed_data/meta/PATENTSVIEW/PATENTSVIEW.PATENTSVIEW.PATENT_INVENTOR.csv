@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-location_id,TEXT,,"[""ff6637c1-cb8e-11eb-9615-121df0c29c1e""]",
-inventor_id,TEXT,,"[""fl:m_ln:watanabe-86"", ""fl:h_ln:naya-1"", ""fl:y_ln:enomoto-39""]",
-patent_id,TEXT,,"[""4633115"", ""7099733"", ""8373326""]",

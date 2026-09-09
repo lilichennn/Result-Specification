@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-StockGroupName,TEXT,,"[""Mugs"", ""Computing Novelties"", ""USB Novelties""]",
-StockGroupID,NUMBER,,"[3, 6, 7]",
-ValidFrom,NUMBER,,"[1356998400000000, 1451664000000000]",
-ValidTo,NUMBER,,[253402300799999999],
-LastEditedBy,NUMBER,,"[1, 9]",

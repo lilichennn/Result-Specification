@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-DATE,DATE,Date associated with the value,"[""2022-12-31"", ""2023-09-30"", ""2024-03-31""]",
-GEO_ID,TEXT,A unique geographic identifier joinable to the geography_index/relationships tables,"[""geoId/50"", ""geoId/34"", ""geoId/C12580""]",
-UNIT,TEXT,"Unit of measure for the variable (e.g., Percent)","[""Percent""]",
-VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""Percent in the Process of Foreclosure, Bankruptcy, or Deed in Lieu - Government / Non-Conventional"", ""Percent in Forbearance - Enterprise Acquisitions"", ""Percent 30 or 60 Days Past Due Date - All Mortgages""]",
-VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table for filtering,"[""Percent_in_the_Process_of_Foreclosure,_Bankruptcy,_or_Deed_in_Lieu_Government / Non-Conventional"", ""Percent_in_Forbearance_Enterprise Acquisitions"", ""Percent_30_or_60_Days_Past_Due_Date_All Mortgages""]",
-VALUE,FLOAT,The reported numeric value for the variable and date,"[0.003, 0.002, 0.017]",

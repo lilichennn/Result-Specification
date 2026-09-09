@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SRA_Sample_s,TEXT,,"[""SRS266829"", ""SRS266826"", ""SRS266824""]",
-cultivar_s,TEXT,,[],
-Sample_Name_s,TEXT,,"[""PK-RT"", ""PK-STM"", ""PK-PFLW""]",
-Library_Name_s,TEXT,,"[""PK-RT"", ""PK-STM"", ""PK-PFLW""]",

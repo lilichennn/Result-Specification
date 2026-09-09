@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VALUE,FLOAT,Value reported for the variable.,"[13.07, 3.58, 2004.43]",
-DATE,DATE,Date associated with the value.,"[""1970-04-30"", ""2019-11-30"", ""2019-10-31""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Nitrous Oxide (N2O) Emissions from Biogenic Sources | Emissions from biomass burning (IPCC 2006), Monthly"", ""Methane (CH4) Emissions from Biogenic Sources | Manufacturing Industries and Construction (IPCC 2006), Monthly"", ""Methane (CH4) Emissions from Fossil Fuel Sources | Solid Waste Disposal (IPCC 2006), Monthly""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""nitrous_oxide_n2o_emissions_from_biogenic_sources_emissions_from_biomass_burning_ipcc_2006,_monthly"", ""methane_ch4_emissions_from_biogenic_sources_manufacturing_industries_and_construction_ipcc_2006,_monthly"", ""methane_ch4_emissions_from_fossil_fuel_sources_solid_waste_disposal_ipcc_2006,_monthly""]",
-GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/LAO"", ""country/KEN"", ""country/SGP""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Metric Ton""]",

@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-MEASUREMENT_TYPE,TEXT,Details how the variable was measured or calculated.,[],
-MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Balance (revenue minus expenditure) from secondary income"", ""Balance (revenue minus expenditure) from capital account""]",
-FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual"", ""Quarterly""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""USD"", ""ZAR"", ""CHF""]",
-SEASONALLY_ADJUSTED,TEXT,Indicates whether the value is seasonally adjusted.,"[""Neither seasonally adjusted nor calendar adjusted"", ""Calendar and seasonally adjusted""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""BAL_OF_PAY_B_IN2_XDC_USD_A_N"", ""BAL_OF_PAY_B_IN2_XDC_USD_Q_Y"", ""BAL_OF_PAY_B_IN2_XDC_ZAR_A_N""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Balance of payments to rest of the world: balance (revenue minus expenditure) from secondary income in US dollar, Annual"", ""Balance of payments to rest of the world: balance (revenue minus expenditure) from secondary income in US dollar, Quarterly (Calendar and seasonally adjusted)"", ""Balance of payments to rest of the world: balance (revenue minus expenditure) from secondary income in Rand, Annual""]",

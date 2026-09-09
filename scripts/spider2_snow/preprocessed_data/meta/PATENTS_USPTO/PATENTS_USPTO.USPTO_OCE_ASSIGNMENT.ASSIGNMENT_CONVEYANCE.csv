@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-employer_assign,TEXT,,"[""1""]",
-rf_id,TEXT,,"[""305160114"", ""305160304"", ""305160497""]",
-convey_ty,TEXT,,"[""assignment""]",

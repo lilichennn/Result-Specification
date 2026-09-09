@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Current and Future Financial situation; Year ago; Somewhat worse off"", ""Debt delinquency expectations; Mean probability of not being able to make minimum debt payment over the next three months, by Demographics; Region Northeast"", ""Distribution of three-year ahead expected inflation rate; [1,2)""]",
-FREQUENCY,TEXT,Frequency of aggregations.,"[""Monthly""]",
-REPORT,TEXT,Name of the New York Fed report that the data pertains to.,"[""Survey of Consumer Expectations""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Percent"", ""Mean Score""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""current_and_future_financial_situation_year_ago_somewhat_worse_off"", ""debt_delinquency_expectations_mean_probability_of_not_being_able_to_make_minimum_debt_payment_over_the_next_three_months_by_demographics_region_northeast"", ""distributions_of_one_year_three_year_and_five_year_ahead_inflation_expectations__distribution_of_three_year_ahead_expected_inflation_rate_12""]",
-MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Current and Future Financial situation"", ""Debt delinquency expectations"", ""Distribution of three-year ahead expected inflation rate""]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-creation_date,NUMBER,,"[1426663800027000, 1426112450947000, 1426119474033000]",
-post_history_type_id,NUMBER,,"[2, 1, 3]",
-comment,TEXT,,[],
-user_id,NUMBER,,"[2170106, 4660474, 4660730]",
-post_id,NUMBER,,"[29116345, 28998490, 28999843]",
-revision_guid,TEXT,,"[""6509ef7b-52e9-4e14-bd54-274c531ef947"", ""8e1fce66-6346-4ea1-978d-9d871c55a4a6"", ""6c8c07dd-e85b-4e86-945d-0f6c42faf117""]",
-text,TEXT,,"[""Use [PHP Date function][1]\n\n    date('Y-m-d',strtotime($_GET['searchKeyword']))\n\n\n  [1]: http://php.net/manual/en/function.date.php"", ""How to change the width of a CSS flex-box column?"", ""<html><css><flex>""]",
-id,NUMBER,,"[86091483, 85632228, 85632229]",

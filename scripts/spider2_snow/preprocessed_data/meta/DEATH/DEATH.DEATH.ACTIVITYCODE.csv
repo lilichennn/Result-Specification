@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Description,TEXT,,"[""While engaged in sports activity"", ""While engaged in leisure activity""]",
-Code,NUMBER,,"[0, 1]",

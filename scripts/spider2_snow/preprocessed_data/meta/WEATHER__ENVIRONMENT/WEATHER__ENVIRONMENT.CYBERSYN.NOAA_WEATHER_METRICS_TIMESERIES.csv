@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table.,"[""precipitation"", ""minimum_temperature"", ""snow_depth""]",
-VALUE,NUMBER,Value reported for the variable,"[""0.000000"", ""0.800000"", ""-5.100000""]",
-NOAA_WEATHER_STATION_ID,TEXT,"Unique identifier for land surface weather stations in the Global Historical Climatology Network daily (GHCNd), comprised of the FIPS country code (first 2 characters), a network code (third character), and the actual station ID (the remaining 8 characters).","[""US1ALSH0043"", ""USW00094994"", ""USS0011C01S""]",
-DATE,DATE,Date associated with the value,"[""2012-09-10"", ""2023-04-03"", ""2008-11-28""]",
-DATETIME,TIMESTAMP_NTZ,Datetime associated with the value,"[""2012-09-10 00:00:00"", ""2023-04-03 00:00:00"", ""2008-11-28 00:00:00""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Millimeters"", ""Degrees Celsius"", ""Degrees""]",
-VARIABLE_NAME,TEXT,Human-readable name for the variable.,"[""Precipitation"", ""Minimum Temperature"", ""Snow Depth""]",

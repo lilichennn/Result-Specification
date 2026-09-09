@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-LEVEL,TEXT,"Geographic level or hierarchy (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""CensusBlockGroup"", ""CensusTract"", ""CensusZipCodeTabulationArea""]",
-ISO_ALPHA2,TEXT,2 letter country code from International Organization for Standardization,[],
-GEO_ID,TEXT,"A unique identifier for a place (a nation, state, zip-code, etc.)","[""censusBlockGroup/480610125072"", ""geoId/26049012906"", ""zip/58327""]",
-ISO_3166_2_CODE,TEXT,Full ISO-3166 code,[],
-ISO_NUMERIC_CODE,TEXT,Numeric code from International Organization for Standardization,[],
-ISO_ALPHA3,TEXT,3 letter country code from International Organization for Standardization,[],
-GEO_NAME,TEXT,Full name of the place,"[""Block Group 2, Census Tract 125.07, Cameron County, Texas"", ""Census Tract 129.06, Genesee County, Michigan"", ""58327""]",
-ISO_NAME,TEXT,Country name from International Organization for Standardization,[],

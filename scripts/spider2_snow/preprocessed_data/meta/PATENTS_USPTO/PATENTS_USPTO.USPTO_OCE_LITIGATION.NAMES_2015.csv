@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-name_row_count,TEXT,,"[""234351"", ""235648"", ""235649""]",
-case_row_id,TEXT,,"[""35376"", ""35523"", ""67746""]",
-name,TEXT,,"[""Jack Sutton"", ""Peters Jewelers"", ""Peters Motor Cuts""]",
-party_row_count,TEXT,,"[""186960"", ""187912"", ""187913""]",
-party_type,TEXT,,[],
-case_number,TEXT,,"[""2:05-cv-06445"", ""2:06-cv-00053"", ""6:07-cv-00354""]",

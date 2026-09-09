@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-series_code,TEXT,,"[""D""]",
-number,TEXT,,"[""D535207"", ""D002048"", ""D013068""]",
-date,TEXT,,"[""1990-07-26"", ""1992-11-30"", ""1993-09-17""]",
-id,TEXT,,"[""D/535207"", ""D002048"", ""D013068""]",
-country,TEXT,,"[""US""]",
-patent_id,TEXT,,"[""D371814"", ""D390605"", ""D395297""]",

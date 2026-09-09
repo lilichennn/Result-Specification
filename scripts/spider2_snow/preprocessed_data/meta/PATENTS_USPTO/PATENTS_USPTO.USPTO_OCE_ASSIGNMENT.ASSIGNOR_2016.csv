@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-rf_id,TEXT,,"[""242980306"", ""242980939"", ""242990248""]",
-or_name,TEXT,,"[""BROOKS, RICHARD VALENTINE"", ""LE, QUI V., MR."", ""D. COLLEN RESEARCH FOUNDATION VZW""]",
-exec_dt,TEXT,,"[""2010-04-16"", ""2010-04-15"", ""2007-09-11""]",
-ack_dt,TEXT,,[],

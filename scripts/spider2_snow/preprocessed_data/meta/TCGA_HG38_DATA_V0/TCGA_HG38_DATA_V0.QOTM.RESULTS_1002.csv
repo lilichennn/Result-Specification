@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Pb,NUMBER,Numbers for group B,"[104, 96, 103]",
-gene_j,TEXT,Gene pair #2,"[""RIPPLY1"", ""PRSS57"", ""NKX6-3""]",
-Na,NUMBER,Total number of pairs for PAAD,[79],
-Nb,NUMBER,Total number of pairs for KIRP,[117],
-gene_i,TEXT,Gene pair #1,"[""ALDH3B2"", ""NKX6-3"", ""BPIFA2""]",
-Pa,NUMBER,Number of pairs where gene #1 < gene #2 in group A,"[8, 3, 9]",
-PDiff,FLOAT,Difference in conditional probabilities,"[0.7876230661040787, 0.7825381369685167, 0.766417829708969]",

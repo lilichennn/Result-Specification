@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-LEVEL,TEXT,"Geographic level or hierarchy (e.g., Country, State, County, City, Continent, CountrySubRegion, etc.)","[""CensusBlockGroup"", ""CensusTract""]",
-ISO_ALPHA2,TEXT,2 letter country code from International Organization for Standardization,[],
-GEO_ID,TEXT,"A unique identifier for a place (a nation, state, zip-code, etc.)","[""censusBlockGroup/450450043003"", ""censusBlockGroup/391559307002"", ""censusBlockGroup/361031101023""]",
-ISO_3166_2_CODE,TEXT,Full ISO-3166 code,[],
-ISO_NUMERIC_CODE,TEXT,Numeric code from International Organization for Standardization,[],
-ISO_ALPHA3,TEXT,3 letter country code from International Organization for Standardization,[],
-GEO_NAME,TEXT,Full name of the place,"[""Block Group 3; Census Tract 43; Greenville County; South Carolina"", ""Block Group 2; Census Tract 9307; Trumbull County; Ohio"", ""Block Group 3, Census Tract 1101.02, Suffolk County, New York""]",
-ISO_NAME,TEXT,Country name from International Organization for Standardization,[],

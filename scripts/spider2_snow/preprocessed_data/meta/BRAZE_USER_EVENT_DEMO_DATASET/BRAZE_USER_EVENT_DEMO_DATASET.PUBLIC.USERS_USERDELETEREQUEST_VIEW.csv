@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-TIME,NUMBER,,"[1688032337, 1687559406, 1678229168]",
-SF_CREATED_AT,TIMESTAMP_LTZ,,"[""2021-12-14 11:20:05.778000-08:00"", ""2021-12-14 11:20:02.581000-08:00"", ""2021-12-14 11:20:02.638000-08:00""]",
-USER_ID,TEXT,,"[""2bDJn0SGGThHK9x"", ""1ppe5I61iENh9EP"", ""1rpmvuI5PtoTUtM""]",
-APP_GROUP_ID,TEXT,,"[""JyWFOSKn8bq"", ""OkIYT1HbF7u""]",
-APP_GROUP_API_ID,TEXT,,"[""OtXMWjj3R4uDCu"", ""NuHOxW8jI1s9sb"", ""RkIJeqeZJCc5wQ""]",
-ID,TEXT,,"[""iqqtbMs9uoz5rO"", ""pqWU2AhRn2QG72"", ""aT5xQm313Q7XQr""]",

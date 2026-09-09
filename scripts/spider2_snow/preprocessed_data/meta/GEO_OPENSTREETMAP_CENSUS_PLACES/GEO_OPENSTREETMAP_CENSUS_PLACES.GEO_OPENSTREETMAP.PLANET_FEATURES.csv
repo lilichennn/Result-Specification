@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-geometry,BINARY,,"[""bytearray(b'\\x01\\x03\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x07\\x00\\x00\\x00\\xb8^.=\\xf5\\x1aX\\xc0\\x90\\xb8l\\x19\\x15\\r@@\\xcc7\\xec\\x08\\xf1\\x1aX\\xc0\\x135,\\xa1\\x16\\r@@aP\\xa6\\xd1\\xe4\\x1aX\\xc0\\xf0\\x18\\xd4m?\\r@@1S\\xa4\\x0c\\xe6\\x1aX\\xc0`\\x1e2\\xe5C\\r@@:\\\\P\\x84\\xf9\\x1aX\\xc0k-\\xccB;\\r@@X\\x81k8\\xf6\\x1aX\\xc0\\xdcID\\xf8\\x17\\r@@\\xb8^.=\\xf5\\x1aX\\xc0\\x90\\xb8l\\x19\\x15\\r@@')""]",
-osm_timestamp,NUMBER,,"[1454960604000000, 1379414474000000, 1633608872000000]",
-all_tags,VARIANT,,"[""[\n  {\n    \""key\"": \""landuse\"",\n    \""value\"": \""farmland\""\n  }\n]"", ""[\n  {\n    \""key\"": \""landuse\"",\n    \""value\"": \""residential\""\n  }\n]"", ""[\n  {\n    \""key\"": \""landuse\"",\n    \""value\"": \""landfill\""\n  }\n]""]",
-feature_type,TEXT,,"[""multipolygons""]",
-osm_version,NUMBER,,[1],
-osm_id,NUMBER,,[],
-osm_way_id,NUMBER,,"[396768914, 238297128, 990859726]",

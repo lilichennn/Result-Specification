@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-meddraCode,TEXT,,"[""10012335"", ""10080751"", ""10003053""]",
-count,NUMBER,,"[58, 39, 55]",
-critval,FLOAT,,[38.961201902675384],
-llr,FLOAT,,"[194.9394994438262, 125.80146108261397, 152.85264223803824]",
-chembl_id,TEXT,,"[""CHEMBL3""]",
-event,TEXT,,"[""dependence"", ""exposure via breast milk"", ""application site pruritus""]",

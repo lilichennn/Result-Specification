@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-System,TEXT,,"[""MAVEN""]",
-HashType,TEXT,,"[""MD5""]",
-SnapshotAt,NUMBER,,[1656363603995533],
-Name,TEXT,,"[""com.github.sarxos:oss-parent"", ""io.matthewnelson.kotlin-components:build-configuration-watchosarm32"", ""io.slixes:parent""]",
-Version,TEXT,,"[""1"", ""2""]",
-Hash,TEXT,,"[""OHVQhLoGM0h1kTqic82elg=="", ""OLMC46rqOMMho5pdvoFFsQ=="", ""OBYqnNn/LGVHF1U+g6/E6w==""]",

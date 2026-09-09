@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-VARIABLE_NAME,TEXT,"Human-readable description of the reported attribute, including commodity type and a description of what is being recorded.","[""Corn: Accumulated Exports"", ""Rice-LG Brown: Current Market Year Total Commitment"", ""Peanut Oil: Exports""]",
-DATE,DATE,"Date associated with the value (e.g., for ESR variables, it represents the sales week end). See the ATTRIBUTES table for more details.","[""1999-04-01"", ""2009-09-10"", ""2015-03-01""]",
-UNIT,TEXT,Unit of measurement for the reported value (ex. Metric Tons).,"[""Metric Tons"", ""Running Bales""]",
-GEO_ID,TEXT,A unique identifier for a country joinable to the GEOGRAPHY_INDEX table.,"[""country/DEU"", ""country/BMU"", ""country/SEN""]",
-VARIABLE,TEXT,"Unique identifier for a variable, which defines the USDA dataset that the data originates (e.g., ESR - Export Sales Report), the commodity associated with that variable, and what is being measured.","[""ESR_corn_accumulated_exports"", ""ESR_rice_lg_brown_current_market_year_total_commitment"", ""PSD-4234000-088""]",
-VALUE,FLOAT,Value reported for the variable.,"[3505.0, 18.0, 35000.0]",
-MARKETING_YEAR,TEXT,The marketing year tied to the agricultural seasons and harvest periods of a specific crop. A marketing year typically begins in the month when a particular crop's harvest starts and ends just before the next year's harvest begin. This period can vary significantly between different crops and different countries.,"[""1999"", ""2010"", ""2015""]",
-CALENDAR_YEAR,DATE,Calendar year associated with the value.,"[""1970-01-01"", ""2020-12-31""]",

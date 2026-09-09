@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-patent_id,TEXT,,"[""5957794"", ""5836287"", ""5743367""]",
-uuid,TEXT,,"[""j8tuxh72edfxc9ap6ykjsssph"", ""je9c7em7fvi10jxtsr6f0p625"", ""jhylh7rzg3f9o1txrysn865f4""]",
-category_id,TEXT,,"[""5""]",
-subcategory_id,TEXT,,"[""53""]",

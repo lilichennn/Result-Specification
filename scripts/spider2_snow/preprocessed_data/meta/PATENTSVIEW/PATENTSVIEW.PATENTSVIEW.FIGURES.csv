@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-uuid,TEXT,,"[""mjc0asaj8ajqw3mihluefyczd"", ""gqeaccvlqdbrbdo3huogk4s9c"", ""0a2fv5zg7hk23f3n6687gr0za""]",
-num_figures,NUMBER,,[10],
-patent_id,TEXT,,"[""7945619"", ""9736480"", ""9806707""]",
-num_sheets,NUMBER,,[10],

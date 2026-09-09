@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-geometry,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xa2\\x9bX;\\xe5,\\x1e@\\xac59!\\x19\\xbcH@')"", ""bytearray(b\""\\x01\\x01\\x00\\x00\\x00r\\xc9\\'\\x1aZ\\x9b4@O\\xfc\\xbd\\xb9d^C@\"")"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\x94\\xd3\\xe8\\x1f\\x8e\\x9b4@\\xa5\\x17\\x10\\xb5\\xc8^C@')""]",
-osm_timestamp,NUMBER,,"[1604175532000000, 1608386913000000, 1353534859000000]",
-osm_way_id,NUMBER,,[],
-osm_id,NUMBER,,"[8069642225, 8242788835, 8242783616]",
-osm_version,NUMBER,,[1],
-all_tags,VARIANT,,"[""[\n  {\n    \""key\"": \""ID\"",\n    \""value\"": \""Friedhof Kottweiler\""\n  }\n]"", ""[\n  {\n    \""key\"": \""id\"",\n    \""value\"": \""1\""\n  }\n]"", ""[\n  {\n    \""key\"": \""LAT\"",\n    \""value\"": \""-15.699508\""\n  },\n  {\n    \""key\"": \""LONG\"",\n    \""value\"": \""34.676861\""\n  },\n  {\n    \""key\"": \""Village_Na\"",\n    \""value\"": \""Felemu\""\n  },\n  {\n    \""key\"": \""name\"",\n    \""value\"": \""Felemu\""\n  },\n  {\n    \""key\"": \""place\"",\n    \""value\"": \""village\""\n  }\n]""]",

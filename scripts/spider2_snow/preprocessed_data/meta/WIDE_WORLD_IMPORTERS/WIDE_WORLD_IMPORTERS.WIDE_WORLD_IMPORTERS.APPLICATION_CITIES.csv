@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-LastEditedBy,NUMBER,,[1],
-CityName,TEXT,,"[""Alberta"", ""Fulton"", ""Marion""]",
-LatestRecordedPopulation,TEXT,,"[""NULL"", ""272"", ""3686""]",
-Location,FLOAT,,"[8.607660043233205e+52, 8.607660043233206e+52]",
-CityID,NUMBER,,"[323, 12470, 20985]",
-ValidTo,NUMBER,,[253402300799999999],
-StateProvinceID,NUMBER,,[1],
-ValidFrom,NUMBER,,[1356998400000000],

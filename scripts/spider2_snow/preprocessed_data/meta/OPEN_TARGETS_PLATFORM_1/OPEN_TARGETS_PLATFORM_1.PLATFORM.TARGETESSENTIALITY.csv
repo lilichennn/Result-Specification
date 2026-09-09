@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""ENSG00000130332"", ""ENSG00000127314"", ""ENSG00000131876""]",
-geneEssentiality,VARIANT,,[],

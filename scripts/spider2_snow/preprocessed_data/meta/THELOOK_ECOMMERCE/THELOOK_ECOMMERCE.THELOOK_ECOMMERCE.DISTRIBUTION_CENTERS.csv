@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-name,TEXT,,"[""Chicago IL"", ""Houston TX"", ""Los Angeles CA""]",
-longitude,FLOAT,,"[-87.6847, -95.3698, -118.25]",
-latitude,FLOAT,,"[41.8369, 29.7604, 34.05]",
-id,NUMBER,,"[2, 3, 4]",

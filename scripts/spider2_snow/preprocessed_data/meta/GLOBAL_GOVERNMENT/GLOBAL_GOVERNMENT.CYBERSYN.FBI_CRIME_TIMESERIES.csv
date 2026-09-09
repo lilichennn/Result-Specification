@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-DATE,DATE,Date associated with the value.,"[""1979-12-31"", ""1980-12-31""]",
-VALUE,NUMBER,Value reported for the variable.,"[14472, 73881, 30650]",
-GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""geoId/08"", ""geoId/12"", ""geoId/25""]",
-UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
-VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""annual_count_of_incidents_violent_crime""]",
-VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Annual Count of Incidents, violent crime""]",
