@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+Refno,NUMBER,"this reference number is always an integer, between 1 and 50000","[10, 13, 14]",
+NameOrder,NUMBER,"an integer between 1 and 228, indicating the position of this author's name in the list of authors for this reference",[1],
+Name,TEXT,"eg 'Mitelman F', or 'Rowley JD'","[""Hayata I"", ""Mitelman F"", ""Shah-Reddy I""]",

@@ -1,0 +1,16 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+activityreg,,"A VARCHAR(20) primary key for each interaction record (e.g., 'ACT001').",character varying,
+timemark,,A TIMESTAMP indicating when the interaction occurred.,timestamp without time zone,
+interactfanpivot,,"A VARCHAR(20) FK referencing Fans(UserRegistry), indicating which fan was involved.",character varying,
+interactidolpivot,,"A VARCHAR(20) FK referencing VirtualIdols(EntityReg), showing which idol was involved.",character varying,
+actkind,,"An enum (InteractionType_enum) describing the action (Vote, Comment, Share, Gift, Live Stream).",USER-DEFINED,
+actplat,,"An enum (InteractionPlatform_enum) for the platform used (YouTube, Twitter, Official App, TikTok).",USER-DEFINED,
+platused,,"An enum (PlatformUsed_enum) describing the device platform (Tablet, Mobile, Console, PC).",USER-DEFINED,
+devtype,,"An enum (DeviceType_enum) specifying the device type (Windows, iOS, Android, Mac).",USER-DEFINED,
+appver,,"A VARCHAR(20) capturing the version of the app used (e.g., 'v2.3.1').",character varying,
+giftfreq,,"An enum (GiftSendingFrequency_enum) capturing how often gifts are sent (Often, Rarely, Never, Frequent).",USER-DEFINED,
+gifttot,,"An INT total count of gifts sent during this session/interaction (e.g., 3).",integer,
+giftvalusd,,"A DECIMAL(10,2) total USD value of gifts (e.g., 15.50).",numeric,
+favgifttag,,"An enum (FavoriteGiftType_enum) for the fan’s preferred gift type (Limited, Custom, Premium, Standard).",USER-DEFINED,
+engagement_metrics,,"JSONB column. Captures metrics related to fan engagement during interactions, such as session duration, live attendance, watch hours, and chat activity.
+Fields: {""chat_activity"":{""chatlang"":""An enum (ChatLang_enum) describing chat language usage (Mixed, Translation, English, Native)."",""chatmsg"":""An INT tally of messages sent in chat (e.g., 30)."",""emojicount"":""An INT number of emoji used by the fan (e.g., 10)."",""msgtone"":""An enum (MessageSentiment_enum) indicating the sentiment (Negative, Positive, Neutral)."",""stkcount"":""An INT number of stickers used (e.g., 2).""},""session"":{""liveatt"":""A SMALLINT counting how many live stream attendances happened in this session."",""sessdurmin"":""A SMALLINT measuring session duration in minutes (e.g., 45)."",""watchhrs"":""A DECIMAL(6,1) specifying how many hours of content the fan watched (e.g., 2.5).""}}",jsonb,

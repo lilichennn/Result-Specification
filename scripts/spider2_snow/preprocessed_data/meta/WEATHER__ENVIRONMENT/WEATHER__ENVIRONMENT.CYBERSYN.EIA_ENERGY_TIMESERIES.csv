@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Refinery and Blender Net Production of Kerosene, MBBL (Monthly)"", ""Natural Gas in Underground Storage Base Gas, MMCF (Monthly)"", ""Refinery Net Production of Paraffinic Lubricants, MBBL per day (Monthly)""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""MBBL"", ""MMCF"", ""MBBL per day""]",
+IMPORTER_GEO_ID,TEXT,"A unique identifier for the importer of natural resources. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.",[],
+EXPORTER_GEO_ID,TEXT,"A unique identifier for the exporter of natural resources. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.",[],
+VALUE,FLOAT,Value reported for the variable.,"[10.0, 60697.0, 13.0]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""refinery_and_blender_net_production_of_kerosene_mbbl_monthly"", ""natural_gas_in_underground_storage_base_gas_mmcf_monthly"", ""refinery_net_production_of_paraffinic_lubricants_mbbl_per_day_monthly""]",
+DATE,DATE,Date associated with the value.,"[""2002-04-30"", ""1997-01-31"", ""2002-10-31""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""padDistrict/04"", ""geoId/56"", ""padDistrict/02""]",

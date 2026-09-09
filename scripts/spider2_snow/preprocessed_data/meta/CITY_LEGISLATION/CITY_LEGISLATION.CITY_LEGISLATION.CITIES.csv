@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+capital,NUMBER,,"[1, 0]",
+insert_date,TEXT,,"[""2022-01-12"", ""2021-03-11"", ""2021-02-24""]",
+city_id,NUMBER,,"[1, 3, 4]",
+country_code_2,TEXT,,"[""jp"", ""in"", ""cn""]",
+city_name,TEXT,,"[""tokyo"", ""delhi"", ""guangzhou""]",
+longitude,FLOAT,,"[35.6897, 28.61, 23.13]",
+latitude,FLOAT,,"[139.6922, 77.23, 113.26]",
+population,FLOAT,,"[37732000.0, 32226000.0, 26940000.0]",

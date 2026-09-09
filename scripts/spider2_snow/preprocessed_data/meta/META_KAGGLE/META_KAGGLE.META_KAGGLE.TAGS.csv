@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+CompetitionCount,NUMBER,,"[20, 14, 10]",
+Description,TEXT,,"[""Basketball is one of the world's most popular and widely viewed sports. Analyze Kobe Bryant's shot selections and peruse our annual March Mania competitions."", ""AI in healthcare is a growing interest. One of the major problems is simply converting research into an application. Should be easy, right?"", """"]",
+KernelCount,NUMBER,,"[662, 1654, 336]",
+Name,TEXT,,"[""basketball"", ""healthcare"", ""earth and nature""]",
+DatasetCount,NUMBER,,"[1870, 1648, 47109]",
+FullPath,TEXT,,"[""subject > health and fitness > exercise > sports > basketball"", ""subject > health and fitness > health > healthcare"", ""subject > earth and nature""]",
+ParentTagId,NUMBER,,"[4141, 11111, 16637]",
+Id,NUMBER,,"[2606, 4202, 7000]",
+Slug,TEXT,,"[""basketball"", ""healthcare"", ""natural-and-physical-sciences""]",

@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,NUMBER,,"[2048980, 2049122, 2049812]",
+creation_date,NUMBER,,"[1264110960193000, 1264111921023000, 1264117573140000]",
+user_id,NUMBER,,"[32632, 98642, 102896]",
+score,NUMBER,,[5],
+text,TEXT,,"[""This Won't work for non-virtual methods, as it will return the name of the type that the method is declared and implemented in, (possibly up the inheritance chain), not the concrete type of the instance you are actually executing the code from."", ""I believe he was saying the opposite, that foo.get(i) can be a lot less efficient.  Think of LinkedList.  If you do a foo.get(i) on the middle of a LinkedList it has to traverse all the previous nodes to get to i.  An iterator, on the other hand, will keep a handle to the underlying data structure and will allow you to walk over the nodes one at a time."", ""Are you trying to estimate the life expectancy of your toilet seat hinges?""]",
+user_display_name,TEXT,,[],
+post_id,NUMBER,,"[2113099, 2113226, 2113685]",

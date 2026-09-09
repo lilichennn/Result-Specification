@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+condition_impairment_at_time_of_crash_driver_name,TEXT,,"[""None/Apparently Normal""]",
+consecutive_number,NUMBER,,"[40164, 40529, 40700]",
+state_name,TEXT,,"[""Arizona""]",
+vehicle_number,NUMBER,,"[6, 7, 5]",
+condition_impairment_at_time_of_crash_driver,NUMBER,,[0],
+state_number,NUMBER,,[4],

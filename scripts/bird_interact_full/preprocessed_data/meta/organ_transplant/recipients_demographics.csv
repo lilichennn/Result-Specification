@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+recip_registry,,TEXT. Primary key uniquely identifying each transplant recipient. PK = Recipients_Demographics(Recip_Registry). Example: R947153.,text,
+age_count,,SMALLINT. Recipient's age in years at time of transplant evaluation. Example: 57.,smallint,
+gend_type,,"TEXT. Recipient's gender classification code. Possible values: F, M.",text,
+blood_class,,"TEXT. Recipient's ABO blood type for compatibility matching. Possible values: A+, A-, AB+, AB-, B+, B-, O+, O-.",text,
+ht_cm,,SMALLINT. Recipient's height measurement in centimeters. Example: 171.,smallint,
+wt_kg,,BIGINT. Recipient's weight measurement in kilograms. Example: 55.,bigint,
+bmi_val,,REAL. Recipient's calculated body mass index value. Example: 18.8.,real,
+ethn_grp,,"TEXT. Recipient's ethnic or racial background classification. Possible values: African, Asian, Caucasian, Hispanic, Other.",text,

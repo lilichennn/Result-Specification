@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,[0.0],
+element,TEXT,,"[""PRCP""]",
+date,DATE,,"[""1797-08-29"", ""1797-09-07"", ""1797-11-04""]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",
+mflag,TEXT,,[],
+id,TEXT,,"[""GM000010962""]",
+time,TEXT,,[],

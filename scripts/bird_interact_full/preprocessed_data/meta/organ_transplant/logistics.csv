@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+log_match_registry,,"TEXT. Primary key linking to transplant matching record. PK = Logistics(Log_Match_Registry), FK to Transplant_Matching.",text,
+trans_method,,"TEXT. Transportation method for organs delivery. Possible values: Charter Air, Commercial Air, Ground, Helicopter.",text,
+don_ref_reg,,TEXT. Reference to donor demographics record. FK to Demographics.,text,
+rec_ref_reg,,TEXT. Reference to recipient demographics record. FK to Recipients_Demographics.,text,

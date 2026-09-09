@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+repo,VARIANT,,"[""{\n  \""id\"": 13184784,\n  \""name\"": \""mina-multistage\"",\n  \""url\"": \""https://github.com/endoze/mina-multistage\""\n}"", ""{\n  \""id\"": 19752304,\n  \""name\"": \""parsedown-extra\"",\n  \""url\"": \""https://github.com/erusev/parsedown-extra\""\n}"", ""{\n  \""id\"": 18802136,\n  \""name\"": \""streamlined\"",\n  \""url\"": \""https://github.com/eugeneware/streamlined\""\n}""]",
+id,TEXT,,[],
+type,TEXT,,"[""WatchEvent""]",
+other,TEXT,,[],
+org,VARIANT,,"[""null""]",
+payload,TEXT,,"[""{\""action\"":\""started\""}""]",
+public,BOOLEAN,,[true],
+actor,VARIANT,,"[""{\n  \""gravatar_id\"": \""b354fcaee552e9d6367cf7b69c1282e0\"",\n  \""login\"": \""lucapette\""\n}"", ""{\n  \""gravatar_id\"": \""525827caf9079e7edb84811724c6042e\"",\n  \""login\"": \""srtfisher\""\n}"", ""{\n  \""gravatar_id\"": \""\"",\n  \""login\"": \""sunny-g\""\n}""]",
+created_at,NUMBER,,"[1410112376000000, 1411101170000000, 1412093659000000]",

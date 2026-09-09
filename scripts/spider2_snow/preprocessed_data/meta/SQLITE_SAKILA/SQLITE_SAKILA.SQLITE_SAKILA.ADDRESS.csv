@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+address_id,NUMBER,,"[3, 5, 6]",
+phone,TEXT,,"["" ""]",
+city_id,NUMBER,,"[300, 463, 449]",
+address2,TEXT,,"[""""]",
+district,TEXT,,"["" ""]",
+last_update,TEXT,,"[""2021-03-06 15:51:54""]",
+postal_code,TEXT,,"["""", ""35200"", ""17886""]",
+address,TEXT,,"[""23 Workhaven Lane"", ""1913 Hanoi Way"", ""1121 Loja Avenue""]",

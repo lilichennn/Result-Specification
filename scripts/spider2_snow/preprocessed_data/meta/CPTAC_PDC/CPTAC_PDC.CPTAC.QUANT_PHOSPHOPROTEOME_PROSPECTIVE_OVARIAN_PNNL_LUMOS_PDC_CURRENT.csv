@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+aliquot_id,TEXT,,"[""e56ea641-6424-11e8-bcf1-0a2705229b82""]",
+refseq_id,TEXT,,"[""NP_008971.2"", ""NP_001135869.1"", ""NP_001164227.1""]",
+aliquot_submitter_id,TEXT,,"[""665f4f0f-130c-4b09-9762-cd0696_D2""]",
+case_id,TEXT,,"[""526a8712-0881-11eb-bc0e-0aad30af8a83""]",
+aliquot_run_metadata_id,TEXT,,"[""096069d2-5738-11e8-b664-00a098d917f8""]",
+sample_id,TEXT,,"[""0633de6c-641d-11e8-bcf1-0a2705229b82""]",
+protein_abundance_log2ratio,FLOAT,,"[-1.8605, -1.2867, -1.8232]",
+study_name,TEXT,,"[""Prospective Ovarian PNNL Phosphoproteome Lumos""]",
+phosphorylation_sites,TEXT,,"[""s668"", ""s299"", ""s246""]",

@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+distregistry,,VARCHAR(20). Unique disaster event identifier. PK.,character varying,
+timemark,,TIMESTAMP. Timestamp when the disaster event was recorded. Example: 2024-12-21 19:49.,timestamp without time zone,
+haztype,,"HazType_enum. Type of the disaster (e.g., Wildfire, Earthquake). Possible values: Earthquake, Flood, Hurricane, Tsunami, Wildfire.",USER-DEFINED,
+haz_level,,"TEXT. Severity level of the disaster event. Possible values: Severity-1, Severity-2, Severity-3, Severity-4, Severity-5.",text,
+affectedarea,,TEXT. Geographic area impacted by the disaster. Example: East Jeremy.,text,
+region_tag,,TEXT. Regional tag for categorization. Example: RC7250.,text,
+latcoord,,REAL. Latitude coordinate of the disaster center. Example: 51.203609.,real,
+lon_coord,,REAL. Longitude coordinate of the disaster center. Example: 36.221141.,real,
+damagereport,,"TEXT. Detailed report of the damage caused by the disaster. Possible values: Catastrophic, Minor, Moderate, Severe.",text,
+impact_summary,,"JSONB column. Summarizes the impact of the disaster including population effects and damage levels.
+Fields: {""communication_and_transport"":{""communication_state"":""TEXT. Communication network status during the disaster. Possible values: Down, Limited, OP."",""transport_access"":""TEXT. Access to transportation routes during the disaster. Possible values: Full, Limited, Minimal.""},""infrastructure_damage"":{""infra_damage_pct"":""REAL. Percentage of infrastructure damaged. Example: 19.0."",""power_outage_pct"":""REAL. Percentage of power outages. **NULL means power outage data not recorded.**. Example: 93.2."",""water_damage_pct"":""BIGINT. Percentage of water infrastructure damage. **NULL means water damage data not available.**. Example: 77.4.""},""population_impact"":{""affected"":""BIGINT. Number of affected population. Example: 228943."",""casualties"":""BIGINT. Number of casualties due to the disaster. Example: 174."",""displaced"":""BIGINT. Number of displaced individuals. **NULL means displacement data not available.**. Example: 31578.0."",""injured"":""BIGINT. Number of injuries caused by the disaster. **NULL means injury data not available.**. Example: 4524.0."",""missing"":""BIGINT. Number of missing persons. **NULL means missing persons data not recorded.**. Example: 212.0.""}}",jsonb,

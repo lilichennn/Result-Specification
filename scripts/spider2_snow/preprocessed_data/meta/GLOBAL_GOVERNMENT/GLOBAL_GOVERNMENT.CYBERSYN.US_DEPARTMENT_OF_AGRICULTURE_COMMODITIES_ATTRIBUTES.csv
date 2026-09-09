@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+COMMODITY_TYPE,TEXT,"The type of agricultural product (e.g., wheat, corn, rice, cotton).","[""Cottonseed Oil"", ""Rapeseed Meal"", ""Peanut Meal""]",
+FREQUENCY,TEXT,Frequency of aggregations (e.g. Annual).,"[""Weekly"", ""Annual""]",
+UNIT,TEXT,Unit of measurement for the reported value (ex. Metric Tons).,"[""Metric Tons""]",
+MEASURE,TEXT,"Quantifiable attribute; description of what is being recorded (ex. Exports, Imports).","[""Outstanding Sales"", ""Exports"", ""Food Use Domestic Consumption""]",
+VARIABLE_NAME,TEXT,"Human-readable description of the reported attribute, including commodity type and a description of what is being recorded.","[""Cottonseed Oil: Outstanding Sales"", ""Rapeseed Meal: Exports"", ""Peanut Meal: Food Use Domestic Consumption""]",
+VARIABLE,TEXT,Unique identifier for a variable created from a concatenation of the IDs provided by the USDA (commodity code and attribute ID).,"[""ESR_cottonseed_oil_outstanding_sales"", ""PSD-0813600-088"", ""PSD-0813200-149""]",

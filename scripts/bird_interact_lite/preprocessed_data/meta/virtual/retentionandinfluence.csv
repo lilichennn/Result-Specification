@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+retreg,,"A VARCHAR(20) primary key for retention/influence records (e.g., 'RET001').",character varying,
+retainengagepivot,,A VARCHAR(20) FK referencing Engagement(EngageReg).,character varying,
+retainloyaltypivot,,A VARCHAR(20) FK referencing LoyaltyAndAchievements(LoyaltyReg).,character varying,
+churnflag,,"An enum (ChurnRisk_enum) capturing churn risk (High, Medium, Low, None).",USER-DEFINED,
+reactcount,,"A SMALLINT how many times the fan reactivated after inactivity (e.g., 2).",smallint,
+refcount,,"A SMALLINT number of referrals the fan made (e.g., 3).",smallint,
+contreach,,"An INT measuring content reach or audience size (e.g., 500).",integer,
+viralcont,,"A SMALLINT how many viral posts or content pieces the fan created (e.g., 1).",smallint,
+trendpart,,"A SMALLINT times the fan participated in trending topics or challenges (e.g., 4).",smallint,
+hashuse,,"A SMALLINT count of hashtags the fan used (e.g., 10).",smallint,

@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+industry,TEXT,,"[""Fintech"", ""E-commerce & direct-to-consumer""]",
+company_id,NUMBER,,"[316, 162, 803]",

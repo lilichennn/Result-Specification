@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable name for the variable.,"[""Mortgage Status By Selected Monthly Owner Costs As A Percentage Of Household Income In The Past 12 Months: Population | Housing units with a mortgage | 30.0 to 34.9 percent, 5yr Estimate"", ""Occupants Per Room ( Householder): Population | 1.00 or less occupants per room | White Alone, Not Hispanic or Latino, 5yr Estimate"", ""Bedrooms By Gross Rent: Population | 3 or more bedrooms | No cash rent, 5yr Margin of Error""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table.,"[""B25091_008E_5YR"", ""B25014H_002E_5YR"", ""B25068_037M_5YR""]",
+VALUE,VARIANT,Value reported for the variable.,"[21.0, 0.0, 17.0]",
+DATE,DATE,Date associated with the value.,"[""2016-12-31"", ""2021-12-31"", ""2013-12-31""]",
+GEO_ID,TEXT,A unique identifier for a place joinable to the GEOGRAPHY_INDEX table.,"[""zip/54137"", ""zip/57540"", ""zip/60955""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",

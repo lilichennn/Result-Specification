@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+COMPANY_NAME,TEXT,The name of the company.,"[""WYNN RESORTS LTD"", ""RITZ-CARLTON HOTEL COMPANY LLC"", ""TOWNEPLACE SUITES BY MARRIOTT""]",
+RELATIONSHIP_TYPE,TEXT,Specifies the kind of relationship between the company and the related company. The value is 'Parent' when the company is the parent of the related company and 'Subsidiary' when the company is a subsidiary of the related company.,"[""Parent"", ""Subsidiary""]",
+RELATIONSHIP_START_DATE,DATE,"The beginning of a company being associated with the related company. In cases where the start date is unknown, NULL is assigned.",[],
+RELATIONSHIP_END_DATE,DATE,"The ending of the relationship being valid for the company and the related company. In cases where a relationship is currently valid, an end date of NULL is assigned.",[],
+COMPANY_ID,TEXT,Unique identifier assigned by Cybersyn to each company. Joinable to the COMPANY_INDEX table.,"[""ca52d8c892a8ffe6e8368f2bd7a5fca7"", ""61042fb57d4bc5965ff4f0dfa55f3aa2"", ""9d60e1934f9141a0991597d08181e126""]",
+ENTITY_LEVEL,TEXT,"Describes the type or level of the entity for additional convenience. Currently, all entities are corporate entities and are denoted as 'Corporate'.","[""Corporate""]",
+RELATED_COMPANY_ID,TEXT,Unique identifier assigned by Cybersyn to the related company. Joinable to the COMPANY_INDEX table.,"[""5a2aaa890644211a8e69ad206ee9d4de"", ""d0d371457687b60bbb116b9fc9ae65ea"", ""015a8a998d3e9492c6ff9ed4e452d802""]",
+RELATED_ENTITY_LEVEL,TEXT,"Describes the type or level of the related entity for additional convenience. Currently, all entities are corporate entities and are denoted as 'Corporate'.","[""Corporate""]",
+RELATED_COMPANY_NAME,TEXT,The name of the related company.,"[""WYNN LAS VEGAS LLC"", ""MARRIOTT INTERNATIONAL INC /MD/"", ""SUPER 8 WORLDWIDE, INC.""]",

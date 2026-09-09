@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+StockItemID,NUMBER,,"[2, 3, 5]",
+StockItemStockGroupID,NUMBER,,"[5, 8, 13]",
+StockGroupID,NUMBER,,[1],
+LastEditedWhen,NUMBER,,[1356998400000000],
+LastEditedBy,NUMBER,,[1],

@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+physref,,A SERIAL primary key uniquely identifying each physical properties record.,bigint,
+objectlink,,"Foreign key INTEGER referencing planets(PlanetRef), linking physical parameters to a specific planet.",bigint,
+massjup,,"Planetary mass from 'pl_bmassj' in Jupiter mass units. REAL covering range from 0.00006 MJ (sub-Earth) to 28.5 MJ (super-Jupiter). Contains  NULL when mass cannot be determined (e.g., for transit-only discoveries without radial velocity follow-up).",real,
+radjup,,"Planetary radius from 'pl_radj' in Jupiter radius units. REAL covering range from 0.027 RJ (sub-Earth) to 6.9 RJ (inflated giants). Contains  NULL when radius cannot be measured (e.g., for radial velocity-only discoveries).",real,
+densvalue,,Bulk density from 'pl_dens' in g/cm³. REAL covering gas giants (<1 g/cm³) to super-dense planets (>20 g/cm³). Contains  NULL when both mass and radius are not available for density calculation.,real,

@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+rgbregistry,,A VARCHAR(20) primary key uniquely identifying each RGB lighting record.,character varying,
+rgbmechref,,"A VARCHAR(20) foreign key referencing Mechanical(MechRegistry), associating RGB details with a mechanical record (e.g., a keyboard).",character varying,
+rgbaudref,,"A VARCHAR(20) foreign key referencing AudioAndMedia(AudRegistry), linking RGB details to audio/media data if necessary.",character varying,
+rgbbright,,A SMALLINT indicating the RGB brightness level (on a predefined scale or percentage).,smallint,
+rgbcoloracc,,"A NUMERIC(4,1) measuring color accuracy or uniformity (e.g., Delta E or similar scale).",numeric,
+rgbrfrate,,A SMALLINT specifying the refresh rate (in Hz) at which the RGB lighting updates.,smallint,
+rgbmodes,,"A VARCHAR(25) naming the different RGB lighting modes (e.g., 'Wave', 'Static', 'Breathing').",character varying,
+rgbzones,,A SMALLINT counting how many independent zones or sections of RGB control the device has.,smallint,
+rgbcolors,,"An INTEGER for the total number of distinct colors supported (e.g., 16.8 million).",integer,

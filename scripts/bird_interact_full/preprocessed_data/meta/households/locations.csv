@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+regioncode,,"Administrative region code or identifier representing the geographic administrative division where households are located. Forms part of composite primary key with ZoneNum. EX. Taguatinga,Samambaia",text,
+zonenum,,"Macrozone numerical identifier representing specific geographic zones within administrative regions for detailed location classification. Forms part of composite primary key with RegionCode. EX.315,222,332",bigint,

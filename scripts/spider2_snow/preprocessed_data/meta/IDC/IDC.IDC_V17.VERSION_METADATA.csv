@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+version_hash,TEXT,MD5 hash of hashes of collections in this version,"[""633f378a65709a6b2bc355ad318171b4"", ""7feb0198730599850c8cbf6fb8831802"", ""9af3719474f077d9185b5590432e86b8""]",
+version_timestamp,TEXT,Version creation timestamp,"[""2021-10-23"", ""2022-02-09"", ""2022-07-11""]",
+idc_version,NUMBER,IDC version number,"[5, 8, 10]",

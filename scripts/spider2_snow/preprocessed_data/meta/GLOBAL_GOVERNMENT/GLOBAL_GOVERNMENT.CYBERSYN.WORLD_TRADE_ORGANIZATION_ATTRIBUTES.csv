@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable description of the reported attribute.,"[""HS Pref - Best preferential simple average ad valorem duty: Goats (010420) (Harmonized System) [Least-developed countries (LDC) duties for 6 countries]"", ""HS Pref - Best preferential simple average ad valorem duty: Other (010690) (Harmonized System) [Free-trade agreement duty rates for Cambodia under ASEAN, Least-developed countries (LDC) duties]"", ""HS Pref - Best preferential simple average ad valorem duty: Sheep (010410) (Harmonized System) [Free-trade agreement duty rate for CAFTA, Dominican Republic and United States]""]",
+VARIABLE,TEXT,Unique identifier for a variable created from a hash of the unique attributes of the World Trade Organization (WTO) variables.,"[""a0cb8c65e9dea7c45a97105bf3e27b66"", ""bb8bfe9d6ef6049cf68b65d1a2cd25ca"", ""ccca9ea12075bfede6aa76eb298a70f3""]",
+FREQUENCY,TEXT,Frequency of aggregations (e.g. Annual).,"[""Annual""]",
+PRODUCT_SECTOR,TEXT,A specific category of goods or services that are traded internationally.,"[""Goats"", ""Other"", ""Sheep""]",
+MEASURE,TEXT,Quantifiable attribute; description of what is being recorded.,"[""Preferential by detailed HS 6-digit""]",
+WTO_INDICATOR,TEXT,World Trade Organization (WTO) indicator code for the variable.,"[""TPA_PRF_HS_HS_P_0070_HS_010420"", ""TPA_PRF_HS_HS_P_0070_HS_010690"", ""TPA_PRF_HS_HS_P_0070_HS_010410""]",
+UNIT,TEXT,"Unit of measurement for the reported value (e.g., Index).","[""Percent""]",
+MEASUREMENT_TYPE,TEXT,"Measurement classification of the variable (e.g., % change over previous year).",[],

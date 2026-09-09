@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+StaffID,NUMBER,,"[98019, 98028, 98011]",
+ClassID,NUMBER,,"[1004, 1020, 1180]",

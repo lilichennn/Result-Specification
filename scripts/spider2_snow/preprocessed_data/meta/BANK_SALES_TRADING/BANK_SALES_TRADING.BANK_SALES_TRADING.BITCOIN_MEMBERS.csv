@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+first_name,TEXT,,"[""Danny"", ""Vipul"", ""Nandita""]",
+member_id,TEXT,,"[""c4ca42"", ""c81e72"", ""a87ff6""]",
+region,TEXT,,"[""Australia"", ""United States""]",

@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+arcregistry,,"Full name: 'Project ID'. Explanation: Primary key for Projects, a unique project identifier. Data type: VARCHAR(10). Example: 'PR7509'.",character varying,
+vesseltag,,Full name: 'Project Name'. Explanation: Label or name for the project. Data type: VARCHAR(60). Example: 'Project Happy'.,character varying,
+fundflux,,Full name: 'Funding Source'. Explanation: Source of funds for the project. Data type: TEXT. Example: 'Government'.,text,
+authpin,,Full name: 'Permit Number'. Explanation: Authorization or permit ID. Data type: CHAR(6). Example: 'PMT4719'.,character,
+authhalt,,Full name: 'Permit Expiry Date'. Explanation: Date on which the permit expires. Data type: DATE. Example: '2025-12-05'.,date,

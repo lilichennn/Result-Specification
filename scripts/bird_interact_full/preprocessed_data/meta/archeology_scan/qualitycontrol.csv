@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+qualregistry,,BIGSERIAL. Auto-generated unique identifier for quality control record. PK = QualityControl(QualRegistry).,bigint,
+arcref,,TEXT. Reference to associated archeologys project. FK to Projects.,text,
+crewref,,TEXT. Reference to operator who performed quality control. FK to Personnel.,text,
+accucheck,,"TEXT. Accuracy assessment evaluation results. Possible values: Accuracy check not required, standard quality sufficient.",text,
+ctrlstate,,"TEXT. Quality control status and validation state. Possible values: Failed, Passed, Pending.",text,
+valimeth,,"TEXT. Validation method used for quality assessment. Possible values: Automated, Hybrid, Visual.",text,
+valistate,,"TEXT. Validation status and completion state. Possible values: Validation rejected, data quality issues identified.",text,
+archstat,,TEXT. Archival status for long-term data preservation. **NULL means archival process not initiated or status not determined.**. Example: Verified.,text,
+pubstat,,"TEXT. Publication status and dissemination readiness. Possible values: Draft status, preparation for submission.",text,
+copystat,,TEXT. Copyright status and intellectual property rights. **NULL means copyright status not established or legal review pending.**. Example: Open Access.,text,
+refmention,,TEXT. Data citation format and attribution requirements. Example: Citation-8447.,text,
+remark,,TEXT. Additional notes and observations for quality control. **NULL means no additional notes recorded or observations not documented.**. Example: Sell shoulder understand serious degree particular game..,text,

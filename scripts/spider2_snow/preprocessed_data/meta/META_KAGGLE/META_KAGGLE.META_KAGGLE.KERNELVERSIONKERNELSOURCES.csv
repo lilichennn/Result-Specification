@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+KernelVersionId,NUMBER,,"[6490319, 6492453, 6513221]",
+SourceKernelVersionId,NUMBER,,[6488320],
+Id,NUMBER,,"[1069706, 1071186, 1077710]",

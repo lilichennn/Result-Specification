@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+time,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+qflag,TEXT,,"[""I""]",
+date,DATE,,"[""1879-02-21"", ""1879-01-13"", ""1879-02-20""]",
+mflag,TEXT,,[],
+element,TEXT,,"[""TMAX"", ""TMIN""]",
+value,FLOAT,,"[-128.0, -50.0, -100.0]",
+id,TEXT,,"[""USC00301010"", ""USC00331662"", ""USC00338366""]",

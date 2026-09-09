@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+territoryid,TEXT,,"[""06897"", ""02139"", ""02184""]",
+employeeid,NUMBER,,"[1, 2, 3]",

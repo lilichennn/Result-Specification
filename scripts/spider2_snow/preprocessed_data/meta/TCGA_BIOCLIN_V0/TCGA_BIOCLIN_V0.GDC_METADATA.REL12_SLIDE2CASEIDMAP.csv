@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+project_id,TEXT,"ID of the Project -- e.g. TCGA-BRCA, TARGET-AML, etc.","[""TCGA-BLCA"", ""TCGA-BRCA""]",
+sample_gdc_id,TEXT,"Unique GDC identifier for this sample (corresponds to the sample_barcode), eg a1ec9279-c1a6-4e58-97ed-9ec1f36187c5  --  this can be used to access more information from the GDC data portal","[""f7f74a2b-5299-424d-b9a7-2b313dc7823c"", ""28462438-fe47-4880-82d9-ee43d534d8a3"", ""4fcf4afe-40be-40eb-95cb-5b172ed83d11""]",
+case_barcode,TEXT,"Submitter identifier, eg HCC1954, TCGA-ZX-AA5X, etc","[""TCGA-DK-A1A6"", ""TCGA-E2-A15E"", ""TCGA-E2-A15K""]",
+slide_gdc_id,TEXT,Slide GDC uuid,"[""c62f2d94-94cc-4948-be2f-ab9a314eefa3"", ""e5b7bb2d-5cf3-4bd6-a36b-9b7c69ca56de"", ""c2f7ed54-0f5a-4f43-b130-77a7dcceb9db""]",
+portion_barcode,TEXT,Original/submitter portion ID,"[""TCGA-DK-A1A6-06A-11"", ""TCGA-E2-A15E-06A-11"", ""TCGA-E2-A15K-06A-11""]",
+sample_barcode,TEXT,Original/submitter sample ID,"[""TCGA-DK-A1A6-06A"", ""TCGA-E2-A15E-06A"", ""TCGA-E2-A15K-06A""]",
+sample_type_id,NUMBER,Accompanying sample type id for the sample type,[6],
+program_name,TEXT,"Program name, eg TCGA or TARGET","[""TCGA""]",
+slide_barcode,TEXT,Slide submitter ID,"[""TCGA-DK-A1A6-06A-01-TS1"", ""TCGA-E2-A15E-06A-01-TS1"", ""TCGA-E2-A15K-06A-01-TS1""]",
+case_gdc_id,TEXT,GDC unique identifier,"[""9c274536-3ca1-4f0e-93a8-1688074d862f"", ""0a2a3529-f645-4967-9a58-89ee20b8bb62"", ""17c1d42c-cb84-4655-a4cd-b54bae17ecaf""]",
+portion_gdc_id,TEXT,Original/submitter portion ID,"[""5df8dcdf-6717-48b1-988d-5239a6f5bd69"", ""1716ea4f-0977-4fdd-a164-a3bde024fe96"", ""e62a108f-46c5-4752-b6d7-1d61c6108f2c""]",
+sample_type,TEXT,"Two-digit sample_type code which forms part of the sample barcode e.g. 01,11,06, etc.","[""Metastatic""]",

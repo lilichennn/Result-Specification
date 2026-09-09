@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+bondallocid,,A SERIAL primary key uniquely identifying each bond credit rating allocation record for funds.,bigint,
+fundlink,,"Foreign key referencing funds.TickerSym, indicating which fund has this bond allocation.",character varying,
+ratinglink,,"Foreign key referencing bond_ratings.RateKey, indicating which credit rating category the allocation applies to.",bigint,
+allocationpct,,Percentage (0-1) of the fund's bond holdings in this credit rating category.,real,

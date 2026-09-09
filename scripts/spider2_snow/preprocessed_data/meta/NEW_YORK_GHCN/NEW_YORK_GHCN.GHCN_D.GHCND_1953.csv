@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[97.0, 0.0, 183.0]",
+date,DATE,,"[""1953-02-16"", ""1953-08-06"", ""1953-06-10""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+id,TEXT,,"[""AG000060390""]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",
+element,TEXT,,"[""PRCP"", ""TMAX""]",

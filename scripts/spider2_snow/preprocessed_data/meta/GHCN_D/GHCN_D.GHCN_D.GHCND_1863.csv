@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[44.0, -2.0, -75.0]",
+id,TEXT,,"[""EIE00101859"", ""ITE00100554"", ""EZE00100082""]",
+time,TEXT,,[],
+element,TEXT,,"[""TMAX"", ""TMIN"", ""SNOW""]",
+mflag,TEXT,,[],
+date,DATE,,"[""1863-08-02"", ""1863-12-03"", ""1863-12-31""]",
+sflag,TEXT,,"[""E"", ""F""]",
+qflag,TEXT,,"[""O"", ""I"", ""X""]",

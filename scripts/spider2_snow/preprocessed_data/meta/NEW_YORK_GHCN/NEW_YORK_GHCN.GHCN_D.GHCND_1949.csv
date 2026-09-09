@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""USC00238777"", ""USC00052759"", ""USC00244241""]",
+element,TEXT,,"[""TMIN"", ""TOBS"", ""TMAX""]",
+qflag,TEXT,,[],
+mflag,TEXT,,[],
+date,DATE,,"[""1949-09-02"", ""1949-04-27"", ""1949-12-04""]",
+time,TEXT,,"[""1600""]",
+value,FLOAT,,[33.0],
+sflag,TEXT,,"[""0""]",

@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+InvoiceID,FLOAT,,"[129.0, 131.0, 154.0]",
+CustomerID,FLOAT,,"[122.0, 543.0, 84.0]",
+TransactionTypeID,NUMBER,,[10],
+StockItemTransactionID,NUMBER,,"[630, 635, 690]",
+StockItemID,NUMBER,,"[118, 105, 137]",
+LastEditedBy,NUMBER,,[2],
+TransactionOccurredWhen,TEXT,,"[""2013-01-03 12:00:00.0000000""]",
+PurchaseOrderID,FLOAT,,[],
+SupplierID,FLOAT,,[],
+LastEditedWhen,TEXT,,"[""2013-01-03 12:00:00.0000000""]",
+Quantity,FLOAT,,[-10.0],

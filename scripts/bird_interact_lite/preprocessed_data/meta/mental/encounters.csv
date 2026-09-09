@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+enckey,,"A VARCHAR(30) primary key identifying the encounter (e.g., 'ENC001').",character varying,
+timemark,,A TIMESTAMP for when the encounter or record was created/logged.,timestamp without time zone,
+abref,,A VARCHAR(30) FK referencing AssessmentBasics(ABKey).,character varying,
+patref,,A VARCHAR(20) FK referencing Patients(PatKey).,character varying,
+clinid,,A VARCHAR(20) referencing the clinician ID (not an enforced FK).,character varying,
+facid,,A VARCHAR(20) referencing the facility ID (not an enforced FK).,character varying,
+missappt,,"A NUMERIC(2,1) capturing how many appointments were missed or how frequently (e.g., 1.0).",numeric,
+txbarrier,,"An enum (treatmentbarriers_enum) indicating barriers to treatment (Multiple, Time, Financial, Transportation).",USER-DEFINED,
+nxapptdt,,"A DATE capturing the next appointment date (e.g., '2025-06-10').",date,
+dqscore,,A SMALLINT data quality score (0–100 scale).,smallint,
+assesscomplete,,"A VARCHAR(250) note on assessment completeness (e.g., 'Sections B & C incomplete').",character varying,

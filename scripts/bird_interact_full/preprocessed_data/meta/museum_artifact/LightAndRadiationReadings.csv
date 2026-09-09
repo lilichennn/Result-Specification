@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+rad_id,,BIGSERIAL. Unique identifier for each light and radiation reading. PK.,bigint,
+env_link,,TEXT. Reference to the environmental reading. FK to EnvironmentalReadingsCore.monitor_code.,text,
+lux,,BIGINT. Light intensity in lux. Example: 138.0.,bigint,
+UV_uW,,REAL. Ultraviolet (UV) radiation in microwatts. Example: 32.58.,real,
+IR_W,,REAL. Infrared radiation in watts. Example: 7.51.,real,
+visLxh,,BIGINT. Visible light intensity in lux-hours. Example: 71166.,bigint,

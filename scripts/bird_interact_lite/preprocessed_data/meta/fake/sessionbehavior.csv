@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+sessref,,"A CHAR(12) primary key uniquely identifying each session behavior record (e.g., 'SE1234567890').",character,
+sessprofref,,"A CHAR(12) referencing Profile(ProfKey) (e.g., 'PF1234567890').",character,
+logintimepat,,"An enum (LoginTimePattern_enum) describing login times (Burst, Bot-like, Random, Regular).",USER-DEFINED,
+loginfreq,,"An enum (LoginFrequency_enum) labeling login frequency (Medium, High, Low, Suspicious).",USER-DEFINED,
+loginlocvar,,"NUMERIC(4,1) measuring variance in login locations (e.g., '2.7').",numeric,
+sesslenmean,,"NUMERIC(7,2) average session length (e.g., '123.45').",numeric,
+sesscount,,"An INTEGER counting total sessions (e.g., '57').",integer,
+actregval,,"NUMERIC(4,2) measuring how regularly the user logs in (e.g., '0.75').",numeric,
+acttimedist,,"A JSONB structure capturing session activity distribution (e.g., '{""morning"": 30, ""night"": 70}').",jsonb,

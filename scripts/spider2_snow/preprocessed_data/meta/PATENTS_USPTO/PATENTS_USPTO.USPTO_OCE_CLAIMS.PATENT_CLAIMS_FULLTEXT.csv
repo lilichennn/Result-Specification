@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+ind_flg,TEXT,,"[""0""]",
+pat_no,TEXT,,"[""8775049""]",
+claim_txt,TEXT,,"[""9. The method according to claim 1, wherein sample signals are derived from theoretical considerations on mixture formation and combustion."", ""15. The method according to claim 14, wherein conclusions are drawn on irregular combustion from at least one deviation between the cylinder pressure peaks and the light signal peaks."", ""17. The method according to claim 1, wherein a measurement of the emissions is performed simultaneously with the detection of the flame light signals.""]",
+dependencies,TEXT,,"[""1"", ""14"", ""20""]",
+claim_no,TEXT,,"[""9"", ""15"", ""17""]",
+appl_id,TEXT,,"[""13306241""]",

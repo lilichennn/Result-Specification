@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+contrib_registry,,TEXT. Primary key uniquely identifying each organs donor in the transplant matching system. PK = Demographics(Contrib_Registry). Example: D812743.,text,
+age_count,,"TEXT. Donor's age in years at time of organs recovery. Example: 57 years, mature donor.",text,
+blood_class,,TEXT. Donor's ABO blood type classification for compatibility matching. Possible values: AB- rare negative type.,text,
+nation_ref,,TEXT. Donor's country of origin or nationality reference. Example: Seychelles.,text,
+physicalstats,,"JSONB column. Groups physical measurements and characteristics including height, weight, BMI, and demographic information for donor assessment.
+Fields: {""Bmi_Value"":""REAL. Donor's calculated body mass index value. Example: 18.8."",""Ethnicity"":""TEXT. Donor's ethnic or racial background classification. Possible values: African, Asian, Caucasian, Hispanic, Other."",""Gender_Type"":""TEXT. Donor's gender classification code. Possible values: F, M."",""Height_Cm"":""SMALLINT. Donor's height measurement in centimeters. Example: 171."",""Weight_Kg"":""SMALLINT. Donor's weight measurement in kilograms. Example: 55.""}",jsonb,

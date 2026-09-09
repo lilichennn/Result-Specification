@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+is_renting,BOOLEAN,"1/0 boolean - is the station currently renting bikes (even if the station is empty, if it is set to allow rentals this value should be 1)",[true],
+is_installed,BOOLEAN,1/0 boolean - is the station currently on the street,[true],
+station_id,TEXT,Unique identifier of a station,"[""46b4ef45-b06b-40eb-9fdf-9bc8ff104a4f"", ""bb54f5c8-5578-4167-9599-8e55154de4fd"", ""63b2136c-c947-473e-977e-8cc0e6347699""]",
+num_bikes_available,NUMBER,Number of bikes available for rental,[0],
+eightd_has_available_keys,BOOLEAN,,[false],
+num_docks_disabled,NUMBER,Number of empty but disabled dock points at the station. This value remains as part of the spec as it is possibly useful during development,[0],
+last_reported,NUMBER,Integer POSIX timestamp indicating the last time this station reported its status to the backend,"[1729209514, 1729209462, 1729209551]",
+is_returning,BOOLEAN,1/0 boolean - is the station accepting bike returns (if a station is full but would allow a return if it was not full then this value should be 1),[true],
+num_ebikes_available,NUMBER,,[0],
+num_bikes_disabled,NUMBER,"Number of disabled bikes at the station. Vendors who do not want to publicize the number of disabled bikes or docks in their system can opt to omit station capacity (in station_information), num_bikes_disabled and num_docks_disabled. If station capacity is published then broken docks/bikes can be inferred (though not specifically whether the decreased capacity is a broken bike or dock)",[0],
+num_docks_available,NUMBER,Number of docks accepting bike returns,"[15, 27, 19]",

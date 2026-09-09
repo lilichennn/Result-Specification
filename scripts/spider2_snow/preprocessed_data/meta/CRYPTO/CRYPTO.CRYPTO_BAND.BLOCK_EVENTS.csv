@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+block_height,NUMBER,,"[4561369, 4560826, 4560892]",
+block_timestamp,TEXT,,"[""2021-03-29T23:27:14.111869Z"", ""2021-03-29T22:59:30.7985516Z"", ""2021-03-29T23:02:53.2451133Z""]",
+event_type,TEXT,,"[""proposer_reward"", ""mint"", ""liveness""]",
+block_timestamp_truncated,NUMBER,,"[1617060434111869, 1617058770798551, 1617058973245113]",
+attributes,VARIANT,,"[""[]""]",
+block_event_type,TEXT,,"[""begin""]",

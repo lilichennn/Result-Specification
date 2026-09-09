@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+title,TEXT,,"[""Sporting rivals go to extra time"", ""TV's future down the phone line"", ""Piero gives rugby perspective""]",
+filename,TEXT,,"[""bbc/tech/056.txt"", ""bbc/tech/394.txt"", ""bbc/tech/028.txt""]",
+category,TEXT,,"[""tech""]",
+body,TEXT,,[],

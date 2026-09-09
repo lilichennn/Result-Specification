@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,The name of the ERC20 token,[],
+address,TEXT,The address of the ERC20 token,"[""0x1141608659ed28bdc60c4915b86907b4e24bde5e"", ""0xbd3419e2d4a4b3a34a92ccb8927e99ac0da1f75e"", ""0xc80d7b787470221079348a40120bd37a4ec4467a""]",
+symbol,TEXT,The symbol of the ERC20 token,[],
+decimals,TEXT,The number of decimals the token uses. Use safe_cast for casting to NUMERIC or FLOAT64,[],
+block_number,NUMBER,Block number where this token was created,"[6245977, 6248211, 6249643]",
+block_timestamp,NUMBER,Timestamp of the block where this token was created,"[1532523239000000, 1532553651000000, 1532574711000000]",
+total_supply,TEXT,The total token supply. Use safe_cast for casting to NUMERIC or FLOAT64,[],
+block_hash,TEXT,Hash of the block where this token was created,"[""0x8b621fa3ed26005a446fed69395f16a3b982f556ec03e2b0608c2de7a91cba4f"", ""0x402274814d248a1867145d588229224c01bf545a0f3e492f22296edb389c6808"", ""0x4d59e762caf3bfcc6f7c9db2eb6086b19f4c5032d25b7527e379259484f48b3d""]",

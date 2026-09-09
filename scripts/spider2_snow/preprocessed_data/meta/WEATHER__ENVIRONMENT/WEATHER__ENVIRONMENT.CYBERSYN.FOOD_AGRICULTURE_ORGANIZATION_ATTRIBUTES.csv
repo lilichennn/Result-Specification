@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Stocks of Chickens, broilers (UNFCCC Official figure)"", ""Stocks of Ducks (FAO Estimated value)"", ""Stocks of Turkeys (FAO Forecast value)""]",
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Stocks""]",
+ITEM,TEXT,"Refers to a crop, land type, animal, energy/waste source, or other related agricultural emissions object or system.","[""Chickens, broilers"", ""Ducks"", ""Turkeys""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""5111_ 1053_3051_A"", ""5111_ 1068_3050_E"", ""5111_ 1079_3050_F""]",
+MEASUREMENT_TYPE,TEXT,"How reliable the data is (official, unofficial, estimated, etc.).","[""Official figure"", ""Estimated value"", ""Forecast value""]",
+SOURCE,TEXT,Source of the statistical data.,"[""UNFCCC"", ""FAO""]",
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual""]",
+EMISSION_TYPE,TEXT,Type of chemical component generated from agricultural activity.,[],

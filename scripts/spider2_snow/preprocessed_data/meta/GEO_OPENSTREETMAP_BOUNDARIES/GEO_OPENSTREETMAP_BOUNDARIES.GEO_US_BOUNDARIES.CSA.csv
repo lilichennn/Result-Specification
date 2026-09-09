@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+internal_point_lon,FLOAT,,"[-86.7482873, -81.4807049, -83.4402563]",
+internal_point_geom,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xc7`j\\xf0\\xe3\\xafU\\xc05Lm\\xa9\\x83\\xc3@@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xba!|\\xde\\xc3^T\\xc0f%\\xf7\\x85\\xa1\\xa5C@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xe9\\x96\\xc2(-\\xdcT\\xc0\\xa1\\x1d&\\xd0\\x16DE@')""]",
+geo_id,TEXT,,"[""142"", ""425"", ""220""]",
+internal_point_lat,FLOAT,,"[33.5274555, 39.2939918, 42.5319462]",
+lsad_name,TEXT,,"[""Birmingham-Hoover-Talladega, AL CSA"", ""Parkersburg-Marietta-Vienna, WV-OH CSA"", ""Detroit-Warren-Ann Arbor, MI CSA""]",
+area_water_meters,FLOAT,,"[347190038.0, 53193779.0, 1335029818.0]",
+area_land_meters,FLOAT,,"[17485172162.0, 3188257728.0, 16921809423.0]",
+msa_lsad_code,TEXT,,"[""M0""]",
+mtfcc_feature_class_code,TEXT,,"[""G3100""]",
+name,TEXT,,"[""Birmingham-Hoover-Talladega, AL"", ""Parkersburg-Marietta-Vienna, WV-OH"", ""Detroit-Warren-Ann Arbor, MI""]",
+csa_geom,BINARY,,[],
+csa_code,TEXT,,"[""142"", ""425"", ""220""]",

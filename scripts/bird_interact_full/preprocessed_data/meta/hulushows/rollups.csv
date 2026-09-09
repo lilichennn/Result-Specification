@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+tierkey,,A BIGSERIAL primary key uniquely identifying each subscription and availability tier in the system.,bigint,
+tiertype,,"Enumerated subscription tier type from: 'free' (free content), 'subscriber' (paid subscriber content), 'current' (currently available content), 'free_on_web' (web-only free content), 'subscriber_on_device' (device-specific subscriber content), 'auth_on_web' (web authentication required), 'showtime' (Showtime premium content).",USER-DEFINED,

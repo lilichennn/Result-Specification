@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+eval_type_created_by,TEXT,See SURVEY.CREATED_BY description for definition.,[],
+eval_type_created_date,DATE,See SURVEY.CREATED_DATE description for definition,"[""2010-08-27"", ""2009-12-15""]",
+eval_type_modified_by,TEXT,See SURVEY.MODIFIED_BY description for definition.,[],
+evaluation_type,TEXT,"Describes the type of evaluation. Evaluation type is needed to generate summary reports for an inventory. For example, a specific evaluation is associated with the evaluation for tree volume (EXPVOL). At the present time, nine types of evaluations can be produced. See also the REF_POP_EVAL_TYP_DESCR table.","[""EXPGROW"", ""EXPREMV"", ""EXPMORT""]",
+evaluation_group_sequence_number,NUMBER,Foreign key linking the population evaluation record to the population evaluation group record.,"[246589849010854, 209643348010854]",
+eval_type_modified_date,DATE,See SURVEY.MODIFIED_DATE description for definition.,[],
+evaluation_sequence_number,NUMBER,Foreign key linking the estimation unit record to the evaluation record.,"[247334062010854, 209643345010854, 209643346010854]",
+eval_type_modified_in_instance,NUMBER,See SURVEY.MODIFIED_IN_INSTANCE description for definition.,[],
+evaluation_type_sequence_number,NUMBER,A unique sequence number used to identify a population evaluation type record.,"[247340670010854, 247340671010854, 247340672010854]",
+eval_type_created_in_instance,NUMBER,See SURVEY.CREATED_IN_INSTANCE description for definition.,[10854],

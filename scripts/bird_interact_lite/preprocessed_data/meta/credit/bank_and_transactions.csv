@@ -1,0 +1,17 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+bankexpref,,A VARCHAR(20) primary key referencing expenses_and_assets(ExpEmplRef).,character varying,
+banktxfreq,,"An enum (BankTransactionFrequency_enum) describing transaction frequency (Low, Medium, High).",USER-DEFINED,
+banktxamt,,"A DECIMAL(14,2) typical monthly transaction amount (e.g., '3000.00').",numeric,
+bankrelscore,,"A NUMERIC(4,3) measuring the strength of the bank relationship (e.g., '0.850').",numeric,
+ovrfreq,,"An enum (OverdraftFrequency_enum) capturing overdraft occurrences (Frequent, Occasional, Rare, Never).",USER-DEFINED,
+bouncecount,,"A SMALLINT for how many checks or payments have bounced (e.g., '1').",smallint,
+inscoverage,,"An enum (InsuranceCoverage_enum) for coverage level (Comprehensive, Basic).",USER-DEFINED,
+lifeinsval,,"A DECIMAL(14,2) denoting total life insurance value (e.g., '50000.00').",numeric,
+hlthinsstat,,"An enum (HealthInsuranceStatus_enum) capturing health insurance (Basic, Premium).",USER-DEFINED,
+fraudrisk,,"A DECIMAL(5,3) rating potential fraud risk (e.g., '0.120').",numeric,
+idverscore,,"A DECIMAL(5,3) indicating identity verification confidence (e.g., '0.890').",numeric,
+docverstat,,"An enum (DocumentVerificationStatus_enum) describing document checks (Pending, Verified, Failed).",USER-DEFINED,
+kycstat,,"An enum (KYCStatus_enum) capturing KYC outcome (Pending, Failed, Completed).",USER-DEFINED,
+amlresult,,"An enum (AMLScreeningResult_enum) storing AML screening result (Flag, Pass, Fail).",USER-DEFINED,
+chaninvdatablock,,"JSONB column. Packs together digital‑channel habits and investment/trading style flags for engagement and cross‑sell scoring.
+Fields: {""autopay"":""An enum (YesNo_enum) indicating if automatic payments are active (Yes, No)."",""depostat"":""An enum (YesNo_enum) indicating direct deposit usage (Yes, No)."",""invcluster"":{""investexp"":""An enum (InvestmentExperience_enum) capturing investing experience (Extensive, Moderate, Limited)."",""investport"":""An enum (InvestmentPortfolio_enum) labeling investment portfolio style (Conservative, Moderate, Aggressive)."",""tradeact"":""An enum (TradingActivity_enum) describing trading activity (High, Medium, Low).""},""mobileuse"":""An enum (MobileBankingUsage_enum) describing mobile banking usage (High, Medium, Low)."",""onlineuse"":""An enum (OnlineBankingUsage_enum) describing online banking use (High, Medium, Low).""}",jsonb,

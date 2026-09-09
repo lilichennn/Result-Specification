@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+engineregistry,,A SERIAL primary key uniquely identifying each engine/fluids record.,integer,
+engfluidseqref,,"A VARCHAR(60) foreign key referencing Equipment(EquipmentCode), linking engine data to a specific equipment unit.",character varying,
+engfluidspbref,,"An INTEGER foreign key referencing PowerBattery(PowerBattRegistry), associating the engine with battery/power data if relevant.",integer,
+enginespeedrpm,,An INT measuring engine speed in revolutions per minute (RPM).,integer,
+engineloadpercent,,A REAL value indicating the current engine load in percentage.,real,
+enginetemperaturec,,A DOUBLE PRECISION value measuring overall engine temperature in Celsius.,double precision,
+enginehours,,"A DECIMAL(8,1) recording total operational hours on the engine.",numeric,
+engfluidsopmaintref,,An INTEGER optionally referencing an OperationMaintenance record if needed.,integer,
+fluidmetrics,,"JSONB column. Groups fluid-related metrics for fuel, oil, coolant, and hydraulic systems, including levels, pressures, and temperatures.
+Fields: {""coolant"":{""level_percent"":""A DECIMAL(5,2) for the coolant level percentage in the system."",""pressure_kpa"":""An INT for the coolant pressure in kilopascals."",""temperature_c"":""A REAL number denoting the coolant temperature in Celsius.""},""fuel"":{""consumption_lh"":""A DECIMAL(5,2) representing fuel consumption in liters per hour."",""level_percent"":""A REAL value specifying the current fuel tank level percentage."",""pressure_kpa"":""A SMALLINT measuring the fuel pressure in kilopascals."",""temperature_c"":""A FLOAT for the current fuel temperature in Celsius.""},""hydraulic"":{""level_percent"":""A DECIMAL(5,2) indicating the hydraulic fluid level as a percentage."",""pressure_kpa"":""A DECIMAL(7,3) specifying the hydraulic system pressure in kilopascals."",""temperature_c"":""A FLOAT for the hydraulic fluid temperature in Celsius.""},""oil"":{""level_percent"":""A REAL value for the oil level percentage."",""pressure_kpa"":""An INT indicating the oil pressure in kilopascals."",""temperature_c"":""A DOUBLE PRECISION value measuring the engine oil temperature in Celsius.""}}",jsonb,

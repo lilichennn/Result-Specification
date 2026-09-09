@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+subscriber_type,TEXT,Type of the Subscriber,"[""Single Trip"", ""Pay-as-you-ride"", ""Local31""]",
+start_time,NUMBER,Start timestamp of trip,"[1541345975000000, 1683920482000000, 1683826896000000]",
+end_station_id,TEXT,Numeric reference for end station,"[""4051""]",
+bike_type,TEXT,Type of bike used,"[""classic"", ""electric""]",
+start_station_id,NUMBER,Numeric reference for start station,"[2574, 4051]",
+end_station_name,TEXT,Station name for end station,"[""10th & Red River"", ""10th/Red River""]",
+trip_id,TEXT,Numeric ID of bike trip,"[""18939964"", ""29611056"", ""29599451""]",
+start_station_name,TEXT,Station name for start station,"[""Zilker Park"", ""10th/Red River""]",
+bike_id,TEXT,ID of bike used,"[""263G"", ""19453"", ""22196""]",
+duration_minutes,NUMBER,Time of trip in minutes,"[44, 64, 12]",

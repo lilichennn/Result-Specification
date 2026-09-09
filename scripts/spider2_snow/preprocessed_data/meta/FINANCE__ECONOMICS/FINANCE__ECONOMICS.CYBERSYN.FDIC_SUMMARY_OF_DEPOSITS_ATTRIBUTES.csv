@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable description of the financial data variables tracked by the FDIC.,"[""Institutional Assets"", ""Institutional Domestic Deposits"", ""Institutional Deposits""]",
+UNIT,TEXT,"Unit in which the measure is recorded (e.g., USD YTD).","[""USD""]",
+MEASURE,TEXT,"Quantifiable attribute being recorded (e.g., Domestic Deposits).","[""Assets Owned"", ""Domestic Deposits"", ""Deposits""]",
+VARIABLE,TEXT,Unique FDIC identifier for tracked financial data.,"[""ASSET"", ""DEPDOM"", ""DEPSUM""]",
+MEASUREMENT_TYPE,TEXT,"Classification indicating the level at which the variable is tracked by the FDIC, either at the ""Institution"" or ""Branch"" level.","[""Institution"", ""Branch""]",
+FREQUENCY,TEXT,"How often the data is aggregated (e.g., Annual).","[""Annual""]",

@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+REC_TAG,,TEXT. Identifier linking manipulation-signal metrics to a market-condition set. PK. FK to market_conditions(REC_PIN).,text,
+layer_idx,,"TEXT. Index measuring order-layering activity. **NULL means layering index not assigned.**. Possible values: Confirmed, Suspected.",text,
+stuff_idx,,REAL. Quote-stuffing index. Example: 0.409.,real,
+ignite_sig,,"TEXT. Signal denoting rapid-ignite trading tactics. **NULL means ignition signal not detected.**. Possible values: Strong, Weak.",text,
+close_mark,,"TEXT. Indicator of closing-price manipulation. **NULL means close-price marker not set.**. Possible values: Frequent, Occasional.",text,
+manip_signals,,"JSONB column. Signals related to market manipulation like spoofing.
+Fields: {""front_run"":""REAL. Score indicating likelihood of front-running. Example: 39.75."",""spoof_prob"":""TEXT. Estimated probability of spoofing behaviour. Example: 0.88%."",""wash_flag"":""TEXT. Flag indicating suspected wash-trading. **NULL means wash-trade flag not determined.**. Possible values: High, Low, Medium.""}",jsonb,

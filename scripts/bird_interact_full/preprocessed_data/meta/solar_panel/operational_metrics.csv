@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+snapops,,TEXT. PK & FK → plant_record.SnapKey. Links to operational metrics snapshot.,text,
+mtbfh,,REAL. Mean time between failures in hours. NULL means the encoder does not report status or data are missing. Example: 3713.0.,real,
+mttrh,,REAL. Mean time to repair in hours. Example: 8.8.,real,
+maintcost,,REAL. Maintenance cost amount. Example: 178.82.,real,
+cleancost,,REAL. Cleaning cost amount. Example: 1034.89.,real,
+replcost,,REAL. Component replacement cost. Example: 31529.13.,real,
+revloss,,TEXT. Revenue loss amount. Example: 13375.59.,text,
+optpot,,"TEXT. Optimization potential assessment. Possible values: High, Low, Medium.",text,

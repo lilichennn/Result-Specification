@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+wins,NUMBER,,"[0, 1]",
+constructor_standings_id,NUMBER,,"[3, 4, 5]",
+position,NUMBER,,"[2, 4, 5]",
+race_id,NUMBER,,"[18, 19]",
+points,FLOAT,,"[9.0, 5.0, 2.0]",
+position_text,TEXT,,"[""2"", ""4"", ""5""]",
+constructor_id,NUMBER,,"[3, 4, 5]",

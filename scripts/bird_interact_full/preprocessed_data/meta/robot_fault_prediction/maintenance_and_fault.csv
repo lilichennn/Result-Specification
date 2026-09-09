@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+upkeepactuation,,"TEXT. Foreign key to the actuation_data table (ActReg). PK, FK to actuation_data.",text,
+upkeepoperation,,TEXT. Foreign key to the operation table (OperReg). FK to operation.,text,
+faultcodeval,,TEXT. Fault code identifier. **NULL means no fault code provided.**. Example: E8902.,text,
+issuecategoryval,,"TEXT. Category of the issue in the fault. Possible values: COM, ELE, MEC, NON, SOF.",text,
+issuelevelval,,"TEXT. Level of the issue in the fault. Possible values: Critical level, High level, Low level, Medium level, None level.",text,
+faultpredscore,,REAL. Fault prediction score. **NULL means no fault prediction score available.**. Example: 0.021.,real,
+faulttypeestimation,,"TEXT. Fault type estimation. **NULL means no fault type estimation available.**. Possible values: Controller, Gearbox, Joint, Motor.",text,
+rulhours,,BIGINT. Remaining useful life in hours. Example: 1601.,bigint,
+upkeepduedays,,BIGINT. Days until the next maintenance is due. Example: 16.,bigint,
+upkeepcostest,,"TEXT. Estimated upkeep cost. Example: $7,299.59.",text,

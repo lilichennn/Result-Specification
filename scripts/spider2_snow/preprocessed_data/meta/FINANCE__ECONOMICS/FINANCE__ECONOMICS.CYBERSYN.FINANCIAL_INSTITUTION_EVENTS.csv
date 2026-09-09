@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+NAME_SUCCESSOR,TEXT,Name of successor entity,"[""California Bank of Commerce, National Association"", ""Equity Bank"", ""Firstar Bank Council Bluffs""]",
+TRANSFORMATION_TYPE,TEXT,Description of transformation,"[""Charter Discontinued"", ""Failure""]",
+CATEGORY_SUCCESSOR,TEXT,High-level category of successor entity legal structure,"[""Bank"", ""Branch""]",
+CATEGORY_PREDECESSOR,TEXT,High-level category of predecessor entity legal structure,"[""Branch"", ""Bank""]",
+NAME_PREDECESSOR,TEXT,Name of predecessor entity,"[""Bank of Santa Clarita"", ""KansasLand Bank"", ""Frontier Bank, FSB""]",
+MERGER_ACCOUNTING_METHOD_UTILIZED,TEXT,Accounting method used in resolving a non-failure merger,"[""Purchase/Acquisition"", ""Pooling of interests or entities under common control.""]",
+ACTIVE_SUCCESSOR,BOOLEAN,Flag to indicate if successor is active,"[true, false]",
+ID_RSSD_PREDECESSOR,NUMBER,Unique identifier for predecessor entity joinable to entities table,"[3302312, 422059, 2704740]",
+TRANSACTION_DATE,DATE,Date of transaction,"[""2021-10-02"", ""2024-07-02"", ""2014-11-08""]",
+ID_RSSD_SUCCESSOR,NUMBER,Unique identifier for successor entity joinable to entities table,"[3076453, 139656, 213248]",
+ACTIVE_PREDECESSOR,BOOLEAN,Flag to indicate if predecessor is active,"[true, false]",

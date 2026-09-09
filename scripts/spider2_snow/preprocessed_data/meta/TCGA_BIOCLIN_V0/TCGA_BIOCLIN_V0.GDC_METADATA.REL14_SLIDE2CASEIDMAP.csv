@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+sample_type,NUMBER,"Two-digit sample_type code which forms part of the sample barcode eg. 01,11,06, etc.",[2],
+portion_barcode,TEXT,Original/submitter portion ID,"[""TCGA-G4-6317-02A-11"", ""TCGA-14-1034-02B-01"", ""TCGA-06-0171-02A-11""]",
+program_name,TEXT,"Program name, eg TCGA or TARGET","[""TCGA""]",
+sample_type_name,TEXT,"The longer name of the sample type; eg. Primary Tumor, Recurrent Tumor, etc.","[""Recurrent Tumor""]",
+slide_barcode,TEXT,Slide submitter ID,"[""TCGA-G4-6317-02A-01-BS1"", ""TCGA-G4-6317-02A-01-TS1"", ""TCGA-14-1034-02B-01-BS1""]",
+sample_gdc_id,TEXT,"Unique GDC identifier for this sample (corresponds to the sample_barcode), eg a1ec9279-c1a6-4e58-97ed-9ec1f36187c5  --  this can be used to access more information from the GDC data portal","[""45c8544c-ec60-447e-91ee-62e41e72a82f"", ""afd6abee-dd83-4b1a-b66f-8fd50190287b"", ""87f7c7d4-533a-401d-aca4-5e36ee815109""]",
+portion_gdc_id,TEXT,Original/submitter portion ID,"[""2b820f48-7713-4877-b5ea-a5060943810a"", ""17abeae2-1116-4ebf-bfed-23dfc701ee16"", ""d7d6194a-07e4-4bf7-b868-c1f73cc9822b""]",
+case_gdc_id,TEXT,GDC unique identifier,"[""cee553c8-460d-436b-b55d-8f41624816cc"", ""0078b0c4-68a9-483b-9aab-61156d263213"", ""01a92062-967a-4900-8dc7-a5ecd3b3f8e2""]",
+slide_gdc_id,TEXT,Slide GDC uuid,"[""870c2e2e-7f4f-4d06-bac3-5e48c4d9d09d"", ""a9998a46-09fd-493d-92fe-4a2b4820b3bf"", ""70cd1f7a-ac1c-43da-b627-47a40bc5445c""]",
+sample_barcode,TEXT,Original/submitter sample ID,"[""TCGA-G4-6317-02A"", ""TCGA-14-1034-02B"", ""TCGA-06-0171-02A""]",
+project_id,TEXT,"ID of the Project -- e.g. TCGA-BRCA, TARGET-AML, etc","[""TCGA-COAD"", ""TCGA-GBM""]",
+case_barcode,TEXT,"Submitter identifier, eg HCC1954, TCGA-ZX-AA5X, etc","[""TCGA-G4-6317"", ""TCGA-14-1034"", ""TCGA-06-0171""]",

@@ -1,0 +1,18 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+expemplref,,A VARCHAR(20) primary key referencing employment_and_income(EmplCoreRef).,character varying,
+mthexp,,"A DECIMAL(14,2) storing monthly expenses (e.g., '2000.00').",numeric,
+fixexpratio,,"A DECIMAL(5,4) ratio for fixed expenses (e.g., '0.3000').",numeric,
+discexpratio,,"A DECIMAL(5,4) ratio for discretionary expenses (e.g., '0.1500').",numeric,
+savamount,,"A DECIMAL(14,2) capturing total savings (e.g., '15000.00').",numeric,
+investamt,,"A DECIMAL(14,2) for total investments (e.g., '8000.00').",numeric,
+liqassets,,"A DECIMAL(15,2) denoting liquid assets (e.g., '20000.00').",numeric,
+totassets,,"A DECIMAL(15,2) for overall assets (e.g., '120000.00').",numeric,
+totliabs,,"A DECIMAL(15,2) total liabilities (e.g., '40000.00').",numeric,
+networth,,"A DECIMAL(15,2) net worth (assets − liabilities) (e.g., '80000.00').",numeric,
+vehown,,"An enum (VehicleOwnership_enum) for vehicle ownership (Lease, Own).",USER-DEFINED,
+vehvalue,,"A DECIMAL(15,2) capturing vehicle value (e.g., '20000.00').",numeric,
+bankacccount,,"A SMALLINT storing how many bank accounts are held (e.g., '2').",smallint,
+bankaccage,,"A SMALLINT showing age in years of the oldest bank account (e.g., '5').",smallint,
+bankaccbal,,"A DECIMAL(14,2) representing total bank account balances (e.g., '5000.00').",numeric,
+propfinancialdata,,"JSONB column. Bundles all housing‑related facts (ownership, value, and pay history) so risk or marketing rules need only one JSONB lookup.
+Fields: {""mortgagebits"":{""mortbalance"":""A DECIMAL(15,2) storing current mortgage balance (e.g., '150000.00')."",""mortpayhist"":""An enum (PaymentHistory_enum) for mortgage payment history. Possible values: Poor, Fair, Good, Excellent, Current, Past.""},""propown"":""An enum (PropertyOwnership_enum) describing property ownership (Rent, Living with Parents, Own)."",""proptype"":""An enum (PropertyType_enum) for property classification (Apartment, House, Condo)."",""propvalue"":""A DECIMAL(15,2) property value (e.g., '250000.00')."",""rentpayhist"":""An enum (PaymentHistory_enum) for rent payment history. Possible values: Poor, Fair, Good, Excellent, Current, Past.""}",jsonb,

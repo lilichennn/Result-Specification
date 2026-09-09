@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+violations_charged_name,TEXT,,"[""None""]",
+vehicle_number,NUMBER,,"[6, 5]",
+consecutive_number,NUMBER,,"[10762, 10845, 10918]",
+state_number,NUMBER,,"[1, 2, 4]",
+state_name,TEXT,,"[""Alabama"", ""Alaska"", ""Arizona""]",
+violations_charged,TEXT,,"[""0""]",

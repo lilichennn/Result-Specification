@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+commercereg,,"A VARCHAR(20) primary key for commerce/collection records (e.g., 'COM001').",character varying,
+commerceengagepivot,,A VARCHAR(20) FK referencing Engagement(EngageReg).,character varying,
+commercememberpivot,,A VARCHAR(20) FK referencing MembershipAndSpending(MemberReg).,character varying,
+merchbuy,,"A SMALLINT tally of merchandise purchases (e.g., 5).",smallint,
+merchspendusd,,"A DECIMAL(10,2) total spent on merchandise in USD (e.g., 120.00).",numeric,
+digown,,"An INT indicating how many digital items the fan owns (e.g., 20).",integer,
+physown,,"An INT indicating how many physical items the fan owns (e.g., 10).",integer,
+collcomprate,,"A DECIMAL(5,1) measuring the fan’s collection completion percentage (e.g., '75.5').",numeric,
+tradelevel,,"An enum (TradingActivityLevel_enum) describing the fan’s trading or exchange activity (High, Low, Medium).",USER-DEFINED,

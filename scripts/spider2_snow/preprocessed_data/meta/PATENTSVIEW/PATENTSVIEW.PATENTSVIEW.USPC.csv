@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+patent_id,TEXT,,"[""4733714"", ""4715905"", ""7684187""]",
+sequence,NUMBER,,[6],
+uuid,TEXT,,"[""vx63cj017gh32rnj8qou8whzr"", ""no3fq6xhprzuyjmzloepaacj0"", ""2jzao5tdsvfggvxxi3me6dx17""]",
+subclass_id,TEXT,,"[""164/306"", ""164/480"", ""165/121""]",
+mainclass_id,TEXT,,"[""164"", ""165""]",

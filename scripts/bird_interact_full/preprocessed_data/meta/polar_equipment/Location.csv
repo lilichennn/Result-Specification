@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+STATION_name,,TEXT. Unique name of the station. PK.,text,
+TimeStamp,,TIMESTAMP. Timestamp when the location data was recorded. Example: 2024-10-29T17:30:55.,timestamp without time zone,
+locType,,"TEXT. Type of location (e.g., field, lab). Possible values: Antarctic, Arctic.",text,
+LAT_deg,,REAL. Latitude of the location in degrees. Example: 80.255202.,real,
+LON_deg,,REAL. Longitude of the location in degrees. Example: -146.257874.,real,
+altitude_m,,REAL. Altitude of the location in meters. **NULL means no altitude provided.**. Example: 2054.5.,real,

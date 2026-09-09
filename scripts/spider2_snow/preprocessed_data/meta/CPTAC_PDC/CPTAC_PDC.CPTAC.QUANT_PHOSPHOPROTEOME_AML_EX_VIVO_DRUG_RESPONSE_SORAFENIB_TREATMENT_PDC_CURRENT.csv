@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+aliquot_submitter_id,TEXT,,"[""15-00276-1""]",
+study_name,TEXT,,"[""AML Ex Vivo Drug Response - Sorafenib Treatment - Phosphoproteome""]",
+case_id,TEXT,,"[""ecbde1d1-d1d9-4de5-913d-090a0571edd9""]",
+refseq_id,TEXT,,"[""NP_000436.2"", ""NP_001001.2"", ""NP_001070729.2""]",
+protein_abundance_log2ratio,FLOAT,,"[-2.4666, -4.0065, -3.1567]",
+aliquot_run_metadata_id,TEXT,,"[""0c7495c0-2773-4f0a-aef6-ad497c9e1249""]",
+phosphorylation_sites,TEXT,,"[""s1622"", ""s235s236"", ""s215""]",
+sample_id,TEXT,,"[""c00046d2-ffee-43d8-a72f-64a187590a7b""]",
+aliquot_id,TEXT,,"[""d9a038c8-92b3-4fff-afeb-799d93b97841""]",

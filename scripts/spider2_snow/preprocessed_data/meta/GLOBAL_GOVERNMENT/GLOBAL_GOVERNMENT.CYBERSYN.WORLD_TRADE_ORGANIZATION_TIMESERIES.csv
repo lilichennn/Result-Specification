@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+PARTNER_GEO_ID,TEXT,The country or region involved in the trade with the reporting economy; the destination.,"[""countryGroup/WORLD"", ""country/CAN"", ""country/BGD""]",
+REPORTING_GEO_ID,TEXT,"Source (e.g., country or country group) reporting the trade data; the origin.","[""country/HRV"", ""country/BOL"", ""country/NAM""]",
+VARIABLE_NAME,TEXT,Human-readable description of the reported attribute.,"[""Commercial services exports by sector and partner – annual: Road transport (Services - Extended Balance of Payments Classification (EBOPS 2010))"", ""Bilateral imports by detailed HS codes (2,4,6 digit): Edible fruit and nuts; peel of citrus fruit or melons (Harmonized System)"", ""Bilateral imports by detailed HS codes (2,4,6 digit): Headgear and parts thereof (Harmonized System)""]",
+DATE,DATE,Date the data was published.,"[""2016-12-31"", ""2005-12-31"", ""2008-12-31""]",
+UNIT,TEXT,Unit of measurement for the reported value (ex. USD).,"[""USD""]",
+VARIABLE,TEXT,Unique identifier for a variable created from a hash of the unique attributes of the World Trade Organization (WTO) variables.,"[""70deaa38619a2d6e1d4caa2bf0b801ec"", ""078fc94ed8f83304cdbbb71f6b636fbe"", ""ce245c329e9011f5e064748bcb2dba81""]",
+VALUE,FLOAT,Reported figure for the variable.,"[579000000.0, 820.0, 2773.0]",

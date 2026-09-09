@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+index,NUMBER,,"[1, 7, 8]",
+product_category_name_english,TEXT,,"[""computers_accessories"", ""housewares"", ""telephony""]",
+product_category_name,TEXT,,"[""informatica_acessorios"", ""utilidades_domesticas"", ""telefonia""]",

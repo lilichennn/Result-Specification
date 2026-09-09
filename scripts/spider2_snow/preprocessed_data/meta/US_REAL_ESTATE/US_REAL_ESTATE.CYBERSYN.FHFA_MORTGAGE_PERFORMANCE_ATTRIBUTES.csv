@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_GROUP,TEXT,"Overall variable grouping for the timeseries (e.g., Percent in Forbearance, Percent 30 or 60 Days Past Due Date, etc.)","[""Percent 90 to 180 Days Past Due Date"", ""Percent 30 or 60 Days Past Due Date"", ""Percent in Forbearance""]",
+UNIT,TEXT,"Unit of measure for the variable:  (e.g., Percent)","[""Percent""]",
+FREQUENCY,TEXT,Frequency of aggregations (e.g. Annual).,"[""Quarterly""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table for filtering,"[""Percent_90_to_180_Days_Past_Due_Date_Other Conventional Market"", ""Percent_30_or_60_Days_Past_Due_Date_Government / Non-Conventional"", ""Percent_in_Forbearance_Government / Non-Conventional""]",
+MARKET,TEXT,"Market segment (e.g., Overall Market, Enterprise, Government, etc.)","[""Other Conventional Market"", ""Government / Non-Conventional"", ""Enterprise Acquisitions""]",
+VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""Percent 90 to 180 Days Past Due Date - Other Conventional Market"", ""Percent 30 or 60 Days Past Due Date - Government / Non-Conventional"", ""Percent in Forbearance - Government / Non-Conventional""]",

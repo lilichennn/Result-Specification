@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+applicant_type,TEXT,,"[""applicant""]",
+sequence,NUMBER,,[0],
+designation,TEXT,,"[""us-only""]",
+rawlocation_id,TEXT,,"[""hj5hpw0v5loq0d1mvau2570b1"", ""h5llpm30mei4bbky4qowpwg52"", ""1ss5uho1xixddj1oxte55vzzq""]",
+uuid,TEXT,,"[""1zpd0v8dy5fcks8ri0tehjph5"", ""i5m4lekiy3q3ob4vd6bca7kzz"", ""kivv0qweqpl9sptp8al7wrznb""]",
+organization,TEXT,,[],
+lname,TEXT,,"[""Martin J."", ""Dawei"", ""Michael""]",
+patent_id,TEXT,,"[""9593885"", ""10076763"", ""D724264""]",
+fname,TEXT,,"[""Cuerdon"", ""Dong"", ""Chen""]",

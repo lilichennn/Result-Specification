@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+index,NUMBER,,"[0, 5, 10]",
+customer_state,TEXT,,"[""SP"", ""SC"", ""MG""]",
+customer_unique_id,TEXT,,"[""861eff4711a542e4b93843c6dd7febb0"", ""4c93744516667ad3b8f1fb645a3116a4"", ""2a7745e1ed516b289ed9b29c7d0539a5""]",
+customer_zip_code_prefix,NUMBER,,"[14409, 89254, 39400]",
+customer_id,TEXT,,"[""06b8999e2fba1a1fbc88172c00ba8bc7"", ""879864dab9bc3047522c92c82e1212b8"", ""9fb35e4ed6f0a14a4977cd9aea4042bb""]",
+customer_city,TEXT,,"[""franca"", ""jaragua do sul"", ""montes claros""]",

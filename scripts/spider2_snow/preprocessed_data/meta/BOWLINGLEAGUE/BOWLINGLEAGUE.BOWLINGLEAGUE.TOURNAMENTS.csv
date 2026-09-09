@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+TourneyDate,TEXT,,"[""2017-09-11"", ""2017-09-18"", ""2017-09-25""]",
+TourneyLocation,TEXT,,"[""Thunderbird Lanes"", ""Bolero Lanes"", ""Imperial Lanes""]",
+TourneyID,NUMBER,,"[2, 3, 4]",

@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+ProdCat,,"TEXT. High-level product category. PK (composite). Possible values: Data, Digital, Physical, Service.",text,
+Subcategory,,"TEXT. Specific product subcategory. PK (composite). Possible values: Type_A, Type_B, Type_C, Type_D.",text,
+ListingAge,,BIGINT. Age of the listing in days. PK (composite). Example: 155.,bigint,
+SellerPointer,,TEXT. Identifier for the vendor offering the listing. PK (composite). FK to vendors(SellerKey).,text,
+product_availability,,"JSONB column. Stores product-related metrics, including availability, price, and listing age.
+Fields: {""price_amt"":""REAL. Listing price amount. Example: 1166.46."",""qty_avail"":""BIGINT. Quantity available for sale in this listing.""}",jsonb,

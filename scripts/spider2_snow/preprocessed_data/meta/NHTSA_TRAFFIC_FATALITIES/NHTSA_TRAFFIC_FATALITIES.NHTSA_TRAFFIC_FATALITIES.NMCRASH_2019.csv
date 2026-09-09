@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+vehicle_number,NUMBER,,[0],
+state_name,TEXT,,"[""Alabama""]",
+state_number,NUMBER,,[1],
+consecutive_number,NUMBER,,"[10101, 10126, 10264]",
+non_motorist_contributing_circumstances_name,TEXT,,"[""None Noted""]",
+non_motorist_contributing_circumstances,NUMBER,,[0],
+person_number,NUMBER,,"[1, 2, 3]",

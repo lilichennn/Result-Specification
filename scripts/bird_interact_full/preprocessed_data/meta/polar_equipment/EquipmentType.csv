@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+EquipType,,TEXT. Unique identifier for the equipment type. PK.,text,
+type_indices,,"JSONB column. Bundles the various performance-, efficiency-, safety- and sustainability-related indices that characterise an equipment family.
+Fields: {""energy_efficiency_idx"":""REAL. Efficiency index for the equipment type. Example: 47.1."",""environmental_impact_idx"":""REAL. Environmental impact index for the equipment type. Example: 36.7."",""performance_score"":""REAL. Performance index for the equipment type. Example: 72.8."",""safety_idx"":""REAL. Safety index for the equipment type. Example: 75.9.""}",jsonb,

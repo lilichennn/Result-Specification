@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+active_file_count,NUMBER,Active Archive File Count,[0],
+project__project_id,TEXT,Program Short Name with Project Short Name,"[""CCLE-DLBC"", ""CCLE-CESC"", ""CCLE-SARC""]",
+project__name,TEXT,Study name of the project,"[""Lymphoid Neoplasm Diffuse Large B-cell Lymphoma"", ""Cervical Squamous Cell Carcinoma and Endocervical Adenocarcinoma"", ""Sarcoma""]",
+legacy_file_count,NUMBER,Total number of files for this case in the GDC legacy archive,"[1, 2]",
+file_id,TEXT,GDC file identifier. This is a duplicate of file_gdc_id field found in some tables. ,"[""942851b0-b554-48f4-84f6-6826902e12d7"", ""aaa8da09-070c-4a31-a99e-720f1a0a964f"", ""b610ac54-345f-453b-a109-0e1731f8989c""]",
+project__dbgap_accession_number,TEXT,Project dbGaP accession number,"[""CCLE""]",
+project__program__name,TEXT,Program Name,"[""CCLE""]",
+project__disease_type,TEXT,Project Disease Type,"[""Lymphoid Neoplasm Diffuse Large B-cell Lymphoma"", ""Cervical Squamous Cell Carcinoma and Endocervical Adenocarcinoma"", ""Sarcoma""]",
+project__program__dbgap_accession_number,TEXT,DbGaP accession number for the program,"[""CCLE""]",
+submitter_id,TEXT,"This can be used to identify a corresponding entry in the submitter's records. The GDC requires that submitter_id be unique for each entity within a project: the tuple (combination) of [ project_id, submitter_id ] is a unique key.","[""DB"", ""EN"", ""MJ""]",

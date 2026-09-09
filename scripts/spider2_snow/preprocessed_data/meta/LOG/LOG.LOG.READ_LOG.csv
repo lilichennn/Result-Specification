@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+url,TEXT,,"[""http://www.example.com/article?id=news731"", ""http://www.example.com/article?id=it605""]",
+session,TEXT,,"[""df6eb25d"", ""77d477cc""]",
+stamp,TEXT,,"[""2016-12-29 21:45:47"", ""2016-12-29 21:46:13"", ""2016-12-29 21:46:22""]",
+action,TEXT,,"[""view"", ""read-60%"", ""read-80%""]",

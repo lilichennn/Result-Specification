@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+serviceref,,"A SERIAL primary key uniquely identifying each social service type or package configuration available to households. Ex. 1,2,3",bigint,
+domestichelp,,"Domestic worker service availability indicating whether households have access to or utilize domestic help services. Part of unique constraint combination. EX. No domestic workers, Yes, occasional",text,
+socsupport,,"Social assistance program participation indicating the type of government or community support services available. Part of unique constraint combination. Ex. Yes, No",text,

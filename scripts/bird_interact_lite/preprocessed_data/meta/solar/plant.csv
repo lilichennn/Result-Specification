@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+growregistry,,"UUID PRIMARY KEY uniquely identifying each plant record (was 'RecordID') (e.g., '3fa85f64-5717-4562-b3fc-2c963f66afa6').",uuid,
+growalias,,"VARCHAR(100) naming or aliasing the plant (was 'PlantName') (e.g., 'DesertSolarOne', 'ValleyGridAlpha').",character varying,
+gencapmw,,"NUMERIC(7,3) indicating the generation capacity in megawatts (was 'PlantCapacityMW') (e.g., 12.500).",numeric,
+initdate,,"DATE representing the plant’s installation or commissioning date (was 'InstallationDate') (e.g., '2022-05-10').",date,

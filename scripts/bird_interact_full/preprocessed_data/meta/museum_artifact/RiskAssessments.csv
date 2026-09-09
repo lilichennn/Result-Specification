@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+risk_id,,TEXT. Unique identifier for each risk assessment. PK.,text,
+art_concern,,TEXT. Reference to the artifact being assessed for risk. FK to ArtifactsCore.ARTregID.,text,
+hall_concern,,TEXT. Reference to the exhibition hall being assessed for risk. FK to ExhibitionHalls.Hall_ID.,text,
+risk_level,,"TEXT. Level of risk associated with the artifact or hall. Possible values: High, Low, Medium.",text,
+emerg_plan,,"TEXT. Emergency plan related to the risk. Possible values: Review Required, Under Revision, Updated.",text,
+evacPrio,,"TEXT. Evacuation priority level for the artifact or hall. Possible values: Priority 1, Priority 2, Priority 3.",text,
+handle_rules,,"TEXT. Handling rules for the artifact or hall. Possible values: Minimal, Strict.",text,
+conserve_score,,BIGINT. Conservation score for the artifact or hall. Example: 85.0.,bigint,

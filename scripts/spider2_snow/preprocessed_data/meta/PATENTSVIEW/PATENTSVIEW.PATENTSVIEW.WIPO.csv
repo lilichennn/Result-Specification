@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+patent_id,TEXT,,"[""10020849"", ""10027265"", ""10037837""]",
+field_id,TEXT,,"[""1""]",
+sequence,TEXT,,"[""0""]",

@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+name_last,TEXT,,[],
+id,TEXT,,"[""007bf9adef356f708442479c51664e88"", ""0130c675635a408305bd352c862f3e8b"", ""023cabbc4284663499f20a4483299643""]",
+name_first,TEXT,,[],
+organization,TEXT,,"[""Leygid, Voit & Mayer, Ltd."", ""Renner Kenner Greive Bobaktaylor & Weber"", ""Okomato & Benedicto LLP""]",
+country,TEXT,,[],

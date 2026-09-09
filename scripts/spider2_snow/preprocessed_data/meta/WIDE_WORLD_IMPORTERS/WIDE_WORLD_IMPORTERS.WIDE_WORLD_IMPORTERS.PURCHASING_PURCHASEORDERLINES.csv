@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+StockItemID,NUMBER,,"[25, 30, 108]",
+ExpectedUnitPricePerOuter,FLOAT,,"[4.5, 19.0, 22.0]",
+LastEditedWhen,NUMBER,,"[1358146800000000, 1357282800000000]",
+Description,TEXT,,"[""DBA joke mug - I will get you in order (Black)"", ""Developer joke mug - Oct 31 = Dec 25 (White)"", ""Superhero action jacket (Blue) XXS""]",
+IsOrderLineFinalized,NUMBER,,[1],
+LastReceiptDate,TEXT,,"[""2013-01-14"", ""2013-01-04""]",
+OrderedOuters,NUMBER,,"[26, 27, 6]",
+ReceivedOuters,NUMBER,,"[26, 27, 6]",
+PackageTypeID,NUMBER,,[7],
+PurchaseOrderID,NUMBER,,"[40, 12]",
+LastEditedBy,NUMBER,,"[2, 3]",
+PurchaseOrderLineID,NUMBER,,"[234, 235, 142]",

@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cureregistry,,BIGSERIAL. Auto-generated unique identifier for conservation record. PK = Conservation(CureRegistry).,bigint,
+arcref,,TEXT. Reference to associated archeologys project. FK to Projects.,text,
+zoneref,,TEXT. Reference to site requiring conservation attention. FK to Sites.,text,
+harmassess,,"TEXT. Damage assessment evaluation results. **NULL means damage assessment not conducted or evaluation pending.**. Possible values: Minor, Moderate, Severe.",text,
+curerank,,"TEXT. Conservation priority ranking classification. Possible values: Critical priority, immediate conservation required.",text,
+structstate,,"TEXT. Structural stability assessment status. Possible values: Moderate condition, careful monitoring required.",text,
+intervhistory,,"TEXT. History of previous conservation interventions. **NULL means no prior conservation interventions recorded or documentation unavailable.**. Possible values: Major, Minor.",text,
+priordocs,,"TEXT. Previous documentation and records available. **NULL means no previous documentation exists or records not accessible.**. Possible values: Complete, Partial.",text,

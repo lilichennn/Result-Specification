@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+CATEGORY_MAIN,TEXT,Primary category or class of place for the POI.,"[""Party Equipment Rental"", ""Lawyer"", ""Church Cathedral""]",
+POI_NAME,TEXT,"Name of the place, merchant, or landmark for the particular the POI.","[""Bk Rentals"", ""Amethyst Law Group"", ""Iglesia Cristiana Mi Refugio""]",
+CATEGORY_ALTERNATE,ARRAY,"Alternate categories of the POI. A POI could fit multiple categories (e.g., Restaurant, Burger Restaurant, Fast Food Restaurant), in which case one category would be recorded as CATEGORY_MAIN and the remaining categories would be recorded in a list under CATEGORY_ALTERNATE.","[""[\n  \""Party Supply\"",\n  \""Retail\""\n]"", ""[\n  \""Religious Organization\""\n]""]",
+POI_ID,TEXT,"A unique identifier for a point of interest (such as a park, fast food chain, hotel, etc.) based on its description and location. This is joinable to the POINT_OF_INTEREST_ADDRESSES_RELATIONSHIPS table which can be used to link POIs to addresses.","[""08f2aad4446520ec03e1f001780831d4"", ""08f44a112860108a03b33ba25948478f"", ""08f2986ab4d3447503b83560c1fe48ad""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+BASE_CURRENCY_NAME,TEXT,Long name of base currency,"[""Swiss Franc"", ""United States Dollar"", ""Canadian Dollar""]",
+VARIABLE,TEXT,A unique identifier for the currency pair,"[""chf_sek"", ""usd_try"", ""usd_mkd""]",
+QUOTE_CURRENCY_NAME,TEXT,Long name of quote currency,"[""Swedish Krona"", ""Turkish Lira"", ""Macedonian Denar""]",
+VALUE,FLOAT,Price for the base currency in terms of the quote currency,"[6.8232, 1.8111, 57.61]",
+VARIABLE_NAME,TEXT,A human-readable unique identifier for the currency pair,"[""CHF/SEK Exchange Rate"", ""USD/TRY Exchange Rate"", ""USD/MKD Exchange Rate""]",
+BASE_CURRENCY_ID,TEXT,ISO 4217 currency code for the base currency,"[""CHF"", ""USD"", ""CAD""]",
+DATE,DATE,Date for the foreign exchange spot rate,"[""2011-03-10"", ""2013-03-13"", ""2024-04-25""]",
+QUOTE_CURRENCY_ID,TEXT,ISO 4217 currency code for the quote currency,"[""SEK"", ""TRY"", ""MKD""]",

@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+recreg,,Primary key (VARCHAR(20)) uniquely identifying this record in the robot database. Was 'RecordRegistry' previously.,character varying,
+rects,,TIMESTAMP marking when the record was created or logged. Must be present (NOT NULL).,timestamp without time zone,
+botcode,,VARCHAR(25) referencing or naming the robot code or ID. Required field (NOT NULL).,character varying,

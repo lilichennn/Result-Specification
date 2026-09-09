@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+customer_id,NUMBER,,"[50042, 50741]",
+review_list,TEXT,,"[""4040:A,6600:C,7950:B"", ""4160:A""]",

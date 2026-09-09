@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+long_description,TEXT,,"[""Declaration of Joseph Rego by defendant Sunrize Staging Inc, defendant Sunrize Building, defendant Lou Luly re motion to dismiss the complaint [8-1] (axr) (Entered: 11/03/2004)"", ""Joint STIPULATION to Continue hearing date from July 28, 2008 to July 21, 2008 Re: Memorandum in Support of Motion, 7 , MOTION to Dismiss for Lack of Jurisdiction over Subject Matter 6 filed by Defendants Dynascan Technology Inc, Dynascan Technology Corp. (Attachments: # 1 Proposed Order)(Huang, Peter) (Entered: 06/17/2008)"", ""PROOF OF SERVICE Executed by Plaintiff I-Flow Corporation, upon TKJ Group Inc. served on 7/27/2008, answer due 8/16/2008. The Summons and Complaint were served by Personal service, by Federal statute, upon Kevin Farrell, Agent authorized to accept service of process on behalf of TKJ Group, Inc.. Due Dilligence declaration not attached. Original Summons Returned. (Friedland, Michael) (Entered: 08/19/2008)""]",
+date_filed,TEXT,,"[""2004-11-02"", ""2008-06-17"", ""2008-08-19""]",
+case_row_id,TEXT,,"[""53000"", ""72857"", ""72883""]",
+case_number,TEXT,,"[""3:04-cv-02001-JMA"", ""8:08-cv-00483-CJC-RNB"", ""8:08-cv-00784-AG-RNB""]",
+attachment,TEXT,,[],
+doc_number,TEXT,,"[""10""]",
+doc_count,TEXT,,"[""46""]",
+short_description,TEXT,,[],
+upload_date,TEXT,,[],

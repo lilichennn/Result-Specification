@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+asrkey,,A VARCHAR(30) primary key matching ABKey from AssessmentBasics (FK).,character varying,
+suicideation,,"An enum (suicidalideation_enum) capturing suicidal ideation (Intent, Active, Plan, Passive).",USER-DEFINED,
+suicrisk,,"An enum (suiciderisk_enum) describing suicide risk level (Medium, High, Low, Severe).",USER-DEFINED,
+selfharm,,"An enum (selfharm_enum) indicating self-harm history (Recent, Past, Current).",USER-DEFINED,
+violrisk,,"An enum (violencerisk_enum) for violence risk (Medium, Low, High).",USER-DEFINED,
+subuse,,"An enum (substanceuse_enum) describing which substance is used (Cannabis, Opioids, Alcohol, Multiple).",USER-DEFINED,
+subusefreq,,"An enum (substanceusefrequency_enum) for how often substances are used (Daily, Never, Occasional, Regular).",USER-DEFINED,
+subusesev,,"An enum (substanceuseseverity_enum) describing severity (Mild, Moderate, Severe).",USER-DEFINED,
+mental_health_scores,,"JSONB column. Aggregates scores related to mental health symptoms and risk factors, such as depression, anxiety, and other symptom metrics.
+Fields: {""anxiety"":{""gad7_score"":""A SMALLINT for GAD-7 score (0–21)."",""gad7_severity"":""An enum (gad7severity_enum) for anxiety severity (Mild, Moderate, Severe).""},""depression"":{""phq9_score"":""A SMALLINT for PHQ-9 score (0–27)."",""phq9_severity"":""An enum (phq9severity_enum) for depression severity (Moderately Severe, Mild, Severe, Moderate).""},""symptom_scores"":[""A NUMERIC(3,1) measuring mood status (e.g., 5.0)."",""A NUMERIC(3,1) measuring anxiety level (e.g., 4.5)."",""A NUMERIC(3,1) measuring sleep quality (e.g., 3.0)."",""A NUMERIC(3,1) measuring appetite (e.g., 2.5)."",""A NUMERIC(3,1) measuring energy (e.g., 6.0)."",""A NUMERIC(3,1) measuring concentration (e.g., 5.5)."",""A NUMERIC(3,1) measuring interest/enjoyment (e.g., 4.0)."",""A NUMERIC(3,1) measuring hopelessness (e.g., 2.0).""]}",jsonb,

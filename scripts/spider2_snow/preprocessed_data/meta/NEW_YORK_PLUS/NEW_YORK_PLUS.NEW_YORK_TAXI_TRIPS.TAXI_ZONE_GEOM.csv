@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+zone_name,TEXT,Full text name of the taxi zone,"[""Bronx Park"", ""Claremont/Bathgate"", ""Co-Op City""]",
+borough,TEXT,Borough containing the taxi zone,"[""Bronx""]",
+zone_id,TEXT,Unique ID number of each taxi zone. Corresponds with the pickup_location_id and dropoff_location_id in each of the trips tables,"[""31"", ""47"", ""51""]",
+zone_geom,BINARY,Geometric outline that defines the taxi zone suitable for GIS analysis.,[],

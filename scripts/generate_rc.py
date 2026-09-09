@@ -5,15 +5,27 @@ import csv
 import json
 import logging
 import sys
+import threading
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any, Mapping, Sequence
+from typing import Any, Callable, Mapping, Sequence
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 CODE_ROOT = SCRIPT_DIR.parent
-DEFAULT_CONCURRENCY = 5
+DEFAULT_CONCURRENCY = 50
+MIN_CONCURRENCY = 10
+MAX_CONCURRENCY = 500
+CONCURRENCY_STEP = 5
+STREAK_THRESHOLD = 10
+MAX_ATTEMPTS = 3
+CONCURRENCY_REPORT_INTERVAL_SECONDS = 15
 LOGGER = logging.getLogger("generate_rc")
+GREEN = "\033[32m"
+RED = "\033[31m"
+RESET = "\033[0m"
+InstanceIndex = int | str
 
 if str(CODE_ROOT) not in sys.path:
     sys.path.insert(0, str(CODE_ROOT))
@@ -27,6 +39,66 @@ from result_contract.rc import (
 )
 
 
+class AdaptiveConcurrency:
+    def __init__(self, initial: int) -> None:
+        if not MIN_CONCURRENCY <= initial <= MAX_CONCURRENCY:
+            raise ValueError(
+                f"concurrency must be between {MIN_CONCURRENCY} and {MAX_CONCURRENCY}"
+            )
+        self._limit = initial
+        self._active = 0
+        self._success_streak = 0
+        self._failure_streak = 0
+        self._condition = threading.Condition()
+
+    @property
+    def limit(self) -> int:
+        with self._condition:
+            return self._limit
+
+    def acquire(self) -> None:
+        with self._condition:
+            while self._active >= self._limit:
+                self._condition.wait()
+            self._active += 1
+
+    def release(self, succeeded: bool) -> None:
+        with self._condition:
+            self._active -= 1
+            if succeeded:
+                self._success_streak += 1
+                self._failure_streak = 0
+                if self._success_streak == STREAK_THRESHOLD:
+                    self._limit = min(
+                        MAX_CONCURRENCY,
+                        self._limit + CONCURRENCY_STEP,
+                    )
+                    self._success_streak = 0
+            else:
+                self._failure_streak += 1
+                self._success_streak = 0
+                if self._failure_streak == STREAK_THRESHOLD:
+                    self._limit = max(
+                        MIN_CONCURRENCY,
+                        self._limit - CONCURRENCY_STEP,
+                    )
+                    self._failure_streak = 0
+            self._condition.notify_all()
+
+
+class ConsoleColorFormatter(logging.Formatter):
+    def format(self, record: logging.LogRecord) -> str:
+        text = super().format(record)
+        text = text.replace(
+            " | success in attempt ",
+            f" | {GREEN}success{RESET} in attempt ",
+        )
+        return text.replace(
+            " | fail in attempt ",
+            f" | {RED}fail{RESET} in attempt ",
+        )
+
+
 def generate_rc_file(
     input_path: str | Path,
     meta_root: str | Path,
@@ -35,22 +107,18 @@ def generate_rc_file(
     concurrency: int = DEFAULT_CONCURRENCY,
 ) -> list[dict[str, Any]]:
     """Generate Round 1 and Round 2 with one shared concurrency limit."""
-    if concurrency < 1:
-        raise ValueError("concurrency must be positive")
+    if not MIN_CONCURRENCY <= concurrency <= MAX_CONCURRENCY:
+        raise ValueError(
+            f"concurrency must be between {MIN_CONCURRENCY} and {MAX_CONCURRENCY}"
+        )
 
     input_path = Path(input_path).resolve()
     meta_root = Path(meta_root).resolve()
     output_path = Path(output_path).resolve()
     instances = _load_instances(input_path)
-    LOGGER.info("Loaded %d instances from %s", len(instances), input_path)
 
     db_ids = {instance["db_id"] for instance in instances}
     metadata_by_db = _load_metadata(meta_root, db_ids)
-    LOGGER.info(
-        "Loaded metadata for %d databases from %s",
-        len(metadata_by_db),
-        meta_root,
-    )
 
     existing_records = _load_existing_records(output_path)
     input_indices = {instance["index"] for instance in instances}
@@ -63,7 +131,6 @@ def generate_rc_file(
     recovery_instances: list[dict[str, Any]] = []
     pending_round2_instances: list[dict[str, Any]] = []
     new_instances: list[dict[str, Any]] = []
-    reusable_count = 0
 
     for instance in instances:
         existing = records_by_index.get(instance["index"])
@@ -77,48 +144,52 @@ def generate_rc_file(
             recovery_instances.append(instance)
             continue
         if _has_reusable_round2(instance, existing):
-            reusable_count += 1
+            continue
         else:
             pending_round2_instances.append(instance)
 
+    round1_counts = _round_status_counts(instances, records_by_index, round_number=1)
+    round2_counts = _round_status_counts(instances, records_by_index, round_number=2)
     LOGGER.info(
-        "Resume state: complete=%d recovery=%d pending_round2=%d new=%d "
-        "concurrency=%d",
-        reusable_count,
-        len(recovery_instances),
-        len(pending_round2_instances),
-        len(new_instances),
-        concurrency,
+        "instances=%d | round1 success=%d fail=%d empty=%d | "
+        "round2 success=%d fail=%d empty=%d",
+        len(instances),
+        round1_counts["success"],
+        round1_counts["fail"],
+        round1_counts["empty"],
+        round2_counts["success"],
+        round2_counts["fail"],
+        round2_counts["empty"],
     )
 
-    for phase, phase_instances in (
-        ("recovery", recovery_instances),
-        ("round2", pending_round2_instances),
-        ("new", new_instances),
-    ):
+    adaptive_concurrency = AdaptiveConcurrency(concurrency)
+    stop_reporting = threading.Event()
+
+    def report_concurrency() -> None:
+        while not stop_reporting.wait(CONCURRENCY_REPORT_INTERVAL_SECONDS):
+            LOGGER.info("current concurrency=%d", adaptive_concurrency.limit)
+
+    reporter = threading.Thread(target=report_concurrency, daemon=True)
+    reporter.start()
+    try:
+        unfinished_instances = (
+            recovery_instances + pending_round2_instances + new_instances
+        )
         _run_phase(
-            phase=phase,
-            phase_instances=phase_instances,
+            phase_instances=unfinished_instances,
             all_instances=instances,
             records_by_index=records_by_index,
             metadata_by_db=metadata_by_db,
             output_path=output_path,
             model_call=model_call,
-            concurrency=concurrency,
+            adaptive_concurrency=adaptive_concurrency,
         )
 
-    output = _ordered_records(instances, records_by_index)
-    _write_json_atomic(output_path, output)
-    counts = _status_counts(output)
-    LOGGER.info(
-        "Wrote %d records to %s: complete=%d round1_failed=%d "
-        "round2_failed=%d",
-        len(output),
-        output_path,
-        counts["complete"],
-        counts["round1_failed"],
-        counts["round2_failed"],
-    )
+        output = _ordered_records(instances, records_by_index)
+        _write_json_atomic(output_path, output)
+    finally:
+        stop_reporting.set()
+        reporter.join()
     return output
 
 
@@ -135,7 +206,7 @@ def parse_args() -> argparse.Namespace:
         "--concurrency",
         type=int,
         default=DEFAULT_CONCURRENCY,
-        help=f"Maximum concurrent instances/API requests (default: {DEFAULT_CONCURRENCY}).",
+        help=f"Initial adaptive API concurrency (default: {DEFAULT_CONCURRENCY}).",
     )
     return parser.parse_args()
 
@@ -190,13 +261,18 @@ def configure_logging(log_path: str | Path) -> None:
     resolved_log_path = Path(log_path).resolve()
     resolved_log_path.parent.mkdir(parents=True, exist_ok=True)
     formatter = logging.Formatter(
-        fmt="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+        fmt="%(asctime)s | %(levelname)s | %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
     )
     file_handler = logging.FileHandler(resolved_log_path, encoding="utf-8")
     file_handler.setFormatter(formatter)
     console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
+    console_handler.setFormatter(
+        ConsoleColorFormatter(
+            fmt="%(asctime)s | %(levelname)s | %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+    )
 
     root_logger = logging.getLogger()
     root_logger.setLevel(logging.INFO)
@@ -213,7 +289,7 @@ def _load_instances(path: Path) -> list[dict[str, Any]]:
         raise ValueError("Preprocessed dataset split must be a JSON array")
 
     required_fields = {"index", "db_id", "question", "evidence"}
-    seen_indices: set[int] = set()
+    seen_indices: set[InstanceIndex] = set()
     instances: list[dict[str, Any]] = []
     for position, instance in enumerate(value):
         if not isinstance(instance, dict):
@@ -223,8 +299,11 @@ def _load_instances(path: Path) -> list[dict[str, Any]]:
             raise ValueError(
                 f"Instance at position {position} is missing fields: {sorted(missing)}"
             )
-        if not isinstance(instance["index"], int):
-            raise ValueError(f"Instance index at position {position} must be an integer")
+        if not _is_valid_instance_index(instance["index"]):
+            raise ValueError(
+                f"Instance index at position {position} must be an integer or "
+                "non-empty string"
+            )
         if instance["index"] in seen_indices:
             raise ValueError(f"Duplicate instance index: {instance['index']}")
         if not isinstance(instance["db_id"], str) or not instance["db_id"].strip():
@@ -282,16 +361,18 @@ def _read_metadata_csv(path: Path) -> list[dict[str, Any]]:
     raise last_error
 
 
-def _load_existing_records(path: Path) -> dict[int, dict[str, Any]]:
+def _load_existing_records(path: Path) -> dict[InstanceIndex, dict[str, Any]]:
     if not path.exists():
         return {}
     value = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(value, list):
         raise ValueError(f"Existing RC output must be a JSON array: {path}")
 
-    records: dict[int, dict[str, Any]] = {}
+    records: dict[InstanceIndex, dict[str, Any]] = {}
     for position, record in enumerate(value):
-        if not isinstance(record, dict) or not isinstance(record.get("index"), int):
+        if not isinstance(record, dict) or not _is_valid_instance_index(
+            record.get("index")
+        ):
             raise ValueError(f"Invalid existing RC record at position {position}: {path}")
         index = record["index"]
         if index in records:
@@ -342,51 +423,57 @@ def _has_reusable_round2(
     return _has_reusable_round1(instance, record)
 
 
+def _round_status_counts(
+    instances: Sequence[Mapping[str, Any]],
+    records_by_index: Mapping[InstanceIndex, Mapping[str, Any]],
+    round_number: int,
+) -> dict[str, int]:
+    counts = {"success": 0, "fail": 0, "empty": 0}
+    status_field = f"round{round_number}_status"
+    for instance in instances:
+        record = records_by_index.get(instance["index"])
+        status = record.get(status_field) if record is not None else None
+        if status == "succeeded":
+            counts["success"] += 1
+        elif status == "failed":
+            counts["fail"] += 1
+        else:
+            counts["empty"] += 1
+    return counts
+
+
 def _run_phase(
-    phase: str,
     phase_instances: list[dict[str, Any]],
     all_instances: list[dict[str, Any]],
-    records_by_index: dict[int, dict[str, Any]],
+    records_by_index: dict[InstanceIndex, dict[str, Any]],
     metadata_by_db: Mapping[str, Sequence[Mapping[str, Any]]],
     output_path: Path,
     model_call: ModelCall | None,
-    concurrency: int,
+    adaptive_concurrency: AdaptiveConcurrency,
 ) -> None:
     if not phase_instances:
         return
-    LOGGER.info(
-        "Starting %s phase: instances=%d concurrency=%d",
-        phase,
-        len(phase_instances),
-        concurrency,
-    )
-    worker_count = min(concurrency, len(phase_instances))
-    with ThreadPoolExecutor(max_workers=worker_count) as executor:
+    with ThreadPoolExecutor(max_workers=len(phase_instances)) as executor:
         work_items = iter(enumerate(phase_instances, start=1))
         futures: dict[Any, dict[str, Any]] = {}
 
-        def submit_next() -> bool:
-            try:
-                position, instance = next(work_items)
-            except StopIteration:
-                return False
-            future = executor.submit(
-                _generate_record,
-                instance,
-                records_by_index.get(instance["index"]),
-                metadata_by_db[instance["db_id"]],
-                model_call,
-                phase,
-                position,
-                len(phase_instances),
-            )
-            futures[future] = instance
-            return True
+        def fill_available_slots() -> None:
+            while len(futures) < adaptive_concurrency.limit:
+                try:
+                    _, instance = next(work_items)
+                except StopIteration:
+                    return
+                future = executor.submit(
+                    _generate_record,
+                    instance,
+                    records_by_index.get(instance["index"]),
+                    metadata_by_db[instance["db_id"]],
+                    model_call,
+                    adaptive_concurrency,
+                )
+                futures[future] = instance
 
-        for _ in range(worker_count):
-            submit_next()
-
-        completed = 0
+        fill_available_slots()
         while futures:
             future = next(as_completed(futures))
             instance = futures.pop(future)
@@ -396,19 +483,7 @@ def _run_phase(
                 output_path,
                 _ordered_records(all_instances, records_by_index),
             )
-            completed += 1
-            LOGGER.info(
-                "%s phase checkpoint: completed=%d/%d index=%s "
-                "round1=%s round2=%s",
-                phase,
-                completed,
-                len(phase_instances),
-                instance["index"],
-                record["round1_status"],
-                record["round2_status"],
-            )
-            submit_next()
-    LOGGER.info("Finished %s phase", phase)
+            fill_available_slots()
 
 
 def _generate_record(
@@ -416,9 +491,7 @@ def _generate_record(
     existing: Mapping[str, Any] | None,
     metadata: Sequence[Mapping[str, Any]],
     model_call: ModelCall | None,
-    phase: str,
-    position: int,
-    total: int,
+    adaptive_concurrency: AdaptiveConcurrency,
 ) -> dict[str, Any]:
     prefix = {
         "index": instance["index"],
@@ -429,41 +502,23 @@ def _generate_record(
 
     if existing is not None and _has_reusable_round1(instance, existing):
         round1_rc = Round1RC.from_value(existing["rc_round1"])
-        LOGGER.info(
-            "[%s %d/%d] Reusing Round-1 RC for index=%s db_id=%s",
-            phase,
-            position,
-            total,
-            instance["index"],
-            instance["db_id"],
-        )
     else:
-        LOGGER.info(
-            "[%s %d/%d] Generating Round-1 RC for index=%s db_id=%s",
-            phase,
-            position,
-            total,
-            instance["index"],
-            instance["db_id"],
-        )
+        round1_mode = "recover" if existing is not None else "begin"
         try:
-            round1_rc = generate_round1(
-                question=instance["question"],
-                evidence=instance["evidence"],
-                model_call=model_call,
+            round1_rc = _run_round(
+                index=instance["index"],
+                round_number=1,
+                mode=round1_mode,
+                adaptive_concurrency=adaptive_concurrency,
+                operation=lambda: generate_round1(
+                    question=instance["question"],
+                    evidence=instance["evidence"],
+                    model_call=model_call,
+                    max_attempts=1,
+                ),
             )
         except Exception as exc:
-            LOGGER.error(
-                "[%s %d/%d] Round-1 failed for index=%s after retry exhaustion: "
-                "%s: %s",
-                phase,
-                position,
-                total,
-                instance["index"],
-                type(exc).__name__,
-                exc,
-            )
-            root_error = exc.__cause__ or exc
+            root_error = _deepest_error(exc)
             return {
                 **prefix,
                 "round1_status": "failed",
@@ -477,34 +532,29 @@ def _generate_record(
                 "rc_round2": None,
             }
 
-    LOGGER.info(
-        "[%s %d/%d] Generating Round-2 RC for index=%s db_id=%s",
-        phase,
-        position,
-        total,
-        instance["index"],
-        instance["db_id"],
+    round2_mode = (
+        "recover"
+        if existing is not None and existing.get("round2_status") == "failed"
+        else "begin"
     )
     try:
-        round2_rc = generate_round2(
-            question=instance["question"],
-            evidence=instance["evidence"],
-            round1_rc=round1_rc,
-            metadata=metadata,
-            model_call=model_call,
-            metadata_complete=True,
+        round2_rc = _run_round(
+            index=instance["index"],
+            round_number=2,
+            mode=round2_mode,
+            adaptive_concurrency=adaptive_concurrency,
+            operation=lambda: generate_round2(
+                question=instance["question"],
+                evidence=instance["evidence"],
+                round1_rc=round1_rc,
+                metadata=metadata,
+                model_call=model_call,
+                max_attempts=1,
+                metadata_complete=True,
+            ),
         )
     except Exception as exc:
-        LOGGER.error(
-            "[%s %d/%d] Round-2 failed for index=%s after retry exhaustion: %s: %s",
-            phase,
-            position,
-            total,
-            instance["index"],
-            type(exc).__name__,
-            exc,
-        )
-        root_error = exc.__cause__ or exc
+        root_error = _deepest_error(exc)
         return {
             **prefix,
             "round1_status": "succeeded",
@@ -515,13 +565,6 @@ def _generate_record(
             "rc_round2": None,
         }
 
-    LOGGER.info(
-        "[%s %d/%d] Round-2 RC completed for index=%s",
-        phase,
-        position,
-        total,
-        instance["index"],
-    )
     return {
         **prefix,
         "round1_status": "succeeded",
@@ -533,19 +576,82 @@ def _generate_record(
     }
 
 
+def _run_round(
+    index: InstanceIndex,
+    round_number: int,
+    mode: str,
+    adaptive_concurrency: AdaptiveConcurrency,
+    operation: Callable[[], Any],
+) -> Any:
+    last_error: Exception | None = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        adaptive_concurrency.acquire()
+        LOGGER.info(
+            "%5s | round%d | %s | attempt %d/%d",
+            index,
+            round_number,
+            mode,
+            attempt,
+            MAX_ATTEMPTS,
+        )
+        try:
+            result = operation()
+        except Exception as exc:
+            adaptive_concurrency.release(succeeded=False)
+            last_error = _deepest_error(exc)
+            LOGGER.info(
+                "%5s | round%d | fail in attempt %d/%d",
+                index,
+                round_number,
+                attempt,
+                MAX_ATTEMPTS,
+            )
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(attempt)
+        else:
+            adaptive_concurrency.release(succeeded=True)
+            LOGGER.info(
+                "%5s | round%d | success in attempt %d/%d",
+                index,
+                round_number,
+                attempt,
+                MAX_ATTEMPTS,
+            )
+            return result
+
+    assert last_error is not None
+    raise RuntimeError(
+        f"Round-{round_number} RC generation failed after {MAX_ATTEMPTS} attempts"
+    ) from last_error
+
+
 def _error_value(error: BaseException) -> dict[str, str]:
     return {"type": type(error).__name__, "message": str(error)}
 
 
+def _deepest_error(error: Exception) -> Exception:
+    while isinstance(error.__cause__, Exception):
+        error = error.__cause__
+    return error
+
+
 def _ordered_records(
     instances: list[dict[str, Any]],
-    records_by_index: Mapping[int, dict[str, Any]],
+    records_by_index: Mapping[InstanceIndex, dict[str, Any]],
 ) -> list[dict[str, Any]]:
     return [
         records_by_index[instance["index"]]
         for instance in instances
         if instance["index"] in records_by_index
     ]
+
+
+def _is_valid_instance_index(value: Any) -> bool:
+    if isinstance(value, bool):
+        return False
+    if isinstance(value, int):
+        return True
+    return isinstance(value, str) and bool(value.strip())
 
 
 def _status_counts(records: Sequence[Mapping[str, Any]]) -> dict[str, int]:

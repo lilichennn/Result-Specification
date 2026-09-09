@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+obsref,,A SERIAL primary key uniquely identifying each planet-instrument observation record.,bigint,
+subjectlink,,"Foreign key INTEGER referencing planets(PlanetRef), indicating which planet was observed.",bigint,
+facilitylink,,"Foreign key INTEGER referencing instruments_surveys(InstrumentRef), indicating which facility made the observation.",bigint,

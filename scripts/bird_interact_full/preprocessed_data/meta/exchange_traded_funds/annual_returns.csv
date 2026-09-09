@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+yearlyid,,A SERIAL primary key uniquely identifying each annual return record for funds by year.,bigint,
+portfolioref,,"Foreign key referencing funds.TickerSym, indicating which fund the annual return data belongs to.",character varying,
+calendaryear,,Calendar year (YYYY) for which the return performance is recorded.,bigint,
+fundperf,,"Fund's return performance for the specific calendar year as decimal (-1 to positive). Contains  NULL when fund performance data is not available for that year (e.g., fund not yet launched).",real,
+categoryperf,,Category or benchmark average return performance for the same calendar year for comparison. Contains  NULL when category performance data is not available for comparison.,real,

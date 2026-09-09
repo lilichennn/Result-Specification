@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+picture,TEXT,,"[""""]",
+username,TEXT,,"[""Mike"", ""Jon""]",
+email,TEXT,,"[""Mike.Hillyer@sakilastaff.com"", ""Jon.Stephens@sakilastaff.com""]",
+last_name,TEXT,,"[""Hillyer"", ""Stephens""]",
+address_id,NUMBER,,"[3, 4]",
+staff_id,NUMBER,,"[1, 2]",
+last_update,TEXT,,"[""2021-03-06 15:52:00""]",
+store_id,NUMBER,,"[1, 2]",
+password,TEXT,,"[""8cb2237d0679ca88db6464eac60da96345513964""]",
+first_name,TEXT,,"[""Mike"", ""Jon""]",
+active,NUMBER,,[1],

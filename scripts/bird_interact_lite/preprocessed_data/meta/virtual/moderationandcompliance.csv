@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+modreg,,"A VARCHAR(20) primary key for moderation records (e.g., 'MOD001').",character varying,
+moderationinteractpivot,,A VARCHAR(20) FK referencing Interactions(ActivityReg).,character varying,
+moderationsocialpivot,,A VARCHAR(20) FK referencing SocialCommunity(SocialReg).,character varying,
+rptcount,,"A SMALLINT count of how many times the fan was reported (e.g., 2).",smallint,
+warncount,,"A SMALLINT count of how many warnings were issued to the fan (e.g., 1).",smallint,
+violhist,,"An enum (ViolationHistory_enum) describing any prior infractions (Major, Minor).",USER-DEFINED,
+modstat,,"An enum (ModerationStatus_enum) showing moderation status (Warning, Good Standing, Restricted).",USER-DEFINED,
+contcomp,,"An enum (ContentCompliance_enum) for compliance with content policy (Warning, Violation, Compliant).",USER-DEFINED,
+ageverif,,"An enum (AgeVerification_enum) indicating age verification state (Not Required, Verified, Pending).",USER-DEFINED,
+payverif,,"An enum (PaymentVerification_enum) verifying payment info (Pending, Verified).",USER-DEFINED,
+idverif,,"A VARCHAR(50) capturing any identity verification code or status (e.g., 'IDCheck#123').",character varying,

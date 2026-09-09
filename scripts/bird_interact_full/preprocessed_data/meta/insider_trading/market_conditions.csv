@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+REC_PIN,,TEXT. Primary key linking market-condition metrics to a trade record. PK.,text,
+vol_ano,,REAL. Volume-anomaly indicator. Example: 2.12.,real,
+mov_pct,,REAL. Percentage price movement over the observation window. Example: 9.6.,real,
+spreadTag,,REAL. Bid-ask-spread metric for the instrument. Example: 0.471.,real,
+impactVal,,TEXT. Estimated market-impact value. Example: 0.05%.,text,
+mkt_corr,,REAL. Correlation with the broader market index. Example: -0.327.,real,
+rot_imp,,REAL. Rotation-impact score on sector rotation. Example: -0.793.,real,
+ofi_density,,"TEXT. The order flow impact density, measured in basis points per million USD of trade volume. Example: 8.76 bps/million USD.",text,
+liq_imp,,"TEXT. The liquidity impact rate, calculated as the USD value of trades per minute. Reflects the instantaneous impact on market liquidity by trading volume. Example: 12,534.56 USD/min.",text,
+price_accel,,TEXT. Rate of change in the price volatility per hour squared. A higher value indicates a more volatile price movement over time. Example: 2.32 %/(hour²).,text,
+market_metrics,,"JSONB column. Market conditions data including volatility and correlation.
+Fields: {""liq_ratio"":""REAL. Liquidity ratio for the instrument. **NULL means liquidity ratio could not be determined.**. Example: 0.58."",""peer_corr"":""REAL. Correlation with peer instruments. **NULL means peer correlation metric not computed.**. Example: 0.525."",""px_vol"":""REAL. Price-weighted volume metric. Example: 0.348.""}",jsonb,

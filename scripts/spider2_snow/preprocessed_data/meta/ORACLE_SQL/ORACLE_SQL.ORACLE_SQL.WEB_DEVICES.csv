@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+phone,NUMBER,,"[1610, 2159]",
+day,TEXT,,"[""2019-05-01"", ""2019-05-02""]",
+tablet,NUMBER,,"[812, 1102]",
+pc,NUMBER,,"[1042, 967]",

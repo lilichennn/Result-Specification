@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+contract_award_number,TEXT,,"[""C "", ""465"", ""589""]",
+patent_id,TEXT,,"[""10169847"", ""PP21965"", ""4534894""]",

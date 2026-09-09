@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+batchtag,,text. Unique production batch identifier. PK. Example: BT909380.,text,
+prodlink,,text. Product code this batch belongs to. FK to Products.,text,
+mfg_ts,,timestamp. Manufacturing timestamp for the batch. Example: 2-Aug-24.,timestamp without time zone,
+exp_ts,,timestamp. Expiry timestamp for the batch. Example: 09/30/2026.,timestamp without time zone,
+store_cond,,"text. Textual description of required storage conditions. Possible values: -20°C, -70°C, 15-25°C, 2-8°C.",text,
+tempmin,,"real. Minimum allowable temperature (°C). Possible values: -70, -20, 2, 15.",real,
+tempmax,,real. Maximum allowable temperature (°C). Example: 12.,real,
+tempsense,,"text. Temperature-sensing method or device type. Possible values: High, Low, Medium.",text,
+pack_type,,"text. Packaging type for the shipment units. Possible values: Ampoule, Container, Syringe, Vial.",text,
+pack_cnt,,bigint. Number of saleable packs in the batch. Example: 936.,bigint,
+valusd,,"text. Declared commercial value in USD. Example: $57,421.85 .",text,
+insusd,,real. Insurance coverage value in USD. **NULL means no insurance value set.**. Example: 226483.74.,real,

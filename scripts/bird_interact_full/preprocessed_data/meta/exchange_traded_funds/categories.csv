@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+catref,,A SERIAL primary key uniquely identifying each fund category or investment classification in the database.,bigint,
+classtype,,"Unique fund category classification (e.g., 'Large Cap Growth', 'International Equity', 'Bond Index', 'Sector Equity', 'Commodity'). Must be unique across all records.",text,

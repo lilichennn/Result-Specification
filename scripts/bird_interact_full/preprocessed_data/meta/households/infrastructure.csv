@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+infraref,,"A SERIAL primary key uniquely identifying each infrastructure configuration record in the database. EX. 1,2,3",bigint,
+wateraccess,,"Piped water supply access type indicating the household's water infrastructure connectivity. Part of unique constraint combination. ex.Yes, available at least in one room",text,
+roadsurface,,"Street pavement condition and type describing the road infrastructure quality around the household location. Part of unique constraint combination. EX. Asphalt, concrete;Gravel surface",text,
+parkavail,,"Private parking space availability indicating whether households have dedicated parking facilities. Part of unique constraint combination. EX.Available, not available",text,

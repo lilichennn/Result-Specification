@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+EnrGrade,FLOAT,,"[3.5, 3.8, 3.1]",
+StdNo,NUMBER,,"[234567890, 567890123, 876543210]",
+OfferNo,NUMBER,,"[1234, 4321, 5555]",

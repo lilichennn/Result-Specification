@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+upkeepactuation,,PRIMARY KEY (VARCHAR(20)) referencing actuation_data(ActReg). Ties maintenance/fault record to actuation data.,character varying,
+upkeepoperation,,VARCHAR(20) referencing operation(OperReg).,character varying,
+upkeeprobot,,VARCHAR(20) referencing robot_details(BotDetReg).,character varying,
+faultcodeval,,"VARCHAR(25) storing a code for the specific fault (e.g., 'F1234').",character varying,
+issuecategoryval,,"VARCHAR(22) labeling the fault or issue category (e.g., 'Communication', 'Electrical', 'Mechanical', 'Software').",character varying,
+issuelevelval,,"VARCHAR(18) describing severity or priority (e.g., 'Low', 'High', 'Medium', 'Critical').",character varying,
+faultpredscore,,FLOAT(5) approximate float rating the probability or severity of fault.,real,
+faulttypeestimation,,"VARCHAR(20) referencing the likely fault type (e.g., 'Motor', 'Joint', 'Gearbox', 'Controller').",character varying,
+rulhours,,INT storing Remaining Useful Life in hours if predicted.,integer,
+upkeepduedays,,SMALLINT capturing days until next scheduled maintenance is due.,smallint,
+upkeepcostest,,"DECIMAL(9,3) estimated cost for upcoming maintenance or repair.",numeric,

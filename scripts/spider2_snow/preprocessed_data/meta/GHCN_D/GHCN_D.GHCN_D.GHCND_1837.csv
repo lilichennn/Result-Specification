@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+value,FLOAT,,"[196.0, 17.0, 36.0]",
+date,DATE,,"[""1837-09-04"", ""1837-10-08"", ""1837-12-21""]",
+id,TEXT,,"[""EZE00100082""]",
+sflag,TEXT,,"[""E""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+element,TEXT,,"[""PRCP""]",

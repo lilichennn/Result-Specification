@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+events_reg,,BIGSERIAL. Auto-generated unique identifier for events and fan club record. PK = EventsAndClub(Events_Reg).,bigint,
+events_social_pivot,,BIGINT. Reference to social community record for event participation analysis. FK to SocialCommunity.,bigint,
+events_member_pivot,,BIGINT. Reference to membership record for event access correlation. FK to MembershipAndSpending.,bigint,
+evt_part,,"TEXT. Level and type of event participation by the fan. **NULL means event participation tracking incomplete or no events attended.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+camp_part,,TEXT. Participation level in campaigns and promotional activities. **NULL means campaign participation tracking incomplete or no campaigns joined.**,text,
+club_stat,,TEXT. Current status within official fan club membership.,text,
+club_j_date,,TEXT. Date when fan joined the official fan club.,text,
+club_contrib,,"TEXT. Type and level of contribution to fan club activities. **NULL means fan club contribution assessment incomplete or minimal participation.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+evt_participation,,"JSONB column. Event participation data including attendance counts for different event types and voting behavior
+Fields: {""Conc_Att"":""SMALLINT. Number of concert or performance events attended."",""Meet_Att"":""SMALLINT. Number of meet-and-greet events attended."",""Off_Evt_Att"":""SMALLINT. Number of offline events attended by the fan."",""On_Evt_Att"":""SMALLINT. Number of online events attended by the fan."",""Vote_Part_Rate"":""REAL. Participation rate in voting activities as percentage.""}",jsonb,

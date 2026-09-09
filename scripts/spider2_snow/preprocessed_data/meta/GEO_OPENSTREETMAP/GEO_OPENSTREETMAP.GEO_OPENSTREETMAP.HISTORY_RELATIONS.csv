@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+username,TEXT,,"[""Stylez995"", ""tkoval83""]",
+members,VARIANT,,[],
+osm_timestamp,NUMBER,,"[1603643356000000, 1601566295000000, 1601308498000000]",
+id,NUMBER,,"[5426265, 10760608, 10073012]",
+visible,BOOLEAN,,[true],
+version,NUMBER,,"[11, 405, 358]",
+geometry,BINARY,,[],
+all_tags,VARIANT,,"[""[\n  {\n    \""key\"": \""to\"",\n    \""value\"": \""Solemskogen\""\n  },\n  {\n    \""key\"": \""ref\"",\n    \""value\"": \""56\""\n  },\n  {\n    \""key\"": \""from\"",\n    \""value\"": \""Tamburveien\""\n  },\n  {\n    \""key\"": \""line\"",\n    \""value\"": \""bus\""\n  },\n  {\n    \""key\"": \""type\"",\n    \""value\"": \""route\""\n  },\n  {\n    \""key\"": \""route\"",\n    \""value\"": \""bus\""\n  },\n  {\n    \""key\"": \""colour\"",\n    \""value\"": \""#0072BC\""\n  },\n  {\n    \""key\"": \""network\"",\n    \""value\"": \""Ruter\""\n  },\n  {\n    \""key\"": \""operator\"",\n    \""value\"": \""Norgesbuss\""\n  },\n  {\n    \""key\"": \""public_transport:version\"",\n    \""value\"": \""2\""\n  }\n]""]",
+changeset,NUMBER,,"[93021604, 91835145, 91652789]",

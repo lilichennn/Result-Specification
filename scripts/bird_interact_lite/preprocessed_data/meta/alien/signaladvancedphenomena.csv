@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+signalref,,Full name: 'Signal Registry Reference'. Explanation: Primary key referencing the main signal. Data type: CHAR(36). Example: 'SIG-ABC-1234'.,character,
+intermedeffects,,"Full name: 'Interstellar Medium Effects'. Explanation: Impact of interstellar medium on the signal. Data type: VARCHAR(40). Possible categories: Minimal, Moderate, Severe.",character varying,
+gravlens,,"Full name: 'Gravitational Lensing'. Explanation: Whether the signal is affected by gravitational lensing. Data type: VARCHAR(50). Possible categories: None, Strong, Weak.",character varying,
+quanteffects,,"Full name: 'Quantum Effects'. Explanation: Quantum-level phenomena observed in the signal. Data type: VARCHAR(85). Possible categories: None, Observed, Significant.",character varying,
+encryptevid,,"Full name: 'Encryption Evidence'. Explanation: Whether there is indication the signal is encrypted. Data type: VARCHAR(40). Possible categories: None, Possible, Strong.",character varying,
+langstruct,,"Full name: 'Language Structure'. Explanation: Presence of linguistic or structured patterns. Data type: TEXT. Possible categories: Complex, None, Simple.",text,
+msgcontent,,"Full name: 'Message Content'. Explanation: Indicates whether an actual message was detected. Data type: TEXT. Possible categories: Identified, None, Possible.",text,
+cultsig,,"Full name: 'Cultural Significance'. Explanation: The level of cultural impact or interest. Data type: VARCHAR(60). Possible categories: High, Low, None.",character varying,
+sciimpact,,"Full name: 'Scientific Impact'. Explanation: Significance of the signal to scientific research. Data type: VARCHAR(50). Possible categories: Major, Minor, Moderate.",character varying,

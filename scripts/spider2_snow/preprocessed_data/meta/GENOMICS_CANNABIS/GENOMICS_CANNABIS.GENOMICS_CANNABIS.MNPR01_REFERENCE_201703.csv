@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+length,NUMBER,,"[4096, 4864, 6656]",
+name,TEXT,,"[""gi|1098477440|gb|MNPR01010102.1|"", ""gi|1098478110|gb|MNPR01009867.1|"", ""gi|1098479977|gb|MNPR01009270.1|""]",

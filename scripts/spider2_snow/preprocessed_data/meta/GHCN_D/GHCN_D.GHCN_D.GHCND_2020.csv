@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+source_url,TEXT,Source ,"[""ftp://ftp.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2020.csv.gz""]",
+id,TEXT,,"[""USC00031492"", ""USC00051441"", ""USC00182906""]",
+mflag,TEXT,,[],
+time,TEXT,,"[""0700"", ""0800"", ""0730""]",
+element,TEXT,,"[""SNOW"", ""PRCP"", ""TMIN""]",
+date,DATE,,"[""2020-06-19""]",
+value,FLOAT,,"[0.0, 183.0, 18.0]",
+qflag,TEXT,,[],
+etl_timestamp,NUMBER,Load time for this data row,[1689802833669021],
+sflag,TEXT,,"[""7""]",

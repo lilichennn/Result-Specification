@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+orderexecmark,,"A BIGSERIAL primary key for each fill/execution (e.g., 210345).",bigint,
+fillcount,,"A DECIMAL(8,4) showing how many units were filled (e.g., '0.0500').",numeric,
+remaincount,,"A NUMERIC(8,4) showing how many units remain unfilled (e.g., '0.0750').",numeric,
+fillquote,,"A DECIMAL(12,3) capturing the fill price (e.g., '27699.150').",numeric,
+fillsum,,"A DECIMAL(12,3) notional of the fill (e.g., '1384.958').",numeric,
+expirespot,,"A TIMESTAMP if the partial fill or order slice expires (e.g., '2025-05-10 15:00:00').",timestamp without time zone,
+cancelnote,,"An enum (CancelNote_enum) describing cancel reason (Expired, InsufficientFunds, UserRequested).",USER-DEFINED,
+exectune,,"An enum (ExecTune_enum) indicating execution style (Maker, Taker).",USER-DEFINED,
+ordersmark,,A CHAR(36) referencing Orders(RecordVault) to link back to the original order.,character,

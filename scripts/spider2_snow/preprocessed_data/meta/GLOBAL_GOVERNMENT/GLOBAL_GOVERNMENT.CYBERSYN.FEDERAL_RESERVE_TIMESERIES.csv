@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+DATE,DATE,Date associated with the value.,"[""2008-12-31"", ""2018-06-30"", ""1984-03-31""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Levels: Government-sponsored enterprises; total assets held by Farmer Mac (balance sheet) - Input series with zero seasonal factor, Quarterly (Not seasonally adjusted)"", ""Transactions: Monetary authority; Treasury bills; asset - Input series with zero seasonal factor, Quarterly (Not seasonally adjusted)"", ""Transactions: Domestic financial sectors; gross fixed investment, nonresidential software - Computed series, Quarterly (Not seasonally adjusted)""]",
+VALUE,FLOAT,Value reported for the variable.,"[5107000000.0, 0.0, 1443000000.0]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""Z1_FL404090453.Q"", ""Z1_FU713061113.Q"", ""Z1_FU795013035.Q""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/USA""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""USD""]",

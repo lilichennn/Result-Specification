@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+SERIES_ID,TEXT,Series identifier from the FRED database. The combination of the geo_id and variable are needed together to identify a unique series_id,"[""IPNMAT"", ""IPFUELS"", ""H41RESPPAAEF07NWW""]",
+GEO_ID,TEXT,Unique identifier for a place joinable to the timeseries table.,"[""country/USA""]",
+VARIABLE,TEXT,Unique identifier joinable to the attributes and timeseries tables.,"[""Industrial_Production:_Nondurable_Goods_Materials,_Seasonally_adjusted,_Monthly,_Index_2017=100"", ""Industrial_Production:_Nondurable_Energy_Consumer_Goods:_Fuels,_Seasonally_adjusted,_Monthly,_Index_2017=100"", ""Assets:_Liquidity_and_Credit_Facilities:_Net_Portfolio_Holdings_of_MS_Facilities_2020_LLC_(Main_Street_Lending_Program):_Wednesday_Level_in_Federal_Reserve_District_7:_Chicago,_Not_seasonally_adjusted,_Weekly,_USD""]",

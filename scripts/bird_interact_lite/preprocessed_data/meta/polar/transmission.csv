@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+transregistry,,A SERIAL primary key uniquely identifying each transmission record.,integer,
+transeqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking the transmission data to a specific piece of equipment.",character varying,
+transengfluidsref,,"An INTEGER foreign key referencing EngineAndFluids(EngineRegistry), associating this transmission with a particular engine/fluids record.",integer,
+transmissiontemperaturec,,A REAL value measuring the current transmission temperature in Celsius.,real,
+transmissionpressurekpa,,"A DECIMAL(8,2) indicating transmission fluid pressure in kilopascals.",numeric,
+transmissiongear,,"A SMALLINT representing the currently engaged gear (e.g., 3, -1, 1, 6, 0, 2, 5, 4).",smallint,
+differentialtemperaturec,,A DOUBLE PRECISION value for the differential’s temperature in Celsius.,double precision,
+axletemperaturec,,A FLOAT specifying the axle’s temperature in Celsius.,double precision,
+transopmaintref,,An INTEGER optionally referencing an OperationMaintenance(OpMaintRegistry) record for linking maintenance or operational data.,integer,

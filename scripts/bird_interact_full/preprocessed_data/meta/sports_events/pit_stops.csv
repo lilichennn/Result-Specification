@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+matchidx,,INTEGER. Foreign key to the races table (RAK_ID). FK to races. Example: 911.,integer,
+wunit,,INTEGER. Foreign key to the drivers table (DRV_MAIN). FK to drivers. Example: 3.,integer,
+pause_no,,"INTEGER. Unique identifier for the pit stop. Possible values: 1, 2, 3, 4, 5, 6.",integer,
+moment,,INTEGER. Moment during the race when the pit stop occurs. Example: 19.,integer,
+attime,,VARCHAR. Timestamp of the pit stop. **NULL means the exact pit-stop time wasn't logged.**. Example: 14:41:14.,text,
+durtxt,,TEXT. Duration of the pit stop. Example: 22.936.,text,
+ms_count,,INTEGER. Millisecond count for the pit stop. Example: 22936.,integer,

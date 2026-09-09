@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""USC00046174"", ""USC00346931"", ""USC00453730""]",
+time,TEXT,,"[""0800"", ""2400"", ""0830""]",
+value,FLOAT,,"[261.0, 228.0, 0.0]",
+qflag,TEXT,,[],
+mflag,TEXT,,[],
+etl_timestamp,NUMBER,Load time for this data row,[1689800315825849],
+source_url,TEXT,Source ,"[""ftp://ftp.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2018.csv.gz""]",
+element,TEXT,,"[""TMAX"", ""SN32"", ""PRCP""]",
+date,DATE,,"[""2018-05-13""]",
+sflag,TEXT,,"[""7""]",

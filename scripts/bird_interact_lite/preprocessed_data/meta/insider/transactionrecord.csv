@@ -1,0 +1,14 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+transreg,,"VARCHAR(50). Primary key for an individual trade‑day record (e.g., 'REC‑20250117‑0001').",character varying,
+transtime,,"TIMESTAMP. Date‑time the trade blotter snapshot was taken (e.g., '2025‑04‑17 13:42:05').",timestamp without time zone,
+trdref,,VARCHAR(50). Foreign‑key linking this record to Trader.TradeReg.,character varying,
+ordervar,,"NUMERIC(20,4). Variance of order sizes submitted during the session.",numeric,
+ordertimepat,,"order_timing_pattern_enum (enum: 'Irregular', 'Regular', 'Suspicious'). Pattern of order entry times.",USER-DEFINED,
+ordertypedist,,"order_type_distribution_enum (enum: 'Market', 'Mixed', 'Limit'). Distribution of order types used.",USER-DEFINED,
+cancelpct,,"NUMERIC(7,4). Percentage of orders cancelled before execution (e.g., 35.8125).",numeric,
+modfreq,,"NUMERIC(7,4). Average number of order modifications per original order (e.g., 0.7430).",numeric,
+darkusage,,"VARCHAR(100). Qualitative or venue list describing dark‑pool usage (e.g., 'ATS‑X, ATS‑Y').",character varying,
+offmkt,,"VARCHAR(100). Summary of off‑exchange trade activity (e.g., 'Internal crosses').",character varying,
+crossfreq,,"NUMERIC(10,4). Frequency of cross trades relative to total trades (e.g., 0.1520).",numeric,
+risk_indicators,,"JSONB column. Aggregates indicators of potential market abuse or risky trading behaviors, such as spoofing probability, front-running risk, and wash trade suspicion.
+Fields: {""frontscore"":""NUMERIC(7,4). Front‑running risk score (e.g., 0.5620)."",""layerind"":""layering_indicator_enum (enum: 'Confirmed', 'Suspected'). Presence of order‑layering indicators."",""markclosepat"":""marking_close_pattern_enum (enum: 'Occasional', 'Frequent'). Pattern of marking‑the‑close activity."",""momentignit"":""momentum_ignition_signal_enum (enum: 'Strong', 'Weak'). Strength of detected momentum‑ignition patterns."",""qstuffindex"":""NUMERIC(7,4). Quote‑stuffing index value computed for the session (e.g., 1.8345)."",""spoofprob"":""NUMERIC(5,2). Probability score that spoofing behaviour occurred (0‑100, e.g., 18.75)."",""washsus"":""wash_trade_suspicion_enum (enum: 'Low', 'Medium', 'High'). System‑derived wash‑trading suspicion level.""}",jsonb,

@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+gender,TEXT,,"[""F""]",
+created_at,NUMBER,,"[1584925080000000, 1703481840000000, 1663130700000000]",
+user_id,NUMBER,,"[52, 120, 150]",
+shipped_at,NUMBER,,[],
+returned_at,NUMBER,,[],
+num_of_item,NUMBER,,"[2, 1]",
+delivered_at,NUMBER,,[],
+order_id,NUMBER,,"[45, 136, 165]",
+status,TEXT,,"[""Cancelled""]",

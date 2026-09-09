@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""iris"", ""concrete""]",
+L1_model,TEXT,,"[""regression""]",
+version,NUMBER,,"[1, 2, 3]",
+step,NUMBER,,"[1, 2, 3]",

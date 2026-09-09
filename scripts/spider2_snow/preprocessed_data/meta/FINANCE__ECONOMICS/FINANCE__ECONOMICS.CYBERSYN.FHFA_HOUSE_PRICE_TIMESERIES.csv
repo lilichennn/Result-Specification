@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VALUE,NUMBER,The reported numeric value for the variable and date,"[""236.84"", ""65.97"", ""141.57""]",
+UNIT,TEXT,"Unit of measure for the variable (e.g., Index)","[""Index""]",
+DATE,DATE,Date associated with the value,"[""2009-09-30"", ""1987-06-30"", ""2005-03-31""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table for filtering,"[""FHFA_HPI_traditional_purchase-only_quarterly_NSA"", ""FHFA_HPI_traditional_all-transactions_quarterly_NSA""]",
+GEO_ID,TEXT,A unique geographic identifier joinable to the geography_index/relationships tables,"[""geoId/53"", ""geoId/C22660"", ""geoId/C47580""]",
+VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""FHFA_HPI traditional purchase-only quarterly Not Seasonally Adjusted"", ""FHFA_HPI traditional all-transactions quarterly Not Seasonally Adjusted""]",

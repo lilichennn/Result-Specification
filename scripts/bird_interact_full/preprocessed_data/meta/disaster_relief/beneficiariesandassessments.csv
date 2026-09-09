@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+beneregistry,,VARCHAR(20). Unique beneficiary registry identifier. PK.,character varying,
+bene_dist_ref,,VARCHAR(20). Disaster event reference. FK to DisasterEvents.,character varying,
+beneopsref,,VARCHAR(20). Operations reference. FK to Operations.,character varying,
+beneregister,,"BeneRegister_enum. Beneficiary registration status. **NULL means registration not completed.**. Possible values: Complete, Partial, Pending.",USER-DEFINED,
+vulnerability_review,,"VulnerabilityReview_enum. Vulnerability review status. Possible values: Complete, In Progress, Pending.",USER-DEFINED,
+needs_assess_status,,"TEXT. Status of needs assessment. Possible values: Due, Overdue, Updated.",text,
+distequityidx,,REAL. Disaster equity index. Example: 0.54.,real,
+bene_feedbackscore,,REAL. Beneficiary feedback score. **NULL means feedback not recorded.**. Example: 1.3.,real,
+commengagelvl,,"TEXT. Community engagement level. Possible values: High, Low, Medium.",text,
+local_capacity_growth,,"TEXT. Local capacity growth description. **NULL means no growth recorded.**. Possible values: Active, Limited.",text,

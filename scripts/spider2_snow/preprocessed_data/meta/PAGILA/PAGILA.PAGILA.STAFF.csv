@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+last_name,TEXT,,"[""Stephens""]",
+store_id,NUMBER,,[2],
+username,TEXT,,"[""Jon""]",
+first_name,TEXT,,"[""Jon""]",
+last_update,TEXT,,"[""2021-03-06 15:52:00""]",
+password,TEXT,,"[""8cb2237d0679ca88db6464eac60da96345513964""]",
+email,TEXT,,"[""Jon.Stephens@sakilastaff.com""]",
+staff_id,NUMBER,,[2],
+picture,TEXT,,"[""""]",
+address_id,NUMBER,,[4],
+active,NUMBER,,[1],

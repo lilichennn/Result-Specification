@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+MatchID,NUMBER,,"[1, 2, 3]",
+WinningTeamID,NUMBER,,"[2, 4, 5]",
+GameNumber,NUMBER,,"[2, 1, 3]",

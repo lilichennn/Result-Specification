@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+mondevref,,text. Unique monitoring-device reference. PK. Example: MD9886.,text,
+calibts,,timestamp. Timestamp of last calibration. Example: 2024/10/6.,timestamp without time zone,
+devacc,,text. Device accuracy specification. Example: 0.31.,text,
+recintmin,,"bigint. Recording interval in minutes. **NULL means interval not configured.**. Possible values: 5.0, 10.0, 15.0, 30.0.",bigint,
+temppts,,bigint. Number of temperature points that can be stored. Example: 891.,bigint,

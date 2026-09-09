@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,A human-readable description of the variable,"[""Inbound Address Changes, Permanent"", ""Inbound Address Changes, Total"", ""Inbound Address Changes, Businesses""]",
+UNIT,TEXT,"Unit of measurement, which is the count of address change requests","[""Count""]",
+REQUEST_TYPE,TEXT,"Categorization of request. Request types are grouped as temporal (permanent or temporary); requestor type (family, individual, business); or total","[""Permanent"", ""Total"", ""Businesses""]",
+MEASURE,TEXT,"Type of address changes being reported, Inbound - people moving to the geography; outbound - people leaving the geography; net - inbound less outbound","[""Inbound Address Changes"", ""Net Address Changes"", ""Outbound Address Changes""]",
+FREQUENCY,TEXT,Frequency for which the value is reported,"[""Month""]",
+VARIABLE,TEXT,A unique identifier joinable to the timeseries table,"[""inbound_address_changes_permanent"", ""inbound_address_changes_total"", ""inbound_address_changes_businesses""]",

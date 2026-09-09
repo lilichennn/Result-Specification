@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+organization_id,NUMBER,,[256],
+patent_id,TEXT,,"[""10074282"", ""10096097"", ""10029556""]",

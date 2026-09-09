@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+traitregistry,,Full name: 'Feature Record ID'. Explanation: Primary key for feature data. Data type: BIGSERIAL. Example: 5001.,bigint,
+zoneref,,Full name: 'Site Reference'. Explanation: Site code tied to these features. Data type: VARCHAR(12). Example: 'SC9016'.,character varying,
+equipref,,Full name: 'Equipment Reference'. Explanation: Equipment ID used to detect these features. Data type: CHAR(10). Example: 'SN20065'.,character,
+traitextract,,"Full name: 'Feature Extraction Method'. Explanation: Method used to extract features (manual or automated). Data type: VARCHAR(25). Possible categories: Manual, Semi-automatic, Automatic.",character varying,
+traitcount,,Full name: 'Number of Detected Features'. Explanation: How many features were identified. Data type: INTEGER. Example: 516.,integer,
+articount,,Full name: 'Artifact Count'. Explanation: Number of artifacts recognized. Data type: INTEGER. Example: 71.,integer,
+structkind,,"Full name: 'Structure Type'. Explanation: Type of structural element. Data type: VARCHAR(15). Possible categories: Artifact, Complex, Wall, Foundation.",character varying,
+matkind,,"Full name: 'Material Type'. Explanation: Primary composition or material. Data type: VARCHAR(15). Possible categories: Organic, Metal, Mixed, Ceramic, Stone.",character varying,
+huestudy,,"Full name: 'Color Analysis'. Explanation: Status of color analysis (done or pending). Data type: VARCHAR(15). Possible categories: Partial, Completed, Not Required.",character varying,
+texturestudy,,"Full name: 'Texture Analysis'. Explanation: Status of texture analysis. Data type: VARCHAR(15). Possible categories: Partial, Completed, Not Required.",character varying,
+patternnote,,"Full name: 'Pattern Recognition'. Explanation: Notes regarding detected patterns. Data type: TEXT. Possible categories: Not Required, None, Partial.",text,

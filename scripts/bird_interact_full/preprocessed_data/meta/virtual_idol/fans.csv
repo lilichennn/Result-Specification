@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+user_registry,,TEXT. Unique identifier for fan user account registration in the virtual_idol idol platform. PK = Fans(User_Registry).,text,
+nick_label,,TEXT. Display nickname or username chosen by the fan for public identification.,text,
+reg_moment,,TEXT. Date and time when the fan account was first registered on the platform.,text,
+tier_step,,SMALLINT. Fan loyalty tier level indicating status progression within the platform hierarchy.,smallint,
+pts_val,,BIGINT. Accumulated loyalty points earned through various platform activities and interactions.,bigint,
+status_tag,,TEXT. Current account status classification for the fan user.,text,
+lang_pref,,"TEXT. Fan's preferred language for platform interface and content. **NULL means language preference not specified or using platform default.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+demo_profile,,"JSONB column. Demographic profile information including age, gender, location, and personal background
+Fields: {""Age_Count"":""SMALLINT. Fan's age in years for demographic analysis and content targeting."",""Gender_Type"":""TEXT. Fan's gender classification for demographic segmentation."",""Interest_Set"":""TEXT. Fan's declared interests and hobbies for content personalization. **NULL means interest profile incomplete or not disclosed.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**"",""Loc_Nation"":""TEXT. Fan's country of residence for geographic analysis."",""Loc_Town"":""TEXT. Fan's city or local area for detailed geographic segmentation."",""Occu_Path"":""TEXT. Fan's occupation or professional background. **NULL means occupation information not provided or privacy setting enabled.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**""}",jsonb,

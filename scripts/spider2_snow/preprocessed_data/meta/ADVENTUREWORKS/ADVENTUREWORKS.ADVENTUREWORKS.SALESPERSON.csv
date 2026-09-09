@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+salesytd,FLOAT,,"[559697.5639, 3763178.1787, 3189418.3662]",
+salesquota,TEXT,,"["""", ""300000"", ""250000""]",
+rowguid,TEXT,,"[""48754992-9ee0-4c0e-8c94-9451604e3e02"", ""1e0a7274-3064-4f58-88ee-4c6586c87169"", ""39012928-bfec-4242-874d-423162c3f567""]",
+saleslastyear,FLOAT,,"[0.0, 1750406.4785, 1997186.2037]",
+commissionpct,FLOAT,,"[0.0, 0.012, 0.015]",
+modifieddate,TEXT,,"[""2010-12-28 00:00:00"", ""2011-05-24 00:00:00""]",
+bonus,NUMBER,,"[0, 4100, 2500]",
+businessentityid,NUMBER,,"[274, 275, 277]",
+territoryid,TEXT,,"["""", ""2"", ""3""]",

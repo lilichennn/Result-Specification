@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+DATE,DATE,Date associated with the value,"[""2024-03-31"", ""2023-12-31"", ""2022-12-31""]",
+UNIT,TEXT,"Unit of measure for the variable (e.g., Percent)","[""Percent""]",
+GEO_ID,TEXT,A unique geographic identifier joinable to the geography_index/relationships tables,"[""geoId/17"", ""geoId/C12940"", ""geoId/C40140""]",
+VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""Percent 30 or 60 Days Past Due Date - Other Conventional Market"", ""Percent 90 to 180 Days Past Due Date - Government / Non-Conventional"", ""Percent 90 to 180 Days Past Due Date - Enterprise Acquisitions""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table for filtering,"[""Percent_30_or_60_Days_Past_Due_Date_Other Conventional Market"", ""Percent_90_to_180_Days_Past_Due_Date_Government / Non-Conventional"", ""Percent_90_to_180_Days_Past_Due_Date_Enterprise Acquisitions""]",
+VALUE,FLOAT,The reported numeric value for the variable and date,"[0.016, 0.026000000000000002, 0.003]",

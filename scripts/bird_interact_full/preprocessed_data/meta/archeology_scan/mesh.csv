@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+facetregistry,,BIGSERIAL. Auto-generated unique identifier for mesh record. PK = Mesh(FacetRegistry).,bigint,
+zoneref,,TEXT. Reference to site where mesh was generated. FK to Sites.,text,
+equipref,,TEXT. Reference to equipment used for mesh generation. FK to Equipment.,text,
+mesh_specs,,"JSONB column. 3D mesh specifications including geometry, texture properties, and accuracy measurements
+Fields: {""Facet_Faces"":""BIGINT. Number of faces in the 3D mesh. Example: 5997318."",""Facet_Res_Mm"":""REAL. Mesh resolution in millimeters. Example: 3.2."",""Facet_Verts"":""BIGINT. Number of vertices in the 3D mesh. Example: 7234721."",""Geom_Delta_Mm"":""REAL. Geometric accuracy measurement in millimeters. Example: 2.74."",""Tex_Dist"":""TEXT. Texture resolution classification or setting. **NULL means texture resolution not specified or texture mapping not applied.**. Possible values: 1K, 2K, 4K."",""Tex_Pix"":""BIGINT. Texture size in pixels. Possible values: 1024, 2048, 4096, 8192."",""UV_Map_Qual"":""TEXT. UV mapping quality assessment. Possible values: High, Low, Medium.""}",jsonb,

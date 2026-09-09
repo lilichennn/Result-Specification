@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+Id,NUMBER,,"[33, 46, 84]",
+JoinDate,DATE,,"[""2016-10-04"", ""2016-10-17"", ""2016-10-20""]",
+OrganizationId,NUMBER,,"[5, 3, 41]",
+UserId,NUMBER,,"[724814, 346825, 755155]",

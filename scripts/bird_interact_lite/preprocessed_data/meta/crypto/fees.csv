@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+feesnode,,"A BIGSERIAL primary key for fee records (e.g., 30012).",bigint,
+feerange,,"An enum (FeeRange_enum) describing the user's fee tier (Tier4, Tier1, Tier3, Tier2).",USER-DEFINED,
+feerate,,"A DECIMAL(8,5) capturing fee percentage (e.g., '0.00050').",numeric,
+feetotal,,"A DECIMAL(12,6) total fee charged (e.g., '0.250000').",numeric,
+feecoin,,"An enum (FeeCoin_enum) for the currency used to pay fees (USDC, USD, USDT).",USER-DEFINED,
+rebrate,,"A DECIMAL(8,5) capturing the maker rebate rate (e.g., '0.00015').",numeric,
+rebtotal,,"A DECIMAL(12,6) total rebate (e.g., '0.075000').",numeric,
+orderslink,,"A CHAR(36) referencing Orders(RecordVault), linking fees to a specific order.",character,

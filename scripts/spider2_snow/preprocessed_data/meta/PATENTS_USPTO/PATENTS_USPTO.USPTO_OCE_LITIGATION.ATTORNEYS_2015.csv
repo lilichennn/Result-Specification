@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""Thomas Holland Loffredo"", ""David G. Hill"", ""William A. Alper""]",
+position,TEXT,,"[""TERMINATED: 09/30/1997; LEAD ATTORNEY; ATTORNEY TO BE NOTICED"", ""TERMINATED: 03/02/1992; LEAD ATTORNEY; ATTORNEY TO BE NOTICED"", ""TERMINATED: 04/29/1994; LEAD ATTORNEY""]",
+party_type,TEXT,,"[""ThirdParty Plaintiff "", ""Counter-Claimant "", ""ThirdParty Defendant ""]",
+attorney_row_count,TEXT,,"[""1157"", ""35285"", ""40772""]",
+case_row_id,TEXT,,"[""171"", ""3284"", ""3865""]",
+party_row_count,TEXT,,"[""833"", ""14519"", ""17106""]",
+contactinfo,TEXT,,"[""(See above for address)"", ""Hopgood, Calimafde, Kalil, Blaustein & Judlowe; 60 East 42nd Street; New York, NY 10165; (212) 986-2480""]",
+case_number,TEXT,,"[""0:96-cv-06366-WDF"", ""1:91-cv-02222-KMO"", ""1:92-cv-09264-MGC-MHD""]",

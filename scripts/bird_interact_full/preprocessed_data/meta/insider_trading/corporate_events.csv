@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+REC_EVT,,TEXT. Identifier linking corporate-event data to a market-condition set. PK. FK to market_conditions(REC_PIN).,text,
+evt_near,,"TEXT. Flag indicating proximity of an upcoming corporate event. **NULL means no upcoming event recorded.**. Possible values: Earnings, M&A, Restructuring.",text,
+announce_time,,"TEXT. Scheduled or actual announcement time of the event. Possible values: Intraday hrs before, Post-market hrs before, Pre-market hrs before.",text,
+leak_score,,REAL. Score estimating likelihood of information leakage before the event. Example: 34.04.,real,
+info_leak_rate,,"TEXT. The rate at which information leakage occurs before a corporate event's announcement, measured in score per hour. Example: 0.45 score/hour.",text,

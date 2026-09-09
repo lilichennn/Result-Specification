@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+consecutive_number,NUMBER,,"[120664, 371022, 480104]",
+sequence_of_events_name,TEXT,,"[""Pedestrian"", ""Live Animal"", ""Motor Vehicle In-Transport""]",
+area_of_Impact_associated_with_the_event_name,TEXT,,"[""Top""]",
+vehicle_event_number,NUMBER,,"[1, 2, 3]",
+sequence_of_events,NUMBER,,"[8, 11, 12]",
+vehicle_number,NUMBER,,[1],
+area_of_Impact_associated_with_the_event,NUMBER,,[13],
+state_name,TEXT,,"[""Florida"", ""North Carolina"", ""Texas""]",
+state_number,NUMBER,,"[12, 37, 48]",

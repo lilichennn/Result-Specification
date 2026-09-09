@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""USC00475484"", ""USC00391392"", ""USC00415429""]",
+qflag,TEXT,,[],
+value,FLOAT,,[211.0],
+time,TEXT,,[],
+date,DATE,,"[""1948-09-06"", ""1948-07-06"", ""1948-04-09""]",
+mflag,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+element,TEXT,,"[""TMIN""]",

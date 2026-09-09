@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+RecordVault,,TEXT. Unique execution record identifier. PK. Example: OB333576. Example: OB333576.,text,
+ExecMARK,,BIGSERIAL. Auto-increment execution index.,bigint,
+FillAmt,,REAL. Executed fill amount. Example: 1.447931.,real,
+remain_amt,,REAL. Remaining order amount. **NULL means remaining amount not recorded.**. Example: 0.545024.,real,
+fillQuote,,REAL. Execution price quote. Example: 26244.44.,real,
+FILL_SUM,,REAL. Cumulative fill value. Example: 38000.14.,real,
+expireSpot,,TIMESTAMP. Expiration timestamp for the execution record. Example: 02/22/2025 08:29.,timestamp without time zone,
+CancelNote,,"TEXT. Cancellation reason or note. **NULL means no cancellation note.**. Possible values: Expired, InsufficientFunds, UserRequested. Possible values: Expired, InsufficientFunds, UserRequested.",text,
+EXECtune,,"TEXT. Execution tuning parameter. **NULL means execution tune not specified.**. Possible values: Maker, Taker.",text,
+Ord_Link,,TEXT. Identifier of the parent order. FK to orders.,text,

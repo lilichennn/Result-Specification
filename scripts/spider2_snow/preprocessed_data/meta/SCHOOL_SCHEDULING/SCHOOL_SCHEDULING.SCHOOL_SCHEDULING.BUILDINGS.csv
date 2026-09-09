@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+NumberOfFloors,NUMBER,,[3],
+SiteParkingAvailable,NUMBER,,[1],
+BuildingName,TEXT,,"[""Arts and Sciences"", ""Instructional Building""]",
+BuildingCode,TEXT,,"[""AS"", ""IB""]",
+ElevatorAccess,NUMBER,,[1],

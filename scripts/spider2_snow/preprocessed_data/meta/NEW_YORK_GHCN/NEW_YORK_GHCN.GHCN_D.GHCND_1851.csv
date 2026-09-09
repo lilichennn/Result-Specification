@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+element,TEXT,,"[""PRCP""]",
+mflag,TEXT,,[],
+value,FLOAT,,"[3.0, 8.0]",
+id,TEXT,,"[""USC00047738""]",
+sflag,TEXT,,"[""0""]",
+date,DATE,,"[""1851-05-10"", ""1851-05-02"", ""1851-10-02""]",
+time,TEXT,,[],

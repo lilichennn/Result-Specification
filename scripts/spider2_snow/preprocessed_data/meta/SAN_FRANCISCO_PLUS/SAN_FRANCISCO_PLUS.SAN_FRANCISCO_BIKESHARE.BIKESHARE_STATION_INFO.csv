@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+has_kiosk,BOOLEAN,,"[false, true]",
+region_id,NUMBER,ID of the region where station is located,[],
+name,TEXT,Public name of the station,"[""Lafayette Park (Laguna St at Washington St)"", ""Balboa Park (San Jose Ave at Sgt. John V. Young Ln"", ""Filbert St at Fillmore St""]",
+short_name,TEXT,"Short name or other type of identifier, as used by the data publisher","[""SF-E21"", ""SF-Y16"", ""SF-C19""]",
+rental_methods,TEXT,"Array of enumerables containing the payment methods accepted at this station.  Current valid values (in CAPS) are: KEY (i.e. operator issued bike key / fob / card) CREDITCARD PAYPASS APPLEPAY ANDROIDPAY TRANSITCARD ACCOUNTNUMBER PHONE This list is intended to be as comprehensive at the time of publication as possible but is subject to change, as defined in File Requirements above",[],
+external_id,TEXT,,[],
+lon,FLOAT,"The longitude of station. The field value must be a valid WGS 84 longitude in decimal degrees format. See: http://en.wikipedia.org/wiki/World_Geodetic_System, https://en.wikipedia.org/wiki/Decimal_degrees","[-122.429315, -122.4432385, -122.435562]",
+eightd_has_key_dispenser,BOOLEAN,,[],
+station_geom,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xaa+\\x9f\\xe5y\\x9b^\\xc0\\xa0\\xc5R$_\\xe5B@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00^<\\x00\\x05^\\x9c^\\xc0\\xe0q\\x91H\\xc9\\xdcB@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00XXp?\\xe0\\x9b^\\xc0\\x06\\xe0\\x9fR%\\xe6B@')""]",
+station_id,TEXT,Unique identifier of a station.,"[""523"", ""501"", ""535""]",
+capacity,NUMBER,"Number of total docking points installed at this station, both available and unavailable","[0, 19]",
+lat,FLOAT,"The latitude of station. The field value must be a valid WGS 84 latitude in decimal degrees format. See: http://en.wikipedia.org/wiki/World_Geodetic_System, https://en.wikipedia.org/wiki/Decimal_degrees","[37.791965999999995, 37.72489268, 37.798013999999995]",

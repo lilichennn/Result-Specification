@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+alertreg,,VARCHAR(50) PRIMARY KEY uniquely identifying each alert record.,character varying,
+compreg,,"UUID REFERENCES Plant(GrowRegistry), referencing which plant component triggered the alert.",uuid,
+deviceref,,"VARCHAR(50) REFERENCES Panel(PaneMark), linking alert to a specific panel if needed.",character varying,
+incidentref,,"VARCHAR(50) REFERENCES Performance(PerfRegistry), linking alert to performance data if relevant.",character varying,
+alertmoment,,"TIMESTAMP logging when the alert was generated (e.g., '2023-07-20 14:05:00').",timestamp without time zone,
+alertstat,,"VARCHAR(50) summarizing the alert’s status or severity (was 'AlertStatus'). Possible enumerations: 'Warning', 'Critical'.",character varying,
+alertcnt,,"SMALLINT counting how many times this alert occurred (was 'AlertCount') (e.g., 3).",smallint,
+maintprior,,"VARCHAR(50) describing the maintenance priority (was 'MaintenancePriority'). Possible enumerations: 'High', 'Medium', 'Low'.",character varying,
+replaceprior,,"VARCHAR(50) indicating the replacement priority (was 'ReplacementPriority'). Possible enumerations: 'High', 'Medium', 'Low'.",character varying,
+optpotential,,"VARCHAR(100) reflecting any optimization potential (was 'OptimizationPotential'). Possible enumerations: 'Medium', 'High', 'Low'.",character varying,

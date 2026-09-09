@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+author,TEXT,,"[""bendoernberg"", ""briantmaurer"", ""carlsednaoui""]",
+by,TEXT,,"[""bendoernberg"", ""briantmaurer"", ""carlsednaoui""]",
+time_ts,NUMBER,,"[1389565876000000, 1439352647000000, 1409761006000000]",
+deleted,BOOLEAN,,[],
+score,NUMBER,,[3],
+descendants,NUMBER,,[0],
+title,TEXT,,"[""Bitcoin Address Shortener"", ""Two women switch continents, draw and share weekly data"", ""The Ice Bucket Challenge, by the Numbers""]",
+dead,BOOLEAN,,[],
+text,TEXT,,"[""""]",
+id,NUMBER,,"[7047766, 10045965, 8263724]",
+time,NUMBER,,"[1389565876, 1439352647, 1409761006]",
+url,TEXT,,"[""http://btcaddr.es/"", ""http://www.dear-data.com/"", ""http://techcrunch.com/2014/09/03/the-ice-bucket-challenge-by-the-numbers""]",

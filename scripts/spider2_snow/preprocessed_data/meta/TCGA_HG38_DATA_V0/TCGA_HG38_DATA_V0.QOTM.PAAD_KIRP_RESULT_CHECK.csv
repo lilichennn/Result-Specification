@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+PHENOTYPE,NUMBER,Whether the gene is from TCGA-PAAD or from TCGA-KIRP,"[0, 1]",
+ID,TEXT,Sample Barcode,"[""TCGA-3A-A9IH-01A"", ""TCGA-5P-A9KE-01A"", ""TCGA-A4-8515-01A""]",
+GENE,TEXT,"The gene symbol. In this table, gene symbol is gene name e.g. ACADVL","[""SLC12A3"", ""NKX6-3""]",
+EXPR,FLOAT,Fragments Per Kilobase of transcript per Million mapped reads (FPKM) is a simple expression level normalization method. The FPKM normalizes read count based on gene length and the total number of mapped reads. https://docs.gdc.cancer.gov/Encyclopedia/pages/HTSeq-FPKM/,"[388.349514563, 0.0, 742.026169914]",
+PROJECT_SHORT_NAME,TEXT,"Project name abbreviation; the program name appended with a project name abbreviation; eg TCGA-OV, etc.","[""TCGA-PAAD"", ""TCGA-KIRP""]",
+ERANK,NUMBER,Expression Rank,"[1, 2]",

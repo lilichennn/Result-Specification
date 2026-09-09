@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+accindex,,"A CHAR(12) primary key uniquely identifying each account record (e.g., 'AC1234567890').",character,
+acctident,,"A VARCHAR(14) field holding an external-facing or system-defined account identifier (e.g., 'ACC2686094').",character varying,
+platident,,"An 8-character field indicating which platform ID the account is associated with (e.g., 'PL784').",character varying,
+plattype,,"An enum (PlatformType_enum) describing the platform type (Microblog, Social Network, Video Platform, Forum).",USER-DEFINED,
+acctcreatedate,,"A DATE indicating when the account was created (e.g., '2025-02-20').",date,
+acctagespan,,"A SMALLINT showing the account’s age in days since creation (e.g., '45').",smallint,
+acctstatus,,"An enum (AccountStatus_enum) capturing the account status (Active, Deleted, Suspended, Dormant).",USER-DEFINED,
+acctcategory,,"An enum (AccountType_enum) labeling the account type (Personal, Bot, Hybrid, Business).",USER-DEFINED,
+authstatus,,"An enum (VerificationStatus_enum) describing the verification state (Unverified, Pending, Failed, Suspicious).",USER-DEFINED,

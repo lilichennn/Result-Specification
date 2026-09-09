@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+instrumentref,,A SERIAL primary key uniquely identifying each observational facility or survey program.,bigint,
+facilityname,,"Observational facility name derived from flag analysis. VARCHAR(100) NOT NULL UNIQUE with values: 'ttv' (from pl_ttvflag='T'), 'kep' (from pl_kepflag=1), 'k2' (from pl_k2flag=true) representing Transit Timing Variations, Kepler mission, and K2 mission respectively.",character varying,

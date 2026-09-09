@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+internal_point_geom,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00w\\xa8&T!\\x99^\\xc0e\\x83\\xf0,.\\xdcB@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xae4\\xe0@7\\x98^\\xc0]\\xae\\xec\\x06z\\xdeB@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xc9_}\\xc2\\xb5\\x9f^\\xc0\\xf1u6\\xcc{\\xe0B@')""]",
+internal_point_longitude,FLOAT,,"[-122.39265922332002, -122.37837240119072, -122.49546873324938]",
+internal_point_latitude,FLOAT,,"[37.720159165800204, 37.738098970000216, 37.75377800616469]",
+neighborhood_geom,BINARY,,[],
+neighborhood,TEXT,,"[""Bret Harte"", ""India Basin"", ""Outer Sunset""]",

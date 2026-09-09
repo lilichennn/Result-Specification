@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+amenityref,,"A SERIAL primary key uniquely identifying each household amenities and utilities record. EX. 1,2,3",bigint,
+houseid,,"Foreign key referencing households.HouseNum with unique constraint, ensuring 1:1 relationship for amenities configuration per household. Ex.3,4,7",bigint,
+cablestatus,,"Cable television service availability and subscription status indicating the household's access to cable TV services. Ex. avail, available,yes",text,

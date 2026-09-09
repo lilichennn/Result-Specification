@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+protein_abundance_log2ratio,FLOAT,,[],
+aliquot_id,TEXT,,"[""3f3637fd-bac8-47d0-a3a7-72c01c0e5082""]",
+phosphorylation_sites,TEXT,,"[""s1010s1014"", ""t112"", ""s826""]",
+study_name,TEXT,,"[""CPTAC PDA Discovery Study - Phosphoproteome""]",
+refseq_id,TEXT,,"[""NP_001317494.1"", ""NP_872422.1"", ""NP_055325.2""]",
+case_id,TEXT,,"[""c524794e-ccd7-49ae-a005-eba41cfdb6b3""]",
+aliquot_run_metadata_id,TEXT,,"[""0c223a33-a4cb-4bb4-8ff6-12325d246977""]",
+aliquot_submitter_id,TEXT,,"[""CPT0355190003""]",
+sample_id,TEXT,,"[""f3367bfe-8a1f-4c4d-978e-992b2a24e497""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+alpha_3_code,TEXT,,"[""GIB""]",
+last_updated,DATE,,"[""2018-01-01"", ""2005-01-01"", ""2006-01-01""]",
+longitude_centroid,FLOAT,,[-5.347083296988231],
+latitude_centroid,FLOAT,,[36.120416721983034],
+geo_id,TEXT,,"[""wpeykjqrd2ev""]",
+population,FLOAT,,"[1650.8153076171875, 1161.977783203125, 956.6270751953125]",
+country_name,TEXT,,"[""Gibraltar""]",
+geog,BINARY,,"[""bytearray(b'\\x01\\x03\\x00\\x00\\x00\\x01\\x00\\x00\\x00\\x05\\x00\\x00\\x00W\\x88\\t\\x12\\xaeg\\x15\\xc0\\x19K(H\\xe1\\x0eB@h\\x92\\x81\\x89%_\\x15\\xc0\\x19K(H\\xe1\\x0eB@h\\x92\\x81\\x89%_\\x15\\xc0\\xd6I9Y\\xf2\\x0fB@V\\x88\\t\\x12\\xaeg\\x15\\xc0\\xd7I9Y\\xf2\\x0fB@W\\x88\\t\\x12\\xaeg\\x15\\xc0\\x19K(H\\xe1\\x0eB@')""]",

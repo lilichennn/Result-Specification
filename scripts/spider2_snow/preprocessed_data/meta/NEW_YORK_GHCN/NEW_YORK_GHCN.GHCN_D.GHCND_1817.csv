@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[188.0, 138.0, 200.0]",
+mflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",
+qflag,TEXT,,"[""I"", ""N""]",
+element,TEXT,,"[""TMAX"", ""TMIN"", ""PRCP""]",
+id,TEXT,,"[""ITE00100554"", ""ITE00100550"", ""EZE00100082""]",
+date,DATE,,"[""1817-06-16"", ""1817-10-04"", ""1817-06-15""]",
+time,TEXT,,[],

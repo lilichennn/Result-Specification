@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+DeathRecordId,NUMBER,,"[1738256, 557544, 427004]",
+Icd10Code,TEXT,,"[""A38"", ""A86"", ""B24""]",
+Id,NUMBER,,"[4987350, 1673817, 1314453]",

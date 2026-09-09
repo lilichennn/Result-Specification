@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+hallrecord,,,character,
+cctvcoverage,,"VARCHAR(100) describing the CCTV coverage (possible values: 'Partial', 'Full', 'Limited').",character varying,
+motiondetectstatus,,"VARCHAR(50) summarizing motion detection status (possible values: 'Active', 'Maintenance', 'Partial').",character varying,
+alarmsysstatus,,"CHAR(15) for alarm system status (possible values: 'Armed', 'Maintenance', 'Partial').",character,
+accessctrlstatus,,"VARCHAR(80) describing the level of access control (possible values: 'Maintenance', 'Active', 'Partial').",character varying,
+visitorcountdaily,,INT representing the typical or observed daily visitor count (unbounded integer).,integer,
+visitorflowrate,,"SMALLINT indicating how many visitors pass through (possible values: 'Low', 'Medium', 'High').",USER-DEFINED,
+visitordwellmin,,SMALLINT specifying the average dwell time (in minutes) per visitor.,smallint,
+visitorbehaviornotes,,"TEXT field for any additional notes on visitor behaviors, traffic patterns, or compliance issues.",text,

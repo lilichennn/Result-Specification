@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+country,TEXT,,"[""United States""]",
+occupation,TEXT,,"[""Senior Sales Associate"", ""Registered Nurse"", ""Director of Sales""]",
+current_location,TEXT,,"[""Bethesda"", ""Oakland"", ""Richmond""]",
+loc_id,NUMBER,,"[2, 3, 4]",
+state,TEXT,,"[""Maryland"", ""California"", ""Virginia""]",

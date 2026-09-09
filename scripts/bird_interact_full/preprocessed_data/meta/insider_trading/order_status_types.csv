@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+STAT_TOKEN,,TEXT. Unique token representing an order-status type. PK.,text,
+order_status,,"JSONB column. Order status types with tracking and spread.
+Fields: {""spread_type"":""TEXT. Spread-classification that the status token maps to (NOT NULL). Possible values: Limit, Market, Mixed."",""tick_type"":""TEXT. Tick-tracking state that the status token maps to (NOT NULL). Possible values: Irregular, Regular, Suspicious.""}",jsonb,

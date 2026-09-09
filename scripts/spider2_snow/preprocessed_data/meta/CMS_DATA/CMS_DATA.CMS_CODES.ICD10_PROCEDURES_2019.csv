@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+short_description,TEXT,Short text description of the procedure,[],
+is_header_code,BOOLEAN,TRUE - The code is a “header” code and not valid for HIPAA-covered transactions. FALSE - The code is valid for submission for HIPAA-covered transactions.,[],
+order_number,TEXT,Unique identifier that makes it easier for users to communicate a range of codes,"[""67579"", ""67665"", ""67779""]",
+pcs_code,TEXT,Procedure code,"[""0XM"", ""0XQ"", ""0XU""]",
+long_description,TEXT,Full text description of the procedure,[],

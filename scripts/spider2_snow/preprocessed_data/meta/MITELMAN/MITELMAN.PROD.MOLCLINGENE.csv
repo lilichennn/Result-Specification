@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+Prefix,TEXT,prefix string -- either blank or '+' ,[],
+InvNo,NUMBER,"investigation number, usually between 1 and 10",[1],
+MolClin,TEXT,"flag indicating either molecular 'M', or clinical 'C'","[""C""]",
+Gene,TEXT,"gene symbol(s), eg 'KMT2A' or 'BCR/ABL1'","[""PML::RARA"", ""TCF3::PBX1"", ""RUNX1::RUNX1T1""]",
+OrderNo,NUMBER,"order number, between 1 and 15",[1],
+RefNo,NUMBER,"reference number, eg '15563'","[4541, 4748, 4994]",
+Suffix,TEXT,suffix string -- either blank or '+',[],

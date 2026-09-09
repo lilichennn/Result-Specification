@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+ACCTBAL_NODE,,BIGSERIAL. Unique account-balance record identifier. PK.,bigint,
+walletSum,,"TEXT. Total wallet balance as text. Example: $316,482.99 .",text,
+AVAIL_SUM,,REAL. Available balance amount. Example: 250957.88.,real,
+frozenSum,,REAL. Frozen balance amount. Example: 65525.11.,real,
+marg_sum,,REAL. Margin allocated sum. Example: 901343.58.,real,
+unrealLINE,,REAL. Unrealised P/L line. Example: 3545.06.,real,
+REAL_LINE,,REAL. Realised P/L line. Example: -38455.08.,real,
+userTAG,,TEXT. User identifier for the balance. FK to users.,text,

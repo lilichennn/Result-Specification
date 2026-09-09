@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+StockItemID,NUMBER,,[1],
+PickedQuantity,NUMBER,,[1],
+PackageTypeID,NUMBER,,[7],
+PickingCompletedWhen,TEXT,,"[""2013-02-21 11:00:00.0000000"", ""2013-03-07 11:00:00.0000000"", ""2013-03-12 11:00:00.0000000""]",
+LastEditedWhen,NUMBER,,"[1361444400000000, 1362654000000000, 1363086000000000]",
+OrderLineID,NUMBER,,"[8107, 8149, 10302]",
+UnitPrice,FLOAT,,[25.0],
+OrderID,NUMBER,,"[2538, 2549, 3208]",
+Description,TEXT,,"[""USB missile launcher (Green)""]",
+Quantity,NUMBER,,[1],
+TaxRate,FLOAT,,[15.0],
+LastEditedBy,NUMBER,,"[17, 18, 5]",

@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+SKU,TEXT,,"[""GGADFBSBKS42347"", ""GGOEGAAX0605"", ""GGOEGAAX0597""]",
+stockLevel,NUMBER,,"[100, 16, 45]",
+orderedQuantity,NUMBER,,"[0, 10, 24]",
+restockingLeadTime,NUMBER,,"[1, 9, 11]",
+sentimentScore,FLOAT,,"[0.6, 0.0]",
+sentimentMagnitude,FLOAT,,"[1.6, 0.5]",
+name,TEXT,,"[""PC gaming speakers"", "" Women's Quilted Insulated Vest White"", "" Men's Quilted Insulated Vest Battleship Grey""]",

@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+modkey,,TEXT. Unique identifier for the solar panel model. Example: Model-102.,text,
+makertag,,"TEXT. Manufacturer of the solar panel. NULL means the encoder does not report status or data are missing. Possible values: Canadian Solar, JA Solar, JinkoSolar, Longi, Trina.",text,
+pnlkind,,"TEXT. Type of solar panel technology used. Possible values: Bifacial, HJT, Mono-PERC, Poly-PERC, TOPCon.",text,
+rated_w,,"REAL. Maximum power output in watts under standard test conditions. Possible values: 450.0, 500.0, 550.0, 600.0, 650.0.",real,
+effpct,,REAL. Percentage efficiency of energy conversion. Example: 20.86.,real,
+degyrrate,,REAL. Annual power output degradation rate. Example: 0.36.,real,
+tempcoeff,,REAL. Temperature coefficient of power. NULL means the encoder does not report status or data are missing. Example: -0.389.,real,
+nomoptempc,,TEXT. Normal operating temperature range. Example: 45.7.,text,

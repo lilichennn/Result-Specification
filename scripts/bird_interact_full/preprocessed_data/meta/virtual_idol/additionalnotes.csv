@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+notes_reg,,BIGSERIAL. Auto-generated unique identifier for additional notes record. PK = AdditionalNotes(Notes_Reg).,bigint,
+notes_retain_pivot,,BIGINT. Reference to retention record for contextual notes. FK to RetentionAndInfluence.,bigint,
+note_info,,TEXT. Free-form notes and additional information about the fan. **NULL means no additional notes recorded or information not available.**,text,

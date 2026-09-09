@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+tag_based,BOOLEAN,,[false],
+id,NUMBER,,"[28291962, 28374828, 28405886]",
+date,NUMBER,,"[1527259383990000, 1527907395610000, 1528196038383000]",
+user_id,NUMBER,,"[9846917, 9883762, 5470122]",
+name,TEXT,,"[""Informed""]",
+class,NUMBER,,[3],

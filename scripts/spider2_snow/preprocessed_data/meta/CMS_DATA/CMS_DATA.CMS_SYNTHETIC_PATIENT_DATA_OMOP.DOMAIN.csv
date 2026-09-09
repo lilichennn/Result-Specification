@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+domain_concept_id,NUMBER,,"[19, 47, 48]",
+domain_id,TEXT,,"[""Condition"", ""Condition/Meas"", ""Condition/Obs""]",
+domain_name,TEXT,,"[""Condition"", ""Condition/Measurement"", ""Condition/Observation""]",

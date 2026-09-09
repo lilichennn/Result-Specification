@@ -1,0 +1,17 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+flowregistry,,BIGSERIAL. Auto-generated unique identifier for processing record. PK = Processing(FlowRegistry).,bigint,
+equipref,,TEXT. Reference to equipment used for data processing. FK to Equipment.,text,
+zoneref,,TEXT. Reference to site where data was processed. FK to Sites.,text,
+flowsoft,,TEXT. Software application used for data processing. **NULL means processing software not specified or custom processing pipeline used.**. Example: RealityCapture.,text,
+stashloc,,"TEXT. Storage location for processed data files. Possible values: Cloud, Local, Network.",text,
+safebak,,"TEXT. Backup status and redundancy measures. Possible values: Completed, In Progress, Pending.",text,
+datalevel,,"TEXT. Data access level and security classification. Possible values: Confidential, Public, Restricted.",text,
+metabench,,"TEXT. Metadata standard compliance and format. Possible values: CIDOC CRM, Custom, Dublin Core.",text,
+coordframe,,"TEXT. Coordinate system used for spatial reference. Possible values: CUSTOM, Custom, LOCAL, Local, WGS84, Wgs84, custom, local, wgs84.",text,
+elevref,,"TEXT. Elevation reference datum used for measurements. Possible values: Arbitrary, Local, Sea Level.",text,
+flowstage,,"TEXT. Current processing stage or workflow step. Possible values: Aligned, Final, Meshed, Raw, Textured.",text,
+processing_rate,,TEXT. Data processing throughput rate. Example: 2.3 MB/s.,text,
+system_usage,,"JSONB column. Computing system resource utilization during data processing including CPU, memory, GPU usage and processing time
+Fields: {""Flow_Hrs"":""REAL. Processing time duration in hours. Example: 21.9."",""Mem_Usage_Gb"":""REAL. Memory usage in gigabytes during processing. Example: 70.3."",""Proc_CPU"":""BIGINT. CPU usage percentage during processing. Example: 81."",""Proc_GPU"":""BIGINT. GPU usage percentage during processing. Example: 84."",""Remain_Gb"":""REAL. Remaining storage space in gigabytes. Example: 983.5.""}",jsonb,
+calib_status,,"JSONB column. Calibration and correction status for various processing components including camera, lens, and color adjustments
+Fields: {""Cam_Cal"":""TEXT. Camera calibration status and accuracy. Possible values: Calibrated, Invalid, Required."",""Color_Tune"":""TEXT. Color balance and calibration status. **NULL means color calibration not performed or status not documented.**. Possible values: Adjusted, Required."",""Lens_Dist"":""TEXT. Lens distortion correction status. Possible values: Corrected, Uncorrected, Unknown."",""Station_Link"":""TEXT. Total station integration status and connectivity. **NULL means total station not integrated or integration status not monitored.**. Example: Partial.""}",jsonb,

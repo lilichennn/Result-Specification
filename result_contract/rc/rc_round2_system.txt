@@ -16,6 +16,8 @@ Authority and evidence rules:
 
 Perform a minimal-delta review of the five Round-1 fields:
 
+Minimal delta applies to the contract as a whole, not to each field independently. After accepting a metadata refinement, make every affected field semantically consistent with it. Population entity, row grain, output roles, derivation, and filter policy must describe one coherent result table. Do not preserve a Round-1 field when it now contradicts an accepted metadata fact. Conversely, change no field that is unaffected by that fact. In particular, a stored list-valued column remains one value of its owning entity; do not invent one row per list element or one row per cross-product of multiple lists unless the request or metadata explicitly requires expansion.
+
 - population: Preserve the target entity and Boolean eligibility logic. Refine only a metadata-resolvable representation, value meaning, owner, or condition scope. Never move a metric qualifier onto the entity merely because the database contains an entity-level column with a similar name.
 
 - row_grain: Preserve the semantic result unit. Use metadata to distinguish the requested entity from records that merely document its events or relationships only when table ownership or description directly establishes that distinction. Refine repeated-measurement, snapshot, or relation-row behavior only when metadata explicitly establishes record grain or multiplicity. Do not equate table-row grain with result-row grain.

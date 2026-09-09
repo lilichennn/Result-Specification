@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""AGE00135039""]",
+date,DATE,,"[""1922-08-10"", ""1922-08-05"", ""1922-09-29""]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",
+value,FLOAT,,[0.0],
+mflag,TEXT,,[],
+time,TEXT,,[],
+element,TEXT,,"[""PRCP""]",

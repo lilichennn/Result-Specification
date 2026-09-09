@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+clin_key,,A TEXT primary key uniquely identifying each clinician record in the mental health assessment database.,text,
+clin_conf,,"Clinician's confidence level in their assessment and treatment decisions. Contains values: 'Medium', 'Low', 'High'.",text,
+assess_lim,,"Known limitations in the clinician's assessment capabilities or scope of practice. Contains values: 'Cognitive', 'Cultural', 'Language', 'Engagement', 'Time'. Contains NULL when limitation assessment is not completed.",text,
+docu_stat,,"Current status of the clinician's documentation and record-keeping. Contains values: 'Complete', 'Incomplete', 'Pending'.",text,
+bill_code,,"Billing code or credential identifier for the clinician's services. Contains CPT codes like 'CPT90511', 'CPT90696', 'CPT90854'.",text,
+nxt_rev_dt,,Next scheduled review date for the clinician's credentials in YYYY-MM-DD format.,date,
+care_coord,,"Level and type of care coordination activities performed by this clinician. Contains values: 'Intensive', 'Regular', 'Limited'. Contains NULL when care coordination role is not defined.",text,
+ref_need,,"Referral needs or specialties that this clinician commonly requires. Contains values: 'Services', 'Testing', 'Specialty'. Contains NULL when referral patterns are not tracked.",text,
+f_up_type,,"Primary type of follow-up care provided by this clinician. Contains values: 'Therapy', 'Routine', 'Crisis', 'Assessment'.",text,
+f_up_freq,,"Typical frequency of follow-up appointments scheduled by this clinician. Contains values: 'Weekly', 'Biweekly', 'Monthly', 'Quarterly'.",text,
+fac_connect,,"Foreign key referencing Facilities(Fac_Key), linking the clinician to their primary practice facility.",text,

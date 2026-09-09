@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+group,NUMBER,Sequential number for grouping arcs in a submission. group: [grp],"[1, 2]",
+parent_tag,TEXT,The tag for the parent of the arc parent_tag: [ptag],"[""CashAndCashEquivalentsPeriodIncreaseDecrease"", ""NetCashProvidedByUsedInOperatingActivities"", ""NetIncomeLoss""]",
+negative,NUMBER,"Indicates a weight of -1 (TRUE if the arc is negative), but typically +1 (FALSE).",[1],
+child_version,TEXT,The version of the tag for the child of the arc child_version: [cversion],"[""us-gaap/2009""]",
+child_tag,TEXT,The tag for the child of the arc child_tag: [ctag],"[""CashAndCashEquivalentsPeriodIncreaseDecrease"", ""NetCashProvidedByUsedInOperatingActivities"", ""NetIncomeLoss""]",
+parent_version,TEXT,The version of the tag for the parent of the arc parent_version: [pversion],"[""us-gaap/2009""]",
+arc,NUMBER,Sequential number for arcs within a group in a submission.,"[1, 2, 3]",
+submission_number,TEXT,Accession Number. The 20-character string formed from the 18-digit number assigned by the Commission to each EDGAR submission. submission_number: [adsh],"[""0001354488-10-001409""]",

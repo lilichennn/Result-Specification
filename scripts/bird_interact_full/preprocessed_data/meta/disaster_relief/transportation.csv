@@ -1,0 +1,14 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+transportregistry,,VARCHAR(20). Unique transportation registry identifier. PK.,character varying,
+transportdistref,,VARCHAR(20). Disaster event reference. FK to DisasterEvents.,character varying,
+transport_hub_ref,,VARCHAR(20). Distribution hub reference. FK to DistributionHubs.,character varying,
+transportsupref,,VARCHAR(20). Supply reference. FK to Supplies.,character varying,
+vehiclecount,,BIGINT. Number of vehicles available. **NULL means vehicle count not recorded.**. Example: 141.0.,bigint,
+trucks_available,,BIGINT. Number of available trucks. Example: 88.,bigint,
+helosavailable,,BIGINT. Number of available helicopters. Example: 7.,bigint,
+boatsavailable,,BIGINT. Number of available boats. Example: 7.,bigint,
+lastmilestatus,,"TEXT. Status of the last-mile delivery. Possible values: Delayed, On Track, Suspended.",text,
+distribution_points,,BIGINT. Number of distribution points. Example: 35.,bigint,
+deliverystatus,,TEXT. Overall delivery status.,text,
+delivery_metrics,,"JSONB column. Captures delivery statistics including capacity, performance, and vehicle metrics.
+Fields: {""delivery_capacity"":{""daily_tons"":""REAL. Daily delivery tonnage. Example: 227."",""total_tons"":""REAL. Total delivery tonnage. Example: 368.""},""delivery_performance"":{""avg_hours"":""REAL. Average delivery hours. **NULL means delivery time not recorded.**. Example: 20.7."",""route_optimization_status"":""RouteOptStatus_enum. Route optimization status. Possible values: In Progress, Optimized, Required."",""success_rate"":""REAL. Delivery success rate percentage. Example: 79.4.""},""vehicle_metrics"":{""break_rate"":""REAL. Vehicle breakdown rate. Example: 9.17."",""fuel_efficiency_lpk"":""REAL. Fuel efficiency in liters per kilometer. Example: 10.6."",""maintenance_state"":""TEXT. Vehicle maintenance state. Possible values: Due, Overdue, Up to Date.""}}",jsonb,

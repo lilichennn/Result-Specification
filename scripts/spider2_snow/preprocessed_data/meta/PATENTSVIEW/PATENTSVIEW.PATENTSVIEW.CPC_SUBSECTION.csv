@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+title,TEXT,,"[""WEAPONS"", ""FOOTWEAR"", ""HEADWEAR""]",
+id,TEXT,,"[""F41"", ""A43"", ""A42""]",

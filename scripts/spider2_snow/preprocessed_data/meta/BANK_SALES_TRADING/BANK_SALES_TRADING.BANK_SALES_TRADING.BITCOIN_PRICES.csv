@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+low,FLOAT,,"[3162.79, 3063.37, 3057.48]",
+change,TEXT,,"[""-2.04%"", ""5.82%"", ""-4.17%""]",
+price,FLOAT,,"[3177.84, 3273.58, 3093.54]",
+open,FLOAT,,"[3243.96, 3093.78, 3228.03]",
+volume,TEXT,,"[""582.04K"", ""839.54K"", ""118.44K""]",
+high,FLOAT,,"[3282.21, 3279.93, 3249.62]",
+market_date,TEXT,,"[""29-08-2021"", ""27-08-2021"", ""26-08-2021""]",
+ticker,TEXT,,"[""ETH""]",

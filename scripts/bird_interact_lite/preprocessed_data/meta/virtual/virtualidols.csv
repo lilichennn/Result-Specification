@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+entityreg,,"A VARCHAR(20) primary key uniquely identifying the virtual idol (e.g., 'IDOL001').",character varying,
+nametag,,A VARCHAR(100) for the idol’s name or stage name.,character varying,
+kindtag,,"An enum (IdolType_enum) describing the idol's nature (2D, AI Generated, 3D, Mixed Reality).",USER-DEFINED,
+debdate,,"A DATE for the idol's debut (e.g., '2023-06-01').",date,
+assocgroup,,A VARCHAR(100) naming the idol's company or group affiliation.,character varying,
+genretag,,"An enum (IdolGenre_enum) indicating the idol’s main genre (Electronic, Dance, Pop, Traditional, Rock).",USER-DEFINED,
+primlang,,"A VARCHAR(50) referencing the idol's primary performance language (e.g., 'English').",character varying,

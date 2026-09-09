@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+condition_concept_id,NUMBER,,"[194984, 317376, 75909]",
+condition_era_id,NUMBER,,"[878283848, 932353279, 938539332]",
+condition_occurrence_count,NUMBER,,[1],
+condition_era_end_date,DATE,,"[""2010-06-06""]",
+condition_era_start_date,DATE,,"[""2010-06-06""]",
+person_id,NUMBER,,"[811675, 1375057, 1439428]",

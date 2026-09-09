@@ -1,0 +1,14 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+effectivenessactuation,,PRIMARY KEY (VARCHAR(20)) referencing actuation_data(ActReg).,character varying,
+effectivenessoperation,,VARCHAR(20) referencing operation(OperReg).,character varying,
+effectivenessrobot,,VARCHAR(20) referencing robot_details(BotDetReg).,character varying,
+conditionindexval,,"DECIMAL(6,4) summarizing an index of overall robot condition (health).",numeric,
+effectivenessindexval,,"NUMERIC(4,2) capturing how effectively the robot is performing (could be throughput or success rate).",numeric,
+qualitymeasureval,,FLOAT(5) approximate float for quality measurement or pass rate.,real,
+energyusekwhval,,"NUMERIC(7,2) referencing energy used in kWh over a certain period.",numeric,
+pwrfactorval,,FLOAT(4) a float for power factor if the robot system uses AC power.,real,
+airpressval,,"DECIMAL(6,3) measuring compressed air pressure if pneumatic components are used.",numeric,
+toolchangecount,,INT referencing how many times a tool was changed on the robot.,integer,
+toolwearpct,,REAL storing estimated tool wear percentage.,real,
+safety_metrics,,"JSONB column. Captures safety-related metrics and events, such as safety state, zone violations, emergency stops, collisions, overloads, speed violations, and calibration status.
+Fields: {""calibration_state"":""CHAR(20) summarizing calibration state (e.g., 'Valid', 'Due', 'Invalid')."",""collisions"":""INT referencing collisions or crash incidents (e.g., 0, 1, 2, 3)."",""emergency_stops"":""SMALLINT logging how many e-stop (emergency stop) events occurred (e.g., 0, 1, 2, 3, 4, 5)."",""overloads"":""SMALLINT enumerating overload events (payload, torque) (e.g., 0, 1, 2, 3, 4, 5)."",""safety_state"":""VARCHAR(25) describing current safety state (e.g., 'Emergency', 'Normal', 'Warning')."",""speed_violations"":""INT counting overspeed or velocity-limit violations."",""zone_violations"":""SMALLINT counting how many times the robot violated safe zones.""}",jsonb,

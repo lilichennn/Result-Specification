@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+category,TEXT,,"[""Fun"", ""Bags""]",
+productSKU,TEXT,,"[""GGOEGOBC078699"", ""GGOEGBJC019999"", ""GGOEGBRJ037399""]",

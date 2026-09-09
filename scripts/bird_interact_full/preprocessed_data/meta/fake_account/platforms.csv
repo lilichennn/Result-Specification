@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+PLT_CODE,,TEXT. Unique platform code. PK. Example: PL331.,text,
+PLT_KIND,,"TEXT. Type of the platform. Not NULL. Possible values: Forum, Microblog, Social Network, Video Platform.",text,

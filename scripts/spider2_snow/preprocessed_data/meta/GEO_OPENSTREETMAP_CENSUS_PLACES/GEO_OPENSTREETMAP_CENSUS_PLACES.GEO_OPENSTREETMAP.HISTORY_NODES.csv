@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+LONGITUDE,NUMBER,,"[""-41.061451400"", ""-40.990267200"", ""-40.962531300""]",
+ID,NUMBER,,"[6627767823, 5950013932, 5933003001]",
+CHANGESET,NUMBER,,"[72390235, 63140772, 62961807]",
+GEOMETRY,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\x8f\\xa5\\xb4\\xa3\\xdd\\x87D\\xc0V\\x12~N\\xe6\\xbc3\\xc0')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\x97&[\\x13\\xc1~D\\xc0\\x1ci\\x04v\\x90\\xc03\\xc0')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00-p\\xc394{D\\xc0r\\xba\\xd1l\\xc3\\xd33\\xc0')""]",
+USERNAME,TEXT,,"[""importES""]",
+ALL_TAGS,VARIANT,,"[""[]""]",
+VERSION,NUMBER,,[1],
+OSM_TIMESTAMP,NUMBER,,"[1563455673000000, 1538519943000000, 1538008817000000]",
+VISIBLE,BOOLEAN,,[true],
+LATITUDE,NUMBER,,"[""-19.737889200"", ""-19.752204300"", ""-19.827200700""]",

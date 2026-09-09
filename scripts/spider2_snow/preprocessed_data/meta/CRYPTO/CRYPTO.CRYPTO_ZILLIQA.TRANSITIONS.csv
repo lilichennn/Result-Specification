@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+addr,TEXT,,"[""zil19f04rrynternymalqx6wnneyp7s82cc942xyk7"", ""zil1c8q5rrlpjs8rs73xd8smvf8esscs3uljykyy0d"", ""zil14ztl08r88c9xjhld0fj2whm6ldlu4gkarqr7wu""]",
+recipient,TEXT,,"[""zil1g899nklz2amfcgl3grh68pvq6ryr6n8q4typuq"", ""zil1l4khjax278mae63ywsv3l4uj8gg4fsxh34nnzh"", ""zil1wm5zg0h7zfwga4g6q6ae9uapw677cyektwnjx7""]",
+transaction_id,TEXT,,"[""f00eb0dcb417601b330e6808f261eec52cdc2676880398b3d88af9626c3cdd9b"", ""99d36f692be23e1628d2f4df1a620c42f8a33cc409ac018df579303d1885d56d"", ""02b09405369ffc942beeb7a6838c1b8f2f9eefe91510fddc63e9529426108df6""]",
+accepted,BOOLEAN,,[false],
+tag,TEXT,,"[""""]",
+block_number,NUMBER,,"[2064100, 2063407, 1934814]",
+block_timestamp,NUMBER,,"[1653325996000000, 1653301895000000, 1648875238000000]",
+depth,NUMBER,,[0],
+params,VARIANT,,"[""[]"", ""[\n  \""{\\\""type\\\"":\\\""Uint128\\\"",\\\""value\\\"":\\\""200\\\"",\\\""vname\\\"":\\\""code\\\""}\""\n]"", ""[\n  \""{\\\""type\\\"":\\\""Int32\\\"",\\\""value\\\"":\\\""3\\\"",\\\""vname\\\"":\\\""code\\\""}\""\n]""]",
+amount,NUMBER,,"[""25000000000000.000000000"", ""15382250000000000000.000000000"", ""7660000000000.000000000""]",
+index,NUMBER,,[0],

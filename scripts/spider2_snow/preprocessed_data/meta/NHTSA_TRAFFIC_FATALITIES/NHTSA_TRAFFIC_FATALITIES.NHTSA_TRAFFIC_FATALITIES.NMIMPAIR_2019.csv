@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+person_number,NUMBER,,"[4, 5]",
+condition_impairment_at_time_of_crash_non_motorist_name,TEXT,,"[""None/Apparently Normal""]",
+condition_impairment_at_time_of_crash_non_motorist,NUMBER,,[0],
+state_name,TEXT,,"[""Alabama"", ""California"", ""Hawaii""]",
+state_number,NUMBER,,"[1, 6, 15]",
+consecutive_number,NUMBER,,"[10368, 62124, 62566]",
+vehicle_number,NUMBER,,[0],

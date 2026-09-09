@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+operreg,,Primary key (VARCHAR(20)) for an operation record (previously 'OperationRegistry').,character varying,
+operbotdetref,,VARCHAR(20) referencing robot_details(BotDetReg). Links this operation record to a specific robot’s details.,character varying,
+operrecref,,"VARCHAR(20) referencing robot_record(RecReg), tying the operation to the main robot record.",character varying,
+totopshrval,,"DECIMAL(9,2) capturing total operating hours for the robot in this operation context.",numeric,
+apptypeval,,"VARCHAR(40) describing the application type (e.g., 'Assembly', 'Painting', 'Palletizing', 'Material Handling', 'Welding').",character varying,
+opermodeval,,"CHAR(25) indicating the operation mode (e.g., 'Programming', 'Maintenance', 'Auto', 'Manual').",character,
+currprogval,,VARCHAR(40) naming the current program loaded or running on the robot.,character varying,
+progcyclecount,,INT counting how many times the program cycle has executed.,integer,
+cycletimesecval,,"DECIMAL(8,3) measuring cycle time in seconds (precision to three decimals).",numeric,
+axiscountval,,"SMALLINT storing how many axes (joints) the robot uses in this operation environment (e.g., 7, 6, 5, 4).",smallint,

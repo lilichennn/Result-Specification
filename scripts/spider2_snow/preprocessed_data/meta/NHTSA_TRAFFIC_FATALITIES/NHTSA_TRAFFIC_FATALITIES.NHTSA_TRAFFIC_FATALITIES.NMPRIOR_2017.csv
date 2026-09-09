@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+non_motorist_action_circumstances,NUMBER,,[1],
+consecutive_number,NUMBER,,"[40105, 50110, 80485]",
+person_number,NUMBER,,[1],
+state_name,TEXT,,"[""Arizona"", ""Arkansas"", ""Colorado""]",
+non_motorist_action_circumstances_name,TEXT,,"[""Going To or From School (K-12)""]",
+state_number,NUMBER,,"[4, 5, 8]",
+vehicle_number,NUMBER,,[0],

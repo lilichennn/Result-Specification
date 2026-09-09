@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+vehicle_number,NUMBER,,"[5, 16, 15]",
+consecutive_number,NUMBER,,"[380091, 380097, 560031]",
+state_number,NUMBER,,"[38, 56]",
+condition_impairment_at_time_of_crash_driver_name,TEXT,,"[""None/Apparently Normal""]",
+condition_impairment_at_time_of_crash_driver,NUMBER,,[0],

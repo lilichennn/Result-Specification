@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+zoneregistry,,TEXT. Unique site code identifier for archeologys zone. PK = Sites(ZoneRegistry). Example: SC9016.,text,
+zonelabel,,TEXT. Descriptive name of the archeologys site. Example: Site-North Alexanderville.,text,
+digunit,,TEXT. Excavation unit designation within the site. Example: Unit-C9.,text,
+gridtrace,,TEXT. Grid reference system coordinates for site location. Example: S29-E8.,text,
+phasefactor,,TEXT. Cultural period or chronological phase classification. **NULL means cultural period classification is undetermined or analysis incomplete.**. Example: Iron Age.,text,
+guessdate,,TEXT. Estimated date or age of archeologys materials. Example: -2929 BCE.,text,
+typesite,,TEXT. Classification of archeologys site type. **NULL means site type classification is pending or cannot be determined.**. Example: Bur..,text,
+guardhint,,"TEXT. Weather protection measures in place at site. **NULL means weather protection assessment not completed or not applicable.**. Possible values: Permanent, Temporary.",text,
+geo_position,,"JSONB column. Geographic positioning data including coordinates, elevation, and excavation depth measurements
+Fields: {""Depth_C"":""REAL. Excavation depth below surface in centimeters. Example: 329.9."",""Geo_X"":""REAL. Latitude coordinate in decimal degrees. Example: -9.602135."",""Geo_Y"":""REAL. Longitude coordinate in decimal degrees. Example: -2.756411."",""Height_M"":""REAL. Altitude above sea level in meters. Example: 4391.4.""}",jsonb,
+site_status,,"JSONB column. Site condition and security assessment including preservation, access, safety, and risk evaluation status
+Fields: {""Entry_Stat"":""TEXT. Site accessibility status for personnel and equipment. Possible values: Closed, Open, Restricted."",""Env_Haz"":""TEXT. Environmental risk factors present at the site. Possible values: High, Low, Medium."",""Health_Eval"":""TEXT. Health and safety evaluation status for site conditions. Possible values: Approved, Pending, Review."",""Insur_Stat"":""TEXT. Insurance coverage status for site operations. Possible values: Active, Expired, Pending."",""Pres_Stat"":""TEXT. Current preservation status of archeologys remains. Possible values: Critical, Excellent, Fair, Good, Poor."",""Risk_Eval"":""TEXT. Risk assessment status for site safety evaluation. **NULL means risk assessment not conducted or evaluation incomplete.**. Example: Req.."",""Safe_Rank"":""TEXT. Security level classification for site protection. **NULL means security assessment not completed or classification pending.**. Example: Minimal.""}",jsonb,

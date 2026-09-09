@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+waterregistry,,A SERIAL primary key uniquely identifying each water/waste management record.,integer,
+watereqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), associating water/waste data with equipment.",character varying,
+waterlevelpercent,,A REAL value showing the current water tank level percentage.,real,
+waterpressurekpa,,"A DECIMAL(7,2) indicating water pressure in kilopascals.",numeric,
+watertemperaturec,,A FLOAT representing the water temperature in Celsius.,double precision,
+waterflowlpm,,"A NUMERIC(8,3) specifying water flow rate in liters per minute.",numeric,
+waterqualityindex,,"An INT rating or index representing overall water quality (e.g., 0–100 scale).",integer,
+wastetanklevelpercent,,"A DECIMAL(5,2) measuring how full the waste tank is as a percentage of capacity.",numeric,

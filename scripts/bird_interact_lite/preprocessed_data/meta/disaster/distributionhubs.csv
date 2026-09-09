@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+hubregistry,,"A VARCHAR(20) primary key identifying each distribution hub record (e.g., 'HUB0001').",character varying,
+disteventref,,"A VARCHAR(20) referencing DisasterEvents(DistRegistry), linking this hub to a specific disaster event (e.g., 'DIST0001').",character varying,
+hubcaptons,,"A DECIMAL(11,2) for the hub’s maximum capacity in tons (e.g., 350.00).",numeric,
+hubutilpct,,"A DECIMAL(7,3) showing the percentage of hub capacity currently utilized (e.g., 85.300).",numeric,
+storecapm3,,"A NUMERIC(9,2) representing total storage capacity in cubic meters (e.g., 2000.00).",numeric,
+storeavailm3,,"A DECIMAL(8,3) specifying how many cubic meters of storage remain available (e.g., 450.750).",numeric,
+coldstorecapm3,,"A DECIMAL(10,3) indicating cold-storage capacity in cubic meters (e.g., 150.300).",numeric,
+coldstoretempc,,"A NUMERIC(4,1) for the temperature in the cold storage facility (e.g., -5.0).",numeric,
+warehousestate,,"An enum (WarehouseState_enum) describing the warehouse’s condition; values: 'Fair', 'Excellent', 'Good', 'Poor'.",USER-DEFINED,
+invaccpct,,"A DECIMAL(5,2) representing inventory accuracy as a percentage (e.g., 98.50).",numeric,
+stockturnrate,,"A DECIMAL(5,2) measuring how often inventory is turned over during a specific period (e.g., 5.20).",numeric,

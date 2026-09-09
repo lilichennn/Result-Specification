@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+SupplierReference,TEXT,,"[""BC0280982""]",
+DeliveryMethodID,NUMBER,,[2],
+PurchaseOrderID,NUMBER,,"[42, 138, 255]",
+ContactPersonID,NUMBER,,[2],
+ExpectedDeliveryDate,DATE,,"[""2013-02-01"", ""2013-04-10"", ""2013-06-20""]",
+OrderDate,DATE,,"[""2013-01-12"", ""2013-03-21"", ""2013-05-31""]",
+LastEditedBy,NUMBER,,[2],
+SupplierID,NUMBER,,[7],
+IsOrderFinalized,NUMBER,,[1],
+Comments,TEXT,,"[""NULL""]",
+InternalComments,TEXT,,"[""NULL""]",
+LastEditedWhen,NUMBER,,"[1358146800000000, 1363935600000000, 1370242800000000]",

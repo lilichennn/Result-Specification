@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+notes,TEXT,Population evaluation group notes.,"[""Arizona 2016"", ""Colorado 2012"", ""Colorado 2014""]",
+evaluation_group,NUMBER,"""An evaluation group identifies the evaluations that were used in producing a core set of tables. In some cases one evaluation will be used for area and volume and another evaluation for growth, removals and mortality. The value of this attribute is used to select the appropriate State and year of interest to produce a set of summary tables.","[42016, 82012, 82014]",
+evaluation_group_sequence_number,NUMBER,Foreign key linking the population evaluation record to the population evaluation group record.,"[469681604489998, 247194993489998, 336542497489998]",
+evaluation_group_description,TEXT,"A description of the evaluation group that includes the State and range of years for the evaluation, for example, """"Minnesota: 2004;2005;2006;2007;2008"""". This is useful to include in a summary report to clearly identify the source of the data.","[""ARIZONA 2016: ALL AREA, CURRENT AREA, CURRENT VOLUME, GROWTH, MORTALITY, DWM"", ""COLORADO 2012: ALL AREA, CURRENT AREA, CURRENT VOLUME, GROWTH, MORTALITY"", ""COLORADO 2014: ALL AREA, CURRENT AREA, CURRENT VOLUME, GROWTH, MORTALITY""]",
+pop_evaluation_group_modified_in_instance,NUMBER,See SURVEY.MODIFIED_IN_INSTANCE description for definition.,"[126144, 489998, 290487]",
+pop_evaluation_group_created_by,TEXT,See SURVEY.CREATED_BY description for definition.,[],
+pop_evaluation_group_created_date,DATE,See SURVEY.CREATED_DATE description for definition.,"[""2017-05-15"", ""2014-03-18"", ""2015-06-18""]",
+region_or_station_code,NUMBER,Identification number of the Forest Service National Forest System Region or Station (FIA work unit) that provided the inventory data (see appendix B for more information).,[22],
+pop_evaluation_group_modified_date,DATE,See SURVEY.MODIFIED_DATE description for definition.,"[""2019-07-22"", ""2015-06-16"", ""2016-06-08""]",
+state_code,NUMBER,Bureau of the Census Federal Information Processing Standards (FIPS) two-digit code for each State. Refer to appendix B. For evaluations that do not conform to the boundaries of a single State the value of STATECD should be set to 99.,"[4, 8, 16]",
+pop_evaluation_group_modified_by,TEXT,See SURVEY.MODIFIED_BY description for definition.,[],
+pop_evaluation_group_created_in_instance,NUMBER,See SURVEY.CREATED_IN_INSTANCE description for definition.,[489998],

@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+country_code,TEXT,,"[""TZA"", ""CYP""]",
+series_code,TEXT,,"[""NY.GDP.PCAP.KD"", ""NY.GNP.PCAP.PP.CD"", ""NY.GNP.PCAP.CD""]",
+description,TEXT,,"[""Covers mainland Tanzania only."", ""Data are for areas under the effective control of the Government of the Republic of Cyprus.""]",

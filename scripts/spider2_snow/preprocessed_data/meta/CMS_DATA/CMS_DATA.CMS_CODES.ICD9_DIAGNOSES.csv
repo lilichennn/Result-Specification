@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+LONG_DESCRIPTION,TEXT,,"[""Kuru"", ""Pica"", ""Felon""]",
+DIAGNOSIS_CODE,TEXT,,"[""0460"", ""30752"", ""68101""]",
+SHORT_DESCRIPTION,TEXT,,"[""Kuru"", ""Pica"", ""Felon""]",

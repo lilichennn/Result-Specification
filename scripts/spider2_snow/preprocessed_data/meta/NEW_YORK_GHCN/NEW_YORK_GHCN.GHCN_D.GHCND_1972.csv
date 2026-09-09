@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+sflag,TEXT,,"[""X""]",
+qflag,TEXT,,[],
+value,FLOAT,,"[50.0, 100.0, 70.0]",
+time,TEXT,,[],
+id,TEXT,,"[""AQW00061705""]",
+element,TEXT,,"[""ACMH""]",
+date,DATE,,"[""1972-03-31"", ""1972-02-14"", ""1972-02-29""]",
+mflag,TEXT,,[],

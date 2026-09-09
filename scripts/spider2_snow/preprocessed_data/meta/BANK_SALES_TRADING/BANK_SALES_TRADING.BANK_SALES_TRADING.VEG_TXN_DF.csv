@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+txn_date,TEXT,,"[""2020-07-01 00:00:00""]",
+qty_sold(kg),FLOAT,,"[0.849, 0.338, 0.132]",
+sale/return,TEXT,,"[""sale""]",
+txn_time,TEXT,,"[""09:17:27"", ""09:21:56"", ""09:22:01""]",
+unit_selling_px_rmb/kg,FLOAT,,"[3.2, 8.0, 7.6]",
+index,NUMBER,,"[1, 6, 7]",
+discount(%),NUMBER,,[1],
+item_code,NUMBER,,"[102900005115960, 102900005115779, 102900005117056]",
+day_of_week,TEXT,,"[""Wednesday""]",

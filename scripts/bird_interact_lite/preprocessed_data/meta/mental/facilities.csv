@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+fackey,,"A VARCHAR(20) primary key uniquely identifying the facility (e.g., 'FAC001').",character varying,
+rsource,,"An enum (referralsource_enum) for how the patient was referred (Self, Court, Physician, Emergency, Family).",USER-DEFINED,
+envstress,,"An enum (environmentalstressors_enum) describing stressors in the environment (Mild, Moderate, Severe).",USER-DEFINED,
+lifeimpact,,"An enum (lifeeventsimpact_enum) showing how life events impact the patient (Mild, Moderate, Severe).",USER-DEFINED,
+seasonpat,,"An enum (seasonalpattern_enum) capturing any seasonal pattern in symptoms (Summer, Winter, Variable).",USER-DEFINED,
+leglissue,,"An enum (legalissues_enum) describing the patient's legal issues (Resolved, Pending, Ongoing).",USER-DEFINED,
+ssystemchg,,"An enum (supportsystemchanges_enum) describing changes in support system (Variable, Improved, Declined).",USER-DEFINED,
+support_and_resources,,"JSONB column. Stores information about the facility's support services, community resources, emergency contacts, and plan statuses.
+Fields: {""community_resources"":""An enum (communityresources_enum) describing local resource availability (Limited, Comprehensive, Adequate)."",""emergency_contact"":""A VARCHAR(200) capturing emergency contact info or phone numbers (e.g., 'Hotline: 1-800-xxx')."",""plans"":{""crisis_plan_status"":""An enum (crisisplanstatus_enum) for the crisis plan status (Not Needed, Needs Update, In Place)."",""safety_plan_status"":""An enum (safetyplanstatus_enum) for the safety plan status (Needs Update, In Place, Not Needed).""},""support_services"":""A VARCHAR(200) listing available or recommended support services (e.g., 'Peer support group, vocational rehab').""}",jsonb,

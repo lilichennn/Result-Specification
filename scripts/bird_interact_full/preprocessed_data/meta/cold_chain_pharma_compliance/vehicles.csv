@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+vehref,,text. Unique vehicle reference identifier. PK. Example: VH6122.,text,
+carrierbond,,text. Carrier identifier to which the vehicle belongs. FK to Carriers.,text,
+vehtype,,"text. Vehicle type (e.g., van, truck, reefer). Possible values: Aircraft, Container, Reefer Truck, Van.",text,
+veh_qual,,"text. Qualitative vehicle qualification/status. Possible values: Qualified, Under Review, Validated.",text,
+temp_mon_sys,,"text. Temperature-monitoring system installed. Possible values: Continuous, Interval, Manual.",text,

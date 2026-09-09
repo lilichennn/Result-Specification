@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+sflag,TEXT,,"[""F"", ""C""]",
+mflag,TEXT,,"[""T""]",
+date,DATE,,"[""1840-02-08"", ""1840-05-19"", ""1840-05-26""]",
+qflag,TEXT,,[],
+value,FLOAT,,[0.0],
+element,TEXT,,"[""PRCP""]",
+time,TEXT,,[],
+id,TEXT,,"[""USC00361920"", ""CA006158350""]",

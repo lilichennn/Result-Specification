@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,TEXT,,"[""2005-11-01""]",
+category,TEXT,,"[""cited by applicant""]",
+name,TEXT,,"[""Schuldt-Hempe et al."", ""Sixto, Jr. et al."", ""Gittings""]",
+uuid,TEXT,,"[""57ncvypgc6olzvvyu8cyrup28"", ""ku1vpwjzed77n4wajpnj8s0bc"", ""9y51eyspby8nsi5pgsjqhvqmu""]",
+sequence,NUMBER,,"[66, 574, 28]",
+patent_id,TEXT,,"[""9089501"", ""8568410"", ""8821530""]",
+citation_id,TEXT,,"[""6966918"", ""6966919"", ""6966923""]",
+kind,TEXT,,"[""B1"", ""B2""]",
+country,TEXT,,"[""US""]",

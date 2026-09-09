@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VALUE,FLOAT,Value reported for the variable.,"[3361249000.0, 0.0, 98.93938]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Balance of payments to rest of the world: expenditure from secondary income in US dollars, exchange rate converted, Quarterly"", ""Balance of payments to rest of the world: revenue from gross acquisitions / disposals of nonproduced nonfinancial assets in Euro, Quarterly"", ""OECD harmonised Composite Consumer Confidence, Index, Monthly (Amplitude adjusted)""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""USD"", ""EUR"", ""Index""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/CAN"", ""country/LTU"", ""country/EST""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""BAL_OF_PAY_D_IN2_USD_EXC__Z_Q_N"", ""BAL_OF_PAY_C_NP_XDC_EUR_Q_N"", ""CLI_H_CCICP__Z_IX__Z_IX_M_AA""]",
+DATE,DATE,Date associated with the value.,"[""2007-03-31"", ""2011-03-31"", ""2012-06-30""]",

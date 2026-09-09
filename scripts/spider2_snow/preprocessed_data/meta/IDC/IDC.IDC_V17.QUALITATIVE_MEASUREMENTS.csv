@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+trackingIdentifier,TEXT,"Value of the TID 1500 Measurement group row corresponding to the concept ""Tracking Identifier"" (e.g., row 2 in TID 1411)","[""Nodule 2"", ""Nodule 1"", ""Nodule 3""]",
+measurementGroup_number,NUMBER,"Measurement group number corresponding to the measurement groups within the TID 1500 report, starting from 0.",[0],
+segmentationInstanceUID,TEXT,SOPInstanceUID of the segmentation object defining the region of interest corresponding to the measurement.,"[""1.2.276.0.7230010.3.1.4.0.1584.1553286271.3857"", ""1.2.276.0.7230010.3.1.4.0.3108.1553287544.9742"", ""1.2.276.0.7230010.3.1.4.0.3352.1553287791.6410""]",
+findingSite,VARIANT,,"[""{\n  \""CodeMeaning\"": \""Lung\"",\n  \""CodeValue\"": \""T-28000\"",\n  \""CodingSchemeDesignator\"": \""SRT\""\n}""]",
+SOPInstanceUID,TEXT,,"[""1.2.276.0.7230010.3.1.4.0.1585.1553286274.439237"", ""1.2.276.0.7230010.3.1.4.0.3109.1553287545.756478"", ""1.2.276.0.7230010.3.1.4.0.3353.1553287793.21136""]",
+PatientID,TEXT,,"[""LIDC-IDRI-0036"", ""LIDC-IDRI-0055"", ""LIDC-IDRI-0058""]",
+sourceSegmentedSeriesUID,TEXT,SeriesInstanceUID corresponding to the image series over which the measurement was done.,"[""1.3.6.1.4.1.14519.5.2.1.6279.6001.177685820605315926524514718990"", ""1.3.6.1.4.1.14519.5.2.1.6279.6001.214252223927572015414741039150"", ""1.3.6.1.4.1.14519.5.2.1.6279.6001.323408652979949774528873200770""]",
+Quantity,VARIANT,Value of the concept code corresponding to TID 1500 Measurement group row where VT is CODE.,"[""{\n  \""CodeMeaning\"": \""Lobular Pattern\"",\n  \""CodeValue\"": \""C62175\"",\n  \""CodingSchemeDesignator\"": \""NCIt\""\n}"", ""{\n  \""CodeMeaning\"": \""Spiculation\"",\n  \""CodeValue\"": \""C28749\"",\n  \""CodingSchemeDesignator\"": \""NCIt\""\n}""]",
+finding,VARIANT,,"[""{\n  \""CodeMeaning\"": \""Nodule\"",\n  \""CodeValue\"": \""M-03010\"",\n  \""CodingSchemeDesignator\"": \""SRT\""\n}""]",
+segmentationSegmentNumber,VARIANT,SegmentNumber of the segment within the segmentation object referenced by segmentationInstanceUID defining the region of interest corresponding to the measurement.,"[""[\n  1\n]""]",
+trackingUniqueIdentifier,TEXT,"Value of the TID 1500 Measurement group row corresponding to the concept ""Tracking Unique Identifier"" (e.g., row 3 in TID 1411)","[""2.25.38911037880904767219763718462833112874273705289856885576034"", ""2.25.19021265325593383368411690106574002039729755006330864394525"", ""2.25.10529473874818738473730636588413133845824236177170700437541""]",
+Value,VARIANT,,"[""{\n  \""CodeMeaning\"": \""2 out of 5\"",\n  \""CodeValue\"": \""002\"",\n  \""CodingSchemeDesignator\"": \""99LIDCQIICR\""\n}""]",

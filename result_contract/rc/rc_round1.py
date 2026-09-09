@@ -22,7 +22,7 @@ ROUND1_FIELDS = (
 PROMPT_DIR = Path(__file__).resolve().parent
 DEFAULT_CONFIG_PATH = Path(__file__).resolve().parents[2] / "config" / ".env"
 DEFAULT_MAX_ATTEMPTS = 3
-DEFAULT_TIMEOUT_SECONDS = 180
+DEFAULT_TIMEOUT_SECONDS = 600
 LOGGER = logging.getLogger(__name__)
 
 
@@ -77,13 +77,13 @@ def generate_round1(
     last_error: Exception | None = None
     for attempt in range(1, max_attempts + 1):
         try:
-            LOGGER.info("Round-1 model request attempt %d/%d", attempt, max_attempts)
+            LOGGER.debug("Round-1 model request attempt %d/%d", attempt, max_attempts)
             result = parse_round1_response(invoke(messages))
-            LOGGER.info("Round-1 model request succeeded on attempt %d/%d", attempt, max_attempts)
+            LOGGER.debug("Round-1 model request succeeded on attempt %d/%d", attempt, max_attempts)
             return result
         except Exception as exc:
             last_error = exc
-            LOGGER.warning(
+            LOGGER.debug(
                 "Round-1 model request failed on attempt %d/%d: %s: %s",
                 attempt,
                 max_attempts,

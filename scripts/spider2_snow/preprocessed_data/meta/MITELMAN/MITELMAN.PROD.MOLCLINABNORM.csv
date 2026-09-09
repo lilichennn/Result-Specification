@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+InvNo,NUMBER,"investigation number, usually between 1 and 10","[1, 2]",
+OrderNo,NUMBER,"order number, between 1 and 54","[1, 11, 2]",
+RefNo,NUMBER,"reference number, eg '15563'","[1696, 2844, 4556]",
+Abnormality,TEXT,"abnormality description, eg 't(19;19)(p13;p13)' or 'del(7)(q?)'","[""r"", ""+1""]",
+MolClin,TEXT,"flag indicating molecular 'M', or clinical 'C'","[""C""]",

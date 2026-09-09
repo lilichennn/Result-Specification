@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+ranking,NUMBER,,[1],
+text,TEXT,,"[""Unfortunately, the market is no better. The governments allow their central banks to print fake money while the market allows its financial institutions to print fake assets.<p>Whether it's currencies or CDOs, a bubble is a bubble. Valuation is an art that got lost somewhere in the science."", ""I'm sure any investor, including PG, would prefer entrepreneurs to work smarter though, it's not just about hours, but it may take that to succeed.<p>But, after reading this, I remembered this PG essay from a few years ago.<p>\""Economically, you can think of a startup as a way to compress your whole working life into a few years. Instead of working at a low intensity for forty years, you work as hard as you possibly can for four.\"" - <a href=\""http://paulgraham.com/wealth.html\"" rel=\""nofollow\"">http://paulgraham.com/wealth.html</a><p>Also:\n<a href=\""http://paulgraham.com/really.html\"" rel=\""nofollow\"">http://paulgraham.com/really.html</a>"", ""It's usually pretty quick/easy to get stuff approved for in-lab, early human trials. But yeah, much longer until it's available to the public.""]",
+deleted,BOOLEAN,,[],
+time_ts,NUMBER,,"[1263694664000000, 1322539234000000, 1362410447000000]",
+by,TEXT,,"[""mortenjorck"", ""mountaineer"", ""mrsebastian""]",
+dead,BOOLEAN,,[],
+author,TEXT,,"[""mortenjorck"", ""mountaineer"", ""mrsebastian""]",
+time,NUMBER,,"[1263694664, 1322539234, 1362410447]",
+id,NUMBER,,"[1057886, 3288980, 5318569]",
+parent,NUMBER,,"[1057265, 3288867, 5318538]",

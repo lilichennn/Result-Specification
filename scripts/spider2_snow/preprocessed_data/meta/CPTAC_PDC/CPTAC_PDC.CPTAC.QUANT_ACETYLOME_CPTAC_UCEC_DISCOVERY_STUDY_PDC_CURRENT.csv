@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+case_id,TEXT,,"[""d4cd4b91-118a-11e9-afb9-0a9c39d33490""]",
+sample_id,TEXT,,"[""15cf94d2-125a-11e9-afb9-0a9c39d33490""]",
+aliquot_submitter_id,TEXT,,"[""NX1""]",
+protein_abundance_log2ratio,FLOAT,,"[-0.2426, -0.1596, 0.0114]",
+refseq_id,TEXT,,"[""NP_000041.2"", ""NP_000117.1"", ""NP_000356.1""]",
+study_name,TEXT,,"[""CPTAC UCEC Discovery Study - Acetylome""]",
+aliquot_id,TEXT,,"[""4110039b-1272-11e9-afb9-0a9c39d33490""]",
+acetylation_sites,TEXT,,"[""k112"", ""k59"", ""k14""]",
+aliquot_run_metadata_id,TEXT,,"[""5308969f-cb98-11ea-b1fd-0aad30af8a83""]",

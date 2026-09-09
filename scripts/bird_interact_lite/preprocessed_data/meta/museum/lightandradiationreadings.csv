@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+lightradregistry,,"BIGSERIAL PRIMARY KEY, uniquely identifying each light/radiation reading.",bigint,
+envreadref,,BIGINT FOREIGN KEY referencing EnvironmentalReadingsCore(EnvReadRegistry). Associates light data with an existing environment reading.,bigint,
+lightlux,,INT measuring visible light intensity in lux.,integer,
+uvuwcm2,,"NUMERIC(6,2) capturing UV radiation in microwatts per cm² (µW/cm²).",numeric,
+irwm2,,"NUMERIC(6,2) measuring infrared radiation in W/m².",numeric,
+visibleexplxh,,INT indicating total visible light exposure over time in lux-hours (Lx·h).,integer,

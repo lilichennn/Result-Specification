@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+products,TEXT,,"[""D002"", ""D001"", ""A001""]",
+session,TEXT,,"[""47db0370"", ""fe05e1d8"", ""eee2bb21""]",
+stamp,TEXT,,"[""2016-11-03 19:00:00"", ""2016-11-03 21:00:00"", ""2016-11-04 19:00:00""]",
+action,TEXT,,"[""click""]",
+user_id,TEXT,,"[""U002"", ""U004"", ""U005""]",

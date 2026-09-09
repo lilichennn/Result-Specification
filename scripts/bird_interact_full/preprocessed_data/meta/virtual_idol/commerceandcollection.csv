@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+commerce_reg,,BIGSERIAL. Auto-generated unique identifier for commerce and collection record. PK = CommerceAndCollection(Commerce_Reg).,bigint,
+commerce_engage_pivot,,BIGINT. Reference to engagement record for commerce behavior analysis. FK to Engagement.,bigint,
+commerce_member_pivot,,BIGINT. Reference to membership record for commerce correlation. FK to MembershipAndSpending.,bigint,
+merch_buy,,SMALLINT. Number of merchandise items purchased by the fan.,smallint,
+merch_spend_usd,,REAL. Total amount spent on merchandise in USD.,real,
+dig_own,,BIGINT. Number of digital items owned by the fan.,bigint,
+phys_own,,BIGINT. Number of physical collectible items owned by the fan.,bigint,
+coll_comp_rate,,REAL. Collection completion rate as percentage of available items.,real,
+trade_level,,TEXT. Trading activity level classification. **NULL means trading activity tracking incomplete or user has not participated in trading.**,text,

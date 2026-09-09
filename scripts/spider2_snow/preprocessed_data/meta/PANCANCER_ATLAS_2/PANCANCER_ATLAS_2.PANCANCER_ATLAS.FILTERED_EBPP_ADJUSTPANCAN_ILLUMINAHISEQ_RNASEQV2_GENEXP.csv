@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+SampleTypeLetterCode,TEXT,"Letter code of the sample type using the TCGA standards, eg TPN, EBV. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/sample-type-codes","[""TP""]",
+Study,TEXT,"TCGA study abbreviation, eg LAML. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations","[""UCEC""]",
+SampleType,TEXT,"There are 10 sample types: Blood Derived Normal, Primary solid Tumor, Solid Tissue Normal, Recurrent Solid Tumor, Metastatic, Additional - New Primary, Primary Blood Derived Cancer - Peripheral Blood, Buccal Cell Normal, Additioanal Metastatic, Bone Marrrow Normal","[""Primary solid Tumor""]",
+SampleBarcode,TEXT,"Barcode of the biospecimen sample, eg TCGA-13-1489-02A","[""TCGA-EO-A22U-01A""]",
+AliquotBarcode,TEXT,"TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-28","[""TCGA-EO-A22U-01A-11R-A180-07""]",
+normalized_count,FLOAT,Normalized gene expression,"[16.5017, 281.471, 12.2584]",
+ParticipantBarcode,TEXT,"TCGA barcode identifier for the study participant, eg TCGA-02-0001","[""TCGA-EO-A22U""]",
+Entrez,TEXT,"Entrez ID from the NCBI, eg 730971","[""100129354"", ""90826"", ""644591""]",
+Symbol,TEXT,"eg TP53, LRP1B, etc (same as Hugo_Symbol field except blank instead of Unknown","[""NRADDP"", ""PRMT10"", ""PPIAL4G""]",

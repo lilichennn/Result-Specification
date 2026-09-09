@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+w_addr1,,TEXT. Primary address line of the worksite. PK.,text,
+wcity,,TEXT. City of the worksite. PK.,text,
+wstate,,TEXT. State of the worksite. PK.,text,
+wzip,,TEXT. Postal code of the worksite. PK.,text,
+secent,,"TEXT. Secondary entity associated with the worksite. **NULL means no secondary entity specified.**. Possible values: No, Yes.",text,
+secentname,,TEXT. Name of the secondary entity. **NULL means no secondary entity name provided.**. Example: Billings Clinic Health System.,text,
+waddr_2,,TEXT. Secondary address line of the worksite. **NULL means no secondary address provided.**. Example: 800.,text,
+wcnty,,TEXT. County of the worksite. **NULL means no county specified.**. Example: YELLOWSTONE.,text,

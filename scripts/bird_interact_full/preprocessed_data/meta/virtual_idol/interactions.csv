@@ -1,0 +1,21 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+activity_reg,,TEXT. Unique identifier for individual fan-idol interaction activity session. PK = Interactions(Activity_Reg).,text,
+time_mark,,TIMESTAMP. Precise timestamp when the interaction activity occurred.,timestamp without time zone,
+interact_fan_pivot,,TEXT. Reference to the fan user participating in this interaction. FK to Fans.,text,
+interact_idol_pivot,,TEXT. Reference to the virtual_idol idol involved in this interaction. FK to virtualidols.,text,
+act_kind,,"TEXT. Type of interaction activity performed. **NULL means interaction type classification failed or is ambiguous.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+act_plat,,"TEXT. Platform where the interaction took place. **NULL means platform identification failed or cross-platform activity.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+plat_used,,"TEXT. Specific platform or service used for the interaction. **NULL means platform usage tracking incomplete or privacy mode enabled.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+dev_type,,"TEXT. Device type used by fan for the interaction. **NULL means device detection failed or privacy settings block tracking.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case) virtual_idol.**",text,
+app_ver,,TEXT. Application version used during the interaction session.,text,
+sess_dur_min,,SMALLINT. Duration of the interaction session in minutes.,smallint,
+live_att,,SMALLINT. Number of live stream sessions attended during this interaction.,smallint,
+watch_hrs,,REAL. Total hours of content watched during the interaction session.,real,
+gift_metrics,,"JSONB column. Comprehensive gift-giving behavior metrics including frequency, quantities, values, and preferences
+Fields: {""Fav_Gift_Tag"":""TEXT. Most frequently used or preferred gift type during interaction."",""Gift_Freq"":""TEXT. Frequency classification of gift-giving behavior during interaction."",""Gift_Tot"":""BIGINT. Total number of virtual_idol gifts sent during this interaction."",""Gift_Val_Usd"":""REAL. Total monetary value in USD of gifts sent during interaction.""}",jsonb,
+chat_activity,,"JSONB column. Chat and messaging activity data including message counts, language, sentiment, and emoji usage
+Fields: {""Chat_Lang"":""TEXT. Primary language used in chat messages during the interaction."",""Chat_Msg"":""BIGINT. Number of chat messages sent by the fan during this interaction."",""Emoji_Count"":""BIGINT. Total number of emojis used in messages during the interaction."",""Msg_Tone"":""TEXT. Sentiment or tone analysis result of messages sent during interaction."",""Stk_Count"":""BIGINT. Total number of stickers used during the interaction session.""}",jsonb,
+engagement_rate,,TEXT. Fan engagement efficiency per time unit during interaction sessions. Example: 15 actions/hr.,text,
+gift_rate,,TEXT. Virtual gift-giving frequency and speed during interaction sessions. Example: 6 gifts/hr.,text,
+message_rate,,TEXT. Chat message sending frequency during interaction sessions. Example: 45 msgs/hr.,text,
+content_consumption_rate,,TEXT. Content viewing and consumption efficiency per session. Example: 489.68182650479406 mins/session.,text,

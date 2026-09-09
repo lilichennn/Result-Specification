@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human readable name for the variable,"[""Outflow Returns - number of returns, primary taxpayers ages 35 under 45, All AGI classes"", ""Outflow Returns – adjusted gross income from Year 2, primary taxpayers ages 26 under 35, AGI bin: $50,000 under $75,000"", ""Total Returns - number of returns, primary taxpayers ages 26 under, All AGI classes""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table,"[""Outflow_Returns_-_number_of_returns,_primary_taxpayers_ages_35_under_45,_All_AGI_classes"", ""Outflow_Returns_–_adjusted_gross_income_from_Year_2,_primary_taxpayers_ages_26_under_35,_AGI_bin:_$50,000_under_$75,000"", ""Total_Returns_-_number_of_returns,_primary_taxpayers_ages_26_under,_All_AGI_classes""]",
+UNIT,TEXT,"Unit of measure for the value, examples: USD, returns, individuals","[""Returns"", ""USD"", ""Individuals""]",
+DATE,DATE,"Date associated with the value, for gross migration data it is the last day of the second year being reported","[""2022-12-31"", ""2014-12-31"", ""2019-12-31""]",
+VALUE,NUMBER,The actual numeric value for the variable,"[17022, 61403000, 141322]",
+GEO_ID,TEXT,"A unique identifier for a place (state, county, zipcode) joinable to the geography_index/relationships tables","[""geoId/24"", ""geoId/02"", ""geoId/35""]",

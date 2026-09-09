@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+action,TEXT,,"[""view""]",
+session,TEXT,,"[""989004ea"", ""47db0370"", ""5eb2e107""]",
+option,TEXT,,"[""search"", ""detail""]",
+search_type,TEXT,,"[""Area-L-with-Job"", ""Area-S"", """"]",
+path,TEXT,,"[""/search_list/"", ""/detail/""]",
+stamp,TEXT,,"[""2017-01-09 12:18:43""]",

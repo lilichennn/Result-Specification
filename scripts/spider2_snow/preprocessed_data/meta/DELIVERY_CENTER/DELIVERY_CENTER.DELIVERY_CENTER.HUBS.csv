@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+hub_latitude,FLOAT,,"[-30.0474148, -30.0374149, -30.0219481]",
+hub_state,TEXT,,"[""RS"", ""RJ""]",
+hub_id,NUMBER,,"[2, 3, 4]",
+hub_city,TEXT,,"[""PORTO ALEGRE"", ""RIO DE JANEIRO""]",
+hub_longitude,FLOAT,,"[-51.21351, -51.20352, -51.2083816]",
+hub_name,TEXT,,"[""BLUE SHOPPING"", ""GREEN SHOPPING"", ""RED SHOPPING""]",

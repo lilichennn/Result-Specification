@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+post_id,NUMBER,,"[25444095, 25448589, 25452281]",
+related_post_id,NUMBER,,"[1453043, 25377797, 11263297]",
+creation_date,NUMBER,,"[1408700902383000, 1408719658267000, 1408730481437000]",
+link_type_id,NUMBER,,[1],
+id,NUMBER,,"[947101319, 947191035, 947233779]",

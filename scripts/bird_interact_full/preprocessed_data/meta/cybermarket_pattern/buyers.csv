@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+AcqCode,,TEXT. Unique identifier for a buyer (acquirer) account. PK.,text,
+ProfileAge,,BIGINT. Age of the buyer’s profile in days. Example: 326.,bigint,
+PurchaseCount,,BIGINT. Number of purchases made by the buyer. Example: 10.,bigint,
+AuthLevel,,"TEXT. Authentication level attained by the buyer. **NULL means authentication level has not been determined.**. Possible values: Advanced, Basic.",text,
+buyer_risk_profile,,"JSONB column. Contains the buyer’s risk-related metrics, including risk score, behavior consistency, and purchase pattern.
+Fields: {""behavior_consistency_scr"":""REAL. Behaviour-consistency score across sessions. **NULL means behavioural-consistency metric not available.**. Example: 83.4."",""purchase_freq"":""TEXT. Buying-frequency classification (e.g., low, medium, high). Possible values: Heavy, Occasional, One-time, Regular."",""risk_dollar_ratio"":""text. The risk indicator associated with each buyer, calculated as the ratio of buyer risk score to payment amount in USD. Example: 0.1079 RiskScore/USD."",""risk_metric_scr"":""REAL. Risk metric assigned to the buyer based on behaviour. **NULL means risk metric has not been calculated.**. Example: 29.5."",""spend_pattern"":""TEXT. Categorised spending pattern for the buyer. Possible values: High, Low, Medium, Variable.""}",jsonb,

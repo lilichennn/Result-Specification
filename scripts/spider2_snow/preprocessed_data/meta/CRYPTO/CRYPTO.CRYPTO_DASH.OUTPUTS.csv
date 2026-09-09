@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,NUMBER,,"[""1564464353.000000000"", ""969722.000000000"", ""193504.000000000""]",
+block_timestamp,NUMBER,,"[1519952693000000, 1521155610000000, 1622632577000000]",
+type,TEXT,,"[""pubkeyhash"", ""scripthash""]",
+script_asm,TEXT,,"[""OP_DUP OP_HASH160 bdac34c8369c3278c19ce857bf3cda38e6e74631 OP_EQUALVERIFY OP_CHECKSIG"", ""OP_HASH160 29a87b7938faafa35f3aae472ce258f0fb095ad8 OP_EQUAL"", ""OP_DUP OP_HASH160 c837f83299c8209d06f2ca43e11830aa7a1aa05b OP_EQUALVERIFY OP_CHECKSIG""]",
+block_hash,TEXT,,"[""000000000000001b7e10f2c2c604d6670ab0ee160b54b4245b4d8a7db90b3299"", ""000000000000001dacd520c1501e8d2046c3ab13b7e173d184e83d4f43621813"", ""0000000000000014e427cf1ba719bff2f8d57e670fbcd83f9f18b780c21f74f1""]",
+addresses,VARIANT,,"[""[\n  \""Xsyjqc1zZ19T3FtJ97WrCLzXUmnE4P6ACP\""\n]"", ""[\n  \""7WCvHxdcQ67mxrodC88544Nqj8YKZNKeRW\""\n]"", ""[\n  \""XtwW2T4Sq2t6vPkmH7Gwa3RN4rMk4JfVmH\""\n]""]",
+index,NUMBER,,"[1, 185, 0]",
+required_signatures,NUMBER,,[1],
+transaction_hash,TEXT,,"[""d8e3ee4b126fcea18d82af9945370d8db4e4bf08d884bbb6b38f6fae97483790"", ""592f9f9565b0c97460e52f125165fe9332e8ba93fcff93cb8bc3c9f7189d2e06"", ""debccd4ce5b3571570d12c5d9e2ddb6243d5b44cfb1e70aa37f788344490e0b3""]",
+block_number,NUMBER,,"[829538, 837169, 1481142]",
+script_hex,TEXT,,"[""76a914bdac34c8369c3278c19ce857bf3cda38e6e7463188ac"", ""a91429a87b7938faafa35f3aae472ce258f0fb095ad887"", ""76a914c837f83299c8209d06f2ca43e11830aa7a1aa05b88ac""]",

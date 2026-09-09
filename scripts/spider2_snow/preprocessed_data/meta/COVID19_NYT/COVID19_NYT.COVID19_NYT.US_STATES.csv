@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+confirmed_cases,NUMBER,The total number of confirmed cases of COVID-19,"[12, 78, 386]",
+state_name,TEXT,State reported,"[""Alabama""]",
+deaths,NUMBER,The total number of confirmed deaths of COVID-19,"[0, 1, 4]",
+state_fips_code,TEXT,Standard geographic identifier for the state,"[""01""]",
+date,DATE,Date reported,"[""2020-03-14"", ""2020-03-19"", ""2020-03-25""]",

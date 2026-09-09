@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""RQC00662634""]",
+mflag,TEXT,,[],
+qflag,TEXT,,[],
+time,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+date,DATE,,"[""1899-08-26"", ""1899-08-23"", ""1899-07-21""]",
+element,TEXT,,"[""PRCP""]",
+value,FLOAT,,[0.0],

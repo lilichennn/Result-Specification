@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+year,NUMBER,,[1990],
+series_code,TEXT,,"[""SP.DYN.CONU.ZS"", ""SH.STA.ORCF.ZS"", ""SH.STA.BRTC.ZS""]",
+description,TEXT,,"[""Averages for regions/groups are based on country-level data around 1990.""]",

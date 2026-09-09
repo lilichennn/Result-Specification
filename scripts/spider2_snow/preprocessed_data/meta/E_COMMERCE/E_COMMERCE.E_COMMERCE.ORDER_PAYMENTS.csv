@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+payment_sequential,NUMBER,,[1],
+payment_installments,NUMBER,,"[8, 1, 2]",
+payment_value,FLOAT,,"[99.33, 24.39, 65.71]",
+order_id,TEXT,,"[""b81ef226f3fe1789b1e8b2acac839d17"", ""a9810da82917af2d9aefd1278f1dcfa0"", ""25e8ea4e93396b6fa0d3dd708e76c1bd""]",
+payment_type,TEXT,,"[""credit_card""]",

@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+PCA_project_id,TEXT,"One of 16 PanCancer Atlas projects, eg PANCAN-SQUAMOUS, MC3, PANCAN-DRIVER, etc","[""MC3""]",
+gdc_id,TEXT,GDC file identifier,"[""883e1558-8145-4f5a-a828-877afa4a66b3"", ""495bb9c0-9bf7-40a7-9099-4c87857d3096"", ""d0a83f83-253e-4f2e-b3b4-a9fe6abe670d""]",
+file_name,TEXT,Name of file at the GDC,"[""GBM.tar.gz"", ""OV.tar.gz"", ""LUSC.tar.gz""]",

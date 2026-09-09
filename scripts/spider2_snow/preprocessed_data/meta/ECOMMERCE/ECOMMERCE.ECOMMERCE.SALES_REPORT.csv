@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+sentimentMagnitude,FLOAT,,"[0.5, 0.1, 0.2]",
+ratio,FLOAT,,"[0.057692307692307696, 0.003278688524590164, 0.021739130434782608]",
+restockingLeadTime,NUMBER,,"[12, 5, 10]",
+name,TEXT,,"["" Men's Short Sleeve Hero Tee Charcoal"", "" Metallic Notebook Set"", ""Waterproof Backpack""]",
+sentimentScore,FLOAT,,[0.0],
+productSKU,TEXT,,"[""GGOEGAAX0325"", ""GGOEGOLC014299"", ""GGOEGBRA037499""]",
+stockLevel,NUMBER,,"[104, 610, 230]",
+total_ordered,NUMBER,,"[6, 2, 5]",

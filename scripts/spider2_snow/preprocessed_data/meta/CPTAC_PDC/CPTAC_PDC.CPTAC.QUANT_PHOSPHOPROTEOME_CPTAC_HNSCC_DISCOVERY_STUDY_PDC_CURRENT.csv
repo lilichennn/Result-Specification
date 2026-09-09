@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+aliquot_run_metadata_id,TEXT,,"[""422c1651-8fab-11ea-bc9a-0a16d369a41f""]",
+phosphorylation_sites,TEXT,,"[""s987"", ""s768"", ""s281""]",
+case_id,TEXT,,"[""df4eba07-8f98-11ea-b1fd-0aad30af8a83""]",
+aliquot_id,TEXT,,"[""df509bbf-8f98-11ea-b1fd-0aad30af8a83""]",
+sample_id,TEXT,,"[""df4f80a8-8f98-11ea-b1fd-0aad30af8a83""]",
+refseq_id,TEXT,,"[""NP_116166.9"", ""NP_001317138.1"", ""NP_001287955.1""]",
+study_name,TEXT,,"[""CPTAC HNSCC Discovery Study - Phosphoproteome""]",
+aliquot_submitter_id,TEXT,,"[""CPT0013130003""]",
+protein_abundance_log2ratio,FLOAT,,[],

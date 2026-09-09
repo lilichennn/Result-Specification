@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+product_sku,TEXT,,"[""2A3E953A5E3D81E67945BCE5519F84C8""]",
+sold_at,NUMBER,,[1702053341000000.0],
+id,NUMBER,,"[30266, 30267, 30268]",
+product_department,TEXT,,"[""Women""]",
+product_distribution_center_id,NUMBER,,[7],
+cost,FLOAT,,[2.768039897618853],
+product_name,TEXT,,"[""(ONE) 1 Satin Headband""]",
+product_category,TEXT,,"[""Accessories""]",
+product_retail_price,FLOAT,,[6.989999771118164],
+product_id,NUMBER,,[13844],
+product_brand,TEXT,,"[""Funny Girl Designs""]",
+created_at,NUMBER,,"[1697415641000000, 1701168720000000, 1621069920000000]",

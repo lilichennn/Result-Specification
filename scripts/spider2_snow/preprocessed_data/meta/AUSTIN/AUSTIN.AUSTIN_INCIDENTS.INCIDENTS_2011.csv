@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+location,TEXT,Latitude/Longitude,[],
+address,TEXT,,"[""500 BLOCK WOODWARD ST"", ""5200 BLOCK E STASSNEY LN"", ""9700 BLOCK NORTH LAKE CREEK PKWY""]",
+unique_key,NUMBER,The unique incident number for this accident.,"[20111302003, 20111312329, 20111302219]",
+time,TIME,,"[""21:41:00"", ""23:33:00"", ""11:54:00""]",
+latitude,FLOAT,,[],
+timestamp,NUMBER,,"[1305085260000000, 1305091980000000, 1305050040000000]",
+date,DATE,,"[""2011-05-10""]",
+descript,TEXT,,"[""DWI"", ""RAPE"", ""THEFT""]",
+longitude,FLOAT,,[],

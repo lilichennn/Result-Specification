@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+block_hash,TEXT,Hash of the block where this transfer was in,"[""0x9a1a9843f11899ae3f84058f0a3a4b9142610ea772d08ba2c5c3c100d58685f0"", ""0xdb348ada7102bfebcf44d60577a5fe038be5d571eab7dcdc22486559abc93af8"", ""0x1d843cca708b16f297bed5b80c6dd31d4f2f6d2f5ae66ddbaabf7bf059f1f45f""]",
+value,TEXT,Amount of tokens transferred (ERC20) / id of the token transferred (ERC721). Use safe_cast for casting to NUMERIC or FLOAT64,"[""40000000000000000000000000000"", ""12000"", ""25854""]",
+token_address,TEXT,ERC20 token address,"[""0xd2c640b89645019fe9044345605ac43ad4219d0d"", ""0x1774c5827fcc520d268e6454d53429e600507f3b"", ""0x45aa09a11d7ea6a484651f2a03df3f3ec2766cbc""]",
+block_timestamp,NUMBER,Timestamp of the block where this transfer was in,"[1532759268000000, 1532786744000000, 1532788489000000]",
+log_index,NUMBER,Log index in the transaction receipt,"[0, 12, 2]",
+from_address,TEXT,Address of the sender,"[""0x0000000000000000000000000000000000000000"", ""0x0073fc90514a359808ced01a122752eaca80c376"", ""0x0f79a13977c992e50f46a6b5f8c990de6cf32a66""]",
+to_address,TEXT,Address of the receiver,"[""0xf5c7a331f1a5c3889cf3187e483efcab53dbc3bc"", ""0x417109f5babad097f10c3ba1e946b3c170008db7"", ""0x8284e1ffc3fa30d7ad662f421d1c38c143c22f10""]",
+block_number,NUMBER,Block number where this transfer was in,"[6262645, 6264648, 6264763]",
+transaction_hash,TEXT,Transaction hash,"[""0x8aa13c540244a8056a4e876e8270dcd893636efe8fbdb2069f847719f9106cd9"", ""0xa7f04f01d6b73362c5fb76bbbf96d3487ea48b4c66f36480aa9fdb8bd1ed1e54"", ""0x0c5066efc1338a874ea69399d504a7c8669f84b8e8eed96aaa4ccbd9850d9c01""]",

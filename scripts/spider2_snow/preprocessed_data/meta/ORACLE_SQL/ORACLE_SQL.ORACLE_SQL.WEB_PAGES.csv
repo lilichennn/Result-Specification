@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+app_id,NUMBER,,[542],
+page_no,NUMBER,,"[1, 3, 4]",
+friendly_url,TEXT,,"[""/Shop"", ""/Breweries"", ""/About""]",

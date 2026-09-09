@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,NUMBER,,"[2, 3, 12]",
+channel,TEXT,,"[""direct""]",
+account_id,NUMBER,,"[1001, 1021]",
+occurred_at,TEXT,,"[""2015-11-05T03:08:26.000Z"", ""2015-12-04T03:57:24.000Z"", ""2016-08-28T06:42:42.000Z""]",

@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+InvNo,NUMBER,"investigation number, between 1 and 9",[1],
+CloneNo,NUMBER,"clone number, between 1 and 58","[1, 2]",
+RefNo,NUMBER,"reference number, eg '14617'","[4169, 10625, 10776]",
+CaseNo,TEXT,"case number, usually between 1 and 10, but can also be an arbitrary string, eg 'A11'","[""384"", ""6674"", ""271""]",
+OrderNo,NUMBER,"order number, between 1 and 392",[1],
+Breakpoint,TEXT,"arbitrary string, eg '14q32', or '9', or '?10q?11'","[""?"", ""?12"", ""?12?""]",

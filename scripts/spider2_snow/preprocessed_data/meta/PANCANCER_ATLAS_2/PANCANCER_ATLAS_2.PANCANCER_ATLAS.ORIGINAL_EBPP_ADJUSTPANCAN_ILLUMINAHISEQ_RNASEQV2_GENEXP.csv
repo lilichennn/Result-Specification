@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+entrez,TEXT,"Entrez ID from the NCBI, eg 730971","[""25845""]",
+AliquotBarcode,TEXT,"TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-28","[""TCGA-AP-A1DK-01A-11R-A137-07"", ""TCGA-AB-3008-03A-01T-0736-13"", ""TCGA-A3-3331-01A-02R-1325-07""]",
+RPKM,FLOAT,"Reads Per Kilobase of transcript, per Million mapped reads (RPKM) is a normalized unit of transcript expression. It scales by transcript length to compensate for the fact that most RNA-seq protocols will generate more sequencing reads from longer RNA molecules.Examples: 0.0617, 14.9241, 2.2411","[281.897723658881, 263.534987397433, 257.444]",
+symbol,TEXT,"eg TP53, LRP1B, etc (same as Hugo_Symbol field except blank instead of Unknown","[""LOC25845""]",

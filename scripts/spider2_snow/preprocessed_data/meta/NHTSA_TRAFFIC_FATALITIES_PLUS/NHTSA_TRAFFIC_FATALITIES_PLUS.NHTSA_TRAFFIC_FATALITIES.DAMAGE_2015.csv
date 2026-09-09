@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+vehicle_number,NUMBER,,"[6, 5]",
+consecutive_number,NUMBER,,"[10141, 50342, 60060]",
+damaged_areas_name,TEXT,,"[""1 Clock Value""]",
+damaged_areas,NUMBER,,[1],
+state_number,NUMBER,,"[1, 5, 6]",
+state_name,TEXT,,"[""Alabama"", ""Arkansas"", ""California""]",

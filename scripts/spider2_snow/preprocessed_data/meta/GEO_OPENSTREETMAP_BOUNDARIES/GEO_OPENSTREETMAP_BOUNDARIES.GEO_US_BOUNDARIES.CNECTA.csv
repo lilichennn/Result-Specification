@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+lsad,TEXT,,"[""M4""]",
+geo_id,TEXT,,"[""775"", ""770"", ""715""]",
+mtfcc_feature_class_code,TEXT,,"[""G3200""]",
+cnecta_geom,BINARY,,[],
+int_point_lat,FLOAT,,"[43.8562034, 42.5337519, 42.3307869]",
+int_point_lon,FLOAT,,"[-70.3192682, -73.1678825, -71.3296644]",
+area_water_meters,NUMBER,,"[1537827560, 24514153, 3004814151]",
+name_lsad,TEXT,,"[""Portland-Lewiston-South Portland, ME Combined NECTA"", ""Pittsfield-North Adams, MA-VT Combined NECTA"", ""Boston-Worcester-Providence, MA-RI-NH-CT-ME Combined NECTA""]",
+name,TEXT,,"[""Portland-Lewiston-South Portland, ME"", ""Pittsfield-North Adams, MA-VT"", ""Boston-Worcester-Providence, MA-RI-NH-CT-ME""]",
+cnecta_fips_code,TEXT,,"[""775"", ""770"", ""715""]",
+area_land_meters,NUMBER,,"[6254813062, 1524389768, 21419197698]",

@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+opsregistry,,VARCHAR(20). Operations registry identifier. PK. FK to Operations.,character varying,
+hubregistry,,VARCHAR(20). Distribution hub registry identifier. PK. FK to DistributionHubs.,character varying,
+hub_role,,"TEXT. Role or function of the hub in the operation. Possible values: Backup Hub, Forward Depot, Primary Hub.",text,
+allocated_cap_tons,,REAL. Allocated capacity in tons. Example: 202.6.,real,

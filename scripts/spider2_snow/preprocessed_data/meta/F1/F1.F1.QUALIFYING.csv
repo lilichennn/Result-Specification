@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+qualify_id,NUMBER,,"[1, 2, 4]",
+driver_id,NUMBER,,"[1, 9, 13]",
+position,NUMBER,,"[1, 2, 4]",
+q1,TEXT,,"[""1:26.572"", ""1:26.103"", ""1:25.994""]",
+q3,TEXT,,"[""1:26.714"", ""1:26.869"", ""1:27.178""]",
+race_id,NUMBER,,[18],
+q2,TEXT,,"[""1:25.187"", ""1:25.315"", ""1:25.691""]",
+number,NUMBER,,"[22, 4, 2]",
+constructor_id,NUMBER,,"[1, 2, 6]",

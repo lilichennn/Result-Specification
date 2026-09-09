@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cloudregistry,,BIGSERIAL. Auto-generated unique identifier for point cloud record. PK = PointCloud(CloudRegistry).,bigint,
+crewref,,TEXT. Reference to operator who generated point cloud. FK to Personnel.,text,
+arcref,,TEXT. Reference to associated archeologys project. FK to Projects.,text,
+cloud_metrics,,"JSONB column. Point cloud quality and density measurements including resolution, coverage, overlap, and noise analysis
+Fields: {""Cloud_Dense"":""BIGINT. Point cloud density measurement. Example: 9449."",""Cover_Pct"":""REAL. Percentage of surface area covered by scan. Example: 91.2."",""Lap_Pct"":""REAL. Overlap percentage between scan segments. Example: 31.3."",""Noise_Db"":""REAL. Noise level measurement in decibels. Example: 1.318."",""Point_Dense"":""BIGINT. Point density per square meter. Example: 42812."",""Ref_Pct"":""REAL. Surface reflectivity percentage measurement. Example: 11.0."",""Scan_Resol_Mm"":""REAL. Scanning resolution in millimeters. Example: 2.4."",""Total_Pts"":""BIGINT. Total number of points in the point cloud. Example: 46562436.""}",jsonb,

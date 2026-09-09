@@ -1,0 +1,15 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+mktregistry,,"Primary key (VARCHAR(30)) uniquely identifying a specific market entry (e.g., 'MKT-AlphaBay').",character varying,
+mktdenom,,"A descriptive name or label for the dark market (e.g., 'AlphaBay', 'DreamMarket').",character varying,
+mktclass,,"An enum (MktClass_enum) denoting the market's general class (Forum, Service, Marketplace, Exchange).",USER-DEFINED,
+mktspan,,"An INT representing how many days this market has been active (e.g., 345).",integer,
+sizecluster,,"An enum (SizeCluster_enum) labeling market size (Mega, Medium, Large, Small).",USER-DEFINED,
+dlyflow,,"A BIGINT indicating daily transaction volume (e.g., 123456).",bigint,
+mthactive,,"A BIGINT counting monthly active users on the market (e.g., 500000).",bigint,
+vendcount,,"An INT tally of how many vendors operate in this market (e.g., 15000).",integer,
+buycount,,"An INT count of buyer accounts on this market (e.g., 100000).",integer,
+listtotal,,"A BIGINT total number of product or service listings (e.g., 250000).",bigint,
+interscore,,"A NUMERIC(6,3) (0–999.999) scoring the market's interaction or activity level (e.g., 458.234).",numeric,
+esccomprate,,"A NUMERIC(5,3) (0–999.999) measuring escrow completion rate (e.g., 95.745).",numeric,
+market_status_reputation,,"JSONB column. Consolidated information regarding the market's operational status, community reputation, trust level, and compliance/enforcement metrics.
+Fields: {""community_trust_score"":""A NUMERIC(4,2) (0–99.99) representing community trust (e.g., 85.40)."",""compliance_metrics"":{""penalty_count"":""A SMALLINT for how many penalties or bans were enforced (e.g., 10)."",""restriction_level"":""An enum (AccountRestrictionLevel_enum) stating the restriction extent (Full, Partial)."",""rule_break_count"":""A SMALLINT counting known rule or TOS violations (e.g., 27)."",""warning_count"":""A SMALLINT tallying warnings issued to market participants (e.g., 53).""},""dispute_resolution_score"":""A NUMERIC(4,1) (0–99.9) describing effectiveness of dispute resolution (e.g., 8.7)."",""reputation_score"":""A NUMERIC(6,3) reputation or community rating (0.000–999.999)."",""status"":""An enum (MarketStatus_enum) capturing the market's status (Active, Under Investigation, Suspended, Closed)."",""trust_level"":""An enum (RiskLevel_enum) describing overall trust/risk level (Low, Medium, High, Unknown).""}",jsonb,

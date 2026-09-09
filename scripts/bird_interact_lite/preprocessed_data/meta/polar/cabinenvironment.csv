@@ -1,0 +1,16 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cabinregistry,,A SERIAL primary key uniquely identifying each cabin environment record.,integer,
+cabineqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking cabin environment data to a specific piece of equipment.",character varying,
+cabinlocref,,"An INTEGER foreign key referencing Location(LocationRegistry), associating this cabin environment with a location or station.",integer,
+emergencybeaconstatus,,"An enum (EmergencyBeaconStatus_enum) indicating the beacon’s mode (e.g., Active, Standby, Testing).",USER-DEFINED,
+ventilationstatus,,"An enum (VentilationStatus_enum) (e.g., On, Auto, Off).",USER-DEFINED,
+ventilationspeedpercent,,"A DECIMAL(5,2) specifying the current ventilation speed or fan power as a percentage.",numeric,
+heaterstatus,,"An enum (HeaterStatus_enum) indicating if the heater is On, Off, or in Auto mode (e.g., Off, On, Auto).",USER-DEFINED,
+heatertemperaturec,,A DOUBLE PRECISION value denoting the set or measured heater output temperature in Celsius.,double precision,
+defrosterstatus,,"An enum (DefrosterStatus_enum) describing the defroster’s state (e.g., On, Auto, Off).",USER-DEFINED,
+windowstatus,,"An enum (WindowStatus_enum) specifying if windows are Open, Closed, or Partial (e.g., Partial, Closed, Open).",USER-DEFINED,
+doorstatus,,"An enum (DoorStatus_enum) indicating if doors are Locked, Open, or Closed (e.g., Closed, Locked, Open).",USER-DEFINED,
+hatchstatus,,"An enum (HatchStatus_enum) describing the status of any hatches (e.g., Closed, Open, Locked).",USER-DEFINED,
+cabincommref,,"An INTEGER foreign key referencing Communication(CommRegistry), linking the cabin environment to a communication record if relevant.",integer,
+cabinclimate,,"JSONB column. Aggregates environmental metrics for the cabin, including temperature, humidity, pressure, and air quality indicators.
+Fields: {""air_quality_index"":""A REAL value summarizing the cabin air quality (e.g., 0–500 index)."",""co2_ppm"":""A DECIMAL(7,1) describing the CO₂ concentration in parts per million (ppm)."",""humidity_percent"":""A DECIMAL(4,1) measuring the relative humidity in the cabin as a percentage."",""o2_percent"":""A NUMERIC(5,2) indicating the oxygen percentage inside the cabin."",""pressure_kpa"":""An INT specifying the internal cabin pressure in kilopascals."",""temperature_c"":""A REAL value representing the cabin’s internal temperature in Celsius.""}",jsonb,

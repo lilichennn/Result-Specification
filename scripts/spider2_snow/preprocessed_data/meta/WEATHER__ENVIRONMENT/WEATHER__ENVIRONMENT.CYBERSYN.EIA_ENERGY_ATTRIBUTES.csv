@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+REPORT,TEXT,Source where the variable is originally collected or published.,"[""EIA petroleum gas survey data""]",
+SECTOR,TEXT,The sector in which the variable is contained (eg. Industrial vs. Commercial).,[],
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Net Receipts"", ""Through Company Outlets Price"", ""Rack Sales Price""]",
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Monthly""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""MBBL per day"", ""USD per gallon"", ""MGAL per day""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Net Receipts by Pipeline, Tanker, Barge and Rail of Residual Fuel Oil, 0.31 to 1.00% Sulfur, MBBL per day (Monthly)"", ""Premium Gasoline Through Company Outlets Price by Refiners and Gas Plants, USD per gallon (Monthly)"", ""Conventional Premium Gasoline Rack Sales Price by Refiners and Gas Plants, USD per gallon (Monthly)""]",
+ENERGY_TYPE,TEXT,"The type of energy associated with the variable (eg. Electricity, Natural Gas, Petroleum, etc.).","[""Petroleum""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""net_receipts_by_pipeline_tanker_barge_and_rail_of_residual_fuel_oil_031_to_100_sulfur_mbbl_per_day_monthly"", ""premium_gasoline_through_company_outlets_price_by_refiners_and_gas_plants_usd_per_gallon_monthly"", ""conventional_premium_gasoline_rack_sales_price_by_refiners_and_gas_plants_usd_per_gallon_monthly""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+element,TEXT,,"[""SNWD""]",
+qflag,TEXT,,[],
+mflag,TEXT,,[],
+id,TEXT,,"[""CA004015020"", ""CA008300447"", ""CA008202000""]",
+sflag,TEXT,,"[""C""]",
+date,DATE,,"[""1995-11-17"", ""1995-01-25"", ""1995-12-19""]",
+time,TEXT,,[],
+value,FLOAT,,[110.0],

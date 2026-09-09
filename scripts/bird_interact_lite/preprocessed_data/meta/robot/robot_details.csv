@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+botdetreg,,Primary key (VARCHAR(20)) referencing robot_record(RecReg). Ties detailed specs to an existing robot record.,character varying,
+mfgnameval,,"VARCHAR(60) describing the manufacturer’s name (was 'Manufacturer') (e.g., 'FANUC', 'Yaskawa', 'KUKA', 'ABB', 'Universal Robots').",character varying,
+modelseriesval,,VARCHAR(40) capturing the robot’s model series/designation.,character varying,
+bottypeval,,"CHAR(15) labeling the broad type of robot (e.g., 'Delta', 'Collaborative', 'Cartesian', 'SCARA', 'Articulated').",character,
+payloadcapkg,,"DECIMAL(9,2) specifying the maximum payload the robot can handle in kilograms (e.g., 5, 200, 100, 50, 20, 3, 10).",numeric,
+reachmmval,,SMALLINT storing the robot’s reach in millimeters (distance from base).,smallint,
+instdateval,,DATE indicating when this robot was installed (was 'InstallationDate').,date,
+fwversionval,,VARCHAR(25) logging the firmware version installed on the robot’s controller.,character varying,
+ctrltypeval,,VARCHAR(40) referencing the type or brand of controller used (was 'ControllerType').,character varying,

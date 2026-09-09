@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+KernelVersionId,NUMBER,,"[81536237, 104735677, 105348317]",
+SourceDatasetVersionId,NUMBER,,"[2883584, 4128768, 8781824]",
+Id,NUMBER,,"[108078246, 145502949, 146492371]",

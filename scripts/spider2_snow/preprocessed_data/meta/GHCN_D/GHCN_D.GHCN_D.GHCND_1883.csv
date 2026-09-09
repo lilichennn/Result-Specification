@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1883-04-02"", ""1883-08-21"", ""1883-08-06""]",
+time,TEXT,,[],
+sflag,TEXT,,"[""a""]",
+element,TEXT,,"[""DAPR""]",
+mflag,TEXT,,[],
+value,FLOAT,,[2.0],
+id,TEXT,,"[""ASN00018079"", ""ASN00019036"", ""ASN00020001""]",
+qflag,TEXT,,[],

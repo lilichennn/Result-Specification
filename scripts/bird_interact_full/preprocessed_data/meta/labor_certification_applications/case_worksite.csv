@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+dockkey,,TEXT. Case number reference. FK to cases.fileKey. PK. Example: I-200-23355-584296.,text,
+ws_addr1,,TEXT. Primary worksite address line. PK. Example: 2800 10th Avenue North.,text,
+wscity,,TEXT. Worksite city. PK. Example: Billings.,text,
+wsstate,,TEXT. Worksite state. PK. Example: MT.,text,
+wszip,,TEXT. Worksite postal code. PK. Example: 59101.,text,
+wsheads,,"BIGINT. Number of workers at the worksite. Possible values: 1, 3, 4, 5, 6, 10, 25, 50.",bigint,
+wagetrack,,TEXT. Wage tracking number reference. FK to prevailing_wage.trackNo. Example: 1.,text,

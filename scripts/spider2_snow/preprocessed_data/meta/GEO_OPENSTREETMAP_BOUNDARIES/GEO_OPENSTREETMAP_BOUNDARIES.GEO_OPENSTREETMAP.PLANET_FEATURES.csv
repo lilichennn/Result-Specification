@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+geometry,BINARY,,"[""bytearray(b'\\x01\\x02\\x00\\x00\\x00\\x03\\x00\\x00\\x00\\x98//\\xc0>3M\\xc0\\xc3?\\x110_HA\\xc0\\x18c\\xbb\\xd693M\\xc0\\x92Gp#eHA\\xc0\\xf6\\xda\\xc7e73M\\xc0\\x8f\\r\\xee\\x18hHA\\xc0')"", ""bytearray(b'\\x01\\x02\\x00\\x00\\x00\\x02\\x00\\x00\\x00\\xf5oMp /T\\xc0\\xd6\\x9f\\x0eui\\x8eE@\\xc6\\xceo\\xf3!/T\\xc0r_\\x18\\xfaq\\x8eE@')"", ""bytearray(b\""\\x01\\x02\\x00\\x00\\x00\\x03\\x00\\x00\\x00\\x1e\\xc6\\xffx\\n\\xf4\\r\\xc0\\xc6\\\\c\\xe15$L@U\\xc5\\x9e\\x87$\\xf4\\r\\xc0\\x07\\xfe\\x01 8$L@\\xa5\\x17\\xc6\\'\\xae\\xf4\\r\\xc0\\x11[\\xd5\\xedG$L@\"")""]",
+osm_timestamp,NUMBER,,"[1566855778000000, 1630961601000000, 1618586508000000]",
+all_tags,VARIANT,,"[""[\n  {\n    \""key\"": \""highway\"",\n    \""value\"": \""service\""\n  },\n  {\n    \""key\"": \""service\"",\n    \""value\"": \""parking_aisle\""\n  }\n]"", ""[\n  {\n    \""key\"": \""highway\"",\n    \""value\"": \""service\""\n  },\n  {\n    \""key\"": \""service\"",\n    \""value\"": \""driveway\""\n  }\n]""]",
+feature_type,TEXT,,"[""lines""]",
+osm_version,NUMBER,,[1],
+osm_id,NUMBER,,"[718495344, 980252639, 931455318]",
+osm_way_id,NUMBER,,[],

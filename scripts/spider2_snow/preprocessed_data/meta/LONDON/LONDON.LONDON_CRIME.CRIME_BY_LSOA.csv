@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,NUMBER,Summary of the number of crimes for the month,"[0, 1]",
+year,NUMBER,,[2008],
+borough,TEXT,,"[""Camden"", ""Brent"", ""Ealing""]",
+minor_category,TEXT,,"[""Rape""]",
+lsoa_code,TEXT,Lower Layer Super Output Area code according to the Office for National Statistics,"[""E01000898"", ""E01000927"", ""E01000644""]",
+major_category,TEXT,,"[""Sexual Offences""]",
+month,NUMBER,,"[11, 6, 2]",

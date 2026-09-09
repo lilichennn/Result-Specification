@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+prodcode,,text. Unique product code. PK. Example: PH75271.,text,
+prodlabel,,text. Commercial product label. Example: strategize value-added deliverables.,text,
+prodcat,,"text. Product category or therapeutic class. Possible values: Biologics, Blood Products, Insulin, Vaccines.",text,
+maker,,text. Manufacturer name. **NULL means manufacturer not specified.**. Example: York Ltd.,text,

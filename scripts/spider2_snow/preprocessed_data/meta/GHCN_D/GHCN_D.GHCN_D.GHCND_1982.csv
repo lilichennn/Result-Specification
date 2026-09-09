@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1982-04-14"", ""1982-12-06"", ""1982-09-06""]",
+id,TEXT,,"[""USW00014739"", ""USW00023160"", ""USW00013723""]",
+value,FLOAT,,[0.0],
+mflag,TEXT,,[],
+qflag,TEXT,,[],
+time,TEXT,,[],
+sflag,TEXT,,"[""X""]",
+element,TEXT,,"[""ACMH""]",

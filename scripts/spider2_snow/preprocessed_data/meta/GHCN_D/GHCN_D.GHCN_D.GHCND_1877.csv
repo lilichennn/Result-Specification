@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+sflag,TEXT,,"[""0""]",
+qflag,TEXT,,[],
+element,TEXT,,"[""DAPR"", ""MDPR"", ""PRCP""]",
+date,DATE,,"[""1877-04-18"", ""1877-04-03"", ""1877-07-06""]",
+value,FLOAT,,"[3.0, 221.0, 0.0]",
+id,TEXT,,"[""USC00034251"", ""USC00015555""]",
+time,TEXT,,[],
+mflag,TEXT,,[],

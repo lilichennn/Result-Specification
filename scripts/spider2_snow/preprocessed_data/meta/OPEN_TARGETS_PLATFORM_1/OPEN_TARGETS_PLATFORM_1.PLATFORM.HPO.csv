@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+parents,VARIANT,,"[""{\n  \""list\"": [\n    {\n      \""element\"": \""b44524\""\n    },\n    {\n      \""element\"": \""CL_1000413\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""CL_0002563\""\n    },\n    {\n      \""element\"": \""CL_0000164\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""BFO_0000040\""\n    }\n  ]\n}""]",
+description,TEXT,,"[""The various hormone- or neurotransmitter-secreting cells present throughout the mucosa of the intestinal tract.""]",
+name,TEXT,,"[""pulmonary artery endothelial cell"", ""intestinal enteroendocrine cell"", ""object""]",
+dbXRefs,VARIANT,,"[""{\n  \""list\"": [\n    {\n      \""element\"": \""BTO:0001141\""\n    }\n  ]\n}""]",
+obsolete_terms,VARIANT,,[],
+namespace,VARIANT,,"[""{\n  \""list\"": [\n    {\n      \""element\"": \""cl\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""bfo\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""obi\""\n    }\n  ]\n}""]",
+id,TEXT,,"[""CL_1001568"", ""CL_1001516"", ""BFO_0000030""]",

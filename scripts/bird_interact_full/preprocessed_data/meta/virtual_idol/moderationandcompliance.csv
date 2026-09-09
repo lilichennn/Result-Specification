@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+mod_reg,,BIGSERIAL. Auto-generated unique identifier for moderation and compliance record. PK = ModerationAndCompliance(Mod_Reg).,bigint,
+moderation_interact_pivot,,TEXT. Reference to interaction record for moderation context. FK to Interactions.,text,
+moderation_social_pivot,,BIGINT. Reference to social community record for moderation analysis. FK to SocialCommunity.,bigint,
+rpt_count,,SMALLINT. Number of reports filed against this fan's content or behavior.,smallint,
+warn_count,,SMALLINT. Number of warnings issued to this fan for policy violations.,smallint,
+viol_hist,,TEXT. History of policy violations committed by the fan. **NULL means no violation history recorded or clean conduct record.**,text,
+mod_stat,,TEXT. Current moderation status and any active restrictions on the account.,text,
+cont_comp,,TEXT. Content compliance rating and adherence to platform guidelines.,text,
+age_verif,,TEXT. Age verification status for access to age-restricted content.,text,
+pay_verif,,TEXT. Payment method verification status. **NULL means payment verification not completed or not required for current membership tier.**,text,
+id_verif,,TEXT. Identity verification status for enhanced security features. **NULL means identity verification not completed or not required for current account type.**,text,

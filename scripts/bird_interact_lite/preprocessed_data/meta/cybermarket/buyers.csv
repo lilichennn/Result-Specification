@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+buyregistry,,"Primary key (VARCHAR(30)) for a buyer record (e.g., 'BUY-xyz890').",character varying,
+buyspan,,"An INT specifying how many days the buyer has been active (e.g., 60).",integer,
+buytxtally,,"A SMALLINT counting how many purchases/transactions the buyer made (e.g., 25).",smallint,
+buyspending,,"An enum (BuySpending_enum) describing spending pattern (Variable, High, Low, Medium).",USER-DEFINED,
+buyfreqcat,,"An enum (BuyFreqCat_enum) labeling purchase frequency (Heavy, Regular, One-time, Occasional).",USER-DEFINED,
+buychecklvl,,"An enum (BuyCheckLvl_enum) specifying buyer verification level (Advanced, Basic).",USER-DEFINED,
+buyriskrate,,"A NUMERIC(5,2) measure of fraud or chargeback risk for this buyer (e.g., 82.50).",numeric,
+mktref,,"FK referencing Markets(MktRegistry), linking buyer to its main or home market.",character varying,
+vendref,,"FK referencing Vendors(VendRegistry), if the buyer is directly associated with a vendor.",character varying,

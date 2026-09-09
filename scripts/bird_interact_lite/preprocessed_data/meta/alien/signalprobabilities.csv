@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+signalref,,Full name: 'Signal Registry Reference'. Explanation: Primary key referencing the main signal record. Data type: CHAR(36). Example: 'SIG-XYZ-9876'.,character,
+falseposprob,,"Full name: 'False Positive Probability'. Explanation: Probability that the signal is falsely detected. Data type: DECIMAL(5,4). Example: '0.0135'.",numeric,
+sigunique,,"Full name: 'Signal Uniqueness'. Explanation: A measure of how unique the signal is compared to others. Data type: DECIMAL(7,4). Example: '99.1234'.",numeric,
+simindex,,"Full name: 'Similarity Index'. Explanation: Compares the signal to known references. Data type: NUMERIC(5,4). Example: '0.8222'.",numeric,
+corrscore,,"Full name: 'Correlation Score'. Explanation: How well the signal aligns with expected patterns. Data type: DECIMAL(5,4). Example: '0.9950'.",numeric,
+anomscore,,Full name: 'Anomaly Score'. Explanation: How unusual or unexpected the signal is. Data type: FLOAT. Example: '1.23'.,double precision,
+techsigprob,,"Full name: 'Technosignature Probability'. Explanation: Probability that the signal is of artificial technological origin. Data type: DECIMAL(5,4). Example: '0.6789'.",numeric,
+biosigprob,,"Full name: 'Biosignature Probability'. Explanation: Probability that the signal indicates a biological origin. Data type: DECIMAL(6,2). Example: '45.21'.",numeric,
+natsrcprob,,"Full name: 'Natural Source Probability'. Explanation: Probability the signal is from a natural source. Data type: NUMERIC(7,3). Example: '98.761'.",numeric,
+artsrcprob,,"Full name: 'Artificial Source Probability'. Explanation: Probability the signal is from an artificial source. Data type: NUMERIC(3,1). Example: '3.4'.",numeric,

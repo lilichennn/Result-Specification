@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""CA006158350""]",
+sflag,TEXT,,"[""C""]",
+time,TEXT,,[],
+date,DATE,,"[""1844-04-05"", ""1844-04-21"", ""1844-04-29""]",
+qflag,TEXT,,[],
+mflag,TEXT,,[],
+value,FLOAT,,[0.0],
+element,TEXT,,"[""PRCP""]",

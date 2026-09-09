@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+state,TEXT,,"[""AL"", ""CO"", ""CT""]",
+neighbors_fips_code,VARIANT,,"[""[\n  \""12\"",\n  \""13\"",\n  \""28\"",\n  \""47\""\n]"", ""[\n  \""20\"",\n  \""35\"",\n  \""31\"",\n  \""49\"",\n  \""56\"",\n  \""04\"",\n  \""40\""\n]"", ""[\n  \""44\"",\n  \""36\"",\n  \""25\""\n]""]",
+state_fips_code,TEXT,,"[""01"", ""08"", ""09""]",
+state_name,TEXT,,"[""Alabama"", ""Colorado"", ""Connecticut""]",
+neighbors_state,VARIANT,,"[""[\n  \""Florida\"",\n  \""Georgia\"",\n  \""Mississippi\"",\n  \""Tennessee\""\n]"", ""[\n  \""Kansas\"",\n  \""New Mexico\"",\n  \""Nebraska\"",\n  \""Utah\"",\n  \""Wyoming\"",\n  \""Arizona\"",\n  \""Oklahoma\""\n]"", ""[\n  \""Rhode Island\"",\n  \""New York\"",\n  \""Massachusetts\""\n]""]",

@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+LID,FLOAT,,"[3.0, 4.0]",
+index,NUMBER,,"[3, 4, 5]",
+MID,TEXT,,"[""tt0848228"", ""tt8239946"", ""tt7027278""]",
+ID,NUMBER,,"[3, 4, 5]",

@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+CLSTR_PIN,,TEXT. Unique cluster identifier. PK. Example: CL0029.,text,
+ClusterQty,,BIGINT. Number of accounts in the cluster. Example: 5.,bigint,
+CluRole,,"TEXT. Role or function of the cluster. Possible values: Botnet, Community, InfluenceNetwork, SocialGroup, SpamRing.",text,
+NetInfl,,REAL. Network influence score. Example: 0.362.,real,
+CoordScore,,REAL. Coordination score. Example: 0.363.,real,

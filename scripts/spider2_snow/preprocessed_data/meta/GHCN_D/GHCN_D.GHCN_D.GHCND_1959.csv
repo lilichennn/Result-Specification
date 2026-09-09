@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1959-01-26"", ""1959-12-03"", ""1959-08-21""]",
+id,TEXT,,"[""ACW00011647""]",
+value,FLOAT,,[0.0],
+element,TEXT,,"[""PRCP"", ""SNOW""]",
+qflag,TEXT,,[],
+time,TEXT,,[],
+mflag,TEXT,,"[""T""]",
+sflag,TEXT,,"[""X""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+time,TEXT,,[],
+date,DATE,,"[""1842-09-09"", ""1842-09-04"", ""1842-09-12""]",
+element,TEXT,,"[""MDPR""]",
+value,FLOAT,,"[208.0, 323.0, 744.0]",
+sflag,TEXT,,"[""C""]",
+mflag,TEXT,,[],
+id,TEXT,,"[""CA006158350""]",
+qflag,TEXT,,[],

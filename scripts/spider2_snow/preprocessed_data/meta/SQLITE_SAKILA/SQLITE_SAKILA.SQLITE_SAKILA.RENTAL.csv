@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+last_update,TEXT,,"[""2021-03-06 15:53:41""]",
+customer_id,NUMBER,,"[130, 333, 222]",
+inventory_id,NUMBER,,"[367, 2452, 2079]",
+rental_date,TEXT,,"[""2005-05-24 22:53:30.000"", ""2005-05-24 23:04:41.000"", ""2005-05-24 23:05:21.000""]",
+staff_id,NUMBER,,"[1, 2]",
+rental_id,NUMBER,,"[1, 4, 5]",
+return_date,TEXT,,"[""2005-05-26 22:04:30.000"", ""2005-06-03 01:43:41.000"", ""2005-06-02 04:33:21.000""]",

@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+envreadregistry,,"BIGSERIAL PRIMARY KEY, uniquely identifying each environmental reading record.",bigint,
+monitorcode,,"CHAR(10) identifier for the monitoring device or sensor (e.g., 'MON000001').",character,
+readtimestamp,,TIMESTAMP NOT NULL indicating the date and time the reading was recorded.,timestamp without time zone,
+showcaseref,,"CHAR(12) FOREIGN KEY referencing Showcases(ShowcaseReg), linking the reading to a specific showcase being monitored.",character,
+tempc,,SMALLINT representing the measured temperature in Celsius.,smallint,
+tempvar24h,,REAL showing the 24-hour variation in temperature (in °C).,real,
+relhumidity,,INT capturing the relative humidity percentage (0–100).,integer,
+humvar24h,,SMALLINT indicating the 24-hour variation in humidity (percentage points).,smallint,
+airpresshpa,,REAL specifying the measured air pressure in hectopascals (hPa).,real,

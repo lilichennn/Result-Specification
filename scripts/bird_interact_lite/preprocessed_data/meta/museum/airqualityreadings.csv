@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+aqrecordregistry,,"BIGSERIAL PRIMARY KEY, uniquely identifying each air-quality reading record.",bigint,
+envreadref,,BIGINT FOREIGN KEY referencing EnvironmentalReadingsCore(EnvReadRegistry). Links this record to its main environmental reading.,bigint,
+co2ppm,,SMALLINT measuring CO2 concentration in parts per million (ppm). Typical range: 300–2000.,smallint,
+tvocppb,,INT capturing total volatile organic compounds in parts per billion (ppb).,integer,
+ozoneppb,,INT indicating ozone concentration in ppb.,integer,
+so2ppb,,SMALLINT for sulfur dioxide concentration in ppb.,smallint,
+no2ppb,,BIGINT for nitrogen dioxide concentration in ppb.,bigint,
+pm25conc,,REAL measuring particulate matter (PM2.5) in µg/m³ or a similar metric.,real,
+pm10conc,,"NUMERIC(5,2) measuring PM10 concentration, possibly µg/m³ as well.",numeric,
+hchoconc,,"NUMERIC(7,4) for formaldehyde (HCHO) concentration (e.g., mg/m³ or another scale).",numeric,
+airexrate,,"NUMERIC(4,1) indicating air exchange rate (e.g., air changes per hour).",numeric,
+airvelms,,"NUMERIC(5,2) capturing air velocity in meters per second (m/s).",numeric,

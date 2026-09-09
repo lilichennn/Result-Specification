@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+systemoverseeractuation,,"TEXT. Foreign key to the actuation_data table (ActReg). PK, FK to actuation_data.",text,
+systemoverseeroperation,,TEXT. Foreign key to the operation table (OperReg). FK to operation.,text,
+overseerloadvalue,,REAL. Load value of the system overseer. Example: 0.99.,real,
+memuseval,,REAL. Memory usage of the system overseer. Example: 32.07.,real,
+overseerthermallevel,,TEXT. Thermal level of the system overseer. Example: 38.5°C.,text,
+cabtempval,,REAL. Cabinet temperature of the system overseer. Example: 33.84.,real,
+cabhumiditylevel,,TEXT. Humidity level in the cabinet of the system overseer. Example: 47%.,text,

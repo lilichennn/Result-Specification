@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+locationregistry,,A SERIAL primary key uniquely identifying each location record.,integer,
+loceqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking location data to a specific piece of equipment.",character varying,
+Timestamp,,A TIMESTAMP recording when the location data was captured or logged.,timestamp without time zone,
+stationname,,"A TEXT field giving the name of the station, camp, or site.",text,
+locationtype,,"An enum (LocationType_enum) describing if it is an 'Arctic' or 'Antarctic' location (e.g., Arctic, Antarctic).",USER-DEFINED,
+latitude,,"A NUMERIC(9,6) representing the latitude of the location in decimal degrees.",numeric,
+longitude,,"A NUMERIC(9,6) representing the longitude of the location in decimal degrees.",numeric,
+altitudem,,"A DECIMAL(7,2) specifying the altitude (in meters) above sea level.",numeric,

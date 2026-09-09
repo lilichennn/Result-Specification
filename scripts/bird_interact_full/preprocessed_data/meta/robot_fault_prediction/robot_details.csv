@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+botdetreg,,"TEXT. Foreign key to the robot_record table (BotCode). PK, FK to robot_record.",text,
+mfgnameval,,"TEXT. Manufacturer name of the robot. Possible values: ABB, FANUC, KUKA, Universal Robots, Yaskawa.",text,
+modelseriesval,,TEXT. Model series of the robot. Example: Series_784.,text,
+bottypeval,,"CHAR(15). Type of the robot (e.g., industrial, collaborative). Possible values: Articulated, Cartesian, Collaborative, Delta, SCARA.",character,
+payloadcapkg,,"REAL. Payload capacity of the robot in kilograms. Possible values: 3, 5, 10, 20, 50, 100, 200.",real,
+reachmmval,,BIGINT. Reach distance of the robot in millimeters. Example: 1592.,bigint,
+instdateval,,DATE. Installation date of the robot. Example: 10 Jun 2023.,date,
+fwversionval,,TEXT. Firmware version of the robot. Example: 9.6.6.,text,
+ctrltypeval,,"TEXT. Control type of the robot (e.g., manual, automatic). Example: Controller_C2.",text,

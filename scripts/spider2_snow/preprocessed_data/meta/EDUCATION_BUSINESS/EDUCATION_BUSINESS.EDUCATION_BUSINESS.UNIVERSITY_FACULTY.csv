@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+FacFirstName,TEXT,,"[""LEONARD"", ""VICTORIA"", ""NICKI""]",
+FacRank,TEXT,,"[""ASST"", ""PROF"", ""ASSC""]",
+FacCity,TEXT,,"[""SEATTLE"", ""BOTHELL"", ""BELLEVUE""]",
+FacSalary,NUMBER,,"[35000, 120000, 70000]",
+FacState,TEXT,,"[""WA""]",
+FacDept,TEXT,,"[""MS"", ""FIN""]",
+FacHireDate,TEXT,,"[""1997-04-10"", ""1998-04-15"", ""1996-05-01""]",
+FacLastName,TEXT,,"[""VINCE"", ""EMMANUEL"", ""FIBON""]",
+FacSupervisor,FLOAT,,"[654321098.0, 543210987.0, 765432109.0]",
+FacNo,NUMBER,,"[98765432, 543210987, 654321098]",
+FacZipCode,TEXT,,"[""98111-9921"", ""98011-2242"", ""98121-0094""]",

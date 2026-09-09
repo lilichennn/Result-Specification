@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+Name,TEXT,,"[""Jazz"", ""Blues"", ""Reggae""]",
+GenreId,NUMBER,,"[2, 6, 8]",

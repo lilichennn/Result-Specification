@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+evidenceCount,NUMBER,,"[1, 2]",
+score,FLOAT,,"[0.547137717850459, 0.6991204172533643, 0.5592963338026914]",
+targetId,TEXT,,"[""ENSG00000108001"", ""ENSG00000135048"", ""ENSG00000150893""]",
+datasourceId,TEXT,,"[""eva""]",
+diseaseId,TEXT,,"[""HP_0000011"", ""HP_0000023"", ""HP_0000062""]",
+datatypeId,TEXT,,"[""genetic_association""]",

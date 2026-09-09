@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+customer_city,TEXT,,"[""mogi das cruzes"", ""timoteo"", ""sao paulo""]",
+customer_state,TEXT,,"[""SP"", ""MG"", ""RJ""]",
+customer_id,TEXT,,"[""b2b6027bc5c5109e529d4dc6358b12c3"", ""5e274e7a0c3809e14aba7ad5aae0d407"", ""eabebad39a88bb6f5b52376faec28612""]",
+customer_zip_code_prefix,NUMBER,,"[8775, 35182, 5704]",
+customer_unique_id,TEXT,,"[""259dac757896d24d7702b9acbbff3f3c"", ""57b2a98a409812fe9618067b6b8ebe4f"", ""295c05e81917928d76245e842748184d""]",

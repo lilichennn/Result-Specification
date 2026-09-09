@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+or_name,TEXT,,"[""JACKSON, GORDON W"", ""LESLIE, STUART"", ""LAMBERT, EDDY""]",
+rf_id,TEXT,,"[""241500929"", ""241520616"", ""241540232""]",
+ack_dt,TEXT,,[],
+exec_dt,TEXT,,"[""2010-03-17"", ""2010-03-09"", ""2010-02-04""]",

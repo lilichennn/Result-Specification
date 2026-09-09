@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+acct_dm,,TEXT. Account reference for direct messaging metrics. PK. FK to accounts.,text,
+MsgSim,,REAL. Message similarity score. Example: 0.041.,real,
+MsgFreq,,REAL. Message frequency. Example: 60.1.,real,
+MsgTargetDiv,,REAL. Message target diversity. Example: 0.498.,real,
+RespTimePtn,,"TEXT. Response time pattern. **NULL means response time pattern not recorded.**. Possible values: Delayed, Instant, Natural, Random.",text,
+ConvNat,,REAL. Conversation nature score. Example: 0.825.,real,
+SentVar,,REAL. Sentiment variance score. Example: 0.005.,real,
+LangSoph,,REAL. Language sophistication score. Example: 0.03.,real,
+TxtUniq,,REAL. Text uniqueness score. Example: 0.44.,real,
+KeyPtnHit,,REAL. Key pattern hit score. **NULL means key pattern hit not recorded.**. Example: 0.589.,real,
+TopCoh,,REAL. Top coherence score. Example: 0.856.,real,

@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+doc_count,TEXT,,"[""63"", ""507"", ""173""]",
+upload_date,TEXT,,[],
+case_number,TEXT,,"[""1:96-cv-04436"", ""1:96-cv-11090-PBS"", ""1:97-cv-00026-SS""]",
+short_description,TEXT,,[],
+doc_number,TEXT,,[],
+attachment,TEXT,,[],
+date_filed,TEXT,,"[""1996-12-19"", ""1996-11-14"", ""1999-05-12""]",
+case_row_id,TEXT,,"[""5842"", ""5975"", ""6020""]",
+long_description,TEXT,,"[""SCHEDULE set on 12/19/96 by Hon. David H. Coar : Markman Hearing hearing reset for 10:00 1/9/97 . Telephone notice (pm) (Entered: 01/06/1997)"", ""Proposed Interim Protective Order by Genentech, Inc. received for approval by the Court. (scj) (Entered: 11/15/1996)"", ""Jury trial held; testimony heard on behalf of defendant; witnesses sworn; evidence submitted on behalf of defendant; plaintiff and defendant rest; testimony continued on behalf of defendant; oral and written motions for judgment by defendants Opti and TriTech; Opti's motions for judgment as a matter of law denied; Opti's motion regarding damages taken under advisement/carried; TriTech orally joins Opti regarding damages; their motion also carried and taken under advisement; Court grants TriTech's motions regarding 271(g) and overules all other motions written and oral; Court grants Crystal's motions regarding \""best mode\"" and \""inequitable conduct\"" as to 899 patent; \""best mode\"", \""inequitable conduct\"" and \""on-sale bar\"" as to 841 patent and overruled all other motions (written order forthcoming); rebuttal testimony heard; plaintiff and defendant close; jury recessed until 5/13/99 at 8:30; charge conference held; jury notes filed (extraneous in nature) (fe) (Entered: 05/13/1999)""]",

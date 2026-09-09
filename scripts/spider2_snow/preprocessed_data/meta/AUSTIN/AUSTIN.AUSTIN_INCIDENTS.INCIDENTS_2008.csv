@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+timestamp,NUMBER,,"[1216535280000000, 1216544280000000, 1216547220000000]",
+longitude,FLOAT,,[],
+unique_key,NUMBER,The unique incident number for this accident.,"[20082020068, 20082020396, 20082020474]",
+descript,TEXT,,"[""DWI""]",
+latitude,FLOAT,,[],
+location,TEXT,Latitude/Longitude,[],
+time,TIME,,"[""00:28:00"", ""02:58:00"", ""03:47:00""]",
+address,TEXT,,"[""5100 BLOCK S 1ST ST"", ""12100 BLOCK N IH 35 NB"", ""5800 BLOCK WELLINGTON DR""]",
+date,DATE,,"[""2008-07-20""]",

@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+address,TEXT,,"[""I-280 / CESAR CHAVEZ ST"", ""100 Block of CLEORAND AV"", ""DONAHUE ST / KIRKWOOD AV""]",
+resolution,TEXT,"Whether there was an arrest, citation, booking, etc.","[""NONE""]",
+location,TEXT,Latitude/Longitude,"[""POINT (-120.50000000000001 90)"", ""POINT (-122.371185513221 37.7291049528122)"", ""POINT (-122.37127431744287 37.72756407203413)""]",
+pddistrict,TEXT,Police Department district,"[""BAYVIEW""]",
+category,TEXT,,"[""OTHER OFFENSES"", ""LARCENY/THEFT"", ""ROBBERY""]",
+dayofweek,TEXT,,"[""Friday"", ""Saturday"", ""Thursday""]",
+latitude,FLOAT,,"[90.0, 37.7291049528122, 37.72756407203412]",
+longitude,FLOAT,,"[-120.5, -122.371185513221, -122.37127431744288]",
+pdid,NUMBER,Unique Identifier for use in update and insert operations,"[4075398068020, 7040743606243, 18001261606371]",
+timestamp,NUMBER,,"[1088775780000000, 1177126440000000, 1513859700000000]",
+descript,TEXT,,"[""MISCELLANEOUS INVESTIGATION"", ""PETTY THEFT FROM LOCKED AUTO"", ""PETTY THEFT OF PROPERTY""]",
+unique_key,NUMBER,The unique incident number for this accident,"[40753980, 70407436, 180012616]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+sflag,TEXT,,"[""X""]",
+date,DATE,,"[""1989-04-29"", ""1989-02-12"", ""1989-09-21""]",
+qflag,TEXT,,[],
+id,TEXT,,"[""USW00094240"", ""USW00013722"", ""USW00023185""]",
+mflag,TEXT,,[],
+element,TEXT,,"[""ACMH""]",
+time,TEXT,,[],
+value,FLOAT,,[0.0],

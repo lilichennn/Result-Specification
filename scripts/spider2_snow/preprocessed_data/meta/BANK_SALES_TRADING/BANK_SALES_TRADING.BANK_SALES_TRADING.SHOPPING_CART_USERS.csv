@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+user_id,NUMBER,,"[1, 2, 4]",
+cookie_id,TEXT,,"[""c4ca42"", ""c81e72"", ""a87ff6""]",
+start_date,TEXT,,"[""2020-02-04"", ""2020-01-18"", ""2020-02-22""]",

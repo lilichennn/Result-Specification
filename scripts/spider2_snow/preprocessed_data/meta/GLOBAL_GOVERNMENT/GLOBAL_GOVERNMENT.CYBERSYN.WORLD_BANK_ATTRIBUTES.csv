@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,Unit of measurement for the reported value.,"[""USD""]",
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Quarterly""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""External Debt Service Payment, Publicly Guaranteed Private Sector External Debt, 4 years, All instruments, Interest, USD"", ""External Debt Service Payment, Publicly Guaranteed Private Sector External Debt, 18 to 24 months, All instruments, Interest, USD"", ""External Debt Service Payment, Publicly Guaranteed Private Sector External Debt, Immediately, All instruments, Interest, USD""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table. This variable combines the World Bank dataset abbreviation with the unique timeseries code (provided by the World Bank).","[""QEDS_DT.INT.PRVS.CD.04.YR.US"", ""QEDS_DT.INT.PRVS.CD.19.24.MO.US"", ""QEDS_DT.INT.PRVS.CD.IQ.00.US""]",
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""External Debt Service Payment, Publicly Guaranteed Private Sector External Debt"", ""External Debt Service Payment, Public Sector External Debt""]",
+ESG_PILLAR,TEXT,"Either Environmental, Social, or Governance, if the variable is ESG-related (e.g., Worldwide Development Indicators).",[],
+RELATED_TOPICS,ARRAY,"Array of topics associated with the variable, according to the World Bank.","[""[]""]",
+SOURCE,TEXT,The source of the data as reported by the World Bank. The World Bank aggregates many of their tracked statistics from other international organizations.,[],
+WORLD_BANK_SOURCE,TEXT,The World Bank data series that this variable belongs to.,"[""Quarterly External Debt Statistics GDDS""]",
+SOURCE_NOTE,TEXT,"Note about the variable from the source of the data, often pertaining to how the variable is measured.",[],

@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+fe_area,TEXT,,"[""nw""]",
+name,TEXT,,"[""Floyd"", ""Motley"", ""Cottle""]",
+cwa,TEXT,,"[""LUB""]",
+shape_geometry,BINARY,,[],
+shortname,TEXT,,"[""Floyd"", ""Motley"", ""Cottle""]",
+lon,FLOAT,,"[-101.3032, -100.7798, -100.2787]",
+state,TEXT,,"[""TX""]",
+state_zone,TEXT,,"[""TX030"", ""TX031"", ""TX032""]",
+zone,TEXT,,"[""030"", ""031"", ""032""]",
+time_zone,TEXT,,"[""C""]",
+lat,FLOAT,,"[34.0724, 34.0741, 34.0777]",

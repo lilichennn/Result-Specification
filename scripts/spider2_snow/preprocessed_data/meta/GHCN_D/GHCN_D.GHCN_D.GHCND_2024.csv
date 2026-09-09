@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[3.0, 2.0]",
+sflag,TEXT,,"[""N""]",
+time,TEXT,,"[""0606"", ""0845"", ""0920""]",
+element,TEXT,,"[""DAPR""]",
+source_url,TEXT,Source ,"[""http://www.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2024.csv.gz""]",
+mflag,TEXT,,[],
+id,TEXT,,"[""US1ILJK0018"", ""US1WAGH0056"", ""US1TNRN0009""]",
+etl_timestamp,NUMBER,Load time for this data row,"[1729305565670643, 1729305580704649, 1729305595252850]",
+date,DATE,,"[""2024-01-04"", ""2024-01-06"", ""2024-01-08""]",
+qflag,TEXT,,[],

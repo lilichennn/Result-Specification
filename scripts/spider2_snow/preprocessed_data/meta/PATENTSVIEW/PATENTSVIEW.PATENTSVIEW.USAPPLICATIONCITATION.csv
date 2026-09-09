@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""Klingel et al."", ""Shiraishi"", ""Selmon""]",
+kind,TEXT,,"[""A1"", ""S""]",
+application_id,TEXT,,"[""WO 96/13790"", ""D. 434674"", ""2001/0000041""]",
+country,TEXT,,"[""US""]",
+patent_id,TEXT,,"[""8712582"", ""6857775"", ""10857329""]",
+sequence,NUMBER,,"[28, 2, 0]",
+uuid,TEXT,,"[""wckile03msbg8fr0rtxy7b2m3"", ""18dkuauyvinnam00r3wbfft9o"", ""c2g37744mvmi7fq9uh7hnrelp""]",
+category,TEXT,,"[""cited by applicant"", ""cited by other"", ""cited by examiner""]",
+date,TEXT,,"[""1996-05-01"", ""2000-12-01"", ""2001-03-01""]",
+number,TEXT,,"[""WO 96/13790"", ""D. 434674"", ""2001/0000041""]",

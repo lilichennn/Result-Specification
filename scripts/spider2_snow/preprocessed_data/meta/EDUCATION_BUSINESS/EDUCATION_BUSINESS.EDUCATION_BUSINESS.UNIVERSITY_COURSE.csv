@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+CourseNo,TEXT,,"[""FIN450"", ""FIN480"", ""IS460""]",
+CrsDesc,TEXT,,"[""PRINCIPLES OF INVESTMENTS"", ""CORPORATE FINANCE"", ""SYSTEMS ANALYSIS""]",
+CrsUnits,NUMBER,,[4],

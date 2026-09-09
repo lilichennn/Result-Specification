@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+invertregistry,,VARCHAR(50) PRIMARY KEY uniquely identifying each inverter record.,character varying,
+siteref,,"UUID REFERENCES Plant(GrowRegistry), indicating which plant’s inverter we are tracking.",uuid,
+invertmoment,,"TIMESTAMP noting when this inverter reading was taken (e.g., '2023-07-15 10:40:00').",timestamp without time zone,
+inverttempc,,"DECIMAL(7,3) inverter operating temperature in °C (was 'InverterOperatingTempC') (e.g., 45.250).",numeric,
+gridvolt,,"NUMERIC(7,3) the AC grid voltage in volts (was 'GridVoltageV') (e.g., 400.000).",numeric,
+gridfreqhz,,"DECIMAL(7,3) the AC grid frequency in Hz (was 'GridFrequencyHz') (e.g., 50.050).",numeric,
+pwrqualidx,,"DECIMAL(7,3) power quality index (was 'PowerQualityIndex') (e.g., 0.980).",numeric,
+power_metrics,,"JSONB column. Stores key performance metrics related to the inverter's power output and quality, including efficiency, power factor, and harmonic distortion.
+Fields: {""harmdistpct"":""DECIMAL(7,3) total harmonic distortion in percent (was 'HarmonicDistortionPercent') (e.g., 3.500)."",""inverteffpct"":""DECIMAL(7,3) the inverter efficiency percentage (was 'InverterEfficiencyPercent') (e.g., 98.500)."",""invertpowfac"":""NUMERIC(7,3) the inverter’s power factor (was 'InverterPowerFactor') (e.g., 0.990)."",""reacpwrkvar"":""DECIMAL(7,2) reactive power output in kVAR (was 'ReactivePowerKVAR') (e.g., 10.00).""}",jsonb,

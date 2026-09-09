@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+snapalrt,,TEXT. PK & FK → plant_record.SnapKey. Links to alert snapshot.,text,
+alrtstate,,"TEXT. Current alert status. NULL means the encoder does not report status or data are missing. Possible values: Critical, Warning.",text,
+alrtcnt,,TEXT. Count of active alerts. Example: 6.0.,text,
+maintprio,,"TEXT. Maintenance priority level. NULL means the encoder does not report status or data are missing. Possible values: High, Low, Medium.",text,
+replprio,,"TEXT. Replacement priority level. Possible values: High, Low, Medium.",text,

@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+signalref,,Full name: 'Signal Registry Reference'. Explanation: Foreign key referencing the main signal. Data type: CHAR(36). Example: 'SIG-DEF-5678'.,character,
+sigclasstype,,"Full name: 'Classification Type'. Explanation: High-level category for the signal. Data type: VARCHAR(40). Possible categories: Artificial, Candidate, Natural, Unknown.",character varying,
+sigpattern,,"Full name: 'Signal Pattern'. Explanation: Pattern observed in the signal. Data type: VARCHAR(60). Possible categories: Periodic, Random, Structured, Unknown.",character varying,
+repeatcount,,Full name: 'Repetition Count'. Explanation: Number of times the signal has repeated. Data type: SMALLINT. Example: '3'.,smallint,
+periodsec,,"Full name: 'Period (s)'. Explanation: Duration of each cycle if periodic. Data type: NUMERIC(7,3). Example: '12.345'.",numeric,
+complexidx,,"Full name: 'Complexity Index'. Explanation: Numeric measure of the signal’s complexity. Data type: DECIMAL(6,3). Example: '5.678'.",numeric,
+entropyval,,"Full name: 'Entropy'. Explanation: Entropy measurement of the signal. Data type: DECIMAL(6,2). Example: '3.45'.",numeric,
+infodense,,"Full name: 'Information Density'. Explanation: Estimated information per unit time/frequency. Data type: DECIMAL(6,3). Example: '2.345'.",numeric,
+classconf,,"Full name: 'Classification Confidence (%)'. Explanation: How confident we are in the assigned signal class. Data type: DECIMAL(5,2). Example: '92.50'.",numeric,

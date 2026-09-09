@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+ee_name,TEXT,,"[""JIDOSHA DENKI KOGYO KABUSHIKI KAISHA"", ""NISSAN MOTOR CO., LTD."", ""CANON KABUSHIKI KAISHA""]",
+ee_country,TEXT,,"[""JAPAN""]",
+ee_address_1,TEXT,,[],
+ee_city,TEXT,,"[""YOKOHAMA-CITY, KANAGAWA-PREFECTURE"", ""YOKOHAMA CITY"", ""TOKYO""]",
+ee_postcode,TEXT,,[],
+ee_address_2,TEXT,,"[""NO. 1760, HIGASHIMATANO-CHO, TOTSUKA-KU"", ""NO. 2, TAKARA-CHO, KANAGAWA-KU"", ""30-2, 3-CHOME, SHIMOMARUKO, OHTA-KU""]",
+rf_id,TEXT,,"[""85010106"", ""85050362"", ""85110426""]",
+ee_state,TEXT,,[],

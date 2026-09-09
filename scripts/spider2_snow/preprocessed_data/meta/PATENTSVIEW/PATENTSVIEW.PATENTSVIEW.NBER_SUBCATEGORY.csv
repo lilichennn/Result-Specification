@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""31"", ""15"", ""12""]",
+title,TEXT,,"[""Drugs"", ""Resins"", ""Coating""]",

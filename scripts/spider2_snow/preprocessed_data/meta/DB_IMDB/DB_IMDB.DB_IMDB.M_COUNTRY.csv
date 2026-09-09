@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+CID,FLOAT,,"[0.0, 1.0, 2.0]",
+index,NUMBER,,"[0, 1, 4]",
+MID,TEXT,,"[""tt2388771"", ""tt5164214"", ""tt8239946""]",
+ID,NUMBER,,"[0, 1, 4]",

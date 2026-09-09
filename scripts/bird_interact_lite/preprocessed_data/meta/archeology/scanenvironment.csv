@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+airregistry,,Full name: 'Environment Record ID'. Explanation: Primary key for environment data. Data type: BIGSERIAL. Example: 1001.,bigint,
+zoneref,,Full name: 'Site Reference'. Explanation: Links environment conditions to a specific site code. Data type: VARCHAR(12). Example: 'SC9016'.,character varying,
+equipref,,Full name: 'Equipment Reference'. Explanation: Identifies which equipment these environment data refer to. Data type: CHAR(10). Example: 'SN20065'.,character,
+ambictemp,,"Full name: 'Ambient Temperature (C)'. Explanation: Air temperature in Celsius. Data type: NUMERIC(5,2). Example: 25.3.",numeric,
+humepct,,"Full name: 'Relative Humidity (%)'. Explanation: Humidity as a percentage. Data type: NUMERIC(5,2). Example: 60.4.",numeric,
+illumelux,,Full name: 'Light Conditions (lux)'. Explanation: Measured illumination in lux. Data type: INTEGER. Example: 86054.,integer,
+geosignal,,"Full name: 'GPS Signal Quality'. Explanation: Quality rating for GPS reception. Data type: VARCHAR(15). Possible categories: None, Poor, Good, Excellent.",character varying,
+trackstatus,,"Full name: 'RTK Status'. Explanation: Real-Time Kinematic correction state. Data type: VARCHAR(12). Possible categories: None, Fixed.",character varying,
+linkstatus,,"Full name: 'Network Status'. Explanation: Status of network connectivity. Data type: VARCHAR(12). Possible categories: Disconnected, Connected.",character varying,
+photomap,,"Full name: 'Photogrammetry Overlap'. Explanation: Percentage overlap for photogrammetry images. Data type: CHAR(4). Possible categories: 80%, 60%, 90%.",character,
+imgcount,,Full name: 'Number of Images'. Explanation: How many images were taken for photogrammetry. Data type: SMALLINT. Example: 248.,smallint,

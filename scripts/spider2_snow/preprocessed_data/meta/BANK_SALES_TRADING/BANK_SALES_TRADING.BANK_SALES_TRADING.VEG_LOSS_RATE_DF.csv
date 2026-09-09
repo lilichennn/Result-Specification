@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+item_name,TEXT,,"[""Niushou Shengcai"", ""Sichuan Red Cedar"", ""Zhuyecai""]",
+item_code,NUMBER,,"[102900005115168, 102900005115199, 102900005115786]",
+index,NUMBER,,"[0, 1, 7]",
+loss_rate_%,FLOAT,,"[4.39, 10.46, 13.62]",

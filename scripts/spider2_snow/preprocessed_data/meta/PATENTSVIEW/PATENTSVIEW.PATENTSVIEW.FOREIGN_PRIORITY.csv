@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+country_transformed,TEXT,,"[""EP""]",
+number,TEXT,,"[""10152097"", ""05026538"", ""07104197""]",
+date,TEXT,,"[""2010-01-29"", ""2005-12-06"", ""2007-03-15""]",
+kind,TEXT,,"[""regional""]",
+sequence,NUMBER,,"[0, 1]",
+uuid,TEXT,,"[""ztgvs4z21xu7ukrf4w7ki6sv9"", ""3kpkrndj6lrrficcwvvd953b2"", ""48eh65lpsj3ntpsafkn02snol""]",
+patent_id,TEXT,,"[""9422244"", ""7689264"", ""8440881""]",
+country,TEXT,,"[""EP""]",

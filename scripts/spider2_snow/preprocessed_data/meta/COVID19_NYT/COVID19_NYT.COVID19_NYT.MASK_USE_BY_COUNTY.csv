@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+sometimes,FLOAT,The estimated share of people in this county who would say sometimes,"[0.104, 0.072, 0.122]",
+always,FLOAT,The estimated share of people in this county who would say always,"[0.75, 0.716, 0.634]",
+frequently,FLOAT,The estimated share of people in this county who would say frequently,"[0.145, 0.208, 0.225]",
+county_fips_code,TEXT,Standard geographic identifier for the county,"[""48255"", ""48493"", ""51740""]",
+rarely,FLOAT,The estimated share of people in this county who would say rarely,"[0.001, 0.003, 0.019]",
+never,FLOAT,"The estimated share of people in this county who would say never in response to the question ""How often do you wear a mask in public when you expect to be within six feet of another person?""","[0.0, 0.001]",

@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+profilenum,,VARCHAR(50). Unique identifier for the customer profile. PK.,character varying,
+seg_category,,"TEXT. Customer segment category. **NULL means the segment category is not assigned.**. Possible values: Wholesale,Retail,Individual",text,
+geographyzone,,VARCHAR(100). Geographic location zone of the customer. example: Cambodia,character varying,
+return_behavior_profile,,"JSONB column. Captures the customer's historical return behavior, including frequency and similarity of returns.
+Fields: {""return_frequency_score"":""BIGINT. Customer's frequency score based on return behavior."",""similar_previous_returns"":""BIGINT. Simulated number of returns. **NULL means no previous simulated returns data.**. Possible values: 0.0, 1.0, 2.0, 3.0, 4.0, 5.0."",""total_returns"":""BIGINT. Total number of returns made by the customer. example: 10""}",jsonb,

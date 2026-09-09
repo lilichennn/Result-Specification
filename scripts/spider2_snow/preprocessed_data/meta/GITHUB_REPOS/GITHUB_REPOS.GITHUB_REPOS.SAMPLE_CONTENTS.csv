@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+size,NUMBER,,"[21447, 3974, 7866]",
+binary,BOOLEAN,,[false],
+sample_symlink_target,TEXT,,[],
+copies,NUMBER,,"[256, 1]",
+sample_mode,NUMBER,,[33188],
+sample_path,TEXT,,"[""drivers/rtc/rtc-ds1305.c"", ""drivers/devfreq/governor_simpleondemand.c"", ""src/router/tests/test_uri.cc""]",
+content,TEXT,,"[""<?php\n/**\n * Licensed under The GPL-3.0 License\n * For full copyright and license information, please see the LICENSE.txt\n * Redistributions of files must retain the above copyright notice.\n *\n * @since    2.0.0\n * @author   Christopher Castro <chris@quickapps.es>\n * @link     http://www.quickappscms.org\n * @license  http://opensource.org/licenses/gpl-3.0.html GPL-3.0 License\n */\nnamespace User\\Notification\\Message;\n\nuse User\\Model\\Entity\\User;\nuse User\\Notification\\Message\\BaseMessage;\n\n/**\n * Sends instructions for the \""password recovery\"" process.\n *\n */\nclass PasswordRequestMessage extends BaseMessage\n{\n\n    /**\n     * {@inheritDoc}\n     */\n    public function send()\n    {\n        $this\n            ->subject(plugin('User')->settings['message_password_recovery_subject'])\n            ->body(plugin('User')->settings['message_password_recovery_body']);\n        return parent::send();\n    }\n}\n""]",
+sample_ref,TEXT,,"[""refs/heads/master"", ""refs/heads/M"", ""refs/heads/2.0""]",
+id,TEXT,,"[""2dd586a19b594a73e9c6f7485d1e5da9203a4467"", ""816b2d7412b432d86a4a36147255ec664f760193"", ""f50a76cff9f42438026c7cf8bba687bcd2d491ea""]",
+sample_repo_name,TEXT,,"[""wandboard-org/linux"", ""garwedgess/android_kernel_lge_g4"", ""mysql/mysql-router""]",

@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""6-person tag (2 out of 3 falls)"", ""steel cage"", ""no disqualification bullrope""]",
+id,NUMBER,,"[8, 25, 67]",

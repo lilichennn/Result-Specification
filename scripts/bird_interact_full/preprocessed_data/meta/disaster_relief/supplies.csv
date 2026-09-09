@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+supplyregistry,,VARCHAR(20). Unique supply registry identifier. PK.,character varying,
+supply_dist_ref,,VARCHAR(20). Disaster event reference. FK to DisasterEvents.,character varying,
+supplyhubref,,VARCHAR(20). Distribution hub reference. FK to DistributionHubs.,character varying,
+foodtons,,REAL. Amount of food supplies in tons. Example: 479.4.,real,
+water_liters,,REAL. Amount of water supplies in liters. Example: 283596.,real,
+medunits,,BIGINT. Number of medical units. Example: 15593.0.,bigint,
+shelter_units,,BIGINT. Number of shelter units. Example: 7534.,bigint,
+blanketunits,,BIGINT. Number of blankets. Example: 26671.0.,bigint,
+hygiene_units,,BIGINT. Number of hygiene units. Example: 46981.,bigint,
+powergenunits,,BIGINT. Number of power generators. Example: 568.,bigint,
+fuel_reserve_liters,,REAL. Amount of fuel reserves in liters. Example: 86011.,real,

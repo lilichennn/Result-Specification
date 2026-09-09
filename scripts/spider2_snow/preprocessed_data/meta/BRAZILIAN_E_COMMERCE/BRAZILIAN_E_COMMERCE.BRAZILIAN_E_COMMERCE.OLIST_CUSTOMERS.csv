@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+customer_city,TEXT,,"[""franca"", ""mogi das cruzes"", ""jaragua do sul""]",
+customer_zip_code_prefix,NUMBER,,"[14409, 8775, 89254]",
+customer_unique_id,TEXT,,"[""861eff4711a542e4b93843c6dd7febb0"", ""259dac757896d24d7702b9acbbff3f3c"", ""4c93744516667ad3b8f1fb645a3116a4""]",
+customer_state,TEXT,,"[""SP"", ""SC"", ""PR""]",
+customer_id,TEXT,,"[""06b8999e2fba1a1fbc88172c00ba8bc7"", ""b2b6027bc5c5109e529d4dc6358b12c3"", ""879864dab9bc3047522c92c82e1212b8""]",

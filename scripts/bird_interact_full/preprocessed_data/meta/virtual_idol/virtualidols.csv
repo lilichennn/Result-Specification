@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+entity_reg,,TEXT. Unique identifier for virtual_idol idol entity registration. PK = virtualidols(Entity_Reg).,text,
+name_tag,,TEXT. Official name or stage name of the virtual_idol idol character.,text,
+kind_tag,,"TEXT. Type or category classification of the virtual_idol idol (e.g., vtuber, AI idol).",text,
+deb_date,,TEXT. Official debut date when the virtual_idol idol first appeared publicly.,text,
+assoc_group,,"TEXT. Associated agency, company, or group managing the virtual_idol idol.",text,
+genre_tag,,TEXT. Primary genre or content category the virtual_idol idol specializes in.,text,
+prim_lang,,TEXT. Primary language used by the virtual_idol idol for content and communication.,text,

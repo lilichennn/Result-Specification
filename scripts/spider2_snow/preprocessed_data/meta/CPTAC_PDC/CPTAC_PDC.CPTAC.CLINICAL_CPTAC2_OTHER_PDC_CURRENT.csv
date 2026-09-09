@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+disease_type,TEXT,,"[""Other""]",
+case_id,TEXT,,"[""5d66255e-9161-42b2-a59f-4764a4e7b570"", ""8e984f66-c1db-4588-bd01-691870ba0225"", ""29182985-6507-4015-9312-8492afc060ad""]",
+case_submitter_id,TEXT,,"[""WHIM27"", ""HumanIR"", ""WHIM25""]",
+diagnosis_submitter_id,TEXT,,"[""WHIM27-DX"", ""HumanIR-DX"", ""WHIM25-DX""]",
+project_submitter_id,TEXT,,"[""CPTAC2-Other""]",
+demographic_submitter_id,TEXT,,"[""WHIM27-DM"", ""HumanIR-DM"", ""WHIM25-DM""]",
+diagnosis_id,TEXT,,"[""0dbfa6eb-7865-4bc1-bcad-bda770d71212"", ""3dda7dd9-ad98-4ca3-bdde-c9076696767e"", ""8fe9bea8-c5d3-4a40-8bbb-6a47821870cf""]",
+demographic_id,TEXT,,"[""78fc2a0c-6f77-413e-b9b1-15cff02ee45e"", ""b63884c6-1208-4c33-ab1b-92c4ec7c1973"", ""ffd61c40-f701-4853-b8be-71a65be0629e""]",

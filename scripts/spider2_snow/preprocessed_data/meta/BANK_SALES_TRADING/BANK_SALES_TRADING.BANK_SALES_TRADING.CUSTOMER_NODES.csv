@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+region_id,NUMBER,,"[3, 5, 2]",
+start_date,TEXT,,"[""2020-01-02"", ""2020-01-03"", ""2020-01-27""]",
+end_date,TEXT,,"[""2020-01-03"", ""2020-01-17"", ""2020-02-18""]",
+customer_id,NUMBER,,"[1, 2, 3]",
+node_id,NUMBER,,"[4, 5]",

@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+country_id,NUMBER,,"[1, 1729, 10257]",
+name,TEXT,,"[""Belgium Jupiler League"", ""England Premier League"", ""Italy Serie A""]",
+id,NUMBER,,"[1, 1729, 10257]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+mflag,TEXT,,[],
+id,TEXT,,"[""AG000060590""]",
+sflag,TEXT,,"[""E""]",
+element,TEXT,,"[""PRCP""]",
+time,TEXT,,[],
+qflag,TEXT,,[],
+date,DATE,,"[""1897-01-18"", ""1897-11-12"", ""1897-05-24""]",
+value,FLOAT,,[0.0],

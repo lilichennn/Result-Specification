@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+ValidFrom,NUMBER,,"[1356998400000000, 1388592900000000]",
+CustomerCategoryID,NUMBER,,"[2, 4, 5]",
+CustomerCategoryName,TEXT,,"[""Wholesaler"", ""Supermarket"", ""Computer Store""]",
+LastEditedBy,NUMBER,,"[1, 9]",
+ValidTo,NUMBER,,[253402300799999999],

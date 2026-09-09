@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+xchgnum,,A SERIAL primary key uniquely identifying each stock exchange or trading venue in the database.,bigint,
+marketcode,,"Unique abbreviated code for the exchange (e.g., 'NYSE', 'NASDAQ', 'LSE'). Must be unique across all records.",character varying,
+tradingvenue,,Full official name of the stock exchange or trading venue where funds are listed and traded.,text,
+exchangetime,,,text,

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""EZE00100082""]",
+date,DATE,,"[""1777-02-15"", ""1777-01-21"", ""1777-12-21""]",
+element,TEXT,,"[""TMAX""]",
+value,FLOAT,,"[0.0, -3.0, 5.0]",
+sflag,TEXT,,"[""E""]",
+time,TEXT,,[],
+mflag,TEXT,,[],
+qflag,TEXT,,[],

@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""AAA"", ""BBB"", ""BBD""]",
+price,NUMBER,,"[3000, 5000]",
+updated_at,TEXT,,"[""2016-11-03 18:00:00"", ""2016-11-03 20:00:00"", ""2016-11-03 21:00:00""]",
+product_id,TEXT,,"[""A001"", ""B001"", ""B002""]",

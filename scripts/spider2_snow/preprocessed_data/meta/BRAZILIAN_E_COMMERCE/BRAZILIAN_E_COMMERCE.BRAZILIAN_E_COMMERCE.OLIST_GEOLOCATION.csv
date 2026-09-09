@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+geolocation_lng,FLOAT,,"[-45.18794771542618, -43.89223348300082, -45.18667845319278]",
+geolocation_zip_code_prefix,NUMBER,,"[47990, 47940]",
+geolocation_city,TEXT,,"[""formosa do rio preto"", ""wanderley""]",
+geolocation_lat,FLOAT,,"[-11.0449613458862, -12.118520396156198, -11.043509645586902]",
+geolocation_state,TEXT,,"[""BA""]",

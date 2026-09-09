@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+CustomerID,NUMBER,,"[10006, 10001, 10007]",
+StartTime,TEXT,,"[""13:00:00"", ""20:00:00"", ""16:00:00""]",
+EndDate,TEXT,,"[""2017-09-06"", ""2017-09-16"", ""2017-09-18""]",
+ContractPrice,NUMBER,,"[200, 590, 470]",
+EntertainerID,NUMBER,,"[1004, 1005, 1003]",
+StartDate,TEXT,,"[""2017-09-02"", ""2017-09-11"", ""2017-09-12""]",
+StopTime,TEXT,,"[""15:00:00"", ""00:00:00"", ""19:00:00""]",
+EngagementNumber,NUMBER,,"[2, 3, 4]",
+AgentID,NUMBER,,"[4, 3, 5]",

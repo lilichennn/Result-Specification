@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+EXCH_SPOT,,TEXT. Exchange spot market symbol. PK.,text,
+TimeTrack,,TIMESTAMP. Timestamp when the snapshot was taken.,timestamp without time zone,
+exchNote,,TEXT. Exchange-specific commentary.,text,
+mktCombo,,TEXT. Market combination or instrument group.,text,
+orderbook_metrics,,"JSONB column. Captures the complete snapshot of best bid/ask quotes, depths, spreads and reference prices in a single JSONB column for fast order-book analytics.
+Fields: {""ask_depth"":""REAL. Aggregate ask depth. Example: 807."",""ask_size"":""REAL. Ask depth volume in units. Example: 87.620549."",""best_ask"":""REAL. Best ask price quote. Example: 27102.24."",""best_bid"":""REAL. Best bid price quote. Example: 27069.78."",""bid_depth"":""REAL. Aggregate bid depth. Example: 202."",""bid_size"":""REAL. Bid depth volume in units. Example: 64.091241."",""index_price"":""TEXT. Index price reference. Example: $27,096.65 ."",""mark_price"":""REAL. Mark price quote. Example: 27088.44."",""mid_price"":""REAL. Mid-price quote. Example: 27086.01. Example: 27086.01."",""spread_abs"":""REAL. Absolute spread band. Example: 32.46."",""spread_pct"":""TEXT. Relative spread rate. **NULL means spread rate not calculated.**. Example: 11.99%.""}",jsonb,

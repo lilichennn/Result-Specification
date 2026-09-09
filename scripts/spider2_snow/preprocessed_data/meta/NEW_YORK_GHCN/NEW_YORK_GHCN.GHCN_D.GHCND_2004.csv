@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[3.0, 2.0, 4.0]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+date,DATE,,"[""2004-05-10"", ""2004-11-17"", ""2004-07-12""]",
+element,TEXT,,"[""DAEV""]",
+time,TEXT,,[],
+id,TEXT,,"[""USC00252741"", ""USC00413686"", ""USC00118740""]",
+mflag,TEXT,,[],

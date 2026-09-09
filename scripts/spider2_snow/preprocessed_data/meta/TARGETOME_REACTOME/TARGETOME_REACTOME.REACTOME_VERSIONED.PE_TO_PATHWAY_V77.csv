@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+pathway_stable_id,TEXT,Reactome pathway stable identifier,"[""R-HSA-15869"", ""R-HSA-68875""]",
+evidence_code,TEXT,Code that indicates the type of evidence supporting physical entity relation to pathway,"[""IEA""]",
+pe_stable_id,TEXT,Reactome physical entity stable identifier,"[""R-HSA-904852"", ""R-HSA-2311338"", ""R-HSA-165978""]",

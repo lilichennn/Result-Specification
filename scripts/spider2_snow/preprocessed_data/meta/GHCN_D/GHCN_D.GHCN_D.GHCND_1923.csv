@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1923-07-09"", ""1923-01-05"", ""1923-08-29""]",
+sflag,TEXT,,"[""a""]",
+time,TEXT,,[],
+element,TEXT,,"[""PRCP""]",
+id,TEXT,,"[""ASN00001017"", ""ASN00002000"", ""ASN00002002""]",
+qflag,TEXT,,[],
+value,FLOAT,,[0.0],
+mflag,TEXT,,[],

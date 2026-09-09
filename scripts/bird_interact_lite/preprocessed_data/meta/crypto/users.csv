@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+usersnode,,"A BIGSERIAL primary key uniquely identifying each user (e.g., 1001).",bigint,
+userstamp,,"A CHAR(36) UUID linking to external/client user references (e.g., 'e3bd1f12-3e93-4b3c-a9f3-84be2593a6d7').",character,
+acctscope,,"An enum (AcctScope_enum) indicating the account scope (Margin, Spot, Options, Futures).",USER-DEFINED,

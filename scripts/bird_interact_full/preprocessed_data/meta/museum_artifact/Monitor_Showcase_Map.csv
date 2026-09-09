@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+mon_ID,,TEXT. Monitor identifier. PK. Example: MM191823.,text,
+case_ID,,TEXT. Showcase case identifier. PK. FK to Showcases.caseID. Example: SC9857.,text,

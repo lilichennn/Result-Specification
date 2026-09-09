@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable description of the reported attribute.,"[""Household air pollution attributable deaths | Sex: Both sexes | Age Group: Total (All ages) | Cause: Total | Estimate"", ""Age-specific death rate between ages x and x+n | Sex: Female | Age Group: 55-59 years | Estimate"", ""Projection of deaths | Sex: Female | Age Group: 70 plus  years of age (please delete. It does not work with menu.xml) | Causes: Birth asphyxia and birth trauma | Estimate""]",
+VARIABLE,TEXT,Unique identifier for a variable created from the unique characteristics of the World Health Organization (WHO) variables.,"[""AIR_11_SEX_BTSX_AGEGROUP_AGEALL_ENVCAUSE_ENVCAUSE000"", ""LIFE_0000000029_SEX_FMLE_AGEGROUP_AGE55-59"", ""MORT_600_SEX_FMLE_AGEGROUP_YEARS70+_GHECAUSES_GHE051""]",
+DATE,DATE,Date the data was published.,"[""2019-12-31"", ""2000-12-31"", ""2030-12-31""]",
+GEO_ID,TEXT,"A unique identifier for a country, group of countries, or region, joinable to the GEOGRAPHY_INDEX table.","[""WHORegion/AFR"", ""WorldBankIncomeGroup/WB_LMI"", ""MGHERegion/WBDCP_EAP""]",
+UNIT,TEXT,Unit of measurement for the reported value (ex. USD).,"[""Count"", ""Rate"", ""Percent""]",
+WHO_SOURCE,TEXT,Source that the World Health Organization (WHO) has received this data.,[],
+VALUE_COMMENT,TEXT,"Comment on the source, measurement, or definition of the value.",[],
+VALUE,FLOAT,Reported figure for the variable.,"[638583.0321, 0.01276, 8.0]",

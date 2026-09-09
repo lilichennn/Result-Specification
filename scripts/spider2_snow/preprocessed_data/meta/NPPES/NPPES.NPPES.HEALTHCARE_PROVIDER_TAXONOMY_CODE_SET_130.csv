@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+specialization,TEXT,,"[""""]",
+classification,TEXT,,"[""Multi-Specialty"", ""Single Specialty"", ""Case Management""]",
+definition,TEXT,,"[""A business group of one or more individual practitioners, who practice with different areas of specialization."", ""A business group of one or more individual practitioners, all of who practice with the same area of specialization."", ""An organization that is responsible for providing case management services.  The agency provides services which assist an individual in gaining access to needed medical, social, educational, and/or other services.  Case management services may be used to locate, coordinate, and monitor necessary appropriate services.  It may be used to encourage the use of cost-effective medical care by referrals to appropriate providers and to discourage over utilization of costly services.  Case management may also serve to provide necessary coordination of non-medical services such as vocational rehabilitation, education, employment, when the services provided enable the individual to function at the highest level.""]",
+notes,TEXT,,"[""[7/1/2003: new]"", ""Source:  CMS State Medicaid Manual Section 4442.3 [7/1/2006: definition modified]"", ""Source: National Uniform Claim Committee, 2008 [7/1/2008: modified definition]""]",
+code,TEXT,,"[""193200000X"", ""193400000X"", ""251B00000X""]",
+grouping,TEXT,,"[""Group"", ""Agencies""]",

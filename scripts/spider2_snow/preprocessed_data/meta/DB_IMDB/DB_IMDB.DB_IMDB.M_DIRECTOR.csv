@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+index,NUMBER,,"[1, 5, 6]",
+MID,TEXT,,"[""tt5164214"", ""tt7027278"", ""tt3498820""]",
+ID,NUMBER,,"[1, 5, 6]",
+PID,TEXT,,"[""nm0002657"", ""nm0438461"", ""nm0751577""]",

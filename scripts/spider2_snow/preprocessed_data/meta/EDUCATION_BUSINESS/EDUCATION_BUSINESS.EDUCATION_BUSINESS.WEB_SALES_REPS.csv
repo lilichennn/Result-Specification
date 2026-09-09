@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,NUMBER,,"[321540, 321550, 321560]",
+name,TEXT,,"[""Cara Clarke"", ""Lavera Oles"", ""Elba Felder""]",
+region_id,NUMBER,,[1],

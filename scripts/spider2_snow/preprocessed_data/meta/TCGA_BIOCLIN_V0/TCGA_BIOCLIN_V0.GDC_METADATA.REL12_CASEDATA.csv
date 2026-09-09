@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+project__program__dbgap_accession_number,TEXT,DbGaP accession number for the program,[],
+project__name,TEXT,Study name of the project,"[""Foundation Medicine Adult Cancer Clinical Dataset (FM-AD)""]",
+project__program__name,TEXT,Program Name,"[""FM""]",
+file_id,TEXT,GDC file identifier. This is a duplicate of file_gdc_id field found in some tables. ,"[""2d8a70d2-56bf-4763-a2bf-ecb22fe2da3b"", ""a2d1f9e8-1db5-4594-b5ac-05db7457b221"", ""f372ee94-1117-42de-8c85-700daba12195""]",
+project__project_id,TEXT,Program Short Name with Project Short Name,"[""FM-AD""]",
+active_file_count,NUMBER,Active File Count for this case,[5],
+project__dbgap_accession_number,TEXT,Project dbGaP accession number,"[""phs001179""]",
+legacy_file_count,NUMBER,Total number of files for this case in the GDC legacy archive,[0],
+submitter_id,TEXT,"This can be used to identify a corresponding entry in the submitter's records. The GDC requires that submitter_id be unique for each entity within a project: the tuple (combination) of [ project_id, submitter_id ] is a unique key.","[""AD10"", ""AD11"", ""AD12""]",
+project__disease_type,TEXT,Project Disease Type,"[""multi""]",

@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+StyleID,NUMBER,,"[2, 3, 6]",
+StyleName,TEXT,,"[""50's Music"", ""60's Music"", ""Country""]",

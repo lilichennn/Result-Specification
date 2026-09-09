@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+diseaseId,TEXT,,"[""EFO_1000684"", ""HP_0001397"", ""DOID_1947""]",
+evidenceCount,NUMBER,,"[256, 512, 1]",
+targetId,TEXT,,"[""ENSG00000105369"", ""ENSG00000186951"", ""ENSG00000213903""]",
+datatypeId,TEXT,,"[""literature""]",
+score,FLOAT,,"[0.7779704397838699, 0.5426763212108744, 0.01823792392834863]",

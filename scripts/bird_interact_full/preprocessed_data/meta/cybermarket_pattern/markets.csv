@@ -1,0 +1,18 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+PlatCode,,TEXT. Unique identifier code for the marketplace platform. PK.,text,
+PlatName,,TEXT. Human-readable name of the marketplace platform. Example: Market_84.,text,
+PlatformType,,"TEXT. Classification of the platform (e.g., forum, service, marketplace).",text,
+AgeDays,,BIGINT. Number of days since the platform’s first observed appearance. Example: 168.,bigint,
+OperStatus,,"TEXT. Current operational status of the platform (active, offline, seized, etc.). Possible values: Active, Closed, Suspended, Under Investigation.",text,
+RepScore,,TEXT. Reputation score assigned to the platform. **NULL means reputation has not yet been assessed or is unavailable.**. Example: $65.20 .,text,
+ConfidenceLevel,,"TEXT. Analyst-assigned confidence in the accuracy of platform metrics. Possible values: High, Low, Medium, Unknown.",text,
+SizeCat,,"TEXT. Categorical size bucket of the platform (small, medium, large). Possible values: Large, Medium, Mega, Small.",text,
+DayTxnVol,,REAL. Average daily transaction volume on the platform. Example: 5388.,real,
+ActiveUsersMo,,"TEXT. Estimated number of active users per month. Example: $38,933 .",text,
+SellerCount,,BIGINT. Number of distinct sellers currently active on the platform. **NULL means seller count could not be determined at snapshot time.**. Example: 985.0.,bigint,
+AcqCount,,BIGINT. Number of distinct buyer (acquirer) accounts on the platform. Example: 6009.,bigint,
+ItemListings,,BIGINT. Current number of active product listings on the platform. Example: 34834.,bigint,
+lastUpdated,,TIMESTAMP. Timestamp when this platform record was last refreshed. Example: 2025/2/16 15:29.,timestamp without time zone,
+RefreshHrs,,"BIGINT. Scheduled refresh interval for this record, in hours. Possible values: 1, 4, 8, 24.",bigint,
+platform_compliance,,"JSONB column. Combines compliance and security-related metrics for the platform, including audit results, vulnerability instances, and security measures.
+Fields: {""data_ret_policy_stat"":""TEXT. Declared data-retention policy of the platform. Possible values: Active, Archived, Deleted."",""geo_dist_scr"":""text. A score representing the geographical distribution of market activity, calculated based on transaction volume and active users, measured in km. Example: 2140.32 km."",""laund_ve_score"":""text. The probability of fraudulent activity in a market, based on laundering velocity, measured in USD/risk/day. Example: 0.62 USD/risk/day."",""protection_meas_count"":""BIGINT. Count of active security protection or mitigation measures. Example: 17."",""sec_audit_stat"":""TEXT. Status or date of the most recent security audit. Possible values: Fail, Pass, Warning."",""sec_event_count"":""BIGINT. Total number of recorded security events/incidents. Example: 0."",""vuln_inst_count"":""BIGINT. Count of discovered security vulnerabilities on the platform. Example: 20.""}",jsonb,

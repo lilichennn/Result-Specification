@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+immu_don_registry,,"TEXT. Primary key linking to donor demographics for HLA typing data. PK = HLA_Info(Immu_Don_Registry), FK to Demographics.",text,
+hla_a_val,,"REAL. Donor's HLA-A antigen typing value for immunological compatibility. Example: 89,11.",real,
+hla_b_val,,"REAL. Donor's HLA-B antigen typing value for immunological compatibility. Example: 22,60.",real,
+hla_dr_val,,"REAL. Donor's HLA-DR antigen typing value for immunological compatibility. Example: 59,9.",real,
+hla_dq_val,,"REAL. Donor's HLA-DQ antigen typing value for immunological compatibility. Example: 8,1.",real,

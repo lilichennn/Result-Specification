@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+state_number,NUMBER,,[1],
+area_of_Impact_associated_with_the_event,NUMBER,,[0],
+sequence_of_events_name,TEXT,,"[""Rollover/Overturn""]",
+consecutive_number,NUMBER,,"[10002, 10005, 10008]",
+vehicle_number,NUMBER,,"[1, 2]",
+sequence_of_events,NUMBER,,[1],
+area_of_Impact_associated_with_the_event_name,TEXT,,"[""Non-Collision""]",
+vehicle_event_number,NUMBER,,"[3, 2]",
+state_name,TEXT,,"[""Alabama""]",

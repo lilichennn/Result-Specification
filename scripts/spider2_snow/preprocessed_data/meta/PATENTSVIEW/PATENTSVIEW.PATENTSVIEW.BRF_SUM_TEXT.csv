@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+uuid,TEXT,,"[""trk41aa0c2vx03i8zta2low1w"", ""3su3q8p4ekjd6xhnx2t4jys8t"", ""b0qs060fwm3tavltiwk2ye9wl""]",
+patent_id,TEXT,,"[""8340917"", ""9223704"", ""4140085""]",
+text,TEXT,,[],

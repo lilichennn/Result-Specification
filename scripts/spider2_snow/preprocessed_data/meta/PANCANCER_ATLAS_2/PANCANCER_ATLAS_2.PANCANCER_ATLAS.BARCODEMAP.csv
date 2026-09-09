@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+AliquotBarcode,TEXT,"TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-28","[""TCGA-04-1331-10A-01D-0430-06"", ""TCGA-04-1331-10A-01D-0431-02"", ""TCGA-04-1331-10A-01D-1036-01""]",
+SampleBarcode,TEXT,"Barcode of the biospecimen sample, eg TCGA-13-1489-02A","[""TCGA-04-1331-10A""]",
+ParticipantBarcode,TEXT,"TCGA barcode identifier for the study participant, eg TCGA-02-0001","[""TCGA-04-1331""]",
+SampleTypeLetterCode,TEXT,"Letter code of the sample type using the TCGA standards, eg TPN, EBV. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/sample-type-codes","[""NB""]",
+Study,TEXT,"TCGA study abbreviation, eg LAML. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations","[""OV""]",

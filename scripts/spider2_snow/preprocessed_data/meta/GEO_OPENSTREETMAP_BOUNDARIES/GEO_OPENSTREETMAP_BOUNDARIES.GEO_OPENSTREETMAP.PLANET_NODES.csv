@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+all_tags,VARIANT,,"[""[]""]",
+osm_timestamp,NUMBER,,"[1573439409000000, 1415225744000000, 1345915129000000]",
+changeset,NUMBER,,"[76884327, 26581813, 12857973]",
+visible,BOOLEAN,,[true],
+geometry,BINARY,,[],
+latitude,NUMBER,,"[""42.624112400"", ""42.830248900"", ""43.286195200""]",
+version,NUMBER,,[1],
+username,TEXT,,"[""kaspesla"", ""kataklop"", ""kathekas""]",
+longitude,NUMBER,,"[""-71.068307600"", ""-70.952409000"", ""5.677898500""]",
+id,NUMBER,,"[6965219276, 3169428389, 1882792979]",

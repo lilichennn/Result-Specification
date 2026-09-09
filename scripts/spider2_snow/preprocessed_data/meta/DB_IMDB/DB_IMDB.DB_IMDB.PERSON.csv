@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+Gender,TEXT,,"[""Female"", ""Male""]",
+Name,TEXT,,"["" Cate Blanchett"", "" Benedict Cumberbatch"", "" Naomie Harris""]",
+PID,TEXT,,"[""nm0000949"", ""nm1212722"", ""nm0365140""]",
+index,NUMBER,,"[1, 2, 3]",

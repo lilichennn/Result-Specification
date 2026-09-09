@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+TotalCases,TEXT,total number of cases (up to 2150),"[""2""]",
+Chromosome,TEXT,"chromosome number (1- 22, X or Y)","[""1""]",
+Arm,TEXT,arm of the chromosome (p or q),"[""q""]",
+Type,TEXT,indicate balanced ('B') or unbalanced ('U'),"[""U""]",
+Band,TEXT,position of the gene on the p or q arm,"[""10""]",
+Topo,TEXT,"topography code, eg '0902' (or blank)","[""0801""]",
+Abnormality,TEXT,"abnormality description, eg 'add(19)(q13)' or 'del(20)(q11q13)'","[""der(1;2)(q10;p10)"", ""der(1;2)(q10;q10)"", ""der(1;3)(q10;q10)""]",
+Morph,TEXT,"morphology code, eg '1602'","[""1702"", ""8804"", ""1101""]",
+Gene,TEXT,"gene symbol(s), eg 'KMT2A+' or 'BCR/ABL1' or blank",[],
+ChrOrder,NUMBER,numeric order of the chromosome,[1],

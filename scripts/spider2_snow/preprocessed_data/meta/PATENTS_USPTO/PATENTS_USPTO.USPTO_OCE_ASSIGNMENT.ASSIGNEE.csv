@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+ee_country,TEXT,,"[""JAPAN""]",
+ee_address_2,TEXT,,"[""A CORP OF JAPAN""]",
+ee_city,TEXT,,"[""KANAGAWA"", ""SHIBUYA-KU, TOKYO"", ""OHTA-KU, TOKYO""]",
+ee_name,TEXT,,"[""FUJI PHOTO FILM CO., LTD."", ""KRAUTKRAMER FOERSTER JAPAN CO., LTD."", ""CANON KABUSHIKI KAISHA, A CORP. OF JAPAN""]",
+ee_address_1,TEXT,,"[""NO. 210 NAKANUMA, MINAMI-ASHIGARA-SHI"", ""10-12 DOGENZAKA 2-CHOME"", ""30-2, 3-CHOME, SHIMOMARUKO""]",
+ee_postcode,TEXT,,[],
+ee_state,TEXT,,[],
+rf_id,TEXT,,"[""56250756"", ""56280778"", ""56310424""]",

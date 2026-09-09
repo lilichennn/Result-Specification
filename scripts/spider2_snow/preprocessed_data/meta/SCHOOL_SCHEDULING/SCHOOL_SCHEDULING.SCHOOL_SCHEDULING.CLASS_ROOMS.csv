@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+ClassRoomID,NUMBER,,"[1131, 1514, 1515]",
+BuildingCode,TEXT,,"[""LB"", ""AS""]",
+PhoneAvailable,NUMBER,,"[1, 0]",

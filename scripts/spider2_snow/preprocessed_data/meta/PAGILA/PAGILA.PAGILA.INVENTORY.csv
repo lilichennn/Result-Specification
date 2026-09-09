@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+inventory_id,NUMBER,,"[1, 3, 4]",
+film_id,NUMBER,,[1],
+last_update,TEXT,,"[""2021-03-06 15:52:08""]",
+store_id,NUMBER,,"[1, 2]",

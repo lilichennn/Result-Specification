@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+product_photos_qty,FLOAT,,"[1.0, 4.0, 2.0]",
+product_description_lenght,FLOAT,,"[250.0, 261.0, 402.0]",
+product_height_cm,FLOAT,,"[9.0, 4.0, 17.0]",
+product_width_cm,FLOAT,,"[15.0, 26.0, 13.0]",
+product_name_lenght,FLOAT,,"[46.0, 27.0, 37.0]",
+product_id,TEXT,,"[""96bd76ec8810374ed1b65e291975717f"", ""cef67bcfe19066a932b7673e239eb23d"", ""9dc1a7de274444849c219cff195d0b71""]",
+product_weight_g,FLOAT,,"[154.0, 371.0, 625.0]",
+product_length_cm,FLOAT,,"[18.0, 26.0, 20.0]",
+product_category_name,TEXT,,"[""esporte_lazer"", ""bebes"", ""utilidades_domesticas""]",

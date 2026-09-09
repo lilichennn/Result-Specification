@@ -1,0 +1,16 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+opmaintregistry,,A SERIAL primary key uniquely identifying each operation/maintenance record.,integer,
+opmainteqref,,"A VARCHAR(60) foreign key referencing Equipment(EquipmentCode), linking operational data to a specific equipment unit.",character varying,
+opmaintlocref,,"An INTEGER foreign key referencing Location(LocationRegistry), associating this record with a location if applicable.",integer,
+operationhours,,"A NUMERIC(8,3) indicating the total hours the equipment has been in operation.",numeric,
+maintenancecyclehours,,"A NUMERIC(7,2) for the planned hours between maintenance events.",numeric,
+lastmaintenancedate,,A DATE noting when the last maintenance was performed.,date,
+nextmaintenancedue,,A DATE indicating the scheduled date for the next maintenance.,date,
+operationalstatus,,"An enum (OperationalStatus_enum) showing the current operating state (e.g., Storage, Standby, Repair, Active, Maintenance).",USER-DEFINED,
+crewcertificationstatus,,"An enum (CrewCertificationStatus_enum) indicating crew status (e.g., Valid, Pending, Expired).",USER-DEFINED,
+inspectionstatus,,"An enum (InspectionStatus_enum) for the result of any recent inspection (e.g., Failed, Passed, Pending).",USER-DEFINED,
+compliancestatus,,"An enum (ComplianceStatus_enum) describing overall compliance (e.g., Review, Non-compliant, Compliant).",USER-DEFINED,
+documentationstatus,,"An enum (DocumentationStatus_enum) indicating if documentation is (e.g., Updated, Incomplete, Complete).",USER-DEFINED,
+opmaintcommref,,An INTEGER optionally linking to a record in Communication or another table if referenced (not enforced here).,integer,
+costmetrics,,"JSONB column. Aggregates financial metrics related to maintenance, repair, and operating costs.
+Fields: {""maintenance_usd"":""A DECIMAL(8,2) for the cost (in USD) of recent or typical maintenance."",""operating_usd"":""A NUMERIC(9,4) indicating the ongoing operating cost (in USD)."",""repair_usd"":""A DECIMAL(9,3) for the cost (in USD) of repairs, if any.""}",jsonb,

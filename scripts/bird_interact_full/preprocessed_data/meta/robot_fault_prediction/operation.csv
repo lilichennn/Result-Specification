@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+operreg,,TEXT. Unique operation record identifier. PK.,text,
+operrecref,,TEXT. Foreign key to the robot_record table (BotCode). FK to robot_record.,text,
+totopshrval,,REAL. Total operational hours of the robot. **NULL means no operational hours data available.**. Example: 20009.0.,real,
+apptypeval,,"TEXT. Application type for the operation. **NULL means no application type specified.**. Possible values: Assembly, Material Handling, Painting, Palletizing, Welding.",text,
+opermodeval,,"CHAR(25). Operating mode of the robot (e.g., automatic, manual). Possible values: MANU.",character,
+currprogval,,TEXT. Current program being executed by the robot. **NULL means no program is active.**. Example: PRG_4901.,text,
+progcyclecount,,BIGINT. Number of cycles executed by the robot. Example: 177681.,bigint,
+cycletimesecval,,REAL. Cycle time of the robot operation in seconds. **NULL means no cycle time data available.**. Example: 211.82.,real,
+axiscountval,,"BIGINT. Number of axes in the robot. Possible values: 4, 5, 6, 7.",bigint,

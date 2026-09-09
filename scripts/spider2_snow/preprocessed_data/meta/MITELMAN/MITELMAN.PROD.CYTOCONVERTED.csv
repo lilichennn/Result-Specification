@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+Clone,NUMBER,,"[1, 2]",
+Type,TEXT,,"[""Gain""]",
+End,NUMBER,,[50400000],
+CellsPresent,TEXT,,"[""unknown""]",
+CaseNo,TEXT,,"[""24"", ""4"", ""40""]",
+InvNo,NUMBER,,[1],
+ChrOrd,NUMBER,,[14],
+RefNo,NUMBER,,"[2238, 15412, 5382]",
+Chr,TEXT,,"[""chr14""]",
+Start,NUMBER,,[0],

@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+driver_id,NUMBER,,"[647, 687, 633]",
+year,NUMBER,,[1950],
+driver_ref,TEXT,,"[""ascari"", ""whitehead"", ""villoresi""]",
+constructor_id,NUMBER,,"[6, 51]",
+constructor_ref,TEXT,,"[""ferrari"", ""alfa""]",
+team_driver_rank,NUMBER,,"[1, 2, 5]",

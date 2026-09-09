@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+sample_barcode,TEXT,"Original TCGA sample barcode, eg TCGA-12-1089-01A","[""TCGA-12-1601-01A""]",
+case_barcode,TEXT,"Original TCGA case barcode, eg TCGA-12-1089  --  note that each case typically has a primary-tumor sample and a matched-normal (blood or adjacent tissue) sample; please refer to the TCGA Biospecimen table for more details","[""TCGA-12-1601""]",
+probe_id,TEXT,Unique probe identifier (eg cg04676771) from the Illumina Human Methylation array -- please refer to the annotation table (isb-cgc:platform_reference.methylation_annotation) for more details about any particular probe,"[""cg19278780"", ""cg16158807"", ""cg01873645""]",
+case_gdc_id,TEXT,,"[""cc1459be-de8f-482e-9efe-65937db9dc45""]",
+platform,TEXT,Platform used to generate this data -- either HumanMethylation450 or HumanMethylation27,[],
+aliquot_gdc_id,TEXT,,"[""aa761ca4-e8f0-4a43-8262-bd84eedb459a""]",
+aliquot_barcode,TEXT,"Original TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-01","[""TCGA-12-1601-01A-01D-0595-05""]",
+beta_value,FLOAT,"Normalized DNA methylation beta value (between 0 and 1, where 0 indicates completely un-methylated and 1 indicates fully methylated)","[0.749796167083439, 0.127442888523738, 0.0106463780254311]",
+file_gdc_id,TEXT,,"[""5cd6f2f6-7278-4757-be8e-a8ae3a7a81d3""]",
+sample_gdc_id,TEXT,,"[""b02fd704-03a6-44c4-b224-f5f457e733f3""]",

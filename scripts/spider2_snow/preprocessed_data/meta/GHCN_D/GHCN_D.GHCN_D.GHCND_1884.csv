@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,[0.0],
+qflag,TEXT,,[],
+date,DATE,,"[""1884-12-20"", ""1884-07-04"", ""1884-07-09""]",
+id,TEXT,,"[""USC00034988""]",
+sflag,TEXT,,"[""6""]",
+element,TEXT,,"[""PRCP""]",
+time,TEXT,,"[""0700""]",
+mflag,TEXT,,[],

@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[83.81, 169.14, 378.32]",
+year,NUMBER,,"[2085, 2060, 2045]",
+country_name,TEXT,,"[""Iran, Islamic Rep.""]",
+indicator_code,TEXT,,"[""PRJ.POP.2529.2.FE"", ""PRJ.POP.2529.2.MA"", ""PRJ.POP.2529.2.MF""]",
+country_code,TEXT,,"[""IRN""]",
+indicator_name,TEXT,,"[""Wittgenstein Projection: Population age 25-29 in thousands by highest level of educational attainment. Lower Secondary. Female"", ""Wittgenstein Projection: Population age 25-29 in thousands by highest level of educational attainment. Lower Secondary. Male"", ""Wittgenstein Projection: Population age 25-29 in thousands by highest level of educational attainment. Lower Secondary. Total""]",

@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+VendorLink,,TEXT. Identifier of the vendor. PK (composite). FK to vendors(SellerKey). Example: V63085.,text,
+AcceptedPmtTypes,,"TEXT. Payment type accepted by the vendor. PK (composite). Possible values: 1, 2, 3, 4, 5.",text,

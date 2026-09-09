@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+session,TEXT,,"[""00700be4"", ""01061716"", ""02596e8a""]",
+form,TEXT,,"[""cart"", ""regist""]",
+stamp,TEXT,,"[""2016-12-30 00:56:08"", ""2016-12-30 00:56:09"", ""2016-12-30 00:56:42""]",
+field,TEXT,,"[""email"", ""kana""]",
+value,TEXT,,"[""xxx---.co.jp"", ""xxx@---cojp"", ""山田 太郎""]",
+error_type,TEXT,,"[""format_error"", ""not_kana"", ""require""]",

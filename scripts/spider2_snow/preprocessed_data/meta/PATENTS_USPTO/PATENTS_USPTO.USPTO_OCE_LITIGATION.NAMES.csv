@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+party_row_count,TEXT,,"[""186961"", ""187914"", ""381334""]",
+name,TEXT,,"[""Jack Sutton"", ""Peters Motor Cuts"", ""TERMINATED: 03/26/2008""]",
+party_type,TEXT,,"[""In Re""]",
+case_number,TEXT,,"[""2:05-cv-06445"", ""2:06-cv-00053"", ""6:07-cv-00354""]",
+name_row_count,TEXT,,"[""234352"", ""235650"", ""497185""]",
+case_row_id,TEXT,,"[""35376"", ""35523"", ""67746""]",

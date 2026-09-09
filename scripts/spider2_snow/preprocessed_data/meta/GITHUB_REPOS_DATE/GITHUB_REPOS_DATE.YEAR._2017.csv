@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+type,TEXT,,"[""PushEvent""]",
+created_at,NUMBER,,"[1506506970000000, 1502449387000000, 1493223022000000]",
+id,TEXT,,"[""6643153159"", ""6440207446"", ""5761860903""]",
+public,BOOLEAN,,[true],
+payload,TEXT,,"[""{\""push_id\"":2012601333,\""size\"":0,\""distinct_size\"":0,\""ref\"":\""refs/heads/master\"",\""head\"":\""aa84864a920130fbd64acf702fade8ef298ee021\"",\""before\"":\""aa84864a920130fbd64acf702fade8ef298ee021\"",\""commits\"":[]}"", ""{\""push_id\"":1916082037,\""size\"":0,\""distinct_size\"":0,\""ref\"":\""refs/heads/orchard-upgrade-1.9.3\"",\""head\"":\""8a5be8b75cdfce969127914a9b42b1d4545469c1\"",\""before\"":\""8a5be8b75cdfce969127914a9b42b1d4545469c1\"",\""commits\"":[]}"", ""{\""push_id\"":1703903800,\""size\"":0,\""distinct_size\"":0,\""ref\"":\""refs/heads/issue/BTLR-63\"",\""head\"":\""0d9d385547ce157ebd94ac5ba8b45d17292cf9f6\"",\""before\"":\""0d9d385547ce157ebd94ac5ba8b45d17292cf9f6\"",\""commits\"":[]}""]",
+other,TEXT,,"[""{\""actor\"":{\""display_login\"":\""LombiqBot\""}}""]",
+actor,VARIANT,,"[""{\n  \""avatar_url\"": \""https://avatars.githubusercontent.com/u/8517910?\"",\n  \""gravatar_id\"": \""\"",\n  \""id\"": 8517910,\n  \""login\"": \""LombiqBot\"",\n  \""url\"": \""https://api.github.com/users/LombiqBot\""\n}""]",
+org,VARIANT,,"[""{\n  \""avatar_url\"": \""https://avatars.githubusercontent.com/u/8158177?\"",\n  \""gravatar_id\"": \""\"",\n  \""id\"": 8158177,\n  \""login\"": \""Lombiq\"",\n  \""url\"": \""https://api.github.com/orgs/Lombiq\""\n}""]",
+repo,VARIANT,,"[""{\n  \""id\"": 46629356,\n  \""name\"": \""Lombiq/Orchard-Scripting-Extensions-PHP\"",\n  \""url\"": \""https://api.github.com/repos/Lombiq/Orchard-Scripting-Extensions-PHP\""\n}"", ""{\n  \""id\"": 46631001,\n  \""name\"": \""Lombiq/Orchard-Content-Types\"",\n  \""url\"": \""https://api.github.com/repos/Lombiq/Orchard-Content-Types\""\n}"", ""{\n  \""id\"": 46631887,\n  \""name\"": \""Lombiq/Orchard-Theme-Override\"",\n  \""url\"": \""https://api.github.com/repos/Lombiq/Orchard-Theme-Override\""\n}""]",

@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+original_size,NUMBER,,"[10603451, 4071452, 1361241]",
+original_landing_url,TEXT,,"[""https://www.flickr.com/photos/tonnerrelombard/9344598677"", ""https://www.flickr.com/photos/tonnerrelombard/9311210064"", ""https://www.flickr.com/photos/tonyadamsphotos/6119287738""]",
+original_url,TEXT,,"[""https://farm8.staticflickr.com/7337/9344598677_321768cee0_o.jpg"", ""https://c3.staticflickr.com/8/7329/9311210064_79cdf61a9a_o.jpg"", ""https://farm6.staticflickr.com/6071/6119287738_fc446b1619_o.jpg""]",
+title,TEXT,,"[""Ultimaker Product Separation Device 1.0"", ""Robot"", ""31""]",
+license,TEXT,,"[""https://creativecommons.org/licenses/by/2.0/""]",
+image_id,TEXT,,"[""74b636551c196dd7"", ""3231f7d3de4adaba"", ""6c230978a399be65""]",
+author_profile_url,TEXT,,"[""https://www.flickr.com/people/tonnerrelombard/"", ""https://www.flickr.com/people/tonyadamsphotos/"", ""https://www.flickr.com/people/torsten-behrens/""]",
+author,TEXT,,"[""Tonnerre Lombard"", ""farmboyz"", ""Torsten Behrens""]",
+original_md5,TEXT,,"[""0/YcOvCN9eZ8BIY7xCIvAw=="", ""r06ZlEBcuB+9o9qxDzlweA=="", ""mcXYrxIWgYhMFOsW3zUHow==""]",
+thumbnail_300k_url,TEXT,,"[""https://c5.staticflickr.com/8/7337/9344598677_2247c7b06a_z.jpg"", ""https://c6.staticflickr.com/8/7329/9311210064_4a0c6f95ee_z.jpg"", ""https://c2.staticflickr.com/7/6071/6119287738_147ddf28a6_z.jpg""]",
+subset,TEXT,,"[""train""]",

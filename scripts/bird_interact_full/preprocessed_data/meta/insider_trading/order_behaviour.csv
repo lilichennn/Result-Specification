@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+REC_NODE,,TEXT. Identifier linking order-behaviour stats to a market-condition set. PK. FK to market_conditions(REC_PIN).,text,
+OST_ref,,TEXT. Reference to the order-status type token. FK to order_status_types(STAT_TOKEN).,text,
+dark_use,,REAL. Proportion of volume routed to dark pools. **NULL means dark-pool usage data not collected.**. Example: 0.009.,real,
+off_mkt,,REAL. Fraction of executions occurring off-exchange. Example: 0.197.,real,
+x_freq,,REAL. Execution frequency (orders filled per unit time). Example: 0.069.,real,
+order_metrics,,"JSONB column. Order behaviour metrics including size and cancellation.
+Fields: {""cancel_pct"":""REAL. Percentage of orders cancelled. **NULL means cancellation percentage not computed.**. Example: 0.129."",""mod_freq"":""REAL. Frequency at which orders are modified. Example: 0.46."",""size_var"":""REAL. Variance of order sizes placed. Example: 0.791.""}",jsonb,

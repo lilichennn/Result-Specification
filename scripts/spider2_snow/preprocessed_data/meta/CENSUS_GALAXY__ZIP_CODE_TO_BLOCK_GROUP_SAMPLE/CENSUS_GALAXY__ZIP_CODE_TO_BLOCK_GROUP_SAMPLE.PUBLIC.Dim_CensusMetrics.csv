@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+Type,TEXT,"The type or nature of the metric, indicating the kind of data it represents, such as population, housing, education, employment, etc.","[""Estimate""]",
+Descriptor2,TEXT,"Additional descriptive attribute or feature associated with the metric, providing more specific details.","["""", ""With no children of the householder under 18 years""]",
+MetricCategory,TEXT,"The category or classification to which the metric belongs, grouping related metrics together.","[""Demographics"", ""Income"", ""Housing""]",
+MetricTableDesc,TEXT,A description or label for the table or dataset in the American Community Survey or census data where the metric is stored.,"[""Median age of the population categorized by sex"", ""Earnings of households in the past 12 months"", ""Different types of households based on size and type""]",
+MetricTableID,TEXT,A unique identifier for the table or dataset in the American Community Survey or census data where the metric is stored.,"[""B01002"", ""B19051"", ""B11012""]",
+MetricID,TEXT,A unique identifier for a specific metric or measurement within the American Community Survey or census data.,"[""B01002_002E"", ""B19051_001E"", ""B19051_003E""]",
+Descriptor1,TEXT,"A descriptive attribute or feature associated with the metric, providing additional information or context.","[""Male"", """", ""No earnings""]",
+UnitMeasureType,TEXT,"The type of data stored in the CensusValue for each MetricID. It’s important to look at this field when grouping and summing values up or down geographic levels, as some are raw counts and others are averages or medians.","[""Aggregate"", ""People""]",
+MetricGroup,TEXT,"The product grouping decided by No Fret Data, connected to the rollout and roadmap of Census Galaxy.","[""Essential""]",
+Descriptor3,TEXT,"Another descriptive attribute or feature associated with the metric, providing further insights or details.","[""""]",

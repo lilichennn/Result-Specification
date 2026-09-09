@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+associated_geographic_entities,TEXT,,"[""Urban Area"", ""Census Division"", ""Voting District""]",
+lsad_code,TEXT,,"[""75"", ""69"", ""V1""]",
+lsad_description,TEXT,,"[""Urbanized Area (suffix)"", ""Division (suffix)"", ""Voting District (prefix)""]",

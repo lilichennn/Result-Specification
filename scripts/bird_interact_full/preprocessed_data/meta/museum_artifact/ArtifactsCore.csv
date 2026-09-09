@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+ARTregID,,TEXT. Unique identifier for each artifact. PK. Example: ART54317.,text,
+art_title,,TEXT. Title of the artifact. **NULL means no title provided.**. Example: Culture Painting.,text,
+DYNASTY,,"TEXT. Dynasty or period the artifact belongs to. Possible values: Han, Ming, Qing, Song, Tang, Yuan.",text,
+ageYears,,BIGINT. Age of the artifact in years. Example: 943.,bigint,
+MatKind,,"TEXT. Material type of the artifact. Possible values: Bronze, Ceramic, Jade, Paper, Stone, Textile, Wood.",text,
+conserve_status,,"TEXT. Current conservation status of the artifact. **NULL means no conservation status provided.**. Possible values: Critical, Excellent, Fair, Good, Poor.",text,

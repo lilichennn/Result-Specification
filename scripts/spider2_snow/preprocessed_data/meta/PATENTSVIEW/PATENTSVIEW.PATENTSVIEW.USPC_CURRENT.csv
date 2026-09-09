@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+sequence,NUMBER,,[],
+patent_id,TEXT,,[],
+subclass_id,TEXT,,[],
+mainclass_id,TEXT,,[],
+uuid,TEXT,,[],

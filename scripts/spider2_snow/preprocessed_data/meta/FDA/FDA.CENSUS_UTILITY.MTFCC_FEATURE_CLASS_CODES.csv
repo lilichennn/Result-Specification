@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+superclass,TEXT,,"[""Miscellaneous Topographic Features""]",
+description,TEXT,,"[""An expanded paved area at the end of a street used by vehicles for turning around. The placement of addressed structures located along the street may wrap around the end of the cul-de-sac."", ""A circular intersection allowing for continuous movement of traffic at the meeting of roadways, when the circle is represented as a point."", ""A movable barrier across a road.""]",
+point,BOOLEAN,,[true],
+feature_class_code,TEXT,,"[""C3061"", ""C3062"", ""C3066""]",
+feature_class,TEXT,,"[""Cul-de-sac"", ""Traffic Circle"", ""Gate""]",
+areal,BOOLEAN,,[false],
+linear,BOOLEAN,,[false],

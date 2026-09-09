@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+position,NUMBER,,"[1, 4, 2]",
+time,TEXT,,"[""1:32.713"", ""1:32.803"", ""1:32.902""]",
+race_id,NUMBER,,[841],
+driver_id,NUMBER,,[20],
+lap,NUMBER,,"[3, 4, 12]",
+milliseconds,NUMBER,,"[92713, 92803, 92902]",
+seconds,FLOAT,,"[92.713, 92.803, 92.902]",

@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+MbrLastName,TEXT,,"[""Hamilton"", ""Sergienko"", ""Patterson""]",
+Gender,TEXT,,"[""M"", ""F""]",
+MbrPhoneNumber,TEXT,,"[""555-2701"", ""555-2526"", ""555-2546""]",
+MbrFirstName,TEXT,,"[""David"", ""Mariya"", ""Rachel""]",
+MemberID,NUMBER,,"[101, 106, 108]",

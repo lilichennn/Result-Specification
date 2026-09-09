@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+region_id,NUMBER,Unique identifier for the region,"[3, 5, 12]",
+name,TEXT,Public name for this region,"[""San Francisco"", ""San Jose"", ""Oakland""]",

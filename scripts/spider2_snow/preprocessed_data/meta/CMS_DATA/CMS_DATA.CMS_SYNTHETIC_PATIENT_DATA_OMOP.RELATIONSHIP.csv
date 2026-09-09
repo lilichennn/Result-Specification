@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+relationship_concept_id,NUMBER,,"[44818859, 45905757, 45754684]",
+relationship_id,TEXT,,"[""Active ing of"", ""AMP of"", ""Answer of""]",
+is_hierarchical,TEXT,,"[""0""]",
+relationship_name,TEXT,,"[""Active ingredient of (SNOMED)"", ""Actual Medicinal Product of (SNOMED)"", ""Answer of (LOINC)""]",
+reverse_relationship_id,TEXT,,"[""Has active ing"", ""Has AMP"", ""Has Answer""]",
+defines_ancestry,TEXT,,"[""0""]",

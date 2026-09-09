@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+score,FLOAT,,"[0.06675469315003064, 0.02838700280430863, 0.768596546284029]",
+diseaseId,TEXT,,"[""EFO_0000544"", ""EFO_0004705"", ""MONDO_0007979""]",
+targetId,TEXT,,"[""ENSG00000183258"", ""ENSG00000170893"", ""ENSG00000179295""]",
+evidenceCount,NUMBER,,"[256, 512]",

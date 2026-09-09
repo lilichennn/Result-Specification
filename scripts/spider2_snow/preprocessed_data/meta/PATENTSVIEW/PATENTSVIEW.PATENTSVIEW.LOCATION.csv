@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+state_fips,FLOAT,,[],
+city,TEXT,,"[""Rio Cuarto"", ""St Martin"", ""PILLICHSDORF""]",
+state,TEXT,,[],
+latitude,FLOAT,,"[18.4365, -33.1223, -32.9539]",
+county,TEXT,,[],
+longitude,FLOAT,,"[-63.1754, -64.3593, -60.6304]",
+county_fips,TEXT,,[],
+country,TEXT,,"[""AI"", ""AR"", ""AT""]",
+id,TEXT,,"[""d7d40b84-cb90-11eb-9615-121df0c29c1e"", ""76690a33-cbae-11eb-9615-121df0c29c1e"", ""97cde1fd-cb8f-11eb-9615-121df0c29c1e""]",

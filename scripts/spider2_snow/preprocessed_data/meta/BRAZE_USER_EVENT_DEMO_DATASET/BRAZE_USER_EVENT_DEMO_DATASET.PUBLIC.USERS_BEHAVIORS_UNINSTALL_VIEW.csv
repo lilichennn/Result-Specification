@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+USER_ID,TEXT,,"[""0Jxi3dN7knMGnzU"", ""0JBoGikw3wgWBo1"", ""2ELeeuwRlHTfYRP""]",
+TIME,NUMBER,,"[1641909284, 1641906624, 1674312021]",
+APP_GROUP_API_ID,TEXT,,"[""yrOPI1O2pxw5mN"", ""IohswIzT1GWRN1"", ""QGZnpuu6m8MXVW""]",
+APP_API_ID,TEXT,,"[""r1BvM4USgbGPP4"", ""awcC2xZY6rMWwE"", ""j8Sw0m3BY9v5CR""]",
+APP_GROUP_ID,TEXT,,"[""JyWFOSKn8bq"", ""OkIYT1HbF7u""]",
+ID,TEXT,,"[""njL6s0HJbF55NK"", ""mWDU81s7w29oEE"", ""w4eapj1fEBWkuE""]",
+APP_ID,TEXT,,"[""cavgwlQbKmE"", ""WleeR6PnBPb""]",
+DEVICE_ID,TEXT,,"[""43cTDjI919bOqd"", ""rLkoWMR5xRbGke"", ""Gp7QRWrPVy3Hbg""]",
+SF_CREATED_AT,TIMESTAMP_LTZ,,"[""2021-12-14 10:21:30.589000-08:00"", ""2021-12-14 10:19:16.747000-08:00"", ""2021-12-14 10:21:22.135000-08:00""]",
+EXTERNAL_USER_ID,TEXT,,"[""B2ShxXxCWro"", ""luhzSnov0YL"", ""pMs0uTfyLRP""]",

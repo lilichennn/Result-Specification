@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+reckey,,"A BIGSERIAL primary key for recommendation records (e.g., 3001).",bigint,
+alglabel,,"An enum (recalgorithm_enum) describing the recommendation algorithm (Contextual, Content-based, Collaborative, Hybrid).",USER-DEFINED,
+stratlabel,,"An enum (recstrategy_enum) capturing strategy used (Trending, Editorial, Similar, Personalized).",USER-DEFINED,
+posval,,"An INT for the recommendation position or rank in a list (e.g., 3).",integer,
+recpage,,"An enum (recpage_enum) describing where the recommendation is displayed (Search, Category, Home, Article).",USER-DEFINED,
+recsec,,"An enum (recsection_enum) describing the section used for recommendation (Bottom, Sidebar, Related, Top).",USER-DEFINED,
+recscore,,"A NUMERIC(5,2) capturing the recommendation relevance or ranking score (e.g., 85.40).",numeric,
+confval,,"A NUMERIC(5,2) measuring algorithm’s confidence (e.g., 70.00).",numeric,
+divval,,"A NUMERIC(5,2) rating how diverse the recommendation is (e.g., 20.00).",numeric,
+novval,,"A NUMERIC(5,2) measuring novelty (e.g., 50.00).",numeric,
+seryval,,"A NUMERIC(5,2) measuring serendipity factor (e.g., 10.25).",numeric,
+artlink,,"A BIGINT FK referencing Articles(ArtKey), linking recommended article with the recommendation record.",bigint,

@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+inspectmode,,"TEXT. Inspection method used. Possible values: EL Imaging, IR Thermal, IV Curve, Visual.",text,
+inspectres,,"TEXT. Inspection results summary. Possible values: Major Issues, Minor Issues, Pass.",text,
+inspectdt,,DATE. Date of inspection. Example: 45528.,date,
+maintsched,,"TEXT. Maintenance schedule status. Possible values: Delayed, On Schedule, Overdue.",text,
+dqscore,,REAL. Data quality score. Example: 97.7.,real,

@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+consecutive_number,NUMBER,,"[10430, 10652, 10732]",
+sequence_of_events_name,TEXT,,"[""Motor Vehicle In-Transport""]",
+area_of_Impact_associated_with_the_event_name,TEXT,,"[""Top""]",
+vehicle_event_number,NUMBER,,"[2, 1, 4]",
+sequence_of_events,NUMBER,,[12],
+vehicle_number,NUMBER,,"[2, 1]",
+area_of_Impact_associated_with_the_event,NUMBER,,[13],
+state_name,TEXT,,"[""Alabama"", ""Arizona"", ""Arkansas""]",
+state_number,NUMBER,,"[1, 4, 5]",

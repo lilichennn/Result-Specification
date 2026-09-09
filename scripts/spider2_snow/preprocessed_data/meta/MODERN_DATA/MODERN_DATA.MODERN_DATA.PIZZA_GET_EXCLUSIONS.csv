@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+row_id,NUMBER,,[1],
+total_exclusions,NUMBER,,"[3, 1]",
+exclusions,NUMBER,,[4],
+order_id,NUMBER,,"[4, 9]",

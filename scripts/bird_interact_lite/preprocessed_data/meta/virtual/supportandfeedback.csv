@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+supportreg,,"A VARCHAR(20) primary key for support/feedback records (e.g., 'SUP001').",character varying,
+supportinteractpivot,,A VARCHAR(20) FK referencing Interactions(ActivityReg).,character varying,
+supportprefpivot,,A VARCHAR(20) FK referencing PreferencesAndSettings(PrefReg).,character varying,
+techissuerpt,,"A SMALLINT number of technical issues reported (e.g., 2).",smallint,
+supptix,,"A SMALLINT how many support tickets the fan opened (e.g., 1).",smallint,
+fbsubs,,"A SMALLINT count of feedback submissions (e.g., 3).",smallint,
+survpart,,"An enum (SurveyParticipation_enum) describing survey participation (Never, Active, Occasional).",USER-DEFINED,
+betapart,,"An enum (BetaTestingParticipation_enum) for beta test participation (Former, Yes, No).",USER-DEFINED,
+featreqsubs,,"A SMALLINT how many feature requests the fan submitted (e.g., 1).",smallint,
+bugsubs,,"A SMALLINT how many bug reports the fan submitted (e.g., 0).",smallint,
+satrate,,"A DECIMAL(3,1) overall satisfaction rating (e.g., '8.5').",numeric,
+npsval,,"A SMALLINT Net Promoter Score value (e.g., 9).",smallint,

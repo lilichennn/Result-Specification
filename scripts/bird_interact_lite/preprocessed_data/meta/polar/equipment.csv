@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+equipmentcode,,A VARCHAR(50) primary key uniquely identifying each equipment record.,character varying,
+equipmenttype,,"An enum (EquipmentType_enum) specifying the category of equipment (e.g., Shelter, Scientific, Safety, Vehicle, Generator, Communication).",USER-DEFINED,
+equipmentmodel,,A VARCHAR(80) describing the model name/number of the equipment.,character varying,
+manufacturer,,A VARCHAR(120) naming the manufacturer or brand of the equipment.,character varying,
+servicelifeyears,,A SMALLINT indicating the expected or recommended service life (in years).,smallint,
+equipmentutilizationpercent,,"A NUMERIC(5,2) showing the approximate utilization percentage (e.g., 75.00%).",numeric,
+reliabilityindex,,"A NUMERIC(6,3) representing a reliability metric or score for the equipment.",numeric,
+performanceindex,,"A NUMERIC(7,2) measuring the performance level of the equipment.",numeric,
+efficiencyindex,,A REAL value indicating the efficiency rating or ratio.,real,
+safetyindex,,"A DECIMAL(5,3) capturing the safety rating index for the equipment.",numeric,
+environmentalimpactindex,,A DOUBLE PRECISION value denoting the environmental impact rating.,double precision,

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+dob,TEXT,,"[""1985-06-27"", ""1981-07-29"", ""1985-01-11""]",
+url,TEXT,,"[""http://en.wikipedia.org/wiki/Nico_Rosberg"", ""http://en.wikipedia.org/wiki/Fernando_Alonso"", ""http://en.wikipedia.org/wiki/Kazuki_Nakajima""]",
+nationality,TEXT,,"[""German"", ""Spanish"", ""Japanese""]",
+forename,TEXT,,"[""Nico"", ""Fernando"", ""Kazuki""]",
+full_name,TEXT,,"[""Nico Rosberg"", ""Fernando Alonso"", ""Kazuki Nakajima""]",
+surname,TEXT,,"[""Rosberg"", ""Alonso"", ""Nakajima""]",
+code,TEXT,,"[""ROS"", ""ALO"", ""NAK""]",
+number,FLOAT,,"[6.0, 14.0]",
+driver_ref,TEXT,,"[""rosberg"", ""alonso"", ""nakajima""]",
+driver_id,NUMBER,,"[3, 4, 6]",

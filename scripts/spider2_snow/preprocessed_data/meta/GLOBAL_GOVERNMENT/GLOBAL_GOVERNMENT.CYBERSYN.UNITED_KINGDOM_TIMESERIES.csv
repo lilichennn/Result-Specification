@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""weekly-deaths-local-authority_registrations_hospice_covid-19"", ""weekly-deaths-local-authority_occurrences_hospital_all-causes"", ""weekly-deaths-local-authority_registrations_other-communal-establishment_covid-19""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Death Registrations from COVID 19: Hospice"", ""Death Occurrences from All causes: Hospital"", ""Death Registrations from COVID 19: Other communal establishment""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""uk/E06000055"", ""uk/E06000037"", ""uk/E08000034""]",
+DATE,DATE,Date associated with the value.,"[""2022-12-11"", ""2023-10-22"", ""2023-09-03""]",
+VALUE,FLOAT,Value reported for the variable.,"[0.0, 8.0, 1.0]",

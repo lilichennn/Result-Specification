@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+ticket_no,TEXT,,"[""0005432000988"", ""0005432000989"", ""0005432000991""]",
+passenger_id,TEXT,,"[""8499 420203"", ""1011 752484"", ""6615 976589""]",
+book_ref,TEXT,,"[""06B046"", ""E170C3"", ""F313DD""]",

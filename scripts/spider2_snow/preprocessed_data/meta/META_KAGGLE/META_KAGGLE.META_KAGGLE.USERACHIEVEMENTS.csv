@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+TotalGold,NUMBER,,[0],
+TierAchievementDate,DATE,,[],
+HighestRanking,NUMBER,,[],
+CurrentRanking,NUMBER,,[],
+Id,NUMBER,,"[6426519, 6512273, 6419651]",
+UserId,NUMBER,,"[930969, 960263, 928677]",
+TotalSilver,NUMBER,,[0],
+Tier,NUMBER,,[0],
+AchievementType,TEXT,,"[""Competitions""]",
+Points,NUMBER,,[0],
+TotalBronze,NUMBER,,[0],

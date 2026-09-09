@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+ModifiedDate,TEXT,,"[""2011-04-16 00:00:00"", ""2011-07-17 00:00:00"", ""2011-10-17 00:00:00""]",
+rowguid,TEXT,,"[""{99109BBF-8693-4587-BC23-6036EC89E1BE}"", ""{DFD01444-8900-461C-8D6F-04598DAE01D4}"", ""{0A69F453-9689-4CCF-A08C-C644670F5668}""]",
+SalesQuota,FLOAT,,"[28000.0, 7000.0, 91000.0]",
+BusinessEntityID,NUMBER,,[274],
+QuotaDate,TEXT,,"[""2011-05-31 00:00:00"", ""2011-08-31 00:00:00"", ""2011-12-01 00:00:00""]",

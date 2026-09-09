@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+team_id,NUMBER,,"[7, 1, 11]",
+match_id,NUMBER,,"[392220, 548368, 501244]",
+player_id,NUMBER,,"[133, 40, 50]",
+role,TEXT,,"[""Captain""]",

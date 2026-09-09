@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+systemoverseeractuation,,PRIMARY KEY (VARCHAR(20)) referencing actuation_data(ActReg). Identifies this system controller record uniquely.,character varying,
+systemoverseeroperation,,VARCHAR(20) referencing operation(OperReg).,character varying,
+systemoverseerrobot,,VARCHAR(20) referencing robot_details(BotDetReg).,character varying,
+controller_metrics,,"JSONB column. Aggregates performance and environmental metrics of the system controller, including load, memory usage, thermal levels, and cabinet conditions.
+Fields: {""cabinet_humidity"":""NUMERIC(5,2) referencing cabinet humidity level as a percentage."",""cabinet_temperature"":""DECIMAL(6,3) storing the temperature inside the controller cabinet, if applicable."",""load_value"":""NUMERIC(4,2) measuring system or CPU load for the robot’s supervisory controller."",""memory_usage"":""REAL capturing memory usage (in MB or as ratio) of the system controller."",""thermal_level"":""FLOAT(5) approximate float for the controller’s internal temperature or thermal reading.""}",jsonb,

@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+loyaltyreg,,"A VARCHAR(20) primary key for loyalty & achievements (e.g., 'LOY001').",character varying,
+loyaltyeventspivot,,A VARCHAR(20) FK referencing EventsAndClub(EventsReg).,character varying,
+loyaltyengagepivot,,A VARCHAR(20) FK referencing Engagement(EngageReg).,character varying,
+rankpos,,"An INT rank position among all fans (e.g., 120).",integer,
+inflscore,,"A DECIMAL(5,2) measuring influencer or leadership potential (e.g., '85.50').",numeric,
+reputelv,,"An enum (ReputationLevel_enum) describing the fan’s reputation (Respected, Elite, New, Established).",USER-DEFINED,
+trustval,,"A DECIMAL(4,1) representing trust or reliability score (e.g., '9.2').",numeric,
+reward_progress,,"JSONB column. Aggregates data related to the fan’s loyalty rewards and achievements, including points, tier, badges, and special titles.
+Fields: {""achievements"":{""achcount"":""An INT number of achievements unlocked (e.g., 5)."",""badgecoll"":""An INT count of badges collected by the fan (e.g., 3)."",""spectitles"":""An INT how many special titles the fan holds (e.g., 1).""},""loyalty"":{""loypts"":""An INT storing loyalty points earned (e.g., 2500)."",""rewtier"":""An enum (RewardTier_enum) for the reward tier (Bronze, Platinum, Gold, Silver).""}}",jsonb,

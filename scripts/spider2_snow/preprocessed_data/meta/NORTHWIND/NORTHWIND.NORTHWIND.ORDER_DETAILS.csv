@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+discount,FLOAT,,"[0.0, 0.150000006]",
+orderid,NUMBER,,"[10248, 10250, 10253]",
+unitprice,FLOAT,,"[14.0, 42.4000015, 14.3999996]",
+quantity,NUMBER,,"[12, 35, 42]",
+productid,NUMBER,,"[11, 51, 39]",

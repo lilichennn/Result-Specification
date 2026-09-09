@@ -85,13 +85,13 @@ def generate_round2(
     last_error: Exception | None = None
     for attempt in range(1, max_attempts + 1):
         try:
-            LOGGER.info("Round-2 model request attempt %d/%d", attempt, max_attempts)
+            LOGGER.debug("Round-2 model request attempt %d/%d", attempt, max_attempts)
             result = parse_round2_response(invoke(messages))
-            LOGGER.info("Round-2 model request succeeded on attempt %d/%d", attempt, max_attempts)
+            LOGGER.debug("Round-2 model request succeeded on attempt %d/%d", attempt, max_attempts)
             return result
         except Exception as exc:
             last_error = exc
-            LOGGER.warning(
+            LOGGER.debug(
                 "Round-2 model request failed on attempt %d/%d: %s: %s",
                 attempt,
                 max_attempts,

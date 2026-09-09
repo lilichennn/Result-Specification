@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,"Unit of measure for the variable (e.g., Count, Percent, Ratio, USD)","[""Percent"", ""USD"", ""Miles""]",
+VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""Annual % of Appraisals Above Contract Price Ratio of Tract Med. Inc. to MSA Med. Inc. Purchase Missing"", ""Quarterly 25% Quartile of Appraised Value Year Built Purchase 1980 to 1989"", ""Annual Mean Comps Adjustment Percent Effective Age Purchase & Refinance 6 to 10 years""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the attributes table for filtering,"[""Annual_%_of_Appraisals_Above_Contract_Price_Ratio_of_Tract_Med._Inc._to_MSA_Med._Inc._Purchase_Missing"", ""Quarterly_25%_Quartile_of_Appraised_Value_Year_Built_Purchase_1980_to_1989"", ""Annual_Mean_Comps_Adjustment_Percent_Effective_Age_Purchase_&_Refinance_6_to_10_years""]",
+GEO_ID,TEXT,A unique geographic identifier joinable to the geography_index/relationships tables,"[""geoId/C41740"", ""geoId/M19804"", ""geoId/C36540""]",
+SUPPRESSED,BOOLEAN,Boolean indicating whether the value has been suppressed in the underlying data for privacy purposes. Suppressed values appear as NULL,[false],
+DATE,DATE,Date associated with the value,"[""2015-12-31"", ""2023-12-31"", ""2021-12-31""]",
+VALUE,FLOAT,The reported numeric value for the variable and date,"[0.51, 264000.0, 0.004]",

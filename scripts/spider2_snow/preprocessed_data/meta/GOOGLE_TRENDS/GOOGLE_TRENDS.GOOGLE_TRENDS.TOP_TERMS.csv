@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+week,DATE,,"[""2019-11-17"", ""2019-12-15"", ""2020-02-02""]",
+term,TEXT,,"[""AC Milan""]",
+rank,NUMBER,,[23],
+score,NUMBER,,[],
+refresh_date,DATE,,"[""2024-09-28""]",
+dma_id,NUMBER,,[500],
+dma_name,TEXT,,"[""Portland-Auburn ME""]",

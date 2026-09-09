@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+pat_dep_clm_ct,TEXT,,"[""3""]",
+pat_clm_ct,TEXT,,"[""2"", ""1""]",
+pat_wrd_ct,TEXT,,"[""471"", ""103"", ""258""]",
+appl_id,TEXT,,"[""11559573""]",
+pat_wrd_avg,TEXT,,"[""235.5"", ""103"", ""129""]",
+pat_dep_wrd_min,TEXT,,"[""33""]",
+pat_dep_wrd_ct,TEXT,,"[""178"", ""199"", ""119""]",
+pat_dep_wrd_avg,TEXT,,"[""59.33333"", ""66.33334"", ""39.66667""]",
+pat_no,TEXT,,"[""8305646"", ""3946637"", ""3988556""]",
+pat_wrd_min,TEXT,,"[""218"", ""103"", ""117""]",

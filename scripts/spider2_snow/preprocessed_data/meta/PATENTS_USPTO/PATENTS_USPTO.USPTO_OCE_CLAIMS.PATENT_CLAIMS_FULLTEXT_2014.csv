@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+pat_no,TEXT,,"[""8775049""]",
+claim_no,TEXT,,"[""25"", ""21"", ""3""]",
+dependencies,TEXT,,"[""1"", ""20"", ""17""]",
+claim_txt,TEXT,,"[""25. The method according to claim 1, wherein the evaluation of the state of the combustion is performed for each individual cylinder of the internal combustion engine."", ""21. The apparatus according to claim 20, wherein each multichannel signal evaluation device is connected with a database in which sample signals of flame light signals with assigned particle emissions are stored."", ""3. The method according to claim 1, wherein a limit value for flame light intensity is defined and upon exceeding the limit value in at least one cylinder, a measure is performed for reducing particle emissions in the respective cylinder.""]",
+appl_id,TEXT,,"[""13306241""]",
+ind_flg,TEXT,,"[""0""]",

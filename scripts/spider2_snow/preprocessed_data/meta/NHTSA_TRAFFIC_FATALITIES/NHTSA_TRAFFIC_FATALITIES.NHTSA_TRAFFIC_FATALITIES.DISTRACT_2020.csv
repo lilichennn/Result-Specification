@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+state_number,NUMBER,,"[4, 5, 6]",
+driver_distracted_by_name,TEXT,,"[""Not Distracted""]",
+state_name,TEXT,,"[""Arizona"", ""Arkansas"", ""California""]",
+consecutive_number,NUMBER,,"[40238, 40498, 50373]",
+vehicle_number,NUMBER,,"[6, 7, 5]",
+driver_distracted_by,NUMBER,,[0],

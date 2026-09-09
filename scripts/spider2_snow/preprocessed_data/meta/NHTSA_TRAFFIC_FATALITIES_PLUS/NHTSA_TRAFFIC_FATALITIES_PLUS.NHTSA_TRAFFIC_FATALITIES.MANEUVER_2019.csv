@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+driver_maneuvered_to_avoid_name,TEXT,,"[""Driver Did Not Maneuver to Avoid""]",
+vehicle_number,NUMBER,,"[7, 5]",
+state_number,NUMBER,,"[4, 5]",
+state_name,TEXT,,"[""Arizona"", ""Arkansas""]",
+consecutive_number,NUMBER,,"[40257, 40259, 40849]",
+driver_maneuvered_to_avoid,NUMBER,,[0],

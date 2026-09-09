@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+opsregistry,,VARCHAR(20). Unique operation registry identifier. PK.,character varying,
+emerglevel,,"EmergLevel_enum. Emergency level of the operation. Possible values: Black, Orange, Red, Yellow.",USER-DEFINED,
+resp_phase,,"TEXT. Response phase during the operation. Possible values: Emergency, Initial, Reconstruction, Recovery.",text,
+opsstatus,,"TEXT. Operational status description. Possible values: Active, Completed, Planning, Scaling Down.",text,
+coordcenter,,TEXT. Coordination center for the operation. Example: CC7649.,text,
+ops_start_date,,DATE. Date when the operation started. Example: 2025-01-26.,date,
+estdurationdays,,BIGINT. Estimated duration of the operation in days. Example: 12.,bigint,
+priority_rank,,"PriorityRank_enum. Priority rank of the operation. Possible values: Critical, High, Low, Medium.",USER-DEFINED,
+resourceallocstate,,"ResourceAllocState_enum. Resource allocation status. Possible values: Critical, Limited, Sufficient.",USER-DEFINED,
+supply_flow_state,,"TEXT. Supply flow status during the operation. Possible values: Disrupted, Stable, Strained.",text,

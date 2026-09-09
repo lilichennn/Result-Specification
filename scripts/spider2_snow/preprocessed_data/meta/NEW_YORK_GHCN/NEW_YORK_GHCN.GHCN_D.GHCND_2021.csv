@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+sflag,TEXT,,"[""W""]",
+value,FLOAT,,"[94.0, 11.0, 17.0]",
+id,TEXT,,"[""USW00013884"", ""USW00013870"", ""USW00003856""]",
+date,DATE,,"[""2021-03-02"", ""2021-11-13""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+source_url,TEXT,Source ,"[""ftp://ftp.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2021.csv.gz""]",
+etl_timestamp,NUMBER,Load time for this data row,"[1689803742385381, 1689804506493496]",
+element,TEXT,,"[""ADPT""]",

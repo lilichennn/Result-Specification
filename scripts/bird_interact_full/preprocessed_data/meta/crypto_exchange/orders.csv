@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+ORD_STAMP,,TEXT. Unique order identifier. PK. Example: OR6015391.,text,
+TimeCode,,TIMESTAMP. Timestamp when the order was submitted. Possible values: 2025/2/19. Possible values: 2025/2/19.,timestamp without time zone,
+exchSpot,,TEXT. Exchange trading pair or market symbol. Example: EX203.,text,
+market_note,,TEXT. Descriptive note about the market context. Example: ETH-USDT.,text,
+UserRef,,TEXT. User identifier who placed the order. FK to users.,text,
+created_at,,TIMESTAMP. Record-creation timestamp. Example: 2025-02-18T09:54:51+09:00.,timestamp without time zone,
+UPDATED_AT,,TIMESTAMP. Last update timestamp for the order record. Possible values: 2025/2/19 08:29.,timestamp without time zone,
+order_attributes,,"JSONB column. Aggregates the core descriptive parameters of an order (type, side, price, size, status, etc.) into one JSONB field for simpler retrieval and analytics.
+Fields: {""client_order_id"":""TEXT. Client-side marker or reference label. Example: CL5311016."",""limit_price"":""REAL. Executed deal price quote. Example: 27080.39."",""notional_value"":""TEXT. Notional trade value. **NULL means notional value not recorded.**. Example: $81,019.90 ."",""quantity"":""REAL. Quantity executed in base units. Example: 1.992955. Example: 1.992955."",""side"":""TEXT. Deal-edge or strategy tag. Possible values: Buy, Sell."",""source"":""TEXT. Base currency origin or funding source. Possible values: API, Bot, Mobile, Web."",""status"":""TEXT. Order-flow direction or category. Possible values: Cancelled, Filled, New, PartiallyFilled."",""time_in_force"":""TEXT. Intended order lifespan or validity period. **NULL means lifespan not specified.**. Possible values: FOK, GTC, GTD, IOC."",""type"":""TEXT. Order-type or tuning parameter. Possible values: Limit, Market, Stop, StopLimit.""}",jsonb,

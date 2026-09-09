@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+abkey,,"A VARCHAR(30) primary key for each assessment (e.g., 'AB001').",character varying,
+atype,,"An enum (assessmenttype_enum) capturing the assessment type (Initial, Emergency, Routine, Follow-up).",USER-DEFINED,
+amethod,,"An enum (assessmentmethod_enum) for how the assessment was done (Phone, Self-report, In-person, Telehealth).",USER-DEFINED,
+adurmin,,"A SMALLINT indicating assessment duration in minutes (e.g., 45).",smallint,
+alang,,"An enum (assessmentlanguage_enum) describing which language was used (Chinese, French, Spanish, English, Other).",USER-DEFINED,
+avalid,,"An enum (assessmentvalidity_enum) capturing validity (Questionable, Invalid, Valid).",USER-DEFINED,
+respconsist,,"An enum (responseconsistency_enum) describing response consistency (Medium, High, Low).",USER-DEFINED,
+symptvalid,,"An enum (symptomvalidity_enum) describing symptom validity (Questionable, Valid, Invalid).",USER-DEFINED,
+patownerref,,"A VARCHAR(20) FK referencing Patients(PatKey), linking the assessment to its patient.",character varying,

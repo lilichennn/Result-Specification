@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+time,TEXT,,[],
+date,DATE,,"[""1973-08-22"", ""1973-12-08"", ""1973-04-05""]",
+mflag,TEXT,,[],
+value,FLOAT,,[0.0],
+qflag,TEXT,,[],
+element,TEXT,,"[""ACMH""]",
+sflag,TEXT,,"[""X""]",
+id,TEXT,,"[""USW00093193"", ""USW00023169"", ""USW00013960""]",

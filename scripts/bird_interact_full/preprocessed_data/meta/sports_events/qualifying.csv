@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+qualkey,,INTEGER. Unique qualifying key. PK. Example: 6815.,integer,
+rbind,,INTEGER. Foreign key to the races table (RAK_ID). FK to races. Example: 954.,integer,
+pilotrec,,INTEGER. Foreign key to the drivers table (DRV_MAIN). FK to drivers. Example: 1.,integer,
+corptag,,INTEGER. Foreign key to the constructors table (CSTR_Key). FK to constructors. Example: 131.,integer,
+regno,,INTEGER. Registration number of the driver. Example: 44.,integer,
+px_pos,,INTEGER. Position in qualifying. Example: 1.,integer,
+q1_r,,TEXT. Q1 qualifying result. **NULL means no Q1 result.**. Example: 1:14.121.,text,
+q2_r,,TEXT. Q2 qualifying result. **NULL means no Q2 result.**. Example: 1:13.076.,text,
+q3_r,,TEXT. Q3 qualifying result. **NULL means no Q3 result.**. Example: 1:12.812.,text,

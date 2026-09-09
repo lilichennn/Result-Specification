@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,Unit of measurement for the reported value.,"[""1982-1984 USD per hour"", ""USD per week"", ""Count""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/USA"", ""geoId/21167""]",
+DATE,DATE,Date associated with the value.,"[""1994-03-31"", ""1992-10-31"", ""2017-07-31""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Current Employment: Average hourly earnings of production and nonsupervisory employees, 1982-84 dollars, construction of buildings, Monthly (Seasonally adjusted)"", ""Current Employment: Average weekly earnings of production and nonsupervisory employees, periodical publishers, Monthly (Seasonally adjusted)"", ""Current Employment: Production and nonsupervisory employees, industrial machinery manufacturing, Monthly (Seasonally adjusted)""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""CES2023600032.M_SA"", ""CES5051312030.M_SA"", ""CES3133320006.M_SA""]",
+VALUE,FLOAT,Value reported for the variable.,"[9.32, 472.26, 63600.0]",

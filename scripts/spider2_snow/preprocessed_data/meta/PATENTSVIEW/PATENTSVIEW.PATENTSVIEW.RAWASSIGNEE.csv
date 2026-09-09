@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+assignee_id,TEXT,,"[""a4730192-57df-482a-b741-5f51986d6d33""]",
+name_first,TEXT,,[],
+sequence,NUMBER,,[0],
+rawlocation_id,TEXT,,"[""b9cui9stli50um6cqid7799p5"", ""ucwouuv2681yeotm5dg0g0c5j"", ""bd2919c8-7c6c-482a-9ac9-6393421cb8c3""]",
+uuid,TEXT,,"[""kdchn2f76p5ppvohmhgjdymn3"", ""w013fx7xgo14m9ar7rdd1y5v0"", ""dc51eab6-0b01-41d8-8f2b-37f01e65430a""]",
+organization,TEXT,,"[""Matsushita Electric Industrial Co., Ltd.""]",
+type,FLOAT,,[3.0],
+patent_id,TEXT,,"[""6519094"", ""7119958"", ""5932850""]",
+name_last,TEXT,,[],

@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""Royal Challengers Bangalore"", ""Chennai Super Kings"", ""Kings XI Punjab""]",
+team_id,NUMBER,,"[2, 3, 4]",

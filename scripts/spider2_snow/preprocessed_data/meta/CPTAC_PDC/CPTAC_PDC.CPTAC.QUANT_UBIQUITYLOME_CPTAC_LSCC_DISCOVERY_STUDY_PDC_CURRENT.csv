@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+aliquot_submitter_id,TEXT,,"[""CPT0175120003""]",
+study_name,TEXT,,"[""CPTAC LSCC Discovery Study - Ubiquitylome""]",
+refseq_id,TEXT,,"[""NP_001123614.1"", ""NP_066956.1"", ""NP_001288177.1""]",
+case_id,TEXT,,"[""1c63e1f8-d028-11ea-b1fd-0aad30af8a83""]",
+aliquot_id,TEXT,,"[""1c663522-d028-11ea-b1fd-0aad30af8a83""]",
+sample_id,TEXT,,"[""1c64a4a5-d028-11ea-b1fd-0aad30af8a83""]",
+aliquot_run_metadata_id,TEXT,,"[""ef74a86c-eecb-11ea-b1fd-0aad30af8a83""]",
+ubiquitylation_sites,TEXT,,"[""k653"", ""k392"", ""k324""]",
+protein_abundance_log2ratio,FLOAT,,[],

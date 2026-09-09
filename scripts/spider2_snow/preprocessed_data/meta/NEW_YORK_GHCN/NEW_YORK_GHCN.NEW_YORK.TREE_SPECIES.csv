@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+species_common_name,TEXT,,"[""Smoke Tree"", ""European Birdcherry"", ""Sargent Cherry""]",
+form,TEXT,,"[""Rounded""]",
+tree_size,TEXT,,"[""Small (Mature Height < 25 ft)"", ""Intermediate (Mature Height 25-35 ft)""]",
+growth_rate,TEXT,,"[""Slow""]",
+location_tolerances,TEXT,,"[""Small Tree Pit (<3 ft)"", ""Median Tree, Small Tree Pit (<3 ft)""]",
+fall_color,TEXT,,"[""Red/Bronze"", ""Yellow/Bronze"", ""Red/ yellow""]",
+environmental_tolerances,TEXT,,"[""none"", ""Salt and Drought Tolerant"", ""Drought and High pH Tolerant""]",
+species_scientific_name,TEXT,,"[""Cotinus sp."", ""Prunus padus"", ""Prunus sargentii""]",
+comments,TEXT,,"[""""]",
+notes_suggested_cultivars,TEXT,,"[""'Royal Purple' or 'Grace'"", ""One of the First Trees to Leaf Out in the Spring"", ""'Accolade' is Semi–double Flowering;""]",

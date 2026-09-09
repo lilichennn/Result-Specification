@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+seller_zip_code_prefix,NUMBER,,"[13023, 13844, 20031]",
+seller_state,TEXT,,"[""SP"", ""RJ"", ""PE""]",
+seller_city,TEXT,,"[""campinas"", ""mogi guacu"", ""rio de janeiro""]",
+seller_id,TEXT,,"[""3442f8959a84dea7ee197c632cb2df15"", ""d1b65fc7debc3361ea86b5f14c68d2e2"", ""ce3ad9de960102d0677a81f5d0bb7b2d""]",

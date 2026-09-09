@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cstr_key,,INTEGER. Unique identifier for the constructor. PK. Example: 1.,integer,
+refcod,,TEXT. Constructor reference code. Example: mclaren.,text,
+namelabel,,VARCHAR. Full team name. **NULL means the constructor name has not been resolved or released.**. Example: McLaren.,text,
+naty,,VARCHAR. Nationality of the constructor. **NULL means the team's nationality is not specified in the dataset.**. Example: British.,text,
+linkpage,,VARCHAR. URL to the constructor's page. **NULL means the reference link is missing.**. Example: http://en.wikipedia.org/wiki/BMW_Sauber.,text,

@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+station_name,TEXT,,"[""36 St"", ""W 4 St - Washington Sq"", ""Jay St - MetroTech""]",
+ridership_2016,NUMBER,,"[13180, 42755, 44267]",
+change_2018_percent,FLOAT,,"[-0.029, -0.028, -0.036]",
+ridership_2017,NUMBER,,"[13894, 41835, 43833]",
+ridership_2013,NUMBER,,"[12059, 40798, 40183]",
+ridership_2018,NUMBER,,"[13493, 40666, 42274]",
+ridership_2015,NUMBER,,"[12810, 42760, 43456]",
+ridership_2014,NUMBER,,"[12497, 41968, 41405]",
+change_2018_raw,NUMBER,,"[-401, -1169, -1559]",
+routes,TEXT,,"[""D,N,R"", ""A,B,C,D,E,F,M"", ""A,C,F,R""]",
+rank_ridership_2018,NUMBER,,"[111, 22, 21]",

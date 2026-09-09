@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""USW00023188"", ""USW00023009"", ""USW00003170""]",
+time,TEXT,,[],
+element,TEXT,,"[""WSF2""]",
+date,DATE,,"[""1998-01-09"", ""1998-05-12"", ""1998-05-02""]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""X""]",
+mflag,TEXT,,[],
+value,FLOAT,,"[89.0, 125.0, 130.0]",

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+ZipCode,TEXT,The U.S. Postal Service Zip Code,"[""13640"", ""14826"", ""13632""]",
+ZipCodeCentroidPoint,TEXT,The precise point location (latitude and longitude) of the Zip Code's centroid.,"[""{\""type\"":\""Point\"", \""coordinates\"":[-75.9901534,44.3326611]}"", ""{\""type\"":\""Point\"", \""coordinates\"":[-77.4924998,42.4962441]}"", ""{\""type\"":\""Point\"", \""coordinates\"":[-76.0682323,44.1269457]}""]",
+ZipCodePolygon,TEXT,"The geometric representation of the Zip Code as a polygon, defined by its boundary coordinates. This may be null for “Unique” and “PO Box” Zip Codes, as they may just have a single point. Those types can be referenced in ZipCodeType field.",[],
+PreferredStateAbbrev,TEXT,The abbreviated form or code representing the state where the Zip/City is located.,"[""NY""]",
+ZipCodeCentroidLon,TEXT,The longitude coordinate of the Zip Code's centroid.,"[""-75.9901534"", ""-77.4924998"", ""-76.0682323""]",
+ZipCodeType,TEXT,"The category of Zip Code, according to the U.S. Postal Service","[""Standard"", ""PO Box""]",
+PreferredCityStateAbbrev,TEXT,The concatenated form of PreferredCity and PreferredStateAbbrev with a comma.,"[""Wellesley Island, NY"", ""Cohocton, NY"", ""Depauville, NY""]",
+PreferredCity,TEXT,The city name most commonly used by the U.S. Census and Postal Service for each zip code. Different agencies and organizations will use different iterations of the same city based on their use and source of data.  ,"[""Wellesley Island"", ""Cohocton"", ""Depauville""]",
+ZipCodeCentroidLat,TEXT,"The latitude coordinate of the Zip Code's centroid, which represents the central point of the Zip Code.","[""+44.3326611"", ""+42.4962441"", ""+44.1269457""]",
+PreferredStateName,TEXT,"The state name associated with the PreferredCity. While there is almost never a case where a city could have a different “preferred state”, we kept the naming convention to differentiate Zip/City associated states from BlockGroup associated states, as they have different sources.","[""New York""]",

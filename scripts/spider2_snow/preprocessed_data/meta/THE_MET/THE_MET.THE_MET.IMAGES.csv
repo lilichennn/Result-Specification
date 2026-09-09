@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+title,TEXT,,[],
+public_caption,TEXT,,"[""Fig. 8. X-radiograph of The Met, 61.101.1"", ""Fig. 5. Ferdinand Hodler, sketch for \""The Dream of the Shepherd,\"" ca. 1895, carnet inv. 1958-176/10.12 (right side) © Musée d’art et d’histoire, Ville de Genève"", ""Fig. 7. Ferdinand Hodler, sketch for \""The Dream of the Shepherd,\"" ca. 1895, carnet inv. 1958-176/116.07 (right side) © Musée d’art et d’histoire, Ville de Genève""]",
+caption,TEXT,,[],
+is_oasc,BOOLEAN,,[false],
+gcs_url,TEXT,,"[""gs://gcs-public-data--met/435868/8.jpg"", ""gs://gcs-public-data--met/634108/5.jpg"", ""gs://gcs-public-data--met/634108/7.jpg""]",
+object_id,NUMBER,,"[435868, 634108]",
+original_image_url,TEXT,,"[""http://images.metmuseum.org/CRDImages/ep/original/CP x-ray.jpg"", ""http://images.metmuseum.org/CRDImages/ep/original/Hodler 1.jpg"", ""http://images.metmuseum.org/CRDImages/ep/original/Hodler 3.jpg""]",

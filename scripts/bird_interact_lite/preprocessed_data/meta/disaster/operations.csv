@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+opsregistry,,"A VARCHAR(20) primary key for each operations record (e.g., 'OPS0001').",character varying,
+opsdistref,,"A VARCHAR(20) referencing DisasterEvents(DistRegistry), tying these operations to a disaster (e.g., 'DIST0001').",character varying,
+opshubref,,"A VARCHAR(20) referencing DistributionHubs(HubRegistry), associating operations with a particular hub (e.g., 'HUB0001').",character varying,
+emerglevel,,"An enum (EmergLevel_enum) labeling the emergency level; possible values: 'Black', 'Orange', 'Red', 'Yellow'.",USER-DEFINED,
+respphase,,"An enum (RespPhase_enum) for the disaster response phase; possible values: 'Reconstruction', 'Recovery', 'Emergency', 'Initial'.",USER-DEFINED,
+opsstatus,,"An enum (OpsStatus_enum) showing the operation’s status; values: 'Completed', 'Scaling Down', 'Active', 'Planning'.",USER-DEFINED,
+coordcenter,,"A VARCHAR(80) describing the coordination center or command location (e.g., 'Central Ops HQ').",character varying,
+opsstartdate,,"A DATE indicating when operations began (e.g., '2025-04-01').",date,
+estdurationdays,,"An INT estimating how many days the operation will last (e.g., 30).",integer,
+priorityrank,,"An enum (PriorityRank_enum) defining the priority level; possible values: 'High', 'Medium', 'Low', 'Critical'.",USER-DEFINED,
+resourceallocstate,,"An enum (ResourceAllocState_enum) describing resource allocation; possible values: 'Limited', 'Critical', 'Sufficient'.",USER-DEFINED,
+supplyflowstate,,"An enum (SupplyFlowState_enum) indicating supply chain flow status; possible values: 'Disrupted', 'Stable', 'Strained'.",USER-DEFINED,

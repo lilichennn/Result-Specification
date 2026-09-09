@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+ret_reg,,BIGSERIAL. Auto-generated unique identifier for retention and influence record. PK = RetentionAndInfluence(Ret_Reg).,bigint,
+retain_engage_pivot,,BIGINT. Reference to engagement record for retention analysis. FK to Engagement.,bigint,
+retain_loyalty_pivot,,BIGINT. Reference to loyalty record for retention correlation. FK to LoyaltyAndAchievements.,bigint,
+churn_flag,,TEXT. Churn risk classification and prediction status.,text,
+ref_count,,SMALLINT. Number of referrals made by this fan to bring new users.,smallint,
+infl_impact,,"JSONB column. User influence and viral impact metrics including content reach, viral content, and trending participation
+Fields: {""Cont_Reach"":""BIGINT. Reach and visibility metrics for fan-created content."",""Hash_Use"":""SMALLINT. Number of hashtags used for content discovery and engagement."",""React_Count"":""SMALLINT. Number of reactivation attempts or successful returns."",""Trend_Part"":""SMALLINT. Number of trending topics or events participated in."",""Viral_Cont"":""SMALLINT. Number of viral content pieces created or shared.""}",jsonb,

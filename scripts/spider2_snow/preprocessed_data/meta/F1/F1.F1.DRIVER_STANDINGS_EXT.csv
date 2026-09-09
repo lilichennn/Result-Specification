@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+position,NUMBER,,"[3, 4, 6]",
+wins,NUMBER,,"[0, 1]",
+driver_standings_id,NUMBER,,"[3, 4, 6]",
+points,FLOAT,,"[6.0, 5.0, 3.0]",
+driver_id,NUMBER,,"[3, 4, 6]",
+race_id,NUMBER,,"[18, 19]",
+position_text,TEXT,,"[""3"", ""4"", ""6""]",

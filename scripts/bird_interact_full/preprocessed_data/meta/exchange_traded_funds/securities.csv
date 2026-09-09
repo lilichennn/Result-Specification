@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+securityref,,A SERIAL primary key uniquely identifying each individual security or holding instrument in the database.,bigint,
+securitylabel,,"Full company name or description of the security (e.g., 'Apple Inc.', 'Microsoft Corporation').",text,

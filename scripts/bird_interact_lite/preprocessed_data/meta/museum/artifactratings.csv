@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+ratingrecordregistry,,"BIGSERIAL PRIMARY KEY, unique ID for each rating record.",bigint,
+artref,,CHAR(10) FOREIGN KEY referencing ArtifactsCore(ArtRegistry). Links the record to a specific artifact.,character,
+histsignrating,,SMALLINT rating for historical significance (scale is flexible).,smallint,
+researchvalrating,,INT rating for research value (range is flexible).,integer,
+exhibitvalrating,,INT rating evaluating the artifact’s exhibition value (scale is flexible).,integer,
+cultscore,,SMALLINT measuring the artifact’s cultural importance (common range or flexible scale).,smallint,
+publicaccessrating,,SMALLINT rating the artifact’s public accessibility or appeal (scale is flexible).,smallint,
+eduvaluerating,,BIGINT rating for how much educational value the artifact provides (scale is flexible).,bigint,
+conservediff,,"VARCHAR(100) describing difficulty in conserving the artifact (possible values: 'Medium', 'High', 'Low').",USER-DEFINED,
+treatcomplexity,,"CHAR(10) indicating treatment complexity (possible values: 'Complex', 'Moderate', 'Simple').",character,
+matstability,,"VARCHAR(30) for material stability classification (possible values: 'Unstable', 'Stable', 'Moderate').",character varying,
+deteriorrate,,"TEXT field detailing the specific deterioration rate or pattern (e.g., 'Moderate', 'Rapid', 'Slow').",text,

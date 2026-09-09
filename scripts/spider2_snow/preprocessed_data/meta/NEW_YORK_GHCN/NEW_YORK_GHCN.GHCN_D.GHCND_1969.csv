@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1969-07-03"", ""1969-10-29"", ""1969-11-07""]",
+sflag,TEXT,,"[""X""]",
+value,FLOAT,,"[100.0, 80.0, 90.0]",
+id,TEXT,,"[""AQW00061705""]",
+element,TEXT,,"[""ACMH""]",
+mflag,TEXT,,[],
+qflag,TEXT,,[],
+time,TEXT,,[],

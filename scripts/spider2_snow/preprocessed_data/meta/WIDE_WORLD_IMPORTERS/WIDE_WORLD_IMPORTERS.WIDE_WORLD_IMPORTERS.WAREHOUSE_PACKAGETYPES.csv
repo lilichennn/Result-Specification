@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+ValidTo,NUMBER,,[253402300799999999],
+PackageTypeID,NUMBER,,"[4, 5, 7]",
+PackageTypeName,TEXT,,"[""Box"", ""Can"", ""Each""]",
+LastEditedBy,NUMBER,,[1],
+ValidFrom,NUMBER,,[1356998400000000],

@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cresref,,INTEGER. Unique result reference. PK. Example: 15178.,integer,
+matchref,,INTEGER. Foreign key to the races table (RAK_ID). FK to races. Example: 943.,integer,
+unitnode,,INTEGER. Foreign key to the constructors table (CSTR_Key). FK to constructors. Example: 9.,integer,
+scoreval,,REAL. Points scored by constructor in the race. **NULL means the constructor was unclassified or data are missing.**. Example: 22.0.,real,
+st_mark,,"TEXT. Status mark for the result. Possible values: D, \N.",text,

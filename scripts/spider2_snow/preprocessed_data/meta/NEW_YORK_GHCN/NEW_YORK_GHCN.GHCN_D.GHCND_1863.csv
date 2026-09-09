@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[100.0, 115.0, 13.0]",
+id,TEXT,,"[""AGE00135039"", ""ITE00100554"", ""USC00064757""]",
+time,TEXT,,[],
+mflag,TEXT,,[],
+date,DATE,,"[""1863-02-18"", ""1863-02-17"", ""1863-12-04""]",
+element,TEXT,,"[""TMAX"", ""TMIN"", ""SNOW""]",
+sflag,TEXT,,"[""E"", ""F""]",
+qflag,TEXT,,"[""I"", ""X""]",

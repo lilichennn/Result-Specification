@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+field_title,TEXT,,"[""Household goods, not elsewhere specified"", ""Miscellaneous"", ""Pharmaceutical and cosmetic products, toilet articles and apparatus""]",
+sector_title,TEXT,,"[""Design""]",
+id,TEXT,,"[""D07"", ""D99"", ""D28""]",

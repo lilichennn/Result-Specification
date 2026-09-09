@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+version,NUMBER,,[1],
+model,TEXT,,"[""LOGRLCV"", ""DTCG"", ""MLPC2""]",
+step,NUMBER,,[1],
+name,TEXT,,"[""iris""]",
+importance,FLOAT,,"[0.0027583162720716957, 0.027860703756201175, 0.04374235866449968]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+element,TEXT,,"[""TMAX""]",
+id,TEXT,,"[""FRE00104937""]",
+sflag,TEXT,,"[""E""]",
+qflag,TEXT,,"[""D""]",
+value,FLOAT,,[9990.0],
+mflag,TEXT,,[],
+date,DATE,,"[""1887-10-04"", ""1887-10-08"", ""1887-09-10""]",
+time,TEXT,,[],

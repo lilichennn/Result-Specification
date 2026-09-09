@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+DepartmentID,NUMBER,,"[2, 1, 5]",
+CategoryID,TEXT,,"[""BIO"", ""BUS"", ""CSC""]",
+CategoryDescription,TEXT,,"[""Biology"", ""Business"", ""Computer Science""]",

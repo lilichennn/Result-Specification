@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+signalref,,Full name: 'Signal Registry Reference'. Explanation: Primary key referencing the signal. Data type: CHAR(36). Example: 'SIG-PQR-9876'.,character,
+obstime,,Full name: 'Observation Time'. Explanation: Local time of the observation in HH:MM:SS. Data type: TIME. Example: '13:45:59'.,time without time zone,
+obsdate,,Full name: 'Observation Date'. Explanation: Local date of the observation (YYYY-MM-DD). Data type: DATE. Example: '2025-08-01'.,date,
+obsdurhrs,,"Full name: 'Observation Duration (hours)'. Explanation: How long the observation lasted in hours. Data type: NUMERIC(5,2). Example: '2.50'.",numeric,

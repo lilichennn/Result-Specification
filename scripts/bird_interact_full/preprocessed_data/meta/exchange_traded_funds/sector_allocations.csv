@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+allockey,,A SERIAL primary key uniquely identifying each sector allocation record for funds.,bigint,
+productlink,,"Foreign key referencing funds.TickerSym, indicating which fund has this sector allocation.",character varying,
+sectorlink,,"Foreign key referencing sectors.SecID, indicating which economic sector the allocation applies to.",bigint,
+weightpct,,"Percentage (0-1) of the fund's assets allocated to this specific sector, must sum to 1.0 across all sectors for each fund.",real,

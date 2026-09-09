@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+file_type,TEXT,"The type of interactive data file rendered on the EDGAR website, H = .htm file, X = .xml file. file_type: [rfile]","[""X""]",
+parentreport,NUMBER,The value of the report field for the role where roleuri equals this parentroleuri.,[],
+menu_category,TEXT,"If available, one of the menu categories as computed by the renderer: C=Cover, S=Statements, N=Notes, P=Policies, T=Tables, D=Details, O=Other, and U=Uncategorized. menu_category: [menucat]",[],
+ultimate_parent_report,NUMBER,The highest ancestor report reachable by following parentreport relationships. A note (menucat = N) is its own ultimate parent. ultimate_parent_report: [ultparentrpt],[],
+longname,TEXT,"The space-normalized text of the XBRL link \""definition\"" element content.","[""00 - Document and Entity Information"", ""0010 - Condensed Consolidated Balance Sheets"", ""0010 - CONDENSED CONSOLIDATED STATEMENT OF EARNINGS""]",
+report,NUMBER,"Represents the report grouping. The numeric value refers to the \""R file\"" as computed by the renderer and posted on the EDGAR website. Note that in some situations the numbers skip.","[1, 2]",
+roleuri,TEXT,"The XBRL \""roleuri\"" of the role.","[""http://newmont.com/nem/2009-03-31/DocumentAndEntityInformation"", ""http://bowne.com/20090331/DocumentAndEntityInformation"", ""http://icumed.com/role/BalanceSheets""]",
+shortname,TEXT,The portion of the long name used in the renderer menu.,"[""No Value Found""]",
+parentroleuri,TEXT,"The XBRL roleuri of a role for which this role has a matching shortname prefix and a higher level menu category, as computed by the renderer.",[],
+submission_number,TEXT,Accession Number. The 20-character string formed from the 18-digit number assigned by the Commission to each EDGAR submission. submission_number: [adsh],"[""0000891618-09-000150"", ""0000950123-09-008550"", ""0001104659-09-025790""]",

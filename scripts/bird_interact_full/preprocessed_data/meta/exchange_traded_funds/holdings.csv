@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+holdref,,A SERIAL primary key uniquely identifying each individual security holding record within funds.,bigint,
+instrumentref,,"Foreign key referencing funds.TickerSym, indicating which fund holds this security.",character varying,
+securitykey,,,bigint,
+holdingpct,,Percentage (0-1) of the fund's total assets represented by this individual security holding.,real,
+positionrank,,"Ranking of this holding within the fund's portfolio (1 = largest holding, 2 = second largest, etc.). Contains  NULL when position ranking is not available or not tracked.",bigint,

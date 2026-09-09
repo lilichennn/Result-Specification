@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+case_barcode,TEXT,"Original TCGA case barcode, eg TCGA-12-1089  --  note that each case typically has a primary-tumor sample and a matched-normal (blood or adjacent tissue) sample; please refer to the TCGA Biospecimen table for more details","[""TCGA-04-1348""]",
+normalized_count,FLOAT,Normalized gene expression from original rsem.genes.normalized_results file,"[0.0, 428.3356, 0.5378]",
+platform,TEXT,Platform used to generate data; either IlluminaHiSeq (for close to 93% of samples) or IlluminaGA,"[""IlluminaHiSeq""]",
+gene_id,NUMBER,"The gene symbol. In this table, gene symbol is gene namee.g. ENSG00000251562","[59284, 252952, 445815]",
+project_short_name,TEXT,"Project name abbreviation; the program name appended with a project name abbreviation; eg. TCGA-OV, etc.","[""TCGA-OV""]",
+aliquot_barcode,TEXT,"Original TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-01","[""TCGA-04-1348-01A-01R-1565-13""]",
+sample_barcode,TEXT,"Original TCGA sample barcode, eg TCGA-12-1089-01A","[""TCGA-04-1348-01A""]",
+HGNC_gene_symbol,TEXT,"HUGO Gene Nomenclature Committee gene symbol, based on gene_id in original data file, eg AMY1A. Null if no gene symbol could be found (see documentation for additional details regarding ETL) http://isb-cancer-genomics-cloud.readthedocs.io/en/latest/sections/data/data2/ETL_mRNAexpression.html","[""CACNG7"", ""TTTY19"", ""PALM2-AKAP2""]",
+original_gene_symbol,TEXT,"Gene symbol from the original data file, differs if the approved gene symbol has since changed, eg C11orf17 became AKIP1","[""CACNG7"", ""TTTY19"", ""PALM2-AKAP2""]",

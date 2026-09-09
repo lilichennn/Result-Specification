@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cstnds,,INTEGER. Unique standings reference. PK. Example: 25335.,integer,
+rref,,INTEGER. Foreign key to the races table (RAK_ID). FK to races. Example: 898.,integer,
+contunit,,INTEGER. Foreign key to the constructors table (CSTR_Key). FK to constructors. Example: 9.,integer,
+scr_tot,,REAL. Constructor's cumulative season points. **NULL means the constructor has not yet scored or the tally is not updated.**. Example: 553.0.,real,
+posno,,INTEGER. Constructor's rank in standings. **NULL means no position computed.**. Example: 1.,integer,
+poslab,,VARCHAR. Position text label. **NULL means no label available.**. Example: 1.,text,
+trophy_w,,INTEGER. Total wins by constructor. **NULL means the constructor has no wins or the count is pending update.**. Example: 12.,integer,

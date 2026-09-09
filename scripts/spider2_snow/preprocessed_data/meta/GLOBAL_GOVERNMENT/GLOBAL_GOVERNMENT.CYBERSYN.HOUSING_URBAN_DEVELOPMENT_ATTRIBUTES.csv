@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Sheltered Safe Haven (SH) Homeless Individuals - Hispanic/Latin(o)(a)(x)"", ""Sheltered Safe Haven (SH) Homeless Individuals - Male"", ""Sheltered Total Homeless""]",
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Homelessness"", ""Sheltered Homelessness""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""sheltered_safe_haven_sh_homeless_individuals_hispaniclatinoax"", ""sheltered_safe_haven_sh_homeless_individuals_male"", ""sheltered_total_homeless""]",

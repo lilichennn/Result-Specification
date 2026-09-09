@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+perfregistry,,A VARCHAR(20) primary key uniquely identifying each performance record.,character varying,
+perfsessionref,,A VARCHAR(20) foreign key referencing TestSessions(SessionRegistry) to link performance metrics to a specific session.,character varying,
+accelmax,,A SMALLINT indicating the maximum acceleration (in G or m/s²) the device sensor can handle.,smallint,
+speedips,,A SMALLINT for maximum tracking speed in inches per second (IPS) for pointing devices.,smallint,
+liftdistmm,,"A NUMERIC(3,1) describing the lift-off distance in millimeters, often relevant for mouse sensors.",numeric,
+angsnap,,A BOOLEAN stating whether angle snapping (prediction or correction) is enabled.,boolean,
+btntens,,"An enum (BtnTens_enum) describing button tension (Light, Medium, or Heavy).",USER-DEFINED,
+clklat,,"A NUMERIC(3,2) measuring click latency (in ms) from actuation to system registration.",numeric,
+clkdur,,"A BIGINT noting the rated click durability (e.g., number of clicks before failure).",bigint,
+screnctyp,,"An enum (ScrollEncoder_enum) for the scroll wheel mechanism type (Mechanical, Optical, Magnetic).",USER-DEFINED,
+scrsteps,,A SMALLINT for how many discrete 'clicks' or steps a full scroll wheel rotation has.,smallint,
+scraccy,,"A NUMERIC(4,1) reflecting the scroll wheel’s accuracy or consistency (on a relative scale).",numeric,

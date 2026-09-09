@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+TagId,NUMBER,,"[12038, 14101]",
+CompetitionId,NUMBER,,"[13242, 4032, 4195]",
+Id,NUMBER,,"[482, 315, 300]",

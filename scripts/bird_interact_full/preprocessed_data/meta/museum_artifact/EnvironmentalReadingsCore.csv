@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+monitor_code,,TEXT. Unique identifier for each environmental reading. PK.,text,
+readTS,,TIMESTAMP. Timestamp of when the environmental reading was taken. Not NULL. Example: 2024-08-06T08:38:48.,timestamp without time zone,
+case_link,,TEXT. Reference to the showcase. FK to Showcases.caseID.,text,
+TEMPc,,BIGINT. Temperature reading in Celsius. **NULL means no temperature data available.**. Example: 21.73.,bigint,
+tempVar24,,REAL. Temperature variation over 24 hours. **NULL means no temperature variation recorded.**. Example: 0.85.,real,
+RH,,BIGINT. Relative humidity reading. Example: 53.28.,bigint,
+RHvar,,BIGINT. Relative humidity variation. **NULL means no humidity variation recorded.**. Example: 2.54.,bigint,
+air_press,,REAL. Air pressure reading. **NULL means no air pressure data available.**. Example: 1020.0.,real,

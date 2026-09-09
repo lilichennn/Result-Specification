@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+questregistry,,TEXT. Unique identifier for scan session record. PK = Scans(QuestRegistry). Example: ASD409481.,text,
+chronotag,,TEXT. Precise timestamp when scan was performed. Example: 2024-09-03 07:20:28.479288 GMT+8.,text,
+arcref,,TEXT. Reference to associated archeologys project. FK to Projects.,text,
+crewref,,TEXT. Reference to operator who performed the scan. FK to Personnel.,text,
+zoneref,,TEXT. Reference to site where scan was conducted. FK to Sites.,text,
+scancount,,"TEXT. Total number of individual scans in session. Example: 5 scans, moderate coverage session.",text,
+climtune,,"TEXT. Weather conditions during scanning session. **NULL means weather conditions not recorded or monitoring equipment unavailable.**. Example: Windy conditions, potential equipment stability issues.",text,
+huecatch,,"TEXT. Color capture mode or settings used during scan. **NULL means color capture not enabled or settings not recorded.**. Possible values: Grayscale, RGB.",text,
+fmtfile,,TEXT. File format used for storing scan data. Example: PTS.,text,
+size,,TEXT. Total file size of scan data in gigabytes. Example: 24.71 GB.,text,
+scan_cost,,TEXT. Equipment cost per GB. Example: 3.22 USD/GB.,text,
+scanning_rate,,TEXT. Data acquisition rate during scanning. Example: 63 MB/min.,text,

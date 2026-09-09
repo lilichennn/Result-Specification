@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+file_gdc_url,TEXT,,"[""gs://gdc-tcga-phs000178-controlled/4b16854d-5365-435b-b15f-348affd75f06/5424d8d265b0f85b4263a8ae7d4e7ccc_gdc_realn.bai"", ""gs://gdc-tcga-phs000178-open/8f53170a-fd76-4fdd-b693-e577795b08e6/genome.wustl.edu_clinical.TCGA-AB-2967.xml"", ""gs://gdc-tcga-phs000178-open/397cfc5b-8fd3-472c-9d82-9f87eb5d8f79/nationwidechildrens.org_clinical.TCGA-KK-A7AU.xml""]",
+file_gdc_id,TEXT,,"[""4b16854d-5365-435b-b15f-348affd75f06"", ""8f53170a-fd76-4fdd-b693-e577795b08e6"", ""397cfc5b-8fd3-472c-9d82-9f87eb5d8f79""]",

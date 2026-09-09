@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+cultureid,TEXT,,"[""th"", ""he"", ""zh-cht""]",
+productmodelid,NUMBER,,"[1, 2]",
+productdescriptionid,NUMBER,,"[1712, 1838, 1965]",
+modifieddate,TEXT,,"[""2013-04-30 00:00:00""]",

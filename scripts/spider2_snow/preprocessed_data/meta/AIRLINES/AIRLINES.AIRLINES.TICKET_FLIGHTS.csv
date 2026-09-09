@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+amount,NUMBER,,"[42100, 23900]",
+ticket_no,TEXT,,"[""0005435212351"", ""0005435212381"", ""0005435212357""]",
+flight_id,NUMBER,,[30625],
+fare_conditions,TEXT,,"[""Business"", ""Comfort""]",

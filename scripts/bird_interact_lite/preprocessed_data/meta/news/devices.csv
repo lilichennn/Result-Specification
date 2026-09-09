@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+devkey,,"A BIGSERIAL primary key uniquely identifying a device (e.g., 501).",bigint,
+devtype,,"An enum (devicetype_enum) describing device OS type (iOS, Windows, MacOS, Android).",USER-DEFINED,
+brwtype,,"An enum (browsertype_enum) referencing the browser used (Safari, Edge, Chrome, Firefox).",USER-DEFINED,
+osver,,"A VARCHAR(40) capturing the specific OS version (e.g., 'Windows10.0.19042').",character varying,
+appver,,"A VARCHAR(20) for the app version if used (e.g., 'v3.1.2').",character varying,
+scrres,,"A VARCHAR(15) for screen resolution (e.g., '1920x1080').",character varying,
+vpsize,,"A VARCHAR(15) describing the viewport size in the browser/app (e.g., '414x896').",character varying,
+conntype,,"An enum (connectiontype_enum) for the network type (Cable, 5G, 4G, WiFi).",USER-DEFINED,
+netspd,,"A NUMERIC(6,2) measuring network speed in Mbps (e.g., 25.75).",numeric,
+uselink,,A BIGINT FK linking to Users(UserKey) to show which user owns or uses this device.,bigint,

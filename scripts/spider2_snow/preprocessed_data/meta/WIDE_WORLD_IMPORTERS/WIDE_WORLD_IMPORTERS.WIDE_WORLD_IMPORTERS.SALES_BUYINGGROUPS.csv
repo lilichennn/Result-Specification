@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+BuyingGroupName,TEXT,,"[""Tailspin Toys""]",
+ValidTo,NUMBER,,[253402300799999999],
+LastEditedBy,NUMBER,,[1],
+BuyingGroupID,NUMBER,,[1],
+ValidFrom,NUMBER,,[1356998400000000],

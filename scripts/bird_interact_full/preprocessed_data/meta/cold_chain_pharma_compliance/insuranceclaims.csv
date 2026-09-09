@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+reckeyclaim,,text. Shipment record key for insurance. PK. FK to Shipments.,text,
+claimneed,,"text. Indicator whether a claim is required. Possible values: No, Under Review, Yes.",text,
+claimstat,,"text. Current claim status. **NULL means claim not initiated.**. Possible values: Approved, Filed, Rejected.",text,
+claimusd,,real. Amount claimed in USD. Example: 79419.22.,real,
+costimpactusd,,real. Total cost impact in USD. Example: 47835.32.,real,
+respparty,,"text. Responsible party for loss. **NULL means not yet assigned.**. Possible values: Carrier, Receiver, Shipper, Unknown.",text,

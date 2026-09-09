@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+index,NUMBER,,"[0, 2, 3]",
+LID,NUMBER,,"[0, 2, 3]",
+Name,TEXT,,"[""Durban, South Africa"", ""Cape Town Film Studios, Cape Town, Western Cape, South Africa"", ""Pittsburgh, Pennsylvania, USA""]",

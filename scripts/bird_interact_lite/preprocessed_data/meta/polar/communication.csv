@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+commregistry,,A SERIAL primary key uniquely identifying each communication record.,integer,
+commeqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking communication data to a specific piece of equipment.",character varying,
+commlocref,,"An INTEGER foreign key referencing Location(LocationRegistry) for associating the communication system with a location (e.g., a station).",integer,
+radiofrequencymhz,,A REAL value specifying the radio communication frequency in MHz.,real,
+antennastatus,,"An enum (AntennaStatus_enum) indicating the antenna’s operational state (e.g., Error, Normal, Warning).",USER-DEFINED,
+bluetoothstatus,,"An enum (BluetoothStatus_enum) indicating the Bluetooth status (e.g., On, Error, Off, Pairing).",USER-DEFINED,
+commopmaintref,,An INTEGER optionally referencing OperationMaintenance(OpMaintRegistry) for maintenance or operational records tied to communication gear.,integer,
+signalmetrics,,"JSONB column. Combines signal strength and performance metrics for various communication systems.
+Fields: {""data_rate_kbps"":""A DOUBLE PRECISION value showing the data transmission rate in kilobits per second."",""gps_strength"":""An enum (GPSSignalStrength_enum) for GPS signal quality (e.g., Strong, Weak, Medium)."",""latency_ms"":""A NUMERIC(6,2) for the measured network latency in milliseconds."",""radio_strength_dbm"":""A DECIMAL(7,3) measuring radio signal strength in dBm."",""satellite_status"":""An enum (SatelliteConnectionStatus_enum) specifying the satellite connection state (e.g., Limited, Connected, Disconnected)."",""wifi_strength_dbm"":""A FLOAT specifying the WiFi signal strength in dBm.""}",jsonb,

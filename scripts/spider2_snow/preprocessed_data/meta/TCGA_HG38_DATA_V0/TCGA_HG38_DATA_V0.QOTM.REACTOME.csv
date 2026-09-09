@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+string_field_2,TEXT,Pathway Name,"[""NUCLEOTIDE METABOLISM""]",
+string_field_0,TEXT,Entrez ID from the NCBI,"[""270"", ""5198"", ""50484""]",
+string_field_1,TEXT,PathwayID,"[""15869""]",

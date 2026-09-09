@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1852-11-03"", ""1852-05-13"", ""1852-02-06""]",
+value,FLOAT,,"[5.0, 8.0, 13.0]",
+element,TEXT,,"[""PRCP""]",
+id,TEXT,,"[""USC00047738""]",
+time,TEXT,,[],
+mflag,TEXT,,[],
+qflag,TEXT,,[],
+sflag,TEXT,,"[""0""]",

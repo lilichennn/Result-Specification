@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+language_id,NUMBER,,"[2, 8, 9]",
+language,TEXT,,"[""persian"", ""kabyle"", ""english""]",
+country_code_2,TEXT,,"[""af"", ""dz"", ""as""]",

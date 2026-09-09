@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1830-01-18"", ""1830-02-10"", ""1830-03-21""]",
+qflag,TEXT,,"[""O""]",
+mflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",
+id,TEXT,,"[""ITE00100550"", ""EZE00100082""]",
+value,FLOAT,,"[1277.0, 0.0]",
+time,TEXT,,[],
+element,TEXT,,"[""PRCP""]",

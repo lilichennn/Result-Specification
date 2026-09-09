@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+abhvreg,,VARCHAR(50). Primary key for an advanced behavioural analysis record.,character varying,
+translink,,VARCHAR(50). Foreign‑key to TransactionRecord.TransReg.,character varying,
+patsim,,"NUMERIC(7,4). Similarity score to known illicit trading patterns (e.g., 0.8754).",numeric,
+peercorr,,"NUMERIC(7,4). Correlation of the trader’s pattern with peers (e.g., 0.6432).",numeric,
+mktcorr,,"NUMERIC(7,4). Correlation of trading activity with overall market moves (e.g., 0.5123).",numeric,
+secrotimp,,"NUMERIC(7,4). Impact of sector rotation strategies used by the trader (e.g., 0.2198).",numeric,

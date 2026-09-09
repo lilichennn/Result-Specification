@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+text,TEXT,,[],
+patent_id,TEXT,,"[""10936286"", ""10941081"", ""10940178""]",
+length,NUMBER,,"[16627, 17139, 85747]",

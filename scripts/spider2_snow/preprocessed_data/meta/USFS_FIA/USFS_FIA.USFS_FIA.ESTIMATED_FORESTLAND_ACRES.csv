@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+macroplot_acres,FLOAT,,[0.0],
+plot_sequence_number,NUMBER,,"[122559609010661, 168245829020004, 40406852010690]",
+evaluation_type,TEXT,,"[""EXPCURR""]",
+state_name,TEXT,,"[""New Jersey"", ""South Dakota"", ""Wyoming""]",
+inventory_year,NUMBER,,"[2007, 2014, 2012]",
+subplot_acres,FLOAT,,"[4775.840384522252, 5902.902558395932, 34197.26236336879]",
+evaluation_group,NUMBER,,"[342011, 462017, 562012]",
+state_code,NUMBER,,"[34, 46, 56]",
+evaluation_description,TEXT,,"[""NEW JERSEY 2011: 2007-2011: CURRENT AREA, CURRENT VOLUME"", ""SOUTH DAKOTA 2017: 2011-2017: CURRENT AREA, CURRENT VOLUME"", ""WYOMING 2012: 2011-2012: CURRENT AREA, CURRENT VOLUME""]",

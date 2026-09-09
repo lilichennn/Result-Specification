@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""lung endothelial cell"", ""intestinal enteroendocrine cell"", ""material entity""]",
+namespace,VARIANT,,"[""{\n  \""list\"": [\n    {\n      \""element\"": \""cl\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""bfo\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""obi\""\n    }\n  ]\n}""]",
+id,TEXT,,"[""CL_1001567"", ""CL_1001516"", ""BFO_0000040""]",
+parents,VARIANT,,"[""{\n  \""list\"": [\n    {\n      \""element\"": \""b43134\""\n    },\n    {\n      \""element\"": \""CL_0000082\""\n    },\n    {\n      \""element\"": \""CL_0002139\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""CL_0002563\""\n    },\n    {\n      \""element\"": \""CL_0000164\""\n    }\n  ]\n}"", ""{\n  \""list\"": [\n    {\n      \""element\"": \""BFO_0000004\""\n    }\n  ]\n}""]",
+description,TEXT,,"[""The various hormone- or neurotransmitter-secreting cells present throughout the mucosa of the intestinal tract."", ""An independent continuant that is spatially extended whose identity is independent of that of other entities and can be maintained through time.""]",
+obsolete_terms,VARIANT,,[],
+dbXRefs,VARIANT,,[],

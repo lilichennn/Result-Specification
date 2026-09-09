@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+companyname,TEXT,,"[""Federal Shipping""]",
+phone,TEXT,,"[""(503) 555-9931""]",
+shipperid,NUMBER,,[3],

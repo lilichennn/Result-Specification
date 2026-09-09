@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+enc_key,,A TEXT primary key uniquely identifying each clinical encounter record in the mental health database.,text,
+time_mark,,Timestamp recording the exact date and time when the clinical encounter occurred in YYYY-MM-DD HH:MM:SS format.,timestamp without time zone,
+ab_ref,,"Foreign key referencing AssessmentBasics(AB_Key), linking the encounter to a specific assessment when applicable.",text,
+pat_ref,,"Foreign key referencing Patients(Pat_Key), linking the encounter to the specific patient.",text,
+clin_id,,"Identifier for the clinician who conducted this encounter (local reference, not foreign key).",text,
+fac_id,,"Identifier for the facility where this encounter took place (local reference, not foreign key).",text,
+miss_appt,,Number of appointments missed by the patient prior to or following this encounter.,real,
+tx_barrier,,"Treatment barriers identified during this encounter. Contains values: 'multiple', 'time', 'financial', 'Transportation'. Contains noise with mixed case variations like 'MULTIPLE', 'FiNAncIal', 'TRAnsPorTATiON', 'FINANCIAL', 'TIME', 'TRANSPORTATION'. Contains NULL when treatment barriers are not assessed.",text,
+nx_appt_dt,,"Date of the next scheduled appointment following this encounter, stored as text with dd/mm/yyyy format like '21/02/2025', '18/04/2025', '13/04/2025'.",text,
+dq_score,,"Data quality score for this encounter record, indicating completeness and accuracy of documentation.",bigint,
+assess_complete,,Assessment completeness indicator for this encounter. Contains standard completeness values.,text,

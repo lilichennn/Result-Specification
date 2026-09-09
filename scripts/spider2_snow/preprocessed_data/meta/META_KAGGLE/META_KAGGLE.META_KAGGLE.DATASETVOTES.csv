@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+VoteDate,DATE,,"[""2016-01-28"", ""2016-01-24"", ""2016-01-23""]",
+Id,NUMBER,,"[400, 359, 341]",
+UserId,NUMBER,,"[484081, 188410, 118065]",
+DatasetVersionId,NUMBER,,[6],

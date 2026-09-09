@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+powerbattregistry,,A SERIAL primary key uniquely identifying each power/battery record.,integer,
+pwrbatteqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking battery data to the equipment using it.",character varying,
+powerstatus,,"An enum (PowerStatus_enum) showing the device power state (e.g., Sleep, Charging, On, Off).",USER-DEFINED,
+powersource,,"An enum (PowerSource_enum) describing the primary energy source (e.g., Wind, Solar, Diesel, Hybrid, Battery).",USER-DEFINED,
+chargingstatus,,"An enum (ChargingStatus_enum) showing the charging state (e.g., Error, Not Charging, Charging, Full).",USER-DEFINED,
+powerconsumptionw,,"A NUMERIC(10,4) measuring the power consumption (in watts).",numeric,
+energyefficiencypercent,,"A NUMERIC(6,3) indicating overall power or energy efficiency (e.g., 95.000%).",numeric,
+batterystatus,,"JSONB column. Combines metrics describing battery performance, health, and charging status.
+Fields: {""current_a"":""A NUMERIC(7,3) specifying the current (in amperes) used during charging."",""cycles"":""A SMALLINT counting the number of charge/discharge cycles for the battery."",""health_percent"":""A NUMERIC(4,1) indicating the battery’s health status in percentage (e.g., 90.0%)."",""level_percent"":""A NUMERIC(5,2) representing the current battery level percentage."",""temperature_c"":""A DOUBLE PRECISION value measuring the battery’s temperature in Celsius."",""voltage_v"":""A NUMERIC(5,2) specifying the voltage (in volts) used during charging.""}",jsonb,

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+time,TEXT,,"[""0700""]",
+id,TEXT,,"[""US1KSRS0040"", ""US1TXTG0005"", ""USC00412013""]",
+mflag,TEXT,,[],
+element,TEXT,,"[""SNOW"", ""SNWD"", ""TMIN""]",
+sflag,TEXT,,"[""N"", ""7"", ""a""]",
+qflag,TEXT,,[],
+date,DATE,,"[""2023-01-20"", ""2023-01-21""]",
+source_url,TEXT,Source ,"[""http://www.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2023.csv.gz""]",
+etl_timestamp,NUMBER,Load time for this data row,[1729304722434001],
+value,FLOAT,,"[0.0, 106.0, 116.0]",

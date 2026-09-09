@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+longitude,FLOAT,,"[-28.865244, -25.625126, -26.570343]",
+value,FLOAT,,"[11.779, 64.459, 76.562]",
+timestamp,NUMBER,,"[1652936400000000, 1652504400000000, 1652169600000000]",
+country,TEXT,,"[""ZA""]",
+unit,TEXT,,"[""µg/m³""]",
+location,TEXT,,"[""Esikhawini - RBCAA"", ""Rosslyn-NAQI"", ""eMbalenhle South""]",
+city,TEXT,,"[""King Cetshwayo"", ""City of Tshwane"", ""Gert Sibande""]",
+latitude,FLOAT,,[1.0],
+source_name,TEXT,,"[""South Africa""]",
+averaged_over_in_hours,FLOAT,,"[31.911679, 28.09474, 29.07457]",
+pollutant,TEXT,,"[""pm10""]",
+location_geom,BINARY,,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00l\\x0f{\\xa1\\x80\\xdd<\\xc0\\x00\\x00\\x00\\x00\\x00\\x00\\xf0?')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\x1a\\xe1\\xedA\\x08\\xa09\\xc0\\x00\\x00\\x00\\x00\\x00\\x00\\xf0?')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xa7\\x80\\xb4\\xff\\x01\\x92:\\xc0\\x00\\x00\\x00\\x00\\x00\\x00\\xf0?')""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+sflag,TEXT,,"[""C""]",
+date,DATE,,"[""1846-03-15"", ""1846-05-26"", ""1846-03-16""]",
+element,TEXT,,"[""PRCP"", ""SNOW""]",
+time,TEXT,,[],
+id,TEXT,,"[""CA006158350""]",
+mflag,TEXT,,"[""T""]",
+value,FLOAT,,[0.0],

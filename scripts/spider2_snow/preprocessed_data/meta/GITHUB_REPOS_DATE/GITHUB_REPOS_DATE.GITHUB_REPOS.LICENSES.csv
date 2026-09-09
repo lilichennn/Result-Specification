@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+repo_name,TEXT,,"[""hesenp/dag-runner"", ""stania1/4clojure-answers"", ""JacobGood1/lispcast-intro""]",
+license,TEXT,,"[""epl-1.0""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+id,TEXT,,"[""USC00465224""]",
+element,TEXT,,"[""SNOW""]",
+mflag,TEXT,,[],
+sflag,TEXT,,"[""6""]",
+time,TEXT,,[],
+date,DATE,,"[""1861-01-03"", ""1861-01-27"", ""1861-01-11""]",
+value,FLOAT,,[0.0],

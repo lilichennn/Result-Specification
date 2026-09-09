@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+movie_id,TEXT,,"[""tt0060908"", ""tt0069049"", ""tt0071145""]",
+median_rating,FLOAT,,"[8.0, 7.0, 3.0]",
+total_votes,NUMBER,,"[3392, 5014, 789]",
+avg_rating,FLOAT,,"[7.5, 6.9, 8.2]",

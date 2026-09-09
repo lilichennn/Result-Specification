@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+prepmail,,TEXT. Preparer’s email address. PK.,text,
+preplname,,TEXT. Last name of the preparer. Example: Peace.,text,
+prepfname,,TEXT. First name of the preparer. Example: Tyler.,text,
+prepmi,,TEXT. Middle initial of the preparer. Example: J.,text,
+prepbiz,,"TEXT. Business name of the preparer. **NULL means no business name provided.**. Example: Musillo Unkenholt, LLC..",text,

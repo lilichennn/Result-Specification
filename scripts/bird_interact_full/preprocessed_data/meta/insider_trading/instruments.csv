@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+SYM_KEY,,"TEXT. Unique symbol key identifying a financial instrument. PK. Possible values: AAPL, AMZN, GOOGL, META, MSFT.",text,
+inst_info,,"JSONB column. Instrument data including cap and sector.
+Fields: {""cap"":""REAL. Market-capitalisation value of the instrument. **NULL means market-cap could not be determined or is not reported.**. Example: 155167483887.68."",""sector"":""TEXT. Sector classification (padded string for alignment). Possible values: Consumer, Energy, Finance, Healthcare, Technology."",""stream"":""TEXT. Industry-stream or sub-sector classification. Possible values: Banking, Biotech, Oil & Gas, Retail, Software.""}",jsonb,

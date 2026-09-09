@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+aliquot_barcode,TEXT,"Original TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-01","[""TCGA-04-1331-01A-01R-1569-13""]",
+cross_mapped,TEXT,"A short isomiR read may map exactly to mature strands whose sequences are similar but not identical, when the read sequence does not capture the bases that distinguish these miRNAs (e.g. hsa-mir-30a at 6q13 and hsa-mir-30e at 1p34.2, which differ at position 18). We report such a <line_feed> read as cross-mapped, and we increment the read count for each MIMAT that it mapped to. Either Y or N -- fewer than 2% are Y","[""N""]",
+project_short_name,TEXT,"Project name abbreviation; the program name appended with a project name abbreviation; eg. TCGA-OV, etc.","[""TCGA-OV""]",
+case_barcode,TEXT,"Original TCGA case barcode, eg TCGA-12-1089  --  note that each case typically has a primary-tumor sample and a matched-normal (blood or adjacent tissue) sample; please refer to the TCGA Biospecimen table for more details","[""TCGA-04-1331""]",
+reads_per_million_miRNA_mapped,FLOAT,Read count normalized by total reads mapped divided by 1 million,"[4.31216, 0.574955, 1.437387]",
+read_count,NUMBER,Number of reads that were mapped to this mirna_id,"[15, 2, 5]",
+mirna_id,TEXT,"One of 1870 unique miRNA ids (aka symbols) contained in this table, eg hsa-mir-21  --  relevant reference information can be found in the isb-cgc:genome_reference dataset in the tables miRBase_v20 and miRBase_v20_hsa_gff3","[""hsa-mir-9-3"", ""hsa-mir-3143"", ""hsa-mir-544b""]",
+sample_barcode,TEXT,"Original TCGA sample barcode, eg TCGA-12-1089-01A  --  note that one sample may have multiple aliquots and therefore multiple sets of CN segmentations; so be sure to use GROUP BY appropriately in your queries","[""TCGA-04-1331-01A""]",

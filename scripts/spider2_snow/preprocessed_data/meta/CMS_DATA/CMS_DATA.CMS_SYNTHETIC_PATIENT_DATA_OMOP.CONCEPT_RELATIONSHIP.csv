@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+invalid_reason,TEXT,,[],
+relationship_id,TEXT,,"[""Is a""]",
+concept_id_1,NUMBER,,"[3021671, 3044119, 3031369]",
+concept_id_2,NUMBER,,"[36207147, 40787219, 45875980]",
+valid_start_date,DATE,,"[""1970-01-01""]",
+valid_end_date,DATE,,"[""2099-12-31""]",

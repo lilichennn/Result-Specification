@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+cause_source_value,TEXT,,[],
+person_id,NUMBER,,"[61332, 120713, 171677]",
+cause_concept_id,NUMBER,,[],
+cause_source_concept_id,NUMBER,,[0],
+death_date,DATE,,"[""2010-09-01""]",
+death_datetime,NUMBER,,[],
+death_type_concept_id,NUMBER,,[38003565],

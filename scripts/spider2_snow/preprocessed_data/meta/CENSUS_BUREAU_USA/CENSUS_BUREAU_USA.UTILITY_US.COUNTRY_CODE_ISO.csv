@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+alpha_3_code,TEXT,,[],
+alpha_2_code,TEXT,,[],
+sub_continent_name,TEXT,,[],
+continent_code,TEXT,,[],
+cctlds,TEXT,,[],
+fips_code,TEXT,,"[""AX"", ""BS"", ""EU""]",
+numeric_code,TEXT,,[],
+country_name,TEXT,,"[""Akrotiri"", ""Bassas da India"", ""Europa Island""]",
+continent_name,TEXT,Note: Australia has been grouped into the Oceania region.,[],
+stanag_code,TEXT,,[],

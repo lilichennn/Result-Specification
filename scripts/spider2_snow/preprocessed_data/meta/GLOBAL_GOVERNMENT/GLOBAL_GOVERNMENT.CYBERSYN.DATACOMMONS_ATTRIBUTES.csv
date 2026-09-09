@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,"Unit of measure for the value (e.g., USD, Years, Acre, etc.)","[""Count"", ""Percent"", ""Celsius""]",
+SOURCE_DOMAIN,TEXT,Domain of the URL where the raw data can be found,"[""europa.eu"", ""cdc.gov"", ""nasa.gov""]",
+VARIABLE_GROUP,TEXT,The core variable being measured excluding any information around measurement method. Variables belonging to the same group measure the same thing but differ on measurement method or reporting agency,"[""Count of Birth Event"", ""Percentage of Population Who Binge Drink"", ""Temperature in a Location""]",
+CATEGORY,TEXT,"Overarching category of the variable or measure type (e.g., Weather, Demographics, etc.)","[""BirthEvent"", ""Person_HealthBehavior-BingeDrinking"", ""ObservationalWeather""]",
+VARIABLE,TEXT,"A unique identifier for a statistical variable, joinable to the DATACOMMONS_TIMESERIES table","[""Count_BirthEvent_europa.eu"", ""Percent_Person_BingeDrinking"", ""Temperature""]",
+VARIABLE_NAME,TEXT,Human-readable name for the variable,"[""Count of Birth Event, europa.eu"", ""Percentage of Population Who Binge Drink"", ""Temperature in a Location""]",

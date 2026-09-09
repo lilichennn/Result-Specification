@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+fac_key,,A TEXT primary key uniquely identifying each healthcare facility record in the mental health assessment database.,text,
+r_source,,"Referral source category indicating how patients are directed to this facility. Contains values: 'Self', 'Physician', 'Court', 'Emergency', 'Family'.",text,
+env_stress,,Environmental stressors present in the facility's service area. Contains NULL when environmental stressor assessment is not available.,text,
+life_impact,,"Major life events impact assessment for the facility's patient population. Contains values: 'Mild', 'Moderate', 'Severe'. Contains NULL when life events impact data is not collected.",text,
+season_pat,,Seasonal pattern observations in patient mental health conditions at this facility. Contains NULL when seasonal pattern tracking is not implemented.,text,
+legl_issue,,"Legal issues commonly encountered by patients at this facility. Contains values: 'Resolved', 'Pending', 'Ongoing'. Contains noise with mixed case variations like 'PEnding', 'oNgoING', 'ReSOlveD', 'rESOLvED', 'ONgOInG'. Contains NULL when legal issue tracking is not maintained.",text,
+spt_svc,,"Support services available at or through this facility. Contains values like 'Case Management', 'Limited', 'Comprehensive', 'Adequate'. Contains NULL when support service information is not documented.",text,
+com_res,,"Community resources accessible to patients from this facility. Contains values: 'Comprehensive', 'Limited', 'Adequate', 'Extensive'. Contains NULL when community resource mapping is incomplete.",text,
+emer_contact,,Emergency contact protocols and contact information for crisis situations. Typically contains numeric values representing contact counts.,text,
+s_plan_stat,,"Safety plan implementation status at this facility. Contains values: 'Not Needed', 'Active', 'Needs Update'. Contains NULL when safety plan status is not tracked.",text,
+c_plan_stat,,"Crisis plan readiness status for this facility. Contains values: 'Not Needed', 'Active', 'Needs Update'. Contains NULL when crisis planning status is not documented.",text,
+s_system_chg,,"Recent or planned changes to support systems at this facility. Contains values: 'Improved', 'Declined', 'Variable'. Contains NULL when support system change tracking is not maintained.",text,

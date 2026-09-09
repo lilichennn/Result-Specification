@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+stop_lon,FLOAT,Longitude of the stop,"[-122.39565, -122.397341, -122.466376]",
+stop_name,TEXT,Full text name of the  transit stop,"[""101 Dakota St"", ""1095 CONNECTICUT ST"", ""10th Ave & Pacheco St""]",
+stop_lat,FLOAT,Latitude of the stop,"[37.75374, 37.753902, 37.75086]",
+stop_id,TEXT,Unique identifier for each stop,"[""14343"", ""14122"", ""13231""]",
+stop_geom,BINARY,Geographic representation of the stop's position,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00d\\xaa`TR\\x99^\\xc0\\xf2\\xd7d\\x8dz\\xe0B@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\x08\\x17\\xf2\\x08n\\x99^\\xc0\\xca1Y\\xdc\\x7f\\xe0B@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xeb\\xe8\\xb8\\x1a\\xd9\\x9d^\\xc0\\xf2\\xef3.\\x1c\\xe0B@')""]",

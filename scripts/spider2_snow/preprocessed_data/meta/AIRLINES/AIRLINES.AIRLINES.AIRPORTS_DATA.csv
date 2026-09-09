@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+airport_code,TEXT,,"[""YKS"", ""VVO"", ""SGC""]",
+coordinates,TEXT,,"[""(129.77099609375,62.0932998657226562)"", ""(132.147994995117188,43.3989982604980469)"", ""(73.4018020629882812,61.3437004089355469)""]",
+airport_name,TEXT,,"[""{\""en\"": \""Yakutsk Airport\"", \""ru\"": \""Якутск\""}"", ""{\""en\"": \""Vladivostok International Airport\"", \""ru\"": \""Владивосток\""}"", ""{\""en\"": \""Surgut Airport\"", \""ru\"": \""Сургут\""}""]",
+timezone,TEXT,,"[""Asia/Yakutsk"", ""Asia/Vladivostok"", ""Asia/Yekaterinburg""]",
+city,TEXT,,"[""{\""en\"": \""Yakutsk\"", \""ru\"": \""Якутск\""}"", ""{\""en\"": \""Vladivostok\"", \""ru\"": \""Владивосток\""}"", ""{\""en\"": \""Surgut\"", \""ru\"": \""Сургут\""}""]",

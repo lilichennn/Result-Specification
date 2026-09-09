@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1976-08-22"", ""1976-07-29"", ""1976-06-14""]",
+value,FLOAT,,"[90.0, 308.0, 238.0]",
+mflag,TEXT,,"[""H""]",
+id,TEXT,,"[""AF000040930"", ""AFM00040938""]",
+time,TEXT,,[],
+qflag,TEXT,,[],
+sflag,TEXT,,"[""S""]",
+element,TEXT,,"[""TAVG""]",

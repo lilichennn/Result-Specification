@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+recov_don_registry,,"TEXT. Primary key linking to donor demographics for organs function data. PK = Function_and_Recovery(Recov_Don_Registry), FK to Demographics.",text,
+don_crtn_val,,TEXT. Donor's serum creatinine level indicating kidney function. Example: 1.62 mg/dL.,text,
+don_gfr_val,,REAL. Donor's glomerular filtration rate measuring kidney function. Example: 103.4 mL/min/1.73m².,text,
+don_co_desc,,"TEXT. Description of donor's cause of death. Possible values: Anoxia, oxygen deprivation may affect organ quality.",text,
+org_recov_dt,,TEXT. Date and time when organss were recovered from donor.** Possible values: 02-18-2025 HKT.,text,
+org_presv_meth,,"TEXT. Method used for organs preservation during transport. Possible values: Static cold storage, standard preservation method.",text,
+org_isch_time,,TEXT. Cold ischemia time in minutes from recovery to transplant. Example: 702 mins.,text,
+organfuncassess,,"JSONB column. Groups organ function assessment data including liver, cardiac, and pulmonary function evaluations for multi-organ status review.
+Fields: {""Card_Func"":""TEXT. Assessment of donor's cardiac function status. Possible values: Mild, Moderate, Normal, Severe."",""Liv_Func"":""TEXT. Assessment of donor's liver function status. Possible values: Mild, Moderate, Normal, Severe."",""Pulm_Func"":""TEXT. Assessment of donor's pulmonary function status. Possible values: Mild, Moderate, Normal, Severe.""}",jsonb,

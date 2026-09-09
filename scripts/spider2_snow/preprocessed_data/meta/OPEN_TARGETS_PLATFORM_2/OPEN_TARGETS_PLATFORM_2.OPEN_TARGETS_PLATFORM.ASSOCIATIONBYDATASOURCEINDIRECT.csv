@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+targetId,TEXT,,"[""ENSG00000151835"", ""ENSG00000043355"", ""ENSG00000144488""]",
+diseaseId,TEXT,,"[""EFO_0004280"", ""OTAR_0000018"", ""EFO_0000508""]",
+datatypeId,TEXT,,"[""genetic_association""]",
+datasourceId,TEXT,,"[""eva""]",
+evidenceCount,NUMBER,,"[1125, 306, 61]",
+score,FLOAT,,"[0.9480686371830984, 0.9317011342874366, 0.316739123497058]",

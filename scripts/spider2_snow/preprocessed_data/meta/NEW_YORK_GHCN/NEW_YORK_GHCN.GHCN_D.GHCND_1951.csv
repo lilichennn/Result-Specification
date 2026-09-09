@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1951-09-06"", ""1951-07-06"", ""1951-12-04""]",
+mflag,TEXT,,[],
+id,TEXT,,"[""AG000060390""]",
+element,TEXT,,"[""PRCP"", ""TMAX""]",
+time,TEXT,,[],
+value,FLOAT,,"[0.0, 5.0, 165.0]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",

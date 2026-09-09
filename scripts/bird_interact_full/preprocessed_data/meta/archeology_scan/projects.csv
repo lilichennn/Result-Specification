@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+arcregistry,,TEXT. Unique identifier for archeologys project registration. PK = Projects(ArcRegistry). Example: PR7509.,text,
+vesseltag,,TEXT. Project name or designation label. Example: Project Happy.,text,
+fundflux,,"TEXT. Source of project funding or financial backing. Possible values: Government, Grant, Private, University.",text,
+authpin,,TEXT. Official permit or authorization number for excavation. Example: PMT4719.,text,
+authhalt,,TEXT. Permit expiration date or authorization termination date. Example: 05/12/2025.,text,

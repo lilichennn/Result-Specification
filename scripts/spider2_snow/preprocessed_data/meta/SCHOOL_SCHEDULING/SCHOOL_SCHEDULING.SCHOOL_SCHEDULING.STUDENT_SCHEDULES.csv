@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+ClassStatus,NUMBER,,"[2, 1, 3]",
+ClassID,NUMBER,,"[1000, 1168, 4180]",
+StudentID,NUMBER,,"[1001, 1002]",
+Grade,FLOAT,,"[99.83, 70.0, 0.0]",

@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+ip,TEXT,,"[""216.58.220.238"", ""98.139.183.24"", ""10.0.0.3""]",
+user_id,TEXT,,"[""U001"", ""U002"", ""U005""]",
+stamp,TEXT,,"[""2016-11-03 18:00:00"", ""2016-11-03 19:00:00"", ""2016-11-04 19:00:00""]",
+action,TEXT,,"[""view""]",
+session,TEXT,,"[""0CVKaz"", ""1QceiB"", ""47db0370""]",

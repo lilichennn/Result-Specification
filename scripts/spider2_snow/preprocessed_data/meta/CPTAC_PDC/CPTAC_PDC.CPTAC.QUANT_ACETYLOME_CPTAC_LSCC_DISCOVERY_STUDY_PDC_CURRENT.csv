@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+refseq_id,TEXT,,"[""NP_005336.3"", ""NP_002484.1"", ""NP_073744.2""]",
+case_id,TEXT,,"[""1c6449cd-d028-11ea-b1fd-0aad30af8a83""]",
+aliquot_submitter_id,TEXT,,"[""CPT0209510003""]",
+protein_abundance_log2ratio,FLOAT,,"[-0.3769, 0.6289, -0.746]",
+acetylation_sites,TEXT,,"[""k559"", ""k49"", ""k322""]",
+aliquot_run_metadata_id,TEXT,,"[""27f301f6-d0fb-11ea-b1fd-0aad30af8a83""]",
+aliquot_id,TEXT,,"[""1c671301-d028-11ea-b1fd-0aad30af8a83""]",
+study_name,TEXT,,"[""CPTAC LSCC Discovery Study - Acetylome""]",
+sample_id,TEXT,,"[""1c6596c8-d028-11ea-b1fd-0aad30af8a83""]",

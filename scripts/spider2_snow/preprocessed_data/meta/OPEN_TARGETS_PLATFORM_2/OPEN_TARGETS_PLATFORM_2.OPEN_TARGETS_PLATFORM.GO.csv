@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,,"[""bleb"", ""CHRAC"", ""T-bar""]",
+id,TEXT,,"[""GO:0032059"", ""GO:0008623"", ""GO:0098986""]",

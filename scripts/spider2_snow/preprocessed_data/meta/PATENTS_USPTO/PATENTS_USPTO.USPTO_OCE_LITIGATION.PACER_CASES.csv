@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+date_closed,TEXT,,"[""05/14/2002"", ""12/11/2002"", ""03/02/2001""]",
+court_name,TEXT,,"[""Arizona District Court""]",
+court_code,TEXT,,"[""azd""]",
+date_filed,TEXT,,"[""2001-09-28"", ""2002-10-07"", ""2000-08-10""]",
+pacer_id,TEXT,,"[""13699"", ""23753"", ""3939""]",
+case_number,TEXT,,"[""2:2001-cv-01857"", ""2:2002-cv-01970"", ""2:2000-cv-01538""]",
+case_name,TEXT,,"[""Cirone v. Sinclair & Rush"", ""Palestrant, et al v. O'Brien, et al"", ""Crafco Inc v. Sealmaster Ind Inc""]",

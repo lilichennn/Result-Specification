@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+TRANS_ID,,BIGSERIAL. Unique identifier for the transmission record. PK.,bigint,
+equipRef,,TEXT. Reference to the equipment. FK to Equipment.EQUIP_CODE.,text,
+engine_link,,BIGINT. Reference to the engine and fluids record. FK to EngineAndFluids.ENGINE_ID.,bigint,
+transTempC,,REAL. Transmission temperature in Celsius. Example: 94.5.,real,
+transPress_kpa,,REAL. Transmission pressure in kPa. **NULL means no transmission pressure recorded.**. Example: 532.9.,real,
+TRANS_gear,,"TEXT. Gear setting of the transmission. **NULL means no gear setting recorded.**. Possible values: -1.0, 0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0.",text,
+diffTempC,,REAL. Differential temperature in Celsius. Example: 80.9.,real,
+axleTempC,,REAL. Axle temperature in Celsius. Example: 22.1.,real,
+opmaint_link,,BIGINT. Reference to the operation and maintenance record. FK to OperationMaintenance.OP_MAINT_ID.,bigint,

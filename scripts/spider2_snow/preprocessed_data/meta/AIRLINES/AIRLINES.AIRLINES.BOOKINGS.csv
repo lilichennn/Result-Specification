@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+book_date,TEXT,,"[""2017-07-14 09:02:00+03"", ""2017-08-15 14:27:00+03"", ""2017-08-10 13:28:00+03""]",
+total_amount,NUMBER,,"[37900, 18100, 131800]",
+book_ref,TEXT,,"[""000012"", ""000068"", ""000181""]",

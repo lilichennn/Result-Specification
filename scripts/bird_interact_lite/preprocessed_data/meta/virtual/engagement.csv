@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+engagereg,,"A VARCHAR(20) primary key for engagement records (e.g., 'ENG001').",character varying,
+engageactivitypivot,,A VARCHAR(20) FK referencing Interactions(ActivityReg).,character varying,
+engagememberpivot,,A VARCHAR(20) FK referencing MembershipAndSpending(MemberReg).,character varying,
+socintscore,,"A DECIMAL(6,2) rating social interaction (e.g., '85.20').",numeric,
+engrate,,"A DECIMAL(6,3) indicating engagement rate (e.g., '0.512').",numeric,
+actfreq,,"An enum (InteractionFrequency_enum) for how often interactions occur (Weekly, Monthly, Occasional, Daily).",USER-DEFINED,
+peaktime,,"An enum (PeakActivityTime_enum) describing the highest activity period (Afternoon, Evening, Night, Morning).",USER-DEFINED,
+actdayswk,,"A SMALLINT number of days per week the fan is active (e.g., 5).",smallint,
+avgsesscount,,"A SMALLINT average number of sessions per day/week (e.g., 3).",smallint,
+contpref,,"An enum (ContentPreference_enum) capturing the fan's preferred content (Music, Dance, Gaming, Chat).",USER-DEFINED,
+langpref,,"An enum (ContentLanguagePreference_enum) for content language (Both, Original, Translated).",USER-DEFINED,
+transuse,,"An enum (TranslationUsage_enum) describing translation usage (Always, Sometimes, Never).",USER-DEFINED,

@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+stop_sequence,TEXT,Identifies the order of the stops for a particular trip. The values for stop_sequence must increase throughout the trip but do not need to be consecutive.,"[""1""]",
+trip_id,TEXT,Identifies a trip. Multiple trips can have the same stop,"[""BSP19GEN-FS012-Sunday-00_000000_FS.S01R"", ""BSP19GEN-FS011-Weekday-00_000000_FS.S01R"", ""BSP19GEN-M086-Weekday-00_000000_M..S30R""]",
+arrival_time,TEXT,Specifies the scheduled arrival time at a specific stop for a specific trip on a route.,"[""00:00:00"", ""00:01:00""]",
+departure_time,TEXT,Specifies the scheduled departure time at a specific stop for a specific trip on a route.,"[""00:00:00"", ""00:01:00""]",
+stop_id,TEXT,Identifies the serviced stop. Multiple routes can use the same stop.,"[""S01S"", ""M11S"", ""L29N""]",
+pickup_type,TEXT,,"[""0""]",
+shape_dist_traveled,TEXT,,[],
+stop_headsign,TEXT,,[],
+dropoff_type,TEXT,"""Indicates whether riders are dropped off at a stop as part of the normal schedule or whether a drop off at the stop isn't available. Available options:  -  regular -  none -  phone (indicates must phone agency to arrange drop off) -  driver (indicates must coordinate with driver to arrange drop off)""","[""0""]",

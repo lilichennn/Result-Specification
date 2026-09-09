@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+client_ip,TEXT,,"[""104.130.89.12""]",
+page_no,NUMBER,,"[3, 2, 4]",
+app_id,NUMBER,,[542],
+visit_time,TEXT,,"[""2019-04-20 08:16:31"", ""2019-04-20 08:41:12"", ""2019-04-20 08:42:37""]",

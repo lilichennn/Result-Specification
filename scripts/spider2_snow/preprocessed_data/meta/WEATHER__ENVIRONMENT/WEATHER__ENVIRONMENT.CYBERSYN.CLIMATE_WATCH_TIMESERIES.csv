@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""waste_ch4_pik"", ""total_excluding_lulucf_ch4_pik"", ""industrial_processes_and_product_use_f-gas_pik""]",
+VALUE,FLOAT,Value reported for the variable.,"[870000.0, 1400000.0, 650000.0]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Waste Sector | Methane (CH4) Emissions (Postdam Institute For Climate Impact Research)"", ""Total excluding LULUCF Sector | Methane (CH4) Emissions (Postdam Institute For Climate Impact Research)"", ""Industrial Processes and Product Use Sector | Fluorinated Greenhouse Gases (F-Gases) Emissions (Postdam Institute For Climate Impact Research)""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/NPL"", ""country/UGA"", ""country/SVK""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Tonnes of carbon dioxide equivalent (tCO₂e)""]",
+DATE,DATE,Date associated with the value.,"[""1946-12-31"", ""1878-12-31"", ""2011-12-31""]",

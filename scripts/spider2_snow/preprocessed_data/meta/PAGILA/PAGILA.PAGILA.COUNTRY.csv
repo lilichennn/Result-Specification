@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+country_id,NUMBER,,"[1, 6, 8]",
+last_update,TEXT,,"[""2021-03-06 15:51:49""]",
+country,TEXT,,"[""Afghanistan"", ""Argentina"", ""Australia""]",

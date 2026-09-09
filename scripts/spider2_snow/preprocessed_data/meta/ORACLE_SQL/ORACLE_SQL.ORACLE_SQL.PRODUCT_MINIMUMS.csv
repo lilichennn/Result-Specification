@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+qty_purchase,FLOAT,,"[400.0, 100.0]",
+qty_minimum,FLOAT,,"[100.0, 30.0]",
+product_id,NUMBER,,"[6520, 6600]",

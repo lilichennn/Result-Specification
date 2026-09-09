@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+created,TEXT,,"[""2019-01-19 15:57:42""]",
+id,NUMBER,,[842],
+picker_emp_id,NUMBER,,[152],

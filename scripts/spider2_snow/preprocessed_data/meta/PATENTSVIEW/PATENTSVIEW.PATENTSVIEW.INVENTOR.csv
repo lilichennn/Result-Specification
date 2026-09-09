@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+attribution_status,NUMBER,,[1],
+id,TEXT,,"[""fl:r_ln:kitago-2"", ""fl:r_ln:baba-13"", ""fl:r_ln:takeuchi-16""]",
+male_flag,FLOAT,,[1.0],
+name_last,TEXT,,"[""Kitago"", ""BABA"", ""Takeuchi""]",
+name_first,TEXT,,"[""Ryosuke""]",

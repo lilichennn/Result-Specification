@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+page_id,NUMBER,,"[2, 3, 4]",
+product_id,FLOAT,,"[1.0, 2.0, 4.0]",
+page_name,TEXT,,"[""All Products"", ""Salmon"", ""Kingfish""]",
+product_category,TEXT,,"["""", ""Fish"", ""Luxury""]",

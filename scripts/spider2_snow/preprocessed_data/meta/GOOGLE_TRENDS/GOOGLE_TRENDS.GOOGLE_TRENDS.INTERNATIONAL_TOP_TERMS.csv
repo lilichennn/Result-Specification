@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+week,DATE,,"[""2022-03-13"", ""2022-11-13"", ""2023-01-01""]",
+term,TEXT,,"[""Galatasaray  PAOK""]",
+rank,NUMBER,,[14],
+score,NUMBER,,[],
+refresh_date,DATE,,"[""2024-09-28""]",
+region_code,TEXT,,"[""TR-39""]",
+region_name,TEXT,,"[""Kırklareli""]",
+country_code,TEXT,,"[""TR""]",
+country_name,TEXT,,"[""Turkey""]",

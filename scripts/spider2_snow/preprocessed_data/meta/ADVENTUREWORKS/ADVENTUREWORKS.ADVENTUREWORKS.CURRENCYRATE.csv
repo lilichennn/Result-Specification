@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+currencyrateid,NUMBER,,"[2, 4, 5]",
+tocurrencycode,TEXT,,"[""AUD"", ""CAD"", ""CNY""]",
+endofdayrate,FLOAT,,"[1.55, 1.4683, 8.2784]",
+modifieddate,TEXT,,"[""2011-05-31 00:00:00""]",
+currencyratedate,TEXT,,"[""2011-05-31 00:00:00""]",
+fromcurrencycode,TEXT,,"[""USD""]",
+averagerate,FLOAT,,"[1.5491, 1.4641, 8.2781]",

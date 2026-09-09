@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+signalref,,Full name: 'Signal Registry Reference'. Explanation: Foreign key referencing the main signal record. Data type: CHAR(36). Example: 'SIG-MNO-7890'.,character,
+analysisprio,,"Full name: 'Analysis Priority'. Explanation: Priority assigned for analyzing this signal. Data type: TEXT. Possible categories: High, Low, Medium, Urgent.",text,
+followstat,,"Full name: 'Follow-up Status'. Explanation: Status of any follow-up observations. Data type: VARCHAR(25). Possible categories: Completed, Required, Scheduled.",character varying,
+peerrevstat,,"Full name: 'Peer Review Status'. Explanation: Where this signal stands in peer review. Data type: VARCHAR(25). Possible categories: Completed, In Progress, Pending.",character varying,
+pubstat,,"Full name: 'Publication Status'. Explanation: Whether findings about the signal have been published. Data type: CHAR(25). Possible categories: Draft, Published, Submitted.",character,
+resprio,,"Full name: 'Research Priority'. Explanation: How urgently this signal needs scientific attention. Data type: VARCHAR(30). Possible categories: High, Low, Medium.",character varying,
+fundstat,,"Full name: 'Funding Status'. Explanation: Funding situation for further study. Data type: VARCHAR(30). Possible categories: Funded, Pending, Unfunded.",character,
+collabstat,,"Full name: 'Collaboration Status'. Explanation: The nature of collaboration on this signal. Data type: VARCHAR(35). Possible categories: International, Solo, Team.",character,
+secclass,,"Full name: 'Security Classification'. Explanation: Visibility and clearance level for the data. Data type: CHAR(35). Possible categories: Classified, Public, Restricted.",character,
+discstat,,"Full name: 'Disclosure Status'. Explanation: How much information about the signal is shared publicly. Data type: VARCHAR(40). Possible categories: Full, None, Partial.",character varying,
+notesmemo,,Full name: 'Research Notes'. Explanation: Any extra remarks or context by researchers. Data type: TEXT. Example: 'Project requires further funding...',text,

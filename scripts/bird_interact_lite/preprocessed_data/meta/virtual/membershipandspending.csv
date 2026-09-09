@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+memberreg,,"A VARCHAR(20) primary key for membership & spending records (e.g., 'MEM001').",character varying,
+memberfanpivot,,A VARCHAR(20) FK referencing Fans(UserRegistry).,character varying,
+membkind,,"An enum (MembershipType_enum) describing membership tier (Free, Basic, Diamond, Premium).",USER-DEFINED,
+membdays,,"A SMALLINT capturing how many days the fan has been a member (e.g., 120).",smallint,
+spendusd,,"A DECIMAL(10,2) total USD spent (e.g., 350.75).",numeric,
+spendfreq,,"An enum (SpendingFrequency_enum) for spending pattern (Occasional, Weekly, Monthly, Daily).",USER-DEFINED,
+paymethod,,"An enum (PaymentMethod_enum) indicating how the fan pays (Credit Card, Mobile Payment, PayPal, Crypto).",USER-DEFINED,

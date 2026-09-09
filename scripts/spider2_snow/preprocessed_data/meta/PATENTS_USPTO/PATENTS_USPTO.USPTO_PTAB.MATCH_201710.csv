@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+application_number,TEXT,,"[""US-20541988-A"", ""US-58639190-A"", ""US-82548892-A""]",
+ApplicationNumber,TEXT,,"[""07205419"", ""07586391"", ""07825488""]",

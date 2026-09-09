@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+range,NUMBER,,"[11100, 3000, 5700]",
+aircraft_code,TEXT,,"[""773"", ""SU9"", ""320""]",
+model,TEXT,,"[""{\""en\"": \""Boeing 777-300\"", \""ru\"": \""Боинг 777-300\""}"", ""{\""en\"": \""Sukhoi Superjet-100\"", \""ru\"": \""Сухой Суперджет-100\""}"", ""{\""en\"": \""Airbus A320-200\"", \""ru\"": \""Аэробус A320-200\""}""]",

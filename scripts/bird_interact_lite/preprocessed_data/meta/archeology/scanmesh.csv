@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+facetregistry,,Full name: 'Mesh Record ID'. Explanation: Primary key for mesh data. Data type: BIGSERIAL. Example: 3001.,bigint,
+zoneref,,Full name: 'Site Reference'. Explanation: Associates mesh data with a site code. Data type: VARCHAR(12). Example: 'SC9016'.,character varying,
+equipref,,Full name: 'Equipment Reference'. Explanation: Identifies which equipment was used to generate the mesh. Data type: CHAR(10). Example: 'SN20065'.,character,
+facetverts,,Full name: 'Mesh Vertices'. Explanation: Count of mesh vertices. Data type: BIGINT. Example: 7234721.,bigint,
+facetfaces,,Full name: 'Mesh Faces'. Explanation: Count of triangular or polygonal faces. Data type: BIGINT. Example: 5997318.,bigint,
+facetresmm,,"Full name: 'Mesh Resolution (mm)'. Explanation: Mesh vertex spacing in mm. Data type: NUMERIC(5,2). Example: 3.2.",numeric,
+texdist,,"Full name: 'Texture Resolution Setting'. Explanation: Preset texture resolution. Data type: VARCHAR(5). Possible categories: 2K, 1K, 4K.",character varying,
+texpix,,Full name: 'Texture Size (px)'. Explanation: Texture image dimension in pixels. Data type: INTEGER. Example: 2048.,integer,
+uvmapqual,,"Full name: 'UV Mapping Quality'. Explanation: Quality of the UV mapping process. Data type: VARCHAR(10). Possible categories: Medium, High, Low.",character varying,
+geomdeltamm,,"Full name: 'Geometric Accuracy (mm)'. Explanation: Estimated geometric deviation in millimeters. Data type: NUMERIC(6,3). Example: 2.74.",numeric,

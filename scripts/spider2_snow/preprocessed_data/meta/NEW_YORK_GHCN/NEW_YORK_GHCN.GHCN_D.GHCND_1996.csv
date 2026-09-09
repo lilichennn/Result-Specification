@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,[132.0],
+id,TEXT,,"[""USC00091657"", ""USC00311515"", ""USC00028904""]",
+sflag,TEXT,,"[""0"", ""C""]",
+element,TEXT,,"[""PRCP""]",
+qflag,TEXT,,[],
+time,TEXT,,"[""0700"", ""0800"", ""1600""]",
+date,DATE,,"[""1996-08-30"", ""1996-04-27"", ""1996-08-29""]",
+mflag,TEXT,,[],

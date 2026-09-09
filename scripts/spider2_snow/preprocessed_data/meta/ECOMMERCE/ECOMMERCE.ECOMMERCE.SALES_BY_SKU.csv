@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+total_ordered,NUMBER,,"[334, 253, 250]",
+productSKU,TEXT,,"[""GGOEGDHC074099"", ""GGOEGFYQ016599"", ""GGOEGOCB078299""]",

@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+stamp,TEXT,,"[""2016-11-03 18:10:00"", ""2016-11-03 18:00:00""]",
+action,TEXT,,"[""purchase"", ""view"", ""favorite""]",
+amount,FLOAT,,[2000.0],
+user_id,TEXT,,"[""U001""]",
+category,TEXT,,"[""drama"", """"]",
+session,TEXT,,"[""989004ea""]",
+products,TEXT,,"[""D001,D002"", """", ""D001""]",

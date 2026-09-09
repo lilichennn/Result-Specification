@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+mflag,TEXT,,[],
+element,TEXT,,"[""SNWD"", ""TOBS"", ""SN53""]",
+source_url,TEXT,Source ,"[""ftp://ftp.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2017.csv.gz""]",
+etl_timestamp,NUMBER,Load time for this data row,[1689799403864424],
+value,FLOAT,,"[0.0, 122.0, 189.0]",
+time,TEXT,,"[""0700"", ""2400""]",
+sflag,TEXT,,"[""7""]",
+id,TEXT,,"[""USC00099506"", ""USC00143665"", ""USC00177238""]",
+date,DATE,,"[""2017-08-30""]",

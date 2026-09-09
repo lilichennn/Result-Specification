@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+gas_used,NUMBER,,"[""71770.000000000"", ""78818.000000000"", ""77401.000000000""]",
+sender,TEXT,,"[""band1yupjfyaxjvrmzm5ydmnjgczdj4wkan9mzk3v4p"", ""band1rf3fgq8y49u9ju3tz625y8e2jjyspkvevxsh3n"", ""band1sa6xc8qz3c5qqfdtlykdnjpdpdp7hs37fhjpht""]",
+block_timestamp_truncated,NUMBER,,"[1621252763539267, 1621233837331940, 1621238655927855]",
+gas_wanted,NUMBER,,"[""79488.000000000""]",
+memo,TEXT,,"[""yoda:1.2.7/exec:google-cloud-function:1.1.2,"", ""yoda:1.2.7a/exec:google-cloud-function:1.1.2,"", ""yoda:1.2.7/exec:,lambda:1.1.2""]",
+txhash,TEXT,,"[""1BB3CF0904BA04BF74B692A998D3F20BDEB5D7B09AE5DA26F81C2DBB79DE83C2"", ""F0B8051D688EB353754D78A5A373D57405FE63EDC0EA3E7FAA40F5539935E059"", ""4D8C06F582BA5CF566E37BE393F1C71AB52B9BD7128C6D97D6AB6670AD7CBC23""]",
+block_height,NUMBER,,"[5900625, 5894547, 5896099]",
+fee,VARIANT,The fee paid by this transaction,"[""{\n  \""amount\"": [],\n  \""gas\"": 79488\n}""]",
+transaction_type,TEXT,,"[""cosmos-sdk/StdTx""]",
+block_timestamp,TEXT,Timestamp of the block which contains this transaction,"[""2021-05-17T11:59:23.53926789Z"", ""2021-05-17T06:43:57.331940073Z"", ""2021-05-17T08:04:15.927855292Z""]",

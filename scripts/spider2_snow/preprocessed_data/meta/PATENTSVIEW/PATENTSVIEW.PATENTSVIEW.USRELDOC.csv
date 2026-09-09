@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,TEXT,,"[""2013-06-20"", ""2017-09-14"", ""2018-10-18""]",
+reldocno,TEXT,,"[""20130154389"", ""20170262782"", ""20180302883""]",
+status,TEXT,,"[""NULL""]",
+relkind,TEXT,,"[""NULL""]",
+kind,TEXT,,"[""A1""]",
+uuid,TEXT,,"[""bg35bwgdg1rmbx1kshsjx1xf7"", ""z0i9pkakju0epdip0vtmcadnf"", ""itba71z7z5ip113q4tkwt75jf""]",
+patent_id,TEXT,,"[""8618696"", ""10037507"", ""10257822""]",
+sequence,TEXT,,"[""28"", ""19"", ""16""]",
+country,TEXT,,"[""US""]",
+doctype,TEXT,,"[""related-publication""]",

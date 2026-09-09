@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+unit_concept_id,NUMBER,,[40234727],
+dose_era_end_date,DATE,,"[""2009-02-25"", ""2009-08-27"", ""2010-02-18""]",
+drug_concept_id,NUMBER,,"[903963, 922570]",
+person_id,NUMBER,,"[241262, 459402, 945851]",
+dose_value,FLOAT,,[50.0],
+dose_era_start_date,DATE,,"[""2009-02-05"", ""2009-08-07"", ""2010-01-29""]",
+dose_era_id,NUMBER,,"[257203989, 268666061, 294242914]",

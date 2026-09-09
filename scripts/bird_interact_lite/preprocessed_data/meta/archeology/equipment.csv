@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+equipregistry,,Full name: 'Equipment ID'. Explanation: Primary key for equipment. Data type: CHAR(10). Example: 'SN20065'.,character,
+equipform,,"Full name: 'Equipment Type'. Explanation: Type or category of scanning equipment. Data type: VARCHAR(28). Possible categories: LiDAR, Structured Light, Photogrammetry, Laser.",character varying,
+equipdesign,,Full name: 'Equipment Model'. Explanation: Model name or identifier. Data type: VARCHAR(14). Example: 'Model-669'.,character varying,
+equiptune,,Full name: 'Calibration Date'. Explanation: Date the equipment was last calibrated. Data type: DATE. Example: '2024-11-01'.,date,
+equipstatus,,"Full name: 'Equipment Condition'. Explanation: Overall condition of the equipment. Data type: VARCHAR(16). Possible categories: Excellent, Good, Fair, Poor.",character varying,
+powerlevel,,Full name: 'Battery Level (%)'. Explanation: Battery level as an integer percentage. Data type: SMALLINT. Example: 62.,smallint,

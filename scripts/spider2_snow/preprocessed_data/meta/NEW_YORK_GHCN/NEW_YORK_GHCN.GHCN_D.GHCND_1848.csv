@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1848-12-03"", ""1848-08-12"", ""1848-10-10""]",
+element,TEXT,,"[""PRCP""]",
+id,TEXT,,"[""CA006158350""]",
+qflag,TEXT,,[],
+value,FLOAT,,[0.0],
+time,TEXT,,[],
+mflag,TEXT,,"[""T""]",
+sflag,TEXT,,"[""C""]",

@@ -1,0 +1,15 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+asr_key,,"A TEXT primary key uniquely identifying each symptom and risk assessment record, linking to AssessmentBasics(AB_Key).",text,
+phq9_scr,,"Patient Health Questionnaire-9 total score, ranging from 0 to 27, measuring depression severity.",bigint,
+phq9_sev,,"PHQ-9 depression severity level based on total score. Contains values: 'Moderately Severe', 'Mild', 'Moderate', 'Severe'. Contains NULL when PHQ-9 is not administered.",text,
+gad7_scr,,"Generalized Anxiety Disorder 7-item scale total score, ranging from 0 to 21, measuring anxiety severity.",bigint,
+gad7_sev,,"GAD-7 anxiety severity level based on total score. Contains values: 'Mild', 'Moderate', 'Severe'. Contains NULL when GAD-7 is not administered.",text,
+suic_ideation,,"Presence and severity of suicidal ideation. Contains values: 'Intent', 'Active', 'Plan', 'Passive', 'None'. Contains NULL when suicidal ideation assessment is not completed.",text,
+suic_risk,,"Overall suicide risk level assessment. Contains values: 'Medium', 'High', 'Low'.",text,
+self_harm,,"History and current status of self-harm behaviors. Contains values: 'Recent', 'Remote', 'Current', 'None'. Contains NULL when self-harm assessment is not conducted.",text,
+viol_risk,,"Assessment of violence risk toward others. Contains values: 'Medium', 'Low', 'High'.",text,
+sub_use,,"Current substance use status. Contains values: 'Cannabis', 'Opioids', 'Alcohol', 'Multiple', 'None'. Contains NULL when substance use assessment is not completed.",text,
+sub_use_freq,,"Frequency of substance use when present. Contains values: 'Daily', 'Occasional', 'Weekly', 'Never'.",text,
+sub_use_sev,,"Severity level of substance use disorder when present. Contains values: 'Moderate', 'Mild', 'Severe'. Contains NULL when substance use severity is not evaluated.",text,
+sympscores,,"JSONB column. Consolidates all symptom rating scores including mood, anxiety, sleep, appetite, energy, concentration, interest, and hopelessness measurements into a single assessment profile.
+Fields: {""Anx_Scr"":""Subjective anxiety rating score typically ranging from 1 to 10."",""App_Scr"":""Appetite rating score typically ranging from 1 to 10."",""Con_Scr"":""Concentration ability rating score typically ranging from 1 to 10."",""En_Scr"":""Energy level rating score typically ranging from 1 to 10."",""Hope_Scr"":""Hopelessness rating score typically ranging from 1 to 10."",""Int_Scr"":""Interest in activities rating score typically ranging from 1 to 10."",""Mood_Scr"":""Subjective mood rating score typically ranging from 1 to 10."",""Slp_Scr"":""Sleep quality rating score typically ranging from 1 to 10.""}",jsonb,

@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+perfregistry,,VARCHAR(50) PRIMARY KEY uniquely identifying each performance record.,character varying,
+solmodref,,"VARCHAR(50) REFERENCES Panel(PaneMark), linking performance data to a panel.",character varying,
+perfmoment,,"TIMESTAMP noting when these performance metrics were recorded (e.g., '2023-07-15 10:30:00').",timestamp without time zone,
+measpoww,,"NUMERIC(9,3) logging the measured power in watts (was 'MeasuredPowerW') (e.g., 595.000).",numeric,
+powlossw,,"DECIMAL(8,3) detailing power loss in watts (was 'PowerLossW') (e.g., 10.500).",numeric,
+efficiency_profile,,"JSONB column. Captures efficiency and degradation metrics for a solar panel, including current efficiency, losses, and degradation rates.
+Fields: {""current_efficiency"":{""curreffpct"":""NUMERIC(7,3) representing the current measured efficiency percentage (was 'CurrentEfficiencyPercent') (e.g., 18.750)."",""efflosspct"":""DECIMAL(7,3) indicating the efficiency loss percentage (was 'EfficiencyLossPercent') (e.g., 1.250).""},""degradation"":{""anndegrate"":""NUMERIC(7,3) capturing annual degradation rate percentage (was 'AnnualDegradationRate') (e.g., 0.500)."",""cumdegpct"":""DECIMAL(7,3) storing cumulative degradation percentage (was 'CumulativeDegradationPercent') (e.g., 2.750).""}}",jsonb,

@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+crewregistry,,"Full name: 'Operator ID'. Explanation: Primary key for Personnel, representing an operator. Data type: CHAR(8). Example: 'OP4641'.",character,
+crewlabel,,Full name: 'Operator Name'. Explanation: Name or label for the operator. Data type: VARCHAR(50). Example: 'Joel Wallace'.,character varying,
+leadregistry,,Full name: 'Supervisor ID'. Explanation: Identifies a supervisor. Data type: CHAR(8). Example: 'SV7658'.,character,
+leadlabel,,Full name: 'Supervisor Name'. Explanation: Name of the supervisor. Data type: VARCHAR(40). Example: 'Michael Kaiser'.,character varying,

@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+SOURCE,TEXT,Source of the data.,[],
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Deaths""]",
+INDUSTRY,TEXT,Related industry.,[],
+SEX,TEXT,"Sex, if applicable.",[],
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Death Occurrences of 70-74 year olds"", ""Death Occurrences of 20-24 year old Females"", ""Death Occurrences of 30-34 year old Females""]",
+MEASUREMENT_TYPE,TEXT,Measurement classification of the variable.,[],
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Weekly""]",
+RELIGION,TEXT,"Religion, if applicable.",[],
+AGE,TEXT,"Age category, if applicable.",[],
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",
+SEASONALLY_ADJUSTED,TEXT,Indicates whether the value is seasonally adjusted.,[],
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""weekly-deaths-age-sex_occurrences_all_70-74"", ""weekly-deaths-age-sex_occurrences_female_20-24"", ""weekly-deaths-age-sex_occurrences_female_30-34""]",

@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,NUMBER,,"[85511205, 107068641, 85289846]",
+version_id,NUMBER,,"[14525151, 17207680, 12274677]",
+platform,TEXT,,"[""Maven"", ""NPM""]",
+version_number,TEXT,,"[""2.0.0"", ""1.0.8"", ""1.20""]",
+dependency_platform,TEXT,,"[""Maven"", ""NPM""]",
+dependency_name,TEXT,,"["" junit : junit "", ""react"", ""org.apache.activemq:activemq-client""]",
+dependency_kind,TEXT,,"["" test "", ""Development"", ""runtime""]",
+project_name,TEXT,,"[""org.tinygroup:org.tinygroup.zTree"", ""shadertoy-react"", ""de.taimos:dvalin-interconnect-core""]",
+dependency_project_id,NUMBER,,"[304875.0, 359766.0]",
+optional_dependency,TEXT,,"[""false""]",
+dependency_requirements,TEXT,,"["" 3.8.1 "", "" ^16.6.1"", ""${activemq.version}""]",
+project_id,NUMBER,,"[3125810, 3409864, 2673189]",

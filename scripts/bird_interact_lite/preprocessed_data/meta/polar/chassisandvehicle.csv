@@ -1,0 +1,17 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+chassisregistry,,A SERIAL primary key uniquely identifying each chassis/vehicle record.,integer,
+chassiseqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking chassis or vehicle details to a specific piece of equipment.",character varying,
+chassistransref,,"An INTEGER foreign key referencing Transmission(TransRegistry), relating this chassis to its transmission record.",integer,
+brakepadwearpercent,,A REAL value measuring the brake pad wear as a percentage of expected lifespan used.,real,
+brakefluidlevelpercent,,"A DECIMAL(5,2) specifying brake fluid level as a percentage.",numeric,
+brakepressurekpa,,An INT indicating brake line pressure in kilopascals.,integer,
+tracktensionkn,,"A NUMERIC(7,3) for tracked vehicles, indicating track tension in kilonewtons.",numeric,
+trackwearpercent,,A FLOAT representing wear on the tracks (if applicable) as a percentage.,double precision,
+suspensionheightmm,,"A NUMERIC(6,1) describing the current suspension height in millimeters.",numeric,
+vehiclespeedkmh,,A REAL number for the vehicle’s current speed in kilometers per hour.,real,
+vehicleloadkg,,"A DECIMAL(9,2) showing the current load (cargo + passengers) in kilograms.",numeric,
+vehicleangledegrees,,"A DECIMAL(6,2) specifying the vehicle’s pitch/tilt angle in degrees.",numeric,
+vehicleheadingdegrees,,"A NUMERIC(5,1) describing the vehicle’s heading or direction in degrees.",numeric,
+chassisengref,,"An INTEGER foreign key referencing EngineAndFluids(EngineRegistry), linking the chassis record to engine data.",integer,
+tiremetrics,,"JSONB column. Captures tire-related data, including pressure, temperature, and tread condition.
+Fields: {""pressure_kpa"":""A SMALLINT for the tires’ pressure in kilopascals."",""temperature_c"":""A DOUBLE PRECISION value representing the tires’ temperature in Celsius."",""tread_depth_mm"":""A DECIMAL(6,2) showing the depth of the tire tread in millimeters.""}",jsonb,

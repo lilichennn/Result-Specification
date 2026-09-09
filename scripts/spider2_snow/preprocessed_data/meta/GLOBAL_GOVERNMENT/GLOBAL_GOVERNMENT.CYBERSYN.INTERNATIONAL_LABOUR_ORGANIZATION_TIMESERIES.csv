@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable name for the variable.,"[""Population by sex and age -- UN estimates and projections | Male | Age (5-year bands): 5-9, Annual (Count), Estimate"", ""Employment by sex and age -- ILO modelled estimates | Female | Age (Youth, adults): 15+, Annual (Count), Estimate"", ""Employment by sex, age and economic class -- ILO modelled estimates | Female | Age (Youth, adults): 25+ | Extremely poor < USD 1.90 PPP, Annual (Count), Estimate""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table.,"[""POP_2POP_SEX_AGE_NB,A_SEX_M_AGE_5YRBANDS_Y05-09_E"", ""EMP_2EMP_SEX_AGE_NB,A_SEX_F_AGE_YTHADULT_YGE15_E"", ""EMP_2EMP_SEX_AGE_CLA_NB,A_SEX_F_AGE_YTHADULT_YGE25_CLA_ECOCLA_USDLT2_E""]",
+VALUE,FLOAT,Value reported for the variable.,"[95073.0, 353757.0, 0.0]",
+DATE,DATE,Date associated with the value.,"[""2026-12-31"", ""2008-12-31"", ""1997-12-31""]",
+GEO_ID,TEXT,A unique identifier for a place joinable to the GEOGRAPHY_INDEX table.,"[""country/ARM"", ""country/LBN"", ""country/BHS""]",
+VALUE_COMMENT,TEXT,"Comment on the source, measurement, and definition of the value.","[""Source: Modeled Estimates"", ""Value Status: Adjusted | Source: Modeled Estimates""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Count""]",

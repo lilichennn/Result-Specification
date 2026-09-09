@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+logregistry,,Full name: 'Registration Record ID'. Explanation: Primary key for registration logs. Data type: BIGSERIAL. Example: 7001.,bigint,
+crewref,,Full name: 'Operator Reference'. Explanation: Operator ID who performed registration. Data type: CHAR(8). Example: 'OP4641'.,character,
+arcref,,Full name: 'Project Reference'. Explanation: Project ID linked to registration data. Data type: VARCHAR(10). Example: 'PR7509'.,character varying,
+logaccumm,,"Full name: 'Registration Accuracy (mm)'. Explanation: Accuracy of the registration in mm. Data type: NUMERIC(5,3). Example: 0.84.",numeric,
+refmark,,"Full name: 'Reference Markers'. Explanation: Numeric codes for registration targets. Data type: VARCHAR(6). Possible categories: 40, 31, 25, 21.",character varying,
+ctrlpts,,"Full name: 'Control Points'. Explanation: Numeric codes for control points. Data type: VARCHAR(6). Possible categories: 73, 99, 6, 84.",character varying,
+logmethod,,"Full name: 'Registration Method'. Explanation: Method for aligning scans. Data type: VARCHAR(15). Possible categories: Target-based, Hybrid, Automatic.",character varying,
+transform,,"Full name: 'Transformation Matrix'. Explanation: Identifier for the transform matrix used. Data type: VARCHAR(15). Possible categories: Matrix-47, Matrix-113, Matrix-543.",character varying,
+errscale,,"Full name: 'Error Metrics'. Explanation: Type of error measurement. Data type: VARCHAR(20). Possible categories: Cloud-to-Mesh, Cloud-to-Cloud, RMSE.",character varying,
+errvalmm,,"Full name: 'Error Value (mm)'. Explanation: Measured error in millimeters. Data type: NUMERIC(6,3). Example: 6.962.",numeric,

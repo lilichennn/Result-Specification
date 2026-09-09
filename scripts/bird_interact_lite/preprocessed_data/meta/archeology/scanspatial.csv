@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+domainregistry,,Full name: 'Spatial Record ID'. Explanation: Primary key for spatial data. Data type: BIGSERIAL. Example: 4001.,bigint,
+arcref,,Full name: 'Project Reference'. Explanation: Project ID linking spatial data. Data type: VARCHAR(10). Example: 'PR7509'.,character varying,
+crewref,,Full name: 'Operator Reference'. Explanation: Operator ID for these spatial records. Data type: CHAR(8). Example: 'OP4641'.,character,
+aream2,,"Full name: 'Surface Area (m²)'. Explanation: Calculated area in square meters. Data type: NUMERIC(8,3). Example: 78.01.",numeric,
+volm3,,"Full name: 'Volume (m³)'. Explanation: Computed volume in cubic meters. Data type: NUMERIC(9,4). Example: 76.7.",numeric,
+boxx,,"Full name: 'Bounding Box X (m)'. Explanation: Size of bounding box along X-axis, in meters. Data type: NUMERIC(8,2). Example: 40.12.",numeric,
+boxy,,"Full name: 'Bounding Box Y (m)'. Explanation: Size of bounding box along Y-axis, in meters. Data type: NUMERIC(8,3). Example: 1.06.",numeric,
+boxz,,"Full name: 'Bounding Box Z (m)'. Explanation: Size of bounding box along Z-axis, in meters. Data type: NUMERIC(9,2). Example: 16.41.",numeric,
+angleaz,,Full name: 'Orientation (degrees)'. Explanation: Azimuth or rotation angle around vertical axis. Data type: REAL. Example: 342.4.,real,
+angletilt,,Full name: 'Tilt Angle (degrees)'. Explanation: Inclination angle from horizontal. Data type: DOUBLE PRECISION. Example: 23.9.,double precision,
+groundspan,,"Full name: 'Ground Sampling Distance (mm)'. Explanation: Effective resolution on the ground, in mm. Data type: NUMERIC(6,3). Example: 4.13.",numeric,

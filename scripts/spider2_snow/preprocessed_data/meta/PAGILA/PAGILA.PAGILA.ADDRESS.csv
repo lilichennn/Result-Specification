@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+city_id,NUMBER,,"[300, 576, 449]",
+district,TEXT,,"["" ""]",
+address_id,NUMBER,,"[1, 3, 4]",
+last_update,TEXT,,"[""2021-03-06 15:51:54""]",
+postal_code,TEXT,,"["""", ""17886"", ""18743""]",
+address2,TEXT,,"[""""]",
+phone,TEXT,,"["" ""]",
+address,TEXT,,"[""47 MySakila Drive"", ""23 Workhaven Lane"", ""1411 Lillydale Drive""]",

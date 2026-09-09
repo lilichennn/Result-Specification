@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+text,TEXT,,"[""FIG. 9 is a top view of the design of FIG. 6 ;"", ""FIG. 9 is a logic flow diagram of assessing a security risk and performing a security response in accordance with the present invention."", ""FIG. 10 is a bottom view of the remote control device shown in FIG. 7 .""]",
+sequence,NUMBER,,[10],
+uuid,TEXT,,"[""72404f44-9964-11eb-9615-121df0c29c1e"", ""73f4ba4a-9964-11eb-9615-121df0c29c1e"", ""7254487e-9964-11eb-9615-121df0c29c1e""]",
+patent_id,TEXT,,"[""D908485"", ""10904214"", ""D909004""]",

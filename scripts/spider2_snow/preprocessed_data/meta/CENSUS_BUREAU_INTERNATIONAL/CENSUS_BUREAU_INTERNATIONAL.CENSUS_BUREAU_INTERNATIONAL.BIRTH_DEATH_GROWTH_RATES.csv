@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+crude_birth_rate,FLOAT,"Crude birth rate (births per 1,000 population)","[47.71, 48.35, 50.48]",
+year,NUMBER,Year,"[1994, 1996, 2000]",
+growth_rate,FLOAT,Growth rate (percent),"[2.92, 3.07, 3.308]",
+crude_death_rate,FLOAT,"Crude death rate (deaths per 1,000 population)","[18.31, 17.51, 16.64]",
+rate_natural_increase,FLOAT,Rate of natural increase (percent),"[2.94, 3.084, 3.384]",
+country_name,TEXT,Country or area name,"[""Chad""]",
+country_code,TEXT,Federal Information Processing Standard (FIPS) country/area code,"[""CD""]",
+net_migration,FLOAT,"Net migration rate (net number of migrants per 1,000 population)","[-0.2, -0.14, -0.76]",

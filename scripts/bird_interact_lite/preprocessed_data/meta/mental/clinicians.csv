@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+clinkey,,"A VARCHAR(20) primary key uniquely identifying the clinician (e.g., 'CLN001').",character varying,
+clinconf,,"An enum (clinicianconfidence_enum) capturing the clinician's confidence (Medium, Low, High).",USER-DEFINED,
+assesslim,,"An enum (assessmentlimitations_enum) describing any limitations (Cognitive, Engagement, Language).",USER-DEFINED,
+docustat,,"An enum (documentationstatus_enum) for documentation status (Complete, Incomplete, Pending).",USER-DEFINED,
+billcode,,"A VARCHAR(15) storing billing or service code (e.g., '99214').",character varying,
+nxtrevdt,,"A DATE indicating next planned review date (e.g., '2025-06-01').",date,
+carecoord,,"An enum (carecoordination_enum) describing care coordination level (Intensive, Regular, Limited).",USER-DEFINED,
+refneed,,"An enum (referralneeds_enum) capturing referral needs (Services, Testing, Specialist).",USER-DEFINED,
+fuptype,,"An enum (followuptype_enum) describing follow-up type (Therapy, Routine, Urgent, Medication Check).",USER-DEFINED,
+fupfreq,,"An enum (followupfrequency_enum) describing follow-up frequency (Weekly, Quarterly, Biweekly, Monthly).",USER-DEFINED,
+facconnect,,"A VARCHAR(20) FK referencing Facilities(FacKey), linking this clinician to a facility.",character varying,

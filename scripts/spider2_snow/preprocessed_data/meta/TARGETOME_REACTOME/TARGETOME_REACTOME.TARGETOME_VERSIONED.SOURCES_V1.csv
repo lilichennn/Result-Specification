@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+sourceID,NUMBER,ID for source supporting Targetome interaction,"[4, 5, 8]",
+databaseName,TEXT,Name of database from which supporting evidence and literature are obtained,"[""IUPHAR""]",
+PubMedID,TEXT,PubMedID identifying literature,"[""20724042"", ""12543790"", ""15930265""]",
+db_downloadDate,TEXT,Date on which database was downloaded,"[""06.15.2016""]",
+db_version,TEXT,Database version,[],
+db_downloadURL,TEXT,URL from which database was downloaded,[],

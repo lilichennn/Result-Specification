@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+txkey,,"A SERIAL primary key for each treatment record (e.g., 101).",integer,
+encref,,A VARCHAR(30) FK referencing Encounters(EncKey).,character varying,
+curmed,,"A TEXT field listing current medications (e.g., 'SSRIs, Mood stabilizer').",text,
+medadh,,"An enum (medicationadherence_enum) for medication adherence (Medium, Low, Non-compliant, High).",USER-DEFINED,
+medside,,"An enum (medicationsideeffects_enum) describing side effect severity (Mild, Moderate, Severe).",USER-DEFINED,
+medchg,,"An enum (medicationchanges_enum) for medication changes (Dose Adjustment, Augmentation, Switch).",USER-DEFINED,
+crisisint,,"A NUMERIC(2,1) capturing any crisis interventions count or measure (e.g., 2.0).",numeric,
+therapy_details,,"JSONB column. Captures details about the therapy provided, including type, frequency, duration, engagement, and changes.
+Fields: {""changes"":""An enum (therapychanges_enum) for therapy changes (Frequency Change, Modality Change, Therapist Change)."",""duration_months"":""A SMALLINT capturing the therapy duration in months (e.g., 6)."",""engagement"":""An enum (therapyengagement_enum) describing engagement (Medium, High, Low, Non-compliant)."",""frequency"":""An enum (therapyfrequency_enum) describing therapy frequency (Biweekly, Monthly, Weekly)."",""type"":""An enum (therapytype_enum) describing therapy modality (DBT, Group, Psychodynamic, CBT).""}",jsonb,

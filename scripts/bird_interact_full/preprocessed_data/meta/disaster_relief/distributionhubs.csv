@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+hubregistry,,VARCHAR(20). Unique distribution hub identifier. PK.,character varying,
+hub_cap_tons,,REAL. Hub's capacity in tons. Example: 5101.,real,
+hubutilpct,,REAL. Hub's utilization percentage. Example: 9.4.,real,
+store_cap_m3,,REAL. Hub's storage capacity in cubic meters. Example: 93293.,real,
+storeavailm3,,REAL. Available storage capacity in cubic meters. Example: 7279.,real,
+coldstorecapm3,,REAL. Cold storage capacity in cubic meters. Example: 249.,real,
+cold_store_temp_c,,REAL. Cold storage temperature in Celsius. **NULL means cold storage temperature not recorded.**. Example: 6.6.,real,
+warehouse_state,,"TEXT. Warehouse operational state. Possible values: Excellent, Fair, Good, Poor.",text,
+invaccpct,,REAL. Inventory acceptance percentage. Example: 91.3.,real,
+stockturnrate,,REAL. Stock turnover rate. Example: 3.31.,real,

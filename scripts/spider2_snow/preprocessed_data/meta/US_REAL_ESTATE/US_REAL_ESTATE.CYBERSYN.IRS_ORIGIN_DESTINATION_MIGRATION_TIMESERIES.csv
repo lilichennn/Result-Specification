@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+SUPPRESSED,NUMBER,Boolean indicating whether the value has been suppressed in the underlying data for privacy purposes. Suppressed values appear as NULL,[0],
+FROM_GEO_ID,TEXT,"A unique identifier for a place (state, county) from which the variable originates in the first year","[""geoId/37081"", ""geoId/12021"", ""geoId/40011""]",
+VARIABLE_NAME,TEXT,Human readable name for the variable,"[""Number of Individuals"", ""Number of Returns"", ""Adjusted Gross Income""]",
+TO_GEO_ID,TEXT,"A unique identifier for a place (state, county) to which the variable moves to in the second year","[""geoId/08031"", ""geoId/12031"", ""geoId/40039""]",
+UNIT,TEXT,"Unit of measure for the value, examples: returns, individuals, USD","[""Individuals"", ""Returns"", ""USD""]",
+DATE,DATE,"Date associated with the value, for inflow data it is the last day of the second year being reported","[""2012-12-31"", ""2020-12-31"", ""2019-12-31""]",
+VALUE,NUMBER,The actual numeric value for the variable. Suppressed values are Null.,"[16, 40, 1826000]",

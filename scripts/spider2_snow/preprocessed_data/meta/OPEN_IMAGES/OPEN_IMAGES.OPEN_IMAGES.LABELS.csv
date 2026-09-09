@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+image_id,TEXT,,"[""3974825c574dd5ca"", ""65618c88c607852b"", ""fa01a5e529de168b""]",
+confidence,FLOAT,,[0.9],
+label_name,TEXT,,"[""/m/01g317""]",
+source,TEXT,,"[""machine""]",

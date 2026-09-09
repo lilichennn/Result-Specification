@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+PROPERTY_CLASSIFICATION,TEXT,"House Price Index classification (traditional, distress-free, non-metro)","[""traditional"", ""non-metro""]",
+VARIABLE_NAME,TEXT,Human-readable description for the variable,"[""FHFA_HPI traditional purchase-only monthly Not Seasonally Adjusted"", ""FHFA_HPI traditional purchase-only quarterly Not Seasonally Adjusted"", ""FHFA_HPI traditional purchase-only monthly Seasonally Adjusted""]",
+SEASONALLY_ADJUSTED,BOOLEAN,Boolean field indicating if a series is seasonally adjusted,"[false, true]",
+INDEX_TYPE,TEXT,"Type of House Price Index measured in the index (all-transactions, purchase-only, expanded-data)","[""purchase-only"", ""all-transactions""]",
+VARIABLE,TEXT,A unique identifier for a variable joinable to the timeseries table for filtering,"[""FHFA_HPI_traditional_purchase-only_monthly_NSA"", ""FHFA_HPI_traditional_purchase-only_quarterly_NSA"", ""FHFA_HPI_traditional_purchase-only_monthly_SA""]",
+FREQUENCY,TEXT,"Frequency of the variable measurement (e.g., Daily, Monthly, Quarterly)","[""MONTHLY"", ""QUARTERLY""]",
+UNIT,TEXT,"Unit of measure for the variable:  (e.g., Index)","[""Index""]",

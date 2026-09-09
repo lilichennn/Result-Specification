@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+linkid,,A SERIAL primary key uniquely identifying each relationship between fund families and categories they offer.,bigint,
+familylink,,"Foreign key referencing families.GroupName, indicating which fund family offers products in this category.",character varying,
+categorylink,,"Foreign key referencing categories.ClassType, indicating which category the fund family operates in.",character varying,

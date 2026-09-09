@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+txnnum,,VARCHAR(50). Unique identifier for the order transaction. PK.,character varying,
+buyerlink,,TEXT. Link to the buyer's account or details. Example: CUS00181.,text,
+transaction_value,,REAL. Total value of the order transaction.,real,
+txndate,,"TEXT. Date when the transaction was made. Example: Feb 16, 2025.",text,

@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+TR_KEY,,TEXT. Unique identifier for a trader account. PK. Example: TR73442.,text,
+typeFlag,,"TEXT. Classification flag indicating trader type . Possible values: Broker, Individual, Institution, Market Maker.",text,
+trader_fin_data,,"JSONB column. Trader financial details including balance and risk.
+Fields: {""age_days"":""BIGINT. Number of days since the trader account was created. Example: 1532."",""risk_lvl"":""TEXT. Qualitative risk-tone category assigned to the trader. Possible values: Aggressive, Conservative, Moderate."",""usd_bal"":""TEXT. Current account balance denominated in U.S. dollars. Example: $4,692,991.""}",jsonb,

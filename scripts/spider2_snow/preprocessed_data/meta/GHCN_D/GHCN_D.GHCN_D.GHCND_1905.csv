@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1905-12-29"", ""1905-06-05"", ""1905-02-17""]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+element,TEXT,,"[""PRCP""]",
+value,FLOAT,,[0.0],
+mflag,TEXT,,"[""T""]",
+id,TEXT,,"[""RQC00662634"", ""RQC00662801"", ""RQC00664702""]",
+time,TEXT,,[],

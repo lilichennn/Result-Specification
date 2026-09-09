@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+Code,NUMBER,,"[4, 6, 8]",
+Description,TEXT,,"[""15 - 24 years"", ""35 - 44 years"", ""55 - 64 years""]",

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+CustStreetAddress,TEXT,,"[""908 W. Capital Way"", ""12330 Kingman Drive"", ""2500 Rosales Lane""]",
+CustState,TEXT,,"[""WA""]",
+CustZipCode,TEXT,,"[""98413"", ""98033"", ""98006""]",
+CustPhoneNumber,TEXT,,"[""555-2496"", ""555-2721"", ""555-9938""]",
+CustLastName,TEXT,,"[""Waldal"", ""Ehrlich"", ""Pundt""]",
+CustomerID,NUMBER,,"[10002, 10010, 10013]",
+CustFirstName,TEXT,,"[""Deb"", ""Zachary"", ""Estella""]",
+CustCity,TEXT,,"[""Tacoma"", ""Kirkland"", ""Bellevue""]",

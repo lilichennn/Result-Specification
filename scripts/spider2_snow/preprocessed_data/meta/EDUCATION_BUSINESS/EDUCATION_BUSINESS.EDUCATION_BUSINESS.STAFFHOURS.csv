@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+EventDate,TEXT,,"[""2013-01-15"", ""2013-02-20"", ""2013-02-21""]",
+EventType,TEXT,,"[""Exit"", ""Enter""]",
+StaffMember,TEXT,,"[""A"", ""F"", ""G""]",
+EventTime,TEXT,,"[""08:00"", ""09:10"", ""14:30""]",

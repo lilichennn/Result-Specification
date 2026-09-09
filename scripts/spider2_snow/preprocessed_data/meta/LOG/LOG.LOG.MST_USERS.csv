@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+register_date,TEXT,,"[""2016-10-01"", ""2016-10-05"", ""2016-10-15""]",
+withdraw_date,TEXT,,"[""2016-10-10"", """"]",
+register_device,TEXT,,"[""sp"", ""pc""]",
+birth_date,TEXT,,"[""1953-06-12"", ""1965-01-06"", ""1954-05-21""]",
+user_id,TEXT,,"[""U002"", ""U003"", ""U004""]",
+sex,TEXT,,"[""F"", ""M""]",

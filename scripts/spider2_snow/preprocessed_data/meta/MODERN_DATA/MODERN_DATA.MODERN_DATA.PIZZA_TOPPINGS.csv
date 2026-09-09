@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+topping_name,TEXT,,"[""BBQ Sauce"", ""Chicken"", ""Mushrooms""]",
+topping_id,NUMBER,,"[2, 5, 6]",

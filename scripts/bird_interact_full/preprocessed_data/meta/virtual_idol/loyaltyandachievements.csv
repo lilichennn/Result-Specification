@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+loyalty_reg,,BIGSERIAL. Auto-generated unique identifier for loyalty and achievements record. PK = LoyaltyAndAchievements(Loyalty_Reg).,bigint,
+loyalty_events_pivot,,BIGINT. Reference to events record for loyalty program correlation. FK to EventsAndClub.,bigint,
+loyalty_engage_pivot,,BIGINT. Reference to engagement record for loyalty calculation. FK to Engagement.,bigint,
+loy_pts,,BIGINT. Total loyalty points accumulated through platform activities.,bigint,
+rew_tier,,TEXT. Current reward tier level in the loyalty program.,text,
+repute_lv,,TEXT. Reputation level classification within the community.,text,
+trust_val,,REAL. Trust score calculated from community interactions and behavior.,real,
+achiev_stats,,"JSONB column. Achievement and recognition statistics including counts of achievements, badges, titles, and rankings
+Fields: {""Ach_Count"":""BIGINT. Total number of achievements unlocked by the fan."",""Badge_Coll"":""BIGINT. Number of badges collected through various activities."",""Infl_Score"":""REAL. Influence score measuring fan's impact on community and platform."",""Rank_Pos"":""BIGINT. Current ranking position among all platform users."",""Spec_Titles"":""BIGINT. Number of special titles earned by the fan.""}",jsonb,

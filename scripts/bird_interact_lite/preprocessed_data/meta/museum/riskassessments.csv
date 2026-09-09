@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+riskassessregistry,,A BIGSERIAL primary key uniquely identifying each risk assessment record.,bigint,
+artrefconcerned,,"A CHAR(10) NOT NULL foreign key referencing ArtifactsCore(ArtRegistry), linking this record to a specific artifact.",character,
+hallrefconcerned,,"A CHAR(8) foreign key referencing ExhibitionHalls(HallRegistry), indicating which hall is involved in this risk assessment (if any).",character,
+riskassesslevel,,"A VARCHAR(50) describing the level of risk (possible values: 'Medium', 'High', 'Low').",USER-DEFINED,
+emergresponseplan,,"A TEXT field outlining the emergency response procedures if the risk materializes (possible values: 'Review Required', 'Under Revision', 'Updated').",text,
+evacpriority,,"A CHAR(15) indicating the priority for evacuation (possible values: 'Priority 3', 'Priority 1', 'Priority 2').",character varying,
+handlerestrictions,,"A VARCHAR(100) describing any handling restrictions (possible values: 'Minimal', 'Strict').",character varying,
+conservepriorityscore,,"A SMALLINT rating (e.g., 1–10) indicating the urgency or priority for conservation actions based on identified risks.",smallint,

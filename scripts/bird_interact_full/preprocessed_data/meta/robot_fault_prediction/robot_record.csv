@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+recreg,,TEXT. Unique record registration identifier. PK. Example: RF100725.,text,
+rects,,"TIMESTAMP. Timestamp of the record creation. Not nullable. Possible values: 2025-02-18, 2025-02-19.",timestamp without time zone,
+botcode,,TEXT. Unique robot code identifier. PK. Example: RB2073.,text,

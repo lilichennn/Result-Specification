@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+description,TEXT,,"[""Aggregate data are based on UNICEF, WHO, and the World Bank harmonized JME dataset.""]",
+country_code,TEXT,,"[""EAS"", ""ECS"", ""LCN""]",
+series_code,TEXT,,"[""SH.STA.STNT.ME.ZS"", ""SH.STA.OWGH.ME.ZS""]",

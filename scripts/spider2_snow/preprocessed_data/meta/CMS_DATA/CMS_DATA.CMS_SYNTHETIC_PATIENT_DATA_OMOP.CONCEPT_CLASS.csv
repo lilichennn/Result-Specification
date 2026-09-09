@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+concept_class_concept_id,NUMBER,,"[44819243, 45754868, 46233669]",
+concept_class_name,TEXT,,"[""11-digit NDC code"", ""3-digit billing code"", ""3-digit billing E code""]",
+concept_class_id,TEXT,,"[""11-digit NDC"", ""3-dig billing code"", ""3-dig billing E code""]",

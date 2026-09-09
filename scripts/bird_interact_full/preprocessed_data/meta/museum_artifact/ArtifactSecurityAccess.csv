@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+loan_stat,,"TEXT. Loan status of the artifact. PK. Possible values: Available, Not Available, On Loan.",text,
+insUSD,,REAL. Insurance value in USD for the artifact. Example: 968368.,real,
+SEC_LEVEL,,"TEXT. Security level for the artifact. Possible values: Level 1, Level 2, Level 3.",text,
+access_restrict,,"TEXT. Restrictions on access to the artifact. Possible values: Limited, Public, Restricted.",text,
+docu_stat,,"TEXT. Documentation status for the artifact. Possible values: Complete, Partial, Updating.",text,
+photo_docu,,"TEXT. Photo documentation status for the artifact. Possible values: Outdated, Recent, Required.",text,
+cond_report,,"TEXT. Condition report status for the artifact. Possible values: Current, Due, Overdue.",text,
+conserve_rec,,"TEXT. Conservation record for the artifact. Possible values: Pending, Review Required, Updated.",text,
+research_access,,"TEXT. Research access status for the artifact. Possible values: Available, Limited, Restricted.",text,
+digital_rec,,"TEXT. Digital record status for the artifact. Possible values: Complete, In Progress, Partial.",text,

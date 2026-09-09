@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+Description,TEXT,,"[""1989 revision of education item on certificate"", ""no education item on certificate""]",
+Code,NUMBER,,"[0, 2]",

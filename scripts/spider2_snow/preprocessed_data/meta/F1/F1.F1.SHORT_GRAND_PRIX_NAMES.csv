@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+short_name,TEXT,,"[""Australia"", ""China"", ""Spain""]",
+full_name,TEXT,,"[""Australian Grand Prix"", ""Chinese Grand Prix"", ""Spanish Grand Prix""]",

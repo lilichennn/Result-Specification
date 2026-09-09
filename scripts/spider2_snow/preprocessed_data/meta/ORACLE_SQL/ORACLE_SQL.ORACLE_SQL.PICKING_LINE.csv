@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+picklist_id,NUMBER,,[841],
+qty,FLOAT,,"[42.0, 14.0, 39.0]",
+product_id,NUMBER,,"[6520, 4280]",
+line_no,NUMBER,,"[1, 2, 5]",
+order_id,NUMBER,,[421],
+location_id,NUMBER,,"[16, 29, 114]",

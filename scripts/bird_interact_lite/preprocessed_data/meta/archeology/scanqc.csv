@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+qualregistry,,Full name: 'QC Record ID'. Explanation: Primary key for quality control records. Data type: BIGSERIAL. Example: 9001.,bigint,
+arcref,,Full name: 'Project Reference'. Explanation: Points to a project for QC. Data type: VARCHAR(10). Example: 'PR7509'.,character varying,
+crewref,,Full name: 'Operator Reference'. Explanation: Identifies the operator associated with QC. Data type: CHAR(8). Example: 'OP4641'.,character,
+accucheck,,"Full name: 'Accuracy Assessment'. Explanation: Indicates if accuracy check was done. Data type: VARCHAR(22). Possible categories: Pending, Completed, Not Required.",character varying,
+ctrlstate,,"Full name: 'Quality Control Status'. Explanation: State of QC checks. Data type: CHAR(10). Possible categories: Failed, Pending.",character,
+valimeth,,"Full name: 'Validation Method'. Explanation: How the data was validated (automated or manual). Data type: VARCHAR(18). Possible categories: Automated, Visual.",character varying,
+valistate,,"Full name: 'Validation Status'. Explanation: Final status of validation. Data type: TEXT. Possible categories: Rejected, Approved.",text,
+archstat,,"Full name: 'Archival Status'. Explanation: Indicates if data is archived. Data type: VARCHAR(10). Possible categories: Verified, Pending.",character varying,
+pubstat,,"Full name: 'Publication Status'. Explanation: Whether data is published, drafted, etc. Data type: VARCHAR(24). Possible categories: Draft, Submitted.",character varying,
+copystat,,"Full name: 'Copyright Status'. Explanation: Copyright or licensing restriction. Data type: CHAR(10). Possible categories: Reserved, Restricted, Open Access.",character,
+refmention,,"Full name: 'Data Citation'. Explanation: Reference or citation code for the data. Data type: VARCHAR(60). Possible categories: Citation-8447, Citation-6197, Citation-8090, Citation-2238.",character varying,
+remark,,Full name: 'Additional Notes'. Explanation: Any free-text remarks or comments. Data type: TEXT. Example: 'Sell shoulder understand serious degree particular game.',text,

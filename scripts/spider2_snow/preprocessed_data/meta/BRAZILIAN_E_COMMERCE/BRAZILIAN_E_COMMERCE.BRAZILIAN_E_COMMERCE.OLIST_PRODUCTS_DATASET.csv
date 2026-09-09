@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+product_name_lenght,FLOAT,,"[44.0, 46.0, 37.0]",
+product_category_name,TEXT,,"[""artes"", ""esporte_lazer"", ""utilidades_domesticas""]",
+product_length_cm,FLOAT,,"[30.0, 18.0, 20.0]",
+product_height_cm,FLOAT,,"[18.0, 9.0, 17.0]",
+product_photos_qty,FLOAT,,"[1.0, 4.0, 2.0]",
+product_description_lenght,FLOAT,,"[276.0, 250.0, 402.0]",
+product_width_cm,FLOAT,,"[20.0, 15.0, 13.0]",
+product_id,TEXT,,"[""3aa071139cb16b67ca9e5dea641aaa2f"", ""96bd76ec8810374ed1b65e291975717f"", ""9dc1a7de274444849c219cff195d0b71""]",
+index,NUMBER,,"[1, 2, 4]",
+product_weight_g,FLOAT,,"[1000.0, 154.0, 625.0]",

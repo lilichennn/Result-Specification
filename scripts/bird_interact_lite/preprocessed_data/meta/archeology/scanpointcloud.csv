@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cloudregistry,,Full name: 'Point Cloud Record ID'. Explanation: Primary key for point cloud data. Data type: BIGSERIAL. Example: 2001.,bigint,
+crewref,,Full name: 'Operator Reference'. Explanation: Which operator is linked to this point cloud. Data type: CHAR(8). Example: 'OP4641'.,character,
+arcref,,Full name: 'Project Reference'. Explanation: Project ID associated with this point cloud. Data type: VARCHAR(10). Example: 'PR7509'.,character varying,
+scanresolmm,,"Full name: 'Scan Resolution (mm)'. Explanation: Resolution of points in millimeters. Data type: NUMERIC(5,2). Example: 2.4.",numeric,
+pointdense,,Full name: 'Point Density (points/m²)'. Explanation: Density of points per square meter. Data type: INTEGER. Example: 42812.,integer,
+coverpct,,"Full name: 'Coverage (%)'. Explanation: Surface coverage percentage. Data type: NUMERIC(4,1). Example: 91.2.",numeric,
+totalpts,,Full name: 'Total Points'. Explanation: Overall number of points in the cloud. Data type: BIGINT. Example: 46562436.,bigint,
+clouddense,,"Full name: 'Point-Cloud Density Code'. Explanation: A numeric code classifying point density. Data type: INTEGER. Possible categories: 9449, 431, 7553, 1746.",integer,
+lappct,,"Full name: 'Overlap (%)'. Explanation: Overlap percentage among multiple scans. Data type: NUMERIC(4,1). Example: 31.3.",numeric,
+noisedb,,"Full name: 'Noise Level (dB)'. Explanation: Measured noise in decibels. Data type: NUMERIC(6,3). Example: 1.318.",numeric,
+refpct,,"Full name: 'Surface Reflectivity (%)'. Explanation: Reflectivity percentage of scanned surfaces. Data type: NUMERIC(4,1). Example: 65.4.",numeric,

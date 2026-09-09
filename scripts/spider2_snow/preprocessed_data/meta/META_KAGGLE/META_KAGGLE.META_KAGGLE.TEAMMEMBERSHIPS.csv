@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+Id,NUMBER,,"[18940, 19443, 889883]",
+TeamId,NUMBER,,"[4541, 4978, 855573]",
+UserId,NUMBER,,"[10466, 8263, 860462]",
+RequestDate,DATE,,[],

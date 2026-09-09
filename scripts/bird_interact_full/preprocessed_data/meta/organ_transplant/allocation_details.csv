@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+allc_match_registry,,"TEXT. Primary key linking to transplant matching record. PK = Allocation_Details(Allc_Match_Registry), FK to Transplant_Matching.",text,
+allc_seq_num,,SMALLINT. Sequence number in allocation ranking. Example: 24.,smallint,
+allc_region,,"TEXT. Geographic region for organs allocation. Possible values: Region_1, Region_10, Region_2, Region_3, Region_4, Region_5, Region_6, Region_7, Region_8, Region_9.",text,
+allc_pol_vers,,TEXT. Allocation policy version used. Example: v2.7.,text,
+donor_ref_reg,,TEXT. Reference to donor demographics record. FK to Demographics.,text,
+recip_ref_reg,,TEXT. Reference to recipient demographics record. FK to Recipients_Demographics.,text,

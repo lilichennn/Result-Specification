@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+aff_geo_id,TEXT,,"[""0100000US""]",
+us_outline_geom,BINARY,,[],
+name,TEXT,,"[""United States""]",
+geo_id,TEXT,,"[""US""]",

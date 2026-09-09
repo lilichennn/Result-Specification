@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1908-05-31"", ""1908-05-06"", ""1908-10-01""]",
+qflag,TEXT,,[],
+time,TEXT,,[],
+element,TEXT,,"[""MDPR"", ""PRCP""]",
+id,TEXT,,"[""USC00134389"", ""RQC00662634"", ""RQC00662801""]",
+sflag,TEXT,,"[""0""]",
+value,FLOAT,,[0.0],
+mflag,TEXT,,[],

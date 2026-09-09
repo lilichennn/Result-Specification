@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+time,TIME,Time as TIME - CAST('23:59:59' AS TIME),"[""00:00:26"", ""00:00:37"", ""00:00:46""]",
+second,NUMBER,"Second as INTEGER - [0, 59]","[26, 37, 46]",
+hour,NUMBER,"Hour as INTEGER - [0, 23]",[0],
+is_pm,BOOLEAN,"AM = False, PM = True",[false],
+hour_ampm,NUMBER,"Hour as INTEGER - [1, 12]",[12],
+second_in_day,NUMBER,"Seconds as INTEGER - [0, 86399]; 00:00:00 = 0, 23:59:59 = 86399","[26, 37, 46]",
+minute,NUMBER,"Minute as INTEGER - [0, 59]",[0],

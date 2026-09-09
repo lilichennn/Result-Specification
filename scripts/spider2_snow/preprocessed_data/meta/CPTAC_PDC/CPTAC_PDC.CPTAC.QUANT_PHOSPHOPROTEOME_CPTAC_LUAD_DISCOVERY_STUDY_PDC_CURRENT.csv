@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+sample_id,TEXT,,"[""98c196c9-d0a6-11e9-9a07-0a80fada099c""]",
+study_name,TEXT,,"[""CPTAC LUAD Discovery Study - Phosphoproteome""]",
+aliquot_submitter_id,TEXT,,"[""CPT0053040004""]",
+case_id,TEXT,,"[""f1ed884e-cf1e-11e9-9a07-0a80fada099c""]",
+aliquot_run_metadata_id,TEXT,,"[""4642fe4b-becc-11e9-9a07-0a80fada099c""]",
+protein_abundance_log2ratio,FLOAT,,"[0.0214, 0.5735, 0.9385]",
+phosphorylation_sites,TEXT,,"[""s926"", ""s307"", ""s165""]",
+aliquot_id,TEXT,,"[""5022ebd4-d0b0-11e9-9a07-0a80fada099c""]",
+refseq_id,TEXT,,"[""NP_001265387.1"", ""NP_001073922.2"", ""NP_060760.2""]",

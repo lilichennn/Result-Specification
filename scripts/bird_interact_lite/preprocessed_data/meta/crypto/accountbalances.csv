@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+accountbalancesnode,,"A BIGSERIAL PK for each balance record (e.g., 88888).",bigint,
+walletsum,,"A DECIMAL(12,3) total wallet balance (e.g., '1500.500').",numeric,
+availsum,,"A DECIMAL(12,3) freely available portion (e.g., '1000.250').",numeric,
+frozensum,,"A DECIMAL(12,3) locked/frozen portion (e.g., '500.250').",numeric,
+margsum,,"A DECIMAL(12,3) margin account balance (e.g., '2000.000').",numeric,
+unrealline,,"A DOUBLE PRECISION unrealized PNL (e.g., 120.75).",double precision,
+realline,,"A DOUBLE PRECISION realized PNL (e.g., -45.25).",double precision,
+usertag,,A CHAR(36) FK referencing Users(UserStamp).,character,

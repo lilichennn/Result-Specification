@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VALUE,FLOAT,Value reported for the variable.,"[0.0635, 172.7589483, 31.93893565]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""30-Year Fixed Rate Mortgage Rate, National Average"", ""Freddie Mac House Price Index (Seasonally adjusted)"", ""Freddie Mac House Price Index (Not seasonally adjusted)""]",
+DATE,DATE,Date associated with the value.,"[""2024-08-29"", ""2020-07-31"", ""1976-09-30""]",
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/USA"", ""geoId/31"", ""geoId/32""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Percent"", ""Index""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""FRM_30_YR"", ""INDEX_SA"", ""INDEX_NSA""]",

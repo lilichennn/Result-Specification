@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+uniprot_review_status,TEXT,,"[""reviewed""]",
+uniprot_id,TEXT,,"[""A1A519-3"", ""A2A2Y4-3"", ""A2A2Y4-4""]",
+refseq_id,TEXT,,"[""NP_001157463.1"", ""NP_001231890.1"", ""NP_001231891.1""]",
+gene_symbol,TEXT,,"[""FAM170A"", ""FRMD3"", ""CCDC66""]",

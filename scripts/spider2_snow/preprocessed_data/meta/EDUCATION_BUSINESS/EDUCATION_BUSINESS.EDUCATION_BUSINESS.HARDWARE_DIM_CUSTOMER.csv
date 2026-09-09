@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+region,TEXT,,"[""APAC""]",
+channel,TEXT,,"[""Direct""]",
+market,TEXT,,"[""India"", ""Indonesia"", ""Japan""]",
+customer_code,NUMBER,,"[70002017, 70002018, 70003182]",
+sub_zone,TEXT,,"[""India"", ""ROA""]",
+platform,TEXT,,"[""Brick & Mortar"", ""E-Commerce""]",
+customer,TEXT,,"[""Atliq Exclusive"", ""Atliq e Store""]",

@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+Version,TEXT,,"[""1.4.0"", ""1.1.1"", ""1.0.12""]",
+System,TEXT,,"[""NPM""]",
+Name,TEXT,,"[""@tpp/um"", ""@sdr/cli"", ""@sdv/alt""]",
+SnapshotAt,NUMBER,,"[1653865202672717, 1652655601333164]",
+Dependency,VARIANT,,"[""{\n  \""Name\"": \""rimraf\"",\n  \""System\"": \""NPM\"",\n  \""Version\"": \""3.0.2\""\n}"", ""{\n  \""Name\"": \""is-accessor-descriptor\"",\n  \""System\"": \""NPM\"",\n  \""Version\"": \""1.0.0\""\n}"", ""{\n  \""Name\"": \""ansi-regex\"",\n  \""System\"": \""NPM\"",\n  \""Version\"": \""5.0.1\""\n}""]",
+MinimumDepth,NUMBER,,[],

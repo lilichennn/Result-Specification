@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+logregistry,,BIGSERIAL. Auto-generated unique identifier for registration record. PK = Registration(LogRegistry).,bigint,
+crewref,,TEXT. Reference to operator who performed registration. FK to Personnel.,text,
+arcref,,TEXT. Reference to associated archeologys project. FK to Projects.,text,
+reg_accuracy,,"JSONB column. Registration accuracy metrics including reference points, error measurements, and transformation parameters
+Fields: {""Ctrl_Pts"":""TEXT. Control points used for geometric registration. Example: 73."",""Err_Scale"":""TEXT. Error metrics and measurement standards. Possible values: Cloud-to-Cloud, Cloud-to-Mesh, RMSE."",""Err_Val_Mm"":""REAL. Error value measurement in millimeters. Example: 6.962."",""Log_Accu_Mm"":""REAL. Registration accuracy measurement in millimeters. Example: 0.84."",""Log_Method"":""TEXT. Registration method or algorithm used. Possible values: Feature-based, Hybrid, Target-based."",""Ref_Mark"":""TEXT. Reference markers used for registration process. Example: 40."",""Transform"":""TEXT. Transformation matrix applied during registration. Example: Matrix-47.""}",jsonb,

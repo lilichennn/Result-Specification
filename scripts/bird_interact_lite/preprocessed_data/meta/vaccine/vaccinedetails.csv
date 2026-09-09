@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+vacregistry,,A SERIAL primary key that uniquely identifies each vaccine detail record.,integer,
+vacvariant,,"A VARCHAR(50) naming the vaccine type or variant (e.g., ‘Viral Vector’, ‘mRNA’, ‘Inactivated’, ‘Protein Subunit’).",character varying,
+mfgsource,,A TEXT field describing the manufacturer or source information of the vaccine.,text,
+batchlabel,,A VARCHAR(50) specifying the batch or lot number label.,character varying,
+prodday,,A DATE indicating the production/manufacture date of the vaccine batch.,date,
+expireday,,A DATE specifying the vaccine’s expiration date.,date,
+lotmeasure,,"A BIGINT representing the quantity or measure of this vaccine lot (e.g., total units produced).",bigint,
+vialtally,,A SMALLINT counting how many vials are included in this particular batch.,smallint,
+dosepervial,,A SMALLINT indicating the number of individual doses contained in each vial.,smallint,
+dosetotal,,An INTEGER summing the total doses in this record (VialTally × DosePerVial).,integer,
+shipinject,,"A VARCHAR(20) foreign key referencing Shipments(ShipmentRegistry), tying this vaccine detail to a shipment.",character varying,
+containvac,,"A VARCHAR(20) foreign key referencing Container(ContainRegistry), linking vaccine details to a specific container.",character varying,

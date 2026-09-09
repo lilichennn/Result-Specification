@@ -1,0 +1,3 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+exchSpot,,TEXT. Exchange market symbol. PK. Example: EX203.,text,
+ORDERtune,,TEXT. Order-type tuning parameter. PK.,text,

@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+vendregistry,,"Primary key (VARCHAR(30)) uniquely identifying a vendor (e.g., 'VEND-Abc123').",character varying,
+vendspan,,"An INT indicating how many days the vendor has been active (e.g., 120).",integer,
+vendrate,,"A NUMERIC(4,2) (0–99.99) rating for the vendor based on reviews (e.g., 92.75).",numeric,
+vendtxcount,,"An INT total number of completed transactions for the vendor (e.g., 3500).",integer,
+vendsucccount,,"An INT number of undisputed or successful transactions (e.g., 3400).",integer,
+venddisputecount,,"An INT number of disputed transactions (e.g., 100).",integer,
+vendplacecount,,"A SMALLINT representing how many listings the vendor has created (e.g., 45).",smallint,
+vendpaymethods,,"A SMALLINT showing how many payment methods the vendor accepts (e.g., 3).",smallint,
+vendchecklvl,,"An enum (VendCheckLvl_enum) describing the vendor’s verification tier (Basic, Advanced, Premium).",USER-DEFINED,
+vendlastmoment,,"A DATE recording the vendor's last activity (e.g., '2025-03-15').",date,
+mktref,,FK referencing Markets(MktRegistry) linking this vendor to a specific market.,character varying,

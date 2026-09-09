@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+series_code,TEXT,,"[""DT.DOD.PVLX.CD""]",
+year,NUMBER,,[2018],
+description,TEXT,,"[""Present value calculations for these countries are for public and publicly guaranteed debt only.""]",

@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+CensusValue,FLOAT,"The Int value for the MetricID and BlockGroupID relationship. This could be aggregates or estimates of people, pets, household, etc. Refer to the Dim_CensusMetrics table for the meaning of each value.","[20.0, 0.0, 6.0]",
+BlockGroupID,TEXT,A unique identifier for a specific block group within a geographic area.,"[""361031471003""]",
+MetricID,TEXT,A unique identifier for a specific metric or measurement within the American Community Survey or census data.,"[""B11012_008E"", ""B11012_010E"", ""B11012_011E""]",

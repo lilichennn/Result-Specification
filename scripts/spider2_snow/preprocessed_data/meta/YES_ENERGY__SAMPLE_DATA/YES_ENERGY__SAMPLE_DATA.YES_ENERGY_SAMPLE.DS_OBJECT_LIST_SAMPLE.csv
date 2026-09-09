@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+OBJECTID,NUMBER,,"[10000697078, 10000712969, 10000712970]",
+SOURCE,TEXT,,"[""ERCOT""]",
+OBJECTNAME,TEXT,,"[""HB_NORTH"", ""NORTH (ERCOT)"", ""SOUTH""]",
+ZONE,TEXT,,"[""NORTH""]",
+STATUS,TEXT,,"[""Active""]",
+ISO,TEXT,,"[""ERCOT""]",
+SUBTYPE,TEXT,,"[""HUB"", ""ZONE""]",
+TIMEZONE,TEXT,,"[""CPT""]",
+OBJECTTYPE,TEXT,,"[""price_node"", ""load_zone""]",

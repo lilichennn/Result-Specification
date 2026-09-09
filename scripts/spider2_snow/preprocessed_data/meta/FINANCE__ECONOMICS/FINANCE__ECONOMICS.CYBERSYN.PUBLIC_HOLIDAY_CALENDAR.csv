@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+SUBDIVISION,TEXT,"State, province, or other underlying geography that is specific to the holiday",[],
+HOLIDAY_NAME,TEXT,Name of the Holiday,"[""Immaculate Conception's Day"", ""Corpus Christi"", ""Prince's Day""]",
+ISO_ALPHA2,TEXT,2 letter country code from International Organization for Standardization,"[""MC""]",
+IS_FINANCIAL,BOOLEAN,Boolean denoting a stock market closure for the given region,[false],
+DATE,DATE,Date associated with the event,"[""1999-12-08"", ""2000-06-22"", ""2000-11-19""]",
+GEO_ID,TEXT,GEO_ID from GEOGRAPHY_INDEX table,"[""country/MCO""]",

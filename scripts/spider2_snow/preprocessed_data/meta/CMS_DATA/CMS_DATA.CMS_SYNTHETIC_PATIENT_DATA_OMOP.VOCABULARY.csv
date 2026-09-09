@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+vocabulary_reference,TEXT,,"[""OMOP generated""]",
+vocabulary_concept_id,NUMBER,,"[44819234, 44819233, 44819127]",
+vocabulary_name,TEXT,,"[""OMOP Cohort Type"", ""OMOP Concept Class"", ""OMOP Condition Occurrence Type""]",
+vocabulary_id,TEXT,,"[""Cohort Type"", ""Concept Class"", ""Condition Type""]",
+vocabulary_version,TEXT,,[],

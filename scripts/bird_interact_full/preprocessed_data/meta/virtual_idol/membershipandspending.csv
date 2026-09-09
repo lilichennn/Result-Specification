@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+member_reg,,BIGSERIAL. Auto-generated unique identifier for membership and spending record. PK = MembershipAndSpending(Member_Reg).,bigint,
+member_fan_pivot,,TEXT. Reference to the fan user for this membership record. FK to Fans.,text,
+memb_kind,,TEXT. Type or tier of membership subscription held by the fan.,text,
+memb_days,,SMALLINT. Duration of current membership in days since activation.,smallint,
+spend_usd,,REAL. Total amount spent by fan on platform in USD.,real,
+spend_freq,,TEXT. Frequency pattern of spending behavior by the fan.,text,
+pay_method,,TEXT. Preferred payment method used for transactions.,text,
+spend_rate,,TEXT. Daily spending velocity and financial engagement rate. Example: 32.296185365657216 USD/day.,text,
+value_per_day,,TEXT. Monthly spending projection based on current patterns. Example: 208.84866536458333 USD/month.,text,
+cost_efficiency,,TEXT. Value-to-cost ratio for membership and spending efficiency. Example: 85 value/USD.,text,

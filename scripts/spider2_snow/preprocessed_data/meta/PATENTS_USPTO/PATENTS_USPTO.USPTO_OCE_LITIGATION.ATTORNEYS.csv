@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+party_type,TEXT,,"[""Defendant""]",
+contactinfo,TEXT,,"[""Richards, Layton & Finger, PA; One Rodney Square; 920 N. King Street; Wilmington, DE 19801; (302) 658-6541; Email: cottrell@rlf.com"", ""(See above for address)"", ""Robins, Kaplan, Miller & Ciresi LLP; Suite 1200; 1801 K Street, N.W.; Washington , DC 20006; Email: jaburatti@rkmc.com""]",
+case_number,TEXT,,"[""1:01-cv-00100"", ""1:01-cv-00401"", ""1:01-cv-10165""]",
+name,TEXT,,"[""Frederick L. Cottrell , III"", ""Robert J. Katzenstein"", ""Jason R. Buratti""]",
+party_row_count,TEXT,,"[""41731"", ""42563"", ""45597""]",
+case_row_id,TEXT,,"[""8895"", ""9024"", ""9581""]",
+attorney_row_count,TEXT,,"[""98169"", ""99682"", ""107154""]",
+position,TEXT,,"[""LEAD ATTORNEY; ATTORNEY TO BE NOTICED""]",

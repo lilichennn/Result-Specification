@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+alias,TEXT,Team alias,[],
+name,TEXT,Team name,[],
+losses,NUMBER,Number of losses in this season,"[0, 2, 3]",
+division,NUMBER,The division the team played in at this time of this season,[1],
+wins,NUMBER,Number of wins in this season,"[16, 24, 21]",
+team_code,NUMBER,School code (see http://stats.ncaa.org/game_upload/team_codes),"[479, 137, 268]",
+season,NUMBER,Season the game was played in,"[1933, 1907, 1906]",
+ties,NUMBER,Number of ties in this season,[0],
+current_division,TEXT,The division the team currently plays in,[],
+team_id,TEXT,Sportradar team ID,[],
+market,TEXT,Team school name (using Sportradar names),[],

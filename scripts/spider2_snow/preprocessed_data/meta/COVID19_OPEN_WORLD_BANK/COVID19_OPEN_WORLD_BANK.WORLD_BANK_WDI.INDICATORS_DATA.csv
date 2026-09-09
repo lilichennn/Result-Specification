@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+country_code,TEXT,,"[""LKA""]",
+year,NUMBER,,"[1987, 2014, 1996]",
+country_name,TEXT,,"[""Sri Lanka""]",
+indicator_name,TEXT,,"[""Prevalence of stunting, height for age (% of children under 5)"", ""Prevalence of undernourishment (% of population)"", ""Primary education, pupils""]",
+indicator_code,TEXT,,"[""SH.STA.STNT.ZS"", ""SN.ITK.DEFC.ZS"", ""SE.PRM.ENRL""]",
+value,FLOAT,,"[32.3, 8.1, 1843848.0]",

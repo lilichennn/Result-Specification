@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+GEO_ID,TEXT,"A unique identifier for a place. Joinable to other geography tables including GEOGRAPHY_INDEX, GEOGRAPHY_RELATIONSHIPS, and GEOGRAPHY_CHARACTERISTICS.","[""country/USA""]",
+UNIT,TEXT,Unit of measurement for the reported value.,"[""USD"", ""Count""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""121"", ""131"", ""213""]",
+DATE,DATE,Date associated with the value.,"[""2017-03-20"", ""2022-08-29"", ""2017-08-10""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Non-Tax Net Collections Amount: Fiscal Service Processed Electronically (Over-the-Counter)"", ""Non-Tax Net Collections Amount: Fiscal Service Settled Electronically (Over-the-Counter)"", ""IRS Non-Tax Net Collections Amount: Fully Electronic (Internet)""]",
+VALUE,FLOAT,Value reported for the variable.,"[64657026.0, 753.0, 99641.0]",

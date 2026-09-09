@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+element,TEXT,,"[""DAEV""]",
+date,DATE,,"[""2001-07-15"", ""2001-08-06"", ""2001-12-25""]",
+id,TEXT,,"[""USC00257110"", ""USC00422864"", ""USC00416210""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+qflag,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+value,FLOAT,,"[3.0, 4.0, 2.0]",

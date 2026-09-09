@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cureregistry,,Full name: 'Conservation Record ID'. Explanation: Primary key for conservation data. Data type: BIGSERIAL. Example: 6001.,bigint,
+arcref,,Full name: 'Project Reference'. Explanation: Associates conservation data with a project. Data type: VARCHAR(10). Example: 'PR7509'.,character varying,
+zoneref,,Full name: 'Site Reference'. Explanation: Associates conservation data with a site code. Data type: VARCHAR(12). Example: 'SC9016'.,character varying,
+harmassess,,"Full name: 'Damage Assessment'. Explanation: Indicates severity of damage. Data type: VARCHAR(15). Possible categories: None, Moderate, Severe.",character varying,
+curerank,,"Full name: 'Conservation Priority'. Explanation: Priority level for conservation efforts. Data type: VARCHAR(15). Possible categories: Critical, Low, High.",character varying,
+structstate,,"Full name: 'Structural Stability'. Explanation: Stability level of the structure. Data type: VARCHAR(15). Possible categories: Stable, Moderate, Unstable.",character varying,
+intervhistory,,"Full name: 'Intervention History'. Explanation: Past restoration or intervention records. Data type: TEXT. Possible categories: None, Major, Minor.",text,
+priordocs,,"Full name: 'Previous Documentation'. Explanation: Level of existing documentation. Data type: TEXT. Possible categories: None, Partial, Complete.",text,

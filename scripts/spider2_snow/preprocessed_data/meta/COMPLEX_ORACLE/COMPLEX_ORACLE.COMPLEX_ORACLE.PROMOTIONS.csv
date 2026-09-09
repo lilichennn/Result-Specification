@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+promo_total_id,NUMBER,,[1],
+promo_subcategory,TEXT,,"[""downtown billboard"", ""coupon news"", ""TV commercial""]",
+promo_category_id,NUMBER,,"[9, 8, 3]",
+promo_id,NUMBER,,"[33, 34, 35]",
+promo_cost,FLOAT,,"[77200.0, 22400.0, 61600.0]",
+promo_name,TEXT,,"[""post promotion #20-33"", ""newspaper promotion #19-34"", ""TV promotion #12-35""]",
+promo_subcategory_id,NUMBER,,"[20, 19, 12]",
+promo_total,TEXT,,"[""Promotion total""]",
+promo_category,TEXT,,"[""post"", ""newspaper"", ""TV""]",
+promo_begin_date,TEXT,,"[""2019-09-15"", ""2019-07-16"", ""2019-11-30""]",
+promo_end_date,TEXT,,"[""2019-11-15"", ""2019-09-16"", ""2020-01-30""]",

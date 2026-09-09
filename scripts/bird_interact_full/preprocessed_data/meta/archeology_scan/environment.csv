@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+airregistry,,BIGSERIAL. Auto-generated unique identifier for environmental record. PK = Environment(AirRegistry).,bigint,
+zoneref,,TEXT. Reference to site where environmental data was recorded. FK to Sites.,text,
+equipref,,TEXT. Reference to equipment used for environmental monitoring. FK to Equipment.,text,
+photomap,,"TEXT. Photogrammetry overlap percentage settings. Possible values: 60%, 70%, 80%, 90%.",text,
+imgcount,,TEXT. Number of images captured during session per minutes. Example: 248 imgs/mins.,text,
+ambient_cond,,"JSONB column. Environmental conditions during scanning including temperature, humidity, lighting, and connectivity status
+Fields: {""Ambic_Temp"":""REAL. Ambient air temperature in degrees Celsius. Example: 25.3."",""Geo_Signal"":""TEXT. GPS signal quality and reception status. **NULL means GPS signal monitoring not available or receiver malfunction.**. Possible values: Excellent, Good, Poor."",""Hume_Pct"":""REAL. Relative humidity percentage during scanning. Example: 60.4."",""Illume_Lux"":""BIGINT. Light intensity conditions in lux units. Example: 86054."",""Link_Status"":""TEXT. Network connectivity status during scanning. Possible values: Connected, Disconnected, Limited."",""Track_Status"":""TEXT. RTK positioning system status and accuracy. **NULL means RTK system not operational or status monitoring unavailable.**. Possible values: Fixed, Float.""}",jsonb,

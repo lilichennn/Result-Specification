@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+product_name_lenght,FLOAT,,"[40.0, 56.0, 54.0]",
+product_width_cm,FLOAT,,"[14.0, 44.0, 40.0]",
+product_category_name,TEXT,,"[""perfumaria"", ""cool_stuff"", ""moveis_decoracao""]",
+product_weight_g,FLOAT,,"[225.0, 18350.0, 900.0]",
+product_length_cm,FLOAT,,"[16.0, 70.0, 40.0]",
+product_photos_qty,FLOAT,,"[1.0, 4.0, 2.0]",
+product_description_lenght,FLOAT,,"[287.0, 1272.0, 184.0]",
+product_id,TEXT,,"[""1e9e8ef04dbcff4541ed26657ea517e5"", ""732bd381ad09e530fe0a5f457d81becb"", ""2548af3e6e77a690cf3eb6368e9ab61e""]",
+product_height_cm,FLOAT,,"[10.0, 24.0, 8.0]",

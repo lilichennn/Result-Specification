@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+itemcode,,VARCHAR(50). Unique identifier for the product. PK.,character varying,
+itemcategory,,"VARCHAR(50). Category of the product (e.g., apparel, electronics, Home Goods, Accessories).",character varying,
+subcat,,"VARCHAR(50). Subcategory of the product. Possible values: Laptops, Shirts, Shoes, Smartphones.",character varying,
+unit_value,,REAL. Unit value/price of the product.,real,
+product_traceability,,"JSONB column. Encapsulates product traceability and compliance metadata including batch, lot, and serial tracking.
+Fields: {""compliance"":{""hazardous_material"":""VARCHAR(50). Hazardous material information for the product."",""recall_flag"":""YesNo_enum. Indicates if the product has been recalled. Possible values: No, Yes."",""regulatory_compliance"":""VARCHAR(50). Regulatory compliance status of the product. **NULL means no regulatory compliance status available.**. Possible values: Compliant, Non-compliant.""},""trace"":{""batch_reference"":""TEXT. Batch reference for the product. example: BT1693, 6730"",""lot_reference"":""VARCHAR(50). Lot reference for the product. Example: 4119LO."",""manufacture_date"":""TEXT. Manufacture date of the product."",""serial_number"":""TEXT. Serial number reference for the product. Example: SN258151.""}}",jsonb,

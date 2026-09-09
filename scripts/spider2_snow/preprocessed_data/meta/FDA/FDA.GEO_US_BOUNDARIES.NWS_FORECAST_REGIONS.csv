@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+fe_area,TEXT,,"[""wu"", ""sr""]",
+name,TEXT,,"[""Keweenaw"", ""Houghton"", ""Gogebic""]",
+cwa,TEXT,,"[""MQT""]",
+shape_geometry,BINARY,,[],
+shortname,TEXT,,"[""Keweenaw"", ""Houghton"", ""Gogebic""]",
+lon,FLOAT,,"[-88.4287, -88.6207, -89.6944]",
+state_zone,TEXT,,"[""MI001"", ""MI003"", ""MI009""]",
+state,TEXT,,"[""MI""]",
+zone,TEXT,,"[""001"", ""003"", ""009""]",
+time_zone,TEXT,,"[""E"", ""C""]",
+lat,FLOAT,,"[47.6104, 47.0531, 46.4089]",

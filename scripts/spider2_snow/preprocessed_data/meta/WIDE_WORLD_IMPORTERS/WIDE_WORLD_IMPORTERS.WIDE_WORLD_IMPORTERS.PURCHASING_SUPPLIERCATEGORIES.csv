@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+SupplierCategoryName,TEXT,,"[""Novelty Goods Supplier"", ""Toy Supplier"", ""Clothing Supplier""]",
+ValidTo,NUMBER,,[253402300799999999],
+SupplierCategoryID,NUMBER,,"[2, 3, 4]",
+ValidFrom,NUMBER,,[1356998400000000],
+LastEditedBy,NUMBER,,[1],

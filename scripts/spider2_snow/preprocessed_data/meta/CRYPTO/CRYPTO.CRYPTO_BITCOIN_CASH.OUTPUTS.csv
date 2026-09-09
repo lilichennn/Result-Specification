@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+block_timestamp,NUMBER,,"[1582183140000000, 1497401226000000, 1614668599000000]",
+block_number,NUMBER,,"[623082, 471165, 676943]",
+index,NUMBER,,"[1, 2, 0]",
+type,TEXT,,"[""pubkeyhash""]",
+value,NUMBER,,"[""2858.000000000"", ""467719733.000000000"", ""8025.000000000""]",
+required_signatures,NUMBER,,[1],
+script_asm,TEXT,,"[""OP_DUP OP_HASH160 066ebee590278f32aedc8a4865700c49e717f1d7 OP_EQUALVERIFY OP_CHECKSIG"", ""OP_DUP OP_HASH160 a9c980640863942fffb1ef30b6852bce1113a0c0 OP_EQUALVERIFY OP_CHECKSIG"", ""OP_DUP OP_HASH160 8775ed865be758535332096c1c97f6181e1d34fa OP_EQUALVERIFY OP_CHECKSIG""]",
+script_hex,TEXT,,"[""76a914066ebee590278f32aedc8a4865700c49e717f1d788ac"", ""76a914a9c980640863942fffb1ef30b6852bce1113a0c088ac"", ""76a9148775ed865be758535332096c1c97f6181e1d34fa88ac""]",
+block_hash,TEXT,,"[""00000000000000000155fe98a3bec94597fa885de958ec997b3747df39a8480b"", ""000000000000000001147e7aef34fad651358270fa2eff466b91d52c7840c2ac"", ""0000000000000000009635f863bd0d5cd6f2a2cba4f4a64c06dab326541ead55""]",
+addresses,VARIANT,,"[""[\n  \""bitcoincash:qqrxa0h9jqnc7v4wmj9ysetsp3y7w9l36u8gnnjulq\""\n]"", ""[\n  \""bitcoincash:qz5unqrypp3egtllk8hnpd59908pzyaqcq2jzdt94w\""\n]"", ""[\n  \""bitcoincash:qzrhtmvxt0n4s56nxgykc8yh7cvpu8f5lgkugrll2l\""\n]""]",
+transaction_hash,TEXT,,"[""746dc1f7266897ac047acda6cee2ab97bb7bea7c76f330e51bd557f9a97a5000"", ""48d76f258b83d6aff8fd05073d61b353b87755cdb7f5a015cb3788920d3def23"", ""4be25dacc786858fc8fef0ce4708d5d715fe90b1f4978adbe640e0bf7adcad68""]",

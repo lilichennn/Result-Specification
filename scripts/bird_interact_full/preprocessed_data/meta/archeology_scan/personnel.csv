@@ -1,0 +1,5 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+crewregistry,,TEXT. Unique identifier for operator personnel registration. PK = Personnel(CrewRegistry). Example: OP4641.,text,
+crewlabel,,TEXT. Name or designation of the operator personnel. Example: Joel Wallace.,text,
+leadregistry,,TEXT. Unique identifier for supervisor personnel registration. Example: SV7658.,text,
+leadlabel,,TEXT. Name or designation of the supervisor personnel. Example: Michael Kaiser.,text,

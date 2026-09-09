@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""USC00113455"", ""USC00031935"", ""USC00032148""]",
+time,TEXT,,"[""0600"", ""0830""]",
+qflag,TEXT,,[],
+sflag,TEXT,,"[""7""]",
+etl_timestamp,NUMBER,Load time for this data row,[1689801206234378],
+date,DATE,,"[""2019-01-24""]",
+mflag,TEXT,,[],
+value,FLOAT,,[0.0],
+element,TEXT,,"[""PRCP"", ""SNWD"", ""SNOW""]",
+source_url,TEXT,Source ,"[""ftp://ftp.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2019.csv.gz""]",

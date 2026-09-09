@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+q_match_registry,,"TEXT. Primary key linking to transplant matching record. PK = Data_Source_and_Quality(Q_Match_Registry), FK to Transplant_Matching.",text,
+data_src_val,,"TEXT. Data source identification and origin. **NULL means data source information is not documented or unknown.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case).** Example: uNoS.",text,
+dq_score_val,,REAL. Data quality assessment score. Example: 0.966.,real,
+dc_score_val,,REAL. Data completeness assessment score. Example: 0.78.,real,
+verif_stat_val,,"TEXT. Data verification status assessment. **NULL means data verification is pending or not performed.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case).** Example: verified.",text,
+last_up_ts,,TIMESTAMP. Timestamp of last data update. **DATA NOISE: Date format converted to yyyy/mm/dd.** Possible values: 2025/02/19.,text,
+next_rev_dt,,DATE. Next scheduled review date for data validation. **DATA NOISE: Date format converted to dd/mm/yyyy.** Example: 04/03/2025.,text,
+q_don_ref,,TEXT. Quality reference to donor demographics record. FK to Demographics.,text,
+q_rec_ref,,TEXT. Quality reference to recipient demographics record. FK to Recipients_Demographics.,text,

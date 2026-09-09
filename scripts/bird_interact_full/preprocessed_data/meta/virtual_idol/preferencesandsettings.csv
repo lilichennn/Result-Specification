@@ -1,0 +1,17 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+pref_reg,,BIGSERIAL. Auto-generated unique identifier for preferences and settings record. PK = PreferencesAndSettings(Pref_Reg).,bigint,
+preferences_member_pivot,,BIGINT. Reference to membership record for preference correlation. FK to MembershipAndSpending.,bigint,
+preferences_social_pivot,,BIGINT. Reference to social community record for social preference analysis. FK to SocialCommunity.,bigint,
+priv_set,,TEXT. Privacy settings configuration chosen by the fan.,text,
+ds_consent,,TEXT. Data sharing consent status for analytics and personalization.,text,
+notif_pref,,TEXT. Notification preferences for various platform activities. **NULL means notification preferences not configured or using platform defaults.**,text,
+comm_pref,,TEXT. Communication preferences for interactions with other users. **NULL means communication preferences not specified or using standard settings.**,text,
+mark_pref,,TEXT. Marketing communication preferences and opt-in status.,text,
+lang_set,,TEXT. Language settings for platform interface and content.,text,
+access_set,,TEXT. Accessibility settings and accommodations enabled.,text,
+dev_count,,SMALLINT. Number of devices registered for account access.,smallint,
+log_freq,,TEXT. Login frequency pattern and regularity classification.,text,
+last_log_dt,,TEXT. Date and time of most recent login to the platform.,text,
+conn_qual,,TEXT. Connection quality classification based on technical performance.,text,
+usage_metrics,,"JSONB column. Platform usage metrics including session data, time spent, and activity consistency measurements
+Fields: {""Avg_Daily_Min"":""SMALLINT. Average daily time spent on platform in minutes."",""Int_Consist"":""REAL. Interaction consistency score measuring regular engagement patterns."",""Peak_Sess"":""SMALLINT. Maximum concurrent sessions recorded for this user."",""Plat_Stable"":""REAL. Platform stability score based on session reliability and connection quality."",""Sess_Count"":""BIGINT. Total number of login sessions since account creation."",""Time_Hrs"":""BIGINT. Total time spent online on the platform in hours.""}",jsonb,

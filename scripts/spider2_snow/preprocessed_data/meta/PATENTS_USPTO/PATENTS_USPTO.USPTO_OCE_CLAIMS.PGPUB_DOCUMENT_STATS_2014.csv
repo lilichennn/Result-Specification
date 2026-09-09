@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+pub_dep_wrd_ct,TEXT,,"[""896"", ""1468"", ""1058""]",
+pub_no,TEXT,,"[""20110289856"", ""20120029445"", ""20120085116""]",
+pub_dep_clm_ct,TEXT,,"[""27""]",
+pub_wrd_min,TEXT,,"[""95"", ""91"", ""76""]",
+pub_dep_wrd_min,TEXT,,"[""15""]",
+appl_id,TEXT,,"[""13205419"", ""13252998"", ""13270753""]",
+pub_wrd_ct,TEXT,,"[""1044"", ""202"", ""268""]",
+pub_dep_wrd_avg,TEXT,,"[""33.18518"", ""54.37037"", ""39.18518""]",
+pub_clm_ct,TEXT,,"[""9"", ""2"", ""3""]",
+pub_wrd_avg,TEXT,,"[""116"", ""101"", ""89.33334""]",

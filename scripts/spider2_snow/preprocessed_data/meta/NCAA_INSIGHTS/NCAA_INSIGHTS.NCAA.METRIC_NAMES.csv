@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+label,TEXT,,"[""TO%"", ""ORB%"", ""eFG%""]",
+concept_name,TEXT,,"[""Turnovers"", ""Rebounding"", ""Shooting""]",
+rd_dec,NUMBER,,[1],
+off_def_stat_name,TEXT,,"[""def_to_pct"", ""orb_pct"", ""off_efg_pct""]",
+off_or_def,TEXT,,"[""Def"", ""Off""]",
+stat_name,TEXT,,"[""opp_to_pct"", ""tm_orb_pct"", ""tm_efg_pct""]",
+rank_asc,BOOLEAN,,"[false, true]",

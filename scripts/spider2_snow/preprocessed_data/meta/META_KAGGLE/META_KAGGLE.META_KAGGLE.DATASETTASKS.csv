@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+Subtitle,TEXT,,"[""Prize Pool $6000; Submission deadline - July 25"", ""Kernel to find the recipe that use the items in my fridge""]",
+DatasetId,NUMBER,,"[511638, 688051, 311962]",
+CreationDate,NUMBER,,"[1582109315000000, 1591047416000000, 1575918022000000]",
+TotalVotes,NUMBER,,"[193, 14, 21]",
+Deadline,NUMBER,,"[1600646400000000.0, 1580428800000000.0, 1609372800000000.0]",
+Description,TEXT,,"[""## Task Details\nCan we predict the possibility of a booking for a hotel based on the previous_cancellation as the target?\n\n## Expected Submission\nTwo columns --&gt; Hotel Name and Booking_Possibility (0 or 1)"", ""## Task Details\nIt might seem to be intuitive that bikeshare users would travel in the reverse direction in the evening than in the morning. But how true is that? If that's the case, would it reduce the value of convenience of bikeshares being available everywhere, and should they just get their own bikes? Do we also need a crew to pick up and restore all the bikes to initial distributions across the city before the next morning?\n\n## Expected Submission\n1. Find out what percentage of bikes are returned to its initial location?\n2. How many bikeshare trips usually visit more than just start/end points, but visited some other points before the end of the day?"", ""Use various Algorithms to increase the performance of the prediction of the sentiment expressed in the review.""]",
+Title,TEXT,,"[""Can we predict the possibility of a booking?"", ""Extend the BCG World Atlas Database for BCG Vaccine Policies and Practices"", ""Hungry with my fridge!""]",
+OwnerUserId,NUMBER,,"[2889731, 5212675, 1952004]",
+ForumId,TEXT,,[],
+Id,NUMBER,,"[462, 1026, 164]",

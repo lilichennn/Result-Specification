@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+non_motorist_contributing_circumstances_name,TEXT,,"[""Entering/Exiting Parked or Stopped Vehicle""]",
+person_number,NUMBER,,[1],
+consecutive_number,NUMBER,,"[310098, 310025, 230118]",
+non_motorist_contributing_circumstances,NUMBER,,[5],
+vehicle_number,NUMBER,,[0],
+state_number,NUMBER,,"[31, 23, 16]",

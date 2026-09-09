@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,Unit of measurement for the reported value.,"[""Percent"", ""Count""]",
+RELEASE_SOURCE,TEXT,Source where the variable is originally collected or published.,"[""Bureau of Labor Statistics""]",
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""Employment""]",
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Annual"", ""Quarterly""]",
+MEASUREMENT_TYPE,TEXT,Details how the variable was measured or calculated; specifications for the type of unit measured.,"[""Percent of employed within group""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Current Labor Force: Employed full time - Lost-time Universe, Private wage and salary workers, excluding incorporated self employed, Management, administrative, and waste services, Percent of employed within group, Annual (Not seasonally adjusted)"", ""Current Labor Force: Employed - Durable goods manufacturing, White, Quarterly (Not seasonally adjusted)"", ""Current Labor Force: Employed - Construction, Black or African American, Quarterly (Not seasonally adjusted)""]",
+SEASONALLY_ADJUSTED,TEXT,Indicates whether the value is seasonally adjusted.,"[""Not seasonally adjusted""]",
+FRED_SERIES_ID,TEXT,Unique identifier for the variable from the FRED database. Visualize the timeseries by inputing this into https://fred.stlouisfed.org/series/{fred_series_id}.,[],
+RELEASE_NAME,TEXT,The individual report or collection of data in which the data was released.,"[""Current Population Survey (CPS)""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""LNU02574808.A_NSA"", ""LNU02038014Q.Q_NSA"", ""LNU02038043Q.Q_NSA""]",
+INDUSTRY,TEXT,Industry or sub-industry of the time series.,"[""Management, Administrative, And Waste Services"", ""Durable Goods Manufacturing"", ""Construction""]",

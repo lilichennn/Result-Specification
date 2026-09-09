@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[176.0, 100.0, 234.0]",
+date,DATE,,"[""2014-11-07"", ""2014-09-20"", ""2014-04-19""]",
+element,TEXT,,"[""AWDR""]",
+time,TEXT,,[],
+id,TEXT,,"[""USS0005N04S""]",
+sflag,TEXT,,"[""T""]",
+mflag,TEXT,,[],
+qflag,TEXT,,[],

@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+EntStreetAddress,TEXT,,"[""4110 Old Redmond Rd."", ""13920 S.E. 40th Street"", ""Route 2, Box 203B""]",
+EntZipCode,TEXT,,"[""98052"", ""98009"", ""98072""]",
+EntEMailAddress,TEXT,,"[""carolp@cptrio.com"", """", ""mikeh@moderndance.com""]",
+EntState,TEXT,,"[""WA""]",
+EntWebPage,TEXT,,"[""www.cptrio.com"", """", ""www.moderndance.com""]",
+EntStageName,TEXT,,"[""Carol Peacock Trio"", ""Jim Glynn"", ""Modern Dance""]",
+EntertainerID,NUMBER,,"[1001, 1004, 1006]",
+DateEntered,TEXT,,"[""1997-05-24"", ""1996-04-01"", ""1995-05-16""]",
+EntSSN,TEXT,,"[""888-90-1121"", ""888-26-1025"", ""888-66-1085""]",
+EntCity,TEXT,,"[""Redmond"", ""Bellevue"", ""Woodinville""]",
+EntPhoneNumber,TEXT,,"[""555-2691"", ""555-2531"", ""555-2631""]",

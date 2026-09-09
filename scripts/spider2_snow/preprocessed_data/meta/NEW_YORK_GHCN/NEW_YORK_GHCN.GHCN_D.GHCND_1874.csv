@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,"[""D""]",
+time,TEXT,,[],
+mflag,TEXT,,[],
+sflag,TEXT,,"[""I""]",
+element,TEXT,,"[""PRCP""]",
+id,TEXT,,"[""SF000847010""]",
+date,DATE,,"[""1874-07-19"", ""1874-08-19"", ""1874-08-25""]",
+value,FLOAT,,[0.0],

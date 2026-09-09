@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+gender,TEXT,Sex (M=male or F=female),"[""F""]",
+state,TEXT,2-digit state code,"[""AL"", ""AR"", ""CA""]",
+number,NUMBER,Number of occurrences of the name,"[875, 39, 101]",
+year,NUMBER,4-digit year of birth,[1910],
+name,TEXT,Given name of a person at birth,"[""Mary"", ""Vera"", ""Virginia""]",

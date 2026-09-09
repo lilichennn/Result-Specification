@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+feature,TEXT,,"[""sepal_length"", ""sepal_width"", ""petal_length""]",
+version,NUMBER,,[2],
+drop_correlation,NUMBER,,"[0, 1]",
+name,TEXT,,"[""iris""]",
+target,NUMBER,,"[0, 1]",
+range,TEXT,,"[""[4.3, 7.9]"", ""[2.0, 4.4]"", ""[1.0, 6.9]""]",
+type,TEXT,,"[""num"", """"]",
+drop_user,NUMBER,,[0],

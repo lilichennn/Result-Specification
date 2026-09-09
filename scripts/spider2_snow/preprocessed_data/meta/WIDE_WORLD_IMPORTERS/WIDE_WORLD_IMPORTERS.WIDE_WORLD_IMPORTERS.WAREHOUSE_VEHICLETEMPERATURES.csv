@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+VehicleRegistration,TEXT,,"[""WWI-321-A""]",
+CompressedSensorData,TEXT,,"[""NULL""]",
+RecordedWhen,NUMBER,,"[1464689767000000, 1464165910000000, 1463488650000000]",
+IsCompressed,NUMBER,,[0],
+ChillerSensorNumber,NUMBER,,[1],
+VehicleTemperatureID,NUMBER,,"[65731, 63011, 59671]",
+Temperature,FLOAT,,[3.0],
+FullSensorData,TEXT,,"[""{\""Recordings\"": [{\""type\"":\""Feature\"", \""geometry\"": {\""type\"":\""Point\"", \""coordinates\"":[-85.3249088,46.5837717] }, \""properties\"":{\""rego\"":\""WWI-321-A\"",\""sensor\"":\""1,\""when\"":\""2016-05-31T10:16:07\"",\""temp\"":3.00}} ]"", ""{\""Recordings\"": [{\""type\"":\""Feature\"", \""geometry\"": {\""type\"":\""Point\"", \""coordinates\"":[-117.6318604,63.2988934] }, \""properties\"":{\""rego\"":\""WWI-321-A\"",\""sensor\"":\""1,\""when\"":\""2016-05-25T08:45:10\"",\""temp\"":3.00}} ]"", ""{\""Recordings\"": [{\""type\"":\""Feature\"", \""geometry\"": {\""type\"":\""Point\"", \""coordinates\"":[-121.0988238,48.1889402] }, \""properties\"":{\""rego\"":\""WWI-321-A\"",\""sensor\"":\""1,\""when\"":\""2016-05-17T12:37:30\"",\""temp\"":3.00}} ]""]",

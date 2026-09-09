@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+vehicle_number,NUMBER,,"[5, 6]",
+state_name,TEXT,,"[""California"", ""Arkansas""]",
+state_number,NUMBER,,"[6, 5]",
+driver_maneuvered_to_avoid,NUMBER,,"[1, 98]",
+driver_maneuvered_to_avoid_name,TEXT,,"[""Object"", ""Not Reported""]",
+consecutive_number,NUMBER,,"[61872, 50460, 60714]",

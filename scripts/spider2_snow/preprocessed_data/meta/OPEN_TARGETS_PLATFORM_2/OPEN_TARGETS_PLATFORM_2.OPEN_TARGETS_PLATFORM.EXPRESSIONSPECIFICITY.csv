@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+ensemblGeneId,TEXT,,"[""ENSG00000198258"", ""ENSG00000198815"", ""ENSG00000132967""]",
+expression,VARIANT,,[],
+expressionSpecificity,VARIANT,,[],

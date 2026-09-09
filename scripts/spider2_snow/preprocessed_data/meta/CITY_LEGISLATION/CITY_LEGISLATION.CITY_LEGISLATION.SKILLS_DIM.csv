@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+type,TEXT,,"[""analyst_tools"", ""webframeworks"", ""programming""]",
+skills,TEXT,,"[""sharepoint"", ""asp.netcore"", ""sas""]",
+skill_id,NUMBER,,"[195, 164, 7]",

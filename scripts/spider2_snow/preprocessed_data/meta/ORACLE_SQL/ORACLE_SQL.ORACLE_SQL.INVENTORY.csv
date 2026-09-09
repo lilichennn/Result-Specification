@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+location_id,NUMBER,,"[244, 23, 179]",
+product_id,NUMBER,,"[7870, 7950, 7790]",
+purchase_id,NUMBER,,"[719, 720, 724]",
+id,NUMBER,,"[1148, 1151, 1154]",
+qty,FLOAT,,"[11.0, 48.0, 36.0]",

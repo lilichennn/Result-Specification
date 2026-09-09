@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+prodregistry,,"Primary key (VARCHAR(30)) for each product listing (e.g., 'PROD-12345').",character varying,
+prodtheme,,"An enum (ProdTheme_enum) for the product's main category (Digital, Data, Service, Physical).",USER-DEFINED,
+prodsubcat,,"An enum (ProdSubcat_enum) specifying the product subcategory (Type_A, Type_B, Type_C, Type_D).",USER-DEFINED,
+prodlistdays,,"An INT showing how many days the listing has been on the market (e.g., 14).",integer,
+prodpriceusd,,"A NUMERIC(10,2) price of the product in USD (e.g., 199.99).",numeric,
+prodqty,,"An INT specifying available quantity (e.g., 500).",integer,
+vendref,,FK referencing Vendors(VendRegistry) indicating which vendor offers this product.,character varying,
+buyref,,"FK referencing Buyers(BuyRegistry), if reserved or linked to a specific buyer.",character varying,

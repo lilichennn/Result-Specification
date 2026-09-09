@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+uuid,TEXT,,"[""z9y4m0a49rrv13oobfjfhruyt"", ""3zitfb2aia6u8nlr3n5uta60p"", ""q36z0hu0fuakfps1855oguvgx""]",
+term_grant,TEXT,,"[""NULL""]",
+term_extension,TEXT,,"[""NULL""]",
+patent_id,TEXT,,"[""5174504"", ""5074838"", ""4559232""]",
+disclaimer_date,TEXT,,"[""2008-05-14"", ""2007-03-13"", ""2001-06-26""]",
+lapse_of_patent,TEXT,,"[""NULL""]",
+term_disclaimer,TEXT,,"[""NULL""]",

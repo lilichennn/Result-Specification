@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+category,TEXT,,"[""inventional""]",
+group_id,TEXT,,"[""C08K"", ""C08L"", ""C09B""]",
+section_id,TEXT,,"[""C""]",
+subsection_id,TEXT,,"[""C08"", ""C09""]",
+subgroup_id,TEXT,,"[""C08K5/3462"", ""C08L101/00"", ""C08L51/085""]",
+sequence,NUMBER,,[4],
+uuid,TEXT,,"[""0fccb987-5388-476f-8391-f47d2e55a308"", ""b51fcbe9-5f0b-478c-9292-7a4e7721bbe9"", ""2313da55-6a74-4330-a280-33125f345769""]",
+patent_id,TEXT,,"[""10396367"", ""5308489"", ""7479522""]",

@@ -1,0 +1,10 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+panemark,,VARCHAR(50) PRIMARY KEY uniquely identifying each panel record.,character varying,
+hubregistry,,"UUID REFERENCES Plant(GrowRegistry), linking this panel to a specific plant.",uuid,
+panemfr,,"VARCHAR(100) describing the manufacturer’s name (was 'PanelManufacturer'). Possible enumerations: 'Longi', 'Canadian Solar', 'JA Solar', 'JinkoSolar', 'Trina'.",character varying,
+paneline,,"VARCHAR(100) capturing the panel’s model line or series (was 'PanelModel') (e.g., 'ModelX', 'CS6K-P').",character varying,
+panetype,,"VARCHAR(50) labeling the panel type (was 'PanelType'). Possible enumerations: 'Mono-PERC', 'HJT', 'Poly-PERC', 'Bifacial', 'TOPCon'.",character varying,
+powratew,,"SMALLINT specifying the rated power output of the panel in watts (was 'PanelRatedPowerW'). Possible enumerations: 650, 450, 600, 550, 500.",smallint,
+paneeffpct,,"DECIMAL(7,3) storing the panel’s nominal efficiency percentage (was 'PanelEfficiencyPercent') (e.g., 21.345).",numeric,
+nomtempc,,"NUMERIC(7,3) indicating the panel’s nominal operating temperature in °C (was 'NominalOperatingTempC') (e.g., 45.000).",numeric,
+tempcoef,,"DECIMAL(4,3) capturing the temperature coefficient for panel performance (was 'TemperatureCoefficient') (e.g., -0.350).",numeric,

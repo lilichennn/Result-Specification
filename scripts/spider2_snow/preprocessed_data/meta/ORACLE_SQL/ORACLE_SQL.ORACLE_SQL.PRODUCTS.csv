@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,NUMBER,,"[4040, 4160, 4280]",
+group_id,NUMBER,,"[142, 152]",
+name,TEXT,,"[""Coalminers Sweat"", ""Reindeer Fuel"", ""Hoppy Crude Oil""]",

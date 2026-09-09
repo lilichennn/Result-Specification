@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+element,TEXT,,"[""DAPR""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+date,DATE,,"[""2008-04-03"", ""2008-09-08"", ""2008-09-01""]",
+value,FLOAT,,"[2.0, 3.0, 4.0]",
+sflag,TEXT,,"[""0""]",
+qflag,TEXT,,[],
+id,TEXT,,"[""USC00153929"", ""USC00510140"", ""GQC00914468""]",

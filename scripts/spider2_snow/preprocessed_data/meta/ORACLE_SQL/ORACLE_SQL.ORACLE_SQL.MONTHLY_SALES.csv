@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+mth,TEXT,,"[""2016-01-01"", ""2016-03-01"", ""2016-04-01""]",
+product_id,NUMBER,,[4040],
+qty,NUMBER,,"[42, 39, 22]",

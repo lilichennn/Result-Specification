@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+drv_stnd,,INTEGER. Unique standings reference. PK. Example: 50065.,integer,
+rlink,,INTEGER. Foreign key to the races table (RAK_ID). FK to races. Example: 752.,integer,
+drive_link,,INTEGER. Foreign key to the drivers table (DRV_MAIN). FK to drivers. Example: 531.,integer,
+acc_pt,,REAL. Driver's cumulative season points. **NULL means the driver has no points or totals not updated.**. Example: 0.0.,real,
+px,,INTEGER. Driver's rank in standings. **NULL means ranking not yet calculated.**. Example: 56.0.,integer,
+px_desc,,VARCHAR. Descriptive rank label. **NULL means label not assigned.**. Example: 56.0.,text,
+topmark,,INTEGER. Total wins by driver. **NULL means the driver has not won or data have not been entered.**. Example: 0.0.,integer,

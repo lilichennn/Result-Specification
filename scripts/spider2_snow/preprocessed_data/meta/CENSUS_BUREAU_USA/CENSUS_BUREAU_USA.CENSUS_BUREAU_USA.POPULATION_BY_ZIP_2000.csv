@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+minimum_age,NUMBER,"The minimum age in the age range. If null, this indicates the row as a total for male, female, or overall population.",[],
+gender,TEXT,"male or female. If empty, the row is a total population summary.","[""""]",
+population,NUMBER,The total count of the population for this segment.,"[1792, 2048, 2305]",
+geo_id,TEXT,Geo code,"[""8600000US58577"", ""8600000US03447"", ""8600000US39176""]",
+zipcode,TEXT,Five digit ZIP Code Tabulation Area Census Code,"[""58577"", ""03447"", ""39176""]",
+maximum_age,NUMBER,"The maximum age in the age range. If null, this indicates the row as having no maximum (such as 85 and over) or the row is a total of the male, female, or overall population.",[],

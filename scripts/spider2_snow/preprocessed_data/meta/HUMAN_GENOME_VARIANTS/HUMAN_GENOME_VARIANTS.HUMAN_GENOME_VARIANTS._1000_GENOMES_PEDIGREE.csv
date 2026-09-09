@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+Maternal_ID,TEXT,,"[""HG02282"", ""HG01989"", ""HG02010""]",
+Other_Comments,TEXT,,"[""0""]",
+Relationship,TEXT,,"[""child""]",
+Family_ID,TEXT,,"[""BB24"", ""BB11"", ""BB13""]",
+Individual_ID,TEXT,,"[""HG02321"", ""HG01960"", ""HG02011""]",
+Paternal_ID,TEXT,,"[""HG02281"", ""HG01988"", ""HG02009""]",
+Siblings,TEXT,,"[""0""]",
+Second_Order,TEXT,,"[""0""]",
+Third_Order,TEXT,,"[""0""]",
+Gender,NUMBER,,"[2, 1]",
+Population,TEXT,,"[""ACB""]",
+Phenotype,NUMBER,,[0],

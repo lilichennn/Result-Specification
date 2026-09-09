@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+zipcode,NUMBER,,"[11205, 11218, 10451]",
+Margin_of_Error_Total,NUMBER,,"[353, 371, 405]",
+Estimate_Mean_income,NUMBER,,"[73353, 78208, 40836]",
+Estimate_Total,NUMBER,,"[15198, 24909, 18140]",
+Estimate_Median_income,NUMBER,,"[47575, 56120, 26048]",
+Margin_of_Error_Mean_income,NUMBER,,"[3929, 3788, 3424]",
+Margin_of_Error_Median_income,NUMBER,,"[3834, 3925, 2140]",

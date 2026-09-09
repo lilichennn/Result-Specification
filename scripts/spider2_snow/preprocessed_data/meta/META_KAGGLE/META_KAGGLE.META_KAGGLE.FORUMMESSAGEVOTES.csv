@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+ToUserId,NUMBER,,"[638, 368, 2246]",
+FromUserId,NUMBER,,"[307512, 6632177, 697221]",
+Id,NUMBER,,"[183321, 4402419, 133472]",
+VoteDate,DATE,,"[""2017-04-06"", ""2024-07-16"", ""2016-08-26""]",
+ForumMessageId,NUMBER,,"[6, 28, 352]",

@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+conditionassessregistry,,"BIGSERIAL PRIMARY KEY, unique ID for each condition assessment record.",bigint,
+artrefexamined,,"TEXT NOT NULL FOREIGN KEY referencing ArtifactsCore(ArtRegistry). Links to the artifact under assessment. (In practice, should match CHAR(10) type if needed.)",text,
+showcaserefexamined,,TEXT FOREIGN KEY referencing Showcases(ShowcaseReg). Ties the record to the showcase if it was part of the assessment.,text,
+lightreadrefobserved,,BIGINT FOREIGN KEY referencing LightAndRadiationReadings(LightRadRegistry). Associates the assessment with relevant light data.,bigint,
+condassessscore,,INT rating or score representing the artifact/showcase condition (scale is flexible).,integer,
+conserveassessdate,,DATE when the conservation assessment took place.,date,
+nextassessdue,,DATE by which the next condition assessment should occur.,date,

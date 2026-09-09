@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+State,TEXT,,"[""WA""]",
+ZIP,TEXT,,"[""98001"", ""98003"", ""98004""]",
+City,TEXT,,"[""Auburn"", ""Federal Way"", ""Bellevue""]",

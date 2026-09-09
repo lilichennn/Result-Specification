@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+team,TEXT,,"[""Purdue"", ""Virginia Tech"", ""Iowa""]",
+tm_def_eff_rtg,FLOAT,,"[86.85964369606155, 94.01597537440225, 70.82823539566483]",
+tm_net_eff_rk,FLOAT,,"[9.0, 6.0, 29.0]",
+tm_net_eff_rtg,FLOAT,,"[98.00671536111155, 98.56978642532177, 92.67694523529984]",
+tm_off_eff_stat,FLOAT,,"[120.16079992525405, 118.95121477063029, 116.58391137429666]",
+tm_def_eff_stat,FLOAT,,"[95.36940876063527, 92.5462604978491, 99.06649161069642]",
+season,NUMBER,,[2018],
+tm_off_eff_rtg,FLOAT,,"[99.24300722858533, 98.81379236338132, 97.3434186210313]",
+tm_def_eff_rk,FLOAT,,"[53.0, 26.0, 103.0]",
+tm_net_eff_stat,FLOAT,,"[24.791391164618798, 26.40495427278121, 17.517419763600273]",
+tm_off_eff_rk,FLOAT,,"[5.0, 7.0, 9.0]",

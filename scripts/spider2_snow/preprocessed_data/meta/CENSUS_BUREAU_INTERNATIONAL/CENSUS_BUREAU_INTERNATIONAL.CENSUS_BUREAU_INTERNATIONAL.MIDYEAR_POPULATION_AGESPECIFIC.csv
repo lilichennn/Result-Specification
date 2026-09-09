@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+year,NUMBER,Year,[2001],
+population,NUMBER,Total count of individuals,"[152, 140, 134]",
+country_code,TEXT,Federal Information Processing Standard (FIPS) country/area code,"[""NR""]",
+sex,TEXT,Gender,"[""Male""]",
+country_name,TEXT,Country or area name,"[""Nauru""]",
+age,NUMBER,Age in years,"[0, 3, 5]",

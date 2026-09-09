@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+constructor_id,NUMBER,,"[2, 3, 8]",
+nationality,TEXT,,"[""German"", ""British"", ""Japanese""]",
+url,TEXT,,"[""http://en.wikipedia.org/wiki/BMW_Sauber"", ""http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering"", ""http://en.wikipedia.org/wiki/Super_Aguri_F1""]",
+name,TEXT,,"[""BMW Sauber"", ""Williams"", ""Super Aguri""]",
+short_name,TEXT,,"[""BMW Sauber"", ""Williams"", ""Super Aguri""]",
+constructor_ref,TEXT,,"[""bmw_sauber"", ""williams"", ""super_aguri""]",

@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+name,TEXT,Reactome physical entity name,"[""HBB"", ""MAFG"", ""HBE1""]",
+stable_id,TEXT,Reactome physical entity stable identifier,"[""R-HSA-1008196"", ""R-HSA-1008212"", ""R-HSA-1008215""]",
+ensembl_id,TEXT,Ensembl database identifier,"[""ENSP00000494175"", ""ENST00000647020"", ""ENSP00000350369""]",
+uniprot_id,TEXT,UniProt database identifier,"[""P68871"", ""O15525"", ""P02100""]",
+location,TEXT,Reactome physical entity location,"[""cytosol"", ""nucleoplasm""]",

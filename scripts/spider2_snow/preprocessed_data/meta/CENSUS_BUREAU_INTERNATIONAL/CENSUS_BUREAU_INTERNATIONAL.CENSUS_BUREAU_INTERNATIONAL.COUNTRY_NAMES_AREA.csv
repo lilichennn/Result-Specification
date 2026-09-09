@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+country_code,TEXT,Federal Information Processing Standard (FIPS) country/area code,"[""AG"", ""AQ"", ""AR""]",
+country_name,TEXT,Country or area name,"[""Algeria"", ""American Samoa"", ""Argentina""]",
+country_area,FLOAT,Area in square kilometers,"[2381741.0, 198.0, 2736690.0]",

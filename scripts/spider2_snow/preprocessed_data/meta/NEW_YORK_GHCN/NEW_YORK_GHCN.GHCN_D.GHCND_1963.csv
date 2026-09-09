@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1963-04-08"", ""1963-11-25"", ""1963-10-27""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+sflag,TEXT,,"[""0""]",
+value,FLOAT,,"[2.0, 3.0]",
+element,TEXT,,"[""DAEV""]",
+qflag,TEXT,,[],
+id,TEXT,,"[""RQC00660152"", ""USC00025924"", ""USC00035200""]",

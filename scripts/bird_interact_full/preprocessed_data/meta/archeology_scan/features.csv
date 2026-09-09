@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+traitregistry,,BIGSERIAL. Auto-generated unique identifier for feature analysis record. PK = Features(TraitRegistry).,bigint,
+zoneref,,TEXT. Reference to site where features were analyzed. FK to Sites.,text,
+equipref,,TEXT. Reference to equipment used for feature extraction. FK to Equipment.,text,
+traitextract,,"TEXT. Method used for feature extraction analysis. Possible values: Automatic, Manual, Semi-automatic.",text,
+feature_analysis,,"JSONB column. Archaeological feature analysis results including counts, material classification, and analysis completion status
+Fields: {""Analysis_Status"":{""Hue_Study"":""TEXT. Color analysis results and classification. Possible values: Completed, Not Required, Partial."",""Pattern_Note"":""TEXT. Pattern recognition analysis and observations. Possible values: Completed, Not Required, Partial."",""Texture_Study"":""TEXT. Texture analysis results and patterns. Possible values: Completed, Not Required, Partial.""},""Arti_Count"":""BIGINT. Number of artifacts detected or counted. Example: 71."",""Mat_Kind"":""TEXT. Material type classification of analyzed features. Possible values: Ceramic, Metal, Mixed, Organic, Stone."",""Struct_Kind"":""TEXT. Type of structure identified in analysis. Possible values: Artifact, Complex, Floor, Foundation, Wall."",""Trait_Count"":""BIGINT. Number of features identified in analysis. Example: 516.""}",jsonb,

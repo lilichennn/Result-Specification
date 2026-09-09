@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+productcategoryid,NUMBER,,"[1, 2, 4]",
+name,TEXT,,"[""Bikes"", ""Components"", ""Accessories""]",
+rowguid,TEXT,,"[""cfbda25c-df71-47a7-b81b-64ee161aa37c"", ""c657828d-d808-4aba-91a3-af2ce02300e9"", ""2be3be36-d9a2-4eee-b593-ed895d97c2a6""]",
+modifieddate,TEXT,,"[""2008-04-30 00:00:00""]",

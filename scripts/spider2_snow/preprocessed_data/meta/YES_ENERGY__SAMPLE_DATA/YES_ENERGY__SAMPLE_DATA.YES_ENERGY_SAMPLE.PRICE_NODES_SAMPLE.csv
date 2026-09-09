@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+PNODENAME,TEXT,,"[""HB_NORTH""]",
+ZONE,TEXT,,"[""NORTH""]",
+ZONEID,NUMBER,,[],
+OBJECTID,NUMBER,,[10000697078],
+STATUS,TEXT,,"[""Active""]",
+NODETYPE,TEXT,,"[""HUB""]",
+LAST_DART_DATE,TIMESTAMP_NTZ,,"[""2024-09-01 00:00:00""]",
+ISO,TEXT,,"[""ERCOT""]",
+FIRST_DART_DATE,TIMESTAMP_NTZ,,"[""2010-09-01 01:00:00""]",

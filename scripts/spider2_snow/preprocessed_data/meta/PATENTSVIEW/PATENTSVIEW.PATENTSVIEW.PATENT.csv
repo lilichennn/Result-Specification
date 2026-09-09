@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+filename,TEXT,,"[""ipg131001.xml"", ""ipg160503.xml"", ""ipg160517.xml""]",
+id,TEXT,,"[""D690894"", ""D755392"", ""D756281""]",
+number,TEXT,,"[""D690894"", ""D755392"", ""D756281""]",
+title,TEXT,,"[""Cremation remains keepsake charm"", ""Pulse oximetry sensor"", ""Wheel""]",
+kind,TEXT,,"[""S1""]",
+type,TEXT,,"[""design""]",
+date,TEXT,,"[""2013-10-01"", ""2016-05-03"", ""2016-05-17""]",
+withdrawn,NUMBER,,[0],
+abstract,TEXT,,[],
+num_claims,NUMBER,,[1],
+country,TEXT,,"[""US""]",

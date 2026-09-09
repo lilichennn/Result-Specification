@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+fiscal_year,NUMBER,,"[2020, 2021]",
+product_code,TEXT,,"[""A0118150102"", ""A0118150103"", ""A0118150104""]",
+gross_price,FLOAT,,"[19.8577, 21.7795, 20.7734]",

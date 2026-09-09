@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+Uniprot,TEXT,Uniprot Identifier from the UniProtKB,"[""Q92934"", ""A0A024R562"", ""Q07812""]",
+pathway,TEXT,Pathway Name,"[""Apoptosis""]",
+Symbol,TEXT,"Eg TP53, LRP1B, etc (same as Hugo_Symbol field except blank instead of Unknown)","[""BAD"", ""BAX"", ""BID""]",
+pathID,TEXT,Pathway ID,"[""WP254""]",
+wikiID,TEXT,WikiPathways ID,"[""WikiPathways_20170410""]",
+entrez,TEXT,Entrez ID from the NCBI,"[""572"", ""581"", ""637""]",

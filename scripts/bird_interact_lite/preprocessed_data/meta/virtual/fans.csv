@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+userregistry,,"A VARCHAR(20) primary key uniquely identifying each fan record (e.g., 'FAN001').",character varying,
+nicklabel,,A VARCHAR(100) storing the fan's chosen nickname or handle.,character varying,
+regmoment,,"A DATE noting when the fan first registered (e.g., '2025-02-15').",date,
+tierstep,,"A SMALLINT that captures the fan's level or tier progression (e.g., 1, 2, 3).",smallint,
+ptsval,,An INT holding the fan's accumulated points or score within the system.,integer,
+statustag,,"An enum (FanStatus_enum) describing the fan’s current status (Inactive, VIP, Active, Blocked).",USER-DEFINED,
+personal_attributes,,"JSONB column. Groups personal demographic and interest-related attributes of the fan, including age, gender, location, language preference, occupation, and interests.
+Fields: {""demographics"":{""agecount"":""A SMALLINT representing the fan’s age in years."",""gendertype"":""An enum (FanGender_enum) indicating the fan’s gender (Other, Male, Undisclosed, Female)."",""locnation"":""A VARCHAR(100) for the fan’s country location (e.g., 'USA', 'Japan')."",""loctown"":""A VARCHAR(100) for the fan’s city or town location.""},""preferences"":{""interestset"":""An enum (FanInterests_enum) indicating the fan's primary interest area (Technology, Anime, Art, Music, Gaming)."",""langpref"":""An enum (FanLang_enum) specifying the fan's main language (Multiple, Korean, English, Japanese, Chinese)."",""occupath"":""An enum (FanOccupation_enum) describing the fan’s occupation (Professional, Student, Other, Creative).""}}",jsonb,

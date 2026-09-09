@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+Line,FLOAT,,[2.0],
+DeathRecordId,NUMBER,,"[717162, 717283, 717363]",
+Sequence,NUMBER,,[1],
+Icd10Code,TEXT,,"[""R688""]",
+Id,NUMBER,,"[2201459, 2201817, 2202048]",
+Part,NUMBER,,[1],

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+element,TEXT,,"[""PRCP""]",
+date,DATE,,"[""1958-02-11"", ""1958-12-10"", ""1958-12-15""]",
+sflag,TEXT,,"[""X""]",
+time,TEXT,,[],
+value,FLOAT,,"[0.0, 36.0, 43.0]",
+id,TEXT,,"[""ACW00011647""]",
+mflag,TEXT,,"[""T""]",

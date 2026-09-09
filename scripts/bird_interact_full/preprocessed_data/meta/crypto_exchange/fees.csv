@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+fee_range,,"TEXT. Fee-tier or range descriptor. **NULL means fee range not provided.**. Possible values: Tier1, Tier2, Tier3, Tier4.",text,
+FeeRate,,"REAL. Applied fee rate (e.g., 0.001 = 0.1 %). Example: 0.0007. Example: 0.0007. Example: 0.0007.",real,
+FEE_TOTAL,,TEXT. Total fee amount as text. Example: $26.60 .,text,
+FeeCoin,,"TEXT. Currency in which the fee is charged. **NULL means fee currency not specified.**. Possible values: USD, USDC, USDT. Possible values: USD, USDC, USDT.",text,
+rebRate,,TEXT. Rebate rate if applicable. Example: 0.09%.,text,
+REB_TOTAL,,TEXT. Total rebate amount. Example: 34.200126.,text,
+Order_Link,,TEXT. Related order identifier. FK to orders.,text,

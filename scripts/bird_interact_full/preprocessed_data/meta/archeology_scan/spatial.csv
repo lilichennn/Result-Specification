@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+domainregistry,,BIGSERIAL. Auto-generated unique identifier for spatial measurement record. PK = Spatial(DomainRegistry).,bigint,
+arcref,,TEXT. Reference to associated archeologys project. FK to Projects.,text,
+crewref,,TEXT. Reference to operator who performed spatial measurements. FK to Personnel.,text,
+spatial_dims,,"JSONB column. Spatial dimensions and measurements including area, volume, bounding box coordinates, and orientation angles
+Fields: {""Angles"":{""Angle_Az"":""REAL. Azimuth orientation angle in degrees. Example: 342.4."",""Angle_Tilt"":""REAL. Tilt angle measurement in degrees. Example: 23.9.""},""Area_M2"":""REAL. Surface area measurement in square meters. Example: 78.01."",""Bounding_Box"":{""Box_X"":""REAL. Bounding box X-dimension in meters. Example: 40.12."",""Box_Y"":""REAL. Bounding box Y-dimension in meters. Example: 1.06."",""Box_Z"":""REAL. Bounding box Z-dimension in meters. Example: 8.74.""},""Ground_Span"":""REAL. Ground sampling distance in millimeters. Example: 4.13."",""Vol_M3"":""REAL. Volume measurement in cubic meters. Example: 76.7.""}",jsonb,

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+number,TEXT,,"[""0.1.0""]",
+project_name,TEXT,,"[""tap-http"", ""view_driver"", ""embulk-filter-azure_computer_vision_api""]",
+created_timestamp,NUMBER,,"[1422485681000000, 1422488467000000, 1485483201000000]",
+project_id,NUMBER,,"[257990, 265540, 2124380]",
+id,NUMBER,,"[1207852, 1243871, 8116395]",
+updated_timestamp,NUMBER,,"[1422485681000000, 1422488467000000, 1485483201000000]",
+published_timestamp,NUMBER,,"[1227596400000000, 1260133200000000, 1485483168000000]",
+platform,TEXT,,"[""Rubygems""]",

@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+clin_recip_registry,,"TEXT. Primary key linking to recipient demographics for clinical data. PK = Clinical(Clin_Recip_Registry), FK to Recipients_Demographics.",text,
+diag_detail,,"TEXT. Primary diagnosis and medical condition requiring transplant. Possible values: Acute failure, immediate transplant required.",text,
+wait_time,,TEXT. Number of days recipient has been on transplant waiting list. Example: 104 days,text,
+med_urgency,,"TEXT. Medical urgency status classification for transplant priority. **DATA NOISE: 'Status 2' partially replaced with '2', 'Status 3' partially replaced with '3', etc.** Possible values: 2, 3, Status 1A, Status 1B, Status 2, Status 3.",text,
+prev_tx_count,,"TEXT. Number of previous transplants recipient has received. Possible values: 0 previous transplants, first-time recipient.",text,
+dial_status,,"TEXT. Current dialysis status and treatment regimen. **NULL means dialysis status is not applicable or not documented.**. Possible values: Hemodialysis, standard renal replacement therapy.",text,
+dial_duration,,TEXT. Duration of dialysis treatment in months. Example: 45 months,text,
+comorbid_detail,,"TEXT. Comorbid conditions and secondary medical issues. **NULL means comorbidity assessment is incomplete or not available.**. Example: Hypertension,Heart Disease,Diabetes.",text,

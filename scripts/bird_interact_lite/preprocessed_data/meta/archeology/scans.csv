@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+questregistry,,Full name: 'Scan ID'. Explanation: Primary key identifying a particular scan. Data type: VARCHAR(16). Example: 'ASD409481'.,character varying,
+chronotag,,"Full name: 'Scan Timestamp'. Explanation: Timestamp representing the scan date/time. Data type: TIMESTAMP. If stored as a numeric like 44302.55648, it may be an Excel serial date/time (days since 1900-01-00). Example: 44302.55648.",timestamp without time zone,
+arcref,,Full name: 'Project Reference'. Explanation: Links a scan to a specific project. Data type: VARCHAR(10). Example: 'PR7509'.,character varying,
+crewref,,Full name: 'Operator Reference'. Explanation: Records which operator performed the scan. Data type: CHAR(8). Example: 'OP4641'.,character,
+zoneref,,Full name: 'Site Reference'. Explanation: Associates the scan with a site code. Data type: VARCHAR(12). Example: 'SC9016'.,character varying,
+scancount,,Full name: 'Number of Scans'. Explanation: Numeric count of scans in a set. Data type: SMALLINT. Example: 5.,smallint,
+climtune,,"Full name: 'Weather Conditions'. Explanation: Indicates the weather during scanning. Data type: VARCHAR(22). Possible categories: Windy, Rainy, Cloudy, Clear.",character varying,
+huecatch,,"Full name: 'Color Capture'. Explanation: Mode of color recording. Data type: VARCHAR(10). Possible categories: RGB, Grayscale, None.",character varying,
+fmtfile,,"Full name: 'File Format'. Explanation: Format in which scan data is saved. Data type: CHAR(4). Possible categories: PTS, PLY, OBJ, LAS, E57.",character,
+gbsize,,"Full name: 'File Size (GB)'. Explanation: Size of the scan file in gigabytes. Data type: NUMERIC(5,2). Example: 24.71.",numeric,
+pressratio,,"Full name: 'Compression Ratio'. Explanation: Compression level applied to scan data. Data type: NUMERIC(4,2). Example: 3.22.",numeric,
+spanmin,,"Full name: 'Scan Duration (min)'. Explanation: Duration of the scanning process, in minutes. Data type: NUMERIC(5,2). Example: 63.",numeric,

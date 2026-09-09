@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+tradereg,,"VARCHAR(50). Primary key uniquely identifying each trader account (e.g., 'TRD‑987654').",character varying,
+tradekind,,"trader_type_enum (enum: 'Market Maker', 'Broker', 'Individual', 'Institution'). Broad category of the trader.",USER-DEFINED,
+acctdays,,"INT. Age of the trading account in days since opening (e.g., 782).",integer,
+acctbal,,"NUMERIC(20,2). Current cash equity in the trader’s account in USD (e.g., 2 150 345.75).",numeric,
+freqscope,,"trading_frequency_enum (enum: 'Low', 'Medium', 'High'). Average trading frequency classification.",USER-DEFINED,
+voldaily,,"NUMERIC(20,4). Mean daily share volume traded across all symbols (e.g., 1 250 000.0000).",numeric,
+posavg,,"NUMERIC(20,4). Average position size in USD held per trade (e.g., 350 000.0000).",numeric,
+posspan,,"position_holding_period_enum (enum: 'Intraday', 'Position', 'Long-term', 'Swing'). Typical holding‑period style.",USER-DEFINED,
+trading_performance,,"JSONB column. Stores metrics related to the trader's performance and risk profile, including win rate, profit-to-loss ratio, and risk characteristics.
+Fields: {""plratio"":""NUMERIC(7,4). Profit‑to‑loss ratio of realised trades (e.g., 1.2430)."",""risklevel"":{""levratio"":""NUMERIC(7,4). Leverage ratio applied to positions (e.g., 2.3500)."",""margpct"":""NUMERIC(5,2). Percentage of margin utilisation versus account equity (e.g., 28.50)."",""risklevel"":""risk_tolerance_enum (enum: 'Conservative', 'Aggressive', 'Moderate'). Stated or inferred risk appetite.""},""winpct"":""NUMERIC(5,2). Historical win‑rate percentage across trades (e.g., 57.35).""}",jsonb,

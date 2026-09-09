@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+PlaylistId,NUMBER,,"[3, 4, 5]",
+Name,TEXT,,"[""TV Shows"", ""Audiobooks"", ""90’s Music""]",

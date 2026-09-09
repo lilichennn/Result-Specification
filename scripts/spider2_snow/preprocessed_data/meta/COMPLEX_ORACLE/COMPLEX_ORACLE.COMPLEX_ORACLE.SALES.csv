@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+prod_id,NUMBER,,[13],
+channel_id,NUMBER,,[3],
+promo_id,NUMBER,,[999],
+amount_sold,FLOAT,,[1232.16],
+time_id,TEXT,,"[""2019-01-10""]",
+cust_id,NUMBER,,"[987, 2273, 2380]",
+quantity_sold,NUMBER,,[1],

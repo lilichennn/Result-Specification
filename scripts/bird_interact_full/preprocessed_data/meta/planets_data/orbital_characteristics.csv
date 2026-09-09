@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+orbitalref,,A SERIAL primary key uniquely identifying each orbital characteristics record.,bigint,
+bodylink,,"Foreign key INTEGER referencing planets(PlanetRef), linking orbital parameters to a specific planet.",bigint,
+period,,"Orbital period from 'pl_orbper' measured in days. REAL accommodating periods from 0.09 days (hot Jupiters) to 7,300,000 days (20,000+ years). Contains  NULL when orbital period cannot be determined from available observations.",real,
+semimajor,,Semi-major axis from 'pl_orbsmax' measured in AU. REAL covering range from 0.0044 AU (ultra-hot Jupiters) to 2500 AU (wide-separation planets). Contains  NULL when orbital distance cannot be reliably calculated.,real,
+eccentricity,,Orbital eccentricity from 'pl_orbeccen' ranging from 0 (circular) to <1 (elliptical). REAL providing high precision for nearly circular orbits. Contains  NULL when eccentricity cannot be constrained from available data.,real,
+inclination,,"Orbital inclination from 'pl_orbincl' in degrees relative to sky plane. REAL ranging from 0° (face-on) to 180° (retrograde). Contains  NULL when inclination cannot be determined (e.g., for radial velocity-only discoveries).",real,

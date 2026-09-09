@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+city,TEXT,,"[""Abha"", ""Aden"", ""Ahmadnagar""]",
+last_update,TEXT,,"[""2021-03-06 15:51:49"", ""2021-03-06 15:51:50""]",
+city_id,NUMBER,,"[2, 7, 9]",
+country_id,NUMBER,,"[82, 107, 44]",

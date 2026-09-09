@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+product_category_name,TEXT,,"[""beleza_saude"", ""automotivo"", ""cama_mesa_banho""]",
+product_category_name_english,TEXT,,"[""health_beauty"", ""auto"", ""bed_bath_table""]",

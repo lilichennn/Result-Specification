@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+VALUE,NUMBER,Value reported for the variable.,"[119632, 59230, 35943]",
+DATE,DATE,Date associated with the value.,"[""2023-06-30"", ""2017-06-30"", ""2014-06-30""]",
+FDIC_INSTITUTION_ID,TEXT,"Unique FDIC ID of the institution that owns the branch. It is a unique number, sequentially added to the FDIC database for both banks and branches. This ID is updated with every merger or purchase of branches to reflect the most current owner.","[""2239"", ""6499"", ""417""]",
+UNIT,TEXT,"Unit in which the measure is recorded (e.g., USD YTD).","[""USD""]",
+VARIABLE,TEXT,Unique FDIC identifier for tracked financial data.,"[""DEPSUMBR"", ""ASSET""]",
+FDIC_BRANCH_ID,TEXT,FDIC's unique number for the bank or savings institution assigned by the FDIC in order to identify and track. The branch ID for the Headquarters branch is the same as the branch ID for the entire bank or savings institution.,"[""286466"", ""6499"", ""481396""]",
+VARIABLE_NAME,TEXT,Human-readable description of the financial data variables tracked by the FDIC.,"[""Branch Deposits"", ""Institutional Assets""]",

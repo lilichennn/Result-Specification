@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+pickup_datetime,NUMBER,The date and time of the trip pick-up.,"[1440513000000000, 1442313540000000, 1429800300000000]",
+zone,TEXT,This is Pickup zone,"[""""]",
+borough,TEXT,This is Pickup borough,"[""""]",
+service_zone,TEXT,This is Pickup service_zone,"[""""]",
+location_id,NUMBER,The TLC taxi zone of the trip pick-up,[],
+dispatching_base_num,TEXT,The TLC Base License Number of the base that dispatched the trip.,"[""B00001""]",

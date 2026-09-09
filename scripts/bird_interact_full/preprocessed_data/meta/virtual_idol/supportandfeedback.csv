@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+support_reg,,BIGSERIAL. Auto-generated unique identifier for support and feedback record. PK = SupportAndFeedback(Support_Reg).,bigint,
+support_interact_pivot,,TEXT. Reference to interaction record for support context. FK to Interactions.,text,
+support_pref_pivot,,BIGINT. Reference to preferences record for support correlation. FK to PreferencesAndSettings.,bigint,
+surv_part,,TEXT. Participation level in surveys and research studies.,text,
+beta_part,,TEXT. Participation status in beta testing programs.,text,
+feedback_data,,"JSONB column. Support and feedback engagement data including issue reports, submissions, and satisfaction ratings
+Fields: {""Bug_Subs"":""SMALLINT. Number of bug reports submitted by the fan."",""Fb_Subs"":""SMALLINT. Number of feedback submissions made by the fan."",""Feat_Req_Subs"":""SMALLINT. Number of feature requests submitted by the fan."",""NPS_Val"":""SMALLINT. Net Promoter Score value indicating likelihood to recommend platform."",""Sat_Rate"":""REAL. Overall satisfaction rating provided by the fan."",""Supp_Tix"":""SMALLINT. Number of support tickets opened by the fan."",""Tech_Issue_Rpt"":""SMALLINT. Number of technical issues reported by the fan.""}",jsonb,

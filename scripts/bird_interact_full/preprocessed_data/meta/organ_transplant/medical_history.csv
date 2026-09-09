@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+contrib_med_registry,,"TEXT. Primary key linking to donor demographics record. PK = Medical_History(Contrib_Med_Registry), FK to Demographics.",text,
+med_history,,"TEXT. Comprehensive medical history and conditions of the donor. **NULL means medical history documentation is incomplete or unavailable.**. Example: None,Cancer,Heart Disease.",text,
+smk_cond,,"TEXT. Donor's smoking status and history. Possible values: Never smoked, optimal lung condition.",text,
+alc_cond,,"TEXT. Donor's alcohol use status and history. **NULL means alcohol use history is not documented or unknown.**. Possible values: Heavy use, liver function requires evaluation.",text,
+drug_cond,,"TEXT. Donor's drug use status and substance abuse history. **NULL means drug use history is not documented or assessed.**. Possible values: Current use, high risk assessment.",text,
+viralstatinfo,,"JSONB column. Consolidates all viral infection status data including CMV, EBV, HBV, HCV, and HIV test results for comprehensive infectious disease screening.
+Fields: {""Cmv_State"":""TEXT. Donor's cytomegalovirus infection status. Possible values: Negative, Positive."",""Ebv_State"":""TEXT. Donor's Epstein-Barr virus infection status. Possible values: Negative, Positive."",""Hbv_State"":""TEXT. Donor's hepatitis B virus infection status. Possible values: Negative, Positive."",""Hcv_State"":""TEXT. Donor's hepatitis C virus infection status. Possible values: Negative, Positive."",""Hiv_State"":""TEXT. Donor's human immunodeficiency virus infection status. Possible values: Negative, Positive.""}",jsonb,

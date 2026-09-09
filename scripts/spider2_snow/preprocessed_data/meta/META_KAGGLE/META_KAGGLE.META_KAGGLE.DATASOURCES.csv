@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+CreatorUserId,NUMBER,,"[3867392, 4064256]",
+CreationDate,NUMBER,,"[1579359348000000, 1692280786000000, 1700233077000000]",
+CurrentDatasourceVersionId,NUMBER,,"[925571, 6399262, 7076875]",
+Id,NUMBER,,"[498859, 3683191, 4068752]",
+Type,TEXT,,"[""Dataset""]",

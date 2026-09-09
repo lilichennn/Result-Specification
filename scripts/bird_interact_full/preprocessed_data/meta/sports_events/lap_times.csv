@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+rc_index,,INTEGER. Foreign key to the races table (RAK_ID). FK to races. Example: 1093.,integer,
+wheel_unit,,INTEGER. Foreign key to the drivers table (DRV_MAIN). FK to drivers. Example: 4.,integer,
+lapval,,INTEGER. Lap value in the race. Example: 55.,integer,
+pp,,INTEGER. Position for the lap. Example: 7.,integer,
+tmdesc,,VARCHAR. Recorded lap-time string. **NULL means the lap time was not captured or is invalid.**. Example: 1:43.848.,text,
+msec_val,,INTEGER. Lap time in milliseconds. Example: 103848.,integer,

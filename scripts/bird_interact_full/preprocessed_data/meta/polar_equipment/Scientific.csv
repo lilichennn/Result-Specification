@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+SCI_ID,,BIGSERIAL. Unique identifier for the scientific instrument record. PK.,bigint,
+equipRef,,TEXT. Reference to the equipment. FK to Equipment.EQUIP_CODE.,text,
+sciEquipStat,,"TEXT. Status of the scientific equipment. Possible values: Fault, Operating, Standby.",text,
+dataLogStat,,"TEXT. Data logging status for the equipment. Possible values: Active, Error, Paused.",text,
+sensorStat,,"TEXT. Sensor status. Possible values: Error, Normal, Warning.",text,
+calibrStat,,"TEXT. Calibration status. Possible values: Due, Expired, Valid.",text,
+measureAccPct,,REAL. Measurement accuracy percentage. Example: 99.3.,real,

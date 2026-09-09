@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+court_code,TEXT,,"[""azd""]",
+case_number,TEXT,,"[""2:2001-cv-01273"", ""2:1993-cv-01071"", ""4:2013-cv-00346""]",
+date_filed,TEXT,,"[""2001-07-09"", ""1993-06-04"", ""2013-05-15""]",
+case_name,TEXT,,"[""PAR Technologies Inc v. Philips Elec N Amer, et al"", ""Akzo Pharma Int'l, et al v. Steris Laboratories, et al"", ""Yellow Dog Technologies LLC v. Fuel Recyclers Arizona LLC""]",
+pacer_id,TEXT,,"[""13166"", ""68655"", ""781287""]",
+date_closed,TEXT,,"[""01/09/2002"", ""07/07/1994"", ""08/05/2013""]",
+court_name,TEXT,,"[""Arizona District Court""]",

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+element,TEXT,,"[""TAVG"", ""TMAX""]",
+sflag,TEXT,,"[""S""]",
+mflag,TEXT,,"[""H""]",
+date,DATE,,"[""2016-05-27"", ""2016-05-28""]",
+id,TEXT,,"[""CHM00052713"", ""KZ000034398"", ""MXM00076750""]",
+etl_timestamp,NUMBER,Load time for this data row,[1672027772371627],
+source_url,TEXT,Source ,"[""ftp://ftp.ncei.noaa.gov/pub/data/ghcn/daily/by_year/2016.csv.gz""]",
+time,TEXT,,[],
+value,FLOAT,,"[88.0, 336.0, 298.0]",
+qflag,TEXT,,[],

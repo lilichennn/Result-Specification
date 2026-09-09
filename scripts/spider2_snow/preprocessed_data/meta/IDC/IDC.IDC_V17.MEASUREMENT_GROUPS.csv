@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+segmentationInstanceUID,TEXT,,"[""1.2.276.0.7230010.3.1.4.0.63809.1553350406.821822"", ""1.2.276.0.7230010.3.1.4.0.25559.1553308683.864333"", ""1.2.276.0.7230010.3.1.4.0.54402.1553339996.524584""]",
+trackingUniqueIdentifier,TEXT,,"[""2.25.23486147279250282548479958366624720415557115703535527581314"", ""2.25.39603594466483810411474193708814402812465485745022332832798"", ""2.25.11760049005319165584581178713957517898501242486959685542497""]",
+segmentationSegmentNumber,VARIANT,,"[""[\n  1\n]""]",
+findingSite,VARIANT,,"[""{\n  \""CodeMeaning\"": \""Lung\"",\n  \""CodeValue\"": \""T-28000\"",\n  \""CodingSchemeDesignator\"": \""SRT\""\n}""]",
+measurementGroup_number,NUMBER,,[0],
+SOPInstanceUID,TEXT,,"[""1.2.276.0.7230010.3.1.4.0.63810.1553350410.105043"", ""1.2.276.0.7230010.3.1.4.0.25560.1553308686.625598"", ""1.2.276.0.7230010.3.1.4.0.54403.1553339998.68552""]",
+sourceSegmentedSeriesUID,TEXT,,"[""1.3.6.1.4.1.14519.5.2.1.6279.6001.117040183261056772902616195387"", ""1.3.6.1.4.1.14519.5.2.1.6279.6001.693480911433291675609148051914"", ""1.3.6.1.4.1.14519.5.2.1.6279.6001.259453428008507791234730686014""]",
+trackingIdentifier,TEXT,,"[""Nodule 1""]",
+SeriesDescription,TEXT,,"[""Nodule 1 - Annotation 15103 evaluations"", ""Nodule 1 - Annotation 78504 evaluations"", ""Nodule 1 - Annotation 11229 evaluations""]",
+PatientID,TEXT,,"[""LIDC-IDRI-0912"", ""LIDC-IDRI-0405"", ""LIDC-IDRI-0786""]",
+contentSequence,VARIANT,,[],
+finding,VARIANT,,"[""{\n  \""CodeMeaning\"": \""Nodule\"",\n  \""CodeValue\"": \""M-03010\"",\n  \""CodingSchemeDesignator\"": \""SRT\""\n}""]",

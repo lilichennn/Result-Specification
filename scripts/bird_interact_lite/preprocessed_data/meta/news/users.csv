@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+userkey,,"A BIGSERIAL primary key for each user in the system (e.g., 1001).",bigint,
+regmoment,,"A DATE indicating when the user registered (e.g., '2024-05-10').",date,
+typelabel,,"An enum (usertype_enum) representing the user type (Trial, Premium, Free).",USER-DEFINED,
+seglabel,,"An enum (usersegment_enum) describing the user's segment (New, Dormant, Active, Regular).",USER-DEFINED,
+substatus,,"An enum (subscriptionstatus_enum) indicating subscription status (Premium, Enterprise, Basic).",USER-DEFINED,
+subdays,,"An INT specifying how many days the user has been subscribed (e.g., 60).",integer,
+ageval,,"An INT capturing the user's age in years (e.g., 30).",integer,
+gendlbl,,"An enum (usergender_enum) for the user's gender (M, F, Other).",USER-DEFINED,
+occulbl,,"An enum (useroccupation_enum) describing the user's occupation (Retired, Professional, Other, Student).",USER-DEFINED,
+testgrp,,"An enum (abtestgroup_enum) labeling which A/B test group the user belongs to (Control, Variant_A, Variant_B).",USER-DEFINED,
+user_preferences,,"JSONB column. Stores user-related preferences and feedback details, including interests, activity level, and satisfaction metrics.
+Fields: {""activity_level"":""An enum (useractivitylevel_enum) describing the user's activity level (Low, High, Medium)."",""feedback"":{""category"":""An enum (feedbackcategory_enum) describing the feedback category (Relevance, Content, Format)."",""type"":""An enum (userfeedback_enum) capturing user feedback (Like, Dislike)."",""value"":""An enum (feedbackscore_enum) referencing the numeric feedback rating (1.0–5.0).""},""interests"":""A TEXT field storing user interests (e.g., 'sports, technology')."",""preference_score"":""A NUMERIC(5,2) capturing how much the user’s profile aligns with personalized content (e.g., 75.50)."",""satisfaction_score"":""A NUMERIC(5,2) measuring user satisfaction (e.g., 80.50).""}",jsonb,

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+SF_CREATED_AT,TIMESTAMP_LTZ,,[],
+USER_ID,TEXT,,[],
+RANDOM_BUCKET_NUMBER,NUMBER,,[],
+EXTERNAL_USER_ID,TEXT,,[],
+APP_GROUP_API_ID,TEXT,,[],
+BACKFILL_RUN_ID,TEXT,,[],
+TIME,NUMBER,,[],
+PREV_RANDOM_BUCKET_NUMBER,NUMBER,,[],
+ID,TEXT,,[],
+APP_GROUP_ID,TEXT,,[],

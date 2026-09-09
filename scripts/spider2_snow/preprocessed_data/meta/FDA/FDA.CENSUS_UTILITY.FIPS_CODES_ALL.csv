@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+county_subdivision_fips_code,TEXT,,[],
+place_fips_code,TEXT,,[],
+summary_level_name,TEXT,,"[""state-county""]",
+state_fips_code,TEXT,,"[""01""]",
+area_name,TEXT,,"[""Autauga County"", ""Baldwin County"", ""Barbour County""]",
+county_fips_code,TEXT,,"[""01001"", ""01003"", ""01005""]",
+consolidated_city_fips_code,TEXT,,[],
+summary_level,TEXT,,"[""050""]",

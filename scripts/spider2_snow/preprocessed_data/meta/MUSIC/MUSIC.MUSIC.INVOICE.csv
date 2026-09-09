@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+BillingCountry,TEXT,,"[""Germany"", ""Canada"", ""Ireland""]",
+CustomerId,NUMBER,,"[2, 14, 46]",
+Total,FLOAT,,"[1.98, 8.91, 5.94]",
+InvoiceId,NUMBER,,"[1, 4, 10]",
+BillingAddress,TEXT,,"[""Theodor-Heuss-Straße 34"", ""8210 111 ST NW"", ""3 Chatham Street""]",
+InvoiceDate,TEXT,,"[""2009-01-01 00:00:00"", ""2009-01-06 00:00:00"", ""2009-02-03 00:00:00""]",
+BillingCity,TEXT,,"[""Stuttgart"", ""Edmonton"", ""Dublin""]",
+BillingState,TEXT,,"["""", ""AB"", ""Dublin""]",
+BillingPostalCode,TEXT,,"[""70174"", ""T6G 2C7"", """"]",

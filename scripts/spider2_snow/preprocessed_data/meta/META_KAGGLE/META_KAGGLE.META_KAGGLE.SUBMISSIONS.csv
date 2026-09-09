@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+PublicScoreFullPrecision,FLOAT,,"[0.4713052641725747, 0.4761521119797183, 0.5169891895550529]",
+SourceKernelVersionId,TEXT,,"["""", ""161290""]",
+SubmissionDate,DATE,,"[""2016-02-16""]",
+PublicScoreLeaderboardDisplay,FLOAT,,"[0.4713, 0.47615, 0.51698]",
+IsAfterDeadline,BOOLEAN,,[false],
+PrivateScoreFullPrecision,FLOAT,,"[0.47029765275103375, 0.4754497853556987, 0.5158655121170114]",
+ScoreDate,DATE,,"[""2016-02-16""]",
+TeamId,NUMBER,,"[270557, 266628, 277085]",
+Id,NUMBER,,"[2575661, 2574743, 2576136]",
+SubmittedUserId,NUMBER,,"[441360, 22969, 137177]",
+PrivateScoreLeaderboardDisplay,FLOAT,,"[0.47029, 0.47544, 0.51586]",

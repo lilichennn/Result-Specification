@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+actor_id,NUMBER,,[1],
+last_update,TEXT,,"[""2021-03-06 15:52:45""]",
+film_id,NUMBER,,"[1, 438, 499]",

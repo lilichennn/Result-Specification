@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+Gene,TEXT,"The gene symbol. In this table, gene symbol is simulated data e.g. X6","[""X6"", ""X8"", ""X1""]",
+Phenotype,NUMBER,Simulated program type,[0],
+Expr,FLOAT,Simulated expression value,"[-2.94947825202297, 0.138096720072752, 0.910744777373118]",
+ID,TEXT,Simulated ID number,"[""DRRTF""]",

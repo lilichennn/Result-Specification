@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+email,TEXT,,"[""MARY.SMITH@sakilacustomer.org"", ""BARBARA.JONES@sakilacustomer.org"", ""ELIZABETH.BROWN@sakilacustomer.org""]",
+create_date,TEXT,,"[""2006-02-14 22:04:36.000""]",
+first_name,TEXT,,"[""MARY"", ""BARBARA"", ""ELIZABETH""]",
+active,TEXT,,"[""1""]",
+address_id,NUMBER,,"[5, 8, 9]",
+last_name,TEXT,,"[""SMITH"", ""JONES"", ""BROWN""]",
+last_update,TEXT,,"[""2021-03-06 15:53:36""]",
+customer_id,NUMBER,,"[1, 4, 5]",
+store_id,NUMBER,,"[1, 2]",

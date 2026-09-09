@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+element,TEXT,,"[""ACMH""]",
+value,FLOAT,,[0.0],
+id,TEXT,,"[""USW00013880"", ""USW00013995"", ""USW00003928""]",
+qflag,TEXT,,[],
+time,TEXT,,[],
+sflag,TEXT,,"[""X""]",
+mflag,TEXT,,[],
+date,DATE,,"[""1988-10-11"", ""1988-04-13"", ""1988-10-10""]",

@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+mth,TEXT,,"[""2018-02-01"", ""2018-04-01"", ""2018-05-01""]",
+product_id,NUMBER,,[6520],
+qty,FLOAT,,"[30.0, 40.0, 50.0]",

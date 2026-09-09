@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+user_agent,TEXT,,[],
+session,TEXT,,[],
+ip,TEXT,,[],
+url,TEXT,,[],
+products,TEXT,,[],
+stamp,TEXT,,[],
+action,TEXT,,[],

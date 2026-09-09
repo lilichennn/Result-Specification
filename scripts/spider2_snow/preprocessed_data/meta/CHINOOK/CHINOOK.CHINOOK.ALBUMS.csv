@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+AlbumId,NUMBER,,"[1, 4, 8]",
+Title,TEXT,,"[""For Those About To Rock We Salute You"", ""Let There Be Rock"", ""Warner 25 Anos""]",
+ArtistId,NUMBER,,"[1, 6, 7]",

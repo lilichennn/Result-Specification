@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+date,DATE,,"[""1904-05-31"", ""1904-06-30"", ""1904-09-26""]",
+sflag,TEXT,,"[""a""]",
+element,TEXT,,"[""DAPR""]",
+time,TEXT,,[],
+mflag,TEXT,,[],
+value,FLOAT,,"[31.0, 30.0, 2.0]",
+id,TEXT,,"[""ASN00005052"", ""ASN00016039"", ""ASN00017014""]",

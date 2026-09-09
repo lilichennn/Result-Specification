@@ -1,0 +1,17 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+lightregistry,,A SERIAL primary key uniquely identifying each lighting and safety record.,integer,
+lighteqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), associating lighting/safety data with equipment.",character varying,
+lightingstatus,,"An enum (LightingStatus_enum) describing the internal lighting state (e.g., Off, On, Auto).",USER-DEFINED,
+lightingintensitypercent,,"A DECIMAL(5,2) showing the brightness level as a percentage.",numeric,
+externallightstatus,,"An enum (ExternalLightStatus_enum) indicating external lighting state (e.g., Off, On, Auto).",USER-DEFINED,
+emergencylightstatus,,"An enum (EmergencyLightStatus_enum) describing emergency lighting (e.g., On, Off, Testing).",USER-DEFINED,
+emergencystopstatus,,"An enum (EmergencyStopStatus_enum) for the emergency stop button state (e.g., Activated, Reset, Ready).",USER-DEFINED,
+alarmstatus,,"An enum (AlarmStatus_enum) describing the overall alarm state (e.g., Normal, Critical, Warning).",USER-DEFINED,
+safetysystemstatus,,"An enum (SafetySystemStatus_enum) describing the overarching safety system state (e.g., Fault, Active, Standby).",USER-DEFINED,
+lifesupportstatus,,"An enum (LifeSupportStatus_enum) indicating the status of life support (e.g., Warning, Critical, Normal).",USER-DEFINED,
+oxygensupplystatus,,"An enum (OxygenSupplyStatus_enum) showing oxygen supply level (e.g., Warning, Normal, Critical).",USER-DEFINED,
+medicalequipmentstatus,,"An enum (MedicalEquipmentStatus_enum) describing the medical equipment state (e.g., Normal, Critical, Warning).",USER-DEFINED,
+wastemanagementstatus,,"An enum (WasteManagementStatus_enum) for waste disposal system health (e.g., Critical, Warning, Normal).",USER-DEFINED,
+watersupplystatus,,"An enum (WaterSupplyStatus_enum) indicating water supply condition (e.g., Normal, Warning, Critical).",USER-DEFINED,
+safetysensors,,"JSONB column. Collects status data for safety-related detection systems, such as fire, smoke, and gas sensors.
+Fields: {""co_detection"":""An enum (CODetectionStatus_enum) indicating the carbon monoxide detection status (e.g., Fault, Alert, Normal)."",""fire_detection"":""An enum (FireDetectionStatus_enum) specifying the fire detection system status (e.g., Normal, Alert, Fault)."",""gas_detection"":""An enum (GasDetectionStatus_enum) describing the presence of gas detection alerts (e.g., Alert, Fault, Normal)."",""smoke_detection"":""An enum (SmokeDetectionStatus_enum) for the smoke detection system status (e.g., Fault, Alert, Normal).""}",jsonb,

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+WDPEAK,NUMBER,,"[0, 1]",
+DATETIME_UTC,TIMESTAMP_NTZ,,"[""2023-01-07 10:00:00"", ""2023-09-01 18:00:00"", ""2023-08-12 12:00:00""]",
+ONPEAK,NUMBER,,[0],
+OFF7X8,NUMBER,,"[""0E-10""]",
+WEPEAK,NUMBER,,"[0, 1]",
+ISO,TEXT,,"[""ERCOT""]",
+MARKETDAY,TIMESTAMP_NTZ,,"[""2023-01-07 00:00:00"", ""2023-09-01 00:00:00"", ""2023-08-12 00:00:00""]",
+DATETIME,TIMESTAMP_NTZ,,"[""2023-01-07 04:00:00"", ""2023-09-01 13:00:00"", ""2023-08-12 07:00:00""]",
+OFFPEAK,NUMBER,,"[1, 0]",
+TIMEZONE,TEXT,,"[""CST"", ""CDT""]",

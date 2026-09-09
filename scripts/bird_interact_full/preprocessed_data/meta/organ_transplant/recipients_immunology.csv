@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+immu_recip_registry,,"TEXT. Primary key linking to recipient demographics for immunological data. PK = Recipients_Immunology(Immu_Recip_Registry), FK to Recipients_Demographics.",text,
+pra_score,,REAL. Panel reactive antibody score indicating sensitization level. Example: 6.,real,
+dsa_state,,"TEXT. Donor-specific antibody presence status. Possible values: Negative, Positive.",text,
+cross_result,,"TEXT. Crossmatch test result for donor-recipient compatibility. Possible values: Negative, Pending, Positive.",text,
+cmv_state,,"TEXT. Recipient's cytomegalovirus infection status. Possible values: Negative, Positive.",text,
+ebv_state,,"TEXT. Recipient's Epstein-Barr virus infection status. Possible values: Negative, Positive.",text,
+func_status,,"TEXT. Recipient's functional status assessment. Possible values: Mild Impairment, Moderate Impairment, Normal, Severe Impairment.",text,
+life_support,,"TEXT. Life support requirements and status. **NULL means life support status is not applicable or not documented.**. Possible values: ECMO, Mechanical Ventilation, VAD.",text,
+hlaprofile,,"JSONB column. Stores complete HLA typing profile including A, B, DR, and DQ values for immunological compatibility matching.
+Fields: {""Hla_A_Val"":""REAL. Recipient's HLA-A antigen typing value for compatibility matching. Example: 89,11."",""Hla_B_Val"":""REAL. Recipient's HLA-B antigen typing value for compatibility matching. Example: 22,60."",""Hla_Dq_Val"":""REAL. Recipient's HLA-DQ antigen typing value for compatibility matching. Example: 8,1."",""Hla_Dr_Val"":""REAL. Recipient's HLA-DR antigen typing value for compatibility matching. Example: 59,9.""}",jsonb,

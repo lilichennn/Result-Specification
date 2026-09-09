@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+rel_root,,TEXT. Root trader referenced in the relationship map. PK. FK to traders(TR_KEY).,text,
+map_state,,"TEXT. Current mapping state of the relationship graph. Possible values: Complete, Partial, Pending.",text,
+addrHits,,"BIGINT. Count of address matches across linked traders. Possible values: 0, 1, 2, 3, 4, 5.",bigint,
+commPath,,"TEXT. Primary communication pathway identified. **NULL means communication path has not been mapped.**. Possible values: Irregular, Regular.",text,
+circ_size,,BIGINT. Size of the trader-relationship circle. Example: 32.,bigint,
+insider_net_str,,"TEXT. The strength of the insider network, calculated by the number of connected entities per percentage of insider ownership. Example: 12.45 connection-point/ownership%.",text,
+trader_links,,"JSONB column. Relationship data for traders including contact and links.
+Fields: {""contact_share"":""TEXT. Shared contact information among related traders. **NULL means no shared-contact data available.**. Possible values: Email, Multiple, Phone."",""fin_link"":""TEXT. Indicator of financial linkage between traders. **NULL means financial linkage data not provided.**. Possible values: Business, Personal."",""grp_score"":""REAL. Group influence or cohesion score. Example: 41.87."",""link_count"":""BIGINT. Number of direct relationship links. **NULL means link count has not been recorded.**. Example: 19.0.""}",jsonb,

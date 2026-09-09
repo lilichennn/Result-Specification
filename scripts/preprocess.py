@@ -12,18 +12,23 @@ CODE_ROOT = SCRIPT_DIR.parent
 if str(CODE_ROOT) not in sys.path:
     sys.path.insert(0, str(CODE_ROOT))
 
-from result_contract.data_preprocess import preprocess_bird, preprocess_spider
+from result_contract.data_preprocess import (
+    preprocess_bird,
+    preprocess_spider,
+    preprocess_spider2_snow,
+)
 
 
 DEFAULT_DATASET_ROOTS = {
     "bird": Path("BIRD"),
     "spider": Path("Spider"),
+    "spider2": Path("Spider2.0"),
 }
 SUPPORTED_SPLITS = {
     "bird": {"dev"},
     "spider": {"dev", "test"},
-    "birdinteract":{},
-    "spider2":{}
+    "birdinteract": set(),
+    "spider2": {"snow"},
 }
 
 
@@ -53,12 +58,19 @@ def preprocess_dataset(
             split=split,
             output_dir=resolved_output_dir,
         )
-    else:
+    elif dataset == "spider":
         summary = preprocess_spider(
             spider_root=resolved_dataset_root,
             split=split,
             output_dir=resolved_output_dir,
         )
+    elif dataset == "spider2":
+        summary = preprocess_spider2_snow(
+            spider2_root=resolved_dataset_root,
+            output_dir=resolved_output_dir,
+        )
+    else:
+        raise ValueError(f"No preprocessor implemented for dataset: {dataset!r}")
 
     return {"dataset": dataset, **summary}
 
@@ -76,14 +88,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--split",
         required=True,
-        choices=("dev", "test", ""),
+        choices=("dev", "test", "snow"),
         help="Dataset split to preprocess.",
     )
     parser.add_argument(
         "--dataset-root",
         type=Path,
         default=None,
-        help="Override the dataset root; defaults to BIRD1.0 or Spider1.0.",
+        help="Override the dataset root; defaults to the benchmark directory.",
     )
     parser.add_argument(
         "--output-dir",

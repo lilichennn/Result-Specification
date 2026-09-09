@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[5.21322866216277, 73.1306321479929, 44.661]",
+indicator_name,TEXT,,"[""Age dependency ratio, old"", ""Age dependency ratio, young"", ""Birth rate, crude (per 1,000 people)""]",
+country_code,TEXT,,"[""BWA""]",
+country_name,TEXT,,"[""Botswana""]",
+indicator_code,TEXT,,"[""SP.POP.DPND.OL"", ""SP.POP.DPND.YG"", ""SP.DYN.CBRT.IN""]",
+year,NUMBER,,"[2005, 1997, 1975]",

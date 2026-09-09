@@ -1,0 +1,11 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+beneregistry,,"A VARCHAR(20) primary key for the beneficiary or assessment record (e.g., 'BENE0001').",character varying,
+benedistref,,"A VARCHAR(20) referencing DisasterEvents(DistRegistry), connecting beneficiaries to an event (e.g., 'DIST0001').",character varying,
+beneopsref,,"A VARCHAR(20) referencing Operations(OpsRegistry), linking to the ongoing operations (e.g., 'OPS0001').",character varying,
+beneregister,,"An enum (BeneRegister_enum) describing beneficiary registration; values: 'Complete', 'Pending', 'Partial'.",USER-DEFINED,
+vulnerabilityreview,,"An enum (VulnerabilityReview_enum) indicating vulnerability assessment; values: 'Complete', 'Pending', 'In Progress'.",USER-DEFINED,
+needsassessstatus,,"An enum (NeedsAssessStatus_enum) capturing needs assessment status; values: 'Due', 'Overdue', 'Updated'.",USER-DEFINED,
+distequityidx,,"A DECIMAL(5,2) for distribution equity index (e.g., 0.85).",numeric,
+benefeedbackscore,,"A DECIMAL(5,2) measuring beneficiary feedback (e.g., 90.50).",numeric,
+commengagelvl,,"An enum (CommEngageLvl_enum) describing community engagement; values: 'High', 'Low', 'Medium'.",USER-DEFINED,
+localcapacitygrowth,,"An enum (LocalCapacityGrowth_enum) tracking local capacity building; values: 'Limited', 'Active'.",USER-DEFINED,

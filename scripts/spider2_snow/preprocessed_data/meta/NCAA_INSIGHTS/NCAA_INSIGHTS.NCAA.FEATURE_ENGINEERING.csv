@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+efficiency_rating,FLOAT,,"[97.704, 58.428, 81.393]",
+team,TEXT,,"[""Ohio St."", ""San Francisco"", ""UConn""]",
+pace_rating,FLOAT,,"[68.038, 62.626, 18.814]",
+pts_100poss,FLOAT,,"[24.826, 2.648, 11.1]",
+poss_40min,FLOAT,,"[66.233, 65.847, 62.675]",
+efficiency_rank,FLOAT,,"[11.0, 140.0, 65.0]",
+pace_rank,FLOAT,,"[106.0, 121.0, 294.0]",
+season,NUMBER,,[2014],

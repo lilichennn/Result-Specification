@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+publication_number,TEXT,,"[""US-2002134230-A1"", ""US-2002134232-A1"", ""US-2002134234-A1""]",
+pat_no,TEXT,,"[""""]",
+pub_no,TEXT,,"[""20020134230"", ""20020134232"", ""20020134234""]",

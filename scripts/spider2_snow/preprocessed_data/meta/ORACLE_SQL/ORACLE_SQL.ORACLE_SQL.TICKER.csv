@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+price,FLOAT,,"[14.2, 15.7, 15.6]",
+symbol,TEXT,,"[""BEER""]",
+day,TEXT,,"[""2019-04-02"", ""2019-04-03"", ""2019-04-04""]",

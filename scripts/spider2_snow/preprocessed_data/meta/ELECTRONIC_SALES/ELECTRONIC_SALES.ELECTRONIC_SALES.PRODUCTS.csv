@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+product_name_lenght,FLOAT,,"[40.0, 27.0, 60.0]",
+product_length_cm,FLOAT,,"[16.0, 26.0, 38.0]",
+product_description_lenght,FLOAT,,"[287.0, 261.0, 745.0]",
+product_width_cm,FLOAT,,"[14.0, 26.0, 11.0]",
+product_weight_g,FLOAT,,"[225.0, 371.0, 200.0]",
+product_photos_qty,FLOAT,,[1.0],
+product_category_name,TEXT,,"[""perfumaria"", ""bebes"", ""instrumentos_musicais""]",
+index,NUMBER,,"[0, 3, 5]",
+product_id,TEXT,,"[""1e9e8ef04dbcff4541ed26657ea517e5"", ""cef67bcfe19066a932b7673e239eb23d"", ""41d3672d4792049fa1779bb35283ed13""]",
+product_height_cm,FLOAT,,"[10.0, 4.0, 5.0]",

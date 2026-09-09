@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,NUMBER,,"[103439287, 103439288, 103439295]",
+creation_date,NUMBER,,"[1572012506553000, 1572012507483000, 1572012520720000]",
+user_id,NUMBER,,"[8961920, 12123479, 3124256]",
+score,NUMBER,,[0],
+text,TEXT,,"[""@Yserbius That didn't solve my issue please can you look at into it"", ""It's changed total output of my script"", ""So we need a `getter` for each variable.  Why not just do: `fruits={\""apple\"", \""orange\""};  d=vars(); params = urllib.urlencode({ fruit: val for fruit, val in d.items() if fruit in fruits and val is not None })`""]",
+user_display_name,TEXT,,[],
+post_id,NUMBER,,"[58559895, 58560057, 14264038]",

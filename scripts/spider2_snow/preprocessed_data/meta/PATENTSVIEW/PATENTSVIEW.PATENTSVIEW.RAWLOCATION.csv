@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+country,TEXT,,"[""US""]",
+location_id,TEXT,,"[""ff1b0420-cb90-11eb-9615-121df0c29c1e""]",
+city,TEXT,,"[""Fremont""]",
+id,TEXT,,"[""vfu7odn7e9oa9s5ypan8plop1"", ""16xusuap7rdacrx87mg3hizxe"", ""55ks2zuw1suyhtgfqke41evmm""]",
+state,TEXT,,"[""CA""]",
+latlong,TEXT,,"[""37.5308|-121.942""]",

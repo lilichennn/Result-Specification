@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+GEO_ID,TEXT,GEO_ID from GEOGRAPHY_INDEX table for the child geography,"[""geoId/1990033"", ""geoId/25009206000"", ""zip/75232""]",
+PARENT_GEO_ID,TEXT,GEO_ID from GEOGRAPHY_INDEX table for the parent geography,"[""geoId/19089"", ""geoId/25"", ""country/USA""]",

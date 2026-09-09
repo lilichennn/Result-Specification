@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+osm_timestamp_min,NUMBER,Minimum timestamp of objects contained in this changeset.,"[1429167998, 1306424582, 1346011892]",
+ways,VARIANT,Ways that are part of this way,"[""[]""]",
+id,NUMBER,Changeset ID.,"[30256461, 8254690, 12871634]",
+osm_timestamp_max,NUMBER,Maximum timestamp of objects contained in this changeset.,"[1429167998, 1306424582, 1346011894]",
+relations,VARIANT,Relations that are part of this way,"[""[\n  2787405\n]"", ""[\n  1573819\n]"", ""[\n  186430\n]""]",
+nodes,VARIANT,Nodes that are part of this way,"[""[]"", ""[\n  171513871\n]""]",

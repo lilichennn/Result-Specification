@@ -1,0 +1,12 @@
+column_name,column_type,column_description,sample_value,ref_key
+writer,TEXT,,"[""Eric von Stroheim"", ""Anita Loos"", ""Kathryn Scola""]",
+locations,TEXT,,"[""Cliff House (1090 Point Lobos Avenue)"", ""The Barbary Coast"", ""San Francisco Bay""]",
+actor_3,TEXT,,"[""Jean Hersholt"", ""Spencer Tracy"", ""Don Ameche""]",
+production_company,TEXT,,"[""Metro-Goldwyn-Mayer (MGM)"", ""Metro-Goldwyn Mayer"", ""Twentieth Century Fox Film Corporation""]",
+actor_1,TEXT,,"[""Zasu Pitts"", ""Clark Gable"", ""Tyrone Power""]",
+fun_facts,TEXT,,"[""In 1887, the Cliff House was severely damaged when the schooner Parallel, abandoned and loaded with dynamite, ran aground on the rocks below."", ""The Barbary Coast was a red-light district that was largely destroyed in the 1906 earthquake. Though some of the establishments were rebuilt after the earthquake, an anti-vice campaign put the establishments out of business."", ""With 23 miles of ladders and 300,000 rivets in each tower, the Golden Gate Bridge was the world's longest span when it opened in 1937.""]",
+title,TEXT,,"[""Greed"", ""San Francisco"", ""Alexander's Ragtime Band""]",
+release_year,NUMBER,,"[1924, 1936, 1938]",
+director,TEXT,,"[""Eric von Stroheim"", ""W.S. Van Dyke"", ""Henry King""]",
+distributor,TEXT,,"[""Metro-Goldwyn-Mayer (MGM)"", ""Metro-Goldwyn Mayer"", ""Twentieth Century Fox Film Corporation""]",
+actor_2,TEXT,,"[""Gibson Gowland"", ""Jeanette MacDonald"", ""Alice Faye""]",

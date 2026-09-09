@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+size,NUMBER,,"[2743, 636, 2954]",
+binary,BOOLEAN,,[false],
+sample_symlink_target,TEXT,,[],
+copies,NUMBER,,[8],
+sample_mode,NUMBER,,[33188],
+sample_path,TEXT,,"[""net/tools/quic/synchronous_host_resolver.cc"", ""json4s/src/main/ls/0.6.5.json"", ""assets/images/svg/ic_menu_folder_w.svg""]",
+content,TEXT,,"[""{\n  \""organization\"" : \""net.databinder\"",\n  \""name\"" : \""unfiltered-json\"",\n  \""version\"" : \""0.6.5\"",\n  \""description\"" : \""Json requset matchers and response functions\"",\n  \""site\"" : \""http://unfiltered.databinder.net/\"",\n  \""tags\"" : [ ],\n  \""docs\"" : \""\"",\n  \""resolvers\"" : [ \""https://oss.sonatype.org/content/repositories/releases\"" ],\n  \""dependencies\"" : [ {\n    \""organization\"" : \""net.liftweb\"",\n    \""name\"" : \""lift-json_2.9.1\"",\n    \""version\"" : \""2.4\""\n  } ],\n  \""scalas\"" : [ \""2.8.1\"", \""2.8.2\"", \""2.9.0-1\"", \""2.9.1\"", \""2.9.1-1\"", \""2.9.2\"", \""2.10.0\"" ],\n  \""licenses\"" : [ {\n    \""name\"" : \""MIT\"",\n    \""url\"" : \""http://www.opensource.org/licenses/MIT\""\n  } ],\n  \""sbt\"" : false\n}"", ""#ifndef BOOST_METAPARSE_V1_ITERATE_C_HPP\n#define BOOST_METAPARSE_V1_ITERATE_C_HPP\n\n// Copyright Abel Sinkovics (abel@sinkovics.hu)  2011.\n// Distributed under the Boost Software License, Version 1.0.\n//    (See accompanying file LICENSE_1_0.txt or copy at\n//          http://www.boost.org/LICENSE_1_0.txt)\n\n#include <boost/metaparse/v1/impl/iterate_impl.hpp>\n\n#include <boost/mpl/deque.hpp>\n\nnamespace boost\n{\n  namespace metaparse\n  {\n    namespace v1\n    {\n      template <class P, int N>\n      struct iterate_c : impl::iterate_impl<N, P, boost::mpl::deque<> > {};\n    }\n  }\n}\n\n#endif\n\n""]",
+sample_ref,TEXT,,"[""refs/heads/nw15"", ""refs/heads/0.9.0"", ""refs/heads/1.0.x""]",
+sample_repo_name,TEXT,,"[""nwjs/chromium.src"", ""unfiltered/unfiltered"", ""JosefRypacek/PrimeTV""]",
+id,TEXT,,"[""2808cc7dad1e963456a33387816a60edcd14e3c2"", ""b5d98c4d7b90b473fdf470a29b2562c7c6b70c67"", ""feb55b7e02a74beed6b06ed165c8ba65cb76bd75""]",

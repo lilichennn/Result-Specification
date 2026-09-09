@@ -1,0 +1,4 @@
+column_name,column_type,column_description,sample_value,ref_key
+year_founded,NUMBER,,"[2004, 2013, 2015]",
+date_joined,TEXT,,"[""2020-09-08T00:00:00.000"", ""2021-06-02T00:00:00.000"", ""2021-04-17T00:00:00.000""]",
+company_id,NUMBER,,"[109, 1022, 433]",

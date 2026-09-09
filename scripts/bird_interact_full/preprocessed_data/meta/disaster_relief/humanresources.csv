@@ -1,0 +1,6 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+hrregistry,,VARCHAR(20). Unique human resources registry identifier. PK.,character varying,
+hrdistref,,VARCHAR(20). Disaster event reference. FK to DisasterEvents.,character varying,
+hr_ops_ref,,VARCHAR(20). Operations reference. FK to Operations.,character varying,
+staffing_details,,"JSONB column. Details about staffing levels and composition across different roles.
+Fields: {""availability_and_equipment"":{""availability_pct"":""REAL. Staff availability percentage. Example: 94.1."",""comm_equipment"":""TEXT. Communication equipment status. Possible values: Insufficient, Limited, Sufficient."",""ppe_status"":""TEXT. Personal protective equipment status. Possible values: Critical, LTD, ✓."",""training_state"":""TEXT. Training state of staff. **NULL means training state not recorded.**. Possible values: Complete, In Progress, Required.""},""staff_counts"":{""logistics"":""BIGINT. Number of logistics staff. Example: 99."",""medical"":""BIGINT. Number of medical staff. Example: 52."",""security"":""BIGINT. Number of security staff. **NULL means security staff not recorded.**. Example: 46.0."",""total"":""BIGINT. Total number of staff. **NULL means staff count not recorded.**. Example: 234.0."",""volunteers"":""BIGINT. Total number of volunteers. Example: 435.0.""}}",jsonb,

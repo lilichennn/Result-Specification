@@ -1,0 +1,16 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+EventCode,,TEXT. Unique identifier for the commercial event (transaction). PK.,text,
+RecordTag,,TEXT. Secondary unique tag for cross-system correlation. Example: DN541412.,text,
+EventTimestamp,,TIMESTAMP. Datetime when the transaction event was recorded. Example: 2024/4/2.,timestamp without time zone,
+PlatformKey,,TEXT. Code of the platform where the transaction occurred. FK to markets(PlatCode).,text,
+VendorLink,,TEXT. Identifier of the vendor involved in the transaction. FK to vendors(SellerKey). Example: V63085.,text,
+AcqLink,,TEXT. Identifier of the buyer involved in the transaction. FK to buyers(AcqCode). Example: B41538.,text,
+OriginRegion,,"TEXT. Geographical origin region of the shipment. Possible values: Region_A, Region_B, Region_C, Unknown.",text,
+DestRegion,,"TEXT. Destination region of the shipment. Possible values: Region_X, Region_Y, Region_Z, Unknown.",text,
+CrossBorder,,"BOOLEAN. Indicates whether the shipment crosses national borders. Possible values: No, Yes.",bigint,
+RouteComplex,,"TEXT. Complexity classification of the shipping route. Possible values: Complex, Medium, Simple.",text,
+Transaction_Velocity,,"text. The rate at which transactions are completed, measured in USD/hour. Example: 45.67 USD/hour.",text,
+Border_cross_pre,,"text. The premium associated with cross-border transactions, calculated based on payment amount and cross-border flag. Example: 78.04 USD/border-crossing.",text,
+GeoDistScore,,"text. The geographical distance involved in the transaction, measured in km. Example: 137.66 USD/border-crossing.",text,
+transaction_financials,,"JSONB column. Contains financial details related to the transaction, such as value, fees, escrow usage, and shipping costs.
+Fields: {""completion_state_stat"":""TEXT. Final completion state of the transaction (e.g., completed, disputed). Possible values: Completed, Disputed, Failed, In Progress."",""escrow_duration_hrs"":""BIGINT. Number of hours funds were held in escrow. **NULL means escrow duration could not be determined.**. Example: 72.0."",""escrow_used_stat"":""TEXT. Indicator describing escrow usage for the transaction. **NULL means escrow usage detail is unavailable.**. Possible values: No, Yes."",""fee_amt_usd"":""TEXT. Platform or escrow fee charged for the transaction. Example: $637.83 ."",""multisig_flag_stat"":""BOOLEAN. Indicates whether multisignature payments were employed. **NULL means multisignature information is missing.**. Possible values: No, Yes."",""pmt_method_type"":""TEXT. Payment method used for the transaction. **NULL means payment method information is not available.**. Possible values: Crypto_A, Crypto_B, Crypto_C, Token."",""process_time_hrs"":""BIGINT. Processing time from order to completion, in hours. **NULL means processing time has not been calculated.**. Example: 114.9."",""shipping_cost_density"":""text. The density of shipping cost per unit of geographical distance, measured in USD/km. Example: 1.95 USD/km."",""shipping_method_type"":""TEXT. Shipping method chosen for physical goods. Possible values: Custom, Digital, Express, Standard."",""value_amt_usd"":""TEXT. Total monetary value of the transaction. Example: $16,635.50 .""}",jsonb,

@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""SF001192090""]",
+mflag,TEXT,,[],
+qflag,TEXT,,"[""D""]",
+time,TEXT,,[],
+value,FLOAT,,[0.0],
+date,DATE,,"[""1882-05-22"", ""1882-01-19"", ""1882-09-23""]",
+element,TEXT,,"[""PRCP""]",
+sflag,TEXT,,"[""I""]",

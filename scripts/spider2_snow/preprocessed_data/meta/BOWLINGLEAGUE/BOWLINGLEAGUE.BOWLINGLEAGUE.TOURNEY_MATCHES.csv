@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+OddLaneTeamID,NUMBER,,"[1, 3, 5]",
+Lanes,TEXT,,"[""01-02"", ""03-04"", ""05-06""]",
+TourneyID,NUMBER,,"[1, 2]",
+EvenLaneTeamID,NUMBER,,"[2, 4, 6]",
+MatchID,NUMBER,,"[1, 2, 3]",

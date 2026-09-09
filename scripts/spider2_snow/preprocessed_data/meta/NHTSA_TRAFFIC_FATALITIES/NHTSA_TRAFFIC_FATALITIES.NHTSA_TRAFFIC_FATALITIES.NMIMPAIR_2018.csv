@@ -1,0 +1,8 @@
+column_name,column_type,column_description,sample_value,ref_key
+state_name,TEXT,,"[""Massachusetts"", ""New York"", ""California""]",
+vehicle_number,NUMBER,,[0],
+condition_impairment_at_time_of_crash_non_motorist_name,TEXT,,"[""None/Apparently Normal"", ""Not Reported""]",
+condition_impairment_at_time_of_crash_non_motorist,NUMBER,,"[0, 98]",
+person_number,NUMBER,,"[5, 6]",
+consecutive_number,NUMBER,,"[250343, 360712, 62680]",
+state_number,NUMBER,,"[25, 36, 6]",

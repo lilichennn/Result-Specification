@@ -1,0 +1,7 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+artregistry,,"CHAR(10) PRIMARY KEY uniquely identifying each artifact record (e.g., 'ART000012').",character,
+artname,,"VARCHAR(100) providing the artifact’s name or label (free text, no strict list).",character varying,
+artdynasty,,"VARCHAR(50) indicating the historical period/era/dynasty (e.g., 'Ming', 'Song', 'Qing', 'Han', 'Tang', 'Yuan'). No strict enumeration.",character varying,
+artageyears,,INT denoting the artifact’s approximate age in years (any integer value).,integer,
+mattype,,"CHAR(30) showing the artifact’s primary material (e.g., 'Stone', 'Textile', 'Bronze', 'Jade', 'Wood', 'Ceramic', 'Paper'). Could be enumerated by your policy but often open-ended.",USER-DEFINED,
+conservestatus,,"VARCHAR(150) describing the artifact’s current conservation condition. Possible values might include 'Excellent', 'Good', 'Fair', 'Poor', 'Critical'.",USER-DEFINED,

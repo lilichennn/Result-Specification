@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+UNIT,TEXT,Unit of measurement for the reported value.,"[""USD""]",
+FREQUENCY,TEXT,Frequency of aggregations.,"[""Quarterly"", ""Annual""]",
+SECTOR,TEXT,"Related fund, government, business, or other authority.","[""Domestic nonfinancial sectors""]",
+SEASONALLY_ADJUSTED,TEXT,Indicates whether the value is seasonally adjusted.,"[""Not seasonally adjusted""]",
+VARIABLE,TEXT,"Unique identifier for a variable, joinable to the timeseries table.","[""Z1_FU383020005.Q"", ""Z1_FU383064105.Q"", ""Z1_FU383069105.Q""]",
+NAICS,TEXT,North American Industry Classification System code.,"[""""]",
+CATEGORY,TEXT,Related industry or financial instrument category.,"[""Checkable deposits and currency; asset"", ""Corporate equities; asset"", ""Open market paper; asset""]",
+VARIABLE_NAME,TEXT,Human-readable unique name for the variable.,"[""Transactions: Domestic nonfinancial sectors; checkable deposits and currency; asset - Computed series, Quarterly (Not seasonally adjusted)"", ""Transactions: Domestic nonfinancial sectors; corporate equities; asset - Computed series, Quarterly (Not seasonally adjusted)"", ""Transactions: Domestic nonfinancial sectors; commercial paper; asset - Computed series, Quarterly (Not seasonally adjusted)""]",
+MEASURE,TEXT,Quantifiable attribute or subject; description of what is being recorded.,"[""US Financial Accounts""]",
+TERMS,TEXT,"Details the terms that apply to a particular financial object, like maturity range or maturity term.",[],

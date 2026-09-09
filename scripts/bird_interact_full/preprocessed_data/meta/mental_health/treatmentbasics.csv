@@ -1,0 +1,13 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+tx_key,,A BIGSERIAL primary key auto-incrementing identifier for treatment records.,bigint,
+enc_ref,,"Foreign key referencing Encounters(Enc_Key), linking treatment to specific clinical encounters.",text,
+cur_med,,"Current medications prescribed to the patient. Free-text field containing medication combinations like 'Antidepressant,Antipsychotic', 'None,Antipsychotic,Mood Stabilizer'. Contains NULL when medication information is not documented.",text,
+med_adh,,"Medication adherence level. Contains values: 'Medium', 'Low', 'High'.",text,
+med_side,,"Medication side effects experienced. Contains values: 'Mild', 'Moderate', 'Severe'. Contains NULL when side effects are not monitored.",text,
+med_chg,,"Recent medication changes made. Contains values: 'Dose Adjustment', 'Augmentation', 'Switch'. Contains NULL when medication changes are not tracked.",text,
+th_type,,"Type of therapy being provided. Contains values: 'CBT', 'Group', 'Individual', 'Family'. Contains NULL when therapy type is not specified.",text,
+th_freq,,"Frequency of therapy sessions. Contains values: 'Biweekly', 'Monthly', 'Weekly', 'Quarterly'. Contains NULL when therapy frequency is not documented.",text,
+th_dur_m,,Duration of therapy treatment in months.,bigint,
+th_eng,,"Level of patient engagement in therapy. Contains values: 'Medium', 'High', 'Low'.",text,
+th_chg,,"Recent therapy changes made to the treatment plan. Contains values: 'Frequency Change', 'Modality Change', 'No Change'. Contains NULL when therapy changes are not tracked.",text,
+crisis_int,,Number of crisis interventions required during the treatment period.,real,

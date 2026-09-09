@@ -1,0 +1,15 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+REC_KEY,,TEXT. Unique key identifying an individual trade record. PK. Example: IT291460.,text,
+snap_ts,,TIMESTAMP. Snapshot timestamp capturing the trade state. **NULL means snapshot time was not captured.**. Example: 2024-11-24 23:31:04.103260.,text,
+tr_anchor,,TEXT. Trader key involved in the trade. FK to traders(TR_KEY).,text,
+sym_anchor,,TEXT. Instrument symbol key traded. FK to instruments(SYM_KEY).,text,
+freq_tag,,"TEXT. Frequency-band tag for the trader’s activity. Possible values: High, Low, Medium.",text,
+vol_day,,REAL. Average daily trading volume for the trader-instrument pair. Example: 693469.34.,real,
+pos_avg,,REAL. Average position size held by the trader. Example: 63384.3.,real,
+hold_span,,"TEXT. Typical holding-period span . Possible values: Intraday, Long-term, Position, Swing.",text,
+margin_pct,,REAL. Margin percentage utilised in the trades. Example: 74.62.,real,
+vol_adj_lev,,"TEXT. The volatility-adjusted leverage, indicating the amount of leverage in relation to market volatility. Example: 0.34 leverage-point/vol-point.",text,
+risk_adj_lev,,"TEXT. The risk-adjusted leverage ratio, indicating the amount of leverage relative to the trader's risk tolerance. Example: 16.98 USD/risk-point.",text,
+bal_turnover,,"TEXT. The turnover rate of the trader's balance per day, calculated as the ratio of daily trading volume to the account balance. Example: 2.34 times/day.",text,
+trade_perf,,"JSONB column. Trade performance including win/loss and leverage.
+Fields: {""lev_ratio"":""REAL. Leverage ratio applied by the trader. **NULL means leverage ratio is not available.**. Example: 1.81."",""pl_ratio"":""REAL. Profit-to-loss ratio for the set of trades. Example: 1.18."",""win_pct"":""REAL. Percentage of profitable trades for the record. **NULL means win percentage has not been calculated.**. Example: 55.83.""}",jsonb,

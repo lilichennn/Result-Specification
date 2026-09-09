@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+connectref,,A SERIAL primary key uniquely identifying each relationship between fund families and exchanges they list on.,bigint,
+familyref,,"Foreign key referencing families.GroupName, indicating which fund family has listings on the exchange.",character varying,
+exchangeref,,"Foreign key referencing exchanges.MarketCode, indicating which exchange the fund family lists products on.",character varying,

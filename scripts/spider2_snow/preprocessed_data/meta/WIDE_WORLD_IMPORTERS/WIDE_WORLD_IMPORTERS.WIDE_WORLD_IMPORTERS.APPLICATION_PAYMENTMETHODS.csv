@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+PaymentMethodName,TEXT,,"[""Cash"", ""Credit-Card""]",
+ValidFrom,NUMBER,,"[1356998400000000, 1451664000000000]",
+ValidTo,NUMBER,,[253402300799999999],
+PaymentMethodID,NUMBER,,"[1, 3]",
+LastEditedBy,NUMBER,,"[1, 9]",

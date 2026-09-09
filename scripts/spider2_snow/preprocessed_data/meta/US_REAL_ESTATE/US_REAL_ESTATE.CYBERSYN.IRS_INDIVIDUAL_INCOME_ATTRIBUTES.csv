@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+VARIABLE_NAME,TEXT,Human-readable name for the variable,"[""Total income - Number of returns, AGI bin: $100,000 under $200,000"", ""Investment interest paid - Amount, AGI bin: $200,000 or more"", ""Personal property taxes - Number of returns, AGI bin: $25,000 under $50,000""]",
+SEASONALLY_ADJUSTED,BOOLEAN,Indicates whether the value is seasonally adjusted,[false],
+INCOME_BRACKET,TEXT,The adjusted gross income bracket of individuals within the series,"[""$100,000 under $200,000"", ""$200,000 or more"", ""$25,000 under $50,000""]",
+UNIT,TEXT,"Unit of measure for the value (e.g., USD, returns, individuals, dependents)","[""Returns"", ""USD""]",
+FREQUENCY,TEXT,Frequency of the variable measurement,"[""Annual""]",
+VARIABLE,TEXT,Unique identifier for a variable joinable to the timeseries table,"[""Total_income_-_Number_of_returns,_AGI_bin:_$100,000_under_$200,000"", ""Investment_interest_paid_-_Amount,_AGI_bin:_$200,000_or_more"", ""Personal_property_taxes_-_Number_of_returns,_AGI_bin:_$25,000_under_$50,000""]",

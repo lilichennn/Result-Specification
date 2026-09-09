@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+cond_id,,BIGSERIAL. Unique identifier for each condition assessment. PK.,bigint,
+art_exam,,TEXT. Reference to the artifact being examined. FK to ArtifactsCore.ARTregID.,text,
+case_exam,,TEXT. Reference to the showcase being examined. FK to Showcases.caseID.,text,
+light_link,,BIGINT. Reference to light and radiation readings. FK to LightAndRadiationReadings.rad_id.,bigint,
+score,,BIGINT. Score for the condition assessment. Example: 93.,bigint,
+assess_date,,DATE. Date when the assessment was done. Example: Sep-15-2024.,date,
+next_due,,DATE. Date when the next assessment is due. Example: 2025/4/17.,date,

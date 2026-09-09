@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+time,TEXT,,[],
+sflag,TEXT,,"[""E"", ""F""]",
+mflag,TEXT,,[],
+qflag,TEXT,,"[""K"", ""I""]",
+element,TEXT,,"[""PRCP"", ""TMAX""]",
+date,DATE,,"[""1858-09-09"", ""1858-08-01"", ""1858-02-23""]",
+id,TEXT,,"[""GM000010962"", ""USC00090430"", ""USC00413270""]",
+value,FLOAT,,"[233.0, 28.0, 64.0]",

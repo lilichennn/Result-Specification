@@ -1,0 +1,4 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+snapkey,,TEXT. Snapshot identifier. Unique ID for performance snapshot. Example: PV937101.,text,
+sitetie,,TEXT. FK → plants.SiteKey. Links to parent solar plant.,text,
+snapts,,TIMESTAMP. Timestamp when snapshot was taken. Example: 43315.51482.,timestamp without time zone,

@@ -1,0 +1,11 @@
+column_name,column_type,column_description,sample_value,ref_key
+language,TEXT,,[],
+created,TEXT,,[],
+identifier,VARIANT,,"[""[]""]",
+subject,VARIANT,,[],
+meta,VARIANT,,"[""{\n  \""profile\"": [\n    \""http://standardhealthrecord.org/fhir/StructureDefinition/shr-entity-Person\""\n  ],\n  \""security\"": [],\n  \""tag\"": []\n}""]",
+implicitRules,TEXT,,[],
+code,VARIANT,,"[""{\n  \""coding\"": [\n    {\n      \""code\"": \""shr-entity-Person\"",\n      \""display\"": \""shr-entity-Person\"",\n      \""system\"": \""http://standardhealthrecord.org/fhir/basic-resource-type\""\n    }\n  ]\n}""]",
+author,VARIANT,,[],
+id,TEXT,,"[""0cf41da2-1b23-4328-b694-0cc7baeb56ff"", ""0d61e5cd-ca45-479f-ba9c-5812cbfc66e2"", ""0d913f3a-4b1c-46d0-80f0-4fa51a092a30""]",
+text,VARIANT,,[],

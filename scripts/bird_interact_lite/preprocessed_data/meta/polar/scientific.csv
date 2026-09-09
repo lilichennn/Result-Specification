@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+sciregistry,,A SERIAL primary key uniquely identifying each scientific record.,integer,
+scieqref,,"A VARCHAR(70) foreign key referencing Equipment(EquipmentCode), linking scientific data to a specific piece of equipment.",character varying,
+scientificequipmentstatus,,"An enum (ScientificEquipmentStatus_enum) describing the operating state of scientific instruments (e.g., Standby, Operating, Fault).",USER-DEFINED,
+dataloggingstatus,,"An enum (DataLoggingStatus_enum) indicating the data logging status (e.g., Active, Paused, Error).",USER-DEFINED,
+sensorstatus,,"An enum (SensorStatus_enum) noting sensor integrity (e.g., Error, Warning, Normal).",USER-DEFINED,
+calibrationstatus,,"An enum (CalibrationStatus_enum) specifying calibration validity (e.g., Expired, Valid, Due).",USER-DEFINED,
+measurementaccuracypercent,,"A REAL value reflecting the measurement accuracy (e.g., 98.5%).",real,

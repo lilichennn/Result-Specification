@@ -1,0 +1,9 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+WATER_ID,,BIGSERIAL. Unique identifier for the water and waste record. PK.,bigint,
+equipRef,,TEXT. Reference to the equipment. FK to Equipment.EQUIP_CODE.,text,
+waterLevelPct,,REAL. Water level percentage. Example: 77.,real,
+waterPress_kpa,,REAL. Water pressure in kPa. Example: 66.4.,real,
+waterTempC,,TEXT. Water temperature in Celsius. **NULL means no water temperature data recorded.**. Example: 58.4 °C.,text,
+waterFlow_lpm,,REAL. Water flow in liters per minute. Example: 28.6.,real,
+waterQualityIdx,,BIGINT. Water quality index. Example: 57.,bigint,
+wasteTankPct,,REAL. Waste tank percentage. Example: 28.,real,

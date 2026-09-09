@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+driver_distracted_by,NUMBER,,[0],
+state_number,NUMBER,,"[38, 56]",
+driver_distracted_by_name,TEXT,,"[""Not Distracted""]",
+vehicle_number,NUMBER,,"[5, 19, 18]",
+consecutive_number,NUMBER,,"[380091, 560031]",

@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+circuit_ref,TEXT,,"[""bahrain"", ""istanbul"", ""magny_cours""]",
+lng,FLOAT,,"[50.5106, 29.405, 3.16361]",
+url,TEXT,,"[""http://en.wikipedia.org/wiki/Bahrain_International_Circuit"", ""http://en.wikipedia.org/wiki/Istanbul_Park"", ""http://en.wikipedia.org/wiki/Circuit_de_Nevers_Magny-Cours""]",
+circuit_id,NUMBER,,"[3, 5, 8]",
+lat,FLOAT,,"[26.0325, 40.9517, 46.8642]",
+name,TEXT,,"[""Bahrain International Circuit"", ""Istanbul Park"", ""Circuit de Nevers Magny-Cours""]",
+alt,NUMBER,,"[7, 130, 228]",
+country,TEXT,,"[""Bahrain"", ""Turkey"", ""France""]",
+location,TEXT,,"[""Sakhir"", ""Istanbul"", ""Magny Cours""]",

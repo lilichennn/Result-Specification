@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+date,DATE,,"[""1950-12-28"", ""1950-07-16"", ""1950-09-28""]",
+id,TEXT,,"[""AG000060390""]",
+time,TEXT,,[],
+mflag,TEXT,,[],
+qflag,TEXT,,[],
+sflag,TEXT,,"[""E""]",
+element,TEXT,,"[""PRCP""]",
+value,FLOAT,,"[32.0, 0.0]",

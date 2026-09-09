@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+qflag,TEXT,,[],
+mflag,TEXT,,[],
+date,DATE,,"[""1990-11-13"", ""1990-02-16"", ""1990-02-05""]",
+id,TEXT,,"[""USC00344812"", ""USC00043672"", ""USC00512751""]",
+sflag,TEXT,,"[""0""]",
+element,TEXT,,"[""DAEV"", ""DAPR""]",
+value,FLOAT,,"[4.0, 2.0, 3.0]",
+time,TEXT,,[],

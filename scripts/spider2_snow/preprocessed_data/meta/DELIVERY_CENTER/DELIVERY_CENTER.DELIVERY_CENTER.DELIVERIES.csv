@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+delivery_order_id,NUMBER,,"[68413340, 68414309, 68414018]",
+delivery_distance_meters,FLOAT,,"[5199.0, 410.0, 3746.0]",
+delivery_id,NUMBER,,"[2174658, 2174660, 2174675]",
+driver_id,FLOAT,,"[8378.0, 2473.0, 10463.0]",
+delivery_status,TEXT,,"[""DELIVERED"", ""CANCELLED""]",

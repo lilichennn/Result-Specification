@@ -1,0 +1,13 @@
+column_name,column_type,column_description,sample_value,ref_key
+StfAreaCode,TEXT,,"[""253"", ""510"", ""206""]",
+StfPhoneNumber,TEXT,,"[""555-2676"", ""555-2596"", ""555-2591""]",
+StfZipCode,TEXT,,"[""98002"", ""94538"", ""98271""]",
+StfStreetAddress,TEXT,,"[""Route 2, Box 203B"", ""30301 - 166th Ave. N.E."", ""16 Maple Lane""]",
+StfFirstName,TEXT,,"[""Gary"", ""Jeffrey"", ""Ann""]",
+DateHired,TEXT,,"[""1985-01-21"", ""1983-10-06"", ""1983-10-16""]",
+Salary,FLOAT,,"[53000.0, 52000.0, 45000.0]",
+StaffID,NUMBER,,"[98007, 98010, 98011]",
+StfLastname,TEXT,,"[""Hallmark"", ""Smith"", ""Patterson""]",
+StfState,TEXT,,"[""WA"", ""CA""]",
+Position,TEXT,,"[""Faculty"", ""Registrar""]",
+StfCity,TEXT,,"[""Auburn"", ""Fremont"", ""Marysville""]",

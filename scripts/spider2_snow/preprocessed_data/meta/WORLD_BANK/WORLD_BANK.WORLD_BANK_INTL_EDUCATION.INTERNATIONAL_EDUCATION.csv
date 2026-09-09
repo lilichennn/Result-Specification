@@ -1,0 +1,7 @@
+column_name,column_type,column_description,sample_value,ref_key
+value,FLOAT,,"[1.95879995822906, 100974.0, 95.6890335083008]",
+year,NUMBER,,"[2015, 1977, 2009]",
+country_name,TEXT,,"[""Thailand""]",
+indicator_code,TEXT,,"[""SE.PRM.REPT.ZS"", ""SE.PRM.TCHR.FE"", ""SE.PRM.TENR.FE""]",
+country_code,TEXT,,"[""THA""]",
+indicator_name,TEXT,,"[""Percentage of repeaters in primary education, all grades, both sexes (%)"", ""Teachers in primary education, female (number)"", ""Adjusted net enrolment rate, primary, female (%)""]",

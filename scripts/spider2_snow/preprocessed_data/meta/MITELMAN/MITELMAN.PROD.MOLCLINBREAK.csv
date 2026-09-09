@@ -1,0 +1,6 @@
+column_name,column_type,column_description,sample_value,ref_key
+RefNo,NUMBER,"reference number, eg '15563'","[2514, 7542, 7869]",
+MolClin,TEXT,"flag indicating either molecular 'M', or clinical 'C'","[""C""]",
+Breakpoint,TEXT,"breakpoint description, eg '19p13' or '12q2?3', etc","[""1""]",
+InvNo,NUMBER,"investigation number, usually between 1 and 10",[1],
+OrderNo,NUMBER,"order number, between 1 and 68",[1],

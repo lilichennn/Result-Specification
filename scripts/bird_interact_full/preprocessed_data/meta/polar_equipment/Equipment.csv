@@ -1,0 +1,8 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+EQUIP_CODE,,TEXT. Unique identifier for the equipment. PK. Example: PE593707.,text,
+EquipType,,TEXT. Reference to the equipment type. FK to EquipmentType.EquipType.,text,
+model_name,,TEXT. Model name of the equipment. **NULL means no model name provided.**. Example: Model-925.,text,
+MakerName,,"TEXT. Name of the equipment manufacturer. **NULL means no manufacturer provided.**. Example: Lee, Meyers and Hamilton.",text,
+SERVICE_YRS,,BIGINT. Number of years the equipment has been in service. Example: 4.,bigint,
+utilPercent,,REAL. Utilization percentage of the equipment. Example: 53.,real,
+RELIAB_IDX,,REAL. Reliability index of the equipment. Example: 97.8.,real,

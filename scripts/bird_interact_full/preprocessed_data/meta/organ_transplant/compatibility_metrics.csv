@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+match_comp_registry,,"TEXT. Primary key linking to transplant matching record. PK = Compatibility_Metrics(Match_Comp_Registry), FK to Transplant_Matching.",text,
+hla_mis_count,,BIGINT. Number of HLA antigen mismatches between donor and recipient. Possible values: 0,bigint,
+blood_compat,,"TEXT. Blood type compatibility assessment result. **NULL means blood compatibility assessment is pending or unavailable.** **DATA NOISE: Values have random case variations (lowercase, uppercase, mixed case).** Example: incompatible.",text,
+distance,,TEXT. Geographic distance between donor and recipient in kilometers. Example: 1815 miles,text,
+exp_isch_time,,TEXT. Expected cold ischemia time in minutes. Example: 539 minutes ischemia.,text,
+exp_time,,TEXT. Expected transport time in minutes. Example: 45 minutes transport.,text,
+cost_est,,TEXT. Estimated cost for transplant procedure and logistics. Example: US$5210.53,text,
+donor_ref_reg,,TEXT. Reference to donor demographics record. FK to Demographics.,text,
+recip_ref_reg,,TEXT. Reference to recipient demographics record. FK to Recipients_Demographics.,text,
+compatscores,,"JSONB column. Aggregates compatibility scoring metrics including HLA, size, and age compatibility assessments for donor-recipient matching.
+Fields: {""Age_Score"":""REAL. Age compatibility score for optimal matching. Example: 0.327."",""Hla_Score"":""REAL. HLA compatibility score based on antigen matching. Example: 0.522."",""Size_Score"":""REAL. Size compatibility score based on donor-recipient measurements. Example: 0.228.""}",jsonb,

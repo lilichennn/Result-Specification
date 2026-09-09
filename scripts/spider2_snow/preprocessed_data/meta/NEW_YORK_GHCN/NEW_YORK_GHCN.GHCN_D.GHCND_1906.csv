@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+id,TEXT,,"[""ASN00055049""]",
+value,FLOAT,,[0.0],
+date,DATE,,"[""1906-03-28"", ""1906-11-06"", ""1906-03-24""]",
+sflag,TEXT,,"[""a""]",
+mflag,TEXT,,[],
+time,TEXT,,[],
+qflag,TEXT,,[],
+element,TEXT,,"[""PRCP""]",

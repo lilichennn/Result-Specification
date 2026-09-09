@@ -1,0 +1,10 @@
+column_name,column_type,column_description,sample_value,ref_key
+disamb_assignee_id_20200331,TEXT,,"[""org_lzqPgin2dVISUmrcJ2NI"", ""org_5jmx9triBfVN0PdZ4jej"", ""org_fxokv3jRQDbQYxEDJPEr""]",
+disamb_assignee_id_20181127,TEXT,,"[""org_HBn0m2UXFTu1sqbCc9ef"", ""org_VvOqlh1veAQhGtpEm3Pu"", ""org_kQmuMf7J9WGPcfOUDdcC""]",
+disamb_assignee_id_20200929,TEXT,,"[""org_twu8vYBiARRSKaOfpKaq"", ""org_dUehhs0cRggrHyKRoXWk"", ""org_cJeLB6TvMqU4g8HbmELx""]",
+disamb_assignee_id_20200630,TEXT,,"[""org_twu8vYBiARRSKaOfpKaq"", ""org_dUehhs0cRggrHyKRoXWk"", ""org_cJeLB6TvMqU4g8HbmELx""]",
+rawassignee_id,TEXT,,"[""dp7vu225vgmbczqehgbm17r1k"", ""acso0u0s2os150vuz2k87jvwi"", ""0tffiqzdc02o6mxf58i3ejmjg""]",
+disamb_assignee_id_20190820,TEXT,,"[""org_kEnV6I8cuBHV5fQ0ZCZN"", ""org_npVJ4j7RstzxqbGCrc8t"", ""org_HaMejF3KUiJrek2EFRh2""]",
+disamb_assignee_id_20190312,TEXT,,"[""org_XY9itoQIZtoEnvTyof61"", ""org_67YzfuOA09U6exgSWnkm"", ""org_kRhmBLQVcWt9PFidjhYa""]",
+disamb_assignee_id_20191008,TEXT,,"[""org_00JIuEjOeTD9FaaMEPbp"", ""org_00VTI7dJwHgr26VkL4NM"", ""org_00ZpPHnQGwsshY7ISboK""]",
+disamb_assignee_id_20191231,TEXT,,"[""org_OhzNz0dANlu1NfK7TdCR"", ""org_03jQkU3MS8JEguCAlklK"", ""org_z80x0b2N4Dk6CsEVroeT""]",

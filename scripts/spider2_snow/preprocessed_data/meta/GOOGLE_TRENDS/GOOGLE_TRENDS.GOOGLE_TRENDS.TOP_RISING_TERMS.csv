@@ -1,0 +1,9 @@
+column_name,column_type,column_description,sample_value,ref_key
+refresh_date,DATE,,"[""2024-09-17""]",
+rank,NUMBER,,[13],
+dma_name,TEXT,,"[""Portland-Auburn ME""]",
+score,NUMBER,,[],
+week,DATE,,"[""2019-09-15"", ""2019-11-17"", ""2019-11-24""]",
+percent_gain,NUMBER,,[1650],
+term,TEXT,,"[""49ers vs vikings""]",
+dma_id,NUMBER,,[500],

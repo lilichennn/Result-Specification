@@ -1,0 +1,5 @@
+column_name,column_type,column_description,sample_value,ref_key
+Id,NUMBER,,"[1, 12, 13]",
+DisplayName,TEXT,,"[""R"", ""Python""]",
+IsNotebook,BOOLEAN,,"[false, true]",
+Name,TEXT,,"[""R"", ""R Notebook HTML"", ""R Notebook""]",

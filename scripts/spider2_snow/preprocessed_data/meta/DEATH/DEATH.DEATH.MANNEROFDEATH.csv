@@ -1,0 +1,3 @@
+column_name,column_type,column_description,sample_value,ref_key
+Description,TEXT,,"[""Suicide"", ""Homicide"", ""Pending investigation""]",
+Code,NUMBER,,"[2, 3, 4]",

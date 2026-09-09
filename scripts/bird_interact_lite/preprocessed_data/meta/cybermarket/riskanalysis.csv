@@ -1,0 +1,18 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+riskregistry,,"Primary key (VARCHAR(30)) for a risk analysis record (e.g., 'RA-abc123').",character varying,
+fraudprob,,"A NUMERIC(5,3) fraud probability (0.000–99.999) (e.g., 45.210).",numeric,
+moneyrisk,,"An enum (RiskLevel_enum) for money laundering risk (Low, Medium, High, Unknown).",USER-DEFINED,
+linkedtxcount,,"A SMALLINT counting related or linked transactions (e.g., 7).",smallint,
+txchainlen,,"A SMALLINT measuring transaction chain length (e.g., 4).",smallint,
+wallrisksc,,"A NUMERIC(5,2) wallet risk score (e.g., 88.50).",numeric,
+wallage,,"An INT indicating wallet age in days (e.g., 200).",integer,
+wallbalusd,,"A NUMERIC(15,2) approximate wallet balance in USD (e.g., 12500.00).",numeric,
+wallturnrt,,"A NUMERIC(5,3) wallet turnover rate (e.g., 5.234).",numeric,
+txvel,,"A NUMERIC(6,2) transaction velocity (e.g., 245.67).",numeric,
+profilecomplete,,"A NUMERIC(4,1) (0–99.9) indicating completeness of associated profile data (e.g., 85.7).",numeric,
+idverifyscore,,"A NUMERIC(4,1) (0–99.9) for identity verification confidence (e.g., 40.2).",numeric,
+feedbackauthscore,,"A NUMERIC(4,1) (0–99.9) rating authenticity of feedback (e.g., 92.3).",numeric,
+commref,,FK referencing Communication(CommRegistry). Links risk analysis to communication logs.,character varying,
+txref,,FK referencing Transactions(TxRegistry). Ties the analysis to a transaction chain or record.,character varying,
+network_behavior_analytics,,"JSONB column. Stores scores derived from analyzing network structure, transaction patterns, temporal activity, geographic distribution, and behavioral consistency associated with the risk profile.
+Fields: {""behavioral_analysis"":{""behavior_consistency_score"":""A NUMERIC(5,2) consistency of behavior across time (e.g., 70.90)."",""geo_distribution_score"":""A NUMERIC(5,1) geolocation distribution score (e.g., 45.3)."",""temporal_pattern_score"":""A NUMERIC(5,2) analyzing temporal patterns (e.g., 60.25).""},""network_analysis"":{""centrality_score"":""A NUMERIC(6,3) (0–999.999) network centrality measure (e.g., 452.110)."",""cluster_coefficient"":""A NUMERIC(5,4) graph clustering coefficient (0.0000–0.9999) (e.g., 0.3421)."",""connection_diversity"":""A NUMERIC(6,2) measuring diversity of connections (e.g., 78.45).""},""transaction_pattern_category"":""An enum (TxPatternCat_enum) describing transaction patterns (High-risk, Suspicious, Normal).""}",jsonb,

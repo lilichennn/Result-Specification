@@ -1,0 +1,12 @@
+﻿original_column_name,column_name,column_description,data_format,value_description
+REC_SA,,TEXT. Identifier linking sentiment analytics to a market-condition set. PK. FK to market_conditions(REC_PIN).,text,
+ins_hold,,REAL. Percentage of insider holdings in the float. Example: 45.91.,real,
+inst_own,,REAL. Percentage of institutional ownership. **NULL means institutional-ownership data unavailable.**. Example: 78.29.,real,
+short_rt,,REAL. Short-interest rate for the instrument. **NULL means short-interest rate not provided.**. Example: 17.24.,real,
+opt_vol,,REAL. Options-trading volume on the instrument. **NULL means options volume value is missing.**. Example: 2.91.,real,
+pc_ratio,,REAL. Put-call ratio for the instrument. Example: 1.17.,real,
+iv_rank,,TEXT. Implied-volatility rank classification. Example: 11.39%.,text,
+uo_act,,"TEXT. Unusual-options-activity descriptor. **NULL means no unusual-options activity recorded.**. Possible values: High, Moderate.",text,
+short_press_int,,"TEXT. The intensity of short selling pressure as a percentage per hour, reflecting how quickly short interest builds up near corporate events. Example: 2.57 %/hour.",text,
+sentiment_data,,"JSONB column. Sentiment data from news, social media, and analysts.
+Fields: {""analyst_cnt"":""BIGINT. Number of analyst reports considered. Example: 18."",""news_score"":""REAL. Sentiment score derived from news sources. Example: 0.874."",""soc_sent"":""REAL. Aggregate social-media sentiment score. Example: 0.613.""}",jsonb,
