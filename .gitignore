@@ -6,5 +6,6 @@ __pycache__/
 .DS_Store
 
 # 大型实验产物
-baselines_reproduce/
+baselines_reproduce/CHESS/
+baselines_reproduce/DeepEye-SQL/
 *.log
