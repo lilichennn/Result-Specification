@@ -477,12 +477,46 @@ sys.stdin.read()
                             {"attempts": 1, "succeeded": 0, "failed": 0, "interrupted": 1, "events": 0},
                         )
 
+    def test_summary_rejects_a_successful_verification_from_another_store(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            with RunStore.create(root / "first", {}) as first:
+                verification = first.verify()
+            with RunStore.create(root / "second", {}) as second:
+                with self.assertRaises(ValueError):
+                    second.summary(verification=verification)
+
+    def test_summary_rejects_verification_from_before_a_writer_commit(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with RunStore.create(Path(temp) / "run", {}) as store:
+                verification = store.verify()
+                store.begin_attempt("q", "stage", "fp")
+                with self.assertRaises(ValueError):
+                    store.summary(verification=verification)
+
+    def test_summary_rejects_verification_from_before_direct_corruption(self):
+        with tempfile.TemporaryDirectory() as temp:
+            run_dir = Path(temp) / "run"
+            with RunStore.create(run_dir, {}) as store:
+                attempt_id = store.begin_attempt("q", "stage", "fp")
+                store.finish_attempt(attempt_id, "succeeded", {"answer": 1})
+                verification = store.verify()
+                with sqlite3.connect(run_dir / "run.sqlite3") as connection:
+                    connection.execute("DROP TRIGGER finishes_no_update")
+                    connection.execute(
+                        "UPDATE finishes SET payload_json = ? WHERE attempt_id = ?",
+                        ('{"answer":2}', attempt_id),
+                    )
+                with self.assertRaises(ValueError):
+                    store.summary(verification=verification)
+
     def test_summary_rejects_failed_or_invalid_precomputed_verification(self):
         invalid = (
             {"ok": False, "sqlite_integrity": ["ok"], "checksum_errors": 1, "records_checked": 1},
             {},
             {"ok": 1, "sqlite_integrity": ["ok"], "checksum_errors": 0, "records_checked": 1},
             {"ok": "yes", "sqlite_integrity": ["ok"], "checksum_errors": 0, "records_checked": 1},
+            {"ok": True, "sqlite_integrity": ["ok"], "checksum_errors": 0, "records_checked": 0},
             True,
         )
         with tempfile.TemporaryDirectory() as temp:

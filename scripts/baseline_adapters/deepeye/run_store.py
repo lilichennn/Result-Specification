@@ -42,6 +42,21 @@ _CORE_EXPORT_NAMES = frozenset({
 })
 
 
+class _VerificationReport(dict[str, Any]):
+    """Public report fields plus private provenance for safe in-process reuse."""
+
+    def __init__(
+        self,
+        values: dict[str, Any],
+        *,
+        store_token: object,
+        revision: tuple[int, int],
+    ) -> None:
+        super().__init__(values)
+        self._store_token = store_token
+        self._revision = revision
+
+
 def _type_reference(value: object) -> dict[str, str]:
     cls = type(value)
     return {"module": cls.__module__, "qualname": cls.__qualname__}
@@ -262,8 +277,6 @@ class RunStore:
         self,
         run_dir: Path,
         connection: sqlite3.Connection,
-        manifest_json: str,
-        manifest_checksum: str,
         manifest: dict[str, Any],
         *,
         read_only: bool,
@@ -271,12 +284,11 @@ class RunStore:
     ) -> None:
         self._run_dir = run_dir
         self._connection = connection
-        self._manifest_json = manifest_json
-        self._manifest_checksum = manifest_checksum
         self._manifest = manifest
         self._manifest_fingerprint = hashlib.sha256(
             _canonical_dumps(to_jsonable(manifest)).encode("utf-8")
         ).hexdigest()
+        self._verification_token = object()
         self._read_only = read_only
         self._lock_file = lock_file
         self._mutex = threading.RLock()
@@ -313,8 +325,6 @@ class RunStore:
             return cls(
                 run_dir,
                 connection,
-                manifest_json,
-                manifest_checksum,
                 verified_manifest,
                 read_only=False,
                 lock_file=lock_file,
@@ -352,8 +362,6 @@ class RunStore:
             return cls(
                 run_dir,
                 connection,
-                manifest_json,
-                manifest_checksum,
                 manifest,
                 read_only=read_only,
                 lock_file=lock_file,
@@ -793,6 +801,10 @@ class RunStore:
     def events(self, attempt_id: str | None = None) -> list[dict[str, Any]]:
         return list(self.iter_events(attempt_id))
 
+    def _database_revision(self) -> tuple[int, int]:
+        data_version = int(self._connection.execute("PRAGMA data_version").fetchone()[0])
+        return data_version, self._connection.total_changes
+
     def verify(self) -> dict[str, Any]:
         self._assert_open()
         checksum_errors = 0
@@ -836,13 +848,18 @@ class RunStore:
                         checksum_errors += 1
             except sqlite3.DatabaseError:
                 checksum_errors += 1
+            revision = self._database_revision()
         sqlite_ok = integrity == ["ok"]
-        return {
-            "ok": sqlite_ok and checksum_errors == 0,
-            "sqlite_integrity": integrity,
-            "checksum_errors": checksum_errors,
-            "records_checked": records_checked,
-        }
+        return _VerificationReport(
+            {
+                "ok": sqlite_ok and checksum_errors == 0,
+                "sqlite_integrity": integrity,
+                "checksum_errors": checksum_errors,
+                "records_checked": records_checked,
+            },
+            store_token=self._verification_token,
+            revision=revision,
+        )
 
     def _summary_counts(self) -> dict[str, int]:
         row = self._connection.execute(
@@ -861,10 +878,13 @@ class RunStore:
             "events": int(event_count),
         }
 
-    @staticmethod
-    def _validate_verification(verification: Mapping[str, Any]) -> None:
-        if not isinstance(verification, Mapping):
-            raise TypeError("verification must be a RunStore verification mapping")
+    def _validate_verification(self, verification: Mapping[str, Any]) -> None:
+        if not isinstance(verification, _VerificationReport):
+            raise TypeError("verification must be produced by this RunStore")
+        if verification._store_token is not self._verification_token:
+            raise ValueError("verification belongs to a different RunStore")
+        if verification._revision != self._database_revision():
+            raise ValueError("verification is stale for the current RunStore snapshot")
         required = {"ok", "sqlite_integrity", "checksum_errors", "records_checked"}
         if not required.issubset(verification):
             raise ValueError("verification is missing required fields")
