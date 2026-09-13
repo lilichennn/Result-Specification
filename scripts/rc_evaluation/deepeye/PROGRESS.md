@@ -1,6 +1,6 @@
 # Implementation ledger — IMPLEMENTATION_PLAN.md
 
-> 历史实现记录：下文的运行进度和监测状态均为 2026-09-11 当时快照，不代表当前状态，也不是继续运行的指令。当前维护入口见 [DEEPEYE_CURRENT.md](../../DEEPEYE_CURRENT.md)；10 题四阶段 RC 测试已于 2026-09-12 完成，详见 `docs/deepeye_rc_probe10_20260912_continuation.md`。
+> 历史实现记录：下文的运行进度和监测状态均为 2026-09-11 当时快照，不代表当前状态，也不是继续运行的指令。当前本地维护说明见 [DEEPEYE_CURRENT.md](../../../docs/DEEPEYE_CURRENT.md)（不随 Git 同步）；10 题四阶段 RC 测试已于 2026-09-12 完成，详见 `docs/deepeye_rc_probe10_20260912_continuation.md`。
 
 2026-09-11: 用户批准分阶段独立对照；最新补充要求已纳入 DESIGN.md。
 

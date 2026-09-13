@@ -1,6 +1,6 @@
 # DeepEye 独立 RC 阶段实验
 
-当前入口与历史代码边界见 [DEEPEYE_CURRENT.md](../../DEEPEYE_CURRENT.md)。旧 guard 临时脚本和旧测试记录不可作为当前执行器或源基线。
+当前入口与历史代码边界见本地文档 [DEEPEYE_CURRENT.md](../../../docs/DEEPEYE_CURRENT.md)（不随 Git 同步）。旧 guard 临时脚本和旧测试记录不可作为当前执行器或源基线。
 
 每个目录只对应一个目标阶段、一个条件和一个 repeat_id。`prepare` 只读取冻结预计算、已有基线和已有双轮 RC，不连接模型或 PostgreSQL。`run`、`resume`、`evaluate` 是显式执行命令；本工具不会自动开始新的实验批次。
 
