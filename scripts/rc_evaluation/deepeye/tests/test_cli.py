@@ -8,6 +8,7 @@ import socket
 import subprocess
 import sys
 import tempfile
+import threading
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -82,6 +83,21 @@ class CliTests(OfflineTestCase):
                 self.assertEqual(len(store.attempts()), count)
                 self.assertEqual(store.attempts()[0]['payload']['execution_origin'], 'reused_no_native_llm_call')
                 self.assertEqual(store.events(), [])
+
+    def test_replay_only_execution_creates_no_runtime_or_threads(self):
+        # Break caught: an all-replay invocation still allocates native scheduling resources.
+        with tempfile.TemporaryDirectory() as temporary:
+            root, inputs, arguments, _ = self.fixture(temporary)
+            with patch.object(cli, 'prepare_inputs', return_value=inputs):
+                self.assertEqual(self.invoke(arguments), 0)
+            with RunStore.open(root / 'run') as store, \
+                    patch.object(cli, 'sampling_runtime', side_effect=AssertionError('sampling runtime created')), \
+                    patch.object(cli, 'admission_context', side_effect=AssertionError('admission context created')), \
+                    patch.object(threading.Thread, 'start', side_effect=AssertionError('thread started')):
+                result = cli.execute_run(store, ENV)
+            self.assertEqual(result['succeeded'], 1)
+            self.assertEqual(result['runtime']['requests']['submitted'], 0)
+            self.assertEqual(result['admission']['pipeline']['active'], 0)
 
     def test_old_runtime_manifest_cannot_start_new_paid_work(self):
         effective = build_effective_config(ENV, native_args())

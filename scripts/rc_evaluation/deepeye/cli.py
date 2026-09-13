@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import Future
 import hashlib
 import json
 from pathlib import Path
@@ -21,6 +22,40 @@ from scripts.deepeye_run import (prepare_inputs, build_effective_config, code_so
     build_runtime_config, admission_context, admission_settings, runtime_limits, sampling_runtime,
     read_environment, backend_context)
 from scripts.rc_evaluation.deepeye.source import binding_partition, snapshot_source, validate_manifest
+
+
+class _InlineReplayRuntime:
+    """Runner-compatible scheduling for replay-only work without owned resources."""
+    def __init__(self, stop_event, limits):
+        self.stop_event = stop_event
+        self._limits = dict(limits)
+
+    def workflow_executor(self, workers):
+        if type(workers) is not int or workers < 1:
+            raise ValueError('workflow workers must be a positive integer')
+        return self
+
+    def submit(self, function, /, *args, **kwargs):
+        future = Future()
+        try:
+            future.set_result(function(*args, **kwargs))
+        except BaseException as error:
+            future.set_exception(error)
+        return future
+
+    def shutdown(self, wait=True, *, cancel_futures=False):
+        pass
+
+    def snapshot(self):
+        return {
+            'limits': dict(self._limits),
+            'workflows': {'cap': 0, 'active': 0, 'peak': 0},
+            'coordinators': {'cap': self._limits['coordinator_workers'], 'active': 0, 'peak': 0},
+            'samples': {'worker_cap': self._limits['request_workers'], 'active': 0, 'peak': 0, 'queued': 0},
+            'requests': {'request_limit': self._limits['request_limit'],
+                         'http_connections': self._limits['http_connections'],
+                         'in_flight': 0, 'peak_in_flight': 0, 'submitted': 0, 'completed': 0},
+        }
 
 
 def production_hash():
@@ -218,16 +253,16 @@ def execute_run(store, environment, *, item_keys=None, prepared=None):
     secrets = [environment.get(key) for key in ('DASH_API_KEY', 'EMBEDDING_API_KEY', 'PG_PASSWORD')]
     recorder = TraceRecorder(store, secrets=secrets, stop_event=threading.Event())
     if not needed:
+        from scripts.baseline_adapters.deepeye.run_slots import WorkflowSlots
         def no_factory(*unused):
             raise RuntimeError('Replay-only run attempted to construct native resources')
-        with admission_context(recorder, args, population=len(store.manifest['items'])) as controllers, \
-                sampling_runtime(recorder, args) as runtime:
-            result = run_experiment(store, no_factory, recorder, runtime=runtime,
-                                    slot_controller=controllers['pipeline'], item_keys=item_keys,
-                                    prepared=prepared)
-            result['runtime'] = runtime.snapshot()
-            result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
-            return result
+        slots = WorkflowSlots(len(store.manifest['items']))
+        runtime = _InlineReplayRuntime(recorder.stop_event, runtime_limits(args))
+        result = run_experiment(store, no_factory, recorder, runtime=runtime,
+                                slot_controller=slots, item_keys=item_keys, prepared=prepared)
+        result['runtime'] = runtime.snapshot()
+        result['admission'] = {'pipeline': slots.snapshot()}
+        return result
     from scripts.rc_evaluation.deepeye.injection import install_rc_prompts
     config = build_runtime_config(environment, args, store.run_dir)
     with backend_context(environment, args):
