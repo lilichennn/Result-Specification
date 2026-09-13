@@ -3,6 +3,7 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 from functools import partial
+from types import FunctionType, MethodType
 from typing import Any, Callable
 from uuid import uuid4
 import hashlib
@@ -77,25 +78,14 @@ def parser_identity(parser, seen=()):
 
 
 def _parser_identity(parser, seen=()):
-    if isinstance(parser, partial):
+    if type(parser) is partial:
         return {'kind': 'partial', 'function': parser_identity(parser.func, seen),
                 'args': _parser_state(parser.args), 'keywords': _parser_state(parser.keywords)}
-    code = getattr(parser, '__code__', None)
-    if code is None:
-        call = getattr(type(parser), '__call__', None)
-        if getattr(call, '__code__', None) is None:
-            raise TypeError(f'unsupported parser callable: {type(parser).__qualname__}')
-        state = dict(vars(parser)) if hasattr(parser, '__dict__') else {}
-        for cls in type(parser).__mro__:
-            slots = vars(cls).get('__slots__', ())
-            for name in (slots,) if isinstance(slots, str) else slots:
-                if name.startswith('__') and not name.endswith('__'):
-                    name = f'_{cls.__name__.lstrip("_")}{name}'
-                if name not in ('__dict__', '__weakref__') and hasattr(parser, name):
-                    state[name] = getattr(parser, name)
-        return {'kind': 'callable_instance', 'module': type(parser).__module__,
-                'name': type(parser).__qualname__, 'call': parser_identity(call, seen),
-                'state': _parser_state(state)}
+    # Callable instances may depend on mutable class attributes, descriptors,
+    # nested helpers or opaque state. Do not infer a complete identity for them.
+    if not isinstance(parser, (FunctionType, MethodType)):
+        raise TypeError(f'unsupported parser callable: {type(parser).__qualname__}')
+    code = parser.__code__
     closure = getattr(parser, '__closure__', None) or ()
     names = code.co_names if code else ()
     return {'module': getattr(parser, '__module__', type(parser).__module__),

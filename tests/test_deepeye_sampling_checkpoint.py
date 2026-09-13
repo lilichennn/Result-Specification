@@ -135,19 +135,34 @@ class CheckpointTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'duplicate sample result'):
             TraceRecorder(self.store)
 
-    def test_partial_and_callable_state_changes_cannot_restore_old_parsed_result(self):
+    def test_partial_configuration_changes_cannot_restore_old_parsed_result(self):
         def rule(content, *, suffix):
             return content + suffix
-        for factory in (lambda suffix: partial(rule, suffix=suffix), SuffixRule):
-            with self.subTest(factory=factory):
-                for suffix, expected_calls in ((' first', 1), (' changed', 1), (' changed', 0)):
-                    llm, calls = llm_fixture([response()])
-                    recorder = TraceRecorder(self.store)
-                    attempt = self.store.begin_attempt('lite/one', 'schema_linking', 'input')
-                    with recorder.context(attempt):
-                        values, _ = LLMExtractor().extract_with_retry(llm, [], factory(suffix), n=1)
-                    self.assertEqual(values, ['SELECT wrong_but_parseable' + suffix])
-                    self.assertEqual(len(calls), expected_calls)
+        for suffix, expected_calls in ((' first', 1), (' changed', 1), (' changed', 0)):
+            llm, calls = llm_fixture([response()])
+            recorder = TraceRecorder(self.store)
+            attempt = self.store.begin_attempt('lite/one', 'schema_linking', 'input')
+            with recorder.context(attempt):
+                values, _ = LLMExtractor().extract_with_retry(llm, [], partial(rule, suffix=suffix), n=1)
+            self.assertEqual(values, ['SELECT wrong_but_parseable' + suffix])
+            self.assertEqual(len(calls), expected_calls)
+
+    def test_callable_with_mutable_class_attribute_is_rejected_before_transport(self):
+        from app.llm.sampling import SamplingIdentityError
+        class Rule:
+            suffix = ' first'
+            def __call__(self, content):
+                return content + self.suffix
+        rule = Rule()
+        for suffix in (' first', ' changed'):
+            with self.subTest(suffix=suffix):
+                Rule.suffix = suffix
+                llm, calls = llm_fixture([response()])
+                recorder = TraceRecorder(self.store)
+                attempt = self.store.begin_attempt('lite/one', 'schema_linking', 'input')
+                with recorder.context(attempt), self.assertRaisesRegex(SamplingIdentityError, 'unsupported parser callable'):
+                    LLMExtractor().extract_with_retry(llm, [], rule, n=1)
+                self.assertEqual(calls, [])
 
     def test_native_fallback_cannot_turn_invalid_parser_identity_into_success(self):
         from app.llm.sampling import SamplingIdentityError
@@ -161,7 +176,7 @@ class CheckpointTests(unittest.TestCase):
                 original = runner._link_tables_and_columns
                 def process(target):
                     try:
-                        LLMExtractor().extract_with_retry(llm, [], str.strip, n=1)
+                        LLMExtractor().extract_with_retry(llm, [], SuffixRule(' unsupported'), n=1)
                     except Exception:
                         original(target)  # Native optional-failure fallback.
                 runner._link_tables_and_columns = process

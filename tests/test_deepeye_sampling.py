@@ -46,6 +46,21 @@ def parse(content):
 
 
 class SamplingTests(unittest.TestCase):
+    def test_callable_instance_and_partial_over_instance_are_rejected_before_transport(self):
+        from functools import partial
+        from app.llm.sampling import SamplingIdentityError
+        class Rule:
+            def __init__(self):
+                self.suffix = ' configured'
+            def __call__(self, content):
+                return content + self.suffix
+        for rule in (Rule(), partial(Rule())):
+            with self.subTest(rule=rule):
+                llm, requests = llm_fixture([response()])
+                with self.assertRaisesRegex(SamplingIdentityError, 'unsupported parser callable'):
+                    LLMExtractor().extract_with_retry(llm, [], rule, n=1)
+                self.assertEqual(requests, [])
+
     def test_unsupported_native_callable_is_rejected_before_transport(self):
         from app.llm.sampling import SamplingIdentityError
         llm, requests = llm_fixture([response()])
