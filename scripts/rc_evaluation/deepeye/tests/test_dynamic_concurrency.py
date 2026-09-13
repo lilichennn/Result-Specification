@@ -79,8 +79,22 @@ class DynamicConcurrencyTests(OfflineTestCase):
         def stop_at_submission(runtime, *args, **kwargs):
             runtime.stop()
             return original(runtime, *args, **kwargs)
-        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, keys='ab') as store, \
+        # This test targets actual request scheduling, not the resource-free
+        # synchronous replay path.
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, calls=1, keys='ab') as store, \
                 patch.object(SamplingRuntime, 'submit_workflow', stop_at_submission):
+            result = cli.execute_run(store, ENV)
+            self.assertEqual((result['succeeded'], result['failed'], result['paused']), (0, 0, 2))
+            self.assertEqual(store.attempts(), [])
+
+    def test_replay_stop_before_inline_submission_returns_paused_without_resources(self):
+        original = cli._InlineReplayRuntime.submit
+        def stop_at_submission(runtime, *args, **kwargs):
+            runtime.stop_event.set()
+            return original(runtime, *args, **kwargs)
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, keys='ab') as store, \
+                patch.object(cli._InlineReplayRuntime, 'submit', stop_at_submission), \
+                patch.object(cli, 'sampling_runtime', side_effect=AssertionError('replay allocated resources')):
             result = cli.execute_run(store, ENV)
             self.assertEqual((result['succeeded'], result['failed'], result['paused']), (0, 0, 2))
             self.assertEqual(store.attempts(), [])
