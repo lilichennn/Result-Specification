@@ -599,5 +599,103 @@ class ConfigurationTests(unittest.TestCase):
                 self.assertNotIn('test-password', json.dumps(config))
 
 
+class FaultHandlingTests(unittest.TestCase):
+    @contextlib.contextmanager
+    def fixture(self):
+        from scripts.rc_evaluation.deepeye.campaign.ledger import CampaignLedger
+        with tempfile.TemporaryDirectory() as directory:
+            config = dict(items=['lite/a'], native_args=[], tail_fraction=.8, poll_seconds=60,
+                          python=sys.executable, code_root=str(ROOT), env_file='/tmp/env', rc_lite='/tmp/lite', rc_full='/tmp/full')
+            with CampaignLedger.create(Path(directory) / 'campaign', config) as ledger:
+                job = ledger.jobs()[0]
+                with RunStore.create(Path(job['run_dir']), {'items': [{'task_key': 'lite/a'}]}) as store:
+                    attempt = store.begin_attempt('lite/a', 'sql_generation', 'input')
+                yield ledger, job, attempt
+
+    def append_api_error(self, job, attempt, call_id='unauthorized'):
+        with RunStore.open(Path(job['run_dir'])) as store:
+            store.append_event(attempt, 'api_error', {'call_id': call_id,
+                'error': {'type': {'module': 'openai', 'qualname': 'AuthenticationError'}, 'status_code': 401}})
+
+    def record_postgres_error(self, job, attempt, error, *, connecting):
+        from types import SimpleNamespace
+        from scripts.baseline_adapters.deepeye.postgres_execution import execute_postgres_sql
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        def execute(*args, **kwargs):
+            raise error
+        connection = SimpleNamespace(read_only=False, rollback=lambda: None, close=lambda: None,
+            cursor=lambda: SimpleNamespace(execute=execute, close=lambda: None))
+        # The adapter and its real trace wrapper serialize the actual
+        # SQLExecutionResult; only connection establishment is replaced.
+        with RunStore.open(Path(job['run_dir'])) as store:
+            recorder = TraceRecorder(store)
+            wrapped = recorder._execution_wrapper(lambda service, data, sql: execute_postgres_sql(data, sql),
+                                                   'sql_execute', 'execute')
+            with patch('scripts.baseline_adapters.deepeye.postgres_execution.psycopg.connect',
+                       side_effect=error if connecting else None, return_value=connection), recorder.context(attempt):
+                wrapped(None, item('a'), 'SELECT x FROM t')
+            event = next(store.iter_events(attempt, kinds='sql_execute_result'))
+            return event['payload']['result']
+
+    def test_actual_postgres_auth_permission_and_database_failures_block(self):
+        import psycopg
+        from scripts.rc_evaluation.deepeye.campaign import controller
+        cases = [(psycopg.OperationalError('password authentication failed'), True),
+                 (psycopg.errors.InsufficientPrivilege('permission denied for table t'), False),
+                 (psycopg.errors.InvalidCatalogName('database missing does not exist'), False)]
+        for error, connecting in cases:
+            with self.subTest(error=type(error).__name__), self.fixture() as (ledger, job, attempt):
+                result = self.record_postgres_error(job, attempt, error, connecting=connecting)
+                self.assertEqual(result['result_type'], 'execution_error')
+                if connecting:
+                    self.assertEqual(result['error_message'], 'PostgreSQL connection failed; check connection settings and server availability')
+                with self.assertRaises(RuntimeError):
+                    controller.check_run_faults(ledger, job)
+                self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
+
+    def test_ordinary_generated_sql_errors_and_timeouts_do_not_block(self):
+        import psycopg
+        from scripts.rc_evaluation.deepeye.campaign import controller
+        for error in (psycopg.errors.SyntaxError('syntax error near FROM'),
+                      psycopg.errors.UndefinedTable('relation missing does not exist'),
+                      psycopg.errors.QueryCanceled('statement timeout')):
+            with self.subTest(error=type(error).__name__), self.fixture() as (ledger, job, attempt):
+                self.record_postgres_error(job, attempt, error, connecting=False)
+                controller.check_run_faults(ledger, job)
+                self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'configured')
+
+    def test_crash_after_cursor_write_cannot_lose_durable_block(self):
+        from scripts.rc_evaluation.deepeye.campaign import controller
+        with self.fixture() as (ledger, job, attempt):
+            self.append_api_error(job, attempt)
+            atomic = controller.atomic_json
+            def crash(path, value):
+                atomic(path, value)
+                if Path(path).name == 'fault-cursors.json':
+                    raise SystemExit('crash immediately after durable cursor')
+            with patch.object(controller, 'atomic_json', side_effect=crash), self.assertRaises(SystemExit):
+                controller.check_run_faults(ledger, job)
+            self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
+            # Acknowledged evidence does not re-block an explicit repair/resume,
+            # but a later independent event must still block.
+            controller.set_control(ledger, 'running', 'explicit_resume_after_repair')
+            controller.check_run_faults(ledger, job)
+            self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'running')
+            self.append_api_error(job, attempt, 'later-unauthorized')
+            with self.assertRaises(RuntimeError):
+                controller.check_run_faults(ledger, job)
+            self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
+
+    def test_crash_before_block_does_not_acknowledge_fault(self):
+        from scripts.rc_evaluation.deepeye.campaign import controller
+        with self.fixture() as (ledger, job, attempt):
+            self.append_api_error(job, attempt)
+            with patch.object(controller, 'set_control', side_effect=SystemExit('before block')), self.assertRaises(SystemExit):
+                controller.check_run_faults(ledger, job)
+            with self.assertRaises(RuntimeError):
+                controller.check_run_faults(ledger, job)
+            self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
+
+
 if __name__ == '__main__':
     unittest.main()

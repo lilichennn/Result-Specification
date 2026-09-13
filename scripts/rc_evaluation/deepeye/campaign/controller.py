@@ -46,6 +46,19 @@ def all_terminal(observation):
     return all(row['status'] in ('succeeded', 'failed') for row in observation['states'].values())
 
 
+def postgres_fault(result):
+    """Recognize adapter diagnostics, not ordinary generated-query errors."""
+    if result.get('result_type') != 'execution_error':
+        return None
+    message = result.get('error_message', '')
+    if message == 'PostgreSQL connection failed; check connection settings and server availability':
+        return 'PostgreSQLConnectionFailure'
+    for sqlstate, name in (('42501', 'PostgreSQLPermissionDenied'), ('3D000', 'PostgreSQLDatabaseMissing')):
+        if message.startswith(f'PostgreSQL [{sqlstate}]:'):
+            return name
+    return None
+
+
 def check_run_faults(ledger, job):
     """Inspect only new error events, including errors hidden by native fallback."""
     from scripts.baseline_adapters.deepeye.run_store import RunStore
@@ -53,22 +66,35 @@ def check_run_faults(ledger, job):
     cursors = read_json(path) or {}
     cursor = cursors.get(job['job_id'], 0)
     with RunStore.open(Path(job['run_dir']), read_only=True) as store, store._read_snapshot() as db:
-        rows = db.execute("SELECT * FROM events WHERE kind='api_error' AND event_id>? ORDER BY event_id", (cursor,)).fetchall()
+        latest = db.execute('SELECT COALESCE(MAX(event_id),0) FROM events').fetchone()[0]
+        rows = db.execute("SELECT * FROM events WHERE event_id>? AND event_id<=? AND "
+                          "(kind='api_error' OR (kind='sql_execute_result' AND "
+                          "json_extract(payload_json,'$.result.result_type')='execution_error')) ORDER BY event_id",
+                          (cursor, latest)).fetchall()
         errors = [store._event_dict(row) for row in rows]
     faults = []
     for event in errors:
+        if event['kind'] == 'sql_execute_result':
+            name = postgres_fault(event['payload'].get('result', {}))
+            if name:
+                faults.append({'job_id': job['job_id'], 'event_id': event['event_id'], 'error_type': name})
+            continue
         error = event['payload'].get('error', {})
         name = error.get('type', {}).get('qualname')
         code = error.get('status_code')
         if code in (400, 401, 403, 404, 422) or name in ('AuthenticationError', 'PermissionDeniedError', 'ConfigurationError'):
             faults.append({'job_id': job['job_id'], 'event_id': event['event_id'], 'error_type': name, 'status_code': code})
-    if errors:
-        cursors[job['job_id']] = errors[-1]['event_id']
-        atomic_json(path, cursors)
     if faults:
         ledger.append_event('system_fault_evidence', {'faults': faults})
         set_control(ledger, 'blocked', faults[0])
-        raise RuntimeError('Provider authentication/permission/configuration fault requires explicit repair and resume')
+    # A cursor acknowledges inspection. Never acknowledge a fault before its
+    # evidence and block are durable: interruption may duplicate a report, but
+    # cannot consume the only record that requires explicit repair/resume.
+    if latest > cursor:
+        cursors[job['job_id']] = latest
+        atomic_json(path, cursors)
+    if faults:
+        raise RuntimeError('Provider or PostgreSQL infrastructure fault requires explicit repair and resume')
 
 
 def reconcile(ledger):
