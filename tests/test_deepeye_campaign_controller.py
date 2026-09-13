@@ -82,7 +82,9 @@ def fixture_cli(path, job_id, command):
         if job['kind'] != 'rc':
             args = native._build_parser().parse_args(['prepare', '--run-dir', job['run_dir'], '--precompute-dir', '/tmp/offline'])
             manifest = native.build_manifest(native.build_effective_config(ENV, args), {},
-                                            [{'task_key': key, 'database_id': 'db'} for key in job['items']])
+                                            [{'task_key': key, 'database_id': 'db',
+                                              'partition': key.split('/')[0], 'external_id': key.split('/')[1]}
+                                             for key in job['items']])
         else:
             snapshot = snapshot_source(Path(job['source_run']), tasks, job['target_stage'])
             manifest = {'format': 'deepeye-rc-evaluation-run-v1', 'target_stage': job['target_stage'],
@@ -225,6 +227,45 @@ class RecoveryTests(unittest.TestCase):
 
 
 class ProcessTests(unittest.TestCase):
+    def test_generic_campaign_configures_from_the_real_native_preparation(self):
+        from tests.test_deepeye_workloads import WorkloadTests
+        from scripts.rc_evaluation.deepeye.tests.test_contracts import _record
+        from scripts.rc_evaluation.deepeye.campaign import cli, configuration
+        from scripts.rc_evaluation.deepeye.campaign.ledger import CampaignLedger
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workload, _ = WorkloadTests().fixture(root, 'spider', 'dev')
+            (root / 'rc.json').write_text(json.dumps([_record(i, db_id='db', question=f'question {i}', evidence='') for i in (7, 19)]))
+            env = root / 'fixture.env'
+            env.write_text('DASH_MODELS=qwen3.6\nDASH_BASE_URL=https://example.test/v1\nDASH_API_KEY=offline\n')
+            args = cli.build_parser().parse_args(['configure', '--campaign-dir', str(root/'campaign'),
+                '--workload', str(workload), '--env-file', str(env)])
+            with patch.object(configuration.native, 'code_source_hashes', return_value={}):
+                result = configuration.configure(args)
+                self.assertEqual(result['items'], 2)
+                with CampaignLedger.open(root/'campaign', read_only=True) as ledger:
+                    config = ledger.config
+                self.assertEqual(config['items'], ['spider/dev/i:19', 'spider/dev/i:7'])
+                self.assertEqual(config['rc_sources'], {'spider/dev': str((root/'rc.json').resolve())})
+                self.assertNotIn('--precompute-dir', config['native_args'])
+                with patch.object(configuration, 'derive', side_effect=AssertionError('supervisor prepared twice')):
+                    self.assertIsNone(configuration.validate_config(config, inputs=False))
+
+    def test_generic_commands_keep_partition_rc_and_use_shared_entry(self):
+        module = self.modules()
+        config = {'python': sys.executable, 'code_root': str(ROOT), 'env_file': '/tmp/env',
+                  'rc_sources': {'spider/dev': '/tmp/rc.json'},
+                  'native_args': ['--workload', '/tmp/workload.json', '--env-file', '/tmp/env']}
+        job = {'kind': 'native_first', 'run_dir': '/tmp/run', 'items': ['spider/dev/i:7', 'spider/dev/i:19']}
+        prepare, execute = module.commands(config, job)
+        self.assertEqual(Path(prepare[3]).name, 'deepeye_run.py')
+        self.assertIn('/tmp/workload.json', execute)
+        job.update(kind='rc', source_run='/tmp/source', target_stage='sql_generation')
+        prepare, execute = module.commands(config, job)
+        self.assertIn('spider/dev=/tmp/rc.json', prepare)
+        self.assertNotIn('--rc-lite', prepare)
+        self.assertEqual(execute[-1], '--unfinished-only')
+
     def modules(self):
         try:
             return importlib.import_module('scripts.rc_evaluation.deepeye.campaign.processes')
@@ -264,6 +305,22 @@ class ProcessTests(unittest.TestCase):
 
 
 class ControllerTests(unittest.TestCase):
+    def test_resource_monitor_does_not_reopen_a_fully_counted_finished_run(self):
+        from scripts.rc_evaluation.deepeye.campaign import monitoring
+        from scripts.rc_evaluation.deepeye.campaign.processes import atomic_json
+        job = self.ledger.jobs()[0]
+        with RunStore.create(Path(job['run_dir']), {'items': [{'task_key': 'lite/a'}]}) as store:
+            attempt = store.begin_attempt('lite/a', 'schema_linking', 'input')
+            store.append_event(attempt, 'api_request', {'call_id': 'one'})
+            store.append_event(attempt, 'api_response', {'call_id': 'one'})
+        self.ledger.update_job(job['job_id'], state='finished')
+        result = monitoring.resource_observations(self.ledger)
+        self.assertEqual(result['runs'][job['job_id']]['requests'], 1)
+        atomic_json(self.path / 'status.json', {'resources': result})
+        with patch.object(monitoring.RunStore, 'open', side_effect=AssertionError('finished store reread')):
+            for _ in range(3):
+                self.assertEqual(monitoring.resource_observations(self.ledger)['runs'], result['runs'])
+
     def setUp(self):
         try:
             self.module = importlib.import_module('scripts.rc_evaluation.deepeye.campaign.controller')
@@ -472,7 +529,9 @@ with CampaignLedger.open(sys.argv[2]) as ledger:
                 child = self.module.launch(ledger, ledger.jobs()[0])
             job = ledger.jobs()[0]
             def failed():
-                if not (Path(job['run_dir']) / 'run.sqlite3').exists():
+                from scripts.rc_evaluation.deepeye.campaign.processes import read_json
+                _, identity_path = self.module.job_paths(path, job)
+                if (read_json(identity_path) or {}).get('phase') not in ('running', 'finished'):
                     return False
                 return self.module.observe(job)['states']['lite/a']['status'] == 'failed'
             self.wait_until(failed)
@@ -494,7 +553,7 @@ with CampaignLedger.open(sys.argv[2]) as ledger:
         from scripts.rc_evaluation.deepeye.campaign.planning import plan_tick
         from scripts.rc_evaluation.deepeye.campaign.processes import atomic_json, read_json
         from scripts.rc_evaluation.deepeye.runner import run_experiment
-        from scripts import deepeye_bird_interact_run as native
+        from scripts import deepeye_run as native
         from scripts.rc_evaluation.deepeye.tests.test_cli import ENV
         path = Path(self.temp.name) / 'overlap'
         config = {**self.config, 'items': ['lite/' + k for k in 'abcdef'], 'fixture_delay': 5}
@@ -504,7 +563,8 @@ with CampaignLedger.open(sys.argv[2]) as ledger:
             first = ledger.jobs()[0]
             args = native._build_parser().parse_args(['prepare', '--run-dir', first['run_dir'], '--precompute-dir', '/tmp/pre'])
             manifest = native.build_manifest(native.build_effective_config(ENV, args), {},
-                                            [{'task_key': key, 'database_id': 'db'} for key in config['items']])
+                                            [{'task_key': key, 'database_id': 'db', 'partition': 'lite',
+                                              'external_id': key.split('/')[1]} for key in config['items']])
             with RunStore.create(Path(first['run_dir']), manifest) as store, contextlib.redirect_stdout(io.StringIO()):
                 run_pipeline(store, fixture_tasks({'items': config['items'][:5]}), zero_factory(), FakeTrace())
             ledger.update_job(first['job_id'], state='prepared')
@@ -604,7 +664,7 @@ class ConfigurationTests(unittest.TestCase):
             self.fail(f'Offline configuration is required: {exc}')
         import socket
         from types import SimpleNamespace
-        from scripts import deepeye_bird_interact_run as native
+        from scripts import deepeye_run as native
         from scripts.rc_evaluation.deepeye.tests.test_cli import ENV
         from scripts.rc_evaluation.deepeye.campaign.ledger import CampaignLedger
         with tempfile.TemporaryDirectory() as directory:
@@ -616,7 +676,7 @@ class ConfigurationTests(unittest.TestCase):
                                    rc_full=root / 'full', item_keys=['lite/a'], tail_fraction=.8, poll_seconds=60)
             inputs = ([('lite', item('a'))], [{'task_key': 'lite/a'}], {'code': native.code_source_hashes()})
             with patch.object(native, 'prepare_inputs', return_value=inputs), \
-                    patch('scripts.deepeye_bird_interact_smoke.read_environment', return_value=ENV), \
+                    patch.object(native, 'read_environment', return_value=ENV), \
                     patch('scripts.rc_evaluation.deepeye.contracts.load_contracts', return_value={'lite/a': {}}), \
                     patch.object(socket.socket, 'connect', side_effect=AssertionError('network forbidden')):
                 configuration.configure(args)

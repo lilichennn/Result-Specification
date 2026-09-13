@@ -6,6 +6,7 @@ from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from tests.test_deepeye_run_pipeline import Factory, FakeTrace, item
 from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, run_pipeline
@@ -13,6 +14,49 @@ from scripts.baseline_adapters.deepeye.run_store import RunStore
 
 
 class CampaignStateTest(unittest.TestCase):
+    def test_generic_typed_keys_can_be_frozen_without_lite_full_assumptions(self):
+        ledger = self.ledger(['spider/dev/i:7', 'spider/dev/i:19'])
+        self.assertEqual(ledger.jobs()[0]['items'], ['spider/dev/i:19', 'spider/dev/i:7'])
+
+    def test_incremental_reader_decodes_only_new_attempts_and_finishes(self):
+        from scripts.rc_evaluation.deepeye.campaign import observations
+        self.assertTrue(hasattr(observations, 'RunObservationReader'))
+        ledger = self.ledger(['lite/a'])
+        job = ledger.jobs()[0]
+        store = self.prepare(ledger, job)
+        started = self.native(store, 'lite/a', 'unfinished')
+        with observations.RunObservationReader(job['run_dir'], kind='native') as reader:
+            with patch.object(reader.store, '_attempt_dict', wraps=reader.store._attempt_dict) as decode:
+                self.assertEqual(reader.read()['states']['lite/a']['status'], 'unfinished')
+                self.assertEqual(decode.call_count, 1)
+                decode.reset_mock()
+                for _ in range(3):
+                    self.assertEqual(reader.read()['states']['lite/a']['status'], 'unfinished')
+                self.assertEqual(decode.call_count, 0)
+                stage = store.begin_attempt('lite/a', 'schema_linking', 'input')
+                store.finish_attempt(stage, 'failed', {'error': 'offline fixture'})
+                store.finish_attempt(started, 'failed', {'failed_stage': 'schema_linking',
+                    'stage_attempts': [{'stage': 'schema_linking', 'attempt_id': stage}]})
+                self.assertEqual(reader.read()['states']['lite/a']['status'], 'failed')
+                self.assertEqual(decode.call_count, 2)
+                decode.reset_mock()
+                reader.read()
+                self.assertEqual(decode.call_count, 0)
+
+    def test_jobs_read_all_memberships_in_one_query(self):
+        ledger = self.ledger()
+        for key in 'abcde':
+            ledger.claim_job(kind='native_retry', items=['lite/' + key])
+        queries = []
+        ledger._db.set_trace_callback(queries.append)
+        try:
+            jobs = ledger.jobs()
+        finally:
+            ledger._db.set_trace_callback(None)
+        self.assertEqual(len(jobs), 6)
+        member_queries = [query for query in queries if 'FROM claims' in query]
+        self.assertEqual(len(member_queries), 1)
+
     def setUp(self):
         try:
             self.Ledger = importlib.import_module('scripts.rc_evaluation.deepeye.campaign.ledger').CampaignLedger

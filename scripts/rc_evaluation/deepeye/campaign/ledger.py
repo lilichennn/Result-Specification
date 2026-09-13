@@ -37,9 +37,16 @@ def _config(config):
     for arg in args:
         if arg.split('=', 1)[0] in ('--run-dir', '--item', '--item-key', '--item-keys'):
             raise ValueError('campaign owns run directory and item selection')
-    for name in ('env_file', 'rc_lite', 'rc_full', 'python', 'code_root'):
+    for name in ('env_file', 'python', 'code_root'):
         if not isinstance(result.get(name), str) or not result[name]:
             raise ValueError(f'{name} must be a nonempty string')
+    paths = result.get('rc_sources')
+    if paths is None:
+        paths = {key: result.get('rc_' + key) for key in ('lite', 'full')}
+    if not isinstance(paths, dict) or not paths or any(
+            not isinstance(key, str) or not key or not isinstance(value, str) or not value
+            for key, value in paths.items()):
+        raise ValueError('RC sources must map partitions to nonempty paths')
     _json(result)
     return result
 
@@ -189,9 +196,12 @@ class CampaignLedger:
 
     def jobs(self):
         result = []
+        members = {}
+        for row in self._db.execute('SELECT job_id,item_key FROM claims ORDER BY job_id,position'):
+            members.setdefault(row['job_id'], []).append(row['item_key'])
         for row in self._db.execute('SELECT * FROM jobs ORDER BY rowid'):
             job = dict(row)
-            job['items'] = [member[0] for member in self._db.execute('SELECT item_key FROM claims WHERE job_id=? ORDER BY position', (job['job_id'],))]
+            job['items'] = members.get(job['job_id'], [])
             validate_items(job['items'])
             if Path(job['run_dir']).resolve() != self.campaign_dir / 'runs' / job['job_id']:
                 raise ValueError('job directory is outside its campaign location')

@@ -1,5 +1,6 @@
 """Read checksummed outcomes without traversing model-response events."""
 from pathlib import Path
+from urllib.parse import quote, unquote
 
 from scripts.baseline_adapters.deepeye.run_pipeline import STAGES
 from scripts.baseline_adapters.deepeye.run_store import RunStore
@@ -12,8 +13,22 @@ def validate_items(items):
         if not isinstance(key, str):
             raise ValueError('task keys must be strings')
         parts = key.split('/')
-        if (len(parts) != 2 or parts[0] not in ('lite', 'full') or
-                parts[1] in ('', '.', '..') or '\\' in key or key.strip() != key):
+        legacy = len(parts) == 2 and parts[0] in ('lite', 'full') and parts[1] not in ('', '.', '..')
+        from scripts.baseline_adapters.deepeye.workloads import SELECTIONS
+        typed = False
+        if len(parts) == 3 and tuple(parts[:2]) in SELECTIONS:
+            suffix = parts[2]
+            if suffix.startswith('i:'):
+                try:
+                    typed = str(int(suffix[2:])) == suffix[2:]
+                except ValueError:
+                    pass
+            elif suffix.startswith('s:') and suffix[2:]:
+                try:
+                    typed = quote(unquote(suffix[2:], errors='strict'), safe='') == suffix[2:]
+                except UnicodeDecodeError:
+                    pass
+        if (not (legacy or typed) or '\\' in key or key.strip() != key):
             raise ValueError(f'invalid task key: {key!r}')
     if len(set(items)) != len(items):
         raise ValueError('duplicate task keys')
@@ -55,28 +70,63 @@ def _native_terminal(master, attempts):
             raise ValueError('native failure requires a complete prefix ending at its failed stage')
 
 
-def read_run(run_dir, *, kind, target_stage=None):
-    """Return one verified SQLite snapshot; missing/corrupt records are errors.
+class RunObservationReader:
+    """Process-owned reader over immutable attempts and append-only finishes.
 
-    RunStore has no public snapshot/filter API. Its existing internal snapshot
-    and attempt decoder let RC read only the target records, with the same
-    checksums as public ``attempts()``, and never read response event bodies.
+    Each stored body is decoded on first observation and when its finish is
+    appended, not on every polling tick. Existing terminal data are immutable
+    by RunStore triggers. A fresh inspection still starts from all records.
+    Do not mutate the returned manifest; it belongs to this polling session.
     """
-    if kind not in ('native', 'rc') or (kind == 'rc' and target_stage not in STAGES):
-        raise ValueError('invalid run kind or RC target stage')
-    path = Path(run_dir).resolve()
-    with RunStore.open(path, read_only=True) as store, store._read_snapshot() as connection:
-        manifest = store.manifest
-        items = manifest_items(manifest)
-        if kind == 'rc':
-            if manifest.get('target_stage') != target_stage:
+    def __init__(self, run_dir, *, kind, target_stage=None):
+        if kind not in ('native', 'rc') or (kind == 'rc' and target_stage not in STAGES):
+            raise ValueError('invalid run kind or RC target stage')
+        self.store = RunStore.open(Path(run_dir).resolve(), read_only=True)
+        try:
+            self.manifest = self.store.manifest
+            self.items = manifest_items(self.manifest)
+            if kind == 'rc' and self.manifest.get('target_stage') != target_stage:
                 raise ValueError('RC manifest target stage mismatch')
-            rows = connection.execute(store._attempt_query('WHERE a.stage = ? ORDER BY a.rowid'),
-                                      (target_stage,)).fetchall()
-            attempts = [store._attempt_dict(row) for row in rows]
-        else:
-            attempts = store.attempts()
-        if any(row['item_key'] not in items for row in attempts):
+        except BaseException:
+            self.store.close()
+            raise
+        self.kind, self.target_stage = kind, target_stage
+        self._attempt_cursor = self._finish_cursor = 0
+        self._attempts = {}
+
+    def close(self):
+        self.store.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *unused):
+        self.close()
+
+    def read(self):
+        store = self.store
+        with store._read_snapshot() as connection:
+            attempt_cursor = connection.execute('SELECT COALESCE(MAX(rowid),0) FROM attempts').fetchone()[0]
+            finish_cursor = connection.execute('SELECT COALESCE(MAX(rowid),0) FROM finishes').fetchone()[0]
+            condition = ('WHERE a.rowid IN (SELECT rowid FROM attempts WHERE rowid>? '
+                         'UNION SELECT a2.rowid FROM finishes f2 JOIN attempts a2 USING(attempt_id) WHERE f2.rowid>?)')
+            args = [self._attempt_cursor, self._finish_cursor]
+            if self.kind == 'rc':
+                condition += ' AND a.stage=?'
+                args.append(self.target_stage)
+            rows = connection.execute(store._attempt_query(condition + ' ORDER BY a.rowid'), args).fetchall()
+            for row in rows:
+                decoded = store._attempt_dict(row)
+                self._attempts[decoded['attempt_id']] = decoded
+            result = self._snapshot()
+            self._attempt_cursor, self._finish_cursor = attempt_cursor, finish_cursor
+            return result
+
+    def _snapshot(self):
+        attempts = list(self._attempts.values())
+        items, manifest, kind, target_stage = self.items, self.manifest, self.kind, self.target_stage
+        members = set(items)
+        if any(row['item_key'] not in members for row in attempts):
             raise ValueError('run contains an attempt for an unlisted task')
         if kind == 'native':
             successful_inputs = {}
@@ -102,4 +152,10 @@ def read_run(run_dir, *, kind, target_stage=None):
                 'finished_at': attempt['finished_at'] if attempt else None,
                 'payload': attempt['payload'] if attempt else None,
             }
-        return {'run_dir': str(path), 'manifest': manifest, 'items': items, 'states': states}
+        return {'run_dir': str(self.store.run_dir.resolve()), 'manifest': manifest, 'items': items, 'states': states}
+
+
+def read_run(run_dir, *, kind, target_stage=None):
+    """One-shot verified observation; controllers retain their reader explicitly."""
+    with RunObservationReader(run_dir, kind=kind, target_stage=target_stage) as reader:
+        return reader.read()

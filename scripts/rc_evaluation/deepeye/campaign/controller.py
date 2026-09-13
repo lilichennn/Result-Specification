@@ -33,8 +33,9 @@ def job_paths(path, job):
     return base.with_suffix('.lock'), base.with_suffix('.json')
 
 
-def observe(job):
-    observation = read_run(job['run_dir'], kind='rc' if job['kind'] == 'rc' else 'native', target_stage=job['target_stage'])
+def observe(job, *, reader=None):
+    observation = (reader.read() if reader is not None else
+                   read_run(job['run_dir'], kind='rc' if job['kind'] == 'rc' else 'native', target_stage=job['target_stage']))
     if sorted(observation['items']) != sorted(job['items']):
         raise ValueError('Job membership differs from frozen cohort')
     if job['kind'] == 'rc' and observation['manifest'].get('source_run') != job['source_run']:
@@ -97,7 +98,7 @@ def check_run_faults(ledger, job):
         raise RuntimeError('Provider or PostgreSQL infrastructure fault requires explicit repair and resume')
 
 
-def reconcile(ledger):
+def reconcile(ledger, *, observer=observe):
     """No inferred ownership from PIDs; delayed acknowledgements remain pending."""
     result = {}
     for job in ledger.jobs():
@@ -120,7 +121,7 @@ def reconcile(ledger):
             else:
                 result[job['job_id']] = 'blocked'
         elif phase == 'finished' and record.get('exit_code') in (0, 1):
-            if all_terminal(observe(job)):
+            if all_terminal(observer(job)):
                 ledger.update_job(job['job_id'], state='finished')
                 result[job['job_id']] = 'finished'
             else:
@@ -139,7 +140,7 @@ def reconcile(ledger):
 
 
 def worker_command(config, campaign_dir, job_id, token):
-    return [config['python'], '-E', '-B', str(Path(config['code_root']) / 'scripts/deepeye_bird_interact_campaign.py'),
+    return [config['python'], '-E', '-B', str(Path(config['code_root']) / 'scripts/deepeye_campaign.py'),
             '_worker', '--campaign-dir', str(campaign_dir), '--job-id', job_id, '--token', token]
 
 
@@ -211,9 +212,20 @@ def run(path, *, resume=False):
             previous[sig] = signal.signal(sig, stopped)
         children = []
         observed_finished = set()
+        readers = {}
         try:
             while True:
-                states = reconcile(ledger)
+                from .observations import RunObservationReader
+                tick_observations = {}
+                def current_observation(job):
+                    key = job['job_id']
+                    if key not in tick_observations:
+                        if key not in readers:
+                            readers[key] = RunObservationReader(job['run_dir'],
+                                kind='rc' if job['kind'] == 'rc' else 'native', target_stage=job['target_stage'])
+                        tick_observations[key] = observe(job, reader=readers[key])
+                    return tick_observations[key]
+                states = reconcile(ledger, observer=current_observation)
                 observations = {}
                 for job in ledger.jobs():
                     if job['job_id'] in observed_finished:
@@ -223,20 +235,23 @@ def run(path, *, resume=False):
                     # Never inspect a partially created store during prepare.
                     if record and record.get('phase') in ('prepared', 'running', 'finished', 'paused', 'blocked') and Path(job['run_dir']).exists():
                         check_run_faults(ledger, job)
-                        observations[job['job_id']] = observe(job)
+                        observations[job['job_id']] = current_observation(job)
                 result = plan_tick(ledger, observations)
-                observed_finished.update(job['job_id'] for job in ledger.jobs()
+                jobs = ledger.jobs()
+                observed_finished.update(job['job_id'] for job in jobs
                                          if job['state'] == 'finished' and job['job_id'] in observations)
+                for key in observed_finished.intersection(readers):
+                    readers.pop(key).close()
                 from .monitoring import snapshot
-                atomic_json(path / 'status.json', snapshot(ledger, result, states))
-                if result['complete'] and all(job['state'] == 'finished' for job in ledger.jobs()):
+                atomic_json(path / 'status.json', snapshot(ledger, result, states, jobs=jobs))
+                if result['complete'] and all(job['state'] == 'finished' for job in jobs):
                     set_control(ledger, 'complete')
                     return status(path)
                 mode = control(path)['mode']
                 if mode == 'running':
-                    for job in ledger.jobs():
+                    for job in jobs:
                         if job['state'] in ('planned', 'prepared') and not job['process']:
-                            validate_config(config)
+                            validate_config(config, inputs=False)
                             child = launch(ledger, job)
                             if child is not None:
                                 children.append(child)
@@ -252,6 +267,8 @@ def run(path, *, resume=False):
             set_control(ledger, 'blocked', {'error_type': type(exc).__name__})
             raise
         finally:
+            for reader in readers.values():
+                reader.close()
             # Normal loop exit only follows released job locks. Reap our direct
             # supervisors, which may still be completing Python interpreter exit.
             for child in children:

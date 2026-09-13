@@ -55,13 +55,15 @@ def commands(config, job):
     root = Path(config['code_root'])
     items = [value for key in job['items'] for value in ('--item', key)]
     if job['kind'] != 'rc':
-        base = [config['python'], '-E', '-B', str(root / 'scripts/deepeye_bird_interact_run.py')]
+        base = [config['python'], '-E', '-B', str(root / 'scripts/deepeye_run.py')]
         options = ['--run-dir', job['run_dir'], *config['native_args'], *items]
         return base + ['prepare', *options], base + ['resume', *options, '--unfinished-only']
     base = [config['python'], '-E', '-B', str(root / 'scripts/rc_evaluation/deepeye/cli.py')]
+    paths = config.get('rc_sources') or {key: config['rc_' + key] for key in ('lite', 'full')}
+    contracts = [value for partition, path in paths.items() for value in ('--rc', f'{partition}={path}')]
     prepare = base + ['prepare', '--source-run', job['source_run'], '--run-dir', job['run_dir'],
                       '--target-stage', job['target_stage'], '--condition', 'rc',
-                      '--rc-lite', config['rc_lite'], '--rc-full', config['rc_full'],
+                      *contracts,
                       '--env-file', config['env_file'], *items]
     return prepare, base + ['resume', '--run-dir', job['run_dir'], '--env-file', config['env_file'], '--unfinished-only']
 

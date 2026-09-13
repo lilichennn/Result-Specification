@@ -10,10 +10,10 @@ from .controller import job_paths, now
 from .processes import atomic_json, read_json, verified_identity
 
 
-def resource_observations(ledger):
+def resource_observations(ledger, *, jobs=None):
     prior = (read_json(ledger.campaign_dir / 'status.json') or {}).get('resources', {}).get('runs', {})
     runs, processes = {}, []
-    for job in ledger.jobs():
+    for job in ledger.jobs() if jobs is None else jobs:
         directory = Path(job['run_dir'])
         _, identity = job_paths(ledger.campaign_dir, job)
         record = read_json(identity)
@@ -33,22 +33,26 @@ def resource_observations(ledger):
         if record and record.get('phase') in ('acknowledged', 'preparing'):
             continue
         previous = prior.get(job['job_id'], {'cursor': 0, 'requests': 0, 'terminals': 0})
+        if job['state'] == 'finished' and previous.get('sealed') is True:
+            runs[job['job_id']] = previous
+            continue
         with RunStore.open(directory, read_only=True) as store, store._read_snapshot() as db:
             cursor = db.execute('SELECT COALESCE(MAX(event_id),0) FROM events').fetchone()[0]
             counts = dict(db.execute('SELECT kind,COUNT(*) FROM events WHERE event_id>? AND event_id<=? '
                                      "AND kind IN ('api_request','api_response','api_error') GROUP BY kind",
                                      (previous['cursor'], cursor)).fetchall())
         runs[job['job_id']] = {'cursor': cursor, 'requests': previous['requests'] + counts.get('api_request', 0),
-                              'terminals': previous['terminals'] + counts.get('api_response', 0) + counts.get('api_error', 0)}
+                              'terminals': previous['terminals'] + counts.get('api_response', 0) + counts.get('api_error', 0),
+                              'sealed': job['state'] == 'finished'}
     return {'occupancy_definition': 'Logical api_request events minus api_response/api_error events; not HTTP in-flight or TCP connections. Interrupted calls can remain outstanding.',
             'http_in_flight': None, 'logical_api_outstanding': sum(row['requests'] - row['terminals'] for row in runs.values()),
             'runs': runs, 'processes': processes, 'load_average': list(os.getloadavg()), 'new_resource_limits': None}
 
 
-def audit_milestones(ledger):
+def audit_milestones(ledger, *, jobs=None):
     directory = ledger.campaign_dir / 'audits'
     directory.mkdir(exist_ok=True)
-    jobs = {row['job_id']: row for row in ledger.jobs()}
+    jobs = {row['job_id']: row for row in (ledger.jobs() if jobs is None else jobs)}
     terminal = [dict(row) for row in ledger._db.execute(
         "SELECT job_id,item_key,status,attempt_id FROM observations WHERE status IN ('succeeded','failed')")]
     # Native milestones count final item dispositions, not execution attempts.
@@ -107,8 +111,9 @@ def audit_milestones(ledger):
     return outputs
 
 
-def snapshot(ledger, result, states):
+def snapshot(ledger, result, states, *, jobs=None):
+    jobs = ledger.jobs() if jobs is None else jobs
     return {**{key: value for key, value in result.items() if key != 'jobs'}, 'observed_at': now(),
             'active_jobs': {key: value for key, value in states.items() if value not in ('finished', 'planned')},
-            'resources': resource_observations(ledger), 'audit_files': audit_milestones(ledger),
+            'resources': resource_observations(ledger, jobs=jobs), 'audit_files': audit_milestones(ledger, jobs=jobs),
             'anchors': {stage: ledger.anchor(stage) for stage in ledger.opened_stages()}}

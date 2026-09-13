@@ -11,8 +11,10 @@ def build_parser():
         sub = commands.add_parser(name)
         sub.add_argument('--campaign-dir', type=Path, required=True)
         if name == 'configure':
-            for field in ('precompute-dir', 'few-shot-source', 'env-file', 'rc-lite', 'rc-full'):
-                sub.add_argument('--' + field, type=Path, required=True)
+            sub.add_argument('--env-file', type=Path, required=True)
+            sub.add_argument('--workload', type=Path)
+            for field in ('precompute-dir', 'few-shot-source', 'rc-lite', 'rc-full'):
+                sub.add_argument('--' + field, type=Path)
             sub.add_argument('--tail-fraction', type=float, default=.8)
             sub.add_argument('--poll-seconds', type=float, default=60)
             sub.add_argument('--item', dest='item_keys', action='append')
