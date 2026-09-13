@@ -398,6 +398,7 @@ class FixedAdmissionTests(unittest.TestCase):
         lock = threading.Lock()
         active = 0
         observed_peak = 0
+        calls = []
         release = threading.Event()
         first_pair = threading.Event()
 
@@ -406,23 +407,28 @@ class FixedAdmissionTests(unittest.TestCase):
             with lock:
                 active += 1
                 observed_peak = max(observed_peak, active)
+                calls.append(number)
                 if active == 2:
                     first_pair.set()
-            if number < 2:
+            try:
                 self.assertTrue(release.wait(2))
-            with lock:
-                active -= 1
-            return number
+                return number
+            finally:
+                with lock:
+                    active -= 1
 
         with ThreadPoolExecutor(max_workers=6) as pool:
             futures = [pool.submit(admission, original, (number,), {})
                        for number in range(6)]
-            self.assertTrue(first_pair.wait(2))
-            self.assertEqual(admission.snapshot()["transport_in_flight"], 2)
-            release.set()
+            try:
+                self.assertTrue(first_pair.wait(2))
+                self.assertEqual(admission.snapshot()["transport_in_flight"], 2)
+            finally:
+                release.set()
             self.assertEqual([future.result(timeout=2) for future in futures],
                              list(range(6)))
 
+        self.assertEqual(sorted(calls), list(range(6)))
         self.assertEqual(observed_peak, 2)
         self.assertEqual(admission.snapshot()["peak_transport_inflight"], 2)
         self.assertEqual([kind for kind, _ in events].count("postgres_admission"), 6)
