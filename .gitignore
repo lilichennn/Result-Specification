@@ -8,9 +8,14 @@ __pycache__/
 # 大型实验产物
 baselines_reproduce/
 *.log
+/archive/
 
 # Local research and experiment documentation
 /docs/
+.superpowers/
 
 # Archived pre-stable DeepEye BIRD-Interact test records
 /archive/deepeye_bird_interact_adapter_trials_20260911/
+
+# Retired pre-optimization formal-budget records and compatibility audit
+/archive/deepeye_formal_budget_legacy_20260913/
