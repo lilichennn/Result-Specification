@@ -1,0 +1,2598 @@
+{
+  "local008": {
+    "result": [
+      "player.name_given",
+      "batting.g",
+      "batting.r",
+      "batting.h",
+      "batting.hr",
+      "player.player_id = batting.player_id"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5743,
+        "total_tokens": 8425,
+        "completion_tokens": 2682,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5743
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2468,
+          "text_tokens": 2682
+        }
+      },
+      80.17
+    ]
+  },
+  "local009": {
+    "result": [
+      "airports_data.city",
+      "airports_data.coordinates",
+      "flights.departure_airport",
+      "flights.arrival_airport",
+      "flights.departure_airport = airports_data.airport_code",
+      "flights.arrival_airport = airports_data.airport_code",
+      "Abakan"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5581,
+        "total_tokens": 9921,
+        "completion_tokens": 4340,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5581
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4119,
+          "text_tokens": 4340
+        }
+      },
+      134.449
+    ]
+  },
+  "local018": {
+    "result": [
+      "collisions.pcf_violation_category",
+      "collisions.collision_date",
+      "collisions.*",
+      "2021",
+      "2011"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5251,
+        "total_tokens": 11420,
+        "completion_tokens": 6169,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5251
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5939,
+          "text_tokens": 6169
+        }
+      },
+      185.089
+    ]
+  },
+  "local007": {
+    "result": [
+      "player.debut",
+      "player.final_game"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5825,
+        "total_tokens": 12376,
+        "completion_tokens": 6551,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5825
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6321,
+          "text_tokens": 6551
+        }
+      },
+      210.934
+    ]
+  },
+  "local003": {
+    "result": [
+      "customers.customer_unique_id",
+      "orders.order_id",
+      "orders.order_status",
+      "orders.order_purchase_timestamp",
+      "order_payments.payment_value",
+      "customers.customer_id = orders.customer_id",
+      "orders.order_id = order_payments.order_id",
+      "'delivered'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 6429,
+        "total_tokens": 13557,
+        "completion_tokens": 7128,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 6429
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6796,
+          "text_tokens": 7128
+        }
+      },
+      222.455
+    ]
+  },
+  "local019": {
+    "result": [
+      "Wrestlers.name",
+      "Matches.duration",
+      "Belts.name",
+      "Matches.title_change",
+      "Matches.title_id = Belts.id",
+      "Matches.winner_id = Wrestlers.id",
+      "Matches.loser_id = Wrestlers.id",
+      "'NXT'",
+      "'title change'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4812,
+        "total_tokens": 11333,
+        "completion_tokens": 6521,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4812
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6240,
+          "text_tokens": 6521
+        }
+      },
+      197.426
+    ]
+  },
+  "local004": {
+    "result": [
+      "customers.customer_unique_id",
+      "orders.order_id",
+      "orders.order_purchase_timestamp",
+      "order_payments.payment_value",
+      "orders.customer_id = customers.customer_id",
+      "order_payments.order_id = orders.order_id",
+      "3",
+      "7",
+      "1.0"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5080,
+        "total_tokens": 14818,
+        "completion_tokens": 9738,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5080
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 9461,
+          "text_tokens": 9738
+        }
+      },
+      297.324
+    ]
+  },
+  "local002": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.466
+    ]
+  },
+  "local017": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.465
+    ]
+  },
+  "local010": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.605
+    ]
+  },
+  "local015": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.605
+    ]
+  },
+  "local028": {
+    "result": [
+      "olist_orders.*",
+      "olist_orders.order_status",
+      "olist_orders.order_purchase_timestamp",
+      "delivered",
+      "2016",
+      "2017",
+      "2018"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5036,
+        "total_tokens": 11082,
+        "completion_tokens": 6046,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5036
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5827,
+          "text_tokens": 6046
+        }
+      },
+      183.829
+    ]
+  },
+  "local031": {
+    "result": [
+      "olist_orders.*",
+      "olist_orders.order_status",
+      "olist_orders.order_delivered_customer_date",
+      "2016",
+      "2017",
+      "2018",
+      "delivered"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5025,
+        "total_tokens": 11266,
+        "completion_tokens": 6241,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5025
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5984,
+          "text_tokens": 6241
+        }
+      },
+      194.54
+    ]
+  },
+  "local026": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.157
+    ]
+  },
+  "local021": {
+    "result": [
+      "ball_by_ball.striker",
+      "batsman_scored.runs_scored",
+      "ball_by_ball.match_id = batsman_scored.match_id",
+      "ball_by_ball.over_id = batsman_scored.over_id",
+      "ball_by_ball.ball_id = batsman_scored.ball_id",
+      "ball_by_ball.innings_no = batsman_scored.innings_no",
+      "50"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4910,
+        "total_tokens": 13043,
+        "completion_tokens": 8133,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4910
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7823,
+          "text_tokens": 8133
+        }
+      },
+      245.44
+    ]
+  },
+  "local020": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.248
+    ]
+  },
+  "local025": {
+    "result": [
+      "ball_by_ball.match_id",
+      "ball_by_ball.innings_no",
+      "ball_by_ball.over_id",
+      "ball_by_ball.bowler",
+      "batsman_scored.match_id",
+      "batsman_scored.innings_no",
+      "batsman_scored.over_id",
+      "batsman_scored.runs_scored",
+      "extra_runs.match_id",
+      "extra_runs.innings_no",
+      "extra_runs.over_id",
+      "extra_runs.extra_runs"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4955,
+        "total_tokens": 14168,
+        "completion_tokens": 9213,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4955
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8846,
+          "text_tokens": 9213
+        }
+      },
+      264.625
+    ]
+  },
+  "local029": {
+    "result": [
+      "olist_customers.customer_unique_id",
+      "olist_customers.customer_city",
+      "olist_customers.customer_state",
+      "olist_orders.order_id",
+      "olist_orders.order_status",
+      "olist_order_payments.payment_value",
+      "olist_customers.customer_id = olist_orders.customer_id",
+      "olist_orders.order_id = olist_order_payments.order_id",
+      "'delivered'",
+      "3"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5027,
+        "total_tokens": 11815,
+        "completion_tokens": 6788,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5027
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6497,
+          "text_tokens": 6788
+        }
+      },
+      217.531
+    ]
+  },
+  "local024": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.16
+    ]
+  },
+  "local022": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.162
+    ]
+  },
+  "local023": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.161
+    ]
+  },
+  "local030": {
+    "result": [
+      "olist_customers.customer_city",
+      "olist_orders.order_status",
+      "olist_orders.order_id",
+      "olist_order_payments.payment_value",
+      "olist_orders.customer_id = olist_customers.customer_id",
+      "olist_order_payments.order_id = olist_orders.order_id",
+      "delivered",
+      "5"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5023,
+        "total_tokens": 12702,
+        "completion_tokens": 7679,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5023
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7428,
+          "text_tokens": 7679
+        }
+      },
+      238.405
+    ]
+  },
+  "local041": {
+    "result": [
+      "trees.*",
+      "trees.boroname",
+      "trees.health",
+      "Bronx",
+      "Good"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5051,
+        "total_tokens": 6893,
+        "completion_tokens": 1842,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5051
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1696,
+          "text_tokens": 1842
+        }
+      },
+      56.569
+    ]
+  },
+  "local034": {
+    "result": [
+      "olist_products.product_category_name",
+      "olist_order_payments.payment_type",
+      "olist_order_payments.*",
+      "olist_order_payments.order_id",
+      "olist_order_items.order_id",
+      "olist_order_items.product_id",
+      "olist_products.product_id"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5031,
+        "total_tokens": 13860,
+        "completion_tokens": 8829,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5031
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8588,
+          "text_tokens": 8829
+        }
+      },
+      279.092
+    ]
+  },
+  "local032": {
+    "result": [
+      "olist_order_items.seller_id",
+      "olist_customers.customer_unique_id",
+      "olist_order_items.price",
+      "olist_order_items.freight_value",
+      "olist_order_items.order_id",
+      "olist_order_reviews.review_score",
+      "olist_order_reviews.review_id",
+      "olist_orders.order_status",
+      "olist_order_items.order_id = olist_orders.order_id",
+      "olist_orders.customer_id = olist_customers.customer_id",
+      "olist_order_reviews.order_id = olist_orders.order_id",
+      "delivered",
+      "5"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5078,
+        "total_tokens": 14778,
+        "completion_tokens": 9700,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5078
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 9284,
+          "text_tokens": 9700
+        }
+      },
+      289.889
+    ]
+  },
+  "local035": {
+    "result": [
+      "olist_geolocation.geolocation_state",
+      "olist_geolocation.geolocation_city",
+      "olist_geolocation.geolocation_zip_code_prefix",
+      "olist_geolocation.geolocation_lat",
+      "olist_geolocation.geolocation_lng",
+      "6371"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5291,
+        "total_tokens": 9168,
+        "completion_tokens": 3877,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5291
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3565,
+          "text_tokens": 3877
+        }
+      },
+      117.545
+    ]
+  },
+  "local038": {
+    "result": [
+      "actor.first_name",
+      "actor.last_name",
+      "film_actor.*",
+      "language.name",
+      "category.name",
+      "film.rating",
+      "film.length",
+      "film.release_year",
+      "actor.actor_id = film_actor.actor_id",
+      "film_actor.film_id = film.film_id",
+      "film.film_id = film_category.film_id",
+      "film_category.category_id = category.category_id",
+      "film.language_id = language.language_id",
+      "English",
+      "Children",
+      "G",
+      "PG",
+      "120",
+      "2000",
+      "2010"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5248,
+        "total_tokens": 11468,
+        "completion_tokens": 6220,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5248
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5796,
+          "text_tokens": 6220
+        }
+      },
+      180.641
+    ]
+  },
+  "local056": {
+    "result": [
+      "customer.first_name",
+      "customer.last_name",
+      "payment.customer_id = customer.customer_id",
+      "payment.amount",
+      "payment.payment_date"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5205,
+        "total_tokens": 7444,
+        "completion_tokens": 2239,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5205
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2067,
+          "text_tokens": 2239
+        }
+      },
+      65.976
+    ]
+  },
+  "local039": {
+    "result": [
+      "category.name",
+      "rental.rental_date",
+      "rental.return_date",
+      "city.city",
+      "film_category.category_id = category.category_id",
+      "film_category.film_id = film.film_id",
+      "inventory.film_id = film.film_id",
+      "rental.inventory_id = inventory.inventory_id",
+      "rental.customer_id = customer.customer_id",
+      "customer.address_id = address.address_id",
+      "address.city_id = city.city_id",
+      "'A'",
+      "'-'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5218,
+        "total_tokens": 11586,
+        "completion_tokens": 6368,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5218
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6065,
+          "text_tokens": 6368
+        }
+      },
+      188.758
+    ]
+  },
+  "local040": {
+    "result": [
+      "trees.boroname",
+      "trees.*",
+      "income_trees.Estimate_Median_income",
+      "income_trees.Estimate_Mean_income",
+      "trees.zipcode = income_trees.zipcode",
+      "0",
+      "3"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5107,
+        "total_tokens": 10876,
+        "completion_tokens": 5769,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5107
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5450,
+          "text_tokens": 5769
+        }
+      },
+      171.658
+    ]
+  },
+  "local037": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.11
+    ]
+  },
+  "local049": {
+    "result": [
+      "companies_dates.company_id = companies_industries.company_id",
+      "companies_dates.date_joined",
+      "companies_industries.industry",
+      "2019",
+      "2021"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5068,
+        "total_tokens": 12782,
+        "completion_tokens": 7714,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5068
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7488,
+          "text_tokens": 7714
+        }
+      },
+      225.71
+    ]
+  },
+  "local058": {
+    "result": [
+      "hardware_dim_product.segment",
+      "hardware_fact_sales_monthly.product_code",
+      "hardware_fact_sales_monthly.fiscal_year",
+      "hardware_dim_product.product_code = hardware_fact_sales_monthly.product_code",
+      "2020",
+      "2021"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5151,
+        "total_tokens": 12786,
+        "completion_tokens": 7635,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5151
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7351,
+          "text_tokens": 7635
+        }
+      },
+      227.325
+    ]
+  },
+  "local059": {
+    "result": [
+      "hardware_fact_sales_monthly.date",
+      "hardware_fact_sales_monthly.sold_quantity",
+      "hardware_fact_sales_monthly.product_code",
+      "hardware_dim_product.product_code",
+      "hardware_dim_product.division",
+      "2021"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5137,
+        "total_tokens": 12669,
+        "completion_tokens": 7532,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5137
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7287,
+          "text_tokens": 7532
+        }
+      },
+      226.077
+    ]
+  },
+  "local054": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.131
+    ]
+  },
+  "local055": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.133
+    ]
+  },
+  "local198": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.137
+    ]
+  },
+  "local060": {
+    "result": [
+      "customers.cust_city",
+      "sales.amount_sold",
+      "products.prod_name",
+      "countries.country_name",
+      "times.calendar_quarter_number",
+      "times.calendar_year",
+      "promotions.promo_name",
+      "sales.cust_id = customers.cust_id",
+      "customers.country_id = countries.country_id",
+      "sales.time_id = times.time_id",
+      "sales.prod_id = products.prod_id",
+      "sales.promo_id = promotions.promo_id",
+      "'United States'",
+      "4",
+      "2019",
+      "2020",
+      "20",
+      "'NO PROMOTION'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5480,
+        "total_tokens": 14815,
+        "completion_tokens": 9335,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5480
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8824,
+          "text_tokens": 9335
+        }
+      },
+      272.857
+    ]
+  },
+  "local063": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      301.186
+    ]
+  },
+  "local061": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.127
+    ]
+  },
+  "local071": {
+    "result": [
+      "cities.country_code_2",
+      "cities.insert_date",
+      "June",
+      "2022"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5205,
+        "total_tokens": 8364,
+        "completion_tokens": 3159,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5205
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2985,
+          "text_tokens": 3159
+        }
+      },
+      104.403
+    ]
+  },
+  "local050": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.167
+    ]
+  },
+  "local070": {
+    "result": [
+      "cities.city_name",
+      "cities.country_code_2",
+      "cities.insert_date",
+      "cn",
+      "July",
+      "2021"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5267,
+        "total_tokens": 11812,
+        "completion_tokens": 6545,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5267
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6269,
+          "text_tokens": 6545
+        }
+      },
+      211.872
+    ]
+  },
+  "local062": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.168
+    ]
+  },
+  "local067": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.101
+    ]
+  },
+  "local072": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.101
+    ]
+  },
+  "local068": {
+    "result": [
+      "cities.*",
+      "cities.insert_date",
+      "2021",
+      "2022",
+      "2023",
+      "April",
+      "May",
+      "June"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5351,
+        "total_tokens": 12031,
+        "completion_tokens": 6680,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5351
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6293,
+          "text_tokens": 6680
+        }
+      },
+      215.298
+    ]
+  },
+  "local074": {
+    "result": [
+      "customer_transactions.customer_id",
+      "customer_transactions.txn_date",
+      "customer_transactions.txn_type",
+      "customer_transactions.txn_amount"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5175,
+        "total_tokens": 8087,
+        "completion_tokens": 2912,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5175
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2692,
+          "text_tokens": 2912
+        }
+      },
+      92.706
+    ]
+  },
+  "local073": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.107
+    ]
+  },
+  "local066": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.231
+    ]
+  },
+  "local065": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.202
+    ]
+  },
+  "local064": {
+    "result": [
+      "customer_transactions.customer_id",
+      "customer_transactions.txn_date",
+      "customer_transactions.txn_type",
+      "customer_transactions.txn_amount",
+      "2020",
+      "deposit",
+      "withdrawal",
+      "0"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5209,
+        "total_tokens": 10245,
+        "completion_tokens": 5036,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5209
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4735,
+          "text_tokens": 5036
+        }
+      },
+      158.784
+    ]
+  },
+  "local297": {
+    "result": [
+      "customer_transactions.customer_id",
+      "customer_transactions.txn_date",
+      "customer_transactions.txn_type",
+      "customer_transactions.txn_amount",
+      "deposit",
+      "withdrawal",
+      "0",
+      "5",
+      "100"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5236,
+        "total_tokens": 14055,
+        "completion_tokens": 8819,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5236
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8461,
+          "text_tokens": 8819
+        }
+      },
+      294.678
+    ]
+  },
+  "local300": {
+    "result": [
+      "customer_transactions.customer_id",
+      "customer_transactions.txn_date",
+      "customer_transactions.txn_amount",
+      "0"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5196,
+        "total_tokens": 10216,
+        "completion_tokens": 5020,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5196
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4777,
+          "text_tokens": 5020
+        }
+      },
+      164.024
+    ]
+  },
+  "local299": {
+    "result": [
+      "customer_transactions.customer_id",
+      "customer_transactions.txn_date",
+      "customer_transactions.txn_type",
+      "customer_transactions.txn_amount",
+      "'deposit'",
+      "30",
+      "0"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5250,
+        "total_tokens": 10563,
+        "completion_tokens": 5313,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5250
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4953,
+          "text_tokens": 5313
+        }
+      },
+      169.89
+    ]
+  },
+  "local298": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.083
+    ]
+  },
+  "local078": {
+    "result": [
+      "interest_map.interest_name",
+      "interest_metrics.month_year",
+      "interest_metrics.composition",
+      "interest_metrics.interest_id = interest_map.id"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5160,
+        "total_tokens": 9236,
+        "completion_tokens": 4076,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5160
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3880,
+          "text_tokens": 4076
+        }
+      },
+      131.561
+    ]
+  },
+  "local075": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.094
+    ]
+  },
+  "local081": {
+    "result": [
+      "customers.customerid",
+      "orders.customerid",
+      "orders.orderdate",
+      "orders.orderid",
+      "order_details.orderid",
+      "order_details.unitprice",
+      "order_details.quantity",
+      "customergroupthreshold.groupname",
+      "customergroupthreshold.rangebottom",
+      "customergroupthreshold.rangetop",
+      "1998"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5122,
+        "total_tokens": 11433,
+        "completion_tokens": 6311,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5122
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5955,
+          "text_tokens": 6311
+        }
+      },
+      205.892
+    ]
+  },
+  "local077": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.116
+    ]
+  },
+  "local097": {
+    "result": [
+      "Movie.year",
+      "Movie.*",
+      "10"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4904,
+        "total_tokens": 10819,
+        "completion_tokens": 5915,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4904
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5737,
+          "text_tokens": 5915
+        }
+      },
+      192.385
+    ]
+  },
+  "local096": {
+    "result": [
+      "Movie.year",
+      "Movie.MID",
+      "M_Cast.MID",
+      "M_Cast.PID",
+      "Person.PID",
+      "Person.Gender",
+      "Female",
+      "Male",
+      "None"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4945,
+        "total_tokens": 11624,
+        "completion_tokens": 6679,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4945
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6388,
+          "text_tokens": 6679
+        }
+      },
+      215.833
+    ]
+  },
+  "local085": {
+    "result": [
+      "orders.employeeid",
+      "orders.*",
+      "orders.shippeddate",
+      "orders.requireddate",
+      "50"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5094,
+        "total_tokens": 13817,
+        "completion_tokens": 8723,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5094
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8511,
+          "text_tokens": 8723
+        }
+      },
+      285.37
+    ]
+  },
+  "local098": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.116
+    ]
+  },
+  "local114": {
+    "result": [
+      "web_region.name",
+      "web_orders.*",
+      "web_orders.total_amt_usd",
+      "web_sales_reps.name",
+      "web_region.id = web_sales_reps.region_id",
+      "web_sales_reps.id = web_accounts.sales_rep_id",
+      "web_accounts.id = web_orders.account_id"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5152,
+        "total_tokens": 11281,
+        "completion_tokens": 6129,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5152
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5844,
+          "text_tokens": 6129
+        }
+      },
+      213.241
+    ]
+  },
+  "local099": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.116
+    ]
+  },
+  "local100": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.086
+    ]
+  },
+  "local128": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.154
+    ]
+  },
+  "local131": {
+    "result": [
+      "Musical_Styles.StyleName",
+      "Musical_Preferences.*",
+      "Musical_Preferences.PreferenceSeq",
+      "Musical_Preferences.StyleID = Musical_Styles.StyleID",
+      "1",
+      "2",
+      "3"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5154,
+        "total_tokens": 9905,
+        "completion_tokens": 4751,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5154
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4527,
+          "text_tokens": 4751
+        }
+      },
+      141.585
+    ]
+  },
+  "local130": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.166
+    ]
+  },
+  "local133": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.117
+    ]
+  },
+  "local132": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.109
+    ]
+  },
+  "local141": {
+    "result": [
+      "salesorderheader.salespersonid = SalesPersonQuotaHistory.BusinessEntityID",
+      "salesorderheader.orderdate",
+      "salesorderheader.totaldue",
+      "SalesPersonQuotaHistory.QuotaDate",
+      "SalesPersonQuotaHistory.SalesQuota"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5188,
+        "total_tokens": 14171,
+        "completion_tokens": 8983,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5188
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8702,
+          "text_tokens": 8983
+        }
+      },
+      267.249
+    ]
+  },
+  "local230": {
+    "result": [
+      "genre.genre",
+      "genre.movie_id",
+      "ratings.avg_rating",
+      "director_mapping.movie_id",
+      "names.name",
+      "director_mapping.name_id = names.id",
+      "genre.movie_id = ratings.movie_id",
+      "director_mapping.movie_id = genre.movie_id",
+      "8"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4864,
+        "total_tokens": 10716,
+        "completion_tokens": 5852,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4864
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5581,
+          "text_tokens": 5852
+        }
+      },
+      187.836
+    ]
+  },
+  "local152": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.122
+    ]
+  },
+  "local163": {
+    "result": [
+      "university_faculty.FacRank",
+      "university_faculty.FacFirstName",
+      "university_faculty.FacLastName",
+      "university_faculty.FacSalary"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5134,
+        "total_tokens": 7649,
+        "completion_tokens": 2515,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5134
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2306,
+          "text_tokens": 2515
+        }
+      },
+      83.362
+    ]
+  },
+  "local157": {
+    "result": [
+      "bitcoin_prices.ticker",
+      "bitcoin_prices.market_date",
+      "bitcoin_prices.volume",
+      "'2021-08-01'",
+      "'2021-08-10'",
+      "'K'",
+      "'M'",
+      "'-'",
+      "0"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5207,
+        "total_tokens": 10151,
+        "completion_tokens": 4944,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5207
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4591,
+          "text_tokens": 4944
+        }
+      },
+      169.042
+    ]
+  },
+  "local156": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.171
+    ]
+  },
+  "local169": {
+    "result": [
+      "legislators_terms.id_bioguide",
+      "legislators_terms.term_number",
+      "legislators_terms.term_start",
+      "legislators_terms.term_end",
+      "legislation_date_dim.date",
+      "legislation_date_dim.month_name",
+      "legislation_date_dim.day_of_month",
+      "1",
+      "'1917-01-01'",
+      "'1999-12-31'",
+      "'December'",
+      "31",
+      "20"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5255,
+        "total_tokens": 14776,
+        "completion_tokens": 9521,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5255
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 9099,
+          "text_tokens": 9521
+        }
+      },
+      289.431
+    ]
+  },
+  "local168": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.13
+    ]
+  },
+  "local171": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.116
+    ]
+  },
+  "local167": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.114
+    ]
+  },
+  "local170": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.178
+    ]
+  },
+  "local193": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.135
+    ]
+  },
+  "local194": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.096
+    ]
+  },
+  "local195": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.125
+    ]
+  },
+  "local196": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.113
+    ]
+  },
+  "local201": {
+    "result": [
+      "word_list.words",
+      "word_list.*",
+      "4",
+      "5",
+      "'r'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5092,
+        "total_tokens": 10056,
+        "completion_tokens": 4964,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5092
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4722,
+          "text_tokens": 4964
+        }
+      },
+      154.546
+    ]
+  },
+  "local199": {
+    "result": [
+      "staff.store_id",
+      "rental.rental_date",
+      "rental.*",
+      "rental.staff_id = staff.staff_id"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5228,
+        "total_tokens": 11136,
+        "completion_tokens": 5908,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5228
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5688,
+          "text_tokens": 5908
+        }
+      },
+      185.978
+    ]
+  },
+  "local202": {
+    "result": [
+      "alien_data.state",
+      "alien_data.*",
+      "alien_data.aggressive",
+      "alien_data.age",
+      "10",
+      "friendly",
+      "hostile",
+      "200"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5204,
+        "total_tokens": 9550,
+        "completion_tokens": 4346,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5204
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4128,
+          "text_tokens": 4346
+        }
+      },
+      137.155
+    ]
+  },
+  "local197": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.15
+    ]
+  },
+  "local218": {
+    "result": [
+      "Match.season",
+      "Match.home_team_goal",
+      "Match.away_team_goal",
+      "Match.home_team_api_id",
+      "Match.away_team_api_id"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5865,
+        "total_tokens": 11050,
+        "completion_tokens": 5185,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5865
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5026,
+          "text_tokens": 5185
+        }
+      },
+      167.925
+    ]
+  },
+  "local209": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.164
+    ]
+  },
+  "local210": {
+    "result": [
+      "hubs.hub_name",
+      "hubs.hub_id = stores.hub_id",
+      "stores.store_id = orders.store_id",
+      "orders.order_status",
+      "orders.order_id",
+      "orders.order_created_month",
+      "20",
+      "2",
+      "3",
+      "'FINISHED'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4951,
+        "total_tokens": 14181,
+        "completion_tokens": 9230,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4951
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8956,
+          "text_tokens": 9230
+        }
+      },
+      292.125
+    ]
+  },
+  "local212": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.115
+    ]
+  },
+  "local219": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.14
+    ]
+  },
+  "local221": {
+    "result": [
+      "Team.team_long_name",
+      "Match.home_team_api_id = Team.team_api_id",
+      "Match.away_team_api_id = Team.team_api_id",
+      "Match.home_team_goal",
+      "Match.away_team_goal",
+      "Match.*",
+      "10"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5864,
+        "total_tokens": 13303,
+        "completion_tokens": 7439,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5864
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7233,
+          "text_tokens": 7439
+        }
+      },
+      239.006
+    ]
+  },
+  "local244": {
+    "result": [
+      "Track.Milliseconds",
+      "InvoiceLine.UnitPrice",
+      "InvoiceLine.Quantity",
+      "InvoiceLine.TrackId = Track.TrackId",
+      "short",
+      "medium",
+      "long"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5110,
+        "total_tokens": 10714,
+        "completion_tokens": 5604,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5110
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5324,
+          "text_tokens": 5604
+        }
+      },
+      178.918
+    ]
+  },
+  "local220": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.156
+    ]
+  },
+  "local228": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.112
+    ]
+  },
+  "local229": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.129
+    ]
+  },
+  "local253": {
+    "result": [
+      "SalaryDataset.Location",
+      "SalaryDataset.CompanyName",
+      "SalaryDataset.Salary",
+      "Mumbai",
+      "Pune",
+      "New Delhi",
+      "Hyderabad"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5211,
+        "total_tokens": 11497,
+        "completion_tokens": 6286,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 5211
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5962,
+          "text_tokens": 6286
+        }
+      },
+      202.262
+    ]
+  },
+  "local258": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.159
+    ]
+  },
+  "local259": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.1
+    ]
+  },
+  "local263": {
+    "result": [
+      "model.L1_model",
+      "model.name",
+      "model.version",
+      "model.step",
+      "model_score.name",
+      "model_score.version",
+      "model_score.step",
+      "model_score.model",
+      "model_score.test_score",
+      "'Stack'",
+      "'strong'",
+      "'soft'"
+    ],
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 4924,
+        "total_tokens": 12391,
+        "completion_tokens": 7467,
+        "prompt_tokens_details": {
+          "cached_tokens": 4224,
+          "text_tokens": 4924
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7085,
+          "text_tokens": 7467
+        }
+      },
+      222.233
+    ]
+  },
+  "local262": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.106
+    ]
+  },
+  "local273": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.004
+    ]
+  },
+  "local274": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.003
+    ]
+  },
+  "local275": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.002
+    ]
+  },
+  "local277": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.002
+    ]
+  },
+  "local279": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local283": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local284": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local285": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local286": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local301": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local302": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local329": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local330": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local331": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local358": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local360": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local344": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local336": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local335": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local309": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local310": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local311": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local354": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local355": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local356": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>"
+    },
+    "resource": [
+      null,
+      0.001
+    ]
+  },
+  "local264": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.097
+    ]
+  },
+  "local269": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.168
+    ]
+  },
+  "local270": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.117
+    ]
+  },
+  "local272": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "TimeoutError: The read operation timed out"
+    },
+    "resource": [
+      null,
+      300.098
+    ]
+  }
+}

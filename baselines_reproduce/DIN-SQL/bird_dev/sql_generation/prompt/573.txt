@@ -1,0 +1,321 @@
+[SYSTEM]
+
+Use the schema links to generate the correct sqlite SQL query for the given question.
+Hint helps you to write the correct sqlite SQL query.
+###
+Few examples of this task are:
+###
+Schema of the database with sample rows and column descriptions:
+#
+CREATE TABLE lists (
+        user_id INTEGER, 
+        list_id INTEGER NOT NULL, 
+        list_title TEXT, 
+        list_movie_number INTEGER, 
+        list_update_timestamp_utc TEXT, 
+        list_creation_timestamp_utc TEXT, 
+        list_followers INTEGER, 
+        list_url TEXT, 
+        list_comments INTEGER, 
+        list_description TEXT, 
+        list_cover_image_url TEXT, 
+        list_first_image_url TEXT, 
+        list_second_image_url TEXT, 
+        list_third_image_url TEXT, 
+        PRIMARY KEY (list_id), 
+        FOREIGN KEY(user_id) REFERENCES lists_users (user_id)
+)
+
+/*
+3 rows from lists table:
+user_id list_id list_title      list_movie_number       list_update_timestamp_utc       list_creation_timestamp_utc     list_followers  list_url        list_commentslist_description list_cover_image_url    list_first_image_url    list_second_image_url   list_third_image_url
+88260493        1       Films that made your kid sister cry     5       2019-01-24 19:16:18     2009-11-11 00:02:21     5       http://mubi.com/lists/films-that-made-your-kid-sister-cry     3       <p>Don’t be such a baby!!</p>
+<p><strong>bold</strong></p>    https://assets.mubicdn.net/images/film/3822/image-w1280.jpg?1445914994  https://assets.mubicdn.net/images/film/3822/image-w320.jpg?1445914994 https://assets.mubicdn.net/images/film/506/image-w320.jpg?1543838422    https://assets.mubicdn.net/images/film/485/image-w320.jpg?1575331204
+45204418        2       Headscratchers  3       2018-12-03 15:12:20     2009-11-11 00:05:11     1       http://mubi.com/lists/headscratchers    2       <p>Films that need at least two viewings to really make sense.</p>
+<p>Or at least… they did for <em>       https://assets.mubicdn.net/images/film/4343/image-w1280.jpg?1583331932  https://assets.mubicdn.net/images/film/4343/image-w320.jpg?1583331932 https://assets.mubicdn.net/images/film/159/image-w320.jpg?1548864573    https://assets.mubicdn.net/images/film/142/image-w320.jpg?1544094102
+48905025        3       Sexy Time Movies        7       2019-05-30 03:00:07     2009-11-11 00:20:00     6       http://mubi.com/lists/sexy-time-movies  5       <p>Films that get you in the mood…for love. In development.</p>
+<p>Remarks</p>
+<p><strong>Enter the    https://assets.mubicdn.net/images/film/3491/image-w1280.jpg?1564112978  https://assets.mubicdn.net/images/film/3491/image-w320.jpg?1564112978https://assets.mubicdn.net/images/film/2377/image-w320.jpg?1564675204    https://assets.mubicdn.net/images/film/2874/image-w320.jpg?1546574412
+*/
+
+CREATE TABLE lists_users (
+        user_id INTEGER NOT NULL, 
+        list_id INTEGER NOT NULL, 
+        list_update_date_utc TEXT, 
+        list_creation_date_utc TEXT, 
+        user_trialist INTEGER, 
+        user_subscriber INTEGER, 
+        user_avatar_image_url TEXT, 
+        user_cover_image_url TEXT, 
+        user_eligible_for_trial TEXT, 
+        user_has_payment_method TEXT, 
+        PRIMARY KEY (user_id, list_id), 
+        FOREIGN KEY(list_id) REFERENCES lists (list_id), 
+        FOREIGN KEY(user_id) REFERENCES lists (user_id)
+)
+
+/*
+3 rows from lists_users table:
+user_id list_id list_update_date_utc    list_creation_date_utc  user_trialist   user_subscriber user_avatar_image_url   user_cover_image_url    user_eligible_for_trial       user_has_payment_method
+85981819        1969    2019-11-26      2009-12-18      1       1       https://assets.mubicdn.net/images/avatars/74983/images-w150.jpg?1523895214      None    0    1
+85981819        3946    2020-05-01      2010-01-30      1       1       https://assets.mubicdn.net/images/avatars/74983/images-w150.jpg?1523895214      None    0    1
+85981819        6683    2020-04-12      2010-03-31      1       1       https://assets.mubicdn.net/images/avatars/74983/images-w150.jpg?1523895214      None    0    1
+*/
+
+CREATE TABLE movies (
+        movie_id INTEGER NOT NULL, 
+        movie_title TEXT, 
+        movie_release_year INTEGER, 
+        movie_url TEXT, 
+        movie_title_language TEXT, 
+        movie_popularity INTEGER, 
+        movie_image_url TEXT, 
+        director_id TEXT, 
+        director_name TEXT, 
+        director_url TEXT, 
+        PRIMARY KEY (movie_id)
+)
+
+/*
+3 rows from movies table:
+movie_id        movie_title     movie_release_year      movie_url       movie_title_language    movie_popularity        movie_image_url director_id     director_namedirector_url
+1       La Antena       2007    http://mubi.com/films/la-antena en      105     https://images.mubicdn.net/images/film/1/cache-7927-1581389497/image-w1280.jpg  131  Esteban Sapir    http://mubi.com/cast/esteban-sapir
+2       Elementary Particles    2006    http://mubi.com/films/elementary-particles      en      23      https://images.mubicdn.net/images/film/2/cache-512179-1581389841/image-w1280.jpg      73      Oskar Roehler   http://mubi.com/cast/oskar-roehler
+3       It's Winter     2006    http://mubi.com/films/its-winter        en      21      https://images.mubicdn.net/images/film/3/cache-7929-1481539519/image-w1280.jpg82      Rafi Pitts      http://mubi.com/cast/rafi-pitts
+*/
+
+CREATE TABLE ratings (
+        movie_id INTEGER, 
+        rating_id INTEGER, 
+        rating_url TEXT, 
+        rating_score INTEGER, 
+        rating_timestamp_utc TEXT, 
+        critic TEXT, 
+        critic_likes INTEGER, 
+        critic_comments INTEGER, 
+        user_id INTEGER, 
+        user_trialist INTEGER, 
+        user_subscriber INTEGER, 
+        user_eligible_for_trial INTEGER, 
+        user_has_payment_method INTEGER, 
+        FOREIGN KEY(movie_id) REFERENCES movies (movie_id), 
+        FOREIGN KEY(user_id) REFERENCES lists_users (user_id), 
+        FOREIGN KEY(rating_id) REFERENCES ratings (rating_id), 
+        FOREIGN KEY(user_id) REFERENCES ratings_users (user_id)
+)
+
+/*
+3 rows from ratings table:
+movie_id        rating_id       rating_url      rating_score    rating_timestamp_utc    critic  critic_likes    critic_comments user_id user_trialist   user_subscriber       user_eligible_for_trial user_has_payment_method
+1066    15610495        http://mubi.com/films/pavee-lackeen-the-traveller-girl/ratings/15610495 3       2017-06-10 12:38:33     None    0       0       41579158     00       1       0
+1066    10704606        http://mubi.com/films/pavee-lackeen-the-traveller-girl/ratings/10704606 2       2014-08-15 23:42:31     None    0       0       85981819     11       0       1
+1066    10177114        http://mubi.com/films/pavee-lackeen-the-traveller-girl/ratings/10177114 2       2014-01-30 13:21:57     None    0       0       4208563 0    01       1
+*/
+
+Table: lists_users
+Column user_id: column description -> ID related to the user who created the list.
+Column list_id: column description -> ID of the list on Mubi
+Column list_update_date_utc: column description -> Last update date for the list, value description -> YYYY-MM-DD
+Column list_creation_date_utc: column description -> Creation date for the list, value description -> YYYY-MM-DD
+Column user_trialist: column description -> whether the user was a tralist when he created the list , value description -> 1 = the user was a trialist when he created the list 0 = the user was not a trialist when he created the list
+Column user_subscriber: column description -> whether the user was a subscriber when he created the list , value description -> 1 = the user was a subscriber when he created the list 0 = the user was not a subscriber when he created the list
+Column user_avatar_image_url: column description -> User profile image URL on Mubi
+Column user_cover_image_url: column description -> User profile cover image URL on Mubi
+Column user_eligible_for_trial: column description -> whether the user was eligible for trial when he created the list , value description -> 1 = the user was eligible for trial when he created the list 0 = the user was not eligible for trial when he created the list
+Column user_has_payment_method : column description -> whether the user was a paying subscriber when he created the list , value description -> 1 = the user was a paying subscriber when he created the list 0 = the user was not a paying subscriber when he created the list 
+
+Table: lists
+Column user_id: column description -> ID related to the user who created the list.
+Column list_id: column description -> ID of the list on Mubi
+Column list_title: column description -> Name of the list
+Column list_movie_number: column description -> Number of movies added to the list
+Column list_update_timestamp_utc: column description -> Last update timestamp for the list
+Column list_creation_timestamp_utc: column description -> Creation timestamp for the list
+Column list_followers: column description -> Number of followers on the list
+Column list_url: column description -> URL to the list page on Mubi
+Column list_comments: column description -> Number of comments on the list
+Column list_description: column description -> List description made by the user
+
+Table: ratings
+Column movie_id: column description -> Movie ID related to the rating
+Column rating_id: column description -> Rating ID on Mubi
+Column rating_url: column description -> URL to the rating on Mubi
+Column rating_score: column description -> Rating score ranging from 1 (lowest) to 5 (highest), value description -> commonsense evidence: The score is proportional to the user's liking. The higher the score is, the more the user likes the movie
+Column rating_timestamp_utc : column description -> Timestamp for the movie rating made by the user on Mubi
+Column critic: column description -> Critic made by the user rating the movie. , value description -> If value = "None", the user did not write a critic when rating the movie.
+Column critic_likes: column description -> Number of likes related to the critic made by the user rating the movie
+Column critic_comments: column description -> Number of comments related to the critic made by the user rating the movie
+Column user_id: column description -> ID related to the user rating the movie
+Column user_trialist : column description -> whether user was a tralist when he rated the movie, value description -> 1 = the user was a trialist when he rated the movie 0 = the user was not a trialist when he rated the movie
+
+Table: movies
+Column movie_id: column description -> ID related to the movie on Mubi
+Column movie_title: column description -> Name of the movie
+Column movie_release_year: column description -> Release year of the movie
+Column movie_url: column description -> URL to the movie page on Mubi
+Column movie_title_language: column description -> By default, the title is in English., value description -> Only contains one value which is 'en'
+Column movie_popularity: column description -> Number of Mubi users who love this movie
+Column movie_image_url: column description -> Image URL to the movie on Mubi
+Column director_id: column description -> ID related to the movie director on Mubi
+Column director_name: column description -> Full Name of the movie director
+Column director_url : column description -> URL to the movie director page on Mubi
+#
+Q: What is the name of the longest movie title? When was it released?
+Hint: longest movie title refers to MAX(LENGTH(movie_title)); when it was released refers to movie_release_year;
+Schema_links: [movies.movie_title,movies.movie_release_year, movies.movie_popularity]
+SQL: SELECT movie_title, movie_release_year FROM movies ORDER BY LENGTH(movie_popularity) DESC LIMIT 1
+
+Q: What is the percentage of the ratings were rated by user who was a subcriber?
+Hint: user is a subscriber refers to user_subscriber = 1; percentage of ratings = DIVIDE(SUM(user_subscriber = 1), SUM(rating_score)) as percent;
+Schema_links: [ratings.user_subscriber,1]
+SQL: SELECT CAST(SUM(CASE WHEN user_subscriber = 1 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(*) FROM ratings
+
+Q: When was the first movie released and who directed it?
+Hint: first movie refers to oldest movie_release_year;
+Schema_links: [movies.movie_release_year, movies.director_name]
+SQL: SELECT movie_release_year, director_name FROM movies WHERE movie_release_year IS NOT NULL ORDER BY movie_release_year ASC LIMIT 1
+
+Q: How many movie lists were still updated 10 years after it was created?
+Hint: updated 10 years after it was created refers to list_update_timestamp_utc > (list_creation_timestamp_utc+10);
+Schema_links: [lists.list_update_timestamp_utc, lists.list_creation_timestamp_utc, 10]
+SQL: SELECT COUNT(*) FROM lists WHERE SUBSTR(list_update_timestamp_utc, 1, 4) - SUBSTR(list_creation_timestamp_utc, 1, 4) > 10
+
+Q: For the list with more than 200 followers, state the title and how long the list has been created?
+Hint: more than 200 followers refers to list_followers >200; how long the list has been created refers to SUBTRACT(CURRENT_TIMESTAMP,list_creation_timestamp_utc)
+Schema_links: [lists.list_title, lists.list_update_timestamp_utc,lists.list_followers, 200]
+SQL: SELECT list_title , 365 * (strftime('%Y', 'now') - strftime('%Y', list_creation_timestamp_utc)) + 30 * (strftime('%m', 'now') - strftime('%m', list_creation_timestamp_utc)) + strftime('%d', 'now') - strftime('%d', list_creation_timestamp_utc) FROM lists WHERE list_followers > 200
+
+Q: What is the percentage of list created by user who was a subscriber when he created the list?
+Hint: was a subscriber refers to user_subscriber = 1; percentage refers to DIVIDE(COUNT(user_subscriber = 1),COUNT(list_id))
+Schema_links: [lists_users.user_subscriber,1]
+SQL: SELECT CAST(SUM(CASE WHEN user_subscriber = 1 THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(list_id) FROM lists_users
+
+
+
+[USER]
+
+Use the schema links to generate the correct sqlite SQL query for the given question.
+Hint helps you to write the correct sqlite SQL query.
+###
+Schema of the database with sample rows and column descriptions:
+#
+Table badges, columns = [*,Id,UserId,Name,Date]
+Table comments, columns = [*,Id,PostId,Score,Text,CreationDate,UserId,UserDisplayName]
+Table postHistory, columns = [*,Id,PostHistoryTypeId,PostId,RevisionGUID,CreationDate,UserId,Text,Comment,UserDisplayName]
+Table postLinks, columns = [*,Id,CreationDate,PostId,RelatedPostId,LinkTypeId]
+Table posts, columns = [*,Id,PostTypeId,AcceptedAnswerId,CreaionDate,Score,ViewCount,Body,OwnerUserId,LasActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,LastEditorUserId,LastEditDate,CommunityOwnedDate,ParentId,ClosedDate,OwnerDisplayName,LastEditorDisplayName]
+Table tags, columns = [*,Id,TagName,Count,ExcerptPostId,WikiPostId]
+Table users, columns = [*,Id,Reputation,CreationDate,DisplayName,LastAccessDate,WebsiteUrl,Location,AboutMe,Views,UpVotes,DownVotes,AccountId,Age,ProfileImageUrl]
+Table votes, columns = [*,Id,PostId,VoteTypeId,CreationDate,UserId,BountyAmount]
+Foreign_keys = [badges.UserId = users.Id,comments.UserId = users.Id,comments.PostId = posts.Id,postHistory.UserId = users.Id,postHistory.PostId = posts.Id,postLinks.RelatedPostId = posts.Id,postLinks.PostId = posts.Id,posts.ParentId = posts.Id,posts.OwnerUserId = users.Id,posts.LastEditorUserId = users.Id,tags.ExcerptPostId = posts.Id,votes.UserId = users.Id,votes.PostId = posts.Id]
+Sample rows from badges (columns: ["Id", "UserId", "Name", "Date"]):
+[[1, 5, "Teacher", "2010-07-19 19:39:07.0"], [2, 6, "Teacher", "2010-07-19 19:39:07.0"], [3, 8, "Teacher", "2010-07-19 19:39:07.0"]]
+Column descriptions and value descriptions for badges:
+Column Id: column description -> the badge id, value description -> 
+Column UserId: column description -> the unique id of the user, value description -> 
+Column Name: column description -> the badge name the user obtained, value description -> 
+Column Date: column description -> the date that the user obtained the badge, value description -> 
+Sample rows from comments (columns: ["Id", "PostId", "Score", "Text", "CreationDate", "UserId", "UserDisplayName"]):
+[[1, 3, 5, "Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'.", "2010-07-19 19:15:52.0", 13, null], [2, 5, 0, "Yes, R is nice- but WHY is it 'valuable'.", "2010-07-19 19:16:14.0", 13, null], [3, 9, 0, "Again- why?  How would I convince my boss to use this over, say, Excel.", "2010-07-19 19:18:54.0", 13, null]]
+Column descriptions and value descriptions for comments:
+Column Id: column description -> the comment Id, value description -> 
+Column PostId: column description -> the unique id of the post, value description -> 
+Column Score: column description -> rating score, value description -> commonsense evidence:
+The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. 
+Column Text: column description -> the detailed content of the comment, value description -> 
+Column CreationDate: column description -> the creation date of the comment, value description -> 
+Column UserId: column description -> the id of the user who post the comment, value description -> 
+Column UserDisplayName: column description -> user's display name, value description -> 
+Sample rows from postHistory (columns: ["Id", "PostHistoryTypeId", "PostId", "RevisionGUID", "CreationDate", "UserId", "Text", "Comment", "UserDisplayName"]):
+[[1, 2, 1, "e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69", "2010-07-19 19:12:12.0", 8, "How should I elicit prior distributions from experts when fitting a Bayesian model?", "", ""], [2, 1, 1, "e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69", "2010-07-19 19:12:12.0", 8, "Eliciting priors from experts", "", ""], [3, 3, 1, "e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69", "2010-07-19 19:12:12.0", 8, "<bayesian><prior><elicitation>", "", ""]]
+Column descriptions and value descriptions for postHistory:
+Column Id: column description -> the post history id, value description -> 
+Column PostHistoryTypeId: column description -> the id of the post history type, value description -> 
+Column PostId: column description -> the unique id of the post, value description -> 
+Column RevisionGUID: column description -> the revision globally unique id of the post, value description -> 
+Column CreationDate: column description -> the creation date of the post, value description -> 
+Column UserId: column description -> the user who post the post, value description -> 
+Column Text: column description -> the detailed content of the post, value description -> 
+Column Comment: column description -> comments of the post, value description -> 
+Column UserDisplayName: column description -> user's display name, value description -> 
+Sample rows from postLinks (columns: ["Id", "CreationDate", "PostId", "RelatedPostId", "LinkTypeId"]):
+[[108, "2010-07-21 14:47:33.0", 395, 173, 1], [145, "2010-07-23 16:30:41.0", 548, 539, 1], [217, "2010-07-26 20:12:15.0", 375, 30, 1]]
+Column descriptions and value descriptions for postLinks:
+Column Id: column description -> the post link id, value description -> 
+Column CreationDate: column description -> the creation date of the post link, value description -> 
+Column PostId: column description -> the post id, value description -> 
+Column RelatedPostId: column description -> the id of the related post, value description -> 
+Column LinkTypeId: column description -> the id of the link type, value description -> 
+Sample rows from posts (columns: ["Id", "PostTypeId", "AcceptedAnswerId", "CreaionDate", "Score", "ViewCount", "Body", "OwnerUserId", "LasActivityDate", "Title", "Tags", "AnswerCount", "CommentCount", "FavoriteCount", "LastEditorUserId", "LastEditDate", "CommunityOwnedDate", "ParentId", "ClosedDate", "OwnerDisplayName", "LastEditorDisplayName"]):
+[[1, 1, 15, "2010-07-19 19:12:12.0", 23, 1278, "<p>How should I elicit prior distributions from experts when fitting a Bayesian model?</p>\n", 8, "2010-09-15 21:08:26.0", "Eliciting priors from experts", "<bayesian><prior><elicitation>", 5, 1, 14, null, null, null, null, null, null, null], [2, 1, 59, "2010-07-19 19:12:57.0", 22, 8198, "<p>In many different statistical methods there is an \"assumption of normality\".  What is \"normality\" and how do I know if there is normality?</p>\n", 24, "2012-11-12 09:21:54.0", "What is normality?", "<distributions><normality>", 7, 1, 8, 88, "2010-08-07 17:56:44.0", null, null, null, null, null], [3, 1, 5, "2010-07-19 19:13:28.0", 54, 3613, "<p>What are some valuable Statistical Analysis open source projects available right now?</p>\n\n<p>Edit: as pointed out by Sharpie, valuable could mean helping you get things done faster or more cheaply.</p>\n", 18, "2013-05-27 14:48:36.0", "What are some valuable Statistical Analysis open source projects?", "<software><open-source>", 19, 4, 36, 183, "2011-02-12 05:50:03.0", "2010-07-19 19:13:28.0", null, null, null, null]]
+Column descriptions and value descriptions for posts:
+Column Id: column description -> the post id, value description -> 
+Column PostTypeId: column description -> the id of the post type, value description -> 
+Column AcceptedAnswerId: column description -> the accepted answer id of the post , value description -> 
+Column CreaionDate: column description -> the creation date of the post, value description -> 
+Column Score: column description -> the score of the post, value description -> 
+Column ViewCount: column description -> the view count of the post, value description -> commonsense evidence:
+Higher view count means the post has higher popularity
+Column Body: column description -> the body of the post, value description -> 
+Column OwnerUserId: column description -> the id of the owner user, value description -> 
+Column LasActivityDate: column description -> the last activity date, value description -> 
+Column Title: column description -> the title of the post, value description -> 
+Column Tags: column description -> the tag of the post, value description -> 
+Column AnswerCount: column description -> the total number of answers of the post, value description -> 
+Column CommentCount: column description -> the total number of comments of the post, value description -> 
+Column FavoriteCount: column description -> the total number of favorites of the post, value description -> commonsense evidence:
+more favorite count refers to more valuable posts. 
+Column LastEditorUserId: column description -> the id of the last editor, value description -> 
+Column LastEditDate: column description -> the last edit date, value description -> 
+Column CommunityOwnedDate: column description -> the community owned date, value description -> 
+Column ParentId: column description -> the id of the parent post, value description -> commonsense evidence:
+If the parent id is null, the post is the root post. Otherwise, the post is the child post of other post. 
+Column ClosedDate: column description -> the closed date of the post, value description -> commonsense evidence:
+if ClosedDate is null or empty, it means this post is not well-finished
+if CloseDate is not null or empty, it means this post has well-finished.
+Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 
+Column LastEditorDisplayName: column description -> the display name of the last editor, value description -> 
+Sample rows from tags (columns: ["Id", "TagName", "Count", "ExcerptPostId", "WikiPostId"]):
+[[1, "bayesian", 1342, 20258, 20257], [2, "prior", 168, 62158, 62157], [3, "elicitation", 6, null, null]]
+Column descriptions and value descriptions for tags:
+Column Id: column description -> the tag id, value description -> 
+Column TagName: column description -> the name of the tag, value description -> 
+Column Count: column description -> the count of posts that contain this tag, value description -> more counts --> this tag is more popular
+Column ExcerptPostId: column description -> the excerpt post id of the tag, value description -> 
+Column WikiPostId: column description -> the wiki post id of the tag, value description -> 
+Sample rows from users (columns: ["Id", "Reputation", "CreationDate", "DisplayName", "LastAccessDate", "WebsiteUrl", "Location", "AboutMe", "Views", "UpVotes", "DownVotes", "AccountId", "Age", "ProfileImageUrl"]):
+[[-1, 1, "2010-07-19 06:55:26.0", "Community", "2010-07-19 06:55:26.0", "http://meta.stackexchange.com/", "on the server farm", "<p>Hi, I'm not really a person.</p>\n\n<p>I'm a background process that helps keep this site clean!</p>\n\n<p>I do things like</p>\n\n<ul>\n<li>Randomly poke old unanswered questions every hour so they get some attention</li>\n<li>Own community questions and answers so nobody gets unnecessary reputation from them</li>\n<li>Own downvotes on spam/evil posts that get permanently deleted</li>\n<li>Own suggested edits from anonymous users</li>\n<li><a href=\"http://meta.stackexchange.com/a/92006\">Remove abandoned questions</a></li>\n</ul>\n", 0, 5007, 1920, -1, null, null], [2, 101, "2010-07-19 14:01:36.0", "Geoff Dalgas", "2013-11-12 22:07:23.0", "http://stackoverflow.com", "Corvallis, OR", "<p>Developer on the StackOverflow team.  Find me on</p>\n\n<p><a href=\"http://www.twitter.com/SuperDalgas\" rel=\"nofollow\">Twitter</a>\n<br><br>\n<a href=\"http://blog.stackoverflow.com/2009/05/welcome-stack-overflow-valued-associate-00003/\">Stack Overflow Valued Associate #00003</a></p>\n", 25, 3, 0, 2, 37, null], [3, 101, "2010-07-19 15:34:50.0", "Jarrod Dixon", "2014-08-08 06:42:58.0", "http://stackoverflow.com", "New York, NY", "<p><a href=\"http://blog.stackoverflow.com/2009/01/welcome-stack-overflow-valued-associate-00002/\">Developer on the Stack Overflow team</a>.</p>\n\n<p>Was dubbed <strong>SALTY SAILOR</strong> by Jeff Atwood, as filth and flarn would oft-times fly when dealing with a particularly nasty bug!</p>\n\n<ul>\n<li>Twitter me: <a href=\"http://twitter.com/jarrod_dixon\" rel=\"nofollow\">jarrod_dixon</a></li>\n<li>Email me: jarrod.m.dixon@gmail.com</li>\n</ul>\n", 22, 19, 0, 3, 35, null]]
+Column descriptions and value descriptions for users:
+Column Id: column description -> the user id, value description -> 
+Column Reputation: column description -> the user's reputation, value description -> commonsense evidence:
+The user with higher reputation has more influence. 
+Column CreationDate: column description -> the creation date of the user account, value description -> 
+Column DisplayName: column description -> the user's display name, value description -> 
+Column LastAccessDate: column description -> the last access date of the user account, value description -> 
+Column WebsiteUrl: column description -> the website url of the user account, value description -> 
+Column Location: column description -> user's location, value description -> 
+Column AboutMe: column description -> the self introduction of the user, value description -> 
+Column Views: column description -> the number of views , value description -> 
+Column UpVotes: column description -> the number of upvotes, value description -> 
+Column DownVotes: column description -> the number of downvotes, value description -> 
+Column AccountId: column description -> the unique id of the account, value description -> 
+Column Age: column description -> user's age, value description ->  teenager: 13-18
+ adult: 19-65
+ elder: > 65
+Column ProfileImageUrl: column description -> the profile image url, value description -> 
+Sample rows from votes (columns: ["Id", "PostId", "VoteTypeId", "CreationDate", "UserId", "BountyAmount"]):
+[[1, 3, 2, "2010-07-19", null, null], [2, 2, 2, "2010-07-19", null, null], [3, 5, 2, "2010-07-19", null, null]]
+Column descriptions and value descriptions for votes:
+Column Id: column description -> the vote id, value description -> 
+Column PostId: column description -> the id of the post that is voted, value description -> 
+Column VoteTypeId: column description -> the id of the vote type, value description -> 
+Column CreationDate: column description -> the creation date of the vote, value description -> 
+Column UserId: column description -> the id of the voter, value description -> 
+Column BountyAmount: column description -> the amount of bounty, value description -> 
+
+
+#
+Q: Write the contents of comments with a score of 17.
+Hint: score of 17 refers to Score = 17; contents of comments refers to Text
+Schema_links: [comments.Text,comments.Score,17]
+SQL: 

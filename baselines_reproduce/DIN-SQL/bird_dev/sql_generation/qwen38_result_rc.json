@@ -1,0 +1,185 @@
+{
+  "498": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "ValueError: qwen38 schema-linking result is unavailable"
+    },
+    "resource": [
+      null,
+      0.0
+    ]
+  },
+  "944": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "ValueError: qwen38 difficulty/decomposition result is unavailable"
+    },
+    "resource": [
+      null,
+      0.0
+    ]
+  },
+  "3": {
+    "result": "SELECT T1.MailStreet\nFROM schools AS T1\nINNER JOIN frpm AS T2\nON T1.CDSCode = T2.CDSCode\nORDER BY T2.`FRPM Count (K-12)` DESC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9479,
+        "total_tokens": 10864,
+        "completion_tokens": 1385,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9479
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1153,
+          "text_tokens": 1385
+        }
+      },
+      30.593
+    ]
+  },
+  "0": {
+    "result": "SELECT MAX(CAST(`Free Meal Count (K-12)` AS REAL) / `Enrollment (K-12)`) FROM frpm WHERE `County Name` = 'Alameda'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10908,
+        "total_tokens": 12538,
+        "completion_tokens": 1630,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10908
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1586,
+          "text_tokens": 1630
+        }
+      },
+      36.224
+    ]
+  },
+  "1": {
+    "result": "SELECT CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`\nFROM frpm AS T1\nINNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode\nWHERE T2.EdOpsName = 'Continuation School'\nORDER BY CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)` ASC\nLIMIT 3",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10896,
+        "total_tokens": 12634,
+        "completion_tokens": 1738,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10896
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1619,
+          "text_tokens": 1738
+        }
+      },
+      39.907
+    ]
+  },
+  "9": {
+    "result": "SELECT COUNT(T2.CDSCode)\nFROM satscores AS T1\nINNER JOIN schools AS T2\nON T1.cds = T2.CDSCode\nWHERE T1.AvgScrMath > 560\n  AND T2.FundingType = 'Directly funded';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9461,
+        "total_tokens": 11868,
+        "completion_tokens": 2407,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9461
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2214,
+          "text_tokens": 2407
+        }
+      },
+      52.439
+    ]
+  },
+  "6": {
+    "result": "SELECT DISTINCT T1.School\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nWHERE T2.NumTstTakr > 500\n  AND T1.Magnet = 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9437,
+        "total_tokens": 12834,
+        "completion_tokens": 3397,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9437
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3208,
+          "text_tokens": 3397
+        }
+      },
+      76.87
+    ]
+  },
+  "8": {
+    "result": "SELECT T3.NumTstTakr\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nINNER JOIN satscores AS T3\n    ON T2.CDSCode = T3.cds\nWHERE T1.`FRPM Count (K-12)` = (\n    SELECT MAX(`FRPM Count (K-12)`)\n    FROM frpm\n);",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 11225,
+        "total_tokens": 15061,
+        "completion_tokens": 3836,
+        "prompt_tokens_details": {
+          "cached_tokens": 10496,
+          "text_tokens": 11225
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3576,
+          "text_tokens": 3836
+        }
+      },
+      90.41
+    ]
+  },
+  "2": {
+    "result": "SELECT T2.Zip\nFROM frpm AS T1\nINNER JOIN schools AS T2\n  ON T1.CDSCode = T2.CDSCode\nWHERE T1.\"Charter School (Y/N)\" = 1\n  AND T2.District = 'Fresno County Office of Education';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9438,
+        "total_tokens": 14125,
+        "completion_tokens": 4687,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9438
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4512,
+          "text_tokens": 4687
+        }
+      },
+      101.432
+    ]
+  }
+}

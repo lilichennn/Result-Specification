@@ -1,0 +1,2485 @@
+{
+  "498": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "ValueError: qwen38 schema-linking result is unavailable"
+    },
+    "resource": [
+      null,
+      0.0
+    ]
+  },
+  "944": {
+    "result": null,
+    "status": {
+      "success": false,
+      "reason": "ValueError: qwen38 difficulty/decomposition result is unavailable"
+    },
+    "resource": [
+      null,
+      0.0
+    ]
+  },
+  "3": {
+    "result": "SELECT T2.MailStreet\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nORDER BY T1.`FRPM Count (K-12)` DESC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8997,
+        "total_tokens": 9779,
+        "completion_tokens": 782,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8997
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 593,
+          "text_tokens": 782
+        }
+      },
+      19.915
+    ]
+  },
+  "0": {
+    "result": "SELECT MAX(CAST(`Free Meal Count (K-12)` AS REAL) / NULLIF(`Enrollment (K-12)`, 0))\nFROM frpm\nWHERE `County Name` = 'Alameda';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10459,
+        "total_tokens": 11922,
+        "completion_tokens": 1463,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10459
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1412,
+          "text_tokens": 1463
+        }
+      },
+      32.684
+    ]
+  },
+  "4": {
+    "result": "SELECT T2.Phone\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T1.`Charter School (Y/N)` = 1\n  AND T1.`Charter Funding Type` = 'Directly funded'\n  AND T2.OpenDate > '2000-01-01'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9042,
+        "total_tokens": 10549,
+        "completion_tokens": 1507,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9042
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1247,
+          "text_tokens": 1507
+        }
+      },
+      33.192
+    ]
+  },
+  "1": {
+    "result": "SELECT CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)` AS eligible_free_rate\nFROM frpm AS T1\nINNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode\nWHERE T2.EdOpsName = 'Continuation School'\nORDER BY eligible_free_rate ASC\nLIMIT 3;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10483,
+        "total_tokens": 12065,
+        "completion_tokens": 1582,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 10483
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1489,
+          "text_tokens": 1582
+        }
+      },
+      36.062
+    ]
+  },
+  "5": {
+    "result": "SELECT COUNT(T1.CDSCode) FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T2.AvgScrMath > 400 AND T1.Virtual = 'F'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9009,
+        "total_tokens": 10499,
+        "completion_tokens": 1490,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9009
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1318,
+          "text_tokens": 1490
+        }
+      },
+      37.082
+    ]
+  },
+  "2": {
+    "result": "SELECT T2.Zip\nFROM frpm AS T1\nINNER JOIN schools AS T2\n  ON T1.CDSCode = T2.CDSCode\nWHERE T1.\"Charter School (Y/N)\" = 1\n  AND T2.District = 'Fresno County Office of Education'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9018,
+        "total_tokens": 10760,
+        "completion_tokens": 1742,
+        "prompt_tokens_details": {
+          "cached_tokens": 8192,
+          "text_tokens": 9018
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1558,
+          "text_tokens": 1742
+        }
+      },
+      38.923
+    ]
+  },
+  "9": {
+    "result": "SELECT COUNT(T2.CDSCode)\nFROM satscores AS T1\nINNER JOIN schools AS T2\nON T1.cds = T2.CDSCode\nWHERE T1.AvgScrMath > 560\n  AND T2.FundingType = 'Directly funded';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9009,
+        "total_tokens": 11394,
+        "completion_tokens": 2385,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9009
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2178,
+          "text_tokens": 2385
+        }
+      },
+      54.283
+    ]
+  },
+  "14": {
+    "result": "SELECT T2.NCESSchool\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nORDER BY T1.`Enrollment (Ages 5-17)` DESC\nLIMIT 5;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9015,
+        "total_tokens": 9949,
+        "completion_tokens": 934,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9015
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 748,
+          "text_tokens": 934
+        }
+      },
+      18.528
+    ]
+  },
+  "19": {
+    "result": "SELECT T2.Phone\nFROM satscores AS T1\nINNER JOIN schools AS T2\nON T1.cds = T2.CDSCode\nORDER BY T1.AvgScrMath DESC\nLIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8981,
+        "total_tokens": 10029,
+        "completion_tokens": 1048,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8981
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 875,
+          "text_tokens": 1048
+        }
+      },
+      21.835
+    ]
+  },
+  "16": {
+    "result": "SELECT COUNT(T1.CDSCode)\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nWHERE T1.StatusType = 'Merged'\n  AND T1.County = 'Alameda'\n  AND T2.NumTstTakr < 100",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9009,
+        "total_tokens": 10328,
+        "completion_tokens": 1319,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9009
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1106,
+          "text_tokens": 1319
+        }
+      },
+      27.027
+    ]
+  },
+  "21": {
+    "result": "SELECT COUNT(CDSCode) FROM frpm WHERE \"County Name\" = 'Los Angeles' AND \"Free Meal Count (K-12)\" > 500 AND \"FRPM Count (K-12)\" < 700",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10453,
+        "total_tokens": 11037,
+        "completion_tokens": 584,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10453
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 530,
+          "text_tokens": 584
+        }
+      },
+      12.206
+    ]
+  },
+  "22": {
+    "result": "SELECT sname FROM satscores WHERE cname = 'Contra Costa' ORDER BY NumTstTakr DESC LIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10410,
+        "total_tokens": 10847,
+        "completion_tokens": 437,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10410
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 408,
+          "text_tokens": 437
+        }
+      },
+      11.397
+    ]
+  },
+  "11": {
+    "result": "SELECT `School Code`\nFROM frpm\nWHERE `Enrollment (K-12)` + `Enrollment (Ages 5-17)` > 500",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9027,
+        "total_tokens": 10760,
+        "completion_tokens": 1733,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9027
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1578,
+          "text_tokens": 1733
+        }
+      },
+      38.16
+    ]
+  },
+  "20": {
+    "result": "SELECT COUNT(CDSCode)\nFROM frpm\nWHERE \"County Name\" = 'Amador'\n  AND \"Low Grade\" = '9'\n  AND \"High Grade\" = '12';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8998,
+        "total_tokens": 10517,
+        "completion_tokens": 1519,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8998
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1376,
+          "text_tokens": 1519
+        }
+      },
+      33.969
+    ]
+  },
+  "15": {
+    "result": "SELECT T1.District\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nWHERE T1.StatusType = 'Active'\nORDER BY T2.AvgScrRead DESC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8983,
+        "total_tokens": 10689,
+        "completion_tokens": 1706,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8983
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1505,
+          "text_tokens": 1706
+        }
+      },
+      36.447
+    ]
+  },
+  "18": {
+    "result": "SELECT COUNT(T1.CDSCode) FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.County = 'Fresno' AND T1.FundingType = 'Directly funded' AND T2.NumTstTakr <= 250",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9015,
+        "total_tokens": 11277,
+        "completion_tokens": 2262,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9015
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2071,
+          "text_tokens": 2262
+        }
+      },
+      47.716
+    ]
+  },
+  "29": {
+    "result": "SELECT T2.OpenDate\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T2.GSserved = 'K-12'\nORDER BY T1.\"Enrollment (K-12)\" DESC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9005,
+        "total_tokens": 10255,
+        "completion_tokens": 1250,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9005
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1021,
+          "text_tokens": 1250
+        }
+      },
+      24.575
+    ]
+  },
+  "23": {
+    "result": "SELECT\n    T1.`School Name`,\n    T2.Street\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE\n    T1.`Enrollment (K-12)` - T1.`Enrollment (Ages 5-17)` > 30;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9062,
+        "total_tokens": 10596,
+        "completion_tokens": 1534,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9062
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1322,
+          "text_tokens": 1534
+        }
+      },
+      31.709
+    ]
+  },
+  "33": {
+    "result": "SELECT\n    T2.Website,\n    T2.School\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE\n    T1.\"Free Meal Count (Ages 5-17)\" BETWEEN 1900 AND 2000;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9035,
+        "total_tokens": 10126,
+        "completion_tokens": 1091,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9035
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 889,
+          "text_tokens": 1091
+        }
+      },
+      24.049
+    ]
+  },
+  "7": {
+    "result": "SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds ORDER BY T2.NumGE1500 DESC LIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8995,
+        "total_tokens": 13325,
+        "completion_tokens": 4330,
+        "prompt_tokens_details": {
+          "cached_tokens": 8192,
+          "text_tokens": 8995
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4160,
+          "text_tokens": 4330
+        }
+      },
+      101.121
+    ]
+  },
+  "34": {
+    "result": "SELECT \n    CAST(T1.`Free Meal Count (Ages 5-17)` AS REAL) / T1.`Enrollment (Ages 5-17)`\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE T2.AdmFName1 = 'Kacey'\n  AND T2.AdmLName1 = 'Gibson';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9073,
+        "total_tokens": 10431,
+        "completion_tokens": 1358,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9073
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1091,
+          "text_tokens": 1358
+        }
+      },
+      28.559
+    ]
+  },
+  "17": {
+    "result": "SELECT T2.CharterNum\nFROM satscores AS T1\nINNER JOIN schools AS T2\nON T1.cds = T2.CDSCode\nWHERE T1.AvgScrWrite > 499\n  AND T2.CharterNum IS NOT NULL\nORDER BY T1.AvgScrWrite DESC",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9005,
+        "total_tokens": 12109,
+        "completion_tokens": 3104,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9005
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2876,
+          "text_tokens": 3104
+        }
+      },
+      65.556
+    ]
+  },
+  "31": {
+    "result": "SELECT CAST(`Free Meal Count (K-12)` AS REAL) / `Enrollment (K-12)` AS eligible_free_rate\nFROM frpm\nORDER BY `Enrollment (K-12)` DESC\nLIMIT 2 OFFSET 9",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10478,
+        "total_tokens": 12748,
+        "completion_tokens": 2270,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10478
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2214,
+          "text_tokens": 2270
+        }
+      },
+      47.82
+    ]
+  },
+  "35": {
+    "result": "SELECT T2.AdmEmail1\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T1.`Charter School (Y/N)` = 1\nORDER BY T1.`Enrollment (K-12)` ASC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9051,
+        "total_tokens": 11061,
+        "completion_tokens": 2010,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9051
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1770,
+          "text_tokens": 2010
+        }
+      },
+      43.829
+    ]
+  },
+  "6": {
+    "result": "SELECT DISTINCT T1.School\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nWHERE T2.NumTstTakr > 500\n  AND T1.Magnet = 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9020,
+        "total_tokens": 14227,
+        "completion_tokens": 5207,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9020
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 5017,
+          "text_tokens": 5207
+        }
+      },
+      125.372
+    ]
+  },
+  "39": {
+    "result": "SELECT AVG(T1.NumTstTakr)\nFROM satscores AS T1\nINNER JOIN schools AS T2\nON T1.cds = T2.CDSCode\nWHERE T2.County = 'Fresno'\n  AND CAST(SUBSTR(T2.OpenDate, 1, 4) AS INTEGER) = 1980;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9049,
+        "total_tokens": 11726,
+        "completion_tokens": 2677,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9049
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2450,
+          "text_tokens": 2677
+        }
+      },
+      56.626
+    ]
+  },
+  "58": {
+    "result": "SELECT Phone, Ext, School FROM schools WHERE Zip = '95203-3704'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10434,
+        "total_tokens": 10656,
+        "completion_tokens": 222,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10434
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 196,
+          "text_tokens": 222
+        }
+      },
+      5.356
+    ]
+  },
+  "54": {
+    "result": "SELECT School, MailZip\nFROM schools\nWHERE AdmFName1 = 'Avetik' AND AdmLName1 = 'Atoian';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10428,
+        "total_tokens": 10785,
+        "completion_tokens": 357,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10428
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 317,
+          "text_tokens": 357
+        }
+      },
+      8.169
+    ]
+  },
+  "26": {
+    "result": "SELECT DISTINCT\n    T1.School,\n    T1.MailStreet,\n    T1.MailCity,\n    T1.MailState,\n    T1.MailZip\nFROM schools AS T1\nINNER JOIN frpm AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE\n    T1.County = 'Monterey'\n    AND T1.SOCType = 'High Schools (Public)'\n    AND T2.\"FRPM Count (Ages 5-17)\" > 800;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9068,
+        "total_tokens": 12313,
+        "completion_tokens": 3245,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9068
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3011,
+          "text_tokens": 3245
+        }
+      },
+      70.037
+    ]
+  },
+  "56": {
+    "result": "SELECT COUNT(CDSCode) FROM schools WHERE MailState = 'CA' AND StatusType = 'Active' AND City = 'San Joaquin'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10424,
+        "total_tokens": 10987,
+        "completion_tokens": 563,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10424
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 529,
+          "text_tokens": 563
+        }
+      },
+      12.468
+    ]
+  },
+  "32": {
+    "result": "SELECT \n    CAST(T1.`FRPM Count (K-12)` AS REAL) / T1.`Enrollment (K-12)`\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE T2.SOC = '66'\nORDER BY T1.`FRPM Count (K-12)` DESC\nLIMIT 5;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9076,
+        "total_tokens": 12288,
+        "completion_tokens": 3212,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9076
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2887,
+          "text_tokens": 3212
+        }
+      },
+      69.046
+    ]
+  },
+  "55": {
+    "result": "SELECT CAST(SUM(CASE WHEN County = 'Colusa' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN County = 'Humboldt' THEN 1 ELSE 0 END) FROM schools WHERE MailState = 'CA'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10452,
+        "total_tokens": 11293,
+        "completion_tokens": 841,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10452
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 785,
+          "text_tokens": 841
+        }
+      },
+      16.829
+    ]
+  },
+  "13": {
+    "result": "SELECT T1.Phone\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nORDER BY CAST(T2.NumGE1500 AS REAL) / T2.NumTstTakr DESC\nLIMIT 3;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9008,
+        "total_tokens": 13797,
+        "completion_tokens": 4789,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9008
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4552,
+          "text_tokens": 4789
+        }
+      },
+      106.217
+    ]
+  },
+  "59": {
+    "result": "SELECT Website FROM schools WHERE (AdmFName1 = 'Mike' AND AdmLName1 = 'Larson') OR (AdmFName1 = 'Dante' AND AdmLName1 = 'Alvarez')",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10422,
+        "total_tokens": 11221,
+        "completion_tokens": 799,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10422
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 746,
+          "text_tokens": 799
+        }
+      },
+      17.686
+    ]
+  },
+  "30": {
+    "result": "SELECT T2.City\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nORDER BY T1.`Enrollment (K-12)` ASC\nLIMIT 5;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9007,
+        "total_tokens": 12602,
+        "completion_tokens": 3595,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9007
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3404,
+          "text_tokens": 3595
+        }
+      },
+      79.636
+    ]
+  },
+  "69": {
+    "result": "SELECT NCESDist FROM schools WHERE SOC = 31",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10426,
+        "total_tokens": 10795,
+        "completion_tokens": 369,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10426
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 354,
+          "text_tokens": 369
+        }
+      },
+      8.605
+    ]
+  },
+  "61": {
+    "result": "SELECT COUNT(CDSCode) FROM schools WHERE Charter = 1 AND City = 'Hickman' AND DOC = 52",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10444,
+        "total_tokens": 11115,
+        "completion_tokens": 671,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10444
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 641,
+          "text_tokens": 671
+        }
+      },
+      15.972
+    ]
+  },
+  "64": {
+    "result": "SELECT COUNT(CDSCode) FROM schools WHERE MailCity = 'Hickman' AND CharterNum = '00D4'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10423,
+        "total_tokens": 10828,
+        "completion_tokens": 405,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10423
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 375,
+          "text_tokens": 405
+        }
+      },
+      9.669
+    ]
+  },
+  "60": {
+    "result": "SELECT Website FROM schools WHERE Virtual = 'P' AND Charter = 1 AND City = 'San Joaquin'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10438,
+        "total_tokens": 11250,
+        "completion_tokens": 812,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10438
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 785,
+          "text_tokens": 812
+        }
+      },
+      18.25
+    ]
+  },
+  "40": {
+    "result": "SELECT T1.Phone FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.District = 'Fresno Unified' ORDER BY T2.AvgScrRead ASC LIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9000,
+        "total_tokens": 11991,
+        "completion_tokens": 2991,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9000
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2808,
+          "text_tokens": 2991
+        }
+      },
+      65.557
+    ]
+  },
+  "47": {
+    "result": "SELECT CAST(COUNT(CDSCode) AS REAL) / 12\nFROM schools\nWHERE County = 'Alameda'\n  AND DOC = 52\n  AND STRFTIME('%Y', OpenDate) = '1980';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10478,
+        "total_tokens": 12757,
+        "completion_tokens": 2279,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10478
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2223,
+          "text_tokens": 2279
+        }
+      },
+      49.619
+    ]
+  },
+  "66": {
+    "result": "SELECT COUNT(CDSCode) FROM schools WHERE County = 'Stanislaus' AND FundingType = 'Directly funded' AND OpenDate BETWEEN '2000-01-01' AND '2005-12-31'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10475,
+        "total_tokens": 11190,
+        "completion_tokens": 715,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10475
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 658,
+          "text_tokens": 715
+        }
+      },
+      15.975
+    ]
+  },
+  "79": {
+    "result": "SELECT County, COUNT(CDSCode) FROM schools WHERE County IN ('San Diego', 'Santa Barbara') AND Virtual = 'F' GROUP BY County ORDER BY COUNT(CDSCode) DESC LIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10437,
+        "total_tokens": 10853,
+        "completion_tokens": 416,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10437
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 372,
+          "text_tokens": 416
+        }
+      },
+      8.906
+    ]
+  },
+  "78": {
+    "result": "SELECT GSserved FROM schools WHERE City = 'Adelanto' GROUP BY GSserved ORDER BY COUNT(GSserved) DESC LIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10404,
+        "total_tokens": 10852,
+        "completion_tokens": 448,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10404
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 414,
+          "text_tokens": 448
+        }
+      },
+      10.135
+    ]
+  },
+  "70": {
+    "result": "SELECT COUNT(CDSCode) FROM schools WHERE StatusType IN ('Active', 'Closed') AND SOCType = 'District Community Day Schools' AND County = 'Alpine'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10423,
+        "total_tokens": 11210,
+        "completion_tokens": 787,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10423
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 749,
+          "text_tokens": 787
+        }
+      },
+      17.299
+    ]
+  },
+  "44": {
+    "result": "SELECT T1.AvgScrWrite, T2.City FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode ORDER BY T1.NumGE1500 DESC LIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9020,
+        "total_tokens": 11757,
+        "completion_tokens": 2737,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9020
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2544,
+          "text_tokens": 2737
+        }
+      },
+      58.118
+    ]
+  },
+  "89": {
+    "result": "SELECT COUNT(T1.account_id)\nFROM account AS T1\nINNER JOIN district AS T2 ON T1.district_id = T2.district_id\nWHERE T1.frequency = 'POPLATEK PO OBRATU'\n  AND T2.A3 = 'East Bohemia';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5379,
+        "total_tokens": 5902,
+        "completion_tokens": 523,
+        "prompt_tokens_details": {
+          "cached_tokens": 2048,
+          "text_tokens": 5379
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 341,
+          "text_tokens": 523
+        }
+      },
+      10.645
+    ]
+  },
+  "38": {
+    "result": "SELECT T1.Website\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nWHERE T1.County = 'Los Angeles'\n  AND T2.NumTstTakr BETWEEN 2000 AND 3000;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9015,
+        "total_tokens": 12977,
+        "completion_tokens": 3962,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9015
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3773,
+          "text_tokens": 3962
+        }
+      },
+      89.013
+    ]
+  },
+  "27": {
+    "result": "SELECT T2.School, T1.AvgScrWrite, T2.Phone FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE CAST(SUBSTR(T2.OpenDate, 1, 4) AS INTEGER) > 1991 OR CAST(SUBSTR(T2.ClosedDate, 1, 4) AS INTEGER) < 2000",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9049,
+        "total_tokens": 13778,
+        "completion_tokens": 4729,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9049
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4492,
+          "text_tokens": 4729
+        }
+      },
+      100.374
+    ]
+  },
+  "82": {
+    "result": "SELECT GSoffered FROM schools ORDER BY ABS(Longitude) DESC LIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10412,
+        "total_tokens": 11169,
+        "completion_tokens": 757,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10412
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 737,
+          "text_tokens": 757
+        }
+      },
+      17.358
+    ]
+  },
+  "73": {
+    "result": "SELECT T1.`FRPM Count (Ages 5-17)`\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T2.EdOpsName = 'Youth Authority School'\n  AND T2.MailStreet = 'PO Box 1040'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9030,
+        "total_tokens": 10129,
+        "completion_tokens": 1099,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9030
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 871,
+          "text_tokens": 1099
+        }
+      },
+      22.158
+    ]
+  },
+  "45": {
+    "result": "SELECT\n    T1.School,\n    T2.AvgScrWrite\nFROM schools AS T1\nINNER JOIN satscores AS T2\n    ON T1.CDSCode = T2.cds\nWHERE\n    T1.AdmFName1 = 'Ricci'\n    AND T1.AdmLName1 = 'Ulrich';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9021,
+        "total_tokens": 11996,
+        "completion_tokens": 2975,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9021
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2783,
+          "text_tokens": 2975
+        }
+      },
+      64.147
+    ]
+  },
+  "8": {
+    "result": "SELECT T3.NumTstTakr\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nINNER JOIN satscores AS T3\n    ON T2.CDSCode = T3.cds\nWHERE T1.`FRPM Count (K-12)` = (\n    SELECT MAX(`FRPM Count (K-12)`)\n    FROM frpm\n);",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10834,
+        "total_tokens": 18428,
+        "completion_tokens": 7594,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "text_tokens": 10834
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 7323,
+          "text_tokens": 7594
+        }
+      },
+      167.272
+    ]
+  },
+  "53": {
+    "result": "SELECT SUM(T1.NumTstTakr) FROM satscores AS T1 INNER JOIN schools AS T2 ON T1.cds = T2.CDSCode WHERE T2.MailCity = 'Fresno'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8990,
+        "total_tokens": 11241,
+        "completion_tokens": 2251,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8990
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2077,
+          "text_tokens": 2251
+        }
+      },
+      49.948
+    ]
+  },
+  "71": {
+    "result": "SELECT T1.\"District Code\"\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T2.City = 'Fresno' AND T2.Magnet = 0",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9020,
+        "total_tokens": 10143,
+        "completion_tokens": 1123,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9020
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 937,
+          "text_tokens": 1123
+        }
+      },
+      25.948
+    ]
+  },
+  "93": {
+    "result": "SELECT COUNT(T1.client_id)\nFROM client AS T1\nINNER JOIN district AS T2 ON T1.district_id = T2.district_id\nWHERE T1.gender = 'M'\n  AND T2.A3 = 'North Bohemia'\n  AND T2.A11 > 8000;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5382,
+        "total_tokens": 6028,
+        "completion_tokens": 646,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5382
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 453,
+          "text_tokens": 646
+        }
+      },
+      12.728
+    ]
+  },
+  "74": {
+    "result": "SELECT T1.`Low Grade`\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T2.EdOpsCode = 'SPECON'\n  AND T2.NCESDist = '0613360'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9034,
+        "total_tokens": 10070,
+        "completion_tokens": 1036,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9034
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 841,
+          "text_tokens": 1036
+        }
+      },
+      23.298
+    ]
+  },
+  "67": {
+    "result": "SELECT COUNT(CDSCode) FROM schools WHERE DOCType = 'Community College District' AND StatusType = 'Closed' AND City = 'San Francisco' AND ClosedDate LIKE '1989%'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10435,
+        "total_tokens": 11901,
+        "completion_tokens": 1466,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10435
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1422,
+          "text_tokens": 1466
+        }
+      },
+      31.876
+    ]
+  },
+  "75": {
+    "result": "SELECT\n    T2.EILName,\n    T2.School\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE\n    T1.\"NSLP Provision Status\" = 'Breakfast Provision 2'\n    AND T1.\"County Code\" = '37';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9017,
+        "total_tokens": 10173,
+        "completion_tokens": 1156,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9017
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 954,
+          "text_tokens": 1156
+        }
+      },
+      24.888
+    ]
+  },
+  "65": {
+    "result": "SELECT CAST(SUM(CASE WHEN FundingType = 'Locally funded' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(FundingType) FROM schools WHERE County = 'Santa Clara'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10445,
+        "total_tokens": 12005,
+        "completion_tokens": 1560,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10445
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1511,
+          "text_tokens": 1560
+        }
+      },
+      33.278
+    ]
+  },
+  "57": {
+    "result": "SELECT T2.Phone, T2.Ext\nFROM satscores AS T1\nINNER JOIN schools AS T2\nON T1.cds = T2.CDSCode\nORDER BY T1.AvgScrWrite DESC\nLIMIT 1 OFFSET 332",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8996,
+        "total_tokens": 11123,
+        "completion_tokens": 2127,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8996
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1918,
+          "text_tokens": 2127
+        }
+      },
+      46.047
+    ]
+  },
+  "28": {
+    "result": "SELECT T2.School, T2.DOCType\nFROM frpm AS T1\nINNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode\nWHERE T1.`Enrollment (K-12)` - T1.`Enrollment (Ages 5-17)` > (\n    SELECT AVG(T3.`Enrollment (K-12)` - T3.`Enrollment (Ages 5-17)`)\n    FROM frpm AS T3\n    INNER JOIN schools AS T4 ON T3.CDSCode = T4.CDSCode\n    WHERE T4.FundingType = 'Locally funded'\n)",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10915,
+        "total_tokens": 16073,
+        "completion_tokens": 5158,
+        "prompt_tokens_details": {
+          "cached_tokens": 10496,
+          "text_tokens": 10915
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4803,
+          "text_tokens": 5158
+        }
+      },
+      107.395
+    ]
+  },
+  "48": {
+    "result": "SELECT CAST(SUM(CASE WHEN DOC = '54' THEN 1 ELSE 0 END) AS REAL) / SUM(CASE WHEN DOC = '52' THEN 1 ELSE 0 END)\nFROM schools\nWHERE StatusType = 'Merged' AND County = 'Orange';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10440,
+        "total_tokens": 13656,
+        "completion_tokens": 3216,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10440
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3152,
+          "text_tokens": 3216
+        }
+      },
+      70.707
+    ]
+  },
+  "76": {
+    "result": "SELECT T2.City FROM frpm AS T1 INNER JOIN schools AS T2 ON T1.CDSCode = T2.CDSCode WHERE T2.EILCode = 'HS' AND T1.\"NSLP Provision Status\" = 'Lunch Provision 2' AND T1.\"Low Grade\" = '9' AND T1.\"High Grade\" = '12' AND T2.County = 'Merced'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9052,
+        "total_tokens": 10422,
+        "completion_tokens": 1370,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9052
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1134,
+          "text_tokens": 1370
+        }
+      },
+      28.118
+    ]
+  },
+  "85": {
+    "result": "SELECT\n  CAST(T1.\"Free Meal Count (K-12)\" AS REAL) * 100 / T1.\"Enrollment (K-12)\",\n  T1.\"District Code\"\nFROM frpm AS T1\nINNER JOIN schools AS T2\n  ON T1.CDSCode = T2.CDSCode\nWHERE T2.AdmFName1 = 'Alusine';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9070,
+        "total_tokens": 10397,
+        "completion_tokens": 1327,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9070
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1068,
+          "text_tokens": 1327
+        }
+      },
+      25.899
+    ]
+  },
+  "127": {
+    "result": "SELECT account_id FROM account WHERE frequency = 'POPLATEK MESICNE'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 6767,
+        "total_tokens": 7005,
+        "completion_tokens": 238,
+        "prompt_tokens_details": {
+          "cached_tokens": 6272,
+          "text_tokens": 6767
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 218,
+          "text_tokens": 238
+        }
+      },
+      5.935
+    ]
+  },
+  "105": {
+    "result": "SELECT T1.district_id FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id WHERE T2.date = '1994-08-25'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5358,
+        "total_tokens": 5915,
+        "completion_tokens": 557,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5358
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 396,
+          "text_tokens": 557
+        }
+      },
+      13.236
+    ]
+  },
+  "117": {
+    "result": "SELECT CAST(SUM(CASE WHEN status = 'A' THEN amount ELSE 0 END) AS REAL) * 100 / SUM(amount) FROM loan",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 6801,
+        "total_tokens": 7291,
+        "completion_tokens": 490,
+        "prompt_tokens_details": {
+          "cached_tokens": 6272,
+          "text_tokens": 6801
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 454,
+          "text_tokens": 490
+        }
+      },
+      9.954
+    ]
+  },
+  "52": {
+    "result": "SELECT COUNT(T1.CDSCode) FROM schools AS T1 INNER JOIN satscores AS T2 ON T1.CDSCode = T2.cds WHERE T1.MailCity = 'Lakeport' AND T2.AvgScrRead + T2.AvgScrMath + T2.AvgScrWrite >= 1500",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9039,
+        "total_tokens": 12093,
+        "completion_tokens": 3054,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9039
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2836,
+          "text_tokens": 3054
+        }
+      },
+      63.868
+    ]
+  },
+  "104": {
+    "result": "SELECT T2.date FROM trans AS T1 INNER JOIN account AS T2 ON T1.account_id = T2.account_id WHERE T1.amount = 840 AND T1.date = '1998-10-14'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5360,
+        "total_tokens": 6064,
+        "completion_tokens": 704,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5360
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 530,
+          "text_tokens": 704
+        }
+      },
+      14.075
+    ]
+  },
+  "121": {
+    "result": "SELECT T1.account_id, T1.date\nFROM account AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T2.A2 = 'Prachatice'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5349,
+        "total_tokens": 5791,
+        "completion_tokens": 442,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5349
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 273,
+          "text_tokens": 442
+        }
+      },
+      9.727
+    ]
+  },
+  "77": {
+    "result": "SELECT \n    T2.School,\n    CAST(T1.`FRPM Count (Ages 5-17)` AS REAL) * 100 / T1.`Enrollment (Ages 5-17)` AS `Percent (%) Eligible FRPM (Ages 5-17)`\nFROM frpm AS T1\nINNER JOIN schools AS T2\n    ON T1.CDSCode = T2.CDSCode\nWHERE \n    T2.County = 'Los Angeles'\n    AND T2.GSserved = 'K-9';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9097,
+        "total_tokens": 10847,
+        "completion_tokens": 1750,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9097
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1486,
+          "text_tokens": 1750
+        }
+      },
+      34.726
+    ]
+  },
+  "103": {
+    "result": "SELECT T3.client_id\nFROM card AS T1\nINNER JOIN disp AS T2\n  ON T1.disp_id = T2.disp_id\nINNER JOIN client AS T3\n  ON T2.client_id = T3.client_id\nWHERE T1.issued = '1994-03-03';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5360,
+        "total_tokens": 6213,
+        "completion_tokens": 853,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5360
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 640,
+          "text_tokens": 853
+        }
+      },
+      17.069
+    ]
+  },
+  "111": {
+    "result": "SELECT COUNT(T1.account_id)\nFROM account AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T2.A2 = 'Litomerice'\nAND T1.date LIKE '1996%'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5362,
+        "total_tokens": 6189,
+        "completion_tokens": 827,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5362
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 653,
+          "text_tokens": 827
+        }
+      },
+      16.658
+    ]
+  },
+  "122": {
+    "result": "SELECT T3.A2, T3.A3\nFROM loan AS T1\nINNER JOIN account AS T2 ON T1.account_id = T2.account_id\nINNER JOIN district AS T3 ON T2.district_id = T3.district_id\nWHERE T1.loan_id = 4990;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5364,
+        "total_tokens": 6003,
+        "completion_tokens": 639,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5364
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 444,
+          "text_tokens": 639
+        }
+      },
+      13.51
+    ]
+  },
+  "124": {
+    "result": "SELECT\n    T1.loan_id,\n    T3.A3,\n    T3.A11\nFROM loan AS T1\nINNER JOIN account AS T2\n    ON T1.account_id = T2.account_id\nINNER JOIN district AS T3\n    ON T2.district_id = T3.district_id\nWHERE T1.duration = 60;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5370,
+        "total_tokens": 6127,
+        "completion_tokens": 757,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5370
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 539,
+          "text_tokens": 757
+        }
+      },
+      15.155
+    ]
+  },
+  "90": {
+    "result": "SELECT COUNT(T1.account_id)\nFROM account AS T1\nINNER JOIN district AS T2 ON T1.district_id = T2.district_id\nINNER JOIN disp AS T3 ON T1.account_id = T3.account_id\nWHERE T2.A3 = 'Prague' AND T3.type = 'OWNER';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5354,
+        "total_tokens": 6938,
+        "completion_tokens": 1584,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5354
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1370,
+          "text_tokens": 1584
+        }
+      },
+      35.632
+    ]
+  },
+  "114": {
+    "result": "SELECT T1.account_id\nFROM account AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T2.A3 = 'Prague'\nORDER BY T1.date ASC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5349,
+        "total_tokens": 6210,
+        "completion_tokens": 861,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5349
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 689,
+          "text_tokens": 861
+        }
+      },
+      18.363
+    ]
+  },
+  "140": {
+    "result": "SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A2 = 'Pisek'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5341,
+        "total_tokens": 5810,
+        "completion_tokens": 469,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5341
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 317,
+          "text_tokens": 469
+        }
+      },
+      9.829
+    ]
+  },
+  "113": {
+    "result": "SELECT T4.birth_date\nFROM loan AS T1\nINNER JOIN account AS T2 ON T1.account_id = T2.account_id\nINNER JOIN disp AS T3 ON T2.account_id = T3.account_id\nINNER JOIN client AS T4 ON T3.client_id = T4.client_id\nWHERE T1.amount = 98832\n  AND T1.date = '1996-01-03'\n  AND T3.type = 'OWNER';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5386,
+        "total_tokens": 6331,
+        "completion_tokens": 945,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5386
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 674,
+          "text_tokens": 945
+        }
+      },
+      19.896
+    ]
+  },
+  "139": {
+    "result": "SELECT COUNT(T1.card_id) FROM card AS T1 INNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id WHERE T1.type = 'gold' AND T2.type = 'OWNER'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5351,
+        "total_tokens": 6022,
+        "completion_tokens": 671,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5351
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 516,
+          "text_tokens": 671
+        }
+      },
+      14.323
+    ]
+  },
+  "154": {
+    "result": "SELECT COUNT(T1.client_id)\nFROM client AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T1.gender = 'M' AND T2.A2 = 'Hl.m. Praha';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5359,
+        "total_tokens": 5755,
+        "completion_tokens": 396,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5359
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 226,
+          "text_tokens": 396
+        }
+      },
+      9.09
+    ]
+  },
+  "157": {
+    "result": "SELECT T2.A15\nFROM account AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T1.account_id = 532;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5366,
+        "total_tokens": 5790,
+        "completion_tokens": 424,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5366
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 260,
+          "text_tokens": 424
+        }
+      },
+      9.089
+    ]
+  },
+  "119": {
+    "result": "SELECT\n    T1.account_id,\n    T2.A2,\n    T2.A3\nFROM account AS T1\nINNER JOIN district AS T2\n    ON T1.district_id = T2.district_id\nWHERE\n    T1.date LIKE '1993%'\n    AND T1.frequency = 'POPLATEK PO OBRATU';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5403,
+        "total_tokens": 6610,
+        "completion_tokens": 1207,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5403
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 955,
+          "text_tokens": 1207
+        }
+      },
+      24.183
+    ]
+  },
+  "80": {
+    "result": "SELECT T1.SOCType, T1.School, T1.Latitude\nFROM schools AS T1\nORDER BY T1.Latitude DESC\nLIMIT 1",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8986,
+        "total_tokens": 10947,
+        "completion_tokens": 1961,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8986
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1825,
+          "text_tokens": 1961
+        }
+      },
+      47.708
+    ]
+  },
+  "162": {
+    "result": "SELECT T2.A3\nFROM client AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T1.client_id = 3541;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5345,
+        "total_tokens": 5765,
+        "completion_tokens": 420,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5345
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 265,
+          "text_tokens": 420
+        }
+      },
+      8.657
+    ]
+  },
+  "49": {
+    "result": "SELECT County, School, ClosedDate\nFROM schools\nWHERE StatusType = 'Closed'\n  AND County = (\n    SELECT County\n    FROM schools\n    WHERE StatusType = 'Closed'\n    GROUP BY County\n    ORDER BY COUNT(CDSCode) DESC\n    LIMIT 1\n  );",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10825,
+        "total_tokens": 14992,
+        "completion_tokens": 4167,
+        "prompt_tokens_details": {
+          "cached_tokens": 10496,
+          "text_tokens": 10825
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3966,
+          "text_tokens": 4167
+        }
+      },
+      94.083
+    ]
+  },
+  "102": {
+    "result": "SELECT DISTINCT T1.account_id\nFROM account AS T1\nINNER JOIN trans AS T2\nON T1.account_id = T2.account_id\nWHERE CAST(SUBSTR(T1.date, 1, 4) AS INTEGER) < 1997\n  AND T2.amount > 3000;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5356,
+        "total_tokens": 7014,
+        "completion_tokens": 1658,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5356
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1430,
+          "text_tokens": 1658
+        }
+      },
+      33.904
+    ]
+  },
+  "42": {
+    "result": "SELECT T1.EdOpsName\nFROM schools AS T1\nINNER JOIN satscores AS T2\nON T1.CDSCode = T2.cds\nORDER BY T2.AvgScrMath DESC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 8984,
+        "total_tokens": 13492,
+        "completion_tokens": 4508,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 8984
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 4322,
+          "text_tokens": 4508
+        }
+      },
+      105.958
+    ]
+  },
+  "153": {
+    "result": "SELECT COUNT(T1.card_id)\nFROM card AS T1\nINNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id\nWHERE T1.type = 'classic' AND T2.type = 'OWNER'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5348,
+        "total_tokens": 6059,
+        "completion_tokens": 711,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5348
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 537,
+          "text_tokens": 711
+        }
+      },
+      15.627
+    ]
+  },
+  "132": {
+    "result": "SELECT AVG(T1.amount)\nFROM loan AS T1\nINNER JOIN account AS T2 ON T1.account_id = T2.account_id\nINNER JOIN disp AS T3 ON T2.account_id = T3.account_id\nINNER JOIN client AS T4 ON T3.client_id = T4.client_id\nWHERE T4.gender = 'M' AND T3.type = 'OWNER'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5354,
+        "total_tokens": 6419,
+        "completion_tokens": 1065,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5354
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 838,
+          "text_tokens": 1065
+        }
+      },
+      26.197
+    ]
+  },
+  "136": {
+    "result": "SELECT COUNT(T1.loan_id)\nFROM loan AS T1\nINNER JOIN account AS T2\n  ON T1.account_id = T2.account_id\nWHERE T1.date BETWEEN '1995-01-01' AND '1997-12-31'\n  AND T1.amount >= 250000\n  AND T2.frequency = 'POPLATEK MESICNE';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5425,
+        "total_tokens": 6555,
+        "completion_tokens": 1130,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5425
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 911,
+          "text_tokens": 1130
+        }
+      },
+      22.582
+    ]
+  },
+  "123": {
+    "result": "SELECT T1.account_id, T3.A2, T3.A3 FROM account AS T1 INNER JOIN loan AS T2 ON T1.account_id = T2.account_id INNER JOIN district AS T3 ON T1.district_id = T3.district_id WHERE T2.amount > 300000",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5374,
+        "total_tokens": 6738,
+        "completion_tokens": 1364,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5374
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1154,
+          "text_tokens": 1364
+        }
+      },
+      28.217
+    ]
+  },
+  "161": {
+    "result": "SELECT T1.type\nFROM card AS T1\nINNER JOIN disp AS T2 ON T1.disp_id = T2.disp_id\nINNER JOIN client AS T3 ON T2.client_id = T3.client_id\nWHERE T3.client_id = 13539;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5350,
+        "total_tokens": 5997,
+        "completion_tokens": 647,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5350
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 470,
+          "text_tokens": 647
+        }
+      },
+      13.917
+    ]
+  },
+  "166": {
+    "result": "SELECT COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T2.A2 = 'Jesenik'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5333,
+        "total_tokens": 5974,
+        "completion_tokens": 641,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5333
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 498,
+          "text_tokens": 641
+        }
+      },
+      13.814
+    ]
+  },
+  "165": {
+    "result": "SELECT T1.trans_id\nFROM trans AS T1\nINNER JOIN account AS T2\nON T1.account_id = T2.account_id\nWHERE T2.district_id = 5;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5332,
+        "total_tokens": 5980,
+        "completion_tokens": 648,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5332
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 476,
+          "text_tokens": 648
+        }
+      },
+      13.983
+    ]
+  },
+  "62": {
+    "result": "SELECT COUNT(T1.CDSCode) FROM schools AS T1 INNER JOIN frpm AS T2 ON T1.CDSCode = T2.CDSCode WHERE T1.County = 'Los Angeles' AND T1.Charter = 0 AND CAST(T2.`Free Meal Count (K-12)` AS REAL) * 100 / CAST(T2.`Enrollment (K-12)` AS REAL) < 0.18",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9110,
+        "total_tokens": 12367,
+        "completion_tokens": 3257,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9110
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2993,
+          "text_tokens": 3257
+        }
+      },
+      68.015
+    ]
+  },
+  "72": {
+    "result": "SELECT SUM(T1.\"Enrollment (Ages 5-17)\")\nFROM frpm AS T1\nINNER JOIN schools AS T2\nON T1.CDSCode = T2.CDSCode\nWHERE T1.\"Academic Year\" = '2014-2015'\n  AND T2.EdOpsCode = 'SSS'\n  AND T2.City = 'Fremont'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9053,
+        "total_tokens": 11852,
+        "completion_tokens": 2799,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9053
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2520,
+          "text_tokens": 2799
+        }
+      },
+      59.661
+    ]
+  },
+  "158": {
+    "result": "SELECT T1.district_id FROM account AS T1 INNER JOIN `order` AS T2 ON T1.account_id = T2.account_id WHERE T2.order_id = 33333",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5345,
+        "total_tokens": 6230,
+        "completion_tokens": 885,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5345
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 744,
+          "text_tokens": 885
+        }
+      },
+      18.718
+    ]
+  },
+  "170": {
+    "result": "SELECT COUNT(trans_id)\nFROM trans\nWHERE operation = 'VYBER KARTOU'\n  AND CAST(SUBSTR(date, 1, 4) AS INTEGER) > 1995;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 6779,
+        "total_tokens": 7363,
+        "completion_tokens": 584,
+        "prompt_tokens_details": {
+          "cached_tokens": 6272,
+          "text_tokens": 6779
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 536,
+          "text_tokens": 584
+        }
+      },
+      11.914
+    ]
+  },
+  "148": {
+    "result": "SELECT DISTINCT T1.account_id FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id INNER JOIN disp AS T3 ON T1.account_id = T3.account_id WHERE T2.A2 = 'Tabor' AND T3.type = 'OWNER'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5368,
+        "total_tokens": 6431,
+        "completion_tokens": 1063,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5368
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 858,
+          "text_tokens": 1063
+        }
+      },
+      23.794
+    ]
+  },
+  "143": {
+    "result": "SELECT DISTINCT T1.account_id\nFROM account AS T1\nINNER JOIN disp AS T2\n  ON T1.account_id = T2.account_id\nINNER JOIN card AS T3\n  ON T2.disp_id = T3.disp_id\nWHERE T3.type = 'gold';",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5337,
+        "total_tokens": 6442,
+        "completion_tokens": 1105,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5337
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 913,
+          "text_tokens": 1105
+        }
+      },
+      24.698
+    ]
+  },
+  "126": {
+    "result": "SELECT CAST(SUM(CASE WHEN T2.A2 = 'Decin' THEN 1 ELSE 0 END) AS REAL) * 100 / COUNT(T1.account_id) FROM account AS T1 INNER JOIN district AS T2 ON T1.district_id = T2.district_id WHERE T1.date LIKE '1993%'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5360,
+        "total_tokens": 7016,
+        "completion_tokens": 1656,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5360
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1460,
+          "text_tokens": 1656
+        }
+      },
+      33.916
+    ]
+  },
+  "138": {
+    "result": "SELECT COUNT(T1.client_id)\nFROM client AS T1\nINNER JOIN district AS T2\nON T1.district_id = T2.district_id\nWHERE T1.gender = 'M'\nAND T2.district_id = (\n    SELECT district_id\n    FROM district\n    ORDER BY A15 DESC\n    LIMIT 1 OFFSET 1\n);",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 7209,
+        "total_tokens": 8560,
+        "completion_tokens": 1351,
+        "prompt_tokens_details": {
+          "cached_tokens": 6272,
+          "text_tokens": 7209
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1118,
+          "text_tokens": 1351
+        }
+      },
+      29.512
+    ]
+  },
+  "87": {
+    "result": "SELECT AdmEmail1\nFROM schools\nWHERE County = 'San Bernardino'\n  AND District = 'San Bernardino City Unified'\n  AND OpenDate BETWEEN '2009-01-01' AND '2010-12-31'\n  AND SOC = 62\n  AND DOC = 54\n  AND AdmEmail1 IS NOT NULL;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 9136,
+        "total_tokens": 11542,
+        "completion_tokens": 2406,
+        "prompt_tokens_details": {
+          "cached_tokens": 8448,
+          "text_tokens": 9136
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 2148,
+          "text_tokens": 2406
+        }
+      },
+      55.562
+    ]
+  },
+  "110": {
+    "result": "SELECT T3.disp_id FROM account AS T1 INNER JOIN trans AS T2 ON T1.account_id = T2.account_id INNER JOIN disp AS T3 ON T1.account_id = T3.account_id WHERE T2.amount = 5100 AND T2.date = '1998-09-02'",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 5371,
+        "total_tokens": 7287,
+        "completion_tokens": 1916,
+        "prompt_tokens_details": {
+          "cached_tokens": 5120,
+          "text_tokens": 5371
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1710,
+          "text_tokens": 1916
+        }
+      },
+      41.225
+    ]
+  },
+  "68": {
+    "result": "SELECT County\nFROM schools\nWHERE SOC = 11\n  AND CAST(SUBSTR(ClosedDate, 1, 4) AS INTEGER) BETWEEN 1980 AND 1989\nGROUP BY County\nORDER BY COUNT(CDSCode) DESC\nLIMIT 1;",
+    "status": {
+      "success": true,
+      "reason": ""
+    },
+    "resource": [
+      {
+        "prompt_tokens": 10473,
+        "total_tokens": 13594,
+        "completion_tokens": 3121,
+        "prompt_tokens_details": {
+          "cached_tokens": 10240,
+          "text_tokens": 10473
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 3056,
+          "text_tokens": 3121
+        }
+      },
+      69.476
+    ]
+  }
+}
