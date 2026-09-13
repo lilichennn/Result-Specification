@@ -161,12 +161,14 @@ def _check_frozen(store, environment):
     return args
 
 
-def execute_run(store, environment):
+def execute_run(store, environment, *, item_keys=None):
     """The sole production execution path, always using the bounded factory."""
     from scripts.rc_evaluation.deepeye.runner import run_experiment, _preflight
     from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
     args = _check_frozen(store, environment)
-    _, _, needed = _preflight(store)
+    _, _, needed = _preflight(store, item_keys=item_keys)
+    if item_keys == []:
+        return {'succeeded': 0, 'failed': 0, 'executed': False}
     secrets = [environment.get(key) for key in ('DASH_API_KEY', 'EMBEDDING_API_KEY', 'PG_PASSWORD')]
     recorder = TraceRecorder(store, secrets=secrets, stop_event=threading.Event())
     if not needed:
@@ -175,7 +177,7 @@ def execute_run(store, environment):
         with admission_context(recorder, args, population=len(store.manifest['items'])) as controllers, \
                 sampling_runtime(recorder, args) as runtime:
             result = run_experiment(store, no_factory, recorder, runtime=runtime,
-                                    slot_controller=controllers['pipeline'])
+                                    slot_controller=controllers['pipeline'], item_keys=item_keys)
             result['runtime'] = runtime.snapshot()
             result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
             return result
@@ -194,7 +196,7 @@ def execute_run(store, environment):
                 sampling_runtime(recorder, args) as runtime:
             factory = bounded_runner_factory(config, args.chat_timeout, runtime=runtime)
             result = run_experiment(store, factory, recorder, runtime=runtime,
-                                    slot_controller=controllers['pipeline'])
+                                    slot_controller=controllers['pipeline'], item_keys=item_keys)
             result['runtime'] = runtime.snapshot()
             result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
             return result
@@ -246,6 +248,9 @@ def build_parser():
     for name in ('run', 'resume', 'inspect', 'export', 'evaluate', 'token-pairs'):
         command = commands.add_parser(name)
         command.add_argument('--run-dir', type=Path, required=True)
+        if name == 'resume':
+            command.add_argument('--unfinished-only', action='store_true',
+                                 help='Execute only items without a canonical terminal outcome')
         if name in ('run', 'resume', 'evaluate'):
             command.add_argument('--env-file', type=Path, default=CODE_ROOT / 'config/.env')
         if name == 'export':
@@ -274,7 +279,14 @@ def main(argv=None):
         elif args.command in ('run', 'resume'):
             environment = read_environment(args.env_file.resolve())
             with RunStore.open(args.run_dir.resolve()) as store:
-                result = execute_run(store, environment)
+                if getattr(args, 'unfinished_only', False):
+                    from scripts.rc_evaluation.deepeye.runner import unfinished_keys
+                    _check_frozen(store, environment)
+                    selected = unfinished_keys(store)
+                    result = execute_run(store, environment, item_keys=selected)
+                    result['recovery'] = {'selected': selected}
+                else:
+                    result = execute_run(store, environment)
                 verification = store.verify()
                 if not verification['ok']:
                     raise RuntimeError('Experiment RunStore verification failed after execution')

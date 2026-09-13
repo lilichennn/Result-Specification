@@ -367,6 +367,9 @@ def _build_parser() -> argparse.ArgumentParser:
     for name in ("prepare", "run", "resume"):
         command = commands.add_parser(name)
         command.add_argument("--run-dir", type=Path, required=True)
+        if name == 'resume':
+            command.add_argument('--unfinished-only', action='store_true',
+                                 help='Validate full manifest; execute only nonterminal native items')
         if name != "resume":
             command.add_argument("--inherit-from", type=Path,
                                  help="Legacy prefix import; rejected for this sampling implementation")
@@ -502,7 +505,14 @@ def _prepare_command(args, *, execute: bool, resume: bool) -> dict:
             with RunStore.open(args.inherit_from.resolve(), read_only=True) as source_store:
                 inheritance = inherit_checkpoints(source_store, store, tasks)
         if execute:
-            result = _execute_pipeline(store, tasks, environment, args)
+            recovery = None
+            if getattr(args, 'unfinished_only', False):
+                from scripts.baseline_adapters.deepeye.run_pipeline import select_unfinished
+                tasks, recovery = select_unfinished(store, tasks)
+            result = (_execute_pipeline(store, tasks, environment, args) if tasks else
+                      {'succeeded': 0, 'failed': 0, 'executed': False})
+            if recovery is not None:
+                result['recovery'] = recovery
         else:
             result = {"prepared": len(tasks), "executed": False}
         if inheritance is not None:

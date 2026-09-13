@@ -37,6 +37,89 @@ def task_key(variant, item):
     return f'{variant}/{item.instance_id}'
 
 
+def select_unfinished(store, tasks):
+    """Validate canonical prefixes and seal only provable interrupted masters.
+
+    Caller holds the RunStore writer lock and has checked the FULL manifest.
+    Success takes precedence over older failures, as in native ``completed``.
+    This changes execution membership only, never sampling or attempt budgets.
+    """
+    if store._lock_file is None:
+        raise ValueError('Unfinished selection requires the RunStore writer lock')
+    if not store.verify()['ok']:
+        raise ValueError('RunStore verification failed before recovery')
+    attempts = store.attempts()
+    selected, report, seals = [], {'selected': [], 'terminal': {}, 'sealed': []}, []
+    for variant, original in tasks:
+        key = task_key(variant, original)
+        rows = [row for row in attempts if row['item_key'] == key]
+        masters = [row for row in rows if row['stage'] == 'pipeline']
+        master = masters[-1] if masters else None
+        state = copy.deepcopy(original)
+        identity = fingerprint({'manifest': store.manifest, 'input': to_jsonable(original.model_dump(exclude={'gold_sql'}))})
+        master_hash = fingerprint({'input': identity, 'stage': 'pipeline'})
+        if master and master['input_fingerprint'] != master_hash:
+            raise ValueError(f'Native master input mismatch: {key}')
+        links, terminal, failed_stage = [], 'succeeded', None
+        for index, stage in enumerate(STAGES):
+            input_hash = fingerprint({'input': identity, 'stage': stage})
+            prior = store.completed(key, stage, input_hash)
+            if prior:
+                _restore(state, stage, prior['payload'])
+                if not _valid_output(state, stage):
+                    raise ValueError(f'Invalid native recovery checkpoint: {key}/{stage}')
+                links.append({'stage': stage, 'attempt_id': prior['attempt_id'], 'reused': True})
+                identity = fingerprint({'input': input_hash, 'output': prior['payload']})
+                continue
+            if any(row['status'] == 'succeeded' and row['stage'] in STAGES[index + 1:] for row in rows):
+                raise ValueError(f'Native successful stage outside canonical prefix: {key}')
+            failures = [row for row in rows if row['stage'] == stage and
+                        row['input_fingerprint'] == input_hash and row['status'] == 'failed']
+            if failures:
+                terminal, failed_stage = 'failed', stage
+                links.append({'stage': stage, 'attempt_id': failures[-1]['attempt_id'], 'reused': False})
+            else:
+                terminal = None
+            break
+        if terminal is None:
+            if master and master['status'] != 'interrupted':
+                raise ValueError(f'Terminal master has incomplete canonical lineage: {key}')
+            selected.append((variant, original))
+            report['selected'].append(key)
+            continue
+        if master is None:
+            raise ValueError(f'Terminal native lineage has no master: {key}')
+        if master['status'] == 'interrupted':
+            recorded, ticket = [], None
+            for event in store.iter_events(master['attempt_id'], kinds=('pipeline_admitted', 'pipeline_stage_attempt')):
+                if event['kind'] == 'pipeline_admitted':
+                    if ticket is not None:
+                        raise ValueError(f'Duplicate native admission record: {key}')
+                    ticket = event['payload']['ticket']
+                    recorded.extend(event['payload']['reused_stage_attempts'])
+                else:
+                    recorded.append(event['payload'])
+            if [(row['stage'], row['attempt_id']) for row in recorded] != [(row['stage'], row['attempt_id']) for row in links]:
+                raise ValueError(f'Interrupted master does not own terminal canonical lineage: {key}')
+            payload = {'ticket': ticket, 'stage_attempts': recorded, 'failed_stage': failed_stage}
+            seals.append((master['attempt_id'], terminal, payload))
+            report['sealed'].append({'task_key': key, 'attempt_id': master['attempt_id'], 'status': terminal})
+        else:
+            payload = master['payload']
+            if master['status'] != terminal or payload.get('failed_stage') != failed_stage:
+                raise ValueError(f'Native master disagrees with canonical lineage: {key}')
+            referenced = payload.get('stage_attempts', [])
+            if [(row['stage'], row['attempt_id']) for row in referenced] != [(row['stage'], row['attempt_id']) for row in links]:
+                raise ValueError(f'Native master references differ from canonical lineage: {key}')
+        report['terminal'][key] = terminal
+    # Validate the whole cohort before sealing any item.
+    for attempt_id, status, payload in seals:
+        store.append_event(attempt_id, 'pipeline_recovery_seal', {
+            'reason': 'committed_terminal_stage_chain_without_master_finish', 'status': status})
+        store.finish_attempt(attempt_id, status, payload)
+    return selected, report
+
+
 def native_runner_factory(config):
     """Inject the current in-memory items at construction; never load native snapshots.
 

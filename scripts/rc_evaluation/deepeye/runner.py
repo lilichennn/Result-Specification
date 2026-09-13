@@ -38,7 +38,7 @@ def _stage_hash(manifest, key, stage, item):
                    'input': item.model_dump(exclude={'gold_sql'})})
 
 
-def _preflight(store, checkpoints=None):
+def _preflight(store, checkpoints=None, *, item_keys=None):
     if not store.verify()['ok']:
         raise ValueError('Experiment RunStore verification failed')
     manifest = validate_manifest(store.manifest)
@@ -74,10 +74,39 @@ def _preflight(store, checkpoints=None):
                         possible_unchanged = False
                 break
         plans[key] = {'state': state, 'remaining': remaining, 'unchanged': unchanged}
+    if item_keys is not None:
+        if not set(item_keys).issubset(plans):
+            raise ValueError('Execution item selection is outside the frozen manifest')
+        plans = {key: plan for key, plan in plans.items() if key in set(item_keys)}
+        needed = set()
+        for key, plan in plans.items():
+            unchanged = plan['unchanged']
+            for stage in plan['remaining']:
+                if not _replay(stage, target, unchanged, manifest['source_checkpoints'][key]['stages'].get(stage)):
+                    needed.add(stage)
+                    unchanged = False
     return manifest, plans, needed
 
 
-def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None, runtime=None):
+def unfinished_keys(store):
+    """Choose resumable canonical prefixes; committed failures stay terminal."""
+    if store._lock_file is None:
+        raise ValueError('Unfinished selection requires the RunStore writer lock')
+    manifest, plans, _ = _preflight(store)
+    attempts = store.attempts()
+    result = []
+    for key, plan in plans.items():
+        if not plan['remaining']:
+            continue
+        stage = plan['remaining'][0]
+        expected = _stage_hash(manifest, key, stage, plan['state'])
+        if not any(row['item_key'] == key and row['stage'] == stage and
+                   row['input_fingerprint'] == expected and row['status'] == 'failed' for row in attempts):
+            result.append(key)
+    return result
+
+
+def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None, runtime=None, item_keys=None):
     """Append native checkpoints, retaining failed attempts and paid-call traces.
 
     ``runner_factory`` is already bounded in production (see cli.execute_run).
@@ -97,7 +126,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
     tickets, failed = {}, {}
     halted = threading.Event()
     try:
-        manifest, plans, needed = _preflight(store, getattr(recorder, 'sampling_checkpoints', None))
+        manifest, plans, needed = _preflight(store, getattr(recorder, 'sampling_checkpoints', None), item_keys=item_keys)
         if runtime is not None:
             from scripts.baseline_adapters.deepeye.run_slots import WorkflowSlots
             if runtime.stop_event is not recorder.stop_event:
