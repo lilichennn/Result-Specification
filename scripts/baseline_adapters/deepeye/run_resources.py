@@ -1,5 +1,5 @@
 """Run-scoped safety for shared, unmodified native DeepEye resources."""
-from concurrent.futures import ThreadPoolExecutor, wait
+from concurrent.futures import Future, ThreadPoolExecutor, wait
 from contextlib import contextmanager, ExitStack
 import contextvars
 import functools
@@ -9,6 +9,86 @@ import threading
 _STAGE_WORK = contextvars.ContextVar('deepeye_native_stage_work', default=None)
 _SUBMISSION_INDEX = contextvars.ContextVar('deepeye_native_submission_index', default=0)
 _POOL_NAMES = ('_thread_pool_executor', '_inner_thread_pool_executor', '_column_query_executor')
+_COORDINATOR_RUNTIME = contextvars.ContextVar('deepeye_coordinator_runtime', default=None)
+
+
+class SamplingRuntime:
+    """Run-owned coordinator, sample and cancellable request resources for C4.
+
+    Use the same ``stop_event`` as TraceRecorder, bind ``context()`` around native
+    stages, and drain this runtime before closing recorder/store resources.
+    Coordinators may await samples, never other tasks on the coordinator pool.
+    """
+    def __init__(self, *, stop_event=None, emit=None, **limits):
+        from .request_dispatch import RequestDispatcher, RequestLimits
+        from .sampling import SampleScheduler
+        self.limits = RequestLimits(**limits)
+        self.stop_event = stop_event if stop_event is not None else threading.Event()
+        self.samples = SampleScheduler(self.limits.request_workers, self.stop_event)
+        self.coordinators = ThreadPoolExecutor(self.limits.coordinator_workers,
+                                              thread_name_prefix='deepeye-coordinator')
+        self.dispatch = RequestDispatcher(self.limits, stop_event=self.stop_event, emit=emit)
+        self._closed = False
+        self._closing = False
+        self._coordinator_lock = threading.Lock()
+        self._coordinator_active = self._coordinator_peak = 0
+
+    @contextmanager
+    def context(self):
+        from app.llm.sampling import sampling_scheduler
+        with sampling_scheduler(self.samples):
+            yield self
+
+    def submit_coordinator(self, function, /, *args, **kwargs):
+        from app.llm.sampling import SamplingPaused
+        nested = _COORDINATOR_RUNTIME.get() is self
+        if self._closed or (self._closing and not nested) or self.stop_event.is_set():
+            raise SamplingPaused('Coordinator submissions stopped')
+        if nested:
+            # A waiting coordinator must not consume the final thread needed
+            # by its descendants. Nested control work executes inline; sample
+            # leaves still run concurrently on the separate sample pool.
+            future = Future()
+            try:
+                future.set_result(function(*args, **kwargs))
+            except BaseException as error:
+                future.set_exception(error)
+            return future
+        context = contextvars.copy_context()
+        def run():
+            token = _COORDINATOR_RUNTIME.set(self)
+            with self._coordinator_lock:
+                self._coordinator_active += 1
+                self._coordinator_peak = max(self._coordinator_peak, self._coordinator_active)
+            try:
+                return function(*args, **kwargs)
+            finally:
+                with self._coordinator_lock:
+                    self._coordinator_active -= 1
+                _COORDINATOR_RUNTIME.reset(token)
+        return self.coordinators.submit(context.run, run)
+
+    def stop(self, *, cancel_active=False):
+        self.dispatch.stop(cancel_active=cancel_active)
+
+    def make_client(self, **configuration):
+        return self.dispatch.make_client(**configuration)
+
+    def close(self):
+        if self._closed:
+            return
+        self._closing = True
+        self.coordinators.shutdown(wait=True)
+        self.samples.close()
+        self.dispatch.close()
+        self._closed = True
+
+    def snapshot(self):
+        with self._coordinator_lock:
+            coordinators = dict(cap=self.limits.coordinator_workers,
+                                active=self._coordinator_active, peak=self._coordinator_peak)
+        return dict(coordinators=coordinators, samples=self.samples.snapshot(),
+                    requests=self.dispatch.snapshot())
 
 
 @contextmanager

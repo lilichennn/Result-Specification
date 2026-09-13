@@ -45,6 +45,7 @@ _COMPONENT_CALL_IDS: contextvars.ContextVar[tuple[str, ...]] = contextvars.Conte
 _API_CALL_ID: contextvars.ContextVar[str | None] = contextvars.ContextVar(
     "deepeye_trace_api_call_id", default=None
 )
+_API_WRITE_TIMING = contextvars.ContextVar('deepeye_api_write_timing', default=None)
 _INSTALL_LOCK = threading.Lock()
 _ACTIVE_RECORDER: "TraceRecorder | None" = None
 _CREDENTIAL_FIELDS = {
@@ -291,6 +292,7 @@ class TraceRecorder:
             prior_error = self.error
         if prior_error is not None:
             raise prior_error
+        write_started = time.monotonic()
         try:
             serialized = self._serialize(payload)
             if kind == 'sample_result' and self.sampling_checkpoints is not None:
@@ -301,6 +303,10 @@ class TraceRecorder:
         except BaseException as error:
             self._remember_error(error)
             raise
+        finally:
+            timing = _API_WRITE_TIMING.get()
+            if timing is not None:
+                timing['seconds'] += time.monotonic() - write_started
 
     @staticmethod
     def _base_payload() -> dict[str, Any]:
@@ -317,7 +323,13 @@ class TraceRecorder:
         self._append(kind, {**self._base_payload(), **payload})
 
     def record_admission(self, kind: str, payload: dict[str, Any]) -> None:
-        """Record gate telemetry with recorder-owned execution linkage."""
+        """Record telemetry with recorder-owned linkage on a synchronous worker.
+
+        C3's request_dispatch captures actual timestamps on the HTTP loop, then
+        calls this emitter on the original waiting sample thread after client
+        transport completion/cancellation. SQLite never runs on the I/O loop.
+        sample_timing separately records C1 checkpoint/observation wait time.
+        """
 
         if not isinstance(kind, str) or not kind:
             raise ValueError("admission event kind must be a non-empty string")
@@ -326,11 +338,31 @@ class TraceRecorder:
         call_id = _API_CALL_ID.get()
         if kind.startswith("api_") and call_id is None:
             raise RuntimeError("api admission event requires an active API call")
+        timing = _API_WRITE_TIMING.get()
+        if kind == 'request_dispatch' and timing is not None:
+            timing['dispatched'] = True
         self._append(kind, {
             **payload,
             **self._base_payload(),
             "call_id": call_id,
         })
+
+    @contextmanager
+    def _api_trace_timing(self, call_id):
+        timing = {'seconds': 0.0, 'dispatched': False}
+        token = _API_WRITE_TIMING.set(timing)
+        try:
+            yield
+        finally:
+            _API_WRITE_TIMING.reset(token)
+            if timing['dispatched']:
+                try:
+                    self._append('api_persistence_timing', {**self._base_payload(),
+                        'call_id': call_id, 'persistence_wait_seconds': timing['seconds']})
+                except BaseException:
+                    # _append remembers storage failure; preserve the actual
+                    # transport exception and let raise_if_failed reject run.
+                    pass
 
     def _api_wrapper(self, original: Callable[..., Any]) -> Callable[..., Any]:
         @functools.wraps(original)
@@ -340,40 +372,41 @@ class TraceRecorder:
             from app.llm.sampling import check_sampling_stop
             check_sampling_stop()
             call_id = uuid.uuid4().hex
-            self._append("api_request", {
-                **self._base_payload(),
-                "call_id": call_id,
-                "logical_sdk_call": True,
-                "args": args,
-                "kwargs": kwargs,
-            })
-            try:
-                call_token = _API_CALL_ID.set(call_id)
+            with self._api_trace_timing(call_id):
+                self._append("api_request", {
+                    **self._base_payload(),
+                    "call_id": call_id,
+                    "logical_sdk_call": True,
+                    "args": args,
+                    "kwargs": kwargs,
+                })
                 try:
-                    if self.api_call is None:
-                        response = original(*args, **kwargs)
-                    else:
-                        response = self.api_call(original, args, kwargs)
-                finally:
-                    _API_CALL_ID.reset(call_token)
-            except BaseException as error:
-                try:
-                    from app.llm.sampling import error_usage
-                    self._append("api_error", {
-                        **self._base_payload(),
-                        "call_id": call_id,
-                        "error": _exception_payload(error),
-                        "response": {"usage": error_usage(error)},
-                    })
-                except BaseException:
-                    pass
-                raise
-            self._append("api_response", {
-                **self._base_payload(),
-                "call_id": call_id,
-                "response": response,
-            })
-            return response
+                    call_token = _API_CALL_ID.set(call_id)
+                    try:
+                        if self.api_call is None:
+                            response = original(*args, **kwargs)
+                        else:
+                            response = self.api_call(original, args, kwargs)
+                    finally:
+                        _API_CALL_ID.reset(call_token)
+                except BaseException as error:
+                    try:
+                        from app.llm.sampling import error_usage
+                        self._append("api_error", {
+                            **self._base_payload(),
+                            "call_id": call_id,
+                            "error": _exception_payload(error),
+                            "response": {"usage": error_usage(error)},
+                        })
+                    except BaseException:
+                        pass
+                    raise
+                self._append("api_response", {
+                    **self._base_payload(),
+                    "call_id": call_id,
+                    "response": response,
+                })
+                return response
 
         return traced
 

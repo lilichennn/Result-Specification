@@ -8,6 +8,7 @@ from typing import Any, Callable
 from uuid import uuid4
 import hashlib
 import marshal
+import time
 from openai import RateLimitError, APITimeoutError, APIConnectionError, InternalServerError
 
 MAX_SAMPLE_ATTEMPTS = 4
@@ -15,6 +16,17 @@ TOKEN_FIELDS = ('prompt_tokens', 'completion_tokens', 'total_tokens')
 _OBSERVER = ContextVar('deepeye_sampling_observer', default=None)
 _IDENTITY = ContextVar('deepeye_sampling_identity', default=None)
 _CHECKPOINTS = ContextVar('deepeye_sampling_checkpoints', default=None)
+_SCHEDULER = ContextVar('deepeye_sampling_scheduler', default=None)
+
+
+@contextmanager
+def sampling_scheduler(scheduler):
+    """Bind a run-owned independent-sample scheduler without global patching."""
+    token = _SCHEDULER.set(scheduler)
+    try:
+        yield
+    finally:
+        _SCHEDULER.reset(token)
 
 
 class SamplingPaused(BaseException):
@@ -207,15 +219,21 @@ def execute_sample(request: Callable, parser: Callable, *, group_id: str,
         raise ValueError('sample attempts must be between 1 and 4, including first')
     checkpoints = _CHECKPOINTS.get()
     check_sampling_stop()
+    persist_seconds = 0.0
+    persisted_at = time.monotonic()
     outcome = checkpoints.restore(group_id, sample_index) if checkpoints else SampleOutcome(group_id, sample_index)
     limit = checkpoints.attempt_limit(group_id, sample_index) if checkpoints else max_attempts
+    if checkpoints:
+        persist_seconds += time.monotonic() - persisted_at
     for number in range(len(outcome.attempts) + 1, limit + 1):
         if outcome.succeeded or outcome.fatal:
             break
         check_sampling_stop()
         identity = {'group_id': group_id, 'sample_index': sample_index, 'sample_attempt': number}
         if checkpoints:
+            persisted_at = time.monotonic()
             checkpoints.start_attempt(identity)
+            persist_seconds += time.monotonic() - persisted_at
         token = _IDENTITY.set(identity)
         error_text, usage = None, None
         try:
@@ -248,15 +266,24 @@ def execute_sample(request: Callable, parser: Callable, *, group_id: str,
             _IDENTITY.reset(token)
         outcome.attempts.append(SampleAttempt(number, status, usage, error_text))
         if checkpoints:
+            persisted_at = time.monotonic()
             checkpoints.finish_sample_attempt(identity, outcome)
+            persist_seconds += time.monotonic() - persisted_at
+        persisted_at = time.monotonic()
         _emit('sample_attempt', {**identity, 'status': status, 'usage': usage, 'error': error_text})
+        persist_seconds += time.monotonic() - persisted_at
         if outcome.succeeded or outcome.fatal:
             break
+    persisted_at = time.monotonic()
     _emit('sample_result', {'group_id': group_id, 'sample_index': sample_index,
         'succeeded': outcome.succeeded, 'fatal': outcome.fatal, 'result': outcome.result,
         'usage': outcome.usage, 'attempt_count': len(outcome.attempts),
         'response_id': outcome.response_id, 'restored_from_event': outcome.restored_from_event,
         'rc_applied': outcome.rc_applied})
+    persist_seconds += time.monotonic() - persisted_at
+    if _SCHEDULER.get() is not None:
+        _emit('sample_timing', {'group_id': group_id, 'sample_index': sample_index,
+                              'persistence_wait_seconds': persist_seconds})
     return outcome
 
 
@@ -269,12 +296,17 @@ def execute_group(request: Callable, parser: Callable, *, n: int,
     group_id = checkpoints.group(recovery_identity, n, max_attempts) if checkpoints else uuid4().hex
     group = GroupOutcome(group_id, n, [])
     _emit('sampling_group_start', {'group_id': group.group_id, 'target_n': n})
-    for index in range(n):
-        sample = execute_sample(request, parser, group_id=group.group_id,
-                                sample_index=index, max_attempts=max_attempts)
-        group.samples.append(sample)
-        if sample.fatal:
-            break
+    scheduler = _SCHEDULER.get()
+    if scheduler is not None:
+        group.samples = scheduler.run_samples(request, parser, group_id=group.group_id,
+                                              n=n, max_attempts=max_attempts)
+    else:
+        for index in range(n):
+            sample = execute_sample(request, parser, group_id=group.group_id,
+                                    sample_index=index, max_attempts=max_attempts)
+            group.samples.append(sample)
+            if sample.fatal:
+                break
     _emit('sampling_group_result', {'group_id': group.group_id, 'target_n': n,
         'success_count': len(group.results), 'complete': group.complete})
     check_sampling_stop()
