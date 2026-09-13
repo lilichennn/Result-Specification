@@ -14,9 +14,17 @@ The process-local aggregate defaults are `--request-limit 8000`,
 `--request-workers 8000`, `--coordinator-workers 6000`, `--http-connections 8000`,
 `--request-start-rate 50`, `--chat-timeout 660`, `--retry-delay 0`, and
 `--pg-concurrency 10`. The coordinator pool is shared across all native branches
-and questions. Nested coordinating work executes inline to avoid deadlock;
-independent sample slots run on the separate request-worker pool. Native
-constructor pools are drained and replaced before stage instrumentation. The
+and questions. Question workflows have a separate waiting pool, bounded by the
+number of unfinished selected questions in this invocation (605 for a complete
+605-question run). These parents do not occupy native coordinator slots, so
+Generation's three branches and Revision's independent candidates overlap when
+capacity is available. Nested work inside a native coordinator still executes
+inline to avoid same-pool deadlock; independent sample slots run on the separate
+request-worker pool. The 605-question headroom is therefore 14,605 pool workers:
+605 workflow workers, 6000 native coordinators, and 8000 sample/request workers,
+plus the HTTP event-loop thread and the invoking thread. Workflow workers are
+waiting/control resources, not additional model requests. Native constructor
+pools are drained and replaced before stage instrumentation. The
 HTTP facade uses the runtime's shared asynchronous connection pool. SDK retries
 are zero; C1/C2 own the single sample retry loop (four total attempts per slot).
 No extra model gate or adaptive question throttle is installed.
@@ -81,8 +89,12 @@ explicit limits, and source hashes. Stage payloads retain their sampling source
 version. Changed source/configuration rejects reuse: prepare new native and RC
 RunStores instead of mutating old records or importing legacy successful prefixes.
 
-Runtime status separates limits, coordinator/sample/request occupancy and peaks,
-and independent PG occupancy. `api_request` means a logical SDK invocation;
+Runtime status separates limits, workflow/coordinator/sample/request occupancy
+and peaks, and independent PG occupancy. `runtime.workflows` reports `cap`,
+`active`, and `peak`; its cap is derived from unfinished workload, not a model
+limit or adaptive throttle. Pools allocate threads lazily. Workflow drain precedes
+native coordinator, sample, and HTTP shutdown, all before the RunStore closes.
+`api_request` means a logical SDK invocation;
 `request_dispatch` records admission, actual send/transfer where available,
 queue/retry/pacing/service timing. A reservation stopped before dispatch may be
 spent/uncertain and is not evidence of a sent request.

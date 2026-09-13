@@ -284,7 +284,7 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runti
                 raise
 
         if remaining:
-            question_pool = (runtime.executor_view() if runtime else
+            question_pool = (runtime.workflow_executor(len(remaining)) if runtime else
                              ThreadPoolExecutor(max_workers=slot_controller.max_limit, thread_name_prefix='run-pipeline'))
             with question_pool as pool:
                 futures = {}

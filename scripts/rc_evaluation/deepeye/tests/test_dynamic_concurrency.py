@@ -38,14 +38,49 @@ def completion(content='<result>SELECT x FROM t</result>'):
 
 
 class DynamicConcurrencyTests(OfflineTestCase):
+    def test_actual_rc_workflow_overlaps_native_generation_and_revision(self):
+        from app.llm import LLM
+        from app.services.schema_service import SchemaService
+        from tests.deepeye_native_overlap import (NativeOverlapTransport, GENERATION_SQL, REVISED_SQL,
+                                                 execute_sql, assert_overlap, assert_sequential_checkers)
+        cases = [('sql_generation', 12, 32, 12), ('sql_revision', 10, 32, 10),
+                 ('sql_generation', 12, 1, 4), ('sql_revision', 10, 1, 5),
+                 ('sql_generation', 12, 2, 8), ('sql_revision', 10, 2, 10)]
+        for stage, expected, coordinators, peak in cases:
+            with self.subTest(stage=stage, coordinators=coordinators), tempfile.TemporaryDirectory() as temporary, \
+                    self.prepared(temporary, calls=1, stage=stage, coordinator_workers=coordinators,
+                                  request_workers=32, candidates=GENERATION_SQL[:2]) as store:
+                transport = NativeOverlapTransport(store, coordinators=coordinators)
+                client = AsyncClientFixture(transport.create)
+                with patch('openai.AsyncOpenAI', return_value=client), \
+                     patch.object(LLM, '_create_client', side_effect=AssertionError('sync client forbidden')), \
+                     patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)), \
+                     patch('scripts.baseline_adapters.deepeye.backend_hooks.execute_postgres_sql', side_effect=execute_sql):
+                    result = cli.execute_run(store, ENV)
+                self.assertEqual((result['succeeded'], result['failed']), (1, 0))
+                attempt, = store.attempts()
+                field = 'sql_candidates' if stage == 'sql_generation' else 'sql_candidates_after_revision'
+                self.assertEqual(attempt['payload']['artifact'][field],
+                                 GENERATION_SQL if stage == 'sql_generation' else REVISED_SQL)
+                self.assertEqual(attempt['payload']['rc_participation']['actual_request_count'], expected)
+                self.assertEqual(attempt['payload']['rc_participation']['status'], 'participating')
+                if stage == 'sql_revision':
+                    assert_sequential_checkers(self, store, attempt)
+                assert_overlap(self, transport, 'lite/a', stage, expected, peak=peak)
+                self.assertEqual(result['runtime']['workflows'], {'cap': 1, 'active': 0, 'peak': 1})
+                self.assertLessEqual(result['runtime']['coordinators']['peak'], coordinators)
+                self.assertEqual(result['runtime']['coordinators']['active'], 0)
+                self.assertTrue(client.closed)
+                self.assertTrue(store.verify()['ok'])
+
     def test_actual_rc_stop_between_admission_and_submit_returns_paused(self):
         from scripts.baseline_adapters.deepeye.run_resources import SamplingRuntime
-        original = SamplingRuntime.submit_coordinator
+        original = SamplingRuntime.submit_workflow
         def stop_at_submission(runtime, *args, **kwargs):
             runtime.stop()
             return original(runtime, *args, **kwargs)
         with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, keys='ab') as store, \
-                patch.object(SamplingRuntime, 'submit_coordinator', stop_at_submission):
+                patch.object(SamplingRuntime, 'submit_workflow', stop_at_submission):
             result = cli.execute_run(store, ENV)
             self.assertEqual((result['succeeded'], result['failed'], result['paused']), (0, 0, 2))
             self.assertEqual(store.attempts(), [])
@@ -72,7 +107,7 @@ class DynamicConcurrencyTests(OfflineTestCase):
             self.assertLessEqual(len(calls), 2)
             self.assertTrue(client.closed)
             self.assertTrue(all(row['status'] == 'interrupted' for row in store.attempts()))
-            self.assertFalse(any(t.name.startswith(('deepeye-http', 'deepeye-coordinator', 'deepeye-sample'))
+            self.assertFalse(any(t.name.startswith(('deepeye-http', 'deepeye-coordinator', 'deepeye-sample', 'deepeye-workflow'))
                                  for t in threading.enumerate()))
 
     def test_actual_rc_manual_stop_preserves_unfinished_sampling_and_same_event(self):
@@ -105,10 +140,12 @@ class DynamicConcurrencyTests(OfflineTestCase):
             self.assertTrue(store.verify()['ok'])
 
     def prepared(self, temporary, *, calls=0, keys='a', stage='sql_generation', condition='rc',
-                 downstream=False, coordinator_workers=4):
+                 downstream=False, coordinator_workers=4, request_workers=None, candidates=None):
         root = Path(temporary)
         args = native_args()
         args.coordinator_workers = coordinator_workers
+        if request_workers is not None:
+            args.request_limit = args.request_workers = args.http_connections = request_workers
         config = build_effective_config(ENV, args)
         tasks = [('lite', make_item(key)) for key in keys]
         source = manifest(tasks, upgrade=True)
@@ -121,6 +158,8 @@ class DynamicConcurrencyTests(OfflineTestCase):
                 for current in STAGES:
                     input_hash = fingerprint({'input': identity, 'stage': current})
                     complete_stage(item, current)
+                    if current == 'sql_generation' and candidates is not None:
+                        item.sql_candidates = list(candidates)
                     count = calls if current == stage else 1
                     setattr(item, current + '_llm_cost', cost(count))
                     payload = _checkpoint(item, current)
@@ -199,8 +238,10 @@ class DynamicConcurrencyTests(OfflineTestCase):
                     return fixture
                 with patch('openai.AsyncOpenAI', side_effect=client), \
                      patch.object(LLM, '_create_client', side_effect=AssertionError('unused sync client created')), \
-                     patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)):
+                     patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)), \
+                     patch('app.pipeline.sql_generation.generators.base.logger.warning') as warning:
                     result = cli.execute_run(store, ENV)
+                self.assertIn('not parseable', ' '.join(str(call) for call in warning.call_args_list))
                 self.assertEqual((result['succeeded'], result['failed']), (2, 0))
                 self.assertEqual(peak, 2)
                 self.assertEqual(len(seen), 25)

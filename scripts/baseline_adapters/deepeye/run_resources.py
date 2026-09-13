@@ -10,6 +10,7 @@ _STAGE_WORK = contextvars.ContextVar('deepeye_native_stage_work', default=None)
 _SUBMISSION_INDEX = contextvars.ContextVar('deepeye_native_submission_index', default=0)
 _POOL_NAMES = ('_thread_pool_executor', '_inner_thread_pool_executor', '_column_query_executor')
 _COORDINATOR_RUNTIME = contextvars.ContextVar('deepeye_coordinator_runtime', default=None)
+_WORKFLOW_RUNTIME = contextvars.ContextVar('deepeye_workflow_runtime', default=None)
 
 
 class SamplingRuntime:
@@ -17,7 +18,8 @@ class SamplingRuntime:
 
     Use the same ``stop_event`` as TraceRecorder, bind ``context()`` around native
     stages, and drain this runtime before closing recorder/store resources.
-    Coordinators may await samples, never other tasks on the coordinator pool.
+    Question workflows wait outside the native coordinator pool. Coordinators
+    may await samples, never other queued tasks on the coordinator pool.
     """
     def __init__(self, *, stop_event=None, emit=None, **limits):
         from .request_dispatch import RequestDispatcher, RequestLimits
@@ -32,6 +34,9 @@ class SamplingRuntime:
         self._closing = False
         self._coordinator_lock = threading.Lock()
         self._coordinator_active = self._coordinator_peak = 0
+        self.workflows = None
+        self._workflow_cap = self._workflow_active = self._workflow_peak = 0
+        self._workflow_lock = threading.Lock()
 
     @contextmanager
     def context(self):
@@ -43,7 +48,8 @@ class SamplingRuntime:
         from app.llm.sampling import SamplingPaused
         from .sampling import submit_owned
         nested = _COORDINATOR_RUNTIME.get() is self
-        if self._closed or (self._closing and not nested) or self.stop_event.is_set():
+        owned_workflow = _WORKFLOW_RUNTIME.get() is self
+        if self._closed or (self._closing and not (nested or owned_workflow)) or self.stop_event.is_set():
             raise SamplingPaused('Coordinator submissions stopped')
         if nested:
             # A waiting coordinator must not consume the final thread needed
@@ -78,6 +84,45 @@ class SamplingRuntime:
     def executor_view(self):
         return _CoordinatorView(self)
 
+    def workflow_executor(self, workers):
+        """One bounded waiting pool sized to this invocation's unfinished tasks.
+
+        Native branch/candidate submissions retain independent coordinator
+        slots. Workflow parents never acquire that identity or consume its cap.
+        """
+        if type(workers) is not int or workers < 1:
+            raise ValueError('workflow workers must be a positive integer')
+        with self._workflow_lock:
+            if self._closed or self._closing:
+                raise RuntimeError('Cannot allocate workflows after runtime shutdown')
+            if self.workflows is None:
+                self.workflows = ThreadPoolExecutor(workers, thread_name_prefix='deepeye-workflow')
+                self._workflow_cap = workers
+            elif workers != self._workflow_cap:
+                raise ValueError('Workflow pool is already sized for this invocation')
+        return _CoordinatorView(self, submit=self.submit_workflow)
+
+    def submit_workflow(self, function, /, *args, **kwargs):
+        from app.llm.sampling import SamplingPaused
+        from .sampling import submit_owned
+        if self._closed or self._closing or self.stop_event.is_set():
+            raise SamplingPaused('Workflow submissions stopped')
+        if self.workflows is None:
+            raise RuntimeError('Allocate workflow_executor before submitting workflows')
+        context = contextvars.copy_context()
+        def run():
+            token = _WORKFLOW_RUNTIME.set(self)
+            with self._workflow_lock:
+                self._workflow_active += 1
+                self._workflow_peak = max(self._workflow_peak, self._workflow_active)
+            try:
+                return function(*args, **kwargs)
+            finally:
+                with self._workflow_lock:
+                    self._workflow_active -= 1
+                _WORKFLOW_RUNTIME.reset(token)
+        return submit_owned(self.workflows, context.run, run)
+
     def bind_runner(self, runner):
         """Replace unused constructor pools/clients before tracing or stage work."""
         pools = set()
@@ -103,6 +148,8 @@ class SamplingRuntime:
         if self._closed:
             return
         self._closing = True
+        if self.workflows is not None:
+            self.workflows.shutdown(wait=True)
         self.coordinators.shutdown(wait=True)
         self.samples.close()
         self.dispatch.close()
@@ -113,14 +160,18 @@ class SamplingRuntime:
         with self._coordinator_lock:
             coordinators = dict(cap=self.limits.coordinator_workers,
                                 active=self._coordinator_active, peak=self._coordinator_peak)
-        return dict(limits=asdict(self.limits), coordinators=coordinators, samples=self.samples.snapshot(),
+        with self._workflow_lock:
+            workflows = dict(cap=self._workflow_cap, active=self._workflow_active, peak=self._workflow_peak)
+        return dict(limits=asdict(self.limits), workflows=workflows,
+                    coordinators=coordinators, samples=self.samples.snapshot(),
                     requests=self.dispatch.snapshot())
 
 
 class _CoordinatorView:
-    """Runner-owned drain scope; shutdown never closes the shared executor."""
-    def __init__(self, runtime):
+    """Runner/workflow drain scope; shutdown never closes a run-owned executor."""
+    def __init__(self, runtime, *, submit=None):
         self.runtime = runtime
+        self._submit = submit or runtime.submit_coordinator
         self._lock = threading.Lock()
         self._futures = set()
         self._shutdown = False
@@ -130,7 +181,7 @@ class _CoordinatorView:
         with self._lock:
             if self._shutdown:
                 raise RuntimeError('Cannot schedule after runner shutdown')
-        future = self.runtime.submit_coordinator(fn, *args, **kwargs)
+        future = self._submit(fn, *args, **kwargs)
         with self._lock:
             self._futures.add(future)
         def done(completed):

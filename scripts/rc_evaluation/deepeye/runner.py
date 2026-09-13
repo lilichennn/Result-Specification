@@ -239,7 +239,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
 
         pending = deque(key for key, plan in plans.items() if plan['remaining'])
         if pending:
-            question_pool = (runtime.executor_view() if runtime else
+            question_pool = (runtime.workflow_executor(len(pending)) if runtime else
                              ThreadPoolExecutor(max_workers=slots.max_limit, thread_name_prefix='rc-stage'))
             futures = {}
             while pending or futures:

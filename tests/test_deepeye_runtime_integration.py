@@ -1,6 +1,6 @@
 """Offline acceptance of the run-owned runtime in the native entrypoint."""
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import io
 from pathlib import Path
 import tempfile
@@ -17,17 +17,51 @@ from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
 
 
 class RuntimeIntegrationTests(unittest.TestCase):
-    def test_stop_between_workflow_admission_and_coordinator_submission_is_a_pause(self):
+    def test_actual_native_workflow_overlaps_generation_branches_and_revision_candidates(self):
+        from types import SimpleNamespace
+        from app.llm import LLM
+        from app.services.schema_service import SchemaService
+        from tests.deepeye_native_overlap import (NativeOverlapTransport, GENERATION_SQL, REVISED_SQL,
+                                                 execute_sql, assert_overlap, assert_sequential_checkers)
+        from scripts.rc_evaluation.deepeye.tests.test_dynamic_concurrency import AsyncClientFixture
+        from scripts.rc_evaluation.deepeye.tests.test_cli import ENV
+        args = entry._build_parser().parse_args(['run', '--run-dir', 'unused', '--precompute-dir', 'unused',
+            '--request-limit', '32', '--request-workers', '32', '--coordinator-workers', '32',
+            '--http-connections', '32', '--request-start-rate', '10000'])
+        with tempfile.TemporaryDirectory() as temporary, RunStore.create(Path(temporary) / 'run', {}) as store:
+            transport = NativeOverlapTransport(store)
+            client = AsyncClientFixture(transport.create)
+            target = item('a')
+            target.few_shot_examples = [{'question': 'Other question', 'evidence': '', 'sql': 'SELECT 2'}]
+            with patch('openai.AsyncOpenAI', return_value=client), \
+                 patch.object(LLM, '_create_client', side_effect=AssertionError('sync client forbidden')), \
+                 patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)), \
+                 patch('scripts.baseline_adapters.deepeye.backend_hooks.execute_postgres_sql', side_effect=execute_sql), \
+                 patch('socket.socket.connect', side_effect=AssertionError('network forbidden')), \
+                 redirect_stdout(io.StringIO()):
+                result = entry._execute_pipeline(store, [('lite', target)], ENV, args)
+            self.assertEqual((result['succeeded'], result['failed']), (1, 0))
+            rows = {a['stage']: a for a in store.attempts()}
+            self.assertEqual(rows['sql_generation']['payload']['artifact']['sql_candidates'], GENERATION_SQL)
+            self.assertEqual(rows['sql_revision']['payload']['artifact']['sql_candidates_after_revision'], REVISED_SQL * 6)
+            assert_sequential_checkers(self, store, rows['sql_revision'])
+            for stage, expected in [('sql_generation', 12), ('sql_revision', 10)]:
+                with self.subTest(stage=stage):
+                    assert_overlap(self, transport, 'lite/a', stage, expected)
+            self.assertTrue(client.closed)
+            self.assertTrue(store.verify()['ok'])
+
+    def test_stop_between_workflow_admission_and_submission_is_a_pause(self):
         runtime = SamplingRuntime(coordinator_workers=1, request_workers=1)
         self.addCleanup(runtime.close)
         recorder = FakeTrace()
         recorder.stop_event = runtime.stop_event
-        original = runtime.submit_coordinator
+        original = runtime.submit_workflow
         def stop_at_submission(*args, **kwargs):
             runtime.stop()
             return original(*args, **kwargs)
         with tempfile.TemporaryDirectory() as temporary, RunStore.create(Path(temporary) / 'run', {}) as store, \
-                patch.object(runtime, 'submit_coordinator', stop_at_submission):
+                patch.object(runtime, 'submit_workflow', stop_at_submission):
             result = run_pipeline(store, [('lite', item(k)) for k in 'ab'], Factory(), recorder, runtime=runtime)
             self.assertEqual((result['succeeded'], result['failed'], result['paused']), (0, 0, 2))
             self.assertEqual(store.attempts(), [])
@@ -43,8 +77,9 @@ class RuntimeIntegrationTests(unittest.TestCase):
                     llm, calls = llm_fixture([response()] + [response('bad')] * 4)
                     recorder = TraceRecorder(store)
                     aid = store.begin_attempt('lite/a', 'sql_generation', 'input')
-                    with recorder.context(aid):
+                    with recorder.context(aid), patch('app.llm_extractor.extractor.logger.warning') as warning:
                         LLMExtractor().extract_with_retry(llm, [], parse, n=2)
+                    warning.assert_called_once_with('Incomplete sampling group: 1/2')
                     store.finish_attempt(aid, 'failed', {'error_type': 'IncompleteSamplingGroup'})
                     before = store.events()
                     group_id = next(e['payload']['group_id'] for e in before if e['kind'] == 'sampling_group_bound')
@@ -68,7 +103,8 @@ class RuntimeIntegrationTests(unittest.TestCase):
         from app.llm import LLM
         from app.db_utils.execution import SQLExecutionResult
         from app.services.schema_service import SchemaService
-        from scripts.baseline_adapters.deepeye.run_trace import _ATTEMPT_ID
+        from scripts.baseline_adapters.deepeye.run_trace import _ATTEMPT_ID, _BRANCH_PATH
+        from app.llm.sampling import sampling_identity
         from scripts.rc_evaluation.deepeye.tests.test_dynamic_concurrency import AsyncClientFixture, completion
         from scripts.rc_evaluation.deepeye.tests.test_cli import ENV
         from types import SimpleNamespace
@@ -97,7 +133,11 @@ class RuntimeIntegrationTests(unittest.TestCase):
                 model_peak = max(model_peak, model_active)
                 if pg_active:
                     overlap.set()
-            if row['item_key'] == 'lite/b':
+            # Hold one remote response, leaving capacity for the other question.
+            # Holding all of b's parallel branches would exhaust the fake cap
+            # while waiting for an unrelated future PG operation.
+            if (row['item_key'] == 'lite/b' and 'schema_linking.direct' in _BRANCH_PATH.get()
+                    and sampling_identity()['sample_index'] == 0):
                 deadline = time.monotonic() + 4
                 while not pg_seen.is_set() and time.monotonic() < deadline:
                     await asyncio.sleep(.005)
@@ -136,7 +176,7 @@ class RuntimeIntegrationTests(unittest.TestCase):
             self.assertEqual(result['runtime']['limits']['start_rate'], 10000)
             self.assertEqual(result['admission']['postgres']['current_limit'], 1)
             self.assertTrue(all(c.closed for c in clients))
-            self.assertFalse(any(t.name.startswith(('deepeye-http', 'deepeye-coordinator', 'deepeye-sample'))
+            self.assertFalse(any(t.name.startswith(('deepeye-http', 'deepeye-coordinator', 'deepeye-sample', 'deepeye-workflow'))
                                  for t in threading.enumerate()))
             self.assertTrue(store.verify()['ok'])
 
@@ -155,6 +195,7 @@ class RuntimeIntegrationTests(unittest.TestCase):
         runtime = SamplingRuntime(coordinator_workers=1, request_workers=1)
         self.addCleanup(runtime.close)
         entered, release = threading.Event(), threading.Event()
+        population_lock, population = threading.Lock(), 0
         base, order = Factory(), {}
         original_pools = []
         def factory(stage, items):
@@ -164,9 +205,13 @@ class RuntimeIntegrationTests(unittest.TestCase):
             runner._inner_thread_pool_executor = pool
             process = getattr(runner, STAGE_METHODS[stage])
             def execute(target):
-                if target.instance_id == '0' and stage == STAGES[0]:
-                    entered.set()
-                    self.assertTrue(release.wait(10))
+                nonlocal population
+                if stage == STAGES[0]:
+                    with population_lock:
+                        population += 1
+                        if population == 605:
+                            entered.set()
+                    self.assertTrue(release.wait(15))
                 order.setdefault(target.instance_id, []).append(stage)
                 runner._inner_thread_pool_executor.submit(process, target).result(2)
             setattr(runner, STAGE_METHODS[stage], execute)
@@ -182,13 +227,8 @@ class RuntimeIntegrationTests(unittest.TestCase):
                     if future.done():
                         future.result()
                     self.assertTrue(did_enter)
-                    # Every question is queued onto the shared executor while
-                    # the only running coordinator is still on question zero.
-                    import time
-                    deadline = time.monotonic() + 5
-                    while runtime.coordinators._work_queue.qsize() < 604 and time.monotonic() < deadline:
-                        time.sleep(.01)
-                    self.assertEqual(runtime.coordinators._work_queue.qsize(), 604)
+                    self.assertEqual(runtime.snapshot()['workflows'], {'cap': 605, 'active': 605, 'peak': 605})
+                    self.assertEqual(runtime.snapshot()['coordinators']['active'], 0)
                 finally:
                     release.set()
                 result = future.result(30)
@@ -198,6 +238,48 @@ class RuntimeIntegrationTests(unittest.TestCase):
             self.assertTrue(all(pool._shutdown for pool in original_pools))
             self.assertEqual(runtime.snapshot()['coordinators']['peak'], 1)
             self.assertTrue(store.verify()['ok'])
+
+    def test_runtime_close_drains_workflows_before_their_native_children(self):
+        runtime = SamplingRuntime(coordinator_workers=1, request_workers=1)
+        self.addCleanup(runtime.close)
+        workflow = runtime.workflow_executor(1)
+        entered, closing = threading.Event(), threading.Event()
+        original_shutdown = runtime.workflows.shutdown
+        def shutdown(*args, **kwargs):
+            closing.set()
+            return original_shutdown(*args, **kwargs)
+        def parent():
+            entered.set()
+            self.assertTrue(closing.wait(3))
+            return runtime.executor_view().submit(lambda: 42).result(3)
+        future = workflow.submit(parent)
+        self.assertTrue(entered.wait(3))
+        with patch.object(runtime.workflows, 'shutdown', shutdown):
+            runtime.close()
+        self.assertEqual(future.result(), 42)
+        self.assertEqual(runtime.snapshot()['workflows'], {'cap': 1, 'active': 0, 'peak': 1})
+        self.assertEqual(runtime.snapshot()['coordinators']['active'], 0)
+
+    def test_failed_workflow_thread_start_cannot_run_unowned_work(self):
+        runtime = SamplingRuntime(coordinator_workers=1, request_workers=1)
+        self.addCleanup(runtime.close)
+        workflow = runtime.workflow_executor(2)
+        unowned = []
+        original_start = threading.Thread.start
+        rejected = False
+        def start(thread):
+            nonlocal rejected
+            if thread.name.startswith('deepeye-workflow') and not rejected:
+                rejected = True
+                raise RuntimeError('injected workflow thread creation failure')
+            return original_start(thread)
+        with patch.object(threading.Thread, 'start', start):
+            with self.assertRaisesRegex(RuntimeError, 'injected workflow thread'):
+                workflow.submit(lambda: unowned.append('ran'))
+            self.assertEqual(workflow.submit(lambda: 'owned').result(3), 'owned')
+        runtime.close()
+        self.assertEqual(unowned, [])
+        self.assertEqual(runtime.snapshot()['workflows']['active'], 0)
 
     def test_cli_defaults_are_effective_runtime_caps_and_formal_budgets(self):
         from tests.test_deepeye_run_entry import DeepEyeRunEntryTests
@@ -217,6 +299,10 @@ class RuntimeIntegrationTests(unittest.TestCase):
         self.assertEqual(effective['stages']['sql_selection']['evaluator_sampling_budget'], 5)
         for flags in (['--adaptive-concurrency'], ['--workers', '1'], ['--inner-workers', '2'],
                       ['--concurrency-max', '100'], ['--thinking-budget', '5'], ['--inherit-from', 'old']):
-            with self.subTest(flags=flags), self.assertRaises(SystemExit):
-                entry._validate_run_args(parser, parser.parse_args([
-                    'run', '--run-dir', 'unused', '--precompute-dir', 'unused', *flags]))
+            diagnostics = io.StringIO()
+            with self.subTest(flags=flags):
+                with redirect_stderr(diagnostics), self.assertRaises(SystemExit) as failure:
+                    entry._validate_run_args(parser, parser.parse_args([
+                        'run', '--run-dir', 'unused', '--precompute-dir', 'unused', *flags]))
+                self.assertEqual(failure.exception.code, 2)
+                self.assertIn('error:', diagnostics.getvalue())
