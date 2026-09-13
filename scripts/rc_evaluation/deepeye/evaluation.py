@@ -6,7 +6,7 @@ version is an operator declaration, not a detected remote database snapshot.
 from __future__ import annotations
 
 from collections import Counter
-from contextlib import contextmanager
+from contextlib import contextmanager, ExitStack
 import hashlib
 import json
 import os
@@ -33,20 +33,46 @@ def _read_run(path):
             return store.manifest, store.attempts(), store.events()
 
 
-def _references(paths):
-    records, sources = {}, {}
+def _references(paths, bindings=()):
+    # Reference answers are read only here, never by the inference boundary.
+    paths = dict(paths)
+    for binding in bindings:
+        partition = binding.get('partition')
+        path = binding.get('reference', {}).get('path')
+        if partition and path and partition not in paths:
+            paths[partition] = path
+    records, sources, files = {}, {}, {}
     for split, path in sorted(paths.items()):
         path = Path(path).resolve()
-        raw = path.read_bytes()
-        sources[split] = {'path': str(path), 'sha256': hashlib.sha256(raw).hexdigest()}
-        content = raw.decode('utf-8-sig').strip()
-        rows = json.loads(content) if content.startswith('[') else [json.loads(line) for line in content.splitlines() if line.strip()]
-        if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
-            raise ValueError('Reference must contain JSON object records')
-        for row in rows:
-            if row.get('category') == 'Query':
-                key = f"{split}/{row.get('instance_id')}"
-                records.setdefault(key, []).append(row)
+        if not path.is_file():
+            sources[split] = {'path': str(path), 'status': 'missing_reference_file'}
+            continue
+        if path not in files:
+            raw = path.read_bytes()
+            content = raw.decode('utf-8-sig').strip()
+            rows = json.loads(content) if content.startswith('[') else [json.loads(line) for line in content.splitlines() if line.strip()]
+            if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+                raise ValueError('Reference must contain JSON object records')
+            files[path] = rows, hashlib.sha256(raw).hexdigest()
+        rows, digest = files[path]
+        sources[split] = {'path': str(path), 'sha256': digest}
+        selected = [b for b in bindings if b.get('partition') == split and b.get('benchmark')]
+        if not selected:  # Existing BIRD-Interact records retain their original keys.
+            for row in rows:
+                if row.get('category') == 'Query':
+                    records.setdefault(f"{split}/{row.get('instance_id')}", []).append(row)
+            continue
+        special = selected[0]['benchmark'] in ('bird_interact', 'spider2')
+        index = {}
+        for position, row in enumerate(rows):
+            if row.get('category', 'Query') != 'Query':
+                continue
+            identifier = row.get('index', row.get('instance_id' if special else 'question_id', None if special else position))
+            if type(identifier) in (int, str):
+                index.setdefault((type(identifier), identifier), []).append(row)
+        for binding in selected:
+            identifier = binding['external_id']
+            records[binding['task_key']] = index.get((type(identifier), identifier), [])
     return records, sources
 
 
@@ -56,14 +82,17 @@ def _reference(binding, records):
         return {'status': 'missing_reference' if not matches else 'duplicate_reference'}
     row = matches[0]
     provenance = {'record_sha256': _hash(row)}
-    database = row.get('selected_database', row.get('db_id'))
+    database = row.get('selected_database', row.get('db_id', row.get('db')))
     if database != binding['database_id'] or ('db_id' in row and row['db_id'] != database):
         return {**provenance, 'status': 'reference_database_mismatch'}
     # Refuse any setup/cleanup requirement; evaluator never executes mutations.
     if any(value for key, value in row.items() if 'preprocess' in key.lower().replace('_', '')
            or 'cleanup' in key.lower().replace('_', '') or key.lower() in ('pre_sql', 'post_sql')):
         return {**provenance, 'status': 'unsupported_reference_setup'}
-    sql = row.get('sol_sql')
+    fields = {'bird': ('SQL', 'sql'), 'spider': ('query', 'sql'),
+              'spider2': ('sql', 'SQL', 'query'), 'bird_interact': ('sol_sql',)}
+    sql = next((row[field] for field in fields.get(binding.get('benchmark'), ('sol_sql',))
+                if row.get(field)), None)
     if isinstance(sql, list) and len(sql) == 1:
         sql = sql[0]
     if not isinstance(sql, str) or not sql.strip():
@@ -130,7 +159,7 @@ def _transition(before, after):
             (True, True): 'unchanged_correct', (False, False): 'unchanged_incorrect'}[(before, after)]
 
 
-def schema_coverage(sql, linked):
+def schema_coverage(sql, linked, dialect='postgres'):
     """Conservative syntactic gold table/column coverage, without Meta/RC truth.
 
     No schema catalog is used to guess wildcard expansion, ambiguous unqualified
@@ -146,7 +175,7 @@ def schema_coverage(sql, linked):
     try:
         import sqlglot
         from sqlglot import exp
-        parsed = sqlglot.parse(sql, read='postgres')
+        parsed = sqlglot.parse(sql, read=dialect)
         if len(parsed) != 1 or not isinstance(parsed[0], exp.Select):
             return {**output, 'reason': 'unsupported_query_structure'}
         tree = parsed[0]
@@ -379,7 +408,7 @@ def _summary(items):
             'bag_equal_rate': bag / count if count else None,
             'ordered_equal_rate': ordered / count if count else None,
             'denominator': 'all_fixed_tasks_including_missing_failed_unknown',
-            'metric': 'strict_result_agreement_not_official_BIRD_Interact_accuracy'}
+            'metric': 'strict_result_agreement_not_official_benchmark_accuracy'}
     for name in ('generation', 'revision'):
         pools = [row[name] if name == 'generation' else row[name]['after'] for row in items.values()]
         correct = sum(pool['has_correct'] is True for pool in pools)
@@ -413,6 +442,62 @@ def _summary(items):
     return summary
 
 
+def _query_only(sql, dialect):
+    """Evaluation is diagnostic and never performs benchmark setup or writes.
+
+    Inference retains its native validation. This separate evaluation guard is
+    particularly necessary for BigQuery, whose native client can also run DML.
+    """
+    import sqlglot
+    from sqlglot import exp
+    try:
+        trees = sqlglot.parse(sql, read=dialect)
+        forbidden = (exp.DML, exp.DDL, exp.Into, exp.Command)
+        return (len(trees) == 1 and isinstance(trees[0], exp.Query)
+                and not any(isinstance(node, forbidden) for node in trees[0].walk()))
+    except Exception:
+        return False
+
+
+@contextmanager
+def _bound_executor(env_file, manifest):
+    """Route finite workload backends; reuse native execution, not another SQL engine."""
+    config = manifest.get('effective_config', {})
+    bindings = {row['task_key']: row for row in manifest['items']}
+    types = {row.get('db_type', 'postgresql') for row in bindings.values()}
+    if types.difference({'sqlite', 'bigquery', 'postgresql'}):
+        raise ValueError('Unsupported evaluation database backend')
+    timeout = config.get('dataset', {}).get('sql_execution_timeout_seconds', 600)
+    credential = config.get('native', {}).get('dataset_config', {}).get('bigquery_credential_path')
+    with ExitStack() as stack:
+        pg_execute, pg_identity = (stack.enter_context(_executor(env_file, config))
+                                   if 'postgresql' in types else (None, None))
+        def execute(key, database_id, sql):
+            binding = bindings[key]
+            if database_id != binding['database_id']:
+                raise ValueError('Evaluation database differs from frozen task binding')
+            db_type = binding.get('db_type', 'postgresql')
+            dialect = {'sqlite': 'sqlite', 'bigquery': 'bigquery', 'postgresql': 'postgres'}[db_type]
+            if not _query_only(sql, dialect):
+                return {'result_type': 'unsupported_evaluation_query'}
+            if db_type == 'postgresql':
+                return pg_execute(key, database_id, sql)
+            path = binding.get('database_path')
+            if not path:
+                raise ValueError('Frozen database resource path is missing')
+            if db_type == 'sqlite':
+                from app.db_utils.execution import execute_sql_without_cache
+                return execute_sql_without_cache(path, sql, timeout=timeout).model_dump()
+            from app.db_utils.cloud_execution import execute_cloud_sql
+            return execute_cloud_sql(sql, db_type, path, credential, timeout).model_dump()
+        identity = {'backends': sorted(types), 'postgres': pg_identity,
+                    'resources': {key: {'db_type': row.get('db_type', 'postgresql'),
+                        'database_path': row.get('database_path', row['database_id'])} for key, row in bindings.items()},
+                    'bigquery_credential_path': credential if 'bigquery' in types else None,
+                    'timeout_seconds': timeout, 'read_only_query_guard': 'sqlglot-query-only-v1'}
+        yield execute, identity
+
+
 def evaluate_run(run_dir: Path, output_dir: Path, reference_paths: dict[str, Path], *,
                  env_file: Path, database_version: str, source_run_dir: Path | None = None, execute_fn=None) -> dict:
     if not isinstance(database_version, str) or not database_version.strip():
@@ -426,8 +511,8 @@ def evaluate_run(run_dir: Path, output_dir: Path, reference_paths: dict[str, Pat
         from .cli import production_hash
         if production_hash() != bound_production:
             raise ValueError('RC evaluation production/prompt hash mismatch; use the corresponding production version')
-    records, reference_sources = _references(reference_paths)
     bindings = manifest.get('items', [])
+    records, reference_sources = _references(reference_paths, bindings)
     keys = [row['task_key'] for row in bindings]
     if len(keys) != len(set(keys)):
         raise ValueError('Duplicate task bindings')
@@ -450,10 +535,16 @@ def evaluate_run(run_dir: Path, output_dir: Path, reference_paths: dict[str, Pat
                 'source_run': str(Path(source_path).resolve()) if source_path else None,
                 'reference_sources': reference_sources, 'database_version': database_version,
                 'database_version_provenance': 'operator_declared_not_remote_snapshot_verified',
-                'executor': 'injected' if execute_fn else 'native_read_only_postgres',
+                'executor': 'injected' if execute_fn else 'native_read_only_bound_backend',
+                'fingerprint_algorithm': 'evaluation-manifest-digest-v2',
                 'comparison': 'strict-finite-exact-numeric-bag-and-ordered-v1'}
     if execute_fn is None:
-        with _executor(env_file, manifest.get('effective_config', {})) as (execute, database_identity):
+        if not any(_reference(binding, records)['status'] == 'available' for binding in bindings):
+            identity['database_execution'] = {'status': 'not_opened_no_available_reference'}
+            def no_execution(*args):
+                raise RuntimeError('No reference is available for database evaluation')
+            return _evaluate(identity, output_dir, records, attempts, events, source_events, no_execution)
+        with _bound_executor(env_file, manifest) as (execute, database_identity):
             identity['database_execution'] = database_identity
             return _evaluate(identity, output_dir, records, attempts, events, source_events, execute)
     return _evaluate(identity, output_dir, records, attempts, events, source_events, execute_fn)
@@ -469,9 +560,10 @@ def _evaluate(identity, output_dir, records, attempts, events, source_events, ex
     store = RunStore.open(output_dir, expected_manifest=identity) if output_dir.exists() else RunStore.create(output_dir, identity)
     items = {}
     with store:
+        identity_digest = store.manifest_fingerprint
         for binding in manifest['items']:
             key = binding['task_key']
-            input_hash = _hash({'identity': identity, 'task_key': key})
+            input_hash = _hash({'identity_sha256': identity_digest, 'task_key': key})
             completed = store.completed(key, 'evaluation', input_hash)
             if completed:
                 items[key] = completed['payload']
@@ -522,10 +614,12 @@ def _evaluate(identity, output_dir, records, attempts, events, source_events, ex
             revised = _pool(artifacts['sql_revision'].get('sql_candidates_after_revision'), assess)
             target_attempt = latest.get((key, target))
             row = {'task_key': key, 'database_id': binding['database_id'], 'reference': reference,
+                   'evaluation_status': 'evaluated' if reference['status'] == 'available' else 'not_evaluated',
                    'target_stage': target, 'target_status': 'succeeded' if target_attempt else 'missing_or_failed',
                    'bag_equal': None, 'ordered_equal': None,
                    'generation': generation, 'revision': {'before': generation, 'after': revised},
-                   'coverage': schema_coverage(reference.get('sql'), artifacts['schema_linking'].get('final_linked_tables_and_columns')),
+                   'coverage': schema_coverage(reference.get('sql'), artifacts['schema_linking'].get('final_linked_tables_and_columns'),
+                        {'sqlite': 'sqlite', 'bigquery': 'bigquery'}.get(binding.get('db_type'), 'postgres')),
                    'usage': _usage([a for a in attempts if a['item_key'] == key], events, manifest)}
             slots = []
             for index, before in enumerate(generation['results']):
