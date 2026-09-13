@@ -49,11 +49,24 @@ def audit_milestones(ledger):
     directory = ledger.campaign_dir / 'audits'
     directory.mkdir(exist_ok=True)
     jobs = {row['job_id']: row for row in ledger.jobs()}
-    groups = {}
-    for row in ledger._db.execute("SELECT job_id,item_key,status,attempt_id FROM observations WHERE status IN ('succeeded','failed')"):
+    terminal = [dict(row) for row in ledger._db.execute(
+        "SELECT job_id,item_key,status,attempt_id FROM observations WHERE status IN ('succeeded','failed')")]
+    # Native milestones count final item dispositions, not execution attempts.
+    # The canonical table already binds either first-pass or retry success to
+    # its unique source. Only twice-failed items add a final failed disposition.
+    native = {row['item_key']: {**dict(row), 'status': 'succeeded'}
+              for row in ledger._db.execute('SELECT item_key,job_id,attempt_id FROM canonical')}
+    failed_first = {row['item_key'] for row in terminal
+                    if jobs[row['job_id']]['kind'] == 'native_first' and row['status'] == 'failed'}
+    for row in terminal:
+        if (jobs[row['job_id']]['kind'] == 'native_retry' and row['status'] == 'failed'
+                and row['item_key'] in failed_first):
+            native.setdefault(row['item_key'], row)
+    groups = {'native': list(native.values())}
+    for row in terminal:
         job = jobs[row['job_id']]
-        group = job['target_stage'] if job['kind'] == 'rc' else job['kind']
-        groups.setdefault(group, []).append(dict(row))
+        if job['kind'] == 'rc':
+            groups.setdefault(job['target_stage'], []).append(row)
     outputs = []
     for group, rows in groups.items():
         previous = list(directory.glob(group + '-*.json'))

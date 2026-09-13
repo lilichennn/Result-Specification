@@ -697,5 +697,112 @@ class FaultHandlingTests(unittest.TestCase):
             self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
 
 
+class AuditMilestoneTests(unittest.TestCase):
+    @contextlib.contextmanager
+    def fixture(self, population):
+        from scripts.rc_evaluation.deepeye.campaign.ledger import CampaignLedger
+        config = dict(items=[f'lite/{number:03d}' for number in range(population)], native_args=[],
+                      tail_fraction=.8, poll_seconds=60, python=sys.executable, code_root=str(ROOT),
+                      env_file='/tmp/env', rc_lite='/tmp/lite', rc_full='/tmp/full')
+        with tempfile.TemporaryDirectory() as directory, CampaignLedger.create(Path(directory) / 'campaign', config) as ledger:
+            yield ledger
+
+    def fill_native(self, ledger, job, keys, *, failed):
+        from scripts.baseline_adapters.deepeye.run_pipeline import STAGE_METHODS
+        manifest = {'items': [{'task_key': key} for key in job['items']]}
+        path = Path(job['run_dir'])
+        with (RunStore.open(path) if path.exists() else RunStore.create(path, manifest)) as store:
+            base = zero_factory()
+            def factory(stage, tasks):
+                runner = base(stage, tasks)
+                if failed and stage == 'schema_linking':
+                    def failure(target):
+                        raise ValueError('controlled native failure')
+                    setattr(runner, STAGE_METHODS[stage], failure)
+                return runner
+            with contextlib.redirect_stdout(io.StringIO()):
+                run_pipeline(store, fixture_tasks({'items': keys}), factory, FakeTrace())
+        ledger.update_job(job['job_id'], state='prepared')
+
+    def tick(self, ledger, job):
+        from scripts.rc_evaluation.deepeye.campaign.controller import observe
+        from scripts.rc_evaluation.deepeye.campaign.planning import plan_tick
+        return plan_tick(ledger, {job['job_id']: observe(job)})
+
+    def test_first_failures_pending_retry_do_not_form_native_milestone(self):
+        from scripts.rc_evaluation.deepeye.campaign.monitoring import audit_milestones
+        with self.fixture(100) as ledger:
+            first = ledger.jobs()[0]
+            self.fill_native(ledger, first, first['items'], failed=True)
+            self.tick(ledger, first)
+            self.assertEqual(audit_milestones(ledger), [])
+            self.assertEqual(list((ledger.campaign_dir / 'audits').glob('*.json')), [])
+
+    def test_retry_successes_use_canonical_source_and_unique_fresh_milestones(self):
+        from scripts.rc_evaluation.deepeye.campaign.monitoring import audit_milestones
+        from scripts.rc_evaluation.deepeye.campaign.processes import read_json
+        with self.fixture(200) as ledger:
+            first = ledger.jobs()[0]
+            self.fill_native(ledger, first, first['items'], failed=True)
+            result = self.tick(ledger, first)
+            retry = next(job for job in result['jobs'] if job['kind'] == 'native_retry')
+            self.fill_native(ledger, retry, retry['items'][:100], failed=False)
+            result = self.tick(ledger, retry)
+            paths = audit_milestones(ledger)
+            self.assertEqual([Path(path).name for path in paths], ['native-000100.json'])
+            first_audit = read_json(paths[0])
+            self.assertEqual(len(first_audit['examples']), 5)
+            for example in first_audit['examples']:
+                self.assertEqual(example['source_run'], result['canonical_sources'][example['task_key']])
+                self.assertEqual(example['job_id'], retry['job_id'])
+                self.assertEqual(example['status'], 'succeeded')
+            self.fill_native(ledger, retry, retry['items'][100:], failed=False)
+            self.tick(ledger, retry)
+            paths = audit_milestones(ledger)
+            self.assertEqual([Path(path).name for path in paths], ['native-000100.json', 'native-000200.json'])
+            examples = [example for path in paths for example in read_json(path)['examples']]
+            self.assertEqual(len(examples), 10)
+            self.assertEqual(len({row['task_key'] for row in examples}), 10)
+            before = {path: Path(path).read_bytes() for path in paths}
+            events = ledger._db.execute("SELECT COUNT(*) FROM events WHERE kind='audit_queued'").fetchone()[0]
+            self.assertEqual(audit_milestones(ledger), paths)
+            self.assertEqual({path: Path(path).read_bytes() for path in paths}, before)
+            self.assertEqual(ledger._db.execute("SELECT COUNT(*) FROM events WHERE kind='audit_queued'").fetchone()[0], events)
+
+    def test_permanent_exclusions_count_once_and_rc_milestones_are_unchanged(self):
+        from scripts.rc_evaluation.deepeye.campaign.monitoring import audit_milestones
+        from scripts.rc_evaluation.deepeye.campaign.processes import read_json
+        with self.fixture(200) as ledger:
+            first = ledger.jobs()[0]
+            self.fill_native(ledger, first, first['items'][:100], failed=False)
+            self.fill_native(ledger, first, first['items'][100:], failed=True)
+            result = self.tick(ledger, first)
+            retry = next(job for job in result['jobs'] if job['kind'] == 'native_retry')
+            rc = next(job for job in result['jobs'] if job['kind'] == 'rc')
+            self.fill_native(ledger, retry, retry['items'], failed=True)
+            result = self.tick(ledger, retry)
+            paths = audit_milestones(ledger)
+            self.assertEqual([Path(path).name for path in paths], ['native-000100.json', 'native-000200.json'])
+            examples = [row for path in paths for row in read_json(path)['examples']]
+            excluded_examples = [row for row in examples if row['task_key'] in result['excluded']]
+            self.assertTrue(excluded_examples)
+            for example in excluded_examples:
+                self.assertEqual(example['status'], 'failed')
+                self.assertEqual(example['source_run'], retry['run_dir'])
+            manifest = {'items': [{'task_key': key} for key in rc['items']],
+                        'target_stage': rc['target_stage'], 'source_run': rc['source_run']}
+            with RunStore.create(Path(rc['run_dir']), manifest) as store:
+                for key in rc['items']:
+                    attempt = store.begin_attempt(key, rc['target_stage'], 'rc')
+                    store.finish_attempt(attempt, 'succeeded', {'artifact': {}, 'rc_participation': {'status': 'rc_not_participating'}})
+            ledger.update_job(rc['job_id'], state='prepared')
+            self.tick(ledger, rc)
+            paths = audit_milestones(ledger)
+            self.assertEqual(set(Path(path).name for path in paths), {'native-000100.json', 'native-000200.json', 'schema_linking-000100.json'})
+            rc_audit = read_json(ledger.campaign_dir / 'audits/schema_linking-000100.json')
+            self.assertEqual(len(rc_audit['examples']), 5)
+            self.assertTrue(all(row['stages'][0]['rc_participation']['status'] == 'rc_not_participating' for row in rc_audit['examples']))
+
+
 if __name__ == '__main__':
     unittest.main()
