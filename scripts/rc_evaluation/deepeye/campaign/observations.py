@@ -78,6 +78,14 @@ def read_run(run_dir, *, kind, target_stage=None):
             attempts = store.attempts()
         if any(row['item_key'] not in items for row in attempts):
             raise ValueError('run contains an attempt for an unlisted task')
+        if kind == 'native':
+            successful_inputs = {}
+            for attempt in attempts:
+                if attempt['stage'] in STAGES and attempt['status'] == 'succeeded':
+                    key = (attempt['item_key'], attempt['stage'])
+                    fingerprint = attempt['input_fingerprint']
+                    if successful_inputs.setdefault(key, fingerprint) != fingerprint:
+                        raise ValueError(f'conflicting successful native input fingerprints for {key!r}')
         by_id = {row['attempt_id']: row for row in attempts}
         selected = {}
         for attempt in attempts:

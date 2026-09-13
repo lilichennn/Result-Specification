@@ -246,6 +246,35 @@ class CampaignStateTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.read(path, kind='native')
 
+    def test_native_success_rejects_conflicting_successful_stage_fingerprints(self):
+        for stage in STAGES:
+            with self.subTest(stage=stage):
+                path = self.root / stage
+                with RunStore.create(path, {'items': [{'task_key': 'lite/a'}]}) as store:
+                    self.native(store, 'lite/a')
+                    original = next(row for row in store.attempts() if row['stage'] == stage)
+                    conflicting = store.begin_attempt('lite/a', stage, 'different-input-fingerprint')
+                    store.finish_attempt(conflicting, 'succeeded', original['payload'])
+                    # Match the source-resume contract enforced by RunStore.
+                    with self.assertRaises(ValueError):
+                        store.completed('lite/a', stage, original['input_fingerprint'])
+                    with self.assertRaises(ValueError):
+                        self.read(path, kind='native')
+
+    def test_native_fingerprint_validation_allows_same_input_success_and_different_input_failure(self):
+        ledger = self.ledger(['lite/a'])
+        first = ledger.jobs()[0]
+        store = self.prepare(ledger, first)
+        self.native(store, 'lite/a')
+        original = next(row for row in store.attempts() if row['stage'] == 'schema_linking')
+        repeated = store.begin_attempt('lite/a', 'schema_linking', original['input_fingerprint'])
+        store.finish_attempt(repeated, 'succeeded', original['payload'])
+        failed = store.begin_attempt('lite/a', 'schema_linking', 'different-input-fingerprint')
+        store.finish_attempt(failed, 'failed', {'error_type': 'ControlledFailure'})
+        result = self.tick(ledger, {first['job_id']: self.observe(first)})
+        self.assertEqual(result['canonical_sources'], {'lite/a': first['run_dir']})
+        self.assertEqual([job['kind'] for job in result['jobs']], ['rc'])
+
     def test_unfinished_master_and_pending_items_are_not_terminal(self):
         path = self.root / 'unfinished'
         with RunStore.create(path, {'items': [{'task_key': 'lite/a'}, {'task_key': 'lite/b'}]}) as store:
