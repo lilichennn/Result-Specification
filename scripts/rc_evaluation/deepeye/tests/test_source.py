@@ -49,6 +49,26 @@ def make_source(path, *, calls=1, stage='sql_revision', partial=False, bad_hash=
 
 
 class SourceTests(OfflineTestCase):
+    def test_duplicate_valid_restored_success_is_rejected_by_source_verification(self):
+        from scripts.rc_evaluation.deepeye.source import api_trace, _source_trace
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        with tempfile.TemporaryDirectory() as temporary, RunStore.create(Path(temporary) / 'run', {}) as store:
+            for sequence in ([response()], []):
+                llm, _ = llm_fixture(sequence)
+                recorder = TraceRecorder(store)
+                attempt = store.begin_attempt('lite/a', 'schema_linking', 'input')
+                with recorder.context(attempt):
+                    _, usage = LLMExtractor().extract_with_retry(llm, [], parse, n=1)
+            event = next(store.iter_events(attempt, kinds='sample_result'))
+            store.append_event(attempt, 'sample_result', event['payload'])
+            store.finish_attempt(attempt, 'succeeded', {'artifact': {'schema_linking_llm_cost': usage}})
+            with self.assertRaisesRegex(ValueError, 'duplicate sample result'):
+                api_trace(store.iter_events(attempt))
+            with self.assertRaisesRegex(ValueError, 'duplicate sample result'):
+                _source_trace(store, store.attempt(attempt), 'schema_linking')
+
     def test_paired_api_trace_with_four_of_five_sampling_is_incomplete(self):
         from scripts.rc_evaluation.deepeye.source import api_trace
         events = [

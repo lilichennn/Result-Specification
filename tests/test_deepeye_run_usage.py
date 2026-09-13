@@ -13,6 +13,19 @@ from scripts.baseline_adapters.deepeye.run_store import RunStore
 from scripts.baseline_adapters.deepeye.run_usage import observed_usage
 
 
+class RestoredUsageIntegrityTests(unittest.TestCase):
+    def test_duplicate_restores_rejected_but_cross_attempt_reuse_counts_once(self):
+        from scripts.baseline_adapters.deepeye.run_usage import _effective_sampling
+        original = {'kind': 'sample_result', 'attempt_id': 'first', 'payload': {
+            'group_id': 'g', 'sample_index': 0, 'succeeded': True, 'result': 'SELECT 1',
+            'response_id': 'r', 'usage': {'prompt_tokens': 10, 'completion_tokens': 20, 'total_tokens': 30}}}
+        restored = {'kind': 'sample_result', 'attempt_id': 'next',
+                    'payload': {**original['payload'], 'restored_from_event': 7}}
+        self.assertEqual(_effective_sampling([original, restored])['known_tokens']['total_tokens'], 30)
+        with self.assertRaisesRegex(ValueError, 'duplicate sample result'):
+            _effective_sampling([original, restored, restored])
+
+
 class ObservedUsageTests(unittest.TestCase):
     def test_duplicate_sample_results_are_rejected_instead_of_double_counted(self):
         with tempfile.TemporaryDirectory() as temp, RunStore.create(Path(temp) / 'run', {}) as store:

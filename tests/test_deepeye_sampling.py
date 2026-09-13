@@ -46,6 +46,13 @@ def parse(content):
 
 
 class SamplingTests(unittest.TestCase):
+    def test_unsupported_native_callable_is_rejected_before_transport(self):
+        from app.llm.sampling import SamplingIdentityError
+        llm, requests = llm_fixture([response()])
+        with self.assertRaisesRegex(SamplingIdentityError, 'unsupported parser callable'):
+            LLMExtractor().extract_with_retry(llm, [], str.strip, n=1)
+        self.assertEqual(requests, [])
+
     def test_five_samples_one_parse_rejection_costs_six_calls_and_150_effective(self):
         llm, requests = llm_fixture([response()] * 3 + [response('invalid', 7)] + [response()] * 2)
         results, usage = LLMExtractor().extract_with_retry(llm, [], parse, n=5)

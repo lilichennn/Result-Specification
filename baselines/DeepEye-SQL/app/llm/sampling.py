@@ -2,6 +2,7 @@
 from contextlib import contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass, field
+from functools import partial
 from typing import Any, Callable
 from uuid import uuid4
 import hashlib
@@ -17,6 +18,10 @@ _CHECKPOINTS = ContextVar('deepeye_sampling_checkpoints', default=None)
 
 class SamplingPaused(BaseException):
     """Cooperative stop; native Exception fallbacks must not swallow it."""
+
+
+class SamplingIdentityError(BaseException):
+    """Invalid recovery identity must not become an optional native fallback."""
 
 
 @contextmanager
@@ -48,8 +53,49 @@ def _parser_owner(value, names, seen):
             for name in names if hasattr(value, name)}}
 
 
+def _parser_state(value, seen=()):
+    """Only lossless, explicit state is eligible for wrapped-callable reuse."""
+    if value is None or isinstance(value, (bool, int, float, str)):
+        return value
+    if id(value) in seen:
+        raise TypeError('unsupported parser callable: cyclic state')
+    seen = (*seen, id(value))
+    if isinstance(value, dict):
+        if not all(isinstance(key, str) for key in value):
+            raise TypeError('unsupported parser callable: non-string state keys')
+        return {key: _parser_state(item, seen) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return {'container': type(value).__name__, 'items': [_parser_state(item, seen) for item in value]}
+    raise TypeError(f'unsupported parser callable state: {type(value).__qualname__}')
+
+
 def parser_identity(parser, seen=()):
+    try:
+        return _parser_identity(parser, seen)
+    except Exception as error:
+        raise SamplingIdentityError(str(error)) from error
+
+
+def _parser_identity(parser, seen=()):
+    if isinstance(parser, partial):
+        return {'kind': 'partial', 'function': parser_identity(parser.func, seen),
+                'args': _parser_state(parser.args), 'keywords': _parser_state(parser.keywords)}
     code = getattr(parser, '__code__', None)
+    if code is None:
+        call = getattr(type(parser), '__call__', None)
+        if getattr(call, '__code__', None) is None:
+            raise TypeError(f'unsupported parser callable: {type(parser).__qualname__}')
+        state = dict(vars(parser)) if hasattr(parser, '__dict__') else {}
+        for cls in type(parser).__mro__:
+            slots = vars(cls).get('__slots__', ())
+            for name in (slots,) if isinstance(slots, str) else slots:
+                if name.startswith('__') and not name.endswith('__'):
+                    name = f'_{cls.__name__.lstrip("_")}{name}'
+                if name not in ('__dict__', '__weakref__') and hasattr(parser, name):
+                    state[name] = getattr(parser, name)
+        return {'kind': 'callable_instance', 'module': type(parser).__module__,
+                'name': type(parser).__qualname__, 'call': parser_identity(call, seen),
+                'state': _parser_state(state)}
     closure = getattr(parser, '__closure__', None) or ()
     names = code.co_names if code else ()
     return {'module': getattr(parser, '__module__', type(parser).__module__),

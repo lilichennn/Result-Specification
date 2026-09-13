@@ -1,5 +1,6 @@
 """Durable sampling acceptance; fake transport, real retry engine and SQLite."""
 from contextlib import nullcontext
+from functools import partial
 from pathlib import Path
 import tempfile
 import threading
@@ -14,6 +15,16 @@ from app.llm_extractor import LLMExtractor
 
 class PowerLoss(BaseException):
     pass
+
+
+class SuffixRule:
+    __slots__ = ('suffix',)
+
+    def __init__(self, suffix):
+        self.suffix = suffix
+
+    def __call__(self, content):
+        return content + self.suffix
 
 
 class CheckpointTests(unittest.TestCase):
@@ -108,6 +119,59 @@ class CheckpointTests(unittest.TestCase):
         self.assertEqual(usage['effective_sampling']['known_tokens']['total_tokens'], 30)
         self.assertEqual(calls, [])
         self.assertEqual(list(self.store.iter_events(attempt, kinds='api_request')), [])
+
+    def test_duplicate_valid_restore_within_one_attempt_is_rejected(self):
+        llm, _ = llm_fixture([response()])
+        self.attempt(llm, n=1)
+        llm, _ = llm_fixture([])
+        _, attempt = self.attempt(llm, n=1)
+        restored = next(self.store.iter_events(attempt, kinds='sample_result'))
+        recorder = TraceRecorder(self.store)
+        before = len(self.store.events(attempt))
+        with recorder.context(attempt), self.assertRaisesRegex(ValueError, 'duplicate sample result'):
+            recorder.record_sampling('sample_result', restored['payload'])
+        self.assertEqual(len(self.store.events(attempt)), before)
+        self.store.append_event(attempt, 'sample_result', restored['payload'])
+        with self.assertRaisesRegex(ValueError, 'duplicate sample result'):
+            TraceRecorder(self.store)
+
+    def test_partial_and_callable_state_changes_cannot_restore_old_parsed_result(self):
+        def rule(content, *, suffix):
+            return content + suffix
+        for factory in (lambda suffix: partial(rule, suffix=suffix), SuffixRule):
+            with self.subTest(factory=factory):
+                for suffix, expected_calls in ((' first', 1), (' changed', 1), (' changed', 0)):
+                    llm, calls = llm_fixture([response()])
+                    recorder = TraceRecorder(self.store)
+                    attempt = self.store.begin_attempt('lite/one', 'schema_linking', 'input')
+                    with recorder.context(attempt):
+                        values, _ = LLMExtractor().extract_with_retry(llm, [], factory(suffix), n=1)
+                    self.assertEqual(values, ['SELECT wrong_but_parseable' + suffix])
+                    self.assertEqual(len(calls), expected_calls)
+
+    def test_native_fallback_cannot_turn_invalid_parser_identity_into_success(self):
+        from app.llm.sampling import SamplingIdentityError
+        from tests.test_deepeye_run_pipeline import Factory, item
+        from scripts.baseline_adapters.deepeye.run_pipeline import run_pipeline
+        base = Factory()
+        llm, calls = llm_fixture([response()])
+        def factory(stage, items):
+            runner = base(stage, items)
+            if stage == 'schema_linking':
+                original = runner._link_tables_and_columns
+                def process(target):
+                    try:
+                        LLMExtractor().extract_with_retry(llm, [], str.strip, n=1)
+                    except Exception:
+                        original(target)  # Native optional-failure fallback.
+                runner._link_tables_and_columns = process
+            return runner
+        recorder = TraceRecorder(self.store)
+        with patch.object(recorder, 'instrument_runner', return_value=lambda: None):
+            with self.assertRaises(SamplingIdentityError):
+                run_pipeline(self.store, [('lite', item())], factory, recorder, workers=1)
+        self.assertEqual(calls, [])
+        self.assertFalse(any(row['status'] == 'succeeded' for row in self.store.attempts()))
 
     def test_duplicate_success_and_bad_restore_reference_fail_closed(self):
         llm, _ = llm_fixture([response()])

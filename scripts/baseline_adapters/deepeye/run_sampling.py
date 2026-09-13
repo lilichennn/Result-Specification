@@ -54,6 +54,7 @@ class SamplingCheckpoints:
         self._attempts = {}
         self.allowances, self.renewal_starts = {}, {}
         self.live_attempts = set()
+        self.sample_results = set()
         for event in store.iter_events(kinds=_KINDS):
             self._index(event)
 
@@ -61,6 +62,10 @@ class SamplingCheckpoints:
         kind, payload = event['kind'], event['payload']
         group = payload['group_id']
         if kind == 'sample_result':
+            key = (event['attempt_id'], group, payload['sample_index'])
+            if key in self.sample_results:
+                raise ValueError('duplicate sample result within stage attempt')
+            self.sample_results.add(key)
             reference = payload.get('restored_from_event')
             if reference is not None:
                 from .run_trace import _prepare_value
@@ -202,6 +207,8 @@ class SamplingCheckpoints:
         # Callers hold the lock; publish the index only after the durable commit.
         event = {'attempt_id': attempt_id, 'kind': kind, 'payload': payload, 'event_id': None}
         try:
+            if kind == 'sample_result' and (attempt_id, payload['group_id'], payload['sample_index']) in self.sample_results:
+                raise ValueError('duplicate sample result within stage attempt')
             event['event_id'] = self.store.append_event(attempt_id, kind, payload)
             self._index(event)
         except BaseException as error:

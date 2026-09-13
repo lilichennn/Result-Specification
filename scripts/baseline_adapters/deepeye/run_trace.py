@@ -293,7 +293,11 @@ class TraceRecorder:
             raise prior_error
         try:
             serialized = self._serialize(payload)
-            self.store.append_event(attempt_id, kind, serialized)
+            if kind == 'sample_result' and self.sampling_checkpoints is not None:
+                with self.sampling_checkpoints.lock:
+                    self.sampling_checkpoints.append(attempt_id, kind, serialized)
+            else:
+                self.store.append_event(attempt_id, kind, serialized)
         except BaseException as error:
             self._remember_error(error)
             raise

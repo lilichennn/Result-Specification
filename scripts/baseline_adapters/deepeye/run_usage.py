@@ -19,9 +19,11 @@ def sampling_completeness(events):
     Absence of group events preserves historical stores' original semantics;
     it does not claim that old calls had the new effective sampling metric.
     """
-    groups = {}
+    groups, sample_results = {}, set()
     for event in events:
         kind, payload = event['kind'], event['payload']
+        if kind == 'sample_result':
+            _claim_sample_result(event, sample_results)
         if kind not in ('sampling_group_start', 'sampling_group_result'):
             continue
         group_id = payload.get('group_id')
@@ -47,11 +49,20 @@ def sampling_completeness(events):
     return {'groups': len(groups), 'incomplete_groups': failed, 'complete': failed == 0}
 
 
+def _claim_sample_result(event, seen):
+    payload = event['payload']
+    key = (event.get('attempt_id'), payload['group_id'], payload['sample_index'])
+    if key in seen:
+        raise ValueError('duplicate sample result within stage attempt')
+    seen.add(key)
+
+
 def _effective_sampling(events):
-    results = {}
+    results, seen = {}, set()
     for event in events:
         if event['kind'] != 'sample_result':
             continue
+        _claim_sample_result(event, seen)
         payload = event['payload']
         identity = (payload['group_id'], payload['sample_index'])
         if identity in results:
