@@ -257,6 +257,9 @@ def _database_path(workload, db_id, db_type):
         explicit = Path(workload['database_paths'][db_id])
         if not explicit.is_file():
             raise FileNotFoundError(f'Explicit SQLite database resource missing: {explicit}')
+        if workload['benchmark'] != 'spider2' and explicit.stem != db_id:
+            raise ValueError('Native value retrieval requires the SQLite file stem to match db_id; '
+                             'different-stem bindings are supported only for Spider2 native VR skip')
         return str(explicit.resolve())
     root = Path(workload['resource_root'])
     benchmark, split = workload['benchmark'], workload['split']
