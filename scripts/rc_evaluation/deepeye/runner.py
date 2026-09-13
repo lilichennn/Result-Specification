@@ -1,0 +1,235 @@
+"""Run only the target stage and explicitly requested native downstream stages."""
+from __future__ import annotations
+
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
+from contextlib import ExitStack, nullcontext
+import copy
+import threading
+import time
+
+from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, STAGE_METHODS, _PIPELINE_LOCK, _checkpoint, _restore, _valid_output
+from scripts.baseline_adapters.deepeye.run_resources import close_runners, instrument_native_pools, native_stage_work, protect_schema_profiles
+from scripts.baseline_adapters.deepeye.run_slots import PipelineSlots
+from scripts.baseline_adapters.deepeye.run_store import restore_jsonable
+from .source import api_trace, digest, restore_seed, validate_manifest
+
+
+def _semantic_artifact(payload):
+    return {key: value for key, value in restore_jsonable(payload['artifact']).items()
+            if not key.endswith(('_time', '_llm_cost', '_recall'))}
+
+
+def _same_output(payload, source):
+    return source is not None and _semantic_artifact(payload) == _semantic_artifact(source['payload'])
+
+
+def _replay(stage, target, unchanged, source):
+    return source is not None and unchanged and (stage != target or source['api_trace']['requests'] == 0)
+
+
+def _stage_hash(manifest, key, stage, item):
+    return digest({'manifest': manifest, 'task_key': key, 'stage': stage,
+                   'input': item.model_dump(exclude={'gold_sql'})})
+
+
+def _preflight(store):
+    if not store.verify()['ok']:
+        raise ValueError('Experiment RunStore verification failed')
+    manifest = validate_manifest(store.manifest)
+    target = manifest['target_stage']
+    stages = STAGES[STAGES.index(target):] if manifest['continue_downstream'] else (target,)
+    successes = set()
+    for attempt in store.attempts():
+        if attempt['item_key'] not in manifest['source_checkpoints'] or attempt['stage'] not in stages:
+            raise ValueError('Experiment attempt lies outside the configured lineage')
+        if attempt['status'] == 'succeeded':
+            successes.add((attempt['item_key'], attempt['stage']))
+    plans, needed = {}, set()
+    for key, snapshot in manifest['source_checkpoints'].items():
+        state = restore_seed(snapshot, target)
+        unchanged, remaining = True, []
+        for index, stage in enumerate(stages):
+            prior = store.completed(key, stage, _stage_hash(manifest, key, stage, state))
+            if prior is not None:
+                _restore(state, stage, prior['payload'])
+                if not _valid_output(state, stage):
+                    raise ValueError(f'Invalid completed RC checkpoint: {key}/{stage}')
+                unchanged = unchanged and _same_output(prior['payload'], snapshot['stages'].get(stage))
+            else:
+                remaining = list(stages[index:])
+                if any((key, future) in successes for future in remaining):
+                    raise ValueError('Successful downstream checkpoint is outside the completed prefix')
+                possible_unchanged = unchanged
+                for future in remaining:
+                    if not _replay(future, target, possible_unchanged, snapshot['stages'].get(future)):
+                        needed.add(future)
+                        possible_unchanged = False
+                break
+        plans[key] = {'state': state, 'remaining': remaining, 'unchanged': unchanged}
+    return manifest, plans, needed
+
+
+def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None):
+    """Append native checkpoints, retaining failed attempts and paid-call traces.
+
+    ``runner_factory`` is already bounded in production (see cli.execute_run).
+    Offline tests inject in-process runners; no production bypass flag exists.
+    The caller installs PostgreSQL support, TraceRecorder and RC prompt wrappers.
+    """
+    if type(workers) is not int or workers < 1:
+        raise ValueError('workers must be a positive integer')
+    if not _PIPELINE_LOCK.acquire(blocking=False):
+        raise RuntimeError('Only one native DeepEye pipeline may run per process')
+    resources, question_pool, question_futures = [], None, []
+    guard = ExitStack()
+    slots = slot_controller or PipelineSlots(fixed_limit=workers)
+    tickets, failed = {}, {}
+    halted = threading.Event()
+    try:
+        manifest, plans, needed = _preflight(store)
+        target = manifest['target_stage']
+        runners = {}
+        for stage in STAGES:
+            if stage not in needed:
+                continue
+            recorder.raise_if_failed()
+            items = [plan['state'] for plan in plans.values() if stage in plan['remaining']]
+            runner = runner_factory(stage, items)
+            entry = [runner, None, None]
+            resources.append(entry)
+            runners[stage] = runner
+            instrumentation = ExitStack()
+            entry[1] = instrumentation.close
+            instrumentation.callback(instrument_native_pools(runner))
+            llm = getattr(runner, '_llm', None)
+            if llm is not None:
+                entry[2] = llm._get_client()
+            instrumentation.callback(recorder.instrument_runner(runner, stage))
+        if runners:
+            guard.enter_context(protect_schema_profiles())
+
+        def execute(key):
+            plan, snapshot = plans[key], manifest['source_checkpoints'][key]
+            state, unchanged = plan['state'], plan['unchanged']
+            status = 'succeeded'
+            try:
+                for stage in plan['remaining']:
+                    if halted.is_set():
+                        return 'failed'
+                    recorder.raise_if_failed()
+                    source = snapshot['stages'].get(stage)
+                    attempt = store.begin_attempt(key, stage, _stage_hash(manifest, key, stage, state))
+                    provenance = {'source_run': manifest['source_run'],
+                                  'source_manifest_fingerprint': manifest['source_manifest_fingerprint'],
+                                  'source_attempt_id': source['attempt_id'] if source else None,
+                                  'source_payload_sha256': source['payload_sha256'] if source else None,
+                                  'upstream_state_sha256': snapshot['upstream_state_sha256']}
+                    if _replay(stage, target, unchanged, source):
+                        payload = copy.deepcopy(source['payload'])
+                        payload.update(execution_origin=('reused_no_native_llm_call' if stage == target
+                                                         else 'reused_unchanged_upstream'),
+                                       source_provenance=provenance, attempt_wall_seconds=0.0,
+                                       rc_participation={'status': 'rc_not_participating', 'actual_request_count': 0, 'native_request_count': 0,
+                                                         'reason': ('no_native_llm_call' if stage == target
+                                                                    else 'unchanged_upstream')})
+                        store.finish_attempt(attempt, 'succeeded', payload)
+                        _restore(state, stage, payload)
+                        continue
+                    updated = copy.deepcopy(state)
+                    contract = manifest.get('contracts', {}).get(key) if (
+                        manifest['condition'] == 'rc' and stage == target) else None
+                    if manifest['condition'] == 'rc' and stage == target and contract is None:
+                        raise ValueError(f'Missing bound RC contract: {key}')
+                    if contract is None:
+                        context, block = nullcontext(), None
+                    else:
+                        from .injection import rc_context
+                        from .contracts import render_rc_block
+                        context, block = rc_context(stage, key, contract), render_rc_block(contract)
+                    with recorder.context(attempt), context:
+                        started = time.monotonic()
+                        error = None
+                        try:
+                            with native_stage_work():
+                                getattr(runners[stage], STAGE_METHODS[stage])(updated)
+                        except Exception as exc:
+                            error = exc
+                        recorder.raise_if_failed()
+                        payload = _checkpoint(updated, stage)
+                        trace = api_trace(store.iter_events(attempt))
+                        if not trace['complete']:
+                            raise RuntimeError('Stage finished with incomplete API trace')
+                        count = 0
+                        if block is not None:
+                            from .injection import count_rc_requests
+                            count = count_rc_requests(list(store.iter_events(attempt, kinds='api_request')), block)
+                        payload.update(execution_origin='executed', source_provenance=provenance,
+                                       attempt_wall_seconds=time.monotonic() - started,
+                                       rc_participation={'status': 'participating' if count else 'rc_not_participating',
+                                                         'actual_request_count': count,
+                                                         'native_request_count': trace['requests'],
+                                                         'reason': ('participating' if count else
+                                                                    'no_native_llm_call' if not trace['requests'] else
+                                                                    'control' if contract is None else 'rc_not_in_request')})
+                        status = 'succeeded' if error is None and _valid_output(updated, stage) else 'failed'
+                        if status == 'failed':
+                            message = str(error) if error is not None else 'Native output missing or empty'
+                            for secret in getattr(recorder, 'secrets', ()):
+                                message = message.replace(secret, '[REDACTED]')
+                            payload.update(error_type=type(error).__name__ if error else 'IncompleteNativeStageOutput',
+                                           error_message=message)
+                        store.finish_attempt(attempt, status, payload)
+                    if status == 'failed':
+                        failed[key] = stage
+                        return status
+                    unchanged = unchanged and _same_output(payload, source)
+                    state = updated
+                    plan['state'] = updated
+                return status
+            except BaseException:
+                halted.set()
+                raise
+
+        pending = deque(key for key, plan in plans.items() if plan['remaining'])
+        if pending:
+            question_pool = ThreadPoolExecutor(max_workers=slots.max_limit, thread_name_prefix='rc-stage')
+            futures = {}
+            while pending or futures:
+                for future in tuple(futures):
+                    if future.done():
+                        key = futures.pop(future)
+                        status = future.result()
+                        slots.release(tickets.pop(key), status=status)
+                recorder.raise_if_failed()
+                slots.set_pending(len(pending))
+                while pending and not halted.is_set():
+                    key = pending[0]
+                    ticket = slots.try_acquire(key)
+                    if ticket is None:
+                        break
+                    pending.popleft()
+                    tickets[key] = ticket
+                    future = question_pool.submit(execute, key)
+                    futures[future] = key
+                    question_futures.append(future)
+                if futures:
+                    wait(futures, timeout=0.1, return_when=FIRST_COMPLETED)
+            recorder.raise_if_failed()
+        return {'succeeded': len(plans) - len(failed), 'failed': len(failed),
+                'accuracy_evaluated': False, 'target_stage': target, 'condition': manifest['condition'],
+                'items': {key: {'status': 'failed' if key in failed else 'succeeded',
+                                'failed_stage': failed.get(key),
+                                'final_selected_sql': plan['state'].final_selected_sql} for key, plan in plans.items()}}
+    finally:
+        halted.set()
+        try:
+            close_runners(resources, question_pool=question_pool, question_futures=question_futures)
+        finally:
+            try:
+                guard.close()
+            finally:
+                for ticket in tickets.values():
+                    slots.release(ticket, status='failed')
+                slots.set_pending(0)
+                _PIPELINE_LOCK.release()

@@ -1,0 +1,16 @@
+<result_contract>
+Definition: A Result Contract (RC) is the minimal set of semantic commitments that every correct result table must satisfy. It records determined meanings and unresolved parts; it does not provide the query answer.
+
+Field meanings:
+- population: The complete semantic set of eligible entities, events, or records. Put every Boolean membership requirement here, including equality, ranges, thresholds, existence conditions, and comparisons involving a derived metric; preserve their AND/OR scope. If a final aggregate counts, sums, or averages qualifying items, population must state every condition controlling which items contribute. If the question uses a separate reference population to define a comparison, name the target and reference populations separately. A qualifier of a requested metric is not automatically a membership condition on the entity.
+- row_grain: What one result row semantically represents after any requested derivation: for example one school, one transaction, one group, or one global summary. Express semantic multiplicity, not SQL machinery. Do not mention DISTINCT, keys, joins, or deduplication operations.
+- column_role: Only the semantic roles of values that must appear in the returned table, including stated optionality. Do not include hidden filtering or ranking measures as output columns. Do not replace a requested entity with a guessed physical identifier unless the input explicitly requires that identifier.
+- derivation: The semantic computation, comparison, aggregation, or set relation required to define an output value or row grain. State operands and aggregation domains only when the input determines them. Describe the required semantic metric without deciding whether it is stored directly or computed at query time. Do not put top-k, extremum retention, final ordering, or other result selection here. Use exactly "none" when no derivation is required.
+- filter_policy: Relative choice or cardinality control applied after the eligible population is defined, such as argmax or argmin, top-k, first or latest, final ordering, or a limit. Equality, range, threshold, existence, and other true-or-false eligibility conditions belong in population even when evaluating them requires a derived metric. If relative selection is requested but its ranking criterion is not determined, state precisely what is unspecified instead of inventing it. Use exactly "none" when no relative selection or output limit is requested.
+- meta_review: the metadata contribution accepted into the final contract, or that no relevant refinement was found.
+
+Final RC:
+<<ROUND2_RC>>
+
+When completing the current stage task, consult this RC.
+</result_contract>
