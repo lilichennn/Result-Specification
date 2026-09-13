@@ -85,6 +85,12 @@ def load_workload(path) -> dict:
         if result.get(field):
             value = Path(result[field])
             result[field] = str((base / value).resolve())
+    if 'database_paths' in result:
+        mappings = result['database_paths']
+        if not isinstance(mappings, dict) or any(not isinstance(key, str) or not key or
+                not isinstance(value, str) or not value for key, value in mappings.items()):
+            raise ValueError('database_paths must map logical database ids to file paths')
+        result['database_paths'] = {key: str((base / value).resolve()) for key, value in mappings.items()}
     result['partition'] = f"{result['benchmark']}/{result['split']}"
     return result
 
@@ -247,6 +253,11 @@ def _prepared_items(path, benchmark):
 def _database_path(workload, db_id, db_type):
     if db_type != 'sqlite':
         return db_id
+    if db_id in workload.get('database_paths', {}):
+        explicit = Path(workload['database_paths'][db_id])
+        if not explicit.is_file():
+            raise FileNotFoundError(f'Explicit SQLite database resource missing: {explicit}')
+        return str(explicit.resolve())
     root = Path(workload['resource_root'])
     benchmark, split = workload['benchmark'], workload['split']
     if benchmark == 'bird':

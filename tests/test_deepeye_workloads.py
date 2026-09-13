@@ -419,6 +419,23 @@ class WorkloadTests(unittest.TestCase):
             self.assertEqual(set(tasks[0][1].database_schema['tables']['visible']['columns']), {'id'})
             self.assertTrue(tasks[0][1].database_schema['tables']['visible']['columns']['id']['primary_key'])
 
+    def test_explicit_sqlite_path_mapping_preserves_logical_database_identity(self):
+        workloads, _ = self.modules()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path, _ = self.fixture(root, 'spider2', 'lite')
+            physical = root/'resources/physical-name.sqlite'
+            (root/'resources/db.sqlite').rename(physical)
+            config = json.loads(path.read_text()); config.pop('prepared_dataset')
+            config['database_paths'] = {'db': 'resources/physical-name.sqlite'}
+            path.write_text(json.dumps(config))
+            workload = workloads.load_workload(path)
+            tasks, bindings, _ = workloads.load_items(workload, require_prepared=False)
+            self.assertEqual(tasks[0][1].database_id, 'db')
+            self.assertEqual(tasks[0][1].database_path, str(physical.resolve()))
+            self.assertEqual(bindings[0]['database_id'], 'db')
+            self.assertEqual(workload['database_paths']['db'], str(physical.resolve()))
+
     def test_fresh_preparation_uses_native_vr_and_snapshot_with_mocked_services(self):
         from scripts.baseline_adapters.deepeye.workload_preparation import prepare_native
         from app.pipeline.value_retrieval.value_retrieval import ValueRetrievalRunner
