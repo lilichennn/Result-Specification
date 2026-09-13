@@ -278,17 +278,17 @@ def prepare_inputs(precompute_dir: Path, few_shot_source: Path, *, variants=None
 
     from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
     from scripts.baseline_adapters.deepeye.precompute_pipeline import (
-        item_directory, load_precomputed_item, question_row, read_record,
+        PrecomputedInputReader, question_row, read_record,
     )
     from scripts.deepeye_bird_interact_precompute import load_inputs
-    from scripts.deepeye_bird_interact_smoke import load_independent_examples
+    from scripts.deepeye_bird_interact_smoke import IndependentExampleReader
 
     inventory_loader = inventory_loader or load_inputs
-    item_loader = item_loader or load_precomputed_item
-    example_loader = example_loader or load_independent_examples
     code_source_hasher = code_source_hasher or code_source_hashes
     precompute_dir = Path(precompute_dir).resolve()
     few_shot_source = Path(few_shot_source).resolve()
+    input_reader = PrecomputedInputReader(precompute_dir)
+    example_reader = IndependentExampleReader(few_shot_source)
 
     verification_path = precompute_dir / "verification.json"
     verification = json.loads(verification_path.read_text(encoding="utf-8"))
@@ -308,20 +308,25 @@ def prepare_inputs(precompute_dir: Path, few_shot_source: Path, *, variants=None
         raise ValueError("Task filters selected no questions")
     prepared, bindings = [], []
     for variant, expected_item in selected:
-        item = item_loader(precompute_dir, variant, expected_item.instance_id,
-                           expected_item=expected_item)
+        if item_loader is None:
+            item = input_reader.load(
+                variant, expected_item.instance_id, expected_item=expected_item)
+        else:
+            item = item_loader(precompute_dir, variant, expected_item.instance_id,
+                               expected_item=expected_item)
         if getattr(item, "gold_sql", ""):
             raise ValueError("Target gold SQL must not enter the run")
-        examples, provenance = example_loader(few_shot_source, item, count=3)
+        if example_loader is None:
+            examples, provenance = example_reader.select(item, count=3)
+        else:
+            examples, provenance = example_loader(few_shot_source, item, count=3)
         if len(examples) != 3:
             raise ValueError("Exactly three independent static training examples are required")
         item.few_shot_examples = examples
         item.few_shot_preparation_metadata = {
             "mode": "static_independent_bird_train", "num_examples": 3,
         }
-        directory = item_directory(precompute_dir, variant, item.instance_id)
-        keywords = read_record(directory / "keywords.json")
-        retrieval = read_record(directory / "retrieval.json")
+        keywords, retrieval = input_reader.records(variant, item.instance_id)
         provenance_rows = provenance.get("examples") if isinstance(provenance, dict) else None
         if (not isinstance(provenance_rows, list) or len(provenance_rows) != 3
                 or any(not isinstance(row, dict) or type(row.get("source_row")) is not int
@@ -350,7 +355,7 @@ def prepare_inputs(precompute_dir: Path, few_shot_source: Path, *, variants=None
         "precompute_inputs_content_hash": inputs_record["content_hash"],
         "precompute_config_content_hash": config_record["content_hash"],
         "precompute_semantic_config": config_record["config"],
-        "few_shot_source_sha256": _file_sha256(few_shot_source),
+        "few_shot_source_sha256": example_reader.source_sha256,
         "precompute_population": {"lite": 195, "full": 410, "databases": 40},
         "locators": {"precompute_dir": str(precompute_dir),
                      "few_shot_source": str(few_shot_source)},

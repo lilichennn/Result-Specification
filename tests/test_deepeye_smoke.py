@@ -1,5 +1,6 @@
 from pathlib import Path
 import importlib
+import json
 import tempfile
 import unittest
 from types import SimpleNamespace
@@ -128,6 +129,81 @@ class SmokeEntrypointTest(unittest.TestCase):
                 self.assertEqual(len(calls), 4)
                 self.assertEqual(result, [])
                 self.assertTrue(module.observation_failures(recorder.events))
+
+    def test_independent_example_reader_reuses_source_and_translation_without_aliasing(self):
+        """Removing the reader snapshot/cache or copies must add I/O/transpiles or leak edits."""
+        module = self.require_module()
+        rows = [
+            {'db_id': 'a', 'question': 'train a', 'evidence': 'ea', 'SQL': 'SELECT 1'},
+            {'db_id': 'b', 'question': 'train b', 'evidence': 'eb', 'SQL': 'SELECT 2'},
+            {'db_id': 'c', 'question': 'train c', 'evidence': 'ec', 'SQL': 'SELECT 3'},
+        ]
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp) / 'train.json'
+            source.write_text(json.dumps(rows))
+            read_count = 0
+            native_read_bytes = Path.read_bytes
+
+            def traced_read_bytes(path):
+                nonlocal read_count
+                if Path(path) == source:
+                    read_count += 1
+                return native_read_bytes(path)
+
+            import sqlglot
+            native_transpile = sqlglot.transpile
+            transpile_count = 0
+
+            def traced_transpile(*args, **kwargs):
+                nonlocal transpile_count
+                transpile_count += 1
+                return native_transpile(*args, **kwargs)
+
+            with patch.object(Path, 'read_bytes', traced_read_bytes), \
+                 patch.object(sqlglot, 'transpile', traced_transpile):
+                reader = module.IndependentExampleReader(source)
+                first, provenance = reader.select(SimpleNamespace(
+                    database_id='target-one', question='first target'), 3)
+                second, second_provenance = reader.select(SimpleNamespace(
+                    database_id='target-two', question='second target'), 3)
+
+            self.assertEqual(read_count, 1)
+            self.assertEqual(transpile_count, 3)
+            self.assertEqual([row['db_id'] for row in provenance['examples']], ['a', 'b', 'c'])
+            self.assertEqual([row['db_id'] for row in second_provenance['examples']], ['a', 'b', 'c'])
+            self.assertIsNot(first, second)
+            first[0]['question'] = 'private'
+            provenance['examples'][0]['db_id'] = 'private'
+            self.assertEqual(second[0]['question'], 'train a')
+            self.assertEqual(second_provenance['examples'][0]['db_id'], 'a')
+
+            original_hash = second_provenance['source_sha256']
+            rows[0]['question'] = 'changed on disk'
+            source.write_text(json.dumps(rows))
+            changed, changed_provenance = module.IndependentExampleReader(source).select(
+                SimpleNamespace(database_id='target-three', question='third target'), 3)
+            self.assertNotEqual(changed_provenance['source_sha256'], original_hash)
+            self.assertEqual(changed[0]['question'], 'changed on disk')
+
+    def test_independent_examples_keep_source_order_and_target_exclusions(self):
+        """Weakening target/domain exclusions or reordering candidates must change this result."""
+        module = self.require_module()
+        rows = [
+            {'db_id': 'target', 'question': 'different', 'SQL': 'SELECT 0'},
+            {'db_id': 'x', 'question': ' target question ', 'SQL': 'SELECT 0'},
+            {'db_id': 'a', 'question': 'train a', 'SQL': 'SELECT 1'},
+            {'db_id': 'a', 'question': 'duplicate domain', 'SQL': 'SELECT 9'},
+            {'db_id': 'broken', 'question': 'broken', 'SQL': 'not valid sql ('},
+            {'db_id': 'b', 'question': 'train b', 'SQL': 'SELECT 2'},
+            {'db_id': 'c', 'question': 'train c', 'SQL': 'SELECT 3'},
+        ]
+        with tempfile.TemporaryDirectory() as temp:
+            source = Path(temp) / 'train.json'
+            source.write_text(json.dumps(rows))
+            examples, provenance = module.load_independent_examples(
+                source, SimpleNamespace(database_id='target', question='target question'))
+        self.assertEqual([row['question'] for row in examples], ['train a', 'train b', 'train c'])
+        self.assertEqual([row['source_row'] for row in provenance['examples']], [2, 5, 6])
 
 
 if __name__ == "__main__":

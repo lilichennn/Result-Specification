@@ -7,6 +7,8 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'baselines/DeepEye-SQL'))
 try:
     pipeline = importlib.import_module('scripts.baseline_adapters.deepeye.precompute_pipeline')
@@ -207,6 +209,96 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(record['usage']['total_tokens'], 22)
             self.assertEqual(len(record['calls']), 2)
             self.assertEqual(module.read_record(path)['usage'], record['usage'])
+
+    def test_shared_reader_reads_common_schema_and_question_records_once_without_aliasing(self):
+        """Removing instance caches or defensive copies must increase reads or leak mutations."""
+        module = self.module()
+        schema = {'db_id': 'a', 'db_type': 'postgresql', 'tables': {'stars': {'columns': {
+            'name': {'column_type': 'TEXT', 'value_examples': ['public']},
+        }}}}
+        usage = {'prompt_tokens': 1, 'completion_tokens': 2, 'total_tokens': 3}
+        expected = []
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            schema_path = root / 'databases' / 'a' / 'schema.json'
+            schema_path.parent.mkdir(parents=True)
+            schema_path.write_text(json.dumps(schema))
+            for number in (1, 2):
+                instance_id = f'a_{number}'
+                row = {'index': instance_id, 'db_id': 'a', 'question': f'question {number}',
+                       'evidence': f'evidence {number}'}
+                expected.append(SimpleNamespace(instance_id=instance_id, database_id='a',
+                    question=row['question'], evidence=row['evidence'], database_schema=schema))
+                directory = module.item_directory(root, 'lite', instance_id)
+                keywords = module.write_record(directory / 'keywords.json', {
+                    'row': row, 'keywords': [f'term-{number}'],
+                })
+                vectors_path = directory / 'keywords.npy'
+                np.save(vectors_path, np.array([[float(number), 1.]], dtype='float32'))
+                retrieved = {'stars': {'name': [
+                    {'value': f'value-{number}', 'distance': 0.1},
+                ]}}
+                reconstructed = {
+                    **schema,
+                    'tables': {'stars': {'columns': {
+                        'name': {'column_type': 'TEXT',
+                                 'value_examples': [f'value-{number}', 'public']},
+                    }}},
+                }
+                module.write_record(directory / 'retrieval.json', {
+                    'row': row, 'variant': 'lite', 'question_id': number,
+                    'schema_hash': module.fingerprint(schema),
+                    'keywords_hash': keywords['content_hash'],
+                    'vectors_hash': module.file_hash(vectors_path), 'dimension': 2,
+                    'retrieved_values': retrieved, 'max_values_per_column': 5,
+                    'retrieved_schema_hash': module.fingerprint(reconstructed),
+                    'value_retrieval_time': float(number),
+                    'value_retrieval_llm_cost': usage,
+                })
+
+            reads = []
+            schema_hashes = 0
+            native_read_text = Path.read_text
+            native_fingerprint = module.fingerprint
+
+            def traced_read_text(path, *args, **kwargs):
+                try:
+                    reads.append(Path(path).relative_to(root))
+                except ValueError:
+                    pass
+                return native_read_text(path, *args, **kwargs)
+
+            def traced_fingerprint(value):
+                nonlocal schema_hashes
+                if value == schema:
+                    schema_hashes += 1
+                return native_fingerprint(value)
+
+            with patch.object(Path, 'read_text', traced_read_text), \
+                 patch.object(module, 'fingerprint', traced_fingerprint):
+                reader = module.PrecomputedInputReader(root)
+                first = reader.load('lite', 'a_1', expected_item=expected[0])
+                second = reader.load('lite', 'a_2', expected_item=expected[1])
+                first_keywords, first_retrieval = reader.records('lite', 'a_1')
+                again_keywords, again_retrieval = reader.records('lite', 'a_1')
+
+            self.assertEqual(reads.count(Path('databases/a/schema.json')), 1)
+            # Once for the frozen schema plus one current-dataset check per question.
+            self.assertEqual(schema_hashes, 3)
+            for instance_id in ('a_1', 'a_2'):
+                self.assertEqual(reads.count(Path(f'questions/lite/{instance_id}/keywords.json')), 1)
+                self.assertEqual(reads.count(Path(f'questions/lite/{instance_id}/retrieval.json')), 1)
+
+            first.database_schema['tables']['stars']['columns']['name']['value_examples'].append('private')
+            first.question_keywords.append('private')
+            first.retrieved_values['stars']['name'][0]['value'] = 'private'
+            first_keywords['keywords'].append('private')
+            first_retrieval['retrieved_values']['stars']['name'][0]['value'] = 'private'
+            self.assertEqual(second.database_schema['tables']['stars']['columns']['name']['value_examples'], ['public'])
+            self.assertEqual(second.question_keywords, ['term-2'])
+            self.assertEqual(second.retrieved_values['stars']['name'][0]['value'], 'value-2')
+            self.assertEqual(again_keywords['keywords'], ['term-1'])
+            self.assertEqual(again_retrieval['retrieved_values']['stars']['name'][0]['value'], 'value-1')
 
 
 if __name__ == '__main__':

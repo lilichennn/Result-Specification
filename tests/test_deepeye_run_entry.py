@@ -294,19 +294,21 @@ class DeepEyeRunEntryTests(unittest.TestCase):
             train = root / "train.json"
             train.write_text('[{"fixture": true}]')
 
-            tasks, bindings, sources = module.prepare_inputs(
-                precompute, train, variants=["lite"], item_keys=["lite/a_1"],
-                inventory_loader=lambda: ([("lite", original)], {"a": original}),
-                item_loader=lambda root, variant, instance_id, expected_item: loaded,
-                example_loader=lambda source, item, count=3: (examples, {
-                    "source_path": str(source), "source_sha256": "train",
-                    "examples": [{"source_row": number, "db_id": f"db{number}",
-                                  "original_sql": "SELECT 1",
-                                  "dialect_conversion": "sqlglot sqlite -> postgres"}
-                                 for number in range(3)],
-                }),
-                code_source_hasher=lambda: {"baseline_python_sha256": "code"},
-            )
+            with patch.object(module, "_file_sha256",
+                              side_effect=AssertionError("few-shot source was read twice")):
+                tasks, bindings, sources = module.prepare_inputs(
+                    precompute, train, variants=["lite"], item_keys=["lite/a_1"],
+                    inventory_loader=lambda: ([("lite", original)], {"a": original}),
+                    item_loader=lambda root, variant, instance_id, expected_item: loaded,
+                    example_loader=lambda source, item, count=3: (examples, {
+                        "source_path": str(source), "source_sha256": "train",
+                        "examples": [{"source_row": number, "db_id": f"db{number}",
+                                      "original_sql": "SELECT 1",
+                                      "dialect_conversion": "sqlglot sqlite -> postgres"}
+                                     for number in range(3)],
+                    }),
+                    code_source_hasher=lambda: {"baseline_python_sha256": "code"},
+                )
 
             verification = json.loads((precompute / "verification.json").read_text())
             verification.update(verified_at="second", verification_seconds=99.0)

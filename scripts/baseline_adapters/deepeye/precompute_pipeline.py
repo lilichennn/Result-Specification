@@ -1,6 +1,7 @@
 """Native-compatible precomputation records, without RC, gold SQL or database writes."""
 from __future__ import annotations
 
+from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -175,39 +176,78 @@ def build_native_index(directory, manifest, cache):
         'files': files, 'created_at': utc_now()})
 
 
+class PrecomputedInputReader:
+    """Instance-scoped snapshot reader for shared schemas and question records."""
+
+    def __init__(self, root):
+        self.root = Path(root)
+        self._record_cache = {}
+        self._schema_cache = {}
+
+    def _records(self, variant, instance_id):
+        key = (variant, instance_id)
+        if key not in self._record_cache:
+            directory = item_directory(self.root, variant, instance_id)
+            self._record_cache[key] = (
+                read_record(directory / 'keywords.json'),
+                read_record(directory / 'retrieval.json'),
+            )
+        return self._record_cache[key]
+
+    def records(self, variant, instance_id):
+        """Return independent mutable views of cached keyword and retrieval records."""
+        keywords, retrieval = self._records(variant, instance_id)
+        return deepcopy(keywords), deepcopy(retrieval)
+
+    def _schema(self, database_id):
+        if database_id not in self._schema_cache:
+            schema_path = self.root / 'databases' / database_id / 'schema.json'
+            schema = json.loads(schema_path.read_text())
+            self._schema_cache[database_id] = (schema, fingerprint(schema))
+        return self._schema_cache[database_id]
+
+    def load(self, variant, instance_id, *, expected_item=None):
+        """Offline load: common schema + per-question delta -> native DataItem."""
+        from .dataset import BirdInteractDataItem
+
+        keywords, record = self._records(variant, instance_id)
+        row = record['row']
+        validate_token_usage(record.get('value_retrieval_llm_cost'))
+        if row['index'] != instance_id or record['variant'] != variant or keywords['row'] != row:
+            raise ValueError('Question artifact identity mismatch')
+        frozen_schema, frozen_schema_hash = self._schema(row['db_id'])
+        if frozen_schema_hash != record['schema_hash']:
+            raise ValueError('Common Meta schema changed after precomputation')
+        if keywords['content_hash'] != record['keywords_hash']:
+            raise ValueError('Keywords changed after retrieval')
+        directory = item_directory(self.root, variant, instance_id)
+        vector_path = directory / 'keywords.npy'
+        if file_hash(vector_path) != record['vectors_hash']:
+            raise ValueError('Keyword vector file checksum mismatch')
+        validate_vectors(np.load(vector_path, allow_pickle=False), len(keywords['keywords']), record['dimension'])
+        if expected_item is not None:
+            if (question_row(expected_item) != row
+                    or fingerprint(expected_item.database_schema) != record['schema_hash']):
+                raise ValueError('Current dataset no longer matches the frozen question/Meta')
+
+        schema = deepcopy(frozen_schema)
+        item = BirdInteractDataItem(question_id=record['question_id'], instance_id=instance_id,
+            question=row['question'], evidence=row['evidence'], database_id=row['db_id'],
+            database_path=row['db_id'], database_schema=schema, gold_sql='', db_type='postgresql')
+        item.question_keywords = deepcopy(keywords['keywords'])
+        item.retrieved_values = deepcopy(record['retrieved_values'])
+        item.database_schema_after_value_retrieval = schema_with_values(
+            schema, item.retrieved_values, record['max_values_per_column'])
+        if fingerprint(item.database_schema_after_value_retrieval) != record['retrieved_schema_hash']:
+            raise ValueError('Reconstructed schema does not match recorded native result')
+        item.value_retrieval_time = record['value_retrieval_time']
+        item.value_retrieval_llm_cost = deepcopy(record['value_retrieval_llm_cost'])
+        item.total_time = record['value_retrieval_time']
+        item.total_llm_cost = dict(record['value_retrieval_llm_cost'])
+        return item
+
+
 def load_precomputed_item(root, variant, instance_id, *, expected_item=None):
-    """Offline load: common schema + per-question delta -> native DataItem, no service calls."""
-    from .dataset import BirdInteractDataItem
-    directory = item_directory(root, variant, instance_id)
-    record = read_record(directory / 'retrieval.json')
-    keywords = read_record(directory / 'keywords.json')
-    row = record['row']
-    validate_token_usage(record.get('value_retrieval_llm_cost'))
-    if row['index'] != instance_id or record['variant'] != variant or keywords['row'] != row:
-        raise ValueError('Question artifact identity mismatch')
-    schema_path = Path(root) / 'databases' / row['db_id'] / 'schema.json'
-    schema = json.loads(schema_path.read_text())
-    if fingerprint(schema) != record['schema_hash']:
-        raise ValueError('Common Meta schema changed after precomputation')
-    if keywords['content_hash'] != record['keywords_hash']:
-        raise ValueError('Keywords changed after retrieval')
-    vector_path = directory / 'keywords.npy'
-    if file_hash(vector_path) != record['vectors_hash']:
-        raise ValueError('Keyword vector file checksum mismatch')
-    vectors = validate_vectors(np.load(vector_path, allow_pickle=False), len(keywords['keywords']), record['dimension'])
-    if expected_item is not None:
-        if question_row(expected_item) != row or fingerprint(expected_item.database_schema) != record['schema_hash']:
-            raise ValueError('Current dataset no longer matches the frozen question/Meta')
-    item = BirdInteractDataItem(question_id=record['question_id'], instance_id=instance_id,
-        question=row['question'], evidence=row['evidence'], database_id=row['db_id'],
-        database_path=row['db_id'], database_schema=schema, gold_sql='', db_type='postgresql')
-    item.question_keywords = keywords['keywords']
-    item.retrieved_values = record['retrieved_values']
-    item.database_schema_after_value_retrieval = schema_with_values(schema, item.retrieved_values, record['max_values_per_column'])
-    if fingerprint(item.database_schema_after_value_retrieval) != record['retrieved_schema_hash']:
-        raise ValueError('Reconstructed schema does not match recorded native result')
-    item.value_retrieval_time = record['value_retrieval_time']
-    item.value_retrieval_llm_cost = record['value_retrieval_llm_cost']
-    item.total_time = record['value_retrieval_time']
-    item.total_llm_cost = dict(record['value_retrieval_llm_cost'])
-    return item
+    """Load one item through a fresh reader so source changes stay observable."""
+    return PrecomputedInputReader(root).load(
+        variant, instance_id, expected_item=expected_item)

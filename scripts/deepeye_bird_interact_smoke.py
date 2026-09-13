@@ -5,6 +5,7 @@ Run with code/.venv/bin/python. This is not a gold-SQL accuracy evaluation.
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -111,28 +112,66 @@ def build_runtime_config(values, variant, preprocessed_dir, output_dir, *, max_t
     )
 
 
+class IndependentExampleReader:
+    """One immutable source snapshot with per-row dialect conversion reuse."""
+
+    def __init__(self, source: Path):
+        self.source = Path(source)
+        payload = self.source.read_bytes()
+        self.source_sha256 = hashlib.sha256(payload).hexdigest()
+        self._rows = json.loads(payload)
+        self._translated = {}
+
+    def _translate(self, index, row):
+        import sqlglot
+
+        if index not in self._translated:
+            translated = None
+            if row.get("question") and row.get("SQL"):
+                try:
+                    queries = sqlglot.transpile(
+                        row["SQL"], read="sqlite", write="postgres",
+                        unsupported_level=sqlglot.ErrorLevel.RAISE)
+                except sqlglot.errors.SqlglotError:
+                    queries = []
+                if len(queries) == 1:
+                    translated = (
+                        {"question": row["question"], "evidence": row.get("evidence", ""),
+                         "sql": queries[0]},
+                        {"source_row": index, "db_id": row.get("db_id"),
+                         "original_sql": row["SQL"],
+                         "dialect_conversion": "sqlglot sqlite -> postgres"},
+                    )
+            self._translated[index] = translated
+        return self._translated[index]
+
+    def select(self, target, count=3):
+        examples, provenance, domains = [], [], set()
+        for index, row in enumerate(self._rows):
+            db_id = row.get("db_id")
+            if (db_id == target.database_id or db_id in domains
+                    or row.get("question", "").strip() == target.question.strip()):
+                continue
+            translated = self._translate(index, row)
+            if translated is None:
+                continue
+            example, source_row = translated
+            examples.append(deepcopy(example))
+            provenance.append(deepcopy(source_row))
+            domains.add(db_id)
+            if len(examples) == count:
+                return examples, {
+                    "source_path": str(self.source),
+                    "source_sha256": self.source_sha256,
+                    "examples": provenance,
+                }
+        raise ValueError(
+            "Insufficient independent training examples; no target gold or synthetic fallback will be used")
+
+
 def load_independent_examples(source: Path, target, count=3):
-    import sqlglot
-    rows = json.loads(source.read_text(encoding="utf-8"))
-    examples, provenance, domains = [], [], set()
-    for index, row in enumerate(rows):
-        db_id = row.get("db_id")
-        if db_id == target.database_id or db_id in domains or row.get("question", "").strip() == target.question.strip():
-            continue
-        if not row.get("question") or not row.get("SQL"):
-            continue
-        try:
-            queries = sqlglot.transpile(row["SQL"], read="sqlite", write="postgres", unsupported_level=sqlglot.ErrorLevel.RAISE)
-        except sqlglot.errors.SqlglotError:
-            continue
-        if len(queries) != 1:
-            continue
-        examples.append({"question": row["question"], "evidence": row.get("evidence", ""), "sql": queries[0]})
-        provenance.append({"source_row": index, "db_id": db_id, "original_sql": row["SQL"], "dialect_conversion": "sqlglot sqlite -> postgres"})
-        domains.add(db_id)
-        if len(examples) == count:
-            return examples, {"source_path": str(source), "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(), "examples": provenance}
-    raise ValueError("Insufficient independent training examples; no target gold or synthetic fallback will be used")
+    """Select examples through a fresh reader so source changes stay observable."""
+    return IndependentExampleReader(source).select(target, count)
 
 
 class CallRecorder:
