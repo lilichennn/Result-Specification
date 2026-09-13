@@ -113,6 +113,16 @@ class WorkloadTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             workloads.restore_item({'type': 'os.system', 'data': {}})
 
+    def test_native_bird_meta_encoding_is_decoded_without_dropping_characters(self):
+        workloads, _ = self.modules()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path, _ = self.fixture(root, 'bird', 'dev')
+            csv = root/'meta/db/visible.csv'
+            csv.write_bytes('original_column_name,column_name,column_description,data_format,value_description\nid,id,identifier – official,INTEGER,\n'.encode('cp1252'))
+            tables, _ = workloads._meta_tables(workloads.load_workload(path), 'db')
+            self.assertEqual(tables['visible']['id']['column_description'], 'identifier – official')
+
     def test_config_and_backend_allow_sqlite_and_bigquery_without_postgres(self):
         _, entry = self.modules()
         for cloud in (False, True):
@@ -356,6 +366,9 @@ class WorkloadTests(unittest.TestCase):
             config = workloads.load_workload(path); config.pop('prepared_dataset')
             tasks, _, _ = workloads.load_items(config, require_prepared=False)
             item = tasks[0][1]
+            from scripts.baseline_adapters.deepeye.dataset import _load_meta_table
+            native_table = _load_meta_table(path.parent/'meta/db/visible.csv')
+            self.assertEqual(item.database_schema['tables']['visible'], native_table)
             precompute = path.parent/'precompute'
             directory = precompute/'questions/lite/7'; directory.mkdir(parents=True)
             schema_path = precompute/'databases/db/schema.json'; schema_path.parent.mkdir(parents=True)

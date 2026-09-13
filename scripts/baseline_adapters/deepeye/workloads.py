@@ -8,6 +8,7 @@ from __future__ import annotations
 from copy import deepcopy
 import csv
 import hashlib
+import io
 import json
 from pathlib import Path
 from urllib.parse import quote
@@ -130,8 +131,18 @@ def _meta_tables(workload, db_id):
         raise FileNotFoundError(f'Meta directory missing for {db_id}: {directory}')
     tables, hashes = {}, {}
     for path in sorted(directory.glob('*.csv')):
-        with path.open(encoding='utf-8-sig', newline='') as source:
-            rows = list(csv.DictReader(source))
+        raw = path.read_bytes()
+        try:
+            text = raw.decode('utf-8-sig')
+        except UnicodeDecodeError:
+            # Original BIRD description files also include Windows encodings;
+            # use the same detector as DeepEye's native description reader.
+            import chardet
+            encoding = chardet.detect(raw)['encoding']
+            if not encoding:
+                raise ValueError(f'Meta CSV encoding could not be identified: {path}')
+            text = raw.decode(encoding)
+        rows = list(csv.DictReader(io.StringIO(text, newline='')))
         if not rows:
             raise ValueError(f'Meta table has no columns: {path}')
         bird = workload['benchmark'] in ('bird', 'bird_interact')
@@ -145,7 +156,7 @@ def _meta_tables(workload, db_id):
                 raise ValueError(f'Meta table has empty or duplicate column: {path}')
             columns[name] = row
         tables[path.stem] = columns
-        hashes[path.relative_to(root).as_posix()] = file_sha256(path)
+        hashes[path.relative_to(root).as_posix()] = hashlib.sha256(raw).hexdigest()
     if not tables:
         raise FileNotFoundError(f'Meta CSV tables missing for {db_id}')
     return tables, hashes
@@ -319,10 +330,10 @@ def load_items(workload, *, require_prepared=True):
                     schema = load_cloud_database_schema_dict(db_id, db_type, workload['resource_root'], max_value_example_length=50)
                 else:
                     from scripts.baseline_adapters.deepeye.dataset import _load_meta_table
-                    directory = Path(workload['meta']) / db_id.casefold()
                     schema = {'db_id': db_id, 'db_path': db_id, 'db_type': db_type,
-                              'tables': {p.stem: _load_meta_table(p) for p in sorted(directory.glob('*.csv'))}}
-                schemas[cache_key] = _scope_schema(schema, tables[db_id])
+                              'tables': {name: _load_meta_table(Path(name + '.csv'), rows=list(columns.values()))
+                                         for name, columns in tables[db_id].items()}}
+                schemas[cache_key] = _scope_schema(schema, tables[db_id], validate=db_type == 'postgresql')
             cls = _types()[benchmark if benchmark in ('spider2', 'bird_interact') else 'native']
             fields = {key: row[key] for key in ('question_id', 'question', 'evidence', 'database_id')}
             if benchmark in ('spider2', 'bird_interact'):

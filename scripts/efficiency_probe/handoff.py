@@ -1,5 +1,4 @@
 """Read-only accounting for a fully-issued chain of draining capacity probes."""
-import json
 from pathlib import Path
 import sqlite3
 
@@ -19,8 +18,7 @@ class DrainingProbe:
         try:
             # Reuse the authoritative decoder without opening a writer or
             # modifying RunStore. It verifies schema version and payload hash.
-            manifest_json, _ = RunStore._read_manifest(self.path/'run.sqlite3')
-            self.manifest = json.loads(manifest_json)
+            _, _, self.manifest = RunStore._read_manifest(self.path/'run.sqlite3')
             if self.manifest.get('kind') != 'prechange_sdk_capacity_probe':
                 raise ValueError('handoff source must be an independent capacity probe')
             self._read(initial=True)

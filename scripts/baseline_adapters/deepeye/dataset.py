@@ -129,14 +129,19 @@ def _column_description(row: dict[str, str]) -> str:
     return " | ".join(sections)
 
 
-def _load_meta_table(csv_path: Path) -> dict[str, Any]:
+def _load_meta_table(csv_path: Path, *, rows=None) -> dict[str, Any]:
     table_name = csv_path.stem
     if not table_name.strip():
         raise ValueError(f"Malformed Meta table name: {csv_path}")
 
-    with csv_path.open("r", encoding="utf-8-sig", newline="") as source:
-        reader = csv.DictReader(source)
-        headers = set(reader.fieldnames or [])
+    # A shared workload may already have decoded the CSV while binding its
+    # hash. Reuse those rows through the exact same native Meta validation.
+    from contextlib import nullcontext
+    source_context = (csv_path.open("r", encoding="utf-8-sig", newline="")
+                      if rows is None else nullcontext(None))
+    with source_context as source:
+        reader = csv.DictReader(source) if rows is None else rows
+        headers = set(reader.fieldnames or []) if rows is None else set(rows[0] if rows else [])
         missing_headers = sorted(_REQUIRED_META_FIELDS - headers)
         if missing_headers:
             raise ValueError(
