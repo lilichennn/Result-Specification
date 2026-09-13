@@ -158,8 +158,14 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         recorder.raise_if_failed()
                         payload = _checkpoint(updated, stage)
                         trace = api_trace(store.iter_events(attempt))
-                        if not trace['complete']:
+                        if trace['unanswered_requests']:
                             raise RuntimeError('Stage finished with incomplete API trace')
+                        if not trace['complete'] and error is None:
+                            from scripts.baseline_adapters.deepeye.run_usage import IncompleteSamplingGroup
+                            error = IncompleteSamplingGroup('Required sampling group did not retain all requested samples')
+                        if 'sampling' in trace:
+                            payload['sampling'] = trace['sampling']
+                            payload['completion_semantics'] = 'required_samples_and_native_fields_present_not_sql_correctness'
                         count = 0
                         if block is not None:
                             from .injection import count_rc_requests

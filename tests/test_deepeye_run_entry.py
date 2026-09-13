@@ -19,6 +19,28 @@ except ImportError:
 
 
 class DeepEyeRunEntryTests(unittest.TestCase):
+    def test_direct_ask_uses_formal_transport_timeout(self):
+        from tests.test_deepeye_sampling import llm_fixture, response
+        llm, calls = llm_fixture([response()])
+        factory = entry.bounded_runner_factory(None, 660,
+            native_factory_builder=lambda config: lambda stage, items: SimpleNamespace(_llm=llm))
+        factory('sql_revision', [])
+        llm.ask([])
+        self.assertEqual(calls[0]['timeout'], 660)
+
+    def test_bounded_runner_uses_single_sample_transport_without_group_retry(self):
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        llm, calls = llm_fixture([response()] * 3 + [response('bad')] * 4 + [response()])
+        runner = SimpleNamespace(_llm=llm)
+        factory = entry.bounded_runner_factory(None, 660,
+            native_factory_builder=lambda config: lambda stage, items: runner)
+        factory('sql_generation', [])
+        results, usage = LLMExtractor(max_retry=2).extract_with_retry(llm, [], parse, n=5)
+        self.assertEqual((len(results), len(calls), usage['total_tokens']), (4, 8, 120))
+        self.assertEqual({call['timeout'] for call in calls}, {660})
+        self.assertEqual(llm._client.max_retries, 0)
+
     def module(self):
         self.assertIsNotNone(entry, "DeepEye durable run CLI is missing")
         return entry

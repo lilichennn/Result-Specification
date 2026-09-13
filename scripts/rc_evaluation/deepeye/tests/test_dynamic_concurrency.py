@@ -87,6 +87,7 @@ class DynamicConcurrencyTests(OfflineTestCase):
     def fake_revision(self, execute, *, create=None, cleanup=None):
         """Keep the bounded factory and trace wrappers; replace native work only."""
         from app.llm import LLM
+        from app.config.config import LLMConfig
         from openai.types.chat import ChatCompletion
 
         closed = threading.Event()
@@ -104,7 +105,9 @@ class DynamicConcurrencyTests(OfflineTestCase):
 
         def factory(stage, items):
             self.assertEqual(stage, 'sql_revision')
-            runner = SimpleNamespace(_llm=SimpleNamespace(_get_client=lambda: client),
+            llm = LLM(LLMConfig(model='offline', api_key='fixture', base_url='https://invalid.test'))
+            llm._client = client
+            runner = SimpleNamespace(_llm=llm,
                                      _checkers=[], _clean_up=cleanup or (lambda: None))
 
             def revise(item):

@@ -92,15 +92,15 @@ class SmokeEntrypointTest(unittest.TestCase):
     def test_stage_timeout_is_configurable_without_changing_native_llm(self):
         module = self.require_module()
         from app.llm import LLM
-        native = LLM.ask
-        client = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=lambda: None)))
-        llm = SimpleNamespace(_get_client=lambda: client)
+        from tests.test_deepeye_sampling import llm_fixture, response
+        native = LLM.request_once
+        llm, calls = llm_fixture([response()])
         runner = SimpleNamespace(_llm=llm)
-        with patch.object(LLM, "ask") as patched:
-            module.configure_stage_calls(runner, "test", module.CallRecorder(), chat_timeout=300)
-            llm.ask([])
-            self.assertEqual(patched.retry_with.return_value.call_args.kwargs["timeout"], 300)
-        self.assertIs(LLM.ask, native)
+        module.configure_stage_calls(runner, "test", module.CallRecorder(), chat_timeout=300)
+        llm.ask([])
+        self.assertEqual(calls[0]['timeout'], 300)
+        self.assertEqual(llm.sample_max_attempts, 4)
+        self.assertIs(LLM.request_once, native)
 
     def test_thinking_budget_is_explicit_and_shared_by_all_stages(self):
         module = self.require_module()
@@ -117,17 +117,15 @@ class SmokeEntrypointTest(unittest.TestCase):
         for stage in ("value_retrieval", "sql_revision"):
             with self.subTest(stage=stage):
                 recorder = module.CallRecorder()
-                client = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=lambda: None)))
-                llm = SimpleNamespace(_get_client=lambda: client)
+                from tests.test_deepeye_sampling import llm_fixture, response
+                llm, calls = llm_fixture([response('unparseable')] * 4)
                 extractor = LLMExtractor(max_retry=2)
                 checker = SimpleNamespace(_extractor=extractor, check_and_revise=lambda: None)
                 runner = SimpleNamespace(_llm=llm, _keyword_extractor=extractor, _checkers=[checker],
                     _embedding_function=SimpleNamespace(client=SimpleNamespace(embeddings=SimpleNamespace(create=lambda: None))))
-                with patch.object(LLM, "ask") as patched:
-                    patched.retry_with.return_value.return_value = ([SimpleNamespace(content="unparseable")],
-                        {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2})
-                    module.configure_stage_calls(runner, stage, recorder)
-                    result, _ = extractor.extract_with_retry(llm=llm, messages=[], rule_parser=lambda _: None)
+                module.configure_stage_calls(runner, stage, recorder)
+                result, _ = extractor.extract_with_retry(llm=llm, messages=[], rule_parser=lambda _: None)
+                self.assertEqual(len(calls), 4)
                 self.assertEqual(result, [])
                 self.assertTrue(module.observation_failures(recorder.events))
 

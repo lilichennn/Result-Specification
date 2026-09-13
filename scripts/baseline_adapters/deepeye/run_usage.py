@@ -9,6 +9,79 @@ _API_KINDS = {"api_request", "api_response", "api_error"}
 _TOKEN_FIELDS = ("prompt_tokens", "completion_tokens", "total_tokens")
 
 
+class IncompleteSamplingGroup(RuntimeError):
+    """A native fallback cannot substitute for a required sample."""
+
+
+def sampling_completeness(events):
+    """Check started groups, including interrupted or swallowed failures.
+
+    Absence of group events preserves historical stores' original semantics;
+    it does not claim that old calls had the new effective sampling metric.
+    """
+    groups = {}
+    for event in events:
+        kind, payload = event['kind'], event['payload']
+        if kind not in ('sampling_group_start', 'sampling_group_result'):
+            continue
+        group_id = payload.get('group_id')
+        if not isinstance(group_id, str) or not group_id:
+            raise ValueError('sampling group has no identity')
+        if kind == 'sampling_group_start':
+            if group_id in groups:
+                raise ValueError('duplicate sampling group start')
+            target = payload.get('target_n')
+            if isinstance(target, bool) or not isinstance(target, int) or target < 1:
+                raise ValueError('invalid sampling target')
+            groups[group_id] = {'target': target, 'complete': False, 'terminal': False}
+        else:
+            group = groups.get(group_id)
+            if group is None or group['terminal']:
+                raise ValueError('sampling group has no unique start')
+            group['terminal'] = True
+            group['complete'] = (payload.get('complete') is True
+                and payload.get('target_n') == group['target']
+                and payload.get('success_count') == group['target'])
+    failed = sum(not group['complete'] for group in groups.values())
+    return {'groups': len(groups), 'incomplete_groups': failed, 'complete': failed == 0}
+
+
+def _effective_sampling(events):
+    results = {}
+    for event in events:
+        if event['kind'] != 'sample_result':
+            continue
+        payload = event['payload']
+        identity = (payload['group_id'], payload['sample_index'])
+        if identity in results:
+            raise ValueError('duplicate sample result')
+        results[identity] = payload
+    retained = [value for value in results.values() if value['succeeded']]
+    known = {field: 0 for field in _TOKEN_FIELDS}
+    missing, missing_reasoning, reasoning = 0, 0, 0
+    for sample in retained:
+        usage = sample.get('usage') or {}
+        complete = True
+        for field in _TOKEN_FIELDS:
+            value = usage.get(field)
+            if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+                known[field] += value
+            else:
+                complete = False
+        missing += not complete
+        value = usage.get('reasoning_tokens')
+        if isinstance(value, int) and not isinstance(value, bool) and value >= 0:
+            reasoning += value
+        else:
+            missing_reasoning += 1
+    return {'known_tokens': known, 'retained_samples': len(retained),
+        'samples_missing_usage': missing, 'usage_complete': missing == 0,
+        'known_reasoning_tokens': reasoning,
+        'reasoning_tokens': None if missing_reasoning else reasoning,
+        'samples_missing_reasoning': missing_reasoning,
+        'semantics': 'finally_retained_successful_samples_only_v1'}
+
+
 def _call_id(event: dict[str, Any]) -> str:
     payload = event.get("payload")
     if not isinstance(payload, dict):
@@ -34,6 +107,9 @@ def observed_usage(store: Any) -> dict[str, Any]:
     responses = 0
     errors = 0
     responses_missing_usage = 0
+    errors_missing_usage = 0
+    reported_reasoning = 0
+    missing_reasoning = 0
 
     for event in store.iter_events(kinds=_API_KINDS):
         kind = event["kind"]
@@ -59,12 +135,18 @@ def observed_usage(store: Any) -> dict[str, Any]:
 
         if kind == "api_error":
             errors += 1
-            continue
-
-        responses += 1
+        else:
+            responses += 1
         payload = event["payload"]
         response = payload.get("response")
         usage = response.get("usage") if isinstance(response, dict) else None
+        details = usage.get('completion_tokens_details') if isinstance(usage, dict) else None
+        reasoning = (details.get('reasoning_tokens') if isinstance(details, dict)
+                     else usage.get('reasoning_tokens') if isinstance(usage, dict) else None)
+        if isinstance(reasoning, int) and not isinstance(reasoning, bool) and reasoning >= 0:
+            reported_reasoning += reasoning
+        else:
+            missing_reasoning += 1
         complete_usage = isinstance(usage, dict)
         if isinstance(usage, dict):
             for field in _TOKEN_FIELDS:
@@ -74,10 +156,13 @@ def observed_usage(store: Any) -> dict[str, Any]:
                 else:
                     complete_usage = False
         if not complete_usage:
-            responses_missing_usage += 1
+            if kind == 'api_error':
+                errors_missing_usage += 1
+            else:
+                responses_missing_usage += 1
 
     unanswered_requests = sum(call["terminal"] is None for call in calls.values())
-    return {
+    result = {
         "reported_tokens": reported,
         "requests": requests,
         "responses": responses,
@@ -91,3 +176,13 @@ def observed_usage(store: Any) -> dict[str, Any]:
         ),
         "semantics": "reported_tokens_only_not_provider_bill",
     }
+    sampling_events = list(store.iter_events(kinds={'sampling_group_start', 'sampling_group_result', 'sample_result'}))
+    if sampling_events:
+        result['sampling'] = sampling_completeness(sampling_events)
+        result['effective_sampling'] = _effective_sampling(sampling_events)
+        result['unknown_usage_attempts'] = responses_missing_usage + errors_missing_usage + unanswered_requests
+        result['known_reported_reasoning_tokens'] = reported_reasoning
+        result['reasoning_usage_unknown_attempts'] = missing_reasoning + unanswered_requests
+        result['reported_reasoning_tokens'] = None if missing_reasoning + unanswered_requests else reported_reasoning
+        result['usage_complete'] = result['unknown_usage_attempts'] == 0
+    return result

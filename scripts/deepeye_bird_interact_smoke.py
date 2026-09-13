@@ -207,17 +207,16 @@ Native results are preserved; only the external acceptance result changes.
 
 
 def configure_stage_calls(runner, stage, recorder, *, chat_timeout=300):
-    from app.llm import LLM
-    from tenacity import stop_after_attempt, wait_fixed
     llm = runner._llm
     client = llm._get_client()
     client.max_retries = 0
     client.chat.completions.create = recorder.wrap_api(client.chat.completions.create, "chat")
-    native_ask = LLM.ask.retry_with(stop=stop_after_attempt(2), wait=wait_fixed(1))
-    def bounded_ask(*args, **kwargs):
+    llm.sample_max_attempts = 4
+    native_request = llm.request_once
+    def bounded_request(*args, **kwargs):
         kwargs["timeout"] = min(kwargs.get("timeout", chat_timeout), chat_timeout)
-        return native_ask(llm, *args, **kwargs)
-    llm.ask = bounded_ask
+        return native_request(*args, **kwargs)
+    llm.request_once = bounded_request
     clients = [client]
     if stage == "value_retrieval":
         recorder.observe_method(runner._keyword_extractor, "extract_with_retry", "value_retrieval.keyword_extraction", count_output=True)

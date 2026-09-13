@@ -60,6 +60,22 @@ class Factory:
 
 
 class RunnerTests(OfflineTestCase):
+    def test_partial_sampling_cannot_succeed_via_native_fallback(self):
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from types import SimpleNamespace
+        llm, calls = llm_fixture([response()] * 3 + [response('bad')] * 4 + [response()])
+        def factory(stage, items):
+            def revise(item):
+                LLMExtractor().extract_with_retry(llm, [], parse, n=5)
+                complete_stage(item, stage)
+            return SimpleNamespace(_llm=llm, _checkers=[], _revise_sql=revise, _clean_up=lambda: None)
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary) as store:
+            result = run_experiment(store, factory, TraceRecorder(store), workers=1)
+            self.assertEqual((result['failed'], len(calls)), (1, 8))
+            self.assertEqual(store.attempts()[0]['payload']['error_type'], 'IncompleteSamplingGroup')
+
     def test_successful_downstream_after_missing_target_rejected_before_constructor(self):
         with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, downstream=True) as store:
             attempt = store.begin_attempt('lite/a', 'sql_selection', 'unrelated-source')

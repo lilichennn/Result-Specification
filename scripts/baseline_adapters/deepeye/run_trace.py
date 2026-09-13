@@ -213,7 +213,9 @@ class TraceRecorder:
         branch_token = _BRANCH_PATH.set(())
         component_token = _COMPONENT_CALL_IDS.set(())
         try:
-            yield
+            from app.llm.sampling import observe_sampling
+            with observe_sampling(self.record_sampling):
+                yield
         finally:
             _COMPONENT_CALL_IDS.reset(component_token)
             _BRANCH_PATH.reset(branch_token)
@@ -287,11 +289,17 @@ class TraceRecorder:
 
     @staticmethod
     def _base_payload() -> dict[str, Any]:
+        from app.llm.sampling import sampling_identity
         component_ids = _COMPONENT_CALL_IDS.get()
         return {
+            **sampling_identity(),
             "branch_path": list(_BRANCH_PATH.get()),
             "component_call_id": component_ids[-1] if component_ids else None,
         }
+
+    def record_sampling(self, kind: str, payload: dict[str, Any]) -> None:
+        """Persist sample outcomes, including failures swallowed by native code."""
+        self._append(kind, {**self._base_payload(), **payload})
 
     def record_admission(self, kind: str, payload: dict[str, Any]) -> None:
         """Record gate telemetry with recorder-owned execution linkage."""
@@ -333,10 +341,12 @@ class TraceRecorder:
                     _API_CALL_ID.reset(call_token)
             except BaseException as error:
                 try:
+                    from app.llm.sampling import error_usage
                     self._append("api_error", {
                         **self._base_payload(),
                         "call_id": call_id,
                         "error": _exception_payload(error),
+                        "response": {"usage": error_usage(error)},
                     })
                 except BaseException:
                     pass

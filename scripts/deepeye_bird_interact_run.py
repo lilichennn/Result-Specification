@@ -77,7 +77,7 @@ def build_effective_config(environment: dict[str, str], args) -> dict:
             "thinking_budget": args.thinking_budget,
             "timeout_seconds": args.chat_timeout,
             "sdk_max_retries": 0,
-            "native_ask_attempts": 2,
+            "sample_max_attempts": 4,
             "extractor_max_retries": args.extractor_retries,
             "n_call_strategy": "split",
             "max_request_n": 1,
@@ -503,25 +503,24 @@ def build_runtime_config(environment, args, run_dir: Path):
 def bounded_runner_factory(config, chat_timeout: int, native_factory_builder=None):
     """Keep native stage logic while applying the smoke-tested transport bounds."""
 
-    from app.llm import LLM
-    from tenacity import stop_after_attempt, wait_fixed
     from scripts.baseline_adapters.deepeye.run_pipeline import native_runner_factory
 
     native_factory_builder = native_factory_builder or native_runner_factory
     base_factory = native_factory_builder(config)
-    bounded_ask = LLM.ask.retry_with(stop=stop_after_attempt(2), wait=wait_fixed(1))
 
     def factory(stage, items):
         runner = base_factory(stage, items)
         llm = runner._llm
         client = llm._get_client()
         client.max_retries = 0
+        llm.sample_max_attempts = 4
+        request_once = llm.request_once
 
-        def ask(*args, **kwargs):
+        def bounded_request(*args, **kwargs):
             kwargs["timeout"] = min(kwargs.get("timeout", chat_timeout), chat_timeout)
-            return bounded_ask(llm, *args, **kwargs)
+            return request_once(*args, **kwargs)
 
-        llm.ask = ask
+        llm.request_once = bounded_request
         return runner
 
     return factory

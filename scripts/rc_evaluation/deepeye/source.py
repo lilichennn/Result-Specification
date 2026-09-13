@@ -7,6 +7,7 @@ from pathlib import Path
 from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
 from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, _restore, _valid_output, task_key
 from scripts.baseline_adapters.deepeye.run_store import RunStore, restore_jsonable, to_jsonable
+from scripts.baseline_adapters.deepeye.run_usage import sampling_completeness
 
 
 def digest(value):
@@ -16,6 +17,7 @@ def digest(value):
 def api_trace(events):
     """Verify request/terminal pairing, independent of provider token metadata."""
     calls, responses, errors = {}, 0, 0
+    events = list(events)
     for event in events:
         kind = event['kind']
         if kind not in ('api_request', 'api_response', 'api_error'):
@@ -34,8 +36,12 @@ def api_trace(events):
             responses += kind == 'api_response'
             errors += kind == 'api_error'
     unanswered = sum(value is None for value in calls.values())
-    return {'requests': len(calls), 'responses': responses, 'errors': errors,
-            'unanswered_requests': unanswered, 'complete': unanswered == 0}
+    sampling = sampling_completeness(events)
+    result = {'requests': len(calls), 'responses': responses, 'errors': errors,
+            'unanswered_requests': unanswered, 'complete': unanswered == 0 and sampling['complete']}
+    if sampling['groups']:
+        result['sampling'] = sampling
+    return result
 
 
 def _source_trace(store, row, stage, seen=()):
@@ -60,7 +66,7 @@ def _source_trace(store, row, stage, seen=()):
                 return _source_trace(prior, original, stage, (*seen, identity))
     result = api_trace(store.iter_events(row['attempt_id']))
     if not result['complete']:
-        raise ValueError('Source API trace has unanswered requests')
+        raise ValueError('Source API trace has unanswered requests or incomplete sampling')
     if not result['requests']:
         usage = restore_jsonable(row['payload']['artifact']).get(stage + '_llm_cost')
         if not isinstance(usage, dict) or any(usage.get(field) != 0 for field in

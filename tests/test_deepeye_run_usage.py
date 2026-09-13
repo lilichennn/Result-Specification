@@ -13,6 +13,101 @@ from scripts.baseline_adapters.deepeye.run_usage import observed_usage
 
 
 class ObservedUsageTests(unittest.TestCase):
+    def test_duplicate_sample_results_are_rejected_instead_of_double_counted(self):
+        with tempfile.TemporaryDirectory() as temp, RunStore.create(Path(temp) / 'run', {}) as store:
+            attempt = store.begin_attempt('q', 'stage', 'fp')
+            store.append_event(attempt, 'sampling_group_start', {'group_id': 'g', 'target_n': 1})
+            for _ in range(2):
+                store.append_event(attempt, 'sample_result', {'group_id': 'g', 'sample_index': 0,
+                    'succeeded': True, 'usage': {'prompt_tokens': 10, 'completion_tokens': 20, 'total_tokens': 30}})
+            with self.assertRaisesRegex(ValueError, 'duplicate sample'):
+                observed_usage(store)
+
+    def test_started_group_without_terminal_is_incomplete(self):
+        from scripts.baseline_adapters.deepeye.run_usage import sampling_completeness
+        self.assertFalse(sampling_completeness([{'kind': 'sampling_group_start',
+            'payload': {'group_id': 'g', 'target_n': 5}}])['complete'])
+
+    def test_sampling_ledger_separates_effective_reported_and_unknown(self):
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as temp, RunStore.create(Path(temp) / 'run', {}) as store:
+            llm, calls = llm_fixture([response()] * 3 + [response('bad', 7)] + [response()] * 2)
+            recorder = TraceRecorder(store)
+            cleanup = recorder.instrument_runner(SimpleNamespace(_llm=llm, _checkers=[]), 'sql_revision')
+            try:
+                attempt = store.begin_attempt('q', 'stage', 'fp')
+                with recorder.context(attempt):
+                    LLMExtractor().extract_with_retry(llm, [], parse, n=5)
+                usage = observed_usage(store)
+                self.assertEqual(usage['reported_tokens']['total_tokens'], 157)
+                self.assertEqual(usage['effective_sampling']['known_tokens']['total_tokens'], 150)
+                self.assertTrue(usage['effective_sampling']['usage_complete'])
+                self.assertIsNone(usage['effective_sampling']['reasoning_tokens'])
+                self.assertEqual(usage['effective_sampling']['retained_samples'], 5)
+            finally:
+                cleanup()
+
+    def test_error_response_usage_and_missing_success_usage_are_not_zero(self):
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from types import SimpleNamespace
+        import httpx
+        from openai import InternalServerError
+        error = InternalServerError('fixture', response=httpx.Response(500,
+            request=httpx.Request('POST', 'https://invalid.test')), body={'usage': {
+                'prompt_tokens': 3, 'completion_tokens': 4, 'total_tokens': 7}})
+        with tempfile.TemporaryDirectory() as temp, RunStore.create(Path(temp) / 'run', {}) as store:
+            llm, calls = llm_fixture([error, response(tokens=None), response(reasoning=12)])
+            recorder = TraceRecorder(store)
+            cleanup = recorder.instrument_runner(SimpleNamespace(_llm=llm, _checkers=[]), 'sql_revision')
+            try:
+                attempt = store.begin_attempt('q', 'stage', 'fp')
+                with recorder.context(attempt):
+                    LLMExtractor().extract_with_retry(llm, [], parse, n=2)
+                usage = observed_usage(store)
+                self.assertEqual(usage['reported_tokens']['total_tokens'], 37)
+                self.assertEqual(usage['unknown_usage_attempts'], 1)
+                self.assertEqual(usage['known_reported_reasoning_tokens'], 12)
+                self.assertIsNone(usage['reported_reasoning_tokens'])
+                effective = usage['effective_sampling']
+                self.assertEqual(effective['known_tokens']['total_tokens'], 30)
+                self.assertEqual(effective['retained_samples'], 2)
+                self.assertEqual(effective['samples_missing_usage'], 1)
+                self.assertFalse(effective['usage_complete'])
+                self.assertEqual(effective['known_reasoning_tokens'], 12)
+                self.assertIsNone(effective['reasoning_tokens'])
+            finally:
+                cleanup()
+
+    def test_exhausted_group_reports_120_effective_and_four_unknown_errors(self):
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from types import SimpleNamespace
+        import httpx
+        from openai import APIConnectionError
+        error = APIConnectionError(request=httpx.Request('POST', 'https://invalid.test'))
+        with tempfile.TemporaryDirectory() as temp, RunStore.create(Path(temp) / 'run', {}) as store:
+            llm, calls = llm_fixture([response()] * 3 + [error] * 4 + [response()])
+            recorder = TraceRecorder(store)
+            cleanup = recorder.instrument_runner(SimpleNamespace(_llm=llm, _checkers=[]), 'sql_revision')
+            try:
+                attempt = store.begin_attempt('q', 'stage', 'fp')
+                with recorder.context(attempt):
+                    LLMExtractor().extract_with_retry(llm, [], parse, n=5)
+                usage = observed_usage(store)
+                self.assertEqual((usage['requests'], usage['unknown_usage_attempts']), (8, 4))
+                self.assertEqual(usage['effective_sampling']['known_tokens']['total_tokens'], 120)
+                self.assertEqual(usage['reported_tokens']['total_tokens'], 120)
+                self.assertFalse(usage['sampling']['complete'])
+                self.assertFalse(usage['usage_complete'])
+            finally:
+                cleanup()
+
     def test_counts_reported_usage_across_success_failed_and_interrupted_attempts(self):
         with tempfile.TemporaryDirectory() as temp:
             with RunStore.create(Path(temp) / "run", {}) as store:

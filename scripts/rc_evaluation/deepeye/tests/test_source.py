@@ -49,6 +49,17 @@ def make_source(path, *, calls=1, stage='sql_revision', partial=False, bad_hash=
 
 
 class SourceTests(OfflineTestCase):
+    def test_paired_api_trace_with_four_of_five_sampling_is_incomplete(self):
+        from scripts.rc_evaluation.deepeye.source import api_trace
+        events = [
+            {'kind': 'api_request', 'payload': {'call_id': 'call'}},
+            {'kind': 'api_response', 'payload': {'call_id': 'call'}},
+            {'kind': 'sampling_group_start', 'payload': {'group_id': 'g', 'target_n': 5}},
+            {'kind': 'sampling_group_result', 'payload': {'group_id': 'g', 'target_n': 5,
+                'success_count': 4, 'complete': False}},
+        ]
+        self.assertFalse(api_trace(events)['complete'])
+
     def test_inherited_target_uses_original_call_trace_not_empty_import_trace(self):
         from scripts.baseline_adapters.deepeye.run_inheritance import inherit_checkpoints
         with tempfile.TemporaryDirectory() as temporary:

@@ -17,6 +17,7 @@ import time
 from .precompute_cache import fingerprint
 from .run_store import restore_jsonable, to_jsonable
 from .run_resources import close_runners, protect_schema_profiles, instrument_native_pools, native_stage_work
+from .run_usage import sampling_completeness
 
 STAGE_METHODS = {
     'schema_linking': '_link_tables_and_columns',
@@ -213,7 +214,14 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                             for secret in getattr(recorder, 'secrets', ()):
                                 error_message = error_message.replace(secret, '[REDACTED]')
                         recorder.raise_if_failed()
+                        sampling = sampling_completeness(store.iter_events(attempt_id))
+                        if not sampling['complete'] and error_type is None:
+                            error_type = 'IncompleteSamplingGroup'
+                            error_message = 'Required sampling group did not retain all requested samples'
                         payload = _checkpoint(target, stage)
+                        if sampling['groups']:
+                            payload['sampling'] = sampling
+                            payload['completion_semantics'] = 'required_samples_and_native_fields_present_not_sql_correctness'
                         payload['attempt_wall_seconds'] = time.monotonic() - started
                         status = 'succeeded' if error_type is None and _valid_output(target, stage) else 'failed'
                         if status == 'failed':

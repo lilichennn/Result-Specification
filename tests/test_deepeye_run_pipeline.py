@@ -72,6 +72,34 @@ class Factory:
 
 
 class PipelineTest(unittest.TestCase):
+    def test_swallowed_partial_sampling_group_fails_stage_with_fallback_output(self):
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from app.llm_extractor import LLMExtractor
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        pipeline, Store = self.modules()
+        base = Factory()
+        llm, calls = llm_fixture([response()] * 3 + [response('bad')] * 4 + [response()])
+        def factory(stage, items):
+            runner = base(stage, items)
+            if stage == 'schema_linking':
+                original = runner._link_tables_and_columns
+                def process(target):
+                    LLMExtractor().extract_with_retry(llm, [], parse, n=5)
+                    original(target)  # Native fallback populates every required field.
+                runner._link_tables_and_columns = process
+                runner._llm = llm
+            return runner
+        with tempfile.TemporaryDirectory() as temp, Store.create(Path(temp) / 'run', {}) as store:
+            recorder = TraceRecorder(store)
+            # This fixture only has stage entry points, no native component tree.
+            with patch.object(recorder, 'instrument_runner', return_value=lambda: None):
+                result = pipeline.run_pipeline(store, [('lite', item())], factory, recorder, workers=1)
+            self.assertEqual((result['failed'], len(calls)), (1, 8))
+            row = next(a for a in store.attempts() if a['stage'] == 'schema_linking')
+            self.assertEqual(row['status'], 'failed')
+            self.assertEqual(row['payload']['error_type'], 'IncompleteSamplingGroup')
+            self.assertEqual(base.calls, [('schema_linking', 'one')])
+
     def modules(self):
         pipeline = importlib.import_module('scripts.baseline_adapters.deepeye.run_pipeline')
         store = importlib.import_module('scripts.baseline_adapters.deepeye.run_store')
