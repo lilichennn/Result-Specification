@@ -1,7 +1,8 @@
 """Run only the target stage and explicitly requested native downstream stages."""
 from __future__ import annotations
 
-from collections import deque
+from collections import deque, defaultdict
+from dataclasses import dataclass
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from contextlib import ExitStack, nullcontext
 import copy
@@ -12,7 +13,7 @@ from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, STAGE_METHODS
 from scripts.baseline_adapters.deepeye.run_resources import close_runners, instrument_native_pools, native_stage_work, protect_schema_profiles
 from scripts.baseline_adapters.deepeye.run_slots import PipelineSlots
 from scripts.baseline_adapters.deepeye.run_store import restore_jsonable
-from .source import api_trace, digest, restore_seed, validate_manifest
+from .source import api_trace, digest, restore_seed, validate_manifest, TRACE_KINDS
 
 
 class MissingRCParticipation(RuntimeError):
@@ -33,29 +34,70 @@ def _replay(stage, target, unchanged, source):
         source['api_trace']['requests'] == 0 and not source['api_trace'].get('restored_samples')))
 
 
-def _stage_hash(manifest, key, stage, item):
-    return digest({'manifest': manifest, 'task_key': key, 'stage': stage,
+def _stage_hash(manifest, key, stage, item, manifest_digest=None):
+    identity = (manifest_digest if manifest.get('fingerprint_algorithm') == 'manifest-digest-v2' else manifest)
+    if identity is None:
+        identity = digest(manifest)
+    return digest({'manifest': identity, 'task_key': key, 'stage': stage,
                    'input': item.model_dump(exclude={'gold_sql'})})
 
 
-def _preflight(store, checkpoints=None, *, item_keys=None):
-    if not store.verify()['ok']:
+@dataclass
+class PreparedExperiment:
+    store: object
+    revision: tuple
+    manifest: dict
+    manifest_digest: str
+    plans: dict
+    needed: set
+    attempts: dict
+    verification: dict
+
+    def check(self, store):
+        if self.store is not store:
+            raise ValueError('Prepared experiment belongs to a different RunStore')
+        if self.revision != store._database_revision():
+            raise ValueError('Prepared experiment is stale for the current RunStore')
+
+
+def prepare_experiment(store, checkpoints=None, *, item_keys=None):
+    with store._read_snapshot():
+        return _prepare_experiment(store, checkpoints, item_keys=item_keys)
+
+
+def _prepare_experiment(store, checkpoints=None, *, item_keys=None):
+    verification = store.verify()
+    if not verification['ok']:
         raise ValueError('Experiment RunStore verification failed')
-    manifest = validate_manifest(store.manifest)
+    manifest = store.manifest
+    selected = set(manifest['source_checkpoints']) if item_keys is None else set(item_keys)
+    if not selected.issubset(manifest['source_checkpoints']):
+        raise ValueError('Execution item selection is outside the frozen manifest')
+    seeds = {}
+    validate_manifest(manifest, item_keys=selected, seeds=seeds)
     target = manifest['target_stage']
     stages = STAGES[STAGES.index(target):] if manifest['continue_downstream'] else (target,)
     successes = set()
+    rows, completed, stage_inputs = defaultdict(list), {}, defaultdict(set)
     for attempt in store.attempts():
+        rows[attempt['item_key']].append(attempt)
         if attempt['item_key'] not in manifest['source_checkpoints'] or attempt['stage'] not in stages:
             raise ValueError('Experiment attempt lies outside the configured lineage')
         if attempt['status'] == 'succeeded':
             successes.add((attempt['item_key'], attempt['stage']))
+            completed[(attempt['item_key'], attempt['stage'], attempt['input_fingerprint'])] = attempt
+            stage_inputs[attempt['item_key'], attempt['stage']].add(attempt['input_fingerprint'])
     plans, needed = {}, set()
     for key, snapshot in manifest['source_checkpoints'].items():
-        state = restore_seed(snapshot, target)
+        if key not in selected:
+            continue
+        state = seeds[key]
         unchanged, remaining = True, []
         for index, stage in enumerate(stages):
-            prior = store.completed(key, stage, _stage_hash(manifest, key, stage, state))
+            expected = _stage_hash(manifest, key, stage, state, store.manifest_fingerprint)
+            if stage_inputs[key, stage] - {expected}:
+                raise ValueError(f'RC checkpoint input fingerprint mismatch: {key}/{stage}')
+            prior = completed.get((key, stage, expected))
             if prior is not None:
                 if checkpoints is not None:
                     checkpoints.validate_stage(prior)
@@ -74,39 +116,47 @@ def _preflight(store, checkpoints=None, *, item_keys=None):
                         possible_unchanged = False
                 break
         plans[key] = {'state': state, 'remaining': remaining, 'unchanged': unchanged}
-    if item_keys is not None:
-        if not set(item_keys).issubset(plans):
-            raise ValueError('Execution item selection is outside the frozen manifest')
-        plans = {key: plan for key, plan in plans.items() if key in set(item_keys)}
-        needed = set()
-        for key, plan in plans.items():
-            unchanged = plan['unchanged']
-            for stage in plan['remaining']:
-                if not _replay(stage, target, unchanged, manifest['source_checkpoints'][key]['stages'].get(stage)):
-                    needed.add(stage)
-                    unchanged = False
-    return manifest, plans, needed
+    return PreparedExperiment(store, store._database_revision(), manifest, store.manifest_fingerprint,
+                              plans, needed, dict(rows), verification)
 
 
-def unfinished_keys(store):
+def _preflight(store, checkpoints=None, *, item_keys=None, prepared=None):
+    prepared = prepared or prepare_experiment(store, checkpoints, item_keys=item_keys)
+    prepared.check(store)
+    selected = set(prepared.plans) if item_keys is None else set(item_keys)
+    if not selected.issubset(prepared.plans):
+        raise ValueError('Execution item selection is outside the prepared manifest')
+    plans = {key: plan for key, plan in prepared.plans.items() if key in selected}
+    needed = set()
+    for key, plan in plans.items():
+        unchanged = plan['unchanged']
+        for stage in plan['remaining']:
+            if not _replay(stage, prepared.manifest['target_stage'], unchanged,
+                           prepared.manifest['source_checkpoints'][key]['stages'].get(stage)):
+                needed.add(stage)
+                unchanged = False
+    return prepared.manifest, plans, needed
+
+
+def unfinished_keys(store, *, prepared=None):
     """Choose resumable canonical prefixes; committed failures stay terminal."""
     if store._lock_file is None:
         raise ValueError('Unfinished selection requires the RunStore writer lock')
-    manifest, plans, _ = _preflight(store)
-    attempts = store.attempts()
+    prepared = prepared or prepare_experiment(store)
+    manifest, plans, _ = _preflight(store, prepared=prepared)
     result = []
     for key, plan in plans.items():
         if not plan['remaining']:
             continue
         stage = plan['remaining'][0]
-        expected = _stage_hash(manifest, key, stage, plan['state'])
+        expected = _stage_hash(manifest, key, stage, plan['state'], prepared.manifest_digest)
         if not any(row['item_key'] == key and row['stage'] == stage and
-                   row['input_fingerprint'] == expected and row['status'] == 'failed' for row in attempts):
+                   row['input_fingerprint'] == expected and row['status'] == 'failed' for row in prepared.attempts.get(key, ())):
             result.append(key)
     return result
 
 
-def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None, runtime=None, item_keys=None):
+def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None, runtime=None, item_keys=None, prepared=None):
     """Append native checkpoints, retaining failed attempts and paid-call traces.
 
     ``runner_factory`` is already bounded in production (see cli.execute_run).
@@ -126,7 +176,8 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
     tickets, failed = {}, {}
     halted = threading.Event()
     try:
-        manifest, plans, needed = _preflight(store, getattr(recorder, 'sampling_checkpoints', None), item_keys=item_keys)
+        prepared = prepared or prepare_experiment(store, getattr(recorder, 'sampling_checkpoints', None), item_keys=item_keys)
+        manifest, plans, needed = _preflight(store, item_keys=item_keys, prepared=prepared)
         if runtime is not None:
             from scripts.baseline_adapters.deepeye.run_slots import WorkflowSlots
             if runtime.stop_event is not recorder.stop_event:
@@ -170,7 +221,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         return 'failed'
                     recorder.raise_if_failed()
                     source = snapshot['stages'].get(stage)
-                    attempt = store.begin_attempt(key, stage, _stage_hash(manifest, key, stage, state))
+                    attempt = store.begin_attempt(key, stage, _stage_hash(manifest, key, stage, state, prepared.manifest_digest))
                     provenance = {'source_run': manifest['source_run'],
                                   'source_manifest_fingerprint': manifest['source_manifest_fingerprint'],
                                   'source_attempt_id': source['attempt_id'] if source else None,
@@ -216,7 +267,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         payload = _checkpoint(updated, stage)
                         if getattr(recorder, 'sampling_checkpoints', None):
                             payload['sampling_implementation_version'] = recorder.sampling_checkpoints.source_version
-                        trace = api_trace(store.iter_events(attempt))
+                        trace = api_trace(store.iter_events(attempt, kinds=TRACE_KINDS))
                         if not trace['complete']:
                             raise RuntimeError('Stage finished with incomplete API trace')
                         if 'sampling' in trace:

@@ -51,6 +51,18 @@ def _item(instance_id: str = "item_1", **changes: object) -> SimpleNamespace:
 
 
 class LoadContractsTest(TestCase):
+    def test_generic_original_integer_id_does_not_match_string_record(self):
+        from app.dataset.dataset import DataItem
+        item = DataItem(question_id=7, question='Question one?', evidence='Evidence one.',
+                        database_id='database_one', gold_sql='', database_path='db', database_schema={})
+        path = self._write([_record(7), _record('7', question='String identity')])
+        loaded = load_contracts({'spider/dev': path}, [('spider/dev', item)])
+        self.assertEqual(list(loaded), ['spider/dev/i:7'])
+        self.assertEqual(loaded['spider/dev/i:7']['question'], 'Question one?')
+        path = self._write([_record('7')])
+        with self.assertRaisesRegex(ValueError, 'missing'):
+            load_contracts({'spider/dev': path}, [('spider/dev', item)])
+
     def setUp(self) -> None:
         self.temporary_directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary_directory.cleanup)

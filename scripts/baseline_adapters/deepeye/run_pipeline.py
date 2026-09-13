@@ -5,7 +5,8 @@ The caller installs PostgreSQL support and TraceRecorder for the whole invocatio
 """
 from __future__ import annotations
 
-from collections import deque
+from collections import deque, defaultdict
+from dataclasses import dataclass
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 from contextlib import ExitStack, nullcontext
 import copy
@@ -18,6 +19,7 @@ from .precompute_cache import fingerprint
 from .run_store import restore_jsonable, to_jsonable
 from .run_resources import close_runners, protect_schema_profiles, instrument_native_pools, native_stage_work
 from .run_usage import sampling_completeness
+from .workloads import task_key
 
 STAGE_METHODS = {
     'schema_linking': '_link_tables_and_columns',
@@ -31,13 +33,87 @@ _CONSTRUCTOR_LOCK = threading.Lock()
 _PIPELINE_LOCK = threading.Lock()
 
 
-def task_key(variant, item):
-    if variant not in ('lite', 'full'):
-        raise ValueError('Unknown BIRD-Interact variant')
-    return f'{variant}/{item.instance_id}'
+def input_identity(manifest, manifest_digest, snapshot):
+    manifest_value = (manifest_digest if manifest.get('fingerprint_algorithm') == 'manifest-digest-v2'
+                      else manifest)
+    return fingerprint({'manifest': manifest_value, 'input': snapshot})
 
 
-def select_unfinished(store, tasks):
+@dataclass
+class PreparedRun:
+    store: object
+    revision: tuple
+    manifest: dict
+    manifest_digest: str
+    plans: dict
+    attempts: dict
+    verification: dict
+
+    def check(self, store):
+        if self.store is not store:
+            raise ValueError('Prepared state belongs to a different RunStore')
+        if self.revision != store._database_revision():
+            raise ValueError('Prepared state is stale for the current RunStore')
+
+
+def prepare_run(store, tasks, *, selected_keys=None, checkpoints=None):
+    """Verify the whole store once and restore only selected canonical prefixes."""
+    with store._read_snapshot():
+        verification = store.verify()
+        if not verification['ok']:
+            raise ValueError('RunStore verification failed before preparation')
+        manifest, rows = store.manifest, defaultdict(list)
+        for row in store.attempts():
+            rows[row['item_key']].append(row)
+        plans, seen = {}, set()
+        selected = None if selected_keys is None else set(selected_keys)
+        for partition, original in tasks:
+            key = task_key(partition, original)
+            if key in seen:
+                raise ValueError('Duplicate task identifier')
+            seen.add(key)
+            if selected is not None and key not in selected:
+                continue
+            if original.gold_sql:
+                raise ValueError('Target gold SQL must not be available to this pipeline')
+            if any(getattr(original, field) is not None for field in
+                   ('final_linked_tables_and_columns', 'sql_candidates', 'sql_candidates_after_revision', 'final_selected_sql')):
+                raise ValueError('Use pristine precomputed inputs; stage state comes only from RunStore')
+            state = copy.deepcopy(original)
+            initial = identity = input_identity(manifest, store.manifest_fingerprint,
+                to_jsonable(original.model_dump(exclude={'gold_sql'})))
+            completed = {(row['stage'], row['input_fingerprint']): row for row in rows[key]
+                         if row['status'] == 'succeeded'}
+            stage_inputs = defaultdict(set)
+            for stage_name, recorded_hash in completed:
+                stage_inputs[stage_name].add(recorded_hash)
+            reused, remaining = [], ()
+            for index, stage in enumerate(STAGES):
+                stage_hash = fingerprint({'input': identity, 'stage': stage})
+                if stage_inputs[stage] - {stage_hash}:
+                    raise ValueError(f'Native checkpoint input fingerprint mismatch: {key}/{stage}')
+                prior = completed.get((stage, stage_hash))
+                if prior is None:
+                    remaining = STAGES[index:]
+                    if any(row['status'] == 'succeeded' and row['stage'] in STAGES[index + 1:] for row in rows[key]):
+                        raise ValueError(f'Native successful stage outside canonical prefix: {key}')
+                    break
+                if checkpoints is not None:
+                    checkpoints.validate_stage(prior)
+                _restore(state, stage, prior['payload'])
+                if not _valid_output(state, stage):
+                    raise ValueError(f'Invalid completed checkpoint for {key}/{stage}')
+                identity = fingerprint({'input': stage_hash, 'output': prior['payload']})
+                reused.append({'stage': stage, 'attempt_id': prior['attempt_id'], 'reused': True})
+            plans[key] = {'state': state, 'initial_identity': initial, 'identity': identity,
+                          'reused': reused, 'remaining': remaining, 'original': original}
+        if selected is not None and not selected.issubset(seen):
+            raise ValueError('Execution item selection is outside the frozen inputs')
+        return PreparedRun(store, store._database_revision(), manifest, store.manifest_fingerprint,
+                           plans, dict(rows), verification)
+
+
+def select_unfinished(store, tasks, *, prepared=None):
     """Validate canonical prefixes and seal only provable interrupted masters.
 
     Caller holds the RunStore writer lock and has checked the FULL manifest.
@@ -46,33 +122,24 @@ def select_unfinished(store, tasks):
     """
     if store._lock_file is None:
         raise ValueError('Unfinished selection requires the RunStore writer lock')
-    if not store.verify()['ok']:
-        raise ValueError('RunStore verification failed before recovery')
-    attempts = store.attempts()
+    tasks = list(tasks)
+    prepared = prepared or prepare_run(store, tasks)
+    prepared.check(store)
     selected, report, seals = [], {'selected': [], 'terminal': {}, 'sealed': []}, []
     for variant, original in tasks:
         key = task_key(variant, original)
-        rows = [row for row in attempts if row['item_key'] == key]
+        plan = prepared.plans[key]
+        rows = prepared.attempts.get(key, [])
         masters = [row for row in rows if row['stage'] == 'pipeline']
         master = masters[-1] if masters else None
-        state = copy.deepcopy(original)
-        identity = fingerprint({'manifest': store.manifest, 'input': to_jsonable(original.model_dump(exclude={'gold_sql'}))})
+        identity = plan['initial_identity']
         master_hash = fingerprint({'input': identity, 'stage': 'pipeline'})
         if master and master['input_fingerprint'] != master_hash:
             raise ValueError(f'Native master input mismatch: {key}')
-        links, terminal, failed_stage = [], 'succeeded', None
-        for index, stage in enumerate(STAGES):
+        links, terminal, failed_stage = list(plan['reused']), 'succeeded', None
+        identity = plan['identity']
+        for stage in plan['remaining'][:1]:
             input_hash = fingerprint({'input': identity, 'stage': stage})
-            prior = store.completed(key, stage, input_hash)
-            if prior:
-                _restore(state, stage, prior['payload'])
-                if not _valid_output(state, stage):
-                    raise ValueError(f'Invalid native recovery checkpoint: {key}/{stage}')
-                links.append({'stage': stage, 'attempt_id': prior['attempt_id'], 'reused': True})
-                identity = fingerprint({'input': input_hash, 'output': prior['payload']})
-                continue
-            if any(row['status'] == 'succeeded' and row['stage'] in STAGES[index + 1:] for row in rows):
-                raise ValueError(f'Native successful stage outside canonical prefix: {key}')
             failures = [row for row in rows if row['stage'] == stage and
                         row['input_fingerprint'] == input_hash and row['status'] == 'failed']
             if failures:
@@ -117,6 +184,7 @@ def select_unfinished(store, tasks):
         store.append_event(attempt_id, 'pipeline_recovery_seal', {
             'reason': 'committed_terminal_stage_chain_without_master_finish', 'status': status})
         store.finish_attempt(attempt_id, status, payload)
+    prepared.revision = store._database_revision()
     return selected, report
 
 
@@ -178,7 +246,7 @@ def _valid_output(item, stage):
     return item.is_stage_complete(stage)
 
 
-def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_controller=None, *, runtime=None):
+def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_controller=None, *, runtime=None, prepared=None):
     """Run/resume four stages, appending attempts and committing each completed item.
 
     Inputs must be pristine, gold-free precomputed DataItems. Failed item mutations
@@ -203,47 +271,24 @@ def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_control
         if slot_controller is None:
             from .run_slots import PipelineSlots
             slot_controller = PipelineSlots(fixed_limit=workers)
-        return _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runtime)
+        prepared = prepared or prepare_run(store, tasks, checkpoints=getattr(recorder, 'sampling_checkpoints', None))
+        prepared.check(store)
+        return _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runtime, prepared)
     finally:
         _PIPELINE_LOCK.release()
 
 
-def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runtime=None):
+def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runtime=None, prepared=None):
     from app.llm.sampling import SamplingPaused
     stop = getattr(recorder, 'stop_event', threading.Event())
-    states, identities = {}, {}
-    for variant, item in tasks:
-        key = task_key(variant, item)
-        if key in states:
-            raise ValueError('Duplicate variant/instance identifier')
-        if item.gold_sql:
-            raise ValueError('Target gold SQL must not be available to this pipeline')
-        if any(getattr(item, field) is not None for field in
-               ('final_linked_tables_and_columns', 'sql_candidates', 'sql_candidates_after_revision', 'final_selected_sql')):
-            raise ValueError('Use pristine precomputed inputs; stage state comes only from RunStore')
-        snapshot = item.model_dump(exclude={'gold_sql'})
-        identities[key] = fingerprint({'manifest': store.manifest, 'input': to_jsonable(snapshot)})
-        states[key] = copy.deepcopy(item)
-    # Restore and validate every available prefix serially before constructing
-    # resources or permitting paid work on any question.
-    initial_identities = dict(identities)
-    remaining, reused = {}, {}
-    for key, state in states.items():
-        reused[key] = []
-        for index, stage in enumerate(STAGES):
-            input_hash = fingerprint({'input': identities[key], 'stage': stage})
-            prior = store.completed(key, stage, input_hash)
-            if prior:
-                if getattr(recorder, 'sampling_checkpoints', None):
-                    recorder.sampling_checkpoints.validate_stage(prior)
-                _restore(state, stage, prior['payload'])
-                if not _valid_output(state, stage):
-                    raise ValueError(f'Invalid completed checkpoint for {key}/{stage}')
-                identities[key] = fingerprint({'input': input_hash, 'output': prior['payload']})
-                reused[key].append({'stage': stage, 'attempt_id': prior['attempt_id'], 'reused': True})
-            else:
-                remaining[key] = STAGES[index:]
-                break
+    keys = [task_key(partition, item) for partition, item in tasks]
+    if len(keys) != len(set(keys)) or not set(keys).issubset(prepared.plans):
+        raise ValueError('Duplicate or unprepared execution task')
+    states = {key: prepared.plans[key]['state'] for key in keys}
+    identities = {key: prepared.plans[key]['identity'] for key in keys}
+    initial_identities = {key: prepared.plans[key]['initial_identity'] for key in keys}
+    reused = {key: prepared.plans[key]['reused'] for key in keys}
+    remaining = {key: prepared.plans[key]['remaining'] for key in keys if prepared.plans[key]['remaining']}
 
     failed, runners, resources, paused = {}, {}, [], set()
     pending = deque(remaining)
@@ -320,7 +365,8 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runti
                             paused.add(key)
                             status = 'paused'
                             break
-                        sampling = sampling_completeness(store.iter_events(attempt_id))
+                        sampling = sampling_completeness(store.iter_events(attempt_id,
+                            kinds=('sampling_group_start', 'sampling_group_result')))
                         payload = _checkpoint(target, stage)
                         if getattr(recorder, 'sampling_checkpoints', None):
                             payload['sampling_implementation_version'] = recorder.sampling_checkpoints.source_version

@@ -50,6 +50,43 @@ def make_source(path, *, calls=1, stage='sql_revision', partial=False, bad_hash=
 
 
 class SourceTests(OfflineTestCase):
+    def test_generic_native_source_preserves_type_and_partition(self):
+        from app.dataset.dataset import DataItem
+        from scripts.baseline_adapters.deepeye.run_pipeline import run_pipeline
+        from tests.test_deepeye_run_pipeline import FakeTrace, Factory
+        from scripts.baseline_adapters.deepeye.workloads import external_id
+        original = make_item('a')
+        native = DataItem(**original.model_dump(exclude={'instance_id'}))
+        native.question_id = 7
+        binding = {'task_key': 'spider/dev/i:7', 'partition': 'spider/dev', 'external_id': 7,
+                   'database_id': 'db', 'benchmark': 'spider', 'split': 'dev'}
+        data = {'format': 'deepeye-run-v2', 'fingerprint_algorithm': 'manifest-digest-v2',
+                'workflow': list(STAGES), 'items': [binding],
+                'effective_config': {}, 'sources': {}}
+        def factory(stage, items):
+            from types import SimpleNamespace
+            def execute(item):
+                complete_stage(item, stage)
+                setattr(item, stage + '_llm_cost', cost(0))
+            from scripts.baseline_adapters.deepeye.run_pipeline import STAGE_METHODS
+            return SimpleNamespace(**{STAGE_METHODS[stage]: execute, '_clean_up': lambda: None})
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'native'
+            with RunStore.create(path, data) as store:
+                run_pipeline(store, [('spider/dev', native)], factory, FakeTrace())
+            snapshot = snapshot_source(path, [('spider/dev', native)], 'sql_revision')
+            restored = restore_seed(snapshot['source_checkpoints']['spider/dev/i:7'], 'sql_revision')
+            self.assertIs(type(restored), DataItem)
+            self.assertEqual(external_id(restored), 7)
+            from .test_runner import experiment_manifest
+            experiment = experiment_manifest(snapshot)
+            self.assertIs(validate_manifest(experiment), experiment)
+            experiment['items'][0]['external_id'] = '7'
+            experiment['source_manifest']['items'][0]['external_id'] = '7'
+            experiment['source_manifest_fingerprint'] = fingerprint(experiment['source_manifest'])
+            with self.assertRaisesRegex(ValueError, 'identity'):
+                validate_manifest(experiment)
+
     def test_complete_group_marker_without_retained_sample_slots_is_not_complete(self):
         from scripts.rc_evaluation.deepeye.source import api_trace
         events = [

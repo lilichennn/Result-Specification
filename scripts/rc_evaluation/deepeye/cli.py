@@ -2,10 +2,8 @@
 from __future__ import annotations
 
 import argparse
-import copy
 import hashlib
 import json
-import os
 from pathlib import Path
 import sys
 import threading
@@ -19,9 +17,10 @@ for directory in (CODE_ROOT, CODE_ROOT / 'baselines/DeepEye-SQL'):
 from scripts.baseline_adapters.deepeye.run_pipeline import STAGES
 from scripts.baseline_adapters.deepeye.run_store import RunStore, to_jsonable
 from scripts.baseline_adapters.deepeye.run_usage import observed_usage
-from scripts.deepeye_bird_interact_run import prepare_inputs, build_effective_config, code_source_hashes, bounded_runner_factory, build_runtime_config, admission_context, admission_settings, runtime_limits, sampling_runtime
-from scripts.deepeye_bird_interact_smoke import read_environment
-from scripts.rc_evaluation.deepeye.source import digest, snapshot_source, validate_manifest
+from scripts.deepeye_run import (prepare_inputs, build_effective_config, code_source_hashes, bounded_runner_factory,
+    build_runtime_config, admission_context, admission_settings, runtime_limits, sampling_runtime,
+    read_environment, backend_context)
+from scripts.rc_evaluation.deepeye.source import binding_partition, snapshot_source, validate_manifest
 
 
 def production_hash():
@@ -57,7 +56,7 @@ def runtime_args(effective, overrides=None):
         'pg_concurrency': admission['postgres_limit'],
         'max_tokens': chat['max_tokens'],
         'thinking_budget': chat.get('thinking_budget'), 'chat_timeout': chat['timeout_seconds'],
-        'extractor_retries': chat['extractor_max_retries'], 'pg_sslmode': effective['postgres']['sslmode'],
+        'extractor_retries': chat['extractor_max_retries'], 'pg_sslmode': effective.get('postgres', {}).get('sslmode', 'prefer'),
         'direct_linking_budget': stages['schema_linking']['direct_linking_sampling_budget'],
         'reversed_linking_budget': stages['schema_linking']['reversed_linking_sampling_budget'],
         'dc_generation_budget': stages['sql_generation']['dc_sampling_budget'],
@@ -80,6 +79,7 @@ def runtime_args(effective, overrides=None):
     if values['chat_timeout'] > 1200:
         raise ValueError('chat_timeout exceeds the 1200-second bound')
     result = SimpleNamespace(**values)
+    result.workload = effective.get('workload')
     runtime_limits(result)
     return result
 
@@ -93,21 +93,61 @@ def _check_source_config(source_manifest, environment, args):
     return effective
 
 
+def _partition_path(value):
+    partition, separator, raw_path = value.partition('=')
+    if not separator or not partition or not raw_path:
+        raise argparse.ArgumentTypeError('source must be PARTITION=PATH')
+    return partition, Path(raw_path)
+
+
+def _partition_paths(pairs, legacy, label):
+    paths = {}
+    for partition, path in pairs or ():
+        if partition in paths:
+            raise ValueError(f'Duplicate {label} source for partition {partition!r}')
+        paths[partition] = path
+    for partition, path in legacy:
+        if path is not None:
+            if partition in paths:
+                raise ValueError(f'Duplicate {label} source for partition {partition!r}')
+            paths[partition] = path
+    return paths
+
+
+def _contract_paths(args, baseline):
+    paths = _partition_paths(getattr(args, 'rc', ()),
+        (('lite', args.rc_lite), ('full', args.rc_full)), 'RC')
+    workload = (baseline.get('sources', {}).get('workload') or
+                baseline.get('effective_config', {}).get('workload'))
+    if workload and workload.get('rc'):
+        paths.setdefault(workload['partition'], Path(workload['rc']))
+    return paths
+
+
+def _evaluation_paths(args):
+    return _partition_paths(getattr(args, 'reference', ()),
+        (('lite', args.reference_lite), ('full', args.reference_full)), 'reference')
+
+
 def prepare_command(args):
     with RunStore.open(args.source_run.resolve(), read_only=True) as source:
         baseline = source.manifest
-    environment = read_environment(args.env_file.resolve())
     runtime = runtime_args(baseline['effective_config'], args)
+    environment = read_environment(args.env_file.resolve(), args=runtime)
     effective = _check_source_config(baseline, environment, runtime)
     locators = baseline['sources']['locators']
     keys = args.item_keys or [row['task_key'] for row in baseline['items']]
-    tasks, bindings, sources = prepare_inputs(
-        args.precompute_dir or Path(locators['precompute_dir']),
-        args.few_shot_source or Path(locators['few_shot_source']),
-        variants=args.variant, item_keys=keys)
-    for field in ('precompute_inputs_content_hash', 'precompute_config_content_hash', 'few_shot_source_sha256', 'code'):
-        if sources.get(field) != baseline['sources'].get(field):
-            raise ValueError(f'Input source differs from baseline: {field}')
+    workload = baseline['sources'].get('workload') or baseline['effective_config'].get('workload')
+    if workload is not None:
+        tasks, bindings, sources = prepare_inputs(
+            workload=workload, variants=args.variant, item_keys=keys)
+    else:
+        tasks, bindings, sources = prepare_inputs(
+            args.precompute_dir or Path(locators['precompute_dir']),
+            args.few_shot_source or Path(locators['few_shot_source']),
+            variants=args.variant, item_keys=keys)
+    if sources != baseline['sources']:
+        raise ValueError('Input sources differ from the frozen native baseline')
     snapshot = snapshot_source(args.source_run, tasks, args.target_stage,
                                continue_downstream=args.continue_downstream)
     if {row['task_key']: row for row in bindings} != {row['task_key']: row for row in snapshot['items']}:
@@ -115,12 +155,12 @@ def prepare_command(args):
     contracts = {}
     if args.condition == 'rc':
         from scripts.rc_evaluation.deepeye.contracts import load_contracts
-        paths = {split: path for split, path in (('lite', args.rc_lite), ('full', args.rc_full)) if path is not None}
-        contracts = load_contracts(paths, tasks)
-    elif args.rc_lite is not None or args.rc_full is not None:
+        contracts = load_contracts(_contract_paths(args, baseline), tasks)
+    elif args.rc_lite is not None or args.rc_full is not None or args.rc:
         raise ValueError('RC files are only accepted for condition=rc')
     manifest = {
-        'format': 'deepeye-rc-evaluation-run-v1', 'target_stage': args.target_stage,
+        'format': 'deepeye-rc-evaluation-run-v1', 'fingerprint_algorithm': 'manifest-digest-v2',
+        'target_stage': args.target_stage,
         'condition': args.condition, 'repeat_id': args.repeat_id,
         'continue_downstream': args.continue_downstream, 'item_count': len(tasks),
         'effective_config': effective, 'sources': {**sources, 'rc_evaluation_code_sha256': production_hash()},
@@ -135,8 +175,13 @@ def prepare_command(args):
                 'verification': store.verify()}
 
 
-def _check_frozen(store, environment):
-    manifest = validate_manifest(store.manifest)
+def _check_frozen(store, environment, *, prepared=None):
+    from scripts.rc_evaluation.deepeye.runner import prepare_experiment
+    prepared = prepared or prepare_experiment(store)
+    prepared.check(store)
+    manifest = prepared.manifest
+    if set(prepared.plans) != set(manifest['source_checkpoints']):
+        raise ValueError('Frozen execution check requires the full prepared experiment')
     if production_hash() != manifest['sources']['rc_evaluation_code_sha256']:
         raise ValueError('RC experiment production source hashes changed; prepare a new run')
     args = runtime_args(manifest['effective_config'])
@@ -145,28 +190,29 @@ def _check_frozen(store, environment):
         raise ValueError('Runtime configuration differs from prepared experiment')
     if manifest['condition'] == 'rc':
         from scripts.rc_evaluation.deepeye.contracts import load_contracts
-        from scripts.rc_evaluation.deepeye.source import restore_seed
         paths = {}
         tasks = []
-        for key, snapshot in manifest['source_checkpoints'].items():
-            split = key.split('/')[0]
+        bindings = {row['task_key']: row for row in manifest['items']}
+        for key in manifest['source_checkpoints']:
+            partition = binding_partition(bindings[key])
             contract = manifest['contracts'][key]
             path = Path(contract['source_file'])
-            if split in paths and paths[split] != path:
-                raise ValueError('Multiple RC sources for one split')
-            paths[split] = path
-            tasks.append((split, restore_seed(snapshot, manifest['target_stage'])))
+            if partition in paths and paths[partition] != path:
+                raise ValueError('Multiple RC sources for one partition')
+            paths[partition] = path
+            tasks.append((partition, prepared.plans[key]['state']))
         if load_contracts(paths, tasks) != manifest['contracts']:
             raise ValueError('RC source records changed since preparation')
     return args
 
 
-def execute_run(store, environment, *, item_keys=None):
+def execute_run(store, environment, *, item_keys=None, prepared=None):
     """The sole production execution path, always using the bounded factory."""
-    from scripts.rc_evaluation.deepeye.runner import run_experiment, _preflight
+    from scripts.rc_evaluation.deepeye.runner import run_experiment, _preflight, prepare_experiment
     from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
-    args = _check_frozen(store, environment)
-    _, _, needed = _preflight(store, item_keys=item_keys)
+    prepared = prepared or prepare_experiment(store)
+    args = _check_frozen(store, environment, prepared=prepared)
+    _, _, needed = _preflight(store, item_keys=item_keys, prepared=prepared)
     if item_keys == []:
         return {'succeeded': 0, 'failed': 0, 'executed': False}
     secrets = [environment.get(key) for key in ('DASH_API_KEY', 'EMBEDDING_API_KEY', 'PG_PASSWORD')]
@@ -177,39 +223,24 @@ def execute_run(store, environment, *, item_keys=None):
         with admission_context(recorder, args, population=len(store.manifest['items'])) as controllers, \
                 sampling_runtime(recorder, args) as runtime:
             result = run_experiment(store, no_factory, recorder, runtime=runtime,
-                                    slot_controller=controllers['pipeline'], item_keys=item_keys)
+                                    slot_controller=controllers['pipeline'], item_keys=item_keys,
+                                    prepared=prepared)
             result['runtime'] = runtime.snapshot()
             result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
             return result
-    from scripts.baseline_adapters.deepeye.hooks import install_postgres_support
     from scripts.rc_evaluation.deepeye.injection import install_rc_prompts
     config = build_runtime_config(environment, args, store.run_dir)
-    fields = ('PG_HOST', 'PG_PORT', 'PG_USER', 'PG_PASSWORD', 'PG_SSLMODE')
-    previous = {key: os.environ.get(key) for key in fields}
-    os.environ.update({key: environment[key] for key in fields[:-1]})
-    os.environ['PG_SSLMODE'] = args.pg_sslmode
-    undo = None
-    try:
-        undo = install_postgres_support()
+    with backend_context(environment, args):
         with recorder.install(), install_rc_prompts(), \
                 admission_context(recorder, args, population=len(store.manifest['items'])) as controllers, \
                 sampling_runtime(recorder, args) as runtime:
             factory = bounded_runner_factory(config, args.chat_timeout, runtime=runtime)
             result = run_experiment(store, factory, recorder, runtime=runtime,
-                                    slot_controller=controllers['pipeline'], item_keys=item_keys)
+                                    slot_controller=controllers['pipeline'], item_keys=item_keys,
+                                    prepared=prepared)
             result['runtime'] = runtime.snapshot()
             result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
             return result
-    finally:
-        try:
-            if undo is not None:
-                undo()
-        finally:
-            for key, value in previous.items():
-                if value is None:
-                    os.environ.pop(key, None)
-                else:
-                    os.environ[key] = value
 
 
 def build_parser():
@@ -237,6 +268,8 @@ def build_parser():
                          help='Legacy adaptive policy; rejected in the shared runtime')
     for name in ('rc-lite', 'rc-full'):
         prepare.add_argument('--' + name, type=Path)
+    prepare.add_argument('--rc', action='append', type=_partition_path, metavar='PARTITION=PATH',
+                         help='RC source for an exact workload partition; repeat as needed')
     for name in ('workers', 'inner-workers', 'pg-concurrency', 'max-tokens', 'thinking-budget', 'chat-timeout',
                  'request-limit', 'request-workers', 'coordinator-workers', 'http-connections',
                  'extractor-retries', 'direct-linking-budget', 'reversed-linking-budget', 'dc-generation-budget',
@@ -259,6 +292,9 @@ def build_parser():
             command.add_argument('--output-dir', type=Path, required=True)
             command.add_argument('--reference-lite', type=Path)
             command.add_argument('--reference-full', type=Path)
+            command.add_argument('--reference', action='append', type=_partition_path,
+                                 metavar='PARTITION=PATH',
+                                 help='Reference source for an exact workload partition; repeat as needed')
             command.add_argument('--database-version', required=True)
             command.add_argument('--source-run', type=Path)
     compare = commands.add_parser('compare')
@@ -277,16 +313,18 @@ def main(argv=None):
         elif args.command == 'prepare':
             result = prepare_command(args)
         elif args.command in ('run', 'resume'):
-            environment = read_environment(args.env_file.resolve())
             with RunStore.open(args.run_dir.resolve()) as store:
+                frozen_args = runtime_args(store.manifest['effective_config'])
+                environment = read_environment(args.env_file.resolve(), args=frozen_args)
+                from scripts.rc_evaluation.deepeye.runner import prepare_experiment
+                prepared = prepare_experiment(store)
                 if getattr(args, 'unfinished_only', False):
                     from scripts.rc_evaluation.deepeye.runner import unfinished_keys
-                    _check_frozen(store, environment)
-                    selected = unfinished_keys(store)
-                    result = execute_run(store, environment, item_keys=selected)
+                    selected = unfinished_keys(store, prepared=prepared)
+                    result = execute_run(store, environment, item_keys=selected, prepared=prepared)
                     result['recovery'] = {'selected': selected}
                 else:
-                    result = execute_run(store, environment)
+                    result = execute_run(store, environment, prepared=prepared)
                 verification = store.verify()
                 if not verification['ok']:
                     raise RuntimeError('Experiment RunStore verification failed after execution')
@@ -308,8 +346,7 @@ def main(argv=None):
                               'target_stage': store.manifest['target_stage'], 'condition': store.manifest['condition']}
         elif args.command == 'evaluate':
             from scripts.rc_evaluation.deepeye.evaluation import evaluate_run
-            references = {split: path for split, path in
-                          (('lite', args.reference_lite), ('full', args.reference_full)) if path is not None}
+            references = _evaluation_paths(args)
             result = evaluate_run(args.run_dir.resolve(), args.output_dir.resolve(), references,
                                   env_file=args.env_file.resolve(), database_version=args.database_version,
                                   source_run_dir=args.source_run)

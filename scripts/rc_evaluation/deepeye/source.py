@@ -2,12 +2,17 @@
 from __future__ import annotations
 
 import copy
+from collections import defaultdict
 from pathlib import Path
 
 from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
-from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, _restore, _valid_output, task_key
+from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, _restore, _valid_output, task_key, input_identity
 from scripts.baseline_adapters.deepeye.run_store import RunStore, restore_jsonable, to_jsonable
+from scripts.baseline_adapters.deepeye.workloads import dump_item, restore_item, external_id
 from scripts.baseline_adapters.deepeye.run_usage import sampling_completeness
+
+TRACE_KINDS = ('api_request', 'api_response', 'api_error', 'sampling_group_start',
+               'sampling_group_result', 'sample_result', 'sample_attempt_started', 'sample_attempt')
 
 
 def digest(value):
@@ -106,7 +111,7 @@ def _source_trace(store, row, stage, seen=()):
             raise ValueError('Cyclic source inheritance')
         with RunStore.open(Path(identity[0]), read_only=True) as prior:
             with prior._read_snapshot():
-                if not prior.verify()['ok'] or digest(prior.manifest) != provenance['source_manifest_fingerprint']:
+                if not prior.verify()['ok'] or prior.manifest_fingerprint != provenance['source_manifest_fingerprint']:
                     raise ValueError('Inherited source manifest fingerprint mismatch')
                 matches = [candidate for candidate in prior.attempts() if candidate['attempt_id'] == identity[1]]
                 if len(matches) != 1 or matches[0]['status'] != 'succeeded':
@@ -116,7 +121,7 @@ def _source_trace(store, row, stage, seen=()):
                         or digest(original['payload']) != provenance['source_payload_fingerprint']):
                     raise ValueError('Inherited source payload fingerprint mismatch')
                 return _source_trace(prior, original, stage, (*seen, identity))
-    result = api_trace(store.iter_events(row['attempt_id']))
+    result = api_trace(store.iter_events(row['attempt_id'], kinds=TRACE_KINDS))
     if not result['complete']:
         raise ValueError('Source API trace has unanswered requests or inconsistent sampling records')
     if not result['requests'] and not result.get('restored_samples'):
@@ -144,8 +149,8 @@ def _restore_checked(item, stage, payload):
 
 
 def restore_seed(snapshot, target_stage):
-    from scripts.baseline_adapters.deepeye.dataset import BirdInteractDataItem
-    item = BirdInteractDataItem(**restore_jsonable(snapshot['input']))
+    item = restore_item({'type': snapshot.get('input_type', 'bird_interact'),
+                         'data': restore_jsonable(snapshot['input'])})
     _pristine(item)
     for stage in STAGES[:STAGES.index(target_stage)]:
         _restore_checked(item, stage, snapshot['stages'][stage]['payload'])
@@ -164,19 +169,24 @@ def snapshot_source(source_run, tasks, target_stage, *, continue_downstream=Fals
             if not store.verify()['ok']:
                 raise ValueError('Source RunStore verification failed')
             source_manifest = store.manifest
-            if source_manifest.get('format') != 'deepeye-bird-interact-run-v1' or source_manifest.get('workflow') != list(STAGES):
+            if source_manifest.get('format') not in ('deepeye-bird-interact-run-v1', 'deepeye-run-v2') or source_manifest.get('workflow') != list(STAGES):
                 raise ValueError('Source must be a native four-stage RunStore')
             bindings = {row['task_key']: row for row in source_manifest['items']}
             if len(bindings) != len(source_manifest['items']):
                 raise ValueError('Duplicate source item binding')
             checkpoints = {}
+            completed = {(row['item_key'], row['stage'], row['input_fingerprint']): row
+                         for row in store.attempts() if row['status'] == 'succeeded'}
+            stage_inputs = defaultdict(set)
+            for item_key, stage, recorded_hash in completed:
+                stage_inputs[item_key, stage].add(recorded_hash)
             for variant, original in tasks:
                 _pristine(original)
                 key = task_key(variant, original)
                 if key in checkpoints or key not in bindings:
                     raise ValueError(f'Duplicate or unknown source task: {key}')
                 snapshot = to_jsonable(original.model_dump(exclude={'gold_sql'}))
-                identity = digest({'manifest': source_manifest, 'input': snapshot})
+                identity = input_identity(source_manifest, store.manifest_fingerprint, snapshot)
                 state = copy.deepcopy(original)
                 records = {}
                 upstream_hash = None
@@ -185,7 +195,9 @@ def snapshot_source(source_run, tasks, target_stage, *, continue_downstream=Fals
                     if stage == target_stage:
                         upstream_hash = digest(state.model_dump(exclude={'gold_sql'}))
                     input_hash = digest({'input': identity, 'stage': stage})
-                    prior = store.completed(key, stage, input_hash)
+                    if stage_inputs[key, stage] - {input_hash}:
+                        raise ValueError(f'Source checkpoint input fingerprint mismatch: {key}/{stage}')
+                    prior = completed.get((key, stage, input_hash))
                     if prior is None:
                         if index <= STAGES.index(target_stage):
                             raise ValueError(f'Source target/prefix not successfully completed: {key}/{stage}')
@@ -196,14 +208,30 @@ def snapshot_source(source_run, tasks, target_stage, *, continue_downstream=Fals
                                       'api_trace': _source_trace(store, prior, stage)}
                     identity = digest({'input': input_hash, 'output': prior['payload']})
                 checkpoints[key] = {'input': snapshot, 'input_sha256': digest(snapshot),
+                                    'input_type': dump_item(original)['type'],
                                     'upstream_state_sha256': upstream_hash, 'stages': records}
             return {'source_run': str(store.run_dir.resolve()), 'source_manifest': source_manifest,
-                    'source_manifest_fingerprint': digest(source_manifest),
+                    'source_manifest_fingerprint': store.manifest_fingerprint,
                     'items': [copy.deepcopy(bindings[key]) for key in sorted(checkpoints)],
                     'source_checkpoints': checkpoints}
 
 
-def validate_manifest(manifest):
+def binding_partition(binding):
+    if 'partition' in binding:
+        return binding['partition']
+    if binding.get('variant') in ('lite', 'full'):
+        return binding['variant']
+    # Legacy bindings explicitly carry split rather than partition.
+    if binding.get('split') in ('lite', 'full'):
+        return binding['split']
+    if 'partition' not in binding and 'instance_id' in binding:
+        for variant in ('lite', 'full'):
+            if binding['task_key'] == f"{variant}/{binding['instance_id']}":
+                return variant
+    raise ValueError('Source binding has no explicit partition')
+
+
+def validate_manifest(manifest, *, item_keys=None, seeds=None):
     """Validate embedded source chains without consulting mutable external state."""
     if manifest.get('format') != 'deepeye-rc-evaluation-run-v1':
         raise ValueError('Not an RC experiment manifest')
@@ -215,9 +243,12 @@ def validate_manifest(manifest):
     if type(manifest.get('continue_downstream')) is not bool:
         raise ValueError('continue_downstream must be boolean')
     source = manifest['source_manifest']
-    if digest(source) != manifest['source_manifest_fingerprint']:
+    source_digest = digest(source)
+    if source_digest != manifest['source_manifest_fingerprint']:
         raise ValueError('Source manifest fingerprint mismatch')
     expected_bindings = {row['task_key']: row for row in source['items']}
+    if len(expected_bindings) != len(source['items']):
+        raise ValueError('Duplicate source item binding')
     keys = [row['task_key'] for row in manifest['items']]
     if not keys or len(set(keys)) != len(keys) or set(keys) != set(manifest['source_checkpoints']):
         raise ValueError('Experiment item bindings differ from source checkpoints')
@@ -230,20 +261,31 @@ def validate_manifest(manifest):
     for key, snapshot in manifest['source_checkpoints'].items():
         if digest(snapshot['input']) != snapshot['input_sha256']:
             raise ValueError('Source input fingerprint mismatch')
-        seed = restore_seed(snapshot, target)
-        if task_key(key.split('/')[0], seed) != key or seed.database_id != expected_bindings[key]['database_id']:
+        binding = expected_bindings[key]
+        partition = binding_partition(binding)
+        raw = restore_jsonable(snapshot['input'])
+        identity_field = 'question_id' if snapshot.get('input_type') == 'native' else 'instance_id'
+        identity = raw[identity_field]
+        expected_id = binding.get('external_id', binding.get('instance_id'))
+        if type(identity) is not type(expected_id) or identity != expected_id or raw['database_id'] != binding['database_id']:
             raise ValueError('Source DataItem identity differs from binding')
-        if digest(seed.model_dump(exclude={'gold_sql'})) != snapshot['upstream_state_sha256']:
-            raise ValueError('Upstream state fingerprint mismatch')
+        if item_keys is None or key in item_keys:
+            seed = restore_seed(snapshot, target)
+            if task_key(partition, seed) != key:
+                raise ValueError('Source DataItem identity differs from binding')
+            if digest(seed.model_dump(exclude={'gold_sql'})) != snapshot['upstream_state_sha256']:
+                raise ValueError('Upstream state fingerprint mismatch')
+            if seeds is not None:
+                seeds[key] = seed
         if manifest['condition'] == 'rc':
             contract = contracts[key]
-            for name, expected in (('task_key', key), ('db_id', seed.database_id),
-                                   ('question', seed.question), ('evidence', seed.evidence)):
+            for name, expected in (('task_key', key), ('db_id', raw['database_id']),
+                                   ('question', raw['question']), ('evidence', raw['evidence'])):
                 if contract.get(name) != expected:
                     raise ValueError(f'RC contract {name} differs from source input')
             from .contracts import render_rc_block
             render_rc_block(contract)
-        identity = digest({'manifest': source, 'input': snapshot['input']})
+        identity = input_identity(source, source_digest, snapshot['input'])
         required = STAGES[:STAGES.index(target) + 1]
         if any(stage not in snapshot['stages'] for stage in required):
             raise ValueError('Missing source target/prefix')

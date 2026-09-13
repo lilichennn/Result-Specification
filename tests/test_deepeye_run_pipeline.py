@@ -224,17 +224,16 @@ class PipelineTest(unittest.TestCase):
     def test_invalid_later_prefix_is_rejected_before_any_constructor(self):
         pipeline, Store = self.modules()
         with tempfile.TemporaryDirectory() as temp, Store.create(Path(temp) / 'run', {}) as store:
-            pipeline.run_pipeline(store, [('lite', item('B'))], Factory(), FakeTrace())
-            actual_completed = store.completed
-            def completed(key, stage, digest):
-                prior = actual_completed(key, stage, digest)
-                if prior and stage == 'sql_generation':
-                    prior['payload']['artifact']['sql_candidates'] = None
-                return prior
-            with patch.object(store, 'completed', side_effect=completed):
-                with self.assertRaises(ValueError):
-                    pipeline.run_pipeline(store, [('lite', item(k)) for k in 'AB'],
-                        lambda *args: self.fail('Preflight must precede constructors'), FakeTrace())
+            from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
+            from scripts.baseline_adapters.deepeye.run_store import to_jsonable
+            target = item('B')
+            identity = fingerprint({'manifest': {}, 'input': to_jsonable(target.model_dump(exclude={'gold_sql'}))})
+            stage_hash = fingerprint({'input': identity, 'stage': 'schema_linking'})
+            attempt = store.begin_attempt('lite/B', 'schema_linking', stage_hash)
+            store.finish_attempt(attempt, 'succeeded', pipeline._checkpoint(target, 'schema_linking'))
+            with self.assertRaises(ValueError):
+                pipeline.run_pipeline(store, [('lite', item(k)) for k in 'AB'],
+                    lambda *args: self.fail('Preflight must precede constructors'), FakeTrace())
 
     def test_fatal_finish_error_halts_admission_and_leaves_master_unfinished(self):
         pipeline, Store = self.modules()

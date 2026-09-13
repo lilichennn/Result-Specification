@@ -56,6 +56,9 @@ def _load_source(path: Path) -> tuple[dict[int | str, dict[str, Any]], str]:
 def _task_identity(variant: Any, item: Any) -> tuple[str, int | str, str]:
     if not isinstance(variant, str) or not variant:
         raise ValueError("task variant must be non-empty text")
+    from scripts.baseline_adapters.deepeye.workloads import external_id, task_key
+    if hasattr(item, 'model_dump'):
+        return variant, external_id(item), task_key(variant, item)
     instance_id = getattr(item, "instance_id", None)
     if (
         not isinstance(instance_id, (int, str))
@@ -143,7 +146,7 @@ def load_contracts(
             parsed[variant] = (source_file, records, file_hash)
         source_file, records, file_hash = parsed[variant]
         record = records.get(instance_id)
-        if record is None:
+        if record is None or type(record['index']) is not type(instance_id):
             raise ValueError(f"RC record is missing for {task_key}")
         contracts[task_key] = _validated_contract(
             task_key=task_key,

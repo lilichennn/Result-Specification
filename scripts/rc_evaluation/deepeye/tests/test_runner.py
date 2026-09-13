@@ -10,9 +10,11 @@ from unittest.mock import patch
 from . import OfflineTestCase
 
 from .test_source import make_source, complete_stage
-from scripts.baseline_adapters.deepeye.run_store import RunStore
-from scripts.baseline_adapters.deepeye.run_pipeline import STAGE_METHODS
+from scripts.baseline_adapters.deepeye.run_store import RunStore, to_jsonable
+from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, STAGE_METHODS, _checkpoint
+from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
 from scripts.rc_evaluation.deepeye.source import snapshot_source
+from tests.test_deepeye_run_inheritance import make_item, manifest
 
 try:
     from scripts.rc_evaluation.deepeye.runner import run_experiment
@@ -60,6 +62,59 @@ class Factory:
 
 
 class RunnerTests(OfflineTestCase):
+    def test_prepared_experiment_scales_without_repeating_cohort_work(self):
+        from scripts.rc_evaluation.deepeye import runner, source as source_module
+        for size in (5, 50, 500):
+            with self.subTest(size=size), tempfile.TemporaryDirectory() as temporary:
+                tasks = [('lite', make_item(str(index))) for index in range(size)]
+                source_path = Path(temporary) / 'source'
+                source_manifest = manifest(tasks, upgrade=True)
+                with RunStore.create(source_path, source_manifest) as source:
+                    for partition, original in tasks:
+                        state = copy.deepcopy(original)
+                        identity = fingerprint({'manifest': source_manifest,
+                            'input': to_jsonable(original.model_dump(exclude={'gold_sql'}))})
+                        for stage in STAGES:
+                            stage_hash = fingerprint({'input': identity, 'stage': stage})
+                            complete_stage(state, stage)
+                            setattr(state, stage + '_llm_cost', {
+                                'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0})
+                            payload = _checkpoint(state, stage)
+                            attempt = source.begin_attempt(f'{partition}/{original.instance_id}', stage, stage_hash)
+                            source.finish_attempt(attempt, 'succeeded', payload)
+                            identity = fingerprint({'input': stage_hash, 'output': payload})
+                frozen = snapshot_source(source_path, tasks, 'sql_revision')
+                data = experiment_manifest(frozen)
+                data['fingerprint_algorithm'] = 'manifest-digest-v2'
+                with RunStore.create(Path(temporary) / 'run', data) as store, \
+                     patch.object(store, 'verify', wraps=store.verify) as verify, \
+                     patch.object(source_module, 'restore_seed', wraps=source_module.restore_seed) as restore, \
+                     patch.object(runner, 'validate_manifest', wraps=runner.validate_manifest) as validate, \
+                     patch.object(store, 'attempts', wraps=store.attempts) as attempts:
+                    prepared = runner.prepare_experiment(store)
+                    keys = runner.unfinished_keys(store, prepared=prepared)
+                    result = runner.run_experiment(store,
+                        lambda *args: self.fail('zero-call replay allocated resources'), OfflineTrace(),
+                        item_keys=keys, prepared=prepared)
+                self.assertEqual(result['succeeded'], size)
+                self.assertEqual((verify.call_count, validate.call_count, attempts.call_count), (1, 1, 1))
+                self.assertEqual(restore.call_count, size)
+
+    def test_one_preparation_is_reused_for_unfinished_selection_and_execution(self):
+        from scripts.rc_evaluation.deepeye import runner, source as source_module
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, calls=0) as store:
+            with patch.object(store, 'verify', wraps=store.verify) as verify, \
+                 patch.object(source_module, 'restore_seed', wraps=source_module.restore_seed) as restore, \
+                 patch.object(runner, 'validate_manifest', wraps=runner.validate_manifest) as validate:
+                prepared = runner.prepare_experiment(store)
+                keys = runner.unfinished_keys(store, prepared=prepared)
+                result = runner.run_experiment(store,
+                    lambda *args: self.fail('zero-call replay allocated resources'), OfflineTrace(),
+                    item_keys=keys, prepared=prepared)
+            self.assertEqual(result['succeeded'], 1)
+            self.assertEqual((verify.call_count, validate.call_count), (1, 1))
+            self.assertLessEqual(restore.call_count, 1)
+
     def test_called_rc_target_without_injection_is_failed_with_request_evidence(self):
         from tests.test_deepeye_sampling import llm_fixture, response
         from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder

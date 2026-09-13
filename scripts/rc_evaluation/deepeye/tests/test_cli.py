@@ -6,6 +6,7 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 import socket
 import subprocess
+import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
@@ -15,7 +16,7 @@ from . import OfflineTestCase
 from .test_source import CODE, make_source
 from .test_runner import experiment_manifest
 from scripts.baseline_adapters.deepeye.run_store import RunStore
-from scripts.deepeye_bird_interact_run import build_effective_config, code_source_hashes
+from scripts.deepeye_run import build_effective_config, code_source_hashes
 try:
     from scripts.rc_evaluation.deepeye import cli
 except ImportError:
@@ -89,6 +90,20 @@ class CliTests(OfflineTestCase):
         with self.assertRaisesRegex(ValueError, 'Legacy native runtime'):
             cli.runtime_args(effective)
 
+    def test_generic_reference_paths_preserve_partition_and_reject_conflicts(self):
+        args = cli.build_parser().parse_args([
+            'evaluate', '--run-dir', 'run', '--output-dir', 'out', '--database-version', 'v1',
+            '--reference', 'spider/dev=dev.json', '--reference', 'spider/test=test.json',
+        ])
+        self.assertEqual(cli._evaluation_paths(args), {
+            'spider/dev': Path('dev.json'), 'spider/test': Path('test.json')})
+        args = cli.build_parser().parse_args([
+            'evaluate', '--run-dir', 'run', '--output-dir', 'out', '--database-version', 'v1',
+            '--reference', 'lite=generic.json', '--reference-lite', 'legacy.json',
+        ])
+        with self.assertRaisesRegex(ValueError, 'Duplicate reference source'):
+            cli._evaluation_paths(args)
+
     def test_invalid_dynamic_options_rejected_before_directory_creation(self):
         # Break caught: malformed or silently ignored policies reach paid execution.
         invalid = [
@@ -112,9 +127,9 @@ class CliTests(OfflineTestCase):
 
     def test_help_works_from_repo_and_code_without_network(self):
         self.assertIsNotNone(cli, 'CLI implementation is required')
-        for cwd, relative in [(CODE, 'scripts/rc_evaluation/deepeye/cli.py'),
-                              (CODE.parent, 'code/scripts/rc_evaluation/deepeye/cli.py')]:
-            completed = subprocess.run([str(CODE / '.venv/bin/python'), relative, '--help'],
+        entry = CODE / 'scripts/rc_evaluation/deepeye/cli.py'
+        for cwd in (CODE, CODE.parent):
+            completed = subprocess.run([sys.executable, str(entry), '--help'],
                                        cwd=cwd, capture_output=True, text=True)
             self.assertEqual(completed.returncode, 0, completed.stderr)
             self.assertIn('prepare', completed.stdout)
@@ -146,6 +161,20 @@ class CliTests(OfflineTestCase):
             with RunStore.open(root / 'run', read_only=True) as store:
                 self.assertEqual(store.attempts()[0]['payload']['execution_origin'], 'reused_no_native_llm_call')
             self.assertTrue((root / 'export' / 'COMPLETE.json').exists())
+
+    def test_resume_prepares_full_experiment_once(self):
+        from scripts.rc_evaluation.deepeye import runner, source as source_module
+        with tempfile.TemporaryDirectory() as temporary:
+            root, inputs, args, environment = self.fixture(temporary)
+            with patch.object(cli, 'prepare_inputs', return_value=inputs), redirect_stdout(io.StringIO()):
+                self.assertEqual(cli.main(args), 0)
+            with patch.object(runner, 'prepare_experiment', wraps=runner.prepare_experiment) as prepare, \
+                 patch.object(runner, 'validate_manifest', wraps=runner.validate_manifest) as validate, \
+                 patch.object(source_module, 'restore_seed', wraps=source_module.restore_seed) as restore, \
+                 redirect_stdout(io.StringIO()):
+                self.assertEqual(cli.main(['resume', '--run-dir', str(root / 'run'),
+                                           '--env-file', str(environment), '--unfinished-only']), 0)
+            self.assertEqual((prepare.call_count, validate.call_count, restore.call_count), (1, 1, 1))
 
     def test_changed_budget_rejected_before_run_directory_exists(self):
         self.assertIsNotNone(cli)
@@ -179,7 +208,7 @@ class CliTests(OfflineTestCase):
             root, inputs, args, environment = self.fixture(temporary)
             with patch.object(cli, 'prepare_inputs', return_value=inputs), redirect_stdout(io.StringIO()):
                 self.assertEqual(cli.main(args), 0)
-            def failed_stage(store, environment):
+            def failed_stage(store, environment, **unused):
                 # Exercise the CLI outcome boundary with an actual committed failure.
                 attempt = store.begin_attempt('lite/a', 'sql_revision', 'synthetic-failure')
                 store.finish_attempt(attempt, 'failed', {'error_type': 'SyntheticFailure'})
