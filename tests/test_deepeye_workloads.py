@@ -282,6 +282,94 @@ class WorkloadTests(unittest.TestCase):
                     _prepare_examples({'benchmark': 'bird', 'few_shot_source': temporary}, [], config)
             client.close.assert_called_once()
 
+    def test_reused_native_index_rejects_changed_source_or_model_before_requests(self):
+        from scripts.baseline_adapters.deepeye import workload_preparation as prep
+        from app.config.config import FewShotIndexConfig, EmbeddingConfig, LLMConfig
+        from app.few_shot.index_builder import _build_manifest
+        from app.few_shot.train_loader import load_training_examples
+        self.modules()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            training = [{'question_id': 7, 'db_id': 'db', 'question': 'independent', 'SQL': 'SELECT 1'}]
+            (root/'train.json').write_text(json.dumps(training))
+            few = FewShotIndexConfig(save_path=str(root/'index'),
+                embedding=EmbeddingConfig(embedding_model_name_or_path='original-embedding'),
+                llm=LLMConfig(model='original-llm', base_url='https://example.test/v1', api_key='offline'))
+            index = Path(few.save_path); index.mkdir()
+            manifest = _build_manifest('bird', root, index, 1, few.embedding, few.llm,
+                None, 1, 1, 1, None, None, False, 2, 2)
+            (index/'manifest.json').write_text(json.dumps(manifest))
+            records = [row.to_record('MASK Q', 'MASK SQL', 'llm') for row in load_training_examples('bird', root)]
+            (index/'examples.jsonl').write_text('\n'.join(json.dumps(row) for row in records))
+            workload = {'benchmark': 'bird', 'few_shot_source': str(root)}
+            run_config = SimpleNamespace(llm_timeout=1)
+            with patch('socket.socket.connect', side_effect=AssertionError('network forbidden')):
+                prep._validate_few_shot_index(workload, few, run_config)
+                for field, new_value in [('few_shot_source', str(root/'different')),
+                                          ('few_shot_dataset', 'spider')]:
+                    with self.subTest(field=field), self.assertRaisesRegex(ValueError, 'index'):
+                        prep._validate_few_shot_index({**workload, field: new_value}, few, run_config)
+                for section, field in [('embedding', 'embedding_model_name_or_path'), ('llm', 'model')]:
+                    changed = few.model_copy(deep=True)
+                    setattr(getattr(changed, section), field, 'changed')
+                    with self.subTest(section=section), self.assertRaisesRegex(ValueError, 'index'):
+                        prep._validate_few_shot_index(workload, changed, run_config)
+                with self.assertRaisesRegex(ValueError, 'index'):
+                    prep._validate_few_shot_index(workload, few, SimpleNamespace(llm_timeout=2))
+                with self.assertRaisesRegex(ValueError, 'force_rebuild'):
+                    prep._validate_few_shot_index(workload, few.model_copy(update={'force_rebuild': True}), run_config)
+                training[0]['question'] = 'updated source text'
+                (root/'train.json').write_text(json.dumps(training))
+                with self.assertRaisesRegex(ValueError, 'index'):
+                    prep._validate_few_shot_index(workload, few, run_config)
+                (index/'manifest.json').unlink()
+                with self.assertRaisesRegex(ValueError, 'incomplete'):
+                    prep._validate_few_shot_index(workload, few, run_config)
+
+    def test_native_resource_identity_rejects_stale_or_unowned_cache(self):
+        from scripts.baseline_adapters.deepeye import workload_preparation as prep
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for directory in (False, True):
+                with self.subTest(directory=directory):
+                    path = root/('vectors' if directory else 'target_masks.jsonl')
+                    if directory:
+                        path.mkdir(); (path/'success_flag').touch()
+                    else:
+                        path.write_text('old masked response')
+                    with self.assertRaisesRegex(ValueError, 'provenance'):
+                        prep._bind_resource_identity(path, {'model': 'new'})
+                    fresh = root/('new_vectors' if directory else 'new_masks.jsonl')
+                    prep._bind_resource_identity(fresh, {'model': 'first', 'database': 'v1'})
+                    prep._bind_resource_identity(fresh, {'model': 'first', 'database': 'v1'})
+                    for changed in ({'model': 'second', 'database': 'v1'}, {'model': 'first', 'database': 'v2'}):
+                        with self.assertRaisesRegex(ValueError, 'identity'):
+                            prep._bind_resource_identity(fresh, changed)
+
+    def test_vector_identity_binds_database_bytes_once_per_database(self):
+        from scripts.baseline_adapters.deepeye import workload_preparation as prep
+        _, entry = self.modules()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path, items = self.fixture(root, 'bird', 'dev')
+            args = entry._build_parser().parse_args(['prepare', '--workload', str(path), '--run-dir', temporary])
+            config = entry.build_runtime_config({'DASH_MODELS':'test', 'DASH_BASE_URL':'https://example.test/v1',
+                                                'DASH_API_KEY':'offline'}, args, root/'run')
+            with patch.object(entry, 'code_source_hashes', return_value={'baseline_python_sha256':'fixture'}), \
+                 patch.object(entry, '_file_sha256', wraps=entry._file_sha256) as digest:
+                prep._bind_preparation_resources(items*3, config, needs_vr=True, needs_examples=False)
+                self.assertEqual(digest.call_count, 1)
+                prep._bind_preparation_resources(items, config, needs_vr=True, needs_examples=False)
+                original_model = config.vector_database_config.embedding_model_name_or_path
+                config.vector_database_config.embedding_model_name_or_path = 'changed-embedding'
+                with self.assertRaisesRegex(ValueError, 'identity'):
+                    prep._bind_preparation_resources(items, config, needs_vr=True, needs_examples=False)
+                config.vector_database_config.embedding_model_name_or_path = original_model
+                with sqlite3.connect(items[0].database_path) as conn:
+                    conn.execute('INSERT INTO visible(id) VALUES(5)')
+                with self.assertRaisesRegex(ValueError, 'identity'):
+                    prep._bind_preparation_resources(items, config, needs_vr=True, needs_examples=False)
+
     def test_explicit_preparation_reuses_native_snapshots_without_new_requests(self):
         workloads, entry = self.modules()
         self.assertTrue((ROOT / 'scripts/baseline_adapters/deepeye/workload_preparation.py').exists(),
@@ -348,7 +436,20 @@ class WorkloadTests(unittest.TestCase):
             config.few_shot_index_config.embedding = EmbeddingConfig(embedding_model_name_or_path='fixture')
             config.few_shot_index_config.llm = config.value_retrieval_config.llm
             index = Path(config.few_shot_index_config.save_path); index.mkdir(parents=True)
-            (index/'manifest.json').write_text('{}')
+            from app.few_shot.index_builder import _build_manifest
+            few = config.few_shot_index_config
+            (index/'manifest.json').write_text(json.dumps(_build_manifest('bird', root, index, 1,
+                few.embedding, few.llm, None, 1, 1, config.run_config.llm_timeout,
+                few.max_samples, few.max_samples_per_db, False, 2, 2)))
+            manifest_text = (index/'manifest.json').read_text()
+            mismatched = json.loads(manifest_text); mismatched['dataset_type'] = 'spider'
+            (index/'manifest.json').write_text(json.dumps(mismatched))
+            with patch.object(entry, 'build_runtime_config', return_value=config), \
+                 patch('runner.create_vector_db_parallel.run_vector_db_creation') as forbidden_build:
+                with self.assertRaisesRegex(ValueError, 'index'):
+                    prepare_native(workload, root/'ready.snapshot', env, workers=1)
+                forbidden_build.assert_not_called()
+            (index/'manifest.json').write_text(manifest_text)
             def examples(_, items, __):
                 for item in items:
                     item.few_shot_examples = [{'question': 'independent', 'sql': 'SELECT 1'}]

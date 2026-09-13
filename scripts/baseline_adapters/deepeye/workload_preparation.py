@@ -53,6 +53,7 @@ Existing successful native VR and few-shot inputs are retained on continuation.
     if needs_examples and workload['benchmark'] != 'bird_interact':
         if few.embedding is None or few.llm is None:
             raise ValueError('Native few-shot preparation requires native_config [few_shot_index.embedding] and [few_shot_index.llm]')
+        _validate_few_shot_index(workload, few, config.run_config)
         if not (Path(few.save_path) / 'manifest.json').exists() and not workload.get('few_shot_source'):
             raise ValueError('Native few-shot index missing; supply few_shot_source training root to build it')
     if needs_examples and workload['benchmark'] == 'bird_interact' and not workload.get('few_shot_source'):
@@ -60,6 +61,11 @@ Existing successful native VR and few-shot inputs are retained on continuation.
     dataset = _dataset(workload, items, config)
     preparation = {'format': 'deepeye-native-preparation-v1', 'sources': sources,
                    'effective_config': entry.build_effective_config(environment, args)}
+    resources = _bind_preparation_resources(items, config, needs_vr=needs_vr,
+        needs_examples=needs_examples and workload['benchmark'] not in ('bird_interact', 'spider2'))
+    if needs_vr:
+        _bind_resource_identity(output.with_name(output.name + '.vr.artifacts'),
+                                {'preparation': preparation, 'resources': resources})
     with entry.backend_context(environment, args):
         if needs_vr:
             # Native runners consume their existing structured snapshot format.
@@ -112,6 +118,102 @@ Existing successful native VR and few-shot inputs are retained on continuation.
             'workload': workload['_path'], 'next': 'Set prepared_dataset in the workload to this native snapshot'}
 
 
+def _bind_resource_identity(resource, identity):
+    """A small provenance marker, never a second copy of cached data.
+
+    Native success flags/mask keys do not bind model or database versions.
+    Refuse unowned data; do not delete or retroactively bless old caches.
+    """
+    from .precompute_cache import fingerprint
+    resource = Path(resource)
+    marker = resource.with_name(resource.name + '.preparation_identity.json')
+    expected = {'format': 'deepeye-native-resource-v1', 'sha256': fingerprint(identity)}
+    if marker.exists():
+        if json.loads(marker.read_text(encoding='utf-8')) != expected:
+            raise ValueError('Native preparation resource identity changed; select a new resource path')
+        return
+    if resource.exists() and (not resource.is_dir() or any(resource.iterdir())):
+        raise ValueError('Existing native resource has no verifiable provenance; select a new resource path')
+    marker.parent.mkdir(parents=True, exist_ok=True)
+    # Exclusive creation: interrupted/competing writes fail closed on validation.
+    with marker.open('x', encoding='utf-8') as stream:
+        json.dump(expected, stream, sort_keys=True)
+
+
+def _bind_preparation_resources(items, config, *, needs_vr, needs_examples):
+    if not needs_vr and not needs_examples:
+        return {}
+    from scripts import deepeye_run as entry
+    from app.few_shot.index_builder import _redact_config
+    baseline = entry.code_source_hashes()['baseline_python_sha256']
+    resources = {'baseline': baseline, 'databases': {}}
+    def public_config(value):
+        return {key: item for key, item in _redact_config(value).items() if key != 'api_key'}
+    if needs_vr:
+        # One streaming digest per distinct SQLite file, not one per question.
+        databases = {item.database_path for item in items if Path(item.database_path).is_file()}
+        for database in sorted(databases):
+            path = Path(database)
+            identity = {'baseline': baseline, 'database_path': str(path.resolve()),
+                        'database_sha256': entry._file_sha256(path),
+                        'vector_config': public_config(config.vector_database_config)}
+            resources['databases'][str(path.resolve())] = identity['database_sha256']
+            _bind_resource_identity(Path(config.vector_database_config.store_root_path)/path.stem, identity)
+    if needs_examples:
+        few = config.few_shot_index_config
+        identity = {'baseline': baseline, 'llm': public_config(few.llm),
+                    'timeout': config.run_config.llm_timeout}
+        index = Path(few.save_path)
+        # Completed native training indexes have their own verified manifest;
+        # this guard is for mask caches whose native keys omit the model.
+        if not (index/'manifest.json').exists():
+            _bind_resource_identity(Path(few.mask_cache_path) if few.mask_cache_path else index/'mask_cache.jsonl', identity)
+        target = Path(few.target_mask_cache_path) if few.target_mask_cache_path else index/'target_mask_cache.jsonl'
+        _bind_resource_identity(target, identity)
+    return resources
+
+
+def _validate_few_shot_index(workload, few, run_config):
+    """Check native index provenance before any paid preparation or reuse."""
+    from app.few_shot.index_builder import _redact_config
+    path = Path(few.save_path) / 'manifest.json'
+    if few.force_rebuild:
+        raise ValueError('force_rebuild is unsupported here; select a new native index path instead of overwriting')
+    if not path.exists():
+        if path.parent.is_dir() and any(path.parent.iterdir()):
+            raise ValueError('Cannot verify an incomplete native few-shot index; select a new index path')
+        return
+    manifest = json.loads(path.read_text(encoding='utf-8'))
+    training_type = workload.get('few_shot_dataset', workload['benchmark'])
+    def config_without_key(value):
+        return {key: item for key, item in value.items() if key != 'api_key'}
+    if (manifest.get('dataset_type') != training_type or
+            manifest.get('max_samples') != few.max_samples or
+            manifest.get('max_samples_per_db') != few.max_samples_per_db or
+            manifest.get('masking', {}).get('skip_mask_llm') is not False or
+            manifest.get('masking', {}).get('llm_timeout') != run_config.llm_timeout or
+            config_without_key(manifest.get('embedding', {}).get('config', {})) !=
+                config_without_key(_redact_config(few.embedding)) or
+            config_without_key(manifest.get('masking', {}).get('llm') or {}) !=
+                config_without_key(_redact_config(few.llm))):
+        raise ValueError('Native few-shot index configuration mismatch; use a new index path')
+    if workload.get('few_shot_source'):
+        source = Path(workload['few_shot_source']).resolve()
+        if not manifest.get('root_path') or Path(manifest['root_path']).resolve() != source:
+            raise ValueError('Native few-shot index training root mismatch; use a new index path')
+        # The original manifest has no content hash for its training inputs.
+        # Compare existing native records, without remasking or embedding.
+        from app.few_shot.train_loader import load_training_examples
+        expected = load_training_examples(training_type, source, few.max_samples, few.max_samples_per_db)
+        examples = Path(few.save_path) / 'examples.jsonl'
+        actual = [json.loads(line) for line in examples.read_text(encoding='utf-8').splitlines() if line.strip()]
+        fields = ('example_id', 'dataset', 'db_id', 'question', 'sql', 'evidence', 'metadata')
+        if len(expected) != len(actual) or any(
+                any(row.get(field) != getattr(example, field) for field in fields)
+                for example, row in zip(expected, actual)):
+            raise ValueError('Native few-shot index training contents changed; use a new index path')
+
+
 def _prepare_examples(workload, items, config):
     from app.few_shot.index_builder import build_few_shot_index
     from app.few_shot.retriever import FewShotRetriever
@@ -134,6 +236,7 @@ def _prepare_examples(workload, items, config):
                 max_samples=few.max_samples, max_samples_per_db=few.max_samples_per_db)
         retriever = FewShotRetriever.from_index_path(index_path=few.save_path, embedding_config=few.embedding,
             embedding_batch_size=config.run_config.embedding_batch_size, similarity_device=few.similarity_device)
+        index_digest = file_sha256(Path(few.save_path) / 'manifest.json')
         cache = TargetMaskCache(few.target_mask_cache_path or str(Path(few.save_path) / 'target_mask_cache.jsonl'))
         if few.preliminary_sql.enabled:
             from app.few_shot.preliminary_sql import PreliminarySQLGenerator
@@ -151,7 +254,8 @@ def _prepare_examples(workload, items, config):
             item.few_shot_examples = prepared.examples
             item.few_shot_preliminary_sql = sql
             item.few_shot_preparation_metadata = {'mode': 'native_dynamic',
-                'index_manifest_sha256': file_sha256(Path(few.save_path) / 'manifest.json'),
+                'index_manifest_sha256': index_digest,
+                'index_producer_code': 'not_recorded_by_native_manifest',
                 'target_mask_source': prepared.mask_source, 'used_sql_similarity': prepared.masked_sql is not None,
                 'retrieved_example_count': len(prepared.examples),
                 'preliminary_sql': {'source': 'generated' if generator else None, 'selected': sql is not None}}
