@@ -538,7 +538,9 @@ class PipelineTest(unittest.TestCase):
             requests.append(kwargs)
             if cross_stage:
                 attempt = next(a for a in store.attempts() if a['attempt_id'] == _ATTEMPT_ID.get())
-                self.assertEqual(len(get_schema_service()._schema_profile_cache), 0)
+                # Shared profiles are content-keyed, never transient dict ids.
+                self.assertTrue(all(isinstance(key[0], str) for key in
+                    get_schema_service()._schema_profile_cache._data))
                 if attempt['item_key'] == 'lite/A' and attempt['stage'] == 'schema_linking':
                     if not release_a.wait(3):
                         raise AssertionError('Native A blocked the independently completing B/C pipelines')

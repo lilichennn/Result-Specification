@@ -2,7 +2,10 @@
 from concurrent.futures import Future, ThreadPoolExecutor, wait
 from contextlib import contextmanager, ExitStack
 import contextvars
+import copy
 import functools
+import hashlib
+import json
 import threading
 
 
@@ -289,24 +292,62 @@ def instrument_native_pools(runner):
 
 @contextmanager
 def protect_schema_profiles():
-    """Disable only the id(dict)-keyed cache while transient stage copies coexist.
+    """Use a bounded content cache while transient stage copies coexist.
 
     Call after all native constructors (which replace the global service), and
     keep installed until every native pool has drained. Other service caches and
-    their configuration stay intact. Never restore stale identity-only entries.
+    their configuration stay intact. Columns/table order is part of the key:
+    sorting JSON keys would reuse a differently ordered native prompt. Never
+    restore stale identity-only entries after the run.
     """
     from app.services._bounded_cache import BoundedCache
-    from app.services.schema_service import get_schema_service
-    service = get_schema_service()
+    from app.services import schema_service
+    from .run_store import to_jsonable
+    service = schema_service.get_schema_service()
+    original_method = service.build_schema_profile
+    had_method = 'build_schema_profile' in vars(service)
     with service._lock:
         original = service._schema_profile_cache
         original.clear()
-        service._schema_profile_cache = BoundedCache(0)
+        cache = BoundedCache(original._max_size)
+        service._schema_profile_cache = cache
+
+    @functools.wraps(original_method)
+    def build(database_schema_dict, *, compress_identical_schemas=True,
+              include_description=True, include_value_statistics=True,
+              include_value_examples=True, include_nested_columns=True):
+        service.ensure_schema_features(database_schema_dict,
+            include_value_statistics=include_value_statistics,
+            include_value_examples=include_value_examples)
+        # Render the exact snapshot that was fingerprinted. No reference to the
+        # mutable per-item dictionaries is retained in the bounded cache.
+        snapshot = copy.deepcopy(database_schema_dict)
+        content = hashlib.sha256(json.dumps(to_jsonable(snapshot),
+            ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+        options = dict(compress_identical_schemas=compress_identical_schemas,
+            include_description=include_description,
+            include_value_statistics=include_value_statistics,
+            include_value_examples=include_value_examples,
+            include_nested_columns=include_nested_columns)
+        key = (content, *options.values())
+        with service._lock:
+            profile = cache.get(key)
+            if profile is None:
+                profile = schema_service.get_database_schema_profile(snapshot, **options)
+                cache.set(key, profile)
+            return profile
+
+    service.build_schema_profile = build
     try:
         yield
     finally:
         with service._lock:
+            cache.clear()
             service._schema_profile_cache = original
+            if had_method:
+                service.build_schema_profile = original_method
+            else:
+                del service.build_schema_profile
 
 
 def close_runners(resources, *, question_pool=None, question_futures=()):
