@@ -45,6 +45,8 @@ _CORE_EXPORT_NAMES = frozenset({
 class _VerificationReport(dict[str, Any]):
     """Public report fields plus private provenance for safe in-process reuse."""
 
+    __slots__ = ("_store_token", "_revision", "_contents_checksum")
+
     def __init__(
         self,
         values: dict[str, Any],
@@ -55,6 +57,14 @@ class _VerificationReport(dict[str, Any]):
         super().__init__(values)
         self._store_token = store_token
         self._revision = revision
+        self._contents_checksum = self._current_contents_checksum()
+
+    def _current_contents_checksum(self) -> bytes:
+        contents = _canonical_dumps(dict(self)).encode("utf-8")
+        return hashlib.sha256(contents).digest()
+
+    def _contents_unchanged(self) -> bool:
+        return self._contents_checksum == self._current_contents_checksum()
 
 
 def _type_reference(value: object) -> dict[str, str]:
@@ -885,6 +895,8 @@ class RunStore:
             raise ValueError("verification belongs to a different RunStore")
         if verification._revision != self._database_revision():
             raise ValueError("verification is stale for the current RunStore snapshot")
+        if not verification._contents_unchanged():
+            raise ValueError("verification report contents were modified")
         required = {"ok", "sqlite_integrity", "checksum_errors", "records_checked"}
         if not required.issubset(verification):
             raise ValueError("verification is missing required fields")

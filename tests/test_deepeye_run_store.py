@@ -510,6 +510,24 @@ sys.stdin.read()
                 with self.assertRaises(ValueError):
                     store.summary(verification=verification)
 
+    def test_summary_rejects_a_failed_current_verification_mutated_to_success(self):
+        with tempfile.TemporaryDirectory() as temp:
+            run_dir = Path(temp) / "run"
+            with RunStore.create(run_dir, {}) as store:
+                attempt_id = store.begin_attempt("q", "stage", "fp")
+                store.finish_attempt(attempt_id, "succeeded", {"answer": 1})
+                with sqlite3.connect(run_dir / "run.sqlite3") as connection:
+                    connection.execute("DROP TRIGGER finishes_no_update")
+                    connection.execute(
+                        "UPDATE finishes SET payload_json = ? WHERE attempt_id = ?",
+                        ('{"answer":2}', attempt_id),
+                    )
+                verification = store.verify()
+                self.assertFalse(verification["ok"])
+                verification.update(ok=True, sqlite_integrity=["ok"], checksum_errors=0)
+                with self.assertRaises(ValueError):
+                    store.summary(verification=verification)
+
     def test_summary_rejects_failed_or_invalid_precomputed_verification(self):
         invalid = (
             {"ok": False, "sqlite_integrity": ["ok"], "checksum_errors": 1, "records_checked": 1},
