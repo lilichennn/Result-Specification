@@ -21,7 +21,7 @@ from scripts.baseline_adapters.deepeye.run_store import RunStore
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def fixture_tasks(config):
+def fixture_tasks(config, **unused):
     return [(key.split('/')[0], item(key.split('/')[1])) for key in config['items']]
 
 
@@ -97,8 +97,15 @@ def fixture_cli(path, job_id, command):
     with RunStore.open(Path(job['run_dir'])) as store:
         if job['kind'] == 'rc':
             time.sleep(config.get('fixture_delay', 0))
-            return int(bool(run_experiment(store, lambda *a: (_ for _ in ()).throw(AssertionError('No model for replay')),
-                                           FakeTrace(), item_keys=unfinished_keys(store))['failed']))
+            try:
+                selected = unfinished_keys(store)
+                return int(bool(run_experiment(store,
+                    lambda *a: (_ for _ in ()).throw(AssertionError('No model for replay')),
+                    FakeTrace(), item_keys=selected)['failed']))
+            except (ValueError, KeyError, TypeError, OSError, RuntimeError):
+                # Match the production RC CLI's distinction between a normal
+                # terminal stage failure (1) and a preflight/store fault (2).
+                return 2
         tasks, _ = select_unfinished(store, tasks)
         recorder = FakeTrace()
         recorder.stop_event = threading.Event()
@@ -308,6 +315,31 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(second.returncode, 0)
         with RunStore.open(Path(first['run_dir']), read_only=True) as store:
             self.assertEqual(len(store.attempts()), 5)
+
+    def test_terminal_rc_store_with_illegal_extra_stage_is_not_marked_finished(self):
+        from scripts.rc_evaluation.deepeye import runner
+        from scripts.rc_evaluation.deepeye.source import snapshot_source
+        from scripts.rc_evaluation.deepeye.tests.test_runner import experiment_manifest, OfflineTrace
+        from scripts.rc_evaluation.deepeye.tests.test_source import make_source
+
+        self.module.set_control(self.ledger, 'running')
+        source_job = self.ledger.jobs()[0]
+        source_tasks = make_source(Path(source_job['run_dir']), calls=0)
+        rc_job = self.ledger.claim_job(kind='rc', items=['lite/a'], source_run=source_job['run_dir'],
+                                       target_stage='sql_revision')
+        manifest = experiment_manifest(snapshot_source(Path(source_job['run_dir']), source_tasks, 'sql_revision'))
+        with RunStore.create(Path(rc_job['run_dir']), manifest) as store:
+            result = runner.run_experiment(store,
+                lambda *args: self.fail('zero-call target must replay'), OfflineTrace())
+            self.assertEqual(result['succeeded'], 1)
+            illegal = store.begin_attempt('lite/a', 'sql_selection', 'outside-configured-lineage')
+            store.finish_attempt(illegal, 'succeeded', {})
+
+        child = self.spawn(rc_job)
+        self.wait_until(lambda: child.poll() is not None)
+        self.assertEqual(child.returncode, 2)
+        self.assertEqual(self.module.reconcile(self.ledger)[rc_job['job_id']], 'blocked')
+        self.assertEqual(self.module.control(self.path)['mode'], 'blocked')
 
     def test_duplicate_supervisor_cannot_make_another_attempt(self):
         self.assertTrue((ROOT / 'scripts/rc_evaluation/deepeye/campaign/supervisor.py').exists(), 'Supervisor is required')

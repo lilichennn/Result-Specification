@@ -5,27 +5,10 @@ import signal
 import subprocess
 import time
 
-from scripts.baseline_adapters.deepeye.run_store import RunStore
-from scripts.baseline_adapters.deepeye.run_pipeline import select_unfinished, task_key
 from .configuration import validate_config
 from .controller import all_terminal, control, job_paths, now, observe, set_control
 from .ledger import CampaignLedger
 from .processes import atomic_json, commands, exclusive_lock, process_identity
-
-
-def recovery_selection(ledger, job, tasks):
-    """Full frozen native cohort remains unchanged; filter under writer lock."""
-    with RunStore.open(Path(job['run_dir'])) as store:
-        if job['kind'] == 'rc':
-            from scripts.rc_evaluation.deepeye.runner import unfinished_keys
-            selected = unfinished_keys(store)
-            report = {'selected': selected, 'sealed': []}
-        else:
-            tasks = [pair for pair in tasks if task_key(*pair) in job['items']]
-            _, report = select_unfinished(store, tasks)
-            selected = report['selected']
-    ledger.append_event('recovery_selection', {'job_id': job['job_id'], **report})
-    return selected
 
 
 def run_worker(campaign_dir, job_id, token):
@@ -79,7 +62,7 @@ def run_worker(campaign_dir, job_id, token):
                     return child.returncode
 
             try:
-                tasks = validate_config(ledger.config)
+                validate_config(ledger.config, inputs=False)
                 prepare, run = commands(ledger.config, job)
                 if stopping_requested():
                     update('paused', exit_code=0)
@@ -97,15 +80,13 @@ def run_worker(campaign_dir, job_id, token):
                     frozen['item_count'] = len(frozen['items'])
                     if manifest != frozen:
                         raise ValueError('Prepared native manifest differs from frozen campaign cohort')
-                selected = recovery_selection(ledger, job, tasks)
                 if stopping_requested():
                     update('paused', child=None, exit_code=0)
                     return 0
-                if not selected:
-                    if not all_terminal(observe(job)):
-                        raise ValueError('Execution selection and terminal observations disagree')
-                    update('finished', child=None, exit_code=0)
-                    return 0
+                # The execution child alone selects unfinished work while it
+                # owns the RunStore writer lock. This always runs so its full
+                # preflight validates even observationally terminal stores; it
+                # can also seal an interrupted master from a committed prefix.
                 code = execute(run, 'running')
                 if code in (0, 1) and all_terminal(observe(job)):
                     update('finished', child=None, exit_code=code)
