@@ -52,7 +52,8 @@ class NativeRCIntegrationTests(unittest.TestCase):
             target.few_shot_examples = [{'question': 'Different question', 'evidence': '', 'sql': 'SELECT 2'}]
             tasks = [('lite', target)]
             manifest = entry.build_manifest(entry.build_effective_config(ENV, args),
-                {'code': entry.code_source_hashes()}, [{'task_key': 'lite/a', 'database_id': 'db'}])
+                {'code': entry.code_source_hashes()}, [{'task_key': 'lite/a', 'partition': 'lite',
+                    'external_id': 'a', 'database_id': 'db'}])
             with RunStore.create(root / 'native', manifest) as native, redirect_stdout(io.StringIO()):
                 result = entry._execute_pipeline(native, tasks, ENV, args)
                 self.assertEqual(result['succeeded'], 1)

@@ -13,7 +13,7 @@ from unittest.mock import patch
 
 
 try:
-    from scripts import deepeye_bird_interact_run as entry
+    from scripts import deepeye_run as entry
 except ImportError:
     entry = None
 
@@ -271,9 +271,10 @@ class DeepEyeRunEntryTests(unittest.TestCase):
         self.assertTrue(hasattr(module, "prepare_inputs"), "Offline precomputed-input preparation is missing")
         from scripts.baseline_adapters.deepeye.precompute_pipeline import write_record
 
-        original = SimpleNamespace(instance_id="a_1", database_id="a", question="question",
-                                   evidence="evidence", database_schema={"tables": {}}, gold_sql="")
-        loaded = SimpleNamespace(**vars(original))
+        from scripts.baseline_adapters.deepeye.dataset import BirdInteractDataItem
+        original = BirdInteractDataItem(instance_id="a_1", question_id=0, database_id="a",
+            question="question", evidence="evidence", database_path="a", database_schema={"tables": {}}, gold_sql="")
+        loaded = original.model_copy(deep=True)
         examples = [{"question": f"train {number}", "evidence": "", "sql": "SELECT 1"}
                     for number in range(3)]
         with tempfile.TemporaryDirectory() as temp:
@@ -456,7 +457,7 @@ class DeepEyeRunEntryTests(unittest.TestCase):
                 destination.finish_attempt(attempt, "succeeded", {"fixture": "imported"})
                 return {"imported": 1}
 
-            with patch("scripts.deepeye_bird_interact_smoke.read_environment", return_value=environment), \
+            with patch.object(module, "read_environment", return_value=environment), \
                     patch.object(module, "_resolve_few_shot_source", return_value=root / "train"), \
                     patch.object(module, "prepare_inputs", return_value=prepared), \
                     patch.object(run_inheritance, "inherit_checkpoints", side_effect=import_boundary) as inherited, \
@@ -474,7 +475,7 @@ class DeepEyeRunEntryTests(unittest.TestCase):
                 self.assertEqual(store.completed("lite/q", "schema_linking", "fixture")["payload"],
                                  {"fixture": "imported"})
                 return {"succeeded": 1, "failed": 0}
-            with patch("scripts.deepeye_bird_interact_smoke.read_environment", return_value=environment), \
+            with patch.object(module, "read_environment", return_value=environment), \
                     patch.object(module, "_resolve_few_shot_source", return_value=root / "train"), \
                     patch.object(module, "prepare_inputs", return_value=prepared), \
                     patch.object(run_inheritance, "inherit_checkpoints", side_effect=import_boundary), \

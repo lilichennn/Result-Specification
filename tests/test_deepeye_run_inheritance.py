@@ -82,6 +82,7 @@ def manifest(tasks, upgrade=False):
         code.update(adapter_python_sha256='adapter-after', entrypoints_sha256='entry-after')
     bindings = [{
         'task_key': f'{variant}/{item.instance_id}', 'database_id': item.database_id,
+        'partition': variant, 'external_id': item.instance_id,
         'question_sha256': fingerprint(question_row(item)),
         'schema_sha256': fingerprint(item.database_schema),
         'keywords_sha256': f'keywords-{item.instance_id}',
