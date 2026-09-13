@@ -45,7 +45,27 @@ def api_trace(events):
         result['restored_samples'] = len(restored)
         result['restored_rc_samples'] = sum(p.get('rc_applied') is True for p in restored)
     if sampling['groups']:
+        # A group summary cannot substitute for the actual retained slot records.
+        targets, retained, terminal = {}, {}, {}
+        for event in events:
+            payload = event['payload']
+            key = (event.get('attempt_id'), payload.get('group_id'))
+            if event['kind'] == 'sampling_group_start':
+                targets[key] = payload['target_n']
+            elif event['kind'] == 'sampling_group_result':
+                terminal[key] = payload
+            elif event['kind'] == 'sample_result' and payload.get('succeeded'):
+                retained.setdefault(key, set()).add(payload['sample_index'])
+        incomplete = {key for key, target in targets.items() if (
+            retained.get(key, set()) != set(range(target)) or terminal.get(key, {}).get('complete') is not True
+            or terminal.get(key, {}).get('success_count') != target
+            or terminal.get(key, {}).get('target_n') != target)}
+        incomplete.update(set(retained).difference(targets))
+        sampling.update(complete=not incomplete, incomplete_groups=len(incomplete))
+        result['complete'] = result['complete'] and sampling['complete']
         result['sampling'] = sampling
+        from scripts.baseline_adapters.deepeye.run_usage import _effective_sampling
+        result['effective_sampling'] = _effective_sampling(events)
     return result
 
 

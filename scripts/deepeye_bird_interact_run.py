@@ -1,7 +1,7 @@
 """Crash-safe, gold-free DeepEye SQL runs from frozen BIRD-Interact precomputation.
 
-This entry point runs a deliberately bounded four-stage configuration.  It is an
-integration workflow, not an exact reproduction of the original paper defaults.
+The four native stages share one run-owned sampling and HTTP runtime. All
+selected questions are eligible; their stage dependencies remain sequential.
 """
 from __future__ import annotations
 
@@ -11,8 +11,10 @@ from dataclasses import asdict
 import hashlib
 import json
 import os
+import signal
 from pathlib import Path
 import sys
+import threading
 
 
 CODE_ROOT = Path(__file__).resolve().parents[1]
@@ -68,7 +70,7 @@ def build_effective_config(environment: dict[str, str], args) -> dict:
     """Return every result-affecting operational choice, excluding credentials."""
 
     return {
-        "profile": "bounded-config",
+        "profile": "shared-sampling-v1",
         "chat": {
             "model": environment["DASH_MODELS"],
             "endpoint": environment["DASH_BASE_URL"].rstrip("/"),
@@ -104,9 +106,8 @@ def build_effective_config(environment: dict[str, str], args) -> dict:
             "max_value_example_length": 100,
         },
         "few_shot": {"mode": "static_independent_bird_train", "examples_per_item": 3},
-        "workers": args.workers,
-        "inner_workers": getattr(args, "inner_workers", None) or args.workers,
-        "scheduler": {"mode": "pipeline_slots", "concurrency_unit": "question_pipeline"},
+        "scheduler": {"mode": "all_questions", "concurrency_unit": "model_request"},
+        "runtime": {"version": "shared-sampling-runtime-v1", **runtime_limits(args)},
         "admission": admission_settings(args),
         "stages": {
             "schema_linking": {
@@ -205,45 +206,69 @@ def select_probe_tasks(tasks, *, per_variant: int):
 
 
 def admission_settings(args) -> dict:
-    if not getattr(args, "adaptive_concurrency", False):
-        return {"enabled": True, "adaptive": False,
-                "pipeline": {"fixed_limit": args.workers},
-                "postgres_limit": args.pg_concurrency}
-    from scripts.baseline_adapters.deepeye.run_admission import AdaptivePolicy
-    policy = AdaptivePolicy(
-        initial_limit=args.concurrency_initial, step=args.concurrency_step,
-        min_limit=args.concurrency_min, max_limit=args.concurrency_max,
-        stable_window_s=args.concurrency_window,
-    )
-    return {"enabled": True, "adaptive": True, "pipeline": asdict(policy),
+    if getattr(args, 'adaptive_concurrency', False) or any(
+            getattr(args, 'concurrency_' + name, None) is not None
+            for name in ('initial', 'step', 'min', 'max', 'window')):
+        raise ValueError('Legacy adaptive pipeline flags are unsupported; configure explicit request/runtime limits')
+    return {"enabled": True, "adaptive": False, "pipeline": {"mode": "all_questions"},
             "postgres_limit": args.pg_concurrency}
 
 
+def runtime_limits(args):
+    from scripts.baseline_adapters.deepeye.request_dispatch import RequestLimits
+    defaults = asdict(RequestLimits())
+    for name in defaults:
+        value = getattr(args, 'chat_timeout' if name == 'request_timeout' else name, None)
+        if value is not None:
+            defaults[name] = value
+    return asdict(RequestLimits(**defaults))
+
+
 @contextmanager
-def admission_context(recorder, args):
-    """Limit question pipelines and PostgreSQL; observe model calls without gating."""
+def sampling_runtime(recorder, args):
+    """Own the one runtime until all traced work and resource cleanup finishes."""
+    from scripts.baseline_adapters.deepeye.run_resources import SamplingRuntime
+    runtime = SamplingRuntime(stop_event=recorder.stop_event, emit=recorder.record_admission,
+                              **runtime_limits(args))
+    previous = {}
+    signals = 0
+    def stop(signum, frame):
+        nonlocal signals
+        signals += 1
+        runtime.stop(cancel_active=signals > 1)
+    try:
+        if threading.current_thread() is threading.main_thread():
+            for signum in (signal.SIGINT, signal.SIGTERM):
+                previous[signum] = signal.signal(signum, stop)
+        yield runtime
+        if runtime.dispatch.fatal_error is not None:
+            raise runtime.dispatch.fatal_error
+    finally:
+        try:
+            runtime.close()
+        finally:
+            for signum, handler in previous.items():
+                signal.signal(signum, handler)
+
+
+@contextmanager
+def admission_context(recorder, args, *, population=1):
+    """Bookkeep all questions and independently limit PostgreSQL execution."""
     settings = admission_settings(args)
     from scripts.baseline_adapters.deepeye import backend_hooks
     from scripts.baseline_adapters.deepeye.run_admission import (
-        AdaptivePolicy, FixedAdmission,
+        FixedAdmission,
     )
-    from scripts.baseline_adapters.deepeye.run_slots import PipelineSlots
+    from scripts.baseline_adapters.deepeye.run_slots import WorkflowSlots
 
-    slots = PipelineSlots(
-        fixed_limit=args.workers,
-        policy=AdaptivePolicy(**settings["pipeline"]) if settings["adaptive"] else None,
-        emit=recorder.record_admission,
-    )
+    slots = WorkflowSlots(population)
     postgres = FixedAdmission(settings["postgres_limit"], emit=recorder.record_admission)
-    original_api = recorder.api_call
     original_pg = backend_hooks.execute_postgres_sql
-    recorder.api_call = slots
     backend_hooks.execute_postgres_sql = lambda *args, **kwargs: postgres(original_pg, args, kwargs)
     try:
         yield {"pipeline": slots, "postgres": postgres}
     finally:
         backend_hooks.execute_postgres_sql = original_pg
-        recorder.api_call = original_api
 
 
 def prepare_inputs(precompute_dir: Path, few_shot_source: Path, *, variants=None,
@@ -337,50 +362,61 @@ def prepare_inputs(precompute_dir: Path, few_shot_source: Path, *, variants=None
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
+    from scripts.baseline_adapters.deepeye.run_operations import add_sample_commands
+    add_sample_commands(commands)
     for name in ("prepare", "run", "resume"):
         command = commands.add_parser(name)
         command.add_argument("--run-dir", type=Path, required=True)
         if name != "resume":
             command.add_argument("--inherit-from", type=Path,
-                                 help="Explicitly import compatible successful stage prefixes into a new run")
+                                 help="Legacy prefix import; rejected for this sampling implementation")
         command.add_argument("--precompute-dir", type=Path, required=True)
         command.add_argument("--env-file", type=Path, default=CODE_ROOT / "config/.env")
         command.add_argument("--few-shot-source", type=Path)
         command.add_argument("--variant", action="append", choices=("lite", "full"))
         command.add_argument("--item", dest="item_keys", action="append",
                              help="Exact variant/instance_id; repeat to select several")
-        command.add_argument("--workers", type=int, default=4,
-                             help="Fixed number of concurrent question pipelines (when not adaptive)")
+        command.add_argument("--workers", type=int,
+                             help="Legacy pipeline throttle; rejected in shared runtime mode")
         command.add_argument("--inner-workers", type=int,
-                             help="Native inner pool width; defaults to --workers")
+                             help="Legacy per-runner pool width; use --coordinator-workers")
+        command.add_argument('--request-limit', type=int, default=8000)
+        command.add_argument('--request-workers', type=int, default=8000)
+        command.add_argument('--coordinator-workers', type=int, default=6000,
+                             help='One shared pool across all questions and native branches')
+        command.add_argument('--http-connections', type=int, default=8000)
+        command.add_argument('--request-start-rate', dest='start_rate', type=float, default=50.0)
+        command.add_argument('--retry-delay', type=float, default=0.0)
         command.add_argument("--probe-per-variant", type=int,
                              help="Gold-free coverage sample per selected variant; includes every database")
         command.add_argument("--adaptive-concurrency", action="store_true",
-                             help="Dynamically adjust question pipeline slots, not model request slots")
-        command.add_argument("--concurrency-initial", type=int, default=50)
-        command.add_argument("--concurrency-step", type=int, default=10)
-        command.add_argument("--concurrency-min", type=int, default=10)
-        command.add_argument("--concurrency-max", type=int, default=100)
-        command.add_argument("--concurrency-window", type=float, default=60.0)
+                             help="Legacy adaptive pipeline throttle; rejected in shared runtime mode")
+        command.add_argument("--concurrency-initial", type=int)
+        command.add_argument("--concurrency-step", type=int)
+        command.add_argument("--concurrency-min", type=int)
+        command.add_argument("--concurrency-max", type=int)
+        command.add_argument("--concurrency-window", type=float)
         command.add_argument("--pg-concurrency", type=int, default=10,
-                             help="Independent PostgreSQL cap in both fixed and adaptive modes")
-        command.add_argument("--max-tokens", type=int, default=6144)
-        command.add_argument("--thinking-budget", type=int)
-        command.add_argument("--chat-timeout", type=int, default=300)
+                             help="Independent PostgreSQL cap; never expanded to model-worker count")
+        command.add_argument("--max-tokens", type=int, default=16384)
+        command.add_argument("--thinking-budget", type=int, help='Legacy thinking toggle; rejected in this version')
+        command.add_argument("--chat-timeout", type=int, default=660,
+                             help='Deadline on the actual HTTP operation, including response reads')
         command.add_argument(
             "--pg-sslmode",
             choices=("disable", "allow", "prefer", "require", "verify-ca", "verify-full"),
             default="prefer",
             help="Explicit libpq SSL mode, frozen in the run manifest (default: prefer)",
         )
-        command.add_argument("--extractor-retries", type=int, default=2)
-        command.add_argument("--direct-linking-budget", type=int, default=1)
-        command.add_argument("--reversed-linking-budget", type=int, default=1)
-        command.add_argument("--dc-generation-budget", type=int, default=1)
-        command.add_argument("--skeleton-generation-budget", type=int, default=1)
-        command.add_argument("--icl-generation-budget", type=int, default=1)
-        command.add_argument("--revision-checker-budget", type=int, default=1)
-        command.add_argument("--selection-evaluator-budget", type=int, default=1)
+        command.add_argument("--extractor-retries", type=int, default=2,
+                             help='Native constructor compatibility value; per-sample attempts remain four')
+        command.add_argument("--direct-linking-budget", type=int, default=4)
+        command.add_argument("--reversed-linking-budget", type=int, default=4)
+        command.add_argument("--dc-generation-budget", type=int, default=4)
+        command.add_argument("--skeleton-generation-budget", type=int, default=4)
+        command.add_argument("--icl-generation-budget", type=int, default=4)
+        command.add_argument("--revision-checker-budget", type=int, default=5)
+        command.add_argument("--selection-evaluator-budget", type=int, default=5)
     inspect = commands.add_parser("inspect")
     inspect.add_argument("--run-dir", type=Path, required=True)
     export = commands.add_parser("export")
@@ -400,23 +436,26 @@ def _diagnostics(run_dir: Path) -> dict:
 
 def _validate_run_args(parser: argparse.ArgumentParser, args) -> None:
     positive = (
-        "workers", "max_tokens", "chat_timeout", "extractor_retries",
+        "max_tokens", "chat_timeout", "extractor_retries",
         "direct_linking_budget", "reversed_linking_budget", "dc_generation_budget",
         "skeleton_generation_budget", "icl_generation_budget",
         "revision_checker_budget", "selection_evaluator_budget",
     )
     if any(getattr(args, name) < 1 for name in positive):
-        parser.error("Workers, token/time limits, retries, and all stage budgets must be positive")
-    if args.thinking_budget is not None and args.thinking_budget < 1:
-        parser.error("thinking-budget must be positive when supplied")
-    if args.inner_workers is not None and args.inner_workers < 1:
-        parser.error("inner-workers must be positive")
+        parser.error("Token/time limits, retries, and all stage budgets must be positive")
+    if args.thinking_budget is not None:
+        parser.error('thinking-budget is unsupported in this experimental version')
+    if args.workers is not None or args.inner_workers is not None:
+        parser.error('Legacy workers/inner-workers are unsupported; use --coordinator-workers and --request-workers')
+    if getattr(args, 'inherit_from', None) is not None:
+        parser.error('Legacy prefix inheritance is read-only in this version; resume the same compatible run')
     if args.probe_per_variant is not None and (args.probe_per_variant < 1 or args.item_keys):
         parser.error("probe-per-variant must be positive and cannot be combined with --item")
     if args.pg_concurrency < 1:
         parser.error("pg-concurrency must be positive")
     try:
         admission_settings(args)
+        runtime_limits(args)
     except ValueError as error:
         parser.error(str(error))
 
@@ -477,7 +516,7 @@ def _prepare_command(args, *, execute: bool, resume: bool) -> dict:
 
 
 def build_runtime_config(environment, args, run_dir: Path):
-    """Create native runner config with explicit bounded, non-paper-default budgets."""
+    """Create the formal budgets; constructor pools are replaced before work."""
 
     from scripts.deepeye_bird_interact_smoke import build_runtime_config as smoke_config
 
@@ -485,7 +524,7 @@ def build_runtime_config(environment, args, run_dir: Path):
     preprocessed = CODE_ROOT / "scripts/bird_interact_lite/preprocessed_data"
     config = smoke_config(environment, "lite", preprocessed, native_output,
                           max_tokens=args.max_tokens, thinking_budget=args.thinking_budget)
-    config.run_config.parallelism = getattr(args, "inner_workers", None) or args.workers
+    config.run_config.parallelism = runtime_limits(args)['coordinator_workers']
     config.llm_extractor_config.max_retry = args.extractor_retries
     config.schema_linking_config.direct_linking_sampling_budget = args.direct_linking_budget
     config.schema_linking_config.reversed_linking_sampling_budget = args.reversed_linking_budget
@@ -500,7 +539,7 @@ def build_runtime_config(environment, args, run_dir: Path):
     return config
 
 
-def bounded_runner_factory(config, chat_timeout: int, native_factory_builder=None):
+def bounded_runner_factory(config, chat_timeout: int, native_factory_builder=None, *, runtime=None):
     """Keep native stage logic while applying the smoke-tested transport bounds."""
 
     from scripts.baseline_adapters.deepeye.run_pipeline import native_runner_factory
@@ -511,8 +550,9 @@ def bounded_runner_factory(config, chat_timeout: int, native_factory_builder=Non
     def factory(stage, items):
         runner = base_factory(stage, items)
         llm = runner._llm
-        client = llm._get_client()
-        client.max_retries = 0
+        if runtime is None:
+            client = llm._get_client()
+            client.max_retries = 0
         llm.sample_max_attempts = 4
         request_once = llm.request_once
 
@@ -544,14 +584,9 @@ def _execute_pipeline(store, tasks, environment, args, *, pipeline_fn=None,
     runtime_config_builder = runtime_config_builder or build_runtime_config
     run_dir = getattr(store, "run_dir", Path("."))
     config = runtime_config_builder(environment, args, run_dir)
-    if runner_factory_fn is native_runner_factory:
-        runner_factory = bounded_runner_factory(config, args.chat_timeout,
-                                                native_factory_builder=runner_factory_fn)
-    else:
-        runner_factory = runner_factory_fn(config)
     secret_values = [environment.get(key) for key in
                      ("DASH_API_KEY", "EMBEDDING_API_KEY", "PG_PASSWORD")]
-    recorder = recorder_type(store, secrets=secret_values)
+    recorder = recorder_type(store, secrets=secret_values, stop_event=threading.Event())
     pg_fields = ("PG_HOST", "PG_PORT", "PG_USER", "PG_PASSWORD", "PG_SSLMODE")
     previous = {key: os.environ.get(key) for key in pg_fields}
     os.environ.update({key: environment[key] for key in pg_fields[:-1]})
@@ -559,9 +594,14 @@ def _execute_pipeline(store, tasks, environment, args, *, pipeline_fn=None,
     undo_support = None
     try:
         undo_support = install_support()
-        with recorder.install(), admission_context(recorder, args) as controllers:
-            result = pipeline_fn(store, tasks, runner_factory, recorder, workers=args.workers,
+        with recorder.install(), admission_context(recorder, args, population=len(tasks)) as controllers, \
+                sampling_runtime(recorder, args) as runtime:
+            runner_factory = (bounded_runner_factory(config, args.chat_timeout,
+                              native_factory_builder=runner_factory_fn, runtime=runtime)
+                              if runner_factory_fn is native_runner_factory else runner_factory_fn(config))
+            result = pipeline_fn(store, tasks, runner_factory, recorder, runtime=runtime,
                                  slot_controller=controllers["pipeline"])
+            result['runtime'] = runtime.snapshot()
             if controllers:
                 result["admission"] = {name: gate.snapshot() for name, gate in controllers.items()}
             return result
@@ -581,6 +621,10 @@ def main(argv=None) -> int:
     parser = _build_parser()
     args = parser.parse_args(argv)
     try:
+        if args.command in ('samples', 'renew-samples'):
+            from scripts.baseline_adapters.deepeye.run_operations import sample_command
+            print(json.dumps(sample_command(args), ensure_ascii=False, sort_keys=True))
+            return 0
         if args.command == "inspect":
             report = _diagnostics(args.run_dir)
             print(json.dumps(report, ensure_ascii=False, sort_keys=True))

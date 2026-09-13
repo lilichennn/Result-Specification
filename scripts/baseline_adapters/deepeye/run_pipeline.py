@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
-from contextlib import ExitStack
+from contextlib import ExitStack, nullcontext
 import copy
 import importlib
 import sys
@@ -98,7 +98,7 @@ def _valid_output(item, stage):
     return True
 
 
-def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_controller=None):
+def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_controller=None, *, runtime=None):
     """Run/resume four stages, appending attempts and committing each completed item.
 
     Inputs must be pristine, gold-free precomputed DataItems. Failed item mutations
@@ -112,15 +112,23 @@ def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_control
     if not _PIPELINE_LOCK.acquire(blocking=False):
         raise RuntimeError('Only one native DeepEye pipeline may run per process')
     try:
+        tasks = list(tasks)
+        if runtime is not None:
+            if runtime.stop_event is not recorder.stop_event:
+                raise ValueError('Runtime and recorder must share the same stop event')
+            from .run_slots import WorkflowSlots
+            if slot_controller is not None and not isinstance(slot_controller, WorkflowSlots):
+                raise ValueError('Legacy pipeline limits are incompatible with the shared runtime')
+            slot_controller = slot_controller or WorkflowSlots(len(tasks))
         if slot_controller is None:
             from .run_slots import PipelineSlots
             slot_controller = PipelineSlots(fixed_limit=workers)
-        return _run_pipeline(store, list(tasks), runner_factory, recorder, slot_controller)
+        return _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runtime)
     finally:
         _PIPELINE_LOCK.release()
 
 
-def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
+def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runtime=None):
     from app.llm.sampling import SamplingPaused
     stop = getattr(recorder, 'stop_event', threading.Event())
     states, identities = {}, {}
@@ -177,6 +185,8 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
             entry = [runner, None, None]
             resources.append(entry)
             runners[stage] = runner
+            if runtime is not None:
+                runtime.bind_runner(runner)
             instrumentation = ExitStack()
             entry[1] = instrumentation.close
             instrumentation.callback(instrument_native_pools(runner))
@@ -212,7 +222,7 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                     links.append(link)
                     store.append_event(master, 'pipeline_stage_attempt', link)
                     target = copy.deepcopy(states[key])
-                    with recorder.context(attempt_id):
+                    with recorder.context(attempt_id), runtime.context() if runtime else nullcontext():
                         started = time.monotonic()
                         error_type = error_message = None
                         try:
@@ -274,7 +284,8 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                 raise
 
         if remaining:
-            question_pool = ThreadPoolExecutor(max_workers=slot_controller.max_limit, thread_name_prefix='run-pipeline')
+            question_pool = (runtime.executor_view() if runtime else
+                             ThreadPoolExecutor(max_workers=slot_controller.max_limit, thread_name_prefix='run-pipeline'))
             with question_pool as pool:
                 futures = {}
                 while pending or futures:
@@ -300,7 +311,14 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                                     break
                                 pending.popleft()
                                 unreleased[key] = ticket
-                                future = pool.submit(execute, key, ticket)
+                                try:
+                                    future = pool.submit(execute, key, ticket)
+                                except SamplingPaused:
+                                    stop.set()
+                                    paused.add(key)
+                                    slot_controller.release(ticket, status='failed')
+                                    unreleased.pop(key)
+                                    continue
                                 question_futures.append(future)
                                 futures[future] = key
                                 slot_controller.set_pending(len(pending))

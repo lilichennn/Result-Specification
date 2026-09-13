@@ -29,11 +29,12 @@ ENV = {'DASH_MODELS': 'offline', 'DASH_BASE_URL': 'https://invalid.test/v1',
 
 
 def native_args():
-    return SimpleNamespace(workers=1, inner_workers=1, pg_concurrency=1, max_tokens=6144,
-        thinking_budget=None, chat_timeout=1200, pg_sslmode='prefer', extractor_retries=2,
-        direct_linking_budget=1, reversed_linking_budget=1, dc_generation_budget=1,
-        skeleton_generation_budget=1, icl_generation_budget=1, revision_checker_budget=1,
-        selection_evaluator_budget=1, adaptive_concurrency=False)
+    return SimpleNamespace(pg_concurrency=1, max_tokens=16384,
+        thinking_budget=None, chat_timeout=660, pg_sslmode='prefer', extractor_retries=2,
+        direct_linking_budget=4, reversed_linking_budget=4, dc_generation_budget=4,
+        skeleton_generation_budget=4, icl_generation_budget=4, revision_checker_budget=5,
+        selection_evaluator_budget=5, request_limit=2, request_workers=4,
+        coordinator_workers=4, http_connections=4, start_rate=10000.0, retry_delay=0.0)
 
 
 class CliTests(OfflineTestCase):
@@ -44,49 +45,36 @@ class CliTests(OfflineTestCase):
             except SystemExit as error:
                 self.fail(f'Expected supported CLI arguments, parser exited with {error.code}')
 
-    def test_saved_dynamic_policy_round_trips_without_falling_back_to_fixed(self):
-        # Break caught: run/resume silently rebuilds a fixed controller or defaults.
+    def test_saved_runtime_round_trips_without_falling_back_to_legacy_pools(self):
         args = native_args()
-        args.adaptive_concurrency = True
-        args.concurrency_initial, args.concurrency_step = 3, 2
-        args.concurrency_min, args.concurrency_max = 1, 9
-        args.concurrency_window = 0.75
         effective = build_effective_config(ENV, args)
         restored = cli.runtime_args(effective)
-        self.assertTrue(restored.adaptive_concurrency)
         rebuilt = build_effective_config(ENV, restored)
         self.assertEqual(rebuilt, effective)
-        self.assertEqual(rebuilt['admission']['pipeline']['initial_limit'], 3)
-        self.assertEqual(rebuilt['admission']['pipeline']['step'], 2)
-        self.assertEqual(rebuilt['admission']['pipeline']['max_limit'], 9)
-        self.assertEqual(rebuilt['admission']['pipeline']['stable_window_s'], 0.75)
-        defaults = cli.runtime_args(build_effective_config(ENV, native_args()),
-                                    SimpleNamespace(adaptive_concurrency=True))
-        self.assertEqual((defaults.concurrency_initial, defaults.concurrency_step,
-                          defaults.concurrency_min, defaults.concurrency_max, defaults.concurrency_window),
-                         (50, 10, 10, 100, 60.0))
+        self.assertEqual(rebuilt['runtime']['request_limit'], 2)
+        self.assertEqual(rebuilt['runtime']['coordinator_workers'], 4)
+        with self.assertRaisesRegex(ValueError, 'Legacy'):
+            cli.runtime_args(effective, SimpleNamespace(adaptive_concurrency=True))
 
-    def test_prepare_freezes_custom_dynamic_policy_and_replay_uses_it_offline(self):
-        # Break caught: options accepted but not used/frozen, or reuse bypasses slots.
+    def test_prepare_freezes_custom_runtime_and_replay_needs_no_native_clients(self):
         with tempfile.TemporaryDirectory() as temporary:
             root, inputs, arguments, environment = self.fixture(temporary)
-            arguments += ['--adaptive-concurrency', '--concurrency-initial', '200',
-                          '--concurrency-step', '10', '--concurrency-min', '5',
-                          '--concurrency-max', '400', '--concurrency-window', '2.5']
+            arguments += ['--request-limit', '5', '--request-workers', '7',
+                          '--coordinator-workers', '3', '--request-start-rate', '12.5']
             with patch.object(cli, 'prepare_inputs', return_value=inputs):
                 self.assertEqual(self.invoke(arguments), 0)
             with RunStore.open(root / 'run') as store:
-                policy = store.manifest['effective_config']['admission']['pipeline']
-                self.assertEqual({key: policy[key] for key in ('initial_limit', 'step', 'min_limit', 'max_limit', 'stable_window_s')},
-                                 {'initial_limit': 200, 'step': 10, 'min_limit': 5, 'max_limit': 400, 'stable_window_s': 2.5})
+                policy = store.manifest['effective_config']['runtime']
+                self.assertEqual((policy['request_limit'], policy['request_workers'], policy['coordinator_workers'], policy['start_rate']),
+                                 (5, 7, 3, 12.5))
                 restored = cli._check_frozen(store, ENV)
-                self.assertTrue(restored.adaptive_concurrency)
+                self.assertEqual(restored.request_limit, 5)
                 with patch.object(cli, 'build_runtime_config', side_effect=AssertionError('reuse built native resources')):
                     result = cli.execute_run(store, ENV)
                     self.assertIn('admission', result)
-                    self.assertEqual(result['admission']['pipeline']['current_limit'], 200)
+                    self.assertEqual(result['admission']['pipeline']['current_limit'], 1)
                     self.assertEqual(result['admission']['pipeline']['active'], 0)
-                    self.assertEqual(result['admission']['pipeline']['model']['requested'], 0)
+                    self.assertEqual(result['runtime']['requests']['submitted'], 0)
                     count = len(store.attempts())
                     repeated = cli.execute_run(store, ENV)
                 self.assertEqual(repeated['succeeded'], 1)
@@ -94,27 +82,12 @@ class CliTests(OfflineTestCase):
                 self.assertEqual(store.attempts()[0]['payload']['execution_origin'], 'reused_no_native_llm_call')
                 self.assertEqual(store.events(), [])
 
-    def test_prepare_from_dynamic_baseline_still_requires_explicit_opt_in(self):
-        # Break caught: baseline scheduling unexpectedly enables RC adaptive mode.
-        source_args = native_args()
-        source_args.adaptive_concurrency = True
-        source_args.concurrency_initial, source_args.concurrency_step = 200, 10
-        source_args.concurrency_min, source_args.concurrency_max = 10, 400
-        source_args.concurrency_window = 60.0
-        effective = build_effective_config(ENV, source_args)
-        basic = ['prepare', '--source-run', '/unused-source', '--run-dir', '/unused-run',
-                 '--target-stage', 'sql_revision', '--condition', 'none']
-        options = cli.build_parser().parse_args(basic)
-        fixed = cli.runtime_args(effective, options)
-        self.assertFalse(fixed.adaptive_concurrency)
-        options = cli.build_parser().parse_args(basic + ['--adaptive-concurrency'])
-        adaptive = cli.runtime_args(effective, options)
-        self.assertTrue(adaptive.adaptive_concurrency)
-        self.assertEqual(build_effective_config(ENV, adaptive)['admission'], effective['admission'])
-        partial = cli.build_parser().parse_args(basic + ['--adaptive-concurrency', '--concurrency-step', '20'])
-        overridden = build_effective_config(ENV, cli.runtime_args(effective, partial))['admission']['pipeline']
-        self.assertEqual({key: overridden[key] for key in ('initial_limit', 'step', 'min_limit', 'max_limit', 'stable_window_s')},
-                         {'initial_limit': 200, 'step': 20, 'min_limit': 10, 'max_limit': 400, 'stable_window_s': 60.0})
+    def test_old_runtime_manifest_cannot_start_new_paid_work(self):
+        effective = build_effective_config(ENV, native_args())
+        effective.pop('runtime')
+        effective['profile'] = 'bounded-config'
+        with self.assertRaisesRegex(ValueError, 'Legacy native runtime'):
+            cli.runtime_args(effective)
 
     def test_invalid_dynamic_options_rejected_before_directory_creation(self):
         # Break caught: malformed or silently ignored policies reach paid execution.

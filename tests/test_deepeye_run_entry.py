@@ -86,9 +86,9 @@ class DeepEyeRunEntryTests(unittest.TestCase):
 
         self.assertEqual(actual, module.build_effective_config(rotated, self.args()))
         self.assertNotEqual(actual, module.build_effective_config({**rotated, "PG_USER": "other-role"}, self.args()))
-        self.assertEqual(actual["profile"], "bounded-config")
+        self.assertEqual(actual["profile"], "shared-sampling-v1")
         self.assertEqual(actual["scheduler"], {
-            "mode": "pipeline_slots", "concurrency_unit": "question_pipeline",
+            "mode": "all_questions", "concurrency_unit": "model_request",
         })
         self.assertNotIn("precomputed_embedding", actual)
         self.assertEqual(actual["stages"]["schema_linking"],
@@ -202,19 +202,16 @@ class DeepEyeRunEntryTests(unittest.TestCase):
         module = self.module()
         parser = module._build_parser()
         common = ["run", "--run-dir", "unused", "--precompute-dir", "unused",
-                  "--adaptive-concurrency", "--workers", "50", "--inner-workers", "100",
-                  "--probe-per-variant", "25"]
+                  "--coordinator-workers", "100", "--probe-per-variant", "25"]
         args = parser.parse_args(common)
         module._validate_run_args(parser, args)
         policy = module.admission_settings(args)
-        self.assertEqual(policy["pipeline"]["initial_limit"], 50)
-        self.assertEqual(policy["pipeline"]["step"], 10)
-        self.assertEqual(policy["pipeline"]["stable_window_s"], 60.0)
-        self.assertTrue(policy["adaptive"])
+        self.assertEqual(policy['pipeline'], {'mode': 'all_questions'})
+        self.assertFalse(policy["adaptive"])
         self.assertEqual(policy["postgres_limit"], 10)
         self.assertEqual(module.admission_settings(self.args()), {
             "enabled": True, "adaptive": False,
-            "pipeline": {"fixed_limit": 4}, "postgres_limit": 10,
+            "pipeline": {"mode": "all_questions"}, "postgres_limit": 10,
         })
         for extra in (["--concurrency-max", "40"], ["--concurrency-min", "0"],
                       ["--concurrency-window", "0"], ["--inner-workers", "0"],
@@ -229,7 +226,7 @@ class DeepEyeRunEntryTests(unittest.TestCase):
         recorder = SimpleNamespace(api_call=None,
                                    record_admission=lambda kind, payload: events.append((kind, payload)))
         args = module._build_parser().parse_args([
-            "run", "--run-dir", "unused", "--precompute-dir", "unused", "--adaptive-concurrency"])
+            "run", "--run-dir", "unused", "--precompute-dir", "unused"])
         original = backend_hooks.execute_postgres_sql
         pg_result = object()
         pg_calls = []
@@ -240,9 +237,7 @@ class DeepEyeRunEntryTests(unittest.TestCase):
             with patch.object(backend_hooks, "execute_postgres_sql", pg_boundary):
                 with module.admission_context(recorder, args) as controllers:
                     self.assertIsNot(backend_hooks.execute_postgres_sql, pg_boundary)
-                    token = object()
-                    self.assertIs(recorder.api_call(lambda: token, (), {}), token)
-                    self.assertEqual(controllers["pipeline"].snapshot()["model"]["completed"], 1)
+                    self.assertIsNone(recorder.api_call)
                     self.assertEqual(controllers["pipeline"].snapshot()["completed"], 0)
                     self.assertIs(backend_hooks.execute_postgres_sql("item", "SELECT 1", timeout=3), pg_result)
                     self.assertEqual(pg_calls, [(("item", "SELECT 1"), {"timeout": 3})])
@@ -251,16 +246,15 @@ class DeepEyeRunEntryTests(unittest.TestCase):
         self.assertIs(backend_hooks.execute_postgres_sql, original)
         self.assertIsNone(recorder.api_call)
         self.assertEqual([kind for kind, _ in events],
-                         ["api_admission", "api_completion", "postgres_admission", "postgres_completion"])
+                         ["postgres_admission", "postgres_completion"])
 
     def test_fixed_slots_also_limit_postgres_and_observe_model_requests(self):
         recorder = SimpleNamespace(api_call=None, record_admission=lambda *args: None)
-        with self.module().admission_context(recorder, self.args(workers=2)) as controllers:
+        with self.module().admission_context(recorder, self.args(), population=605) as controllers:
             slots = controllers["pipeline"]
-            self.assertEqual(slots.snapshot()["current_limit"], 2)
+            self.assertEqual(slots.snapshot()["current_limit"], 605)
             self.assertEqual(controllers["postgres"].snapshot()["current_limit"], 10)
-            self.assertEqual(recorder.api_call(lambda: 42, (), {}), 42)
-            self.assertEqual(slots.snapshot()["model"]["completed"], 1)
+            self.assertIsNone(recorder.api_call)
         self.assertIsNone(recorder.api_call)
 
     def test_inheritance_is_explicit_and_not_a_resume_manifest_bypass(self):
@@ -397,14 +391,14 @@ class DeepEyeRunEntryTests(unittest.TestCase):
             run_dir = root / "new" / "parent" / "run"
             common = ["--run-dir", str(run_dir), "--precompute-dir", str(root / "precomputed"),
                       "--few-shot-source", str(root / "train.json"), "--env-file", str(environment),
-                      "--adaptive-concurrency"]
+                      "--request-limit", "5"]
             with patch.object(module, "prepare_inputs", return_value=prepared):
                 self.assertEqual(module.main(["prepare", *common]), 0)
 
             from scripts.baseline_adapters.deepeye.run_store import RunStore
             with RunStore.open(run_dir, read_only=True) as store:
                 encoded = json.dumps(store.manifest, sort_keys=True)
-                self.assertEqual(store.manifest["effective_config"]["profile"], "bounded-config")
+                self.assertEqual(store.manifest["effective_config"]["profile"], "shared-sampling-v1")
                 self.assertEqual(store.summary()["attempts"], 0)
             for secret in ("chat-secret", "embedding-secret", "database-secret"):
                 self.assertNotIn(secret, encoded)
@@ -414,7 +408,7 @@ class DeepEyeRunEntryTests(unittest.TestCase):
                 self.assertEqual(module.main(["resume", *common, "--direct-linking-budget", "2"]), 1)
             self.assertEqual((run_dir / "run.sqlite3").read_bytes(), before)
             with patch.object(module, "prepare_inputs", return_value=prepared):
-                self.assertEqual(module.main(["resume", *common, "--concurrency-max", "60"]), 1)
+                self.assertEqual(module.main(["resume", *common, "--request-limit", "60"]), 1)
             self.assertEqual((run_dir / "run.sqlite3").read_bytes(), before)
 
             environment.write_text(environment.read_text().replace("PG_USER=reader", "PG_USER=other-role"))
@@ -496,7 +490,8 @@ class DeepEyeRunEntryTests(unittest.TestCase):
         calls = []
 
         class Recorder:
-            def __init__(self, store, secrets):
+            def __init__(self, store, secrets, stop_event):
+                self.stop_event = stop_event
                 self.api_call = None
                 calls.append(("recorder", store, tuple(secrets)))
 
@@ -513,13 +508,14 @@ class DeepEyeRunEntryTests(unittest.TestCase):
             calls.append(("postgres-installed",))
             return lambda: calls.append(("postgres-restored",))
 
-        def pipeline(store, tasks, runner_factory, recorder, workers, slot_controller):
+        def pipeline(store, tasks, runner_factory, recorder, runtime, slot_controller):
             self.assertEqual(os.environ["PG_HOST"], "new-host")
             self.assertEqual(os.environ["PG_PASSWORD"], "new-password")
             self.assertEqual(os.environ["PG_SSLMODE"], "verify-full")
-            self.assertEqual(workers, 3)
-            self.assertEqual(slot_controller.snapshot()["current_limit"], 3)
-            self.assertIs(recorder.api_call, slot_controller)
+            self.assertEqual(runtime.limits.coordinator_workers, 6000)
+            self.assertIs(runtime.stop_event, recorder.stop_event)
+            self.assertEqual(slot_controller.snapshot()["current_limit"], 1)
+            self.assertIsNone(recorder.api_call)
             self.assertTrue(callable(runner_factory))
             calls.append(("pipeline", tuple(tasks)))
             return {"succeeded": 1, "failed": 0, "items": {}}

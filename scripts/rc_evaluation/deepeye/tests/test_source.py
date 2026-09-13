@@ -49,6 +49,18 @@ def make_source(path, *, calls=1, stage='sql_revision', partial=False, bad_hash=
 
 
 class SourceTests(OfflineTestCase):
+    def test_complete_group_marker_without_retained_sample_slots_is_not_complete(self):
+        from scripts.rc_evaluation.deepeye.source import api_trace
+        events = [
+            {'attempt_id': 'a', 'kind': 'sampling_group_start', 'payload': {'group_id': 'g', 'target_n': 2}},
+            {'attempt_id': 'a', 'kind': 'sampling_group_result', 'payload': {'group_id': 'g', 'target_n': 2,
+                'success_count': 2, 'complete': True}},
+            {'attempt_id': 'a', 'kind': 'sample_result', 'payload': {'group_id': 'g', 'sample_index': 0,
+                'succeeded': True, 'usage': {'prompt_tokens': 1, 'completion_tokens': 1, 'total_tokens': 2}}}]
+        result = api_trace(events)
+        self.assertFalse(result['complete'])
+        self.assertEqual(result['sampling']['incomplete_groups'], 1)
+
     def test_duplicate_valid_restored_success_is_rejected_by_source_verification(self):
         from scripts.rc_evaluation.deepeye.source import api_trace, _source_trace
         from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder

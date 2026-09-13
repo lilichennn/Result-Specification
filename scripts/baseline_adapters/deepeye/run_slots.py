@@ -15,6 +15,30 @@ import uuid
 from .run_admission import AdaptiveAdmission, AdaptivePolicy
 
 
+class WorkflowSlots:
+    """Bookkeep every question without an independent adaptive capacity gate."""
+    def __init__(self, population, emit=None):
+        self._slots = PipelineSlots(fixed_limit=max(1, population))
+
+    @property
+    def max_limit(self):
+        return self._slots.max_limit
+
+    def set_pending(self, count):
+        self._slots.set_pending(count)
+
+    def try_acquire(self, item_key):
+        return self._slots.try_acquire(item_key)
+
+    def release(self, ticket, *, status):
+        self._slots.release(ticket, status=status)
+
+    def snapshot(self):
+        state = self._slots.snapshot()
+        state.pop('model', None)
+        return {**state, 'mode': 'all_questions', 'capacity_semantics': 'population_not_model_throttle'}
+
+
 class PipelineSlots:
     def __init__(
         self,

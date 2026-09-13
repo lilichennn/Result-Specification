@@ -60,6 +60,32 @@ class Factory:
 
 
 class RunnerTests(OfflineTestCase):
+    def test_called_rc_target_without_injection_is_failed_with_request_evidence(self):
+        from tests.test_deepeye_sampling import llm_fixture, response
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from types import SimpleNamespace
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'source'
+            tasks = make_source(path, calls=1)
+            data = experiment_manifest(snapshot_source(path, tasks, 'sql_revision'), condition='rc')
+            data['contracts'] = {'lite/a': {'task_key': 'lite/a', 'db_id': 'db',
+                'question': 'Return x', 'evidence': 'Ascending order',
+                'round2': {key: 'Meaning' for key in ('population', 'row_grain', 'column_role',
+                                                    'derivation', 'filter_policy', 'meta_review')}}}
+            llm, calls = llm_fixture([response()])
+            def factory(stage, items):
+                def revise(item):
+                    llm.ask([{'role': 'user', 'content': 'deliberately bypassed formatter'}])
+                    complete_stage(item, stage)
+                return SimpleNamespace(_llm=llm, _checkers=[], _revise_sql=revise, _clean_up=lambda: None)
+            with RunStore.create(Path(temporary) / 'run', data) as store:
+                result = run_experiment(store, factory, TraceRecorder(store))
+                self.assertEqual((result['failed'], len(calls)), (1, 1))
+                payload = store.attempts()[0]['payload']
+                self.assertEqual(payload['error_type'], 'MissingRCParticipation')
+                self.assertEqual(payload['rc_participation']['native_request_count'], 1)
+                self.assertEqual(payload['rc_participation']['actual_request_count'], 0)
+
     def test_partial_sampling_cannot_succeed_via_native_fallback(self):
         from tests.test_deepeye_sampling import llm_fixture, response, parse
         from app.llm_extractor import LLMExtractor

@@ -1,12 +1,11 @@
-"""Offline RC execution through the real pipeline admission boundary."""
+"""Production RC entrypoint uses the shared runtime, never adaptive slots."""
+import asyncio
 import copy
-from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager
+import json
 from pathlib import Path
 import tempfile
 import threading
 from types import SimpleNamespace
-import unittest
 from unittest.mock import patch
 
 from . import OfflineTestCase
@@ -14,33 +13,102 @@ from .test_cli import ENV, native_args
 from .test_runner import experiment_manifest
 from tests.test_deepeye_run_inheritance import make_item, manifest, complete_stage, cost
 from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
-from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, STAGE_METHODS, _checkpoint
-from scripts.baseline_adapters.deepeye.run_slots import PipelineSlots
+from scripts.baseline_adapters.deepeye.run_pipeline import STAGES, _checkpoint
 from scripts.baseline_adapters.deepeye.run_store import RunStore, to_jsonable
 from scripts.deepeye_bird_interact_run import build_effective_config, code_source_hashes
 from scripts.rc_evaluation.deepeye import cli
 from scripts.rc_evaluation.deepeye.source import snapshot_source
 
 
-class Clock:
-    """Only controller time advances; thread synchronization uses real events."""
-    def __init__(self):
-        self.now = 0.0
+class AsyncClientFixture:
+    """Fake only the SDK transport below the real facade/admission/trace."""
+    def __init__(self, create):
+        self.chat = SimpleNamespace(completions=SimpleNamespace(create=create))
+        self.closed = False
 
-    def __call__(self):
-        return self.now
+    async def close(self):
+        self.closed = True
+
+
+def completion(content='<result>SELECT x FROM t</result>'):
+    from openai.types.chat import ChatCompletion
+    return ChatCompletion(id='offline', created=0, model='offline', object='chat.completion',
+        choices=[{'index': 0, 'finish_reason': 'stop', 'message': {'role': 'assistant', 'content': content}}],
+        usage={'prompt_tokens': 3, 'completion_tokens': 2, 'total_tokens': 5})
 
 
 class DynamicConcurrencyTests(OfflineTestCase):
-    def prepared(self, temporary, *, calls=0, keys='a', stage='sql_revision'):
+    def test_actual_rc_stop_between_admission_and_submit_returns_paused(self):
+        from scripts.baseline_adapters.deepeye.run_resources import SamplingRuntime
+        original = SamplingRuntime.submit_coordinator
+        def stop_at_submission(runtime, *args, **kwargs):
+            runtime.stop()
+            return original(runtime, *args, **kwargs)
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, keys='ab') as store, \
+                patch.object(SamplingRuntime, 'submit_coordinator', stop_at_submission):
+            result = cli.execute_run(store, ENV)
+            self.assertEqual((result['succeeded'], result['failed'], result['paused']), (0, 0, 2))
+            self.assertEqual(store.attempts(), [])
+
+    def test_actual_rc_authentication_failure_propagates_and_drains_without_new_work(self):
+        import httpx
+        from openai import AuthenticationError
+        from app.llm import LLM
+        from app.services.schema_service import SchemaService
+        calls = []
+        response = httpx.Response(401, request=httpx.Request('POST', 'https://invalid.test/v1'))
+        original = AuthenticationError('offline invalid credential', response=response, body=None)
+        async def create(**kwargs):
+            calls.append(kwargs)
+            raise original
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, calls=1, keys='ab') as store:
+            client = AsyncClientFixture(create)
+            with patch('openai.AsyncOpenAI', return_value=client), \
+                 patch.object(LLM, '_create_client', side_effect=AssertionError('sync client forbidden')), \
+                 patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)):
+                with self.assertRaises(AuthenticationError) as failure:
+                    cli.execute_run(store, ENV)
+            self.assertIs(failure.exception, original)
+            self.assertLessEqual(len(calls), 2)
+            self.assertTrue(client.closed)
+            self.assertTrue(all(row['status'] == 'interrupted' for row in store.attempts()))
+            self.assertFalse(any(t.name.startswith(('deepeye-http', 'deepeye-coordinator', 'deepeye-sample'))
+                                 for t in threading.enumerate()))
+
+    def test_actual_rc_manual_stop_preserves_unfinished_sampling_and_same_event(self):
+        from app.llm import LLM
+        from app.services.schema_service import SchemaService
+        from scripts.baseline_adapters.deepeye.run_resources import SamplingRuntime
+        runtimes, calls = [], []
+        original_init = SamplingRuntime.__init__
+        def initialize(runtime, **kwargs):
+            original_init(runtime, **kwargs)
+            runtimes.append(runtime)
+        async def create(**kwargs):
+            calls.append(kwargs)
+            runtimes[0].stop(cancel_active=False)
+            await asyncio.sleep(.01)
+            return completion()
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, calls=1, keys='ab') as store:
+            client = AsyncClientFixture(create)
+            with patch.object(SamplingRuntime, '__init__', initialize), \
+                 patch('openai.AsyncOpenAI', return_value=client), \
+                 patch.object(LLM, '_create_client', side_effect=AssertionError('sync client forbidden')), \
+                 patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)):
+                result = cli.execute_run(store, ENV)
+            self.assertEqual((result['succeeded'], result['failed'], result['paused']), (0, 0, 2))
+            self.assertTrue(runtimes[0].stop_event.is_set())
+            self.assertLessEqual(len(calls), 2)
+            self.assertTrue(client.closed)
+            self.assertEqual(runtimes[0].dispatch.snapshot()['in_flight'], 0)
+            self.assertTrue(all(row['status'] == 'interrupted' for row in store.attempts()))
+            self.assertTrue(store.verify()['ok'])
+
+    def prepared(self, temporary, *, calls=0, keys='a', stage='sql_generation', condition='rc',
+                 downstream=False, coordinator_workers=4):
         root = Path(temporary)
-        args = SimpleNamespace(**{
-            **vars(native_args()), 'adaptive_concurrency': True,
-            'inner_workers': 8,
-            'concurrency_initial': 2, 'concurrency_step': 1,
-            'concurrency_min': 1, 'concurrency_max': 3,
-            'concurrency_window': 1.0,
-        })
+        args = native_args()
+        args.coordinator_workers = coordinator_workers
         config = build_effective_config(ENV, args)
         tasks = [('lite', make_item(key)) for key in keys]
         source = manifest(tasks, upgrade=True)
@@ -49,8 +117,7 @@ class DynamicConcurrencyTests(OfflineTestCase):
         with RunStore.create(root / 'source', source) as store:
             for _, original in tasks:
                 item = copy.deepcopy(original)
-                identity = fingerprint({'manifest': source,
-                                        'input': to_jsonable(item.model_dump(exclude={'gold_sql'}))})
+                identity = fingerprint({'manifest': source, 'input': to_jsonable(item.model_dump(exclude={'gold_sql'}))})
                 for current in STAGES:
                     input_hash = fingerprint({'input': identity, 'stage': current})
                     complete_stage(item, current)
@@ -62,281 +129,131 @@ class DynamicConcurrencyTests(OfflineTestCase):
                     for number in range(count):
                         call = f'{attempt}-{number}'
                         store.append_event(attempt, 'api_request', {'call_id': call})
-                        store.append_event(attempt, 'api_response', {'call_id': call,
-                            'response': {'usage': cost(1)}})
+                        store.append_event(attempt, 'api_response', {'call_id': call, 'response': {'usage': cost(1)}})
                     store.finish_attempt(attempt, 'succeeded', payload)
                     identity = fingerprint({'input': input_hash, 'output': payload})
-        data = experiment_manifest(snapshot_source(root / 'source', tasks, stage))
+        data = experiment_manifest(snapshot_source(root / 'source', tasks, stage, continue_downstream=downstream),
+                                   condition=condition, downstream=downstream)
         data['target_stage'] = stage
         data['sources'] = {**data['sources'], 'rc_evaluation_code_sha256': cli.production_hash()}
+        if condition == 'rc':
+            from .test_contracts import _record
+            from scripts.rc_evaluation.deepeye.contracts import load_contracts
+            records = [_record(row.instance_id, db_id=row.database_id, question=row.question, evidence=row.evidence,
+                rc_round2={field: f'Unique contract for {row.instance_id}' for field in (
+                    'population', 'row_grain', 'column_role', 'derivation', 'filter_policy', 'meta_review')})
+                for _, row in tasks]
+            path = root / 'contracts.json'
+            path.write_text(json.dumps(records))
+            data['contracts'] = load_contracts({'lite': path}, tasks)
         return RunStore.create(root / 'run', data)
 
-    @contextmanager
-    def controlled_slots(self, clock):
-        captured = {}
-
-        def create(*args, **kwargs):
-            slots = PipelineSlots(*args, **kwargs, clock=clock)
-            captured['pipeline'] = slots
-            return slots
-
-        with patch('scripts.baseline_adapters.deepeye.run_slots.PipelineSlots', side_effect=create):
-            yield captured
-
-    @contextmanager
-    def fake_revision(self, execute, *, create=None, cleanup=None):
-        """Keep the bounded factory and trace wrappers; replace native work only."""
-        from app.llm import LLM
-        from app.config.config import LLMConfig
-        from openai.types.chat import ChatCompletion
-
-        closed = threading.Event()
-
-        def response(**kwargs):
-            if create is not None:
-                create(**kwargs)
-            return ChatCompletion(id='offline', created=0, model='offline', object='chat.completion',
-                choices=[{'index': 0, 'finish_reason': 'stop', 'message': {
-                    'role': 'assistant', 'content': '<result>SELECT 1</result>'}}],
-                usage={'prompt_tokens': 3, 'completion_tokens': 2, 'total_tokens': 5})
-
-        client = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=response)),
-                                 close=closed.set)
-
-        def factory(stage, items):
-            self.assertEqual(stage, 'sql_revision')
-            llm = LLM(LLMConfig(model='offline', api_key='fixture', base_url='https://invalid.test'))
-            llm._client = client
-            runner = SimpleNamespace(_llm=llm,
-                                     _checkers=[], _clean_up=cleanup or (lambda: None))
-
-            def revise(item):
-                execute(item, client.chat.completions.create)
-                complete_stage(item, stage)
-
-            setattr(runner, STAGE_METHODS[stage], revise)
-            return runner
-
-        with patch('scripts.baseline_adapters.deepeye.run_pipeline.native_runner_factory',
-                   return_value=factory), \
-             patch.object(LLM, '_create_client', side_effect=AssertionError('real model client forbidden')):
-            yield closed
-
-    def test_dynamic_replay_reconstructs_slots_without_native_clients(self):
-        # Break caught: frozen dynamic settings are downgraded, or replay skips
-        # the admission boundary / constructs a native or database client.
+    def test_replay_keeps_shared_runtime_limits_without_creating_native_clients(self):
         with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary) as store:
             with patch.object(cli, 'build_runtime_config', side_effect=AssertionError('replay built native config')), \
                  patch.object(cli, 'bounded_runner_factory', side_effect=AssertionError('replay built model clients')), \
-                 patch('scripts.baseline_adapters.deepeye.hooks.install_postgres_support',
-                       side_effect=AssertionError('replay installed database resources')):
+                 patch('openai.AsyncOpenAI', side_effect=AssertionError('replay opened client')):
                 result = cli.execute_run(store, ENV)
             self.assertEqual(result['succeeded'], 1)
-            slots = result['admission']['pipeline']
-            self.assertEqual((slots['current_limit'], slots['max_limit']), (2, 3))
-            self.assertEqual((slots['completed'], slots['active'], slots['pending']), (1, 0, 0))
-            self.assertEqual(slots['model']['requested'], 0)
+            self.assertEqual(result['admission']['pipeline']['mode'], 'all_questions')
+            self.assertEqual(result['runtime']['requests']['submitted'], 0)
             self.assertEqual(store.attempts()[0]['payload']['execution_origin'], 'reused_no_native_llm_call')
             self.assertTrue(store.verify()['ok'])
 
-    def test_native_workers_one_admits_two_questions_and_refills_pending(self):
-        # Break caught: the RC executor sizes its pool from workers=1, or waits
-        # for every admitted question before refilling a freed pipeline slot.
+    def test_actual_rc_generation_shares_caps_preserves_context_on_retries_and_closes(self):
         from app.llm import LLM
         from app.services.schema_service import SchemaService
-        from openai.types.chat import ChatCompletion
+        from app.llm.sampling import sampling_identity
         from scripts.baseline_adapters.deepeye.run_trace import _ATTEMPT_ID
+        from scripts.baseline_adapters.deepeye.run_usage import observed_usage
+        from scripts.rc_evaluation.deepeye.injection import render_rc_block
+        for coordinators in (1, 2):
+            with self.subTest(coordinators=coordinators), tempfile.TemporaryDirectory() as temporary, \
+                    self.prepared(temporary, calls=1, keys='ab', coordinator_workers=coordinators) as store:
+                clients, seen, active, peak = [], [], 0, 0
+                async def create(**kwargs):
+                    nonlocal active, peak
+                    row = store.attempt(_ATTEMPT_ID.get())
+                    self.assertEqual(row['stage'], 'sql_generation')
+                    key = row['item_key']
+                    block = render_rc_block(store.manifest['contracts'][key])
+                    prompt = kwargs['messages'][0]['content']
+                    self.assertIn(block, prompt)
+                    other = 'lite/b' if key == 'lite/a' else 'lite/a'
+                    self.assertNotIn(render_rc_block(store.manifest['contracts'][other]), prompt)
+                    self.assertEqual((kwargs['n'], kwargs['max_tokens'], kwargs['temperature'], kwargs['timeout']),
+                                     (1, 16384, 0.6, 660))
+                    self.assertNotIn('extra_body', kwargs)
+                    # Decide before the await, while this is still the first request.
+                    bad = key == 'lite/a' and not any(r[0] == key for r in seen)
+                    seen.append((key, sampling_identity().copy(), threading.current_thread().name))
+                    active += 1
+                    peak = max(peak, active)
+                    await asyncio.sleep(.005)
+                    active -= 1
+                    return completion('not parseable' if bad else '<result>SELECT x FROM t</result>')
+                def client(**kwargs):
+                    self.assertEqual(kwargs['max_retries'], 0)
+                    fixture = AsyncClientFixture(create)
+                    clients.append(fixture)
+                    return fixture
+                with patch('openai.AsyncOpenAI', side_effect=client), \
+                     patch.object(LLM, '_create_client', side_effect=AssertionError('unused sync client created')), \
+                     patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)):
+                    result = cli.execute_run(store, ENV)
+                self.assertEqual((result['succeeded'], result['failed']), (2, 0))
+                self.assertEqual(peak, 2)
+                self.assertEqual(len(seen), 25)
+                self.assertEqual(result['runtime']['requests']['peak_in_flight'], 2)
+                self.assertLessEqual(result['runtime']['coordinators']['peak'], coordinators)
+                self.assertTrue(all(c.closed for c in clients))
+                self.assertEqual({name for _, _, name in seen}, {'deepeye-http-loop'})
+                usage = observed_usage(store)
+                self.assertEqual(usage['effective_sampling']['retained_samples'], 24)
+                self.assertEqual(usage['effective_sampling']['known_tokens']['total_tokens'], 120)
+                self.assertEqual(usage['reported_tokens']['total_tokens'], 125)
+                groups = [e['payload'] for e in store.events() if e['kind'] == 'sampling_group_result']
+                self.assertEqual([g['target_n'] for g in groups], [4] * 6)
+                self.assertTrue(all(g['complete'] for g in groups))
+                self.assertTrue(all(a['payload']['rc_participation']['status'] == 'participating' for a in store.attempts()))
+                self.assertTrue(store.verify()['ok'])
 
-        entered = {key: threading.Event() for key in 'abc'}
-        release = {key: threading.Event() for key in 'abc'}
-        closed = threading.Event()
-        with tempfile.TemporaryDirectory() as temporary, \
-             self.prepared(temporary, calls=1, keys='abc', stage='sql_generation') as store:
-            def create(**kwargs):
-                attempt = next(row for row in store.attempts() if row['attempt_id'] == _ATTEMPT_ID.get())
-                key = attempt['item_key'].split('/')[1]
-                entered[key].set()
-                if not release[key].wait(5):
-                    raise AssertionError(f'native question {key} did not receive release')
-                return ChatCompletion(id='offline', created=0, model='offline', object='chat.completion',
-                    choices=[{'index': 0, 'finish_reason': 'stop', 'message': {
-                        'role': 'assistant', 'content': '<result>SELECT x FROM t</result>'}}],
-                    usage={'prompt_tokens': 3, 'completion_tokens': 2, 'total_tokens': 5})
-
-            client = SimpleNamespace(chat=SimpleNamespace(completions=SimpleNamespace(create=create)),
-                                     close=closed.set)
-            with patch.object(LLM, '_create_client', return_value=client), \
-                 patch.object(SchemaService, '_get_encoding',
-                              return_value=SimpleNamespace(encode=lambda text: list(text))), \
-                 ThreadPoolExecutor(max_workers=1) as pool:
-                future = pool.submit(cli.execute_run, store, ENV)
-                try:
-                    self.assertTrue(entered['a'].wait(5), 'first native question never started')
-                    self.assertTrue(entered['b'].wait(5), 'workers=1 capped dynamic initial=2')
-                    self.assertFalse(entered['c'].is_set(), 'a third question bypassed initial=2')
-                    release['b'].set()
-                    self.assertTrue(entered['c'].wait(5), 'pending question did not fill b\'s freed slot')
-                    self.assertFalse(release['a'].is_set())
-                finally:
-                    for event in release.values():
-                        event.set()
-                result = future.result(timeout=5)
-            self.assertEqual((result['succeeded'], result['failed']), (3, 0))
-            slots = result['admission']['pipeline']
-            self.assertEqual((slots['peak_active'], slots['current_limit'], slots['max_limit']), (2, 2, 3))
-            self.assertEqual((slots['active'], slots['pending'], slots['model']['transport_in_flight']), (0, 0, 0))
-            self.assertEqual(slots['model']['completed'], 9)
-            self.assertEqual(len([event for event in store.events() if event['kind'] == 'api_request']), 9)
-            self.assertTrue(all(row['status'] == 'succeeded' for row in store.attempts()))
-            self.assertTrue(closed.is_set())
-            self.assertTrue(store.verify()['ok'])
-
-    def test_stability_and_errors_resize_active_questions_and_persist_adjustments(self):
-        # Break caught: transport observations fail to reach the actual slots,
-        # growth cannot start a third question, or reduction interrupts active
-        # questions / admits a pending one before occupancy falls below its cap.
-        clock = Clock()
-        entered = {key: threading.Event() for key in 'abcd'}
-        release = {key: threading.Event() for key in 'abc'}
-        shrunk, c_released = threading.Event(), threading.Event()
-
-        def create(*, fail=False):
-            if fail:
-                raise TimeoutError('offline transient transport failure')
-
-        def execute(item, request):
-            key = item.instance_id
-            entered[key].set()
-            if key == 'a':
-                if not entered['b'].wait(5):
-                    raise AssertionError('initial=2 never admitted b')
-                for number in range(50):
-                    if number == 49:
-                        clock.now = 1.0
-                    request()
-            elif key == 'c':
-                clock.now = 61.0
-                for _ in range(5):
-                    try:
-                        request(fail=True)
-                    except TimeoutError:
-                        pass
-                shrunk.set()
-            if key in release and not release[key].wait(5):
-                raise AssertionError(f'question {key} did not receive release')
-            if key in 'bd':
-                request()
-
-        with tempfile.TemporaryDirectory() as temporary, \
-             self.prepared(temporary, calls=1, keys='abcd') as store, \
-             self.controlled_slots(clock) as captured, \
-             self.fake_revision(execute, create=create) as closed, \
-             ThreadPoolExecutor(max_workers=1) as pool:
-            future = pool.submit(cli.execute_run, store, ENV)
-            try:
-                self.assertTrue(shrunk.wait(5), 'stable demand never admitted c, or failures did not complete')
-                slots = captured['pipeline']
-                state = slots.snapshot()
-                self.assertEqual((state['current_limit'], state['active'], state['pending']), (2, 3, 1))
-                self.assertFalse(entered['d'].is_set())
-                original_release = slots.release
-
-                def completed(ticket, *, status):
-                    original_release(ticket, status=status)
-                    if ticket['item_key'] == 'lite/c':
-                        c_released.set()
-
-                slots.release = completed
-                release['c'].set()
-                self.assertTrue(c_released.wait(5), 'c did not release its pipeline ticket')
-                self.assertEqual(slots.snapshot()['active'], 2)
-                self.assertFalse(entered['d'].is_set(), 'downshift admitted d while two questions remain active')
-                release['b'].set()
-                self.assertTrue(entered['d'].wait(5), 'pending d was not admitted once active fell below two')
-                self.assertFalse(release['a'].is_set())
-            finally:
-                for event in release.values():
-                    event.set()
-            result = future.result(timeout=5)
-            self.assertEqual((result['succeeded'], result['failed']), (4, 0))
-            state = result['admission']['pipeline']
-            self.assertEqual((state['peak_active'], state['completed'], state['active'], state['pending']), (3, 4, 0, 0))
-            self.assertEqual((state['model']['completed'], state['model']['transient_errors'],
-                              state['model']['transport_in_flight']), (57, 5, 0))
-            changes = [event for event in store.events() if event['kind'] == 'pipeline_concurrency_adjustment']
-            self.assertEqual([(event['payload']['old_limit'], event['payload']['new_limit'],
-                               event['payload']['reason']) for event in changes],
-                             [(2, 3, 'stable_demand'), (3, 2, 'transient_failures')])
-            attempt_ids = {row['attempt_id'] for row in store.attempts()}
-            request_ids = {event['payload']['call_id'] for event in store.events() if event['kind'] == 'api_request'}
-            self.assertTrue(all(event['attempt_id'] in attempt_ids and
-                                event['payload']['call_id'] in request_ids for event in changes))
-            self.assertTrue(all(row['status'] == 'succeeded' for row in store.attempts()))
-            self.assertTrue(closed.is_set())
-            self.assertTrue(store.verify()['ok'])
-
-    def test_fatal_question_drains_inflight_work_and_releases_every_ticket(self):
-        # Break caught: fatal unwinding leaks admitted tickets or resets/closes
-        # native resources while a different admitted question still uses them.
-        class FatalQuestion(BaseException):
-            pass
-
-        from scripts.rc_evaluation.deepeye import runner
-
-        entered = {key: threading.Event() for key in 'abc'}
-        release_a, release_b = threading.Event(), threading.Event()
-        draining, b_finished, cleaned = threading.Event(), threading.Event(), threading.Event()
-        original_close = runner.close_runners
-
-        def drain(*args, **kwargs):
-            draining.set()
-            return original_close(*args, **kwargs)
-
-        def execute(item, request):
-            key = item.instance_id
-            entered[key].set()
-            if key == 'a':
-                if not release_a.wait(5):
-                    raise AssertionError('fatal question was not released')
-                raise FatalQuestion('offline fatal question')
-            if key == 'b':
-                if not release_b.wait(5):
-                    raise AssertionError('inflight question was not released')
-                request()
-                b_finished.set()
-
-        def cleanup():
-            self.assertTrue(b_finished.is_set(), 'native cleanup ran before b drained')
-            cleaned.set()
-
-        with tempfile.TemporaryDirectory() as temporary, \
-             self.prepared(temporary, calls=1, keys='abc') as store, \
-             self.controlled_slots(Clock()) as captured, \
-             self.fake_revision(execute, cleanup=cleanup) as closed, \
-             patch.object(runner, 'close_runners', new=drain), \
-             ThreadPoolExecutor(max_workers=1) as pool:
-            future = pool.submit(cli.execute_run, store, ENV)
-            try:
-                self.assertTrue(entered['a'].wait(5))
-                self.assertTrue(entered['b'].wait(5))
-                release_a.set()
-                self.assertTrue(draining.wait(5), 'fatal question never reached scheduler unwinding')
-                self.assertFalse(cleaned.is_set())
-                self.assertFalse(closed.is_set())
-                self.assertFalse(future.done(), 'fatal run returned while b still owns native work')
-            finally:
-                release_a.set()
-                release_b.set()
-            with self.assertRaisesRegex(FatalQuestion, 'offline fatal question'):
-                future.result(timeout=5)
-            self.assertFalse(entered['c'].is_set())
-            slots = captured['pipeline'].snapshot()
-            self.assertEqual((slots['active'], slots['pending'], slots['completed']), (0, 0, 2))
-            self.assertEqual(slots['model']['transport_in_flight'], 0)
-            self.assertTrue(cleaned.is_set())
-            self.assertTrue(closed.is_set())
-            self.assertEqual({row['item_key'] for row in store.attempts()}, {'lite/a', 'lite/b'})
-
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_explicit_downstream_uses_new_generation_and_rc_stays_in_target(self):
+        from app.llm import LLM
+        from app.services.schema_service import SchemaService
+        from app.db_utils.execution import SQLExecutionResult
+        from scripts.rc_evaluation.deepeye.injection import render_rc_block
+        seen_sql = []
+        async def create(**kwargs):
+            return completion('<result>SELECT x FROM t WHERE x = 7</result>')
+        def pg(item, sql, timeout=None):
+            seen_sql.append(sql)
+            return SQLExecutionResult(result_type='success', db_path='db', sql=sql,
+                execution_time=.01, result_rows=[(7,)], result_cols=['x'])
+        with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, calls=1, downstream=True) as store:
+            client = AsyncClientFixture(create)
+            with patch('openai.AsyncOpenAI', return_value=client), \
+                 patch.object(LLM, '_create_client', side_effect=AssertionError('sync client forbidden')), \
+                 patch.object(SchemaService, '_get_encoding', return_value=SimpleNamespace(encode=list)), \
+                 patch('scripts.baseline_adapters.deepeye.backend_hooks.execute_postgres_sql', side_effect=pg):
+                result = cli.execute_run(store, ENV)
+            self.assertEqual((result['succeeded'], result['failed']), (1, 0))
+            rows = {a['stage']: a for a in store.attempts()}
+            self.assertEqual(rows['sql_revision']['payload']['artifact']['sql_candidates_after_revision'],
+                             ['SELECT x FROM t WHERE x = 7'] * 12)
+            self.assertEqual(rows['sql_selection']['payload']['artifact']['final_selected_sql'], 'SELECT x FROM t WHERE x = 7')
+            self.assertTrue(all(a['payload']['execution_origin'] == 'executed' for a in rows.values()))
+            self.assertTrue(seen_sql)
+            starts = [e['payload'] for e in store.events() if e['kind'] == 'component_start'
+                      and e['attempt_id'] == rows['sql_revision']['attempt_id']]
+            checkers = [p for p in starts if p['component'].startswith('revision.')
+                        and p['component'] != 'revision.candidate']
+            self.assertEqual([p['component'] for p in checkers], [
+                'revision.SyntaxChecker', 'revision.JoinChecker', 'revision.OrderByLimitChecker',
+                'revision.TimeChecker', 'revision.SelectChecker', 'revision.MaxMinChecker',
+                'revision.OrderByNullChecker', 'revision.ResultChecker'])
+            self.assertTrue(all(p['inputs']['sampling_budget'] == 5 for p in checkers))
+            requests = [e for e in store.events() if e['kind'] == 'api_request']
+            self.assertEqual({e['attempt_id'] for e in requests}, {rows['sql_generation']['attempt_id']})
+            block = render_rc_block(store.manifest['contracts']['lite/a'])
+            self.assertTrue(all(block in e['payload']['kwargs']['messages'][0]['content'] for e in requests))

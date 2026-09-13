@@ -15,6 +15,10 @@ from scripts.baseline_adapters.deepeye.run_store import restore_jsonable
 from .source import api_trace, digest, restore_seed, validate_manifest
 
 
+class MissingRCParticipation(RuntimeError):
+    """An actual target request (or recovered sample) did not contain its RC."""
+
+
 def _semantic_artifact(payload):
     return {key: value for key, value in restore_jsonable(payload['artifact']).items()
             if not key.endswith(('_time', '_llm_cost', '_recall'))}
@@ -73,7 +77,7 @@ def _preflight(store, checkpoints=None):
     return manifest, plans, needed
 
 
-def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None):
+def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controller=None, runtime=None):
     """Append native checkpoints, retaining failed attempts and paid-call traces.
 
     ``runner_factory`` is already bounded in production (see cli.execute_run).
@@ -94,6 +98,13 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
     halted = threading.Event()
     try:
         manifest, plans, needed = _preflight(store, getattr(recorder, 'sampling_checkpoints', None))
+        if runtime is not None:
+            from scripts.baseline_adapters.deepeye.run_slots import WorkflowSlots
+            if runtime.stop_event is not recorder.stop_event:
+                raise ValueError('Runtime and recorder must share the same stop event')
+            if slot_controller is not None and not isinstance(slot_controller, WorkflowSlots):
+                raise ValueError('Legacy pipeline limits are incompatible with the shared runtime')
+            slots = slot_controller or WorkflowSlots(len(plans))
         target = manifest['target_stage']
         runners = {}
         for stage in STAGES:
@@ -105,6 +116,8 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
             entry = [runner, None, None]
             resources.append(entry)
             runners[stage] = runner
+            if runtime is not None:
+                runtime.bind_runner(runner)
             instrumentation = ExitStack()
             entry[1] = instrumentation.close
             instrumentation.callback(instrument_native_pools(runner))
@@ -156,7 +169,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         from .injection import rc_context
                         from .contracts import render_rc_block
                         context, block = rc_context(stage, key, contract), render_rc_block(contract)
-                    with recorder.context(attempt), context:
+                    with recorder.context(attempt), context, runtime.context() if runtime else nullcontext():
                         started = time.monotonic()
                         error = None
                         try:
@@ -189,6 +202,10 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         if block is not None:
                             from .injection import count_rc_requests
                             count = count_rc_requests(list(store.iter_events(attempt, kinds='api_request')), block)
+                            if count != trace['requests'] or restored_rc != restored:
+                                error = MissingRCParticipation(
+                                    f'RC present in {count}/{trace["requests"]} logical requests and '
+                                    f'{restored_rc}/{restored} restored samples')
                         payload.update(execution_origin='executed', source_provenance=provenance,
                                        attempt_wall_seconds=time.monotonic() - started,
                                        rc_participation={'status': 'participating' if count or restored_rc else 'rc_not_participating',
@@ -222,7 +239,8 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
 
         pending = deque(key for key, plan in plans.items() if plan['remaining'])
         if pending:
-            question_pool = ThreadPoolExecutor(max_workers=slots.max_limit, thread_name_prefix='rc-stage')
+            question_pool = (runtime.executor_view() if runtime else
+                             ThreadPoolExecutor(max_workers=slots.max_limit, thread_name_prefix='rc-stage'))
             futures = {}
             while pending or futures:
                 for future in tuple(futures):
@@ -242,7 +260,13 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         break
                     pending.popleft()
                     tickets[key] = ticket
-                    future = question_pool.submit(execute, key)
+                    try:
+                        future = question_pool.submit(execute, key)
+                    except SamplingPaused:
+                        stop.set()
+                        paused.add(key)
+                        slots.release(tickets.pop(key), status='failed')
+                        continue
                     futures[future] = key
                     question_futures.append(future)
                 if futures:

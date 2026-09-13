@@ -75,6 +75,30 @@ class SamplingRuntime:
     def make_client(self, **configuration):
         return self.dispatch.make_client(**configuration)
 
+    def executor_view(self):
+        return _CoordinatorView(self)
+
+    def bind_runner(self, runner):
+        """Replace unused constructor pools/clients before tracing or stage work."""
+        pools = set()
+        for name in _POOL_NAMES:
+            pool = getattr(runner, name, None)
+            if pool is not None:
+                if id(pool) not in pools:
+                    pool.shutdown(wait=True)
+                    pools.add(id(pool))
+                setattr(runner, name, self.executor_view())
+        llm = getattr(runner, '_llm', None)
+        if llm is not None:
+            previous = getattr(llm, '_client', None)
+            if previous is not None:
+                previous.close()
+                llm._client = None
+            config = llm.llm_config
+            llm._client = self.make_client(api_key=config.api_key, base_url=str(config.base_url),
+                                          api_type=config.api_type,
+                                          api_version=getattr(config, 'api_version', None))
+
     def close(self):
         if self._closed:
             return
@@ -85,11 +109,52 @@ class SamplingRuntime:
         self._closed = True
 
     def snapshot(self):
+        from dataclasses import asdict
         with self._coordinator_lock:
             coordinators = dict(cap=self.limits.coordinator_workers,
                                 active=self._coordinator_active, peak=self._coordinator_peak)
-        return dict(coordinators=coordinators, samples=self.samples.snapshot(),
+        return dict(limits=asdict(self.limits), coordinators=coordinators, samples=self.samples.snapshot(),
                     requests=self.dispatch.snapshot())
+
+
+class _CoordinatorView:
+    """Runner-owned drain scope; shutdown never closes the shared executor."""
+    def __init__(self, runtime):
+        self.runtime = runtime
+        self._lock = threading.Lock()
+        self._futures = set()
+        self._shutdown = False
+
+    def submit(self, fn, /, *args, **kwargs):
+        # Do not hold the view lock while nested coordination executes inline.
+        with self._lock:
+            if self._shutdown:
+                raise RuntimeError('Cannot schedule after runner shutdown')
+        future = self.runtime.submit_coordinator(fn, *args, **kwargs)
+        with self._lock:
+            self._futures.add(future)
+        def done(completed):
+            with self._lock:
+                self._futures.discard(completed)
+        future.add_done_callback(done)
+        return future
+
+    def shutdown(self, wait=True, *, cancel_futures=False):
+        with self._lock:
+            self._shutdown = True
+            pending = tuple(self._futures)
+        if cancel_futures:
+            for future in pending:
+                future.cancel()
+        if wait:
+            from concurrent.futures import wait as drain
+            drain(pending)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.shutdown(wait=True)
 
 
 @contextmanager
@@ -238,7 +303,10 @@ def close_runners(resources, *, question_pool=None, question_futures=()):
         # Preserve the first exception but never unwind while workers may live.
         while True:
             try:
-                ThreadPoolExecutor.shutdown(pool, wait=True)
+                if isinstance(pool, _CoordinatorView):
+                    _CoordinatorView.shutdown(pool, wait=True)
+                else:
+                    ThreadPoolExecutor.shutdown(pool, wait=True)
                 return
             except BaseException:
                 # A repeated interruption (or persistent shutdown failure)

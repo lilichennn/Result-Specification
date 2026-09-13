@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import threading
 from types import SimpleNamespace
 
 CODE_ROOT = Path(__file__).resolve().parents[3]
@@ -18,7 +19,7 @@ for directory in (CODE_ROOT, CODE_ROOT / 'baselines/DeepEye-SQL'):
 from scripts.baseline_adapters.deepeye.run_pipeline import STAGES
 from scripts.baseline_adapters.deepeye.run_store import RunStore, to_jsonable
 from scripts.baseline_adapters.deepeye.run_usage import observed_usage
-from scripts.deepeye_bird_interact_run import prepare_inputs, build_effective_config, code_source_hashes, bounded_runner_factory, build_runtime_config, admission_context, admission_settings
+from scripts.deepeye_bird_interact_run import prepare_inputs, build_effective_config, code_source_hashes, bounded_runner_factory, build_runtime_config, admission_context, admission_settings, runtime_limits, sampling_runtime
 from scripts.deepeye_bird_interact_smoke import read_environment
 from scripts.rc_evaluation.deepeye.source import digest, snapshot_source, validate_manifest
 
@@ -38,29 +39,23 @@ def production_hash():
 
 def _semantic(config):
     return {key: value for key, value in config.items()
-            if key not in ('workers', 'inner_workers', 'scheduler', 'admission')}
+            if key not in ('workers', 'inner_workers', 'scheduler', 'admission', 'runtime')}
 
 
 def runtime_args(effective, overrides=None):
-    """Restore frozen scheduling; prepare opts into adaptive mode explicitly."""
-    from scripts.baseline_adapters.deepeye.run_admission import AdaptivePolicy
-
+    """Restore the explicit shared runtime; old stores remain read-only inputs."""
     chat, stages = effective['chat'], effective['stages']
     admission = effective['admission']
-    adaptive = admission.get('adaptive', False)
-    if type(adaptive) is not bool:
-        raise ValueError('adaptive concurrency must be boolean')
-    fields = {'concurrency_initial': 'initial_limit', 'concurrency_step': 'step',
-              'concurrency_min': 'min_limit', 'concurrency_max': 'max_limit',
-              'concurrency_window': 'stable_window_s'}
-    policy = AdaptivePolicy(**admission['pipeline']) if adaptive else AdaptivePolicy()
-    if overrides is not None and not getattr(overrides, 'adaptive_concurrency', False):
-        if any(getattr(overrides, name, None) is not None for name in fields):
-            raise ValueError('concurrency options require --adaptive-concurrency')
+    runtime = effective.get('runtime', {})
+    if runtime.get('version') != 'shared-sampling-runtime-v1':
+        raise ValueError('Legacy native runtime cannot be mixed with this implementation; prepare a new native source run')
+    if overrides is not None:
+        admission_settings(overrides)
+        if any(getattr(overrides, key, None) is not None for key in ('workers', 'inner_workers', 'thinking_budget')):
+            raise ValueError('Legacy workers/inner-workers/thinking-budget are unsupported in this version')
     values = {
-        'workers': effective['workers'], 'inner_workers': effective['inner_workers'],
         'pg_concurrency': admission['postgres_limit'],
-        'adaptive_concurrency': adaptive, 'max_tokens': chat['max_tokens'],
+        'max_tokens': chat['max_tokens'],
         'thinking_budget': chat.get('thinking_budget'), 'chat_timeout': chat['timeout_seconds'],
         'extractor_retries': chat['extractor_max_retries'], 'pg_sslmode': effective['postgres']['sslmode'],
         'direct_linking_budget': stages['schema_linking']['direct_linking_sampling_budget'],
@@ -70,24 +65,22 @@ def runtime_args(effective, overrides=None):
         'icl_generation_budget': stages['sql_generation']['icl_sampling_budget'],
         'revision_checker_budget': stages['sql_revision']['checker_sampling_budget'],
         'selection_evaluator_budget': stages['sql_selection']['evaluator_sampling_budget'],
-        **{name: getattr(policy, field) for name, field in fields.items()},
+        **{key: value for key, value in runtime.items() if key not in ('version', 'request_timeout')},
     }
     for key in values:
         value = getattr(overrides, key, None) if overrides is not None else None
         if value is not None:
             values[key] = value
     for key, value in values.items():
-        if key not in ('pg_sslmode', 'adaptive_concurrency', 'thinking_budget', 'concurrency_window'):
+        if key not in ('pg_sslmode', 'thinking_budget', 'start_rate', 'retry_delay'):
             if type(value) is not int or value < 1:
                 raise ValueError(f'{key} must be a positive integer')
-    if values['thinking_budget'] is not None and (type(values['thinking_budget']) is not int or values['thinking_budget'] < 1):
-        raise ValueError('thinking_budget must be positive')
+    if values['thinking_budget'] is not None:
+        raise ValueError('thinking_budget is unsupported in this version')
     if values['chat_timeout'] > 1200:
         raise ValueError('chat_timeout exceeds the 1200-second bound')
-    if type(values['adaptive_concurrency']) is not bool:
-        raise ValueError('adaptive concurrency must be boolean')
     result = SimpleNamespace(**values)
-    admission_settings(result)  # Validate policy bounds/window before any new store or calls.
+    runtime_limits(result)
     return result
 
 
@@ -175,19 +168,20 @@ def execute_run(store, environment):
     args = _check_frozen(store, environment)
     _, _, needed = _preflight(store)
     secrets = [environment.get(key) for key in ('DASH_API_KEY', 'EMBEDDING_API_KEY', 'PG_PASSWORD')]
-    recorder = TraceRecorder(store, secrets=secrets)
+    recorder = TraceRecorder(store, secrets=secrets, stop_event=threading.Event())
     if not needed:
         def no_factory(*unused):
             raise RuntimeError('Replay-only run attempted to construct native resources')
-        with admission_context(recorder, args) as controllers:
-            result = run_experiment(store, no_factory, recorder, workers=args.workers,
+        with admission_context(recorder, args, population=len(store.manifest['items'])) as controllers, \
+                sampling_runtime(recorder, args) as runtime:
+            result = run_experiment(store, no_factory, recorder, runtime=runtime,
                                     slot_controller=controllers['pipeline'])
+            result['runtime'] = runtime.snapshot()
             result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
             return result
     from scripts.baseline_adapters.deepeye.hooks import install_postgres_support
     from scripts.rc_evaluation.deepeye.injection import install_rc_prompts
     config = build_runtime_config(environment, args, store.run_dir)
-    factory = bounded_runner_factory(config, args.chat_timeout)
     fields = ('PG_HOST', 'PG_PORT', 'PG_USER', 'PG_PASSWORD', 'PG_SSLMODE')
     previous = {key: os.environ.get(key) for key in fields}
     os.environ.update({key: environment[key] for key in fields[:-1]})
@@ -195,9 +189,13 @@ def execute_run(store, environment):
     undo = None
     try:
         undo = install_postgres_support()
-        with recorder.install(), install_rc_prompts(), admission_context(recorder, args) as controllers:
-            result = run_experiment(store, factory, recorder, workers=args.workers,
+        with recorder.install(), install_rc_prompts(), \
+                admission_context(recorder, args, population=len(store.manifest['items'])) as controllers, \
+                sampling_runtime(recorder, args) as runtime:
+            factory = bounded_runner_factory(config, args.chat_timeout, runtime=runtime)
+            result = run_experiment(store, factory, recorder, runtime=runtime,
                                     slot_controller=controllers['pipeline'])
+            result['runtime'] = runtime.snapshot()
             result['admission'] = {key: gate.snapshot() for key, gate in controllers.items()}
             return result
     finally:
@@ -215,6 +213,8 @@ def execute_run(store, environment):
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
+    from scripts.baseline_adapters.deepeye.run_operations import add_sample_commands
+    add_sample_commands(commands)
     prepare = commands.add_parser('prepare', help='Offline source validation and immutable experiment manifest')
     prepare.add_argument('--source-run', type=Path, required=True)
     prepare.add_argument('--run-dir', type=Path, required=True)
@@ -227,20 +227,23 @@ def build_parser():
     prepare.add_argument('--variant', choices=('lite', 'full'), action='append')
     prepare.add_argument('--item', dest='item_keys', action='append')
     prepare.add_argument('--adaptive-concurrency', action='store_true',
-                         help='Dynamically adjust concurrent question pipelines; default is fixed --workers')
+                         help='Legacy adaptive throttle; rejected in the shared runtime')
     for name in ('initial', 'step', 'min', 'max'):
         prepare.add_argument('--concurrency-' + name, type=int,
-                             help='Adaptive pipeline policy; inherits the source adaptive policy or baseline defaults')
+                             help='Legacy adaptive policy; rejected in the shared runtime')
     prepare.add_argument('--concurrency-window', type=float,
-                         help='Adaptive health window in seconds; requires --adaptive-concurrency')
+                         help='Legacy adaptive policy; rejected in the shared runtime')
     for name in ('rc-lite', 'rc-full'):
         prepare.add_argument('--' + name, type=Path)
     for name in ('workers', 'inner-workers', 'pg-concurrency', 'max-tokens', 'thinking-budget', 'chat-timeout',
+                 'request-limit', 'request-workers', 'coordinator-workers', 'http-connections',
                  'extractor-retries', 'direct-linking-budget', 'reversed-linking-budget', 'dc-generation-budget',
                  'skeleton-generation-budget', 'icl-generation-budget', 'revision-checker-budget', 'selection-evaluator-budget'):
         prepare.add_argument('--' + name, type=int)
+    prepare.add_argument('--request-start-rate', dest='start_rate', type=float)
+    prepare.add_argument('--retry-delay', type=float)
     prepare.add_argument('--env-file', type=Path, default=CODE_ROOT / 'config/.env')
-    for name in ('run', 'resume', 'inspect', 'export', 'evaluate'):
+    for name in ('run', 'resume', 'inspect', 'export', 'evaluate', 'token-pairs'):
         command = commands.add_parser(name)
         command.add_argument('--run-dir', type=Path, required=True)
         if name in ('run', 'resume', 'evaluate'):
@@ -263,7 +266,10 @@ def build_parser():
 def main(argv=None):
     args = build_parser().parse_args(argv)
     try:
-        if args.command == 'prepare':
+        if args.command in ('samples', 'renew-samples'):
+            from scripts.baseline_adapters.deepeye.run_operations import sample_command
+            result = sample_command(args)
+        elif args.command == 'prepare':
             result = prepare_command(args)
         elif args.command in ('run', 'resume'):
             environment = read_environment(args.env_file.resolve())
@@ -273,10 +279,16 @@ def main(argv=None):
                 if not verification['ok']:
                     raise RuntimeError('Experiment RunStore verification failed after execution')
                 result.update(verification=verification, observed_usage=observed_usage(store))
-        elif args.command in ('inspect', 'export'):
+        elif args.command in ('inspect', 'export', 'token-pairs'):
             with RunStore.open(args.run_dir.resolve(), read_only=True) as store:
                 validate_manifest(store.manifest)
-                if args.command == 'export':
+                if args.command == 'token-pairs':
+                    from scripts.rc_evaluation.deepeye.evaluation import stage_token_pairs
+                    with store._read_snapshot():
+                        if not store.verify()['ok']:
+                            raise ValueError('Experiment RunStore verification failed')
+                        result = stage_token_pairs(store.manifest, store.attempts(), store.events())
+                elif args.command == 'export':
                     result = {'export_dir': str(store.export(args.export_dir.resolve(),
                                                            extra_reports={'usage.json': observed_usage}))}
                 else:

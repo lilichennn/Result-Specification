@@ -521,7 +521,7 @@ class PipelineTest(unittest.TestCase):
         from scripts.deepeye_bird_interact_smoke import build_runtime_config
         from scripts.deepeye_bird_interact_run import admission_context, _build_parser
         args = _build_parser().parse_args(['run', '--run-dir', 'unused',
-            '--precompute-dir', 'unused', '--workers', '2'])
+            '--precompute-dir', 'unused'])
         requests, native_pools = [], []
         release_a, crossed = threading.Event(), threading.Event()
         original_reset = SchemaService.reset
@@ -580,7 +580,7 @@ class PipelineTest(unittest.TestCase):
                      patch('socket.socket.connect', side_effect=AssertionError('No network allowed')):
                     with Store.create(path, {'test': 'all_native_stages'}) as store:
                         trace = TraceRecorder(store)
-                        with trace.install(), admission_context(trace, args) as gates:
+                        with trace.install(), admission_context(trace, args, population=2) as gates:
                             result = pipeline.run_pipeline(store, tasks, native_factory, trace,
                                 slot_controller=gates['pipeline'])
                         self.assertEqual(result['succeeded'], expected_items, store.attempts())
@@ -596,10 +596,10 @@ class PipelineTest(unittest.TestCase):
                         if cross_stage:
                             self.assertTrue(crossed.is_set())
                             self.assertEqual(gates['pipeline'].snapshot()['peak_active'], 2)
-                        admitted = [e['payload']['call_id'] for e in store.events() if e['kind'] == 'api_admission']
+                        admitted = [e['payload']['call_id'] for e in store.events() if e['kind'] == 'api_request']
                         responded = [e['payload']['call_id'] for e in store.events() if e['kind'] == 'api_response']
                         self.assertEqual(sorted(admitted), sorted(responded))
-                        self.assertEqual(gates['pipeline'].snapshot()['model']['completed'], expected_calls)
+                        self.assertNotIn('model', gates['pipeline'].snapshot())
                         self.assertGreater(gates['postgres'].snapshot()['completed'], 0)
                         self.assertEqual(observed_usage(store)['reported_tokens']['total_tokens'], expected_calls * 5)
                         self.assertTrue(any(e['kind'] == 'sql_execute_result' for e in store.events()))
@@ -612,7 +612,7 @@ class PipelineTest(unittest.TestCase):
                                 slot_controller=gates['pipeline'])
                         self.assertEqual(result['succeeded'], expected_items)
                         self.assertEqual(len(requests), expected_calls)
-                        self.assertEqual(gates['pipeline'].snapshot()['model']['completed'], 0)
+                        self.assertNotIn('model', gates['pipeline'].snapshot())
                         self.assertEqual(gates['postgres'].snapshot()['completed'], 0)
                         store.export(Path(temp) / 'export')
             finally:

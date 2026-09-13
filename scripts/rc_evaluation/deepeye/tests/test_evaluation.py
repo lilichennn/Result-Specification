@@ -13,6 +13,54 @@ def result(value):
 
 
 class EvaluationTests(unittest.TestCase):
+    def test_retained_stage_token_pair_excludes_failures_and_missing_usage_without_zero_fill(self):
+        from scripts.rc_evaluation.deepeye import evaluation
+        from scripts.rc_evaluation.deepeye.source import api_trace
+        self.assertTrue(hasattr(evaluation, 'stage_token_pairs'), 'Native-source token pairing is missing')
+        def events(aid, tokens=10, complete=True):
+            return [
+                {'attempt_id': aid, 'kind': 'sampling_group_start', 'payload': {'group_id': aid, 'target_n': 1}},
+                {'attempt_id': aid, 'kind': 'sampling_group_result', 'payload': {'group_id': aid, 'target_n': 1,
+                    'success_count': int(complete), 'complete': complete}},
+                {'attempt_id': aid, 'kind': 'sample_result', 'payload': {'group_id': aid, 'sample_index': 0,
+                    'succeeded': complete, 'rc_applied': True, 'usage': None if tokens is None else {
+                        'prompt_tokens': tokens - 2, 'completion_tokens': 2, 'total_tokens': tokens,
+                        'reasoning_tokens': 1}}}]
+        native = api_trace(events('native'))
+        manifest = {'target_stage': 'sql_generation', 'condition': 'rc', 'source_checkpoints': {
+            key: {'stages': {'sql_generation': {'api_trace': native}}}
+            for key in ('ok', 'failed', 'unknown', 'partial', 'missing')}}
+        rows, trace = [], []
+        for key, tokens, status, complete in [('ok', 15, 'succeeded', True), ('failed', 12, 'failed', True),
+                                             ('unknown', None, 'succeeded', True), ('partial', 8, 'succeeded', False)]:
+            rows.append({'attempt_id': key, 'item_key': key, 'stage': 'sql_generation', 'status': status,
+                         'payload': {'rc_participation': {'status': 'participating'}}})
+            trace.extend(events(key, tokens, complete))
+        report = evaluation.stage_token_pairs(manifest, rows, trace)
+        self.assertEqual(report['summary']['eligible_pairs'], 1)
+        self.assertEqual(report['summary']['native_tokens']['total_tokens'], 10)
+        self.assertEqual(report['summary']['rc_tokens']['total_tokens'], 15)
+        self.assertEqual(report['items']['ok']['delta_tokens']['total_tokens'], 5)
+        for key, reason in [('failed', 'rc_stage_failed'), ('unknown', 'rc_usage_incomplete'),
+                            ('partial', 'rc_sampling_incomplete'), ('missing', 'rc_stage_missing')]:
+            self.assertIn(reason, report['items'][key]['exclusions'])
+            self.assertIsNone(report['items'][key]['delta_tokens'])
+        self.assertEqual(report['items']['ok']['rc']['reasoning_tokens'], 1)
+
+    def test_legacy_and_zero_call_native_sources_do_not_claim_full_budget_pairs(self):
+        from scripts.rc_evaluation.deepeye import evaluation
+        self.assertTrue(hasattr(evaluation, 'stage_token_pairs'), 'Native-source token pairing is missing')
+        manifest = {'target_stage': 'sql_revision', 'condition': 'rc', 'source_checkpoints': {
+            'legacy': {'stages': {'sql_revision': {'api_trace': {'requests': 1, 'complete': True}}}},
+            'zero': {'stages': {'sql_revision': {'api_trace': {'requests': 0, 'complete': True}}}}}}
+        rows = [{'attempt_id': key, 'item_key': key, 'stage': 'sql_revision', 'status': 'succeeded',
+                 'payload': {'execution_origin': 'reused_no_native_llm_call'}} for key in ('legacy', 'zero')]
+        report = evaluation.stage_token_pairs(manifest, rows, [])
+        self.assertIn('native_effective_sampling_unavailable', report['items']['legacy']['exclusions'])
+        self.assertIn('native_zero_call_target', report['items']['zero']['exclusions'])
+        self.assertEqual(report['summary']['eligible_pairs'], 0)
+        self.assertIsNone(report['summary']['native_tokens'])
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

@@ -252,6 +252,77 @@ def _usage(attempts, events, manifest):
             'rc_participation': participation, 'scope': 'current_run_attempts_only_including_failed_retries'}
 
 
+def stage_token_pairs(manifest, attempts, events):
+    """Compare retained target samples against the frozen native source, offline.
+
+    This does not execute SQL, manufacture a control run, or relabel the existing
+    all-attempt usage ledger. Legacy traces cannot prove the new sampling budget.
+    """
+    from .source import api_trace
+    from .injection import count_rc_requests, render_rc_block
+    target = manifest['target_stage']
+    if manifest['condition'] != 'rc':
+        raise ValueError('Native-source token pairing requires condition=rc')
+    latest = {row['item_key']: row for row in attempts if row['stage'] == target}
+    by_attempt = {}
+    for event in events:
+        by_attempt.setdefault(event['attempt_id'], []).append(event)
+    items = {}
+    def inspect(trace, label, exclusions):
+        sampling, metric = trace.get('sampling', {}), trace.get('effective_sampling')
+        if not trace.get('complete', False) or sampling.get('complete') is False:
+            exclusions.append(label + '_sampling_incomplete')
+        if metric is None or not sampling.get('groups'):
+            exclusions.append(label + '_effective_sampling_unavailable')
+        elif not metric['usage_complete']:
+            exclusions.append(label + '_usage_incomplete')
+        return metric
+    for key, snapshot in manifest['source_checkpoints'].items():
+        native_trace = snapshot['stages'][target]['api_trace']
+        exclusions = []
+        native = inspect(native_trace, 'native', exclusions)
+        if not (native_trace['requests'] or native_trace.get('restored_samples')
+                or (native and native['retained_samples'])):
+            exclusions.append('native_zero_call_target')
+        row = latest.get(key)
+        rc = None
+        if row is None:
+            exclusions.append('rc_stage_missing')
+        else:
+            if row['status'] != 'succeeded':
+                exclusions.append('rc_stage_' + row['status'])
+            current = by_attempt.get(row['attempt_id'], [])
+            rc_trace = api_trace(current)
+            rc = inspect(rc_trace, 'rc', exclusions)
+            requests = [e for e in current if e['kind'] == 'api_request']
+            samples = [e['payload'] for e in current if e['kind'] == 'sample_result'
+                       and e['payload'].get('succeeded')]
+            applied = (all(p.get('rc_applied') is True for p in samples)
+                       and bool(samples or requests))
+            if requests:
+                contract = manifest.get('contracts', {}).get(key)
+                applied = applied and contract is not None and count_rc_requests(
+                    requests, render_rc_block(contract)) == len(requests)
+            if not applied:
+                exclusions.append('rc_participation_unproven')
+        eligible = not exclusions
+        fields = ('prompt_tokens', 'completion_tokens', 'total_tokens')
+        items[key] = {'eligible': eligible, 'exclusions': exclusions, 'native': native, 'rc': rc,
+                      'delta_tokens': {field: rc['known_tokens'][field] - native['known_tokens'][field]
+                                       for field in fields} if eligible else None}
+    eligible = [row for row in items.values() if row['eligible']]
+    summary = {'tasks': len(items), 'eligible_pairs': len(eligible), 'excluded_pairs': len(items) - len(eligible),
+               'exclusion_counts': dict(Counter(reason for row in items.values() for reason in row['exclusions']))}
+    for side in ('native', 'rc'):
+        summary[side + '_tokens'] = ({field: sum(row[side]['known_tokens'][field] for row in eligible)
+                                     for field in ('prompt_tokens', 'completion_tokens', 'total_tokens')}
+                                    if eligible else None)
+    return {'target_stage': target, 'metric': 'finally_retained_successful_samples_only_v1',
+            'control': 'frozen_native_source_no_extra_calls',
+            'reasoning_semantics': 'subset_of_completion_tokens_not_added_to_total',
+            'items': items, 'summary': summary}
+
+
 @contextmanager
 def _executor(env_file, effective_config):
     """Install only PG environment values for native read-only execution."""
