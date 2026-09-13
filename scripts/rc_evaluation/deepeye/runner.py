@@ -188,14 +188,10 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         if getattr(recorder, 'sampling_checkpoints', None):
                             payload['sampling_implementation_version'] = recorder.sampling_checkpoints.source_version
                         trace = api_trace(store.iter_events(attempt))
-                        if trace['unanswered_requests']:
+                        if not trace['complete']:
                             raise RuntimeError('Stage finished with incomplete API trace')
-                        if not trace['complete'] and error is None:
-                            from scripts.baseline_adapters.deepeye.run_usage import IncompleteSamplingGroup
-                            error = IncompleteSamplingGroup('Required sampling group did not retain all requested samples')
                         if 'sampling' in trace:
                             payload['sampling'] = trace['sampling']
-                            payload['completion_semantics'] = 'required_samples_and_native_fields_present_not_sql_correctness'
                         count = 0
                         restored = trace.get('restored_samples', 0)
                         restored_rc = trace.get('restored_rc_samples', 0)
@@ -220,7 +216,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                                                                     'control' if contract is None else 'rc_not_in_request')})
                         status = 'succeeded' if error is None and _valid_output(updated, stage) else 'failed'
                         if status == 'failed':
-                            message = str(error) if error is not None else 'Native output missing or empty'
+                            message = str(error) if error is not None else 'Native required fields or metrics are None'
                             for secret in getattr(recorder, 'secrets', ()):
                                 message = message.replace(secret, '[REDACTED]')
                             payload.update(error_type=type(error).__name__ if error else 'IncompleteNativeStageOutput',

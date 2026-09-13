@@ -80,13 +80,24 @@ class NativeRCIntegrationTests(unittest.TestCase):
             self.assertEqual(len(sent), native_count + 12, 'Offline pairing performed additional model calls')
 
     def test_native_generation_records_exact_rc_requests_and_none_is_unmodified(self):
+        self._generation_records()
+
+    def test_native_and_rc_generation_keep_two_channels_after_icl_api_exhaustion(self):
+        self._generation_records(fail_icl=True)
+
+    def _generation_records(self, *, fail_icl=False):
         # Break caught: injection outside trace/token formatting, lost context in
         # native inner pools, a skipped target, or a control receiving the RC.
+        import httpx
+        from openai import APIConnectionError
         from app.llm import LLM
         from app.services.schema_service import SchemaService
         from openai.types.chat import ChatCompletion
         from scripts.deepeye_bird_interact_smoke import build_runtime_config
         from scripts.rc_evaluation.deepeye.injection import install_rc_prompts, render_rc_block
+        from scripts.baseline_adapters.deepeye.run_trace import _BRANCH_PATH
+
+        expected_requests, expected_candidates, expected_tokens = (6, 2, 10) if fail_icl else (3, 3, 15)
 
         environment = {'DASH_MODELS': 'fixture', 'DASH_BASE_URL': 'https://invalid.test/v1',
                        'DASH_API_KEY': 'fixture', 'EMBEDDING_MODEL': 'fixture',
@@ -108,6 +119,8 @@ class NativeRCIntegrationTests(unittest.TestCase):
                     sent = []
                     def create(**kwargs):
                         sent.append(deepcopy(kwargs))
+                        if fail_icl and 'generation.icl' in _BRANCH_PATH.get():
+                            raise APIConnectionError(request=httpx.Request('POST', 'https://invalid.test'))
                         return ChatCompletion(id='offline', created=0, model='fixture', object='chat.completion',
                             choices=[{'index': 0, 'finish_reason': 'stop', 'message': {
                                 'role': 'assistant', 'content': '<result>SELECT x FROM t</result>'}}],
@@ -136,25 +149,28 @@ class NativeRCIntegrationTests(unittest.TestCase):
                             self.assertEqual(result['succeeded'], 1)
                             self.assertEqual(result['failed'], 0)
                             stage = next(row for row in store.attempts() if row['stage'] == 'sql_generation')
-                            self.assertEqual(len(stage['payload']['artifact']['sql_candidates']), 3)
+                            self.assertEqual(len(stage['payload']['artifact']['sql_candidates']), expected_candidates)
+                            self.assertEqual(stage['payload']['sampling']['complete'], not fail_icl)
                             api_events = [event for event in store.events() if event['kind'] == 'api_request']
-                            self.assertEqual(len(sent), 3)
-                            self.assertEqual(len(api_events), 3)
+                            self.assertEqual(len(sent), expected_requests)
+                            self.assertEqual(len(api_events), expected_requests)
+                            self.assertEqual(len(list(store.iter_events(kinds='api_error'))), 4 if fail_icl else 0)
                             wire = sorted(request['messages'][0]['content'] for request in sent)
                             disk = sorted(event['payload']['kwargs']['messages'][0]['content'] for event in api_events)
                             self.assertEqual(wire, disk)
                             all_prompts[condition] = wire
                             block = render_rc_block(rc)
-                            self.assertEqual(sum(block in prompt for prompt in disk), 3 if condition == 'rc' else 0)
+                            self.assertEqual(sum(block in prompt for prompt in disk), expected_requests if condition == 'rc' else 0)
                             self.assertEqual(stage['payload']['rc_participation']['actual_request_count'],
-                                             3 if condition == 'rc' else 0)
-                            self.assertEqual(observed_usage(store)['reported_tokens']['total_tokens'], 15)
+                                             expected_requests if condition == 'rc' else 0)
+                            self.assertEqual(observed_usage(store)['reported_tokens']['total_tokens'], expected_tokens)
                             self.assertTrue(store.verify()['ok'])
                             before = store.attempts()
                             with recorder.install(), install_rc_prompts():
                                 run_experiment(store, lambda *args: self.fail('completed run created runner'),
                                                recorder, workers=1)
                             self.assertEqual(store.attempts(), before)
+                            self.assertEqual(len(sent), expected_requests)
                     finally:
                         undo()
             block = render_rc_block(rc)

@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from . import OfflineTestCase
 
 CODE = Path(__file__).resolve().parents[4]
@@ -81,7 +82,7 @@ class SourceTests(OfflineTestCase):
             with self.assertRaisesRegex(ValueError, 'duplicate sample result'):
                 _source_trace(store, store.attempt(attempt), 'schema_linking')
 
-    def test_paired_api_trace_with_four_of_five_sampling_is_incomplete(self):
+    def test_paired_api_trace_with_four_of_five_sampling_is_valid_but_not_full(self):
         from scripts.rc_evaluation.deepeye.source import api_trace
         events = [
             {'kind': 'api_request', 'payload': {'call_id': 'call'}},
@@ -90,6 +91,89 @@ class SourceTests(OfflineTestCase):
             {'kind': 'sampling_group_result', 'payload': {'group_id': 'g', 'target_n': 5,
                 'success_count': 4, 'complete': False}},
         ]
+        events.extend({'kind': 'sample_result', 'payload': {'group_id': 'g', 'sample_index': index,
+            'succeeded': index != 4, 'usage': cost(1) if index != 4 else None}} for index in range(5))
+        trace = api_trace(events)
+        self.assertTrue(trace['complete'])
+        self.assertFalse(trace['sampling']['complete'])
+
+        self.assertEqual(trace['effective_sampling']['retained_samples'], 4)
+
+    def test_completed_native_source_with_exhausted_sample_is_eligible(self):
+        import httpx
+        from openai import APIConnectionError
+        from tests.test_deepeye_sampling import llm_fixture, response, parse
+        from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
+        from app.llm_extractor import LLMExtractor
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'source'
+            tasks = [('lite', make_item('a'))]
+            data = manifest(tasks, upgrade=True)
+            with RunStore.create(path, data) as store:
+                target = copy.deepcopy(tasks[0][1])
+                identity = fingerprint({'manifest': data, 'input': to_jsonable(target.model_dump(exclude={'gold_sql'}))})
+                for stage in STAGES:
+                    input_hash = fingerprint({'input': identity, 'stage': stage})
+                    attempt = store.begin_attempt('lite/a', stage, input_hash)
+                    complete_stage(target, stage)
+                    usage = cost()
+                    if stage == 'sql_generation':
+                        recorder = TraceRecorder(store)
+                        error = APIConnectionError(request=httpx.Request('POST', 'https://invalid.test'))
+                        llm, calls = llm_fixture([response()] + [error] * 4)
+                        client = llm._get_client().chat.completions
+                        with recorder.install(), recorder.context(attempt), patch.object(
+                                client, 'create', recorder._api_wrapper(client.create)):
+                            target.sql_candidates, usage = LLMExtractor().extract_with_retry(llm, [], parse, n=2)
+                        self.assertEqual(len(calls), 5)
+                    setattr(target, stage + '_llm_cost', usage)
+                    payload = _checkpoint(target, stage)
+                    store.finish_attempt(attempt, 'succeeded', payload)
+                    identity = fingerprint({'input': input_hash, 'output': payload})
+            snapshot = snapshot_source(path, tasks, 'sql_generation')
+            trace = snapshot['source_checkpoints']['lite/a']['stages']['sql_generation']['api_trace']
+            self.assertTrue(trace['complete'])
+            self.assertFalse(trace['sampling']['complete'])
+            self.assertEqual((trace['requests'], trace['responses'], trace['errors']), (5, 1, 4))
+            from .test_runner import experiment_manifest
+            rc_manifest = experiment_manifest(snapshot)
+            rc_manifest['target_stage'] = 'sql_generation'
+            validate_manifest(rc_manifest)
+
+    def test_missing_group_terminal_remains_a_trace_integrity_failure(self):
+        from scripts.rc_evaluation.deepeye.source import api_trace
+        trace = api_trace([{'kind': 'sampling_group_start', 'payload': {'group_id': 'g', 'target_n': 1}}])
+        self.assertFalse(trace['complete'])
+
+    def test_partial_group_summary_cannot_hide_missing_failure_records(self):
+        from scripts.rc_evaluation.deepeye.source import api_trace
+        success = {'kind': 'sample_result', 'payload': {'group_id': 'g', 'sample_index': 0,
+            'succeeded': True, 'usage': cost(1)}}
+        for samples, successes in (([], 0), ([success], 1)):
+            with self.subTest(successes=successes):
+                events = [{'kind': 'sampling_group_start', 'payload': {'group_id': 'g', 'target_n': 2}},
+                          *samples,
+                          {'kind': 'sampling_group_result', 'payload': {'group_id': 'g', 'target_n': 2,
+                              'success_count': successes, 'complete': False}}]
+                self.assertFalse(api_trace(events)['complete'])
+
+    def test_documented_fatal_can_end_sequential_group_without_starting_remaining_slots(self):
+        from scripts.rc_evaluation.deepeye.source import api_trace
+        events = [
+            {'kind': 'sampling_group_start', 'payload': {'group_id': 'g', 'target_n': 3}},
+            {'kind': 'sample_result', 'payload': {'group_id': 'g', 'sample_index': 0,
+                'succeeded': True, 'usage': cost(1)}},
+            {'kind': 'sample_result', 'payload': {'group_id': 'g', 'sample_index': 1,
+                'succeeded': False, 'fatal': True, 'usage': None}},
+            {'kind': 'sampling_group_result', 'payload': {'group_id': 'g', 'target_n': 3,
+                'success_count': 1, 'complete': False}}]
+        trace = api_trace(events)
+        self.assertTrue(trace['complete'])
+        self.assertFalse(trace['sampling']['complete'])
+
+        # A recorded start is not an unstarted slot that fatal can explain away.
+        events.insert(1, {'kind': 'sample_attempt_started', 'payload': {
+            'group_id': 'g', 'sample_index': 2}})
         self.assertFalse(api_trace(events)['complete'])
 
     def test_inherited_target_uses_original_call_trace_not_empty_import_trace(self):

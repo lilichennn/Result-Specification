@@ -72,7 +72,7 @@ class Factory:
 
 
 class PipelineTest(unittest.TestCase):
-    def test_swallowed_partial_sampling_group_fails_stage_with_fallback_output(self):
+    def test_partial_sampling_preserves_native_completion_and_is_not_retried_on_resume(self):
         from tests.test_deepeye_sampling import llm_fixture, response, parse
         from app.llm_extractor import LLMExtractor
         from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
@@ -95,11 +95,17 @@ class PipelineTest(unittest.TestCase):
             with patch.object(recorder, 'instrument_runner', return_value=lambda: None), patch('app.llm_extractor.extractor.logger.warning') as warning:
                 result = pipeline.run_pipeline(store, [('lite', item())], factory, recorder, workers=1)
             warning.assert_called_once()
-            self.assertEqual((result['failed'], len(calls)), (1, 8))
+            self.assertEqual((result['succeeded'], result['failed'], len(calls)), (1, 0, 8))
             row = next(a for a in store.attempts() if a['stage'] == 'schema_linking')
-            self.assertEqual(row['status'], 'failed')
-            self.assertEqual(row['payload']['error_type'], 'IncompleteSamplingGroup')
-            self.assertEqual(base.calls, [('schema_linking', 'one')])
+            self.assertEqual(row['status'], 'succeeded')
+            self.assertFalse(row['payload']['sampling']['complete'])
+            self.assertNotIn('error_type', row['payload'])
+            self.assertEqual(base.calls, [(stage, 'one') for stage in pipeline.STAGES])
+            before = store.attempts()
+            pipeline.run_pipeline(store, [('lite', item())],
+                lambda *args: self.fail('Native-completed pipeline must not be retried'), recorder)
+            self.assertEqual(store.attempts(), before)
+            self.assertEqual(len(calls), 8)
 
     def modules(self):
         pipeline = importlib.import_module('scripts.baseline_adapters.deepeye.run_pipeline')
@@ -223,7 +229,7 @@ class PipelineTest(unittest.TestCase):
             def completed(key, stage, digest):
                 prior = actual_completed(key, stage, digest)
                 if prior and stage == 'sql_generation':
-                    prior['payload']['artifact']['sql_candidates'] = []
+                    prior['payload']['artifact']['sql_candidates'] = None
                 return prior
             with patch.object(store, 'completed', side_effect=completed):
                 with self.assertRaises(ValueError):

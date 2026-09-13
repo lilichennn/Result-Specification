@@ -86,7 +86,7 @@ class RunnerTests(OfflineTestCase):
                 self.assertEqual(payload['rc_participation']['native_request_count'], 1)
                 self.assertEqual(payload['rc_participation']['actual_request_count'], 0)
 
-    def test_partial_sampling_cannot_succeed_via_native_fallback(self):
+    def test_partial_sampling_can_succeed_via_native_fallback(self):
         from tests.test_deepeye_sampling import llm_fixture, response, parse
         from app.llm_extractor import LLMExtractor
         from scripts.baseline_adapters.deepeye.run_trace import TraceRecorder
@@ -101,8 +101,16 @@ class RunnerTests(OfflineTestCase):
             with patch('app.llm_extractor.extractor.logger.warning') as warning:
                 result = run_experiment(store, factory, TraceRecorder(store), workers=1)
             warning.assert_called_once()
-            self.assertEqual((result['failed'], len(calls)), (1, 8))
-            self.assertEqual(store.attempts()[0]['payload']['error_type'], 'IncompleteSamplingGroup')
+            self.assertEqual((result['succeeded'], result['failed'], len(calls)), (1, 0, 8))
+            row = store.attempts()[0]
+            self.assertEqual(row['status'], 'succeeded')
+            self.assertFalse(row['payload']['sampling']['complete'])
+            self.assertNotIn('error_type', row['payload'])
+            before = store.attempts()
+            run_experiment(store, lambda *args: self.fail('Completed RC stage must not be retried'),
+                           TraceRecorder(store))
+            self.assertEqual(store.attempts(), before)
+            self.assertEqual(len(calls), 8)
 
     def test_successful_downstream_after_missing_target_rejected_before_constructor(self):
         with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary, downstream=True) as store:

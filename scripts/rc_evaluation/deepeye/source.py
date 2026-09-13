@@ -15,7 +15,11 @@ def digest(value):
 
 
 def api_trace(events):
-    """Verify request/terminal pairing, independent of provider token metadata."""
+    """Verify recorded outcomes; partial sampling is valid, not a broken trace.
+
+    ``complete`` describes trace integrity. ``sampling.complete`` independently
+    describes whether every requested sample succeeded; it is not an RC gate.
+    """
     calls, responses, errors = {}, 0, 0
     events = list(events)
     for event in events:
@@ -38,7 +42,7 @@ def api_trace(events):
     unanswered = sum(value is None for value in calls.values())
     sampling = sampling_completeness(events)
     result = {'requests': len(calls), 'responses': responses, 'errors': errors,
-            'unanswered_requests': unanswered, 'complete': unanswered == 0 and sampling['complete']}
+            'unanswered_requests': unanswered, 'complete': unanswered == 0}
     restored = [e['payload'] for e in events if e['kind'] == 'sample_result'
                 and e['payload'].get('restored_from_event') is not None]
     if restored:
@@ -46,7 +50,8 @@ def api_trace(events):
         result['restored_rc_samples'] = sum(p.get('rc_applied') is True for p in restored)
     if sampling['groups']:
         # A group summary cannot substitute for the actual retained slot records.
-        targets, retained, terminal = {}, {}, {}
+        targets, retained, terminal, indices = {}, {}, {}, {}
+        started, fatal = {}, {}
         for event in events:
             payload = event['payload']
             key = (event.get('attempt_id'), payload.get('group_id'))
@@ -54,15 +59,34 @@ def api_trace(events):
                 targets[key] = payload['target_n']
             elif event['kind'] == 'sampling_group_result':
                 terminal[key] = payload
-            elif event['kind'] == 'sample_result' and payload.get('succeeded'):
-                retained.setdefault(key, set()).add(payload['sample_index'])
+            elif event['kind'] == 'sample_result':
+                indices.setdefault(key, set()).add(payload['sample_index'])
+                if payload.get('succeeded'):
+                    retained.setdefault(key, set()).add(payload['sample_index'])
+                elif payload.get('fatal') is True:
+                    fatal.setdefault(key, set()).add(payload['sample_index'])
+            elif event['kind'] in ('sample_attempt_started', 'sample_attempt'):
+                started.setdefault(key, set()).add(payload['sample_index'])
         incomplete = {key for key, target in targets.items() if (
             retained.get(key, set()) != set(range(target)) or terminal.get(key, {}).get('complete') is not True
             or terminal.get(key, {}).get('success_count') != target
             or terminal.get(key, {}).get('target_n') != target)}
         incomplete.update(set(retained).difference(targets))
         sampling.update(complete=not incomplete, incomplete_groups=len(incomplete))
-        result['complete'] = result['complete'] and sampling['complete']
+        # A documented exhausted/fatal sample is different from a missing or
+        # inconsistent log record. Do not require target_n successful slots.
+        consistent = (set(indices) | set(started)).issubset(targets) and all(
+            key in terminal
+            and indices.get(key, set()).issubset(range(target))
+            and started.get(key, set()).issubset(indices.get(key, set()))
+            and (indices.get(key, set()) == set(range(target))
+                 or any(indices.get(key, set()) == set(range(index + 1))
+                        for index in fatal.get(key, ())))
+            and terminal[key].get('target_n') == target
+            and terminal[key].get('success_count') == len(retained.get(key, set()))
+            and terminal[key].get('complete') is (len(retained.get(key, set())) == target)
+            for key, target in targets.items())
+        result['complete'] = result['complete'] and consistent
         result['sampling'] = sampling
         from scripts.baseline_adapters.deepeye.run_usage import _effective_sampling
         result['effective_sampling'] = _effective_sampling(events)
@@ -94,7 +118,7 @@ def _source_trace(store, row, stage, seen=()):
                 return _source_trace(prior, original, stage, (*seen, identity))
     result = api_trace(store.iter_events(row['attempt_id']))
     if not result['complete']:
-        raise ValueError('Source API trace has unanswered requests or incomplete sampling')
+        raise ValueError('Source API trace has unanswered requests or inconsistent sampling records')
     if not result['requests'] and not result.get('restored_samples'):
         usage = restore_jsonable(row['payload']['artifact']).get(stage + '_llm_cost')
         if not isinstance(usage, dict) or any(usage.get(field) != 0 for field in

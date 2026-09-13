@@ -9,12 +9,8 @@ _API_KINDS = {"api_request", "api_response", "api_error"}
 _TOKEN_FIELDS = ("prompt_tokens", "completion_tokens", "total_tokens")
 
 
-class IncompleteSamplingGroup(RuntimeError):
-    """A native fallback cannot substitute for a required sample."""
-
-
 def sampling_completeness(events):
-    """Check started groups, including interrupted or swallowed failures.
+    """Describe sampling completeness, not native stage completion.
 
     Absence of group events preserves historical stores' original semantics;
     it does not claim that old calls had the new effective sampling metric.

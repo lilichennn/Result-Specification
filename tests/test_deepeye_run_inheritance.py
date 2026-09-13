@@ -136,7 +136,7 @@ def seed_source(store, tasks, lengths=(2, 4), *, failed=None, unfinished=None, i
             payload = _checkpoint(state, stage)
             payload['attempt_wall_seconds'] = 1.25
             if invalid == (key, stage):
-                payload['artifact']['sql_candidates'] = []
+                payload['artifact']['sql_candidates'] = None
             attempt = store.begin_attempt(key, stage, input_hash)
             store.append_event(attempt, 'api_request', {'call_id': attempt, 'logical_sdk_call': True})
             store.append_event(attempt, 'api_response', {'call_id': attempt, 'response': {'usage': cost(3)}})

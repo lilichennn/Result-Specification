@@ -87,15 +87,12 @@ def _restore(item, stage, checkpoint):
 
 
 def _valid_output(item, stage):
-    if not item.is_stage_complete(stage):
-        return False
-    if stage in ('sql_generation', 'sql_revision'):
-        field = 'sql_candidates' if stage == 'sql_generation' else 'sql_candidates_after_revision'
-        values = getattr(item, field)
-        return bool(values) and all(isinstance(sql, str) and bool(sql.strip()) for sql in values)
-    if stage == 'sql_selection':
-        return bool(item.final_selected_sql.strip()) and item.final_selected_sql != 'Error'
-    return True
+    """Use DeepEye's required-field check, without extra sampling/SQL criteria.
+
+    Native empty lists and fallback strings are not None. Later native stages
+    decide whether they can continue; SQL correctness belongs to evaluation.
+    """
+    return item.is_stage_complete(stage)
 
 
 def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_controller=None, *, runtime=None):
@@ -241,20 +238,16 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller, runti
                             status = 'paused'
                             break
                         sampling = sampling_completeness(store.iter_events(attempt_id))
-                        if not sampling['complete'] and error_type is None:
-                            error_type = 'IncompleteSamplingGroup'
-                            error_message = 'Required sampling group did not retain all requested samples'
                         payload = _checkpoint(target, stage)
                         if getattr(recorder, 'sampling_checkpoints', None):
                             payload['sampling_implementation_version'] = recorder.sampling_checkpoints.source_version
                         if sampling['groups']:
                             payload['sampling'] = sampling
-                            payload['completion_semantics'] = 'required_samples_and_native_fields_present_not_sql_correctness'
                         payload['attempt_wall_seconds'] = time.monotonic() - started
                         status = 'succeeded' if error_type is None and _valid_output(target, stage) else 'failed'
                         if status == 'failed':
                             payload['error_type'] = error_type or 'IncompleteNativeStageOutput'
-                            payload['error_message'] = error_message or 'Native required output fields are missing or empty'
+                            payload['error_message'] = error_message or 'Native required fields or metrics are None'
                         store.finish_attempt(attempt_id, status, payload)
                     print(f'{stage}: committed; {key} {status}', flush=True)
                     if status == 'failed':
