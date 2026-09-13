@@ -27,6 +27,31 @@ class RuntimeTestCase(unittest.TestCase):
 
 class DispatchTests(RuntimeTestCase):
 
+    def test_retry_queued_first_does_not_block_ready_first_attempt_in_same_group(self):
+        runtime = self.runtime(request_limit=2, request_workers=2,
+                               start_rate=10000, retry_delay=.30)
+        retry_enqueued = threading.Event()
+        starts = []
+        original_enqueue = runtime.dispatch._enqueue
+        def enqueue(work):
+            original_enqueue(work)
+            if work.identity.get('sample_index') == 0 and work.identity.get('sample_attempt') == 2:
+                retry_enqueued.set()
+        runtime.dispatch._enqueue = enqueue
+        async def api():
+            identity = sampling_identity()
+            starts.append((identity['sample_index'], identity['sample_attempt']))
+            return response('bad' if identity['sample_index'] == 0 and
+                            identity['sample_attempt'] == 1 else 'SELECT 1')
+        def request():
+            if sampling_identity()['sample_index'] == 1:
+                self.assertTrue(retry_enqueued.wait(2))
+            return runtime.dispatch.call(api)
+        with runtime.context():
+            group = execute_group(request, parse_message, n=2)
+        self.assertTrue(group.complete)
+        self.assertEqual(starts, [(0, 1), (1, 1), (0, 2)])
+
     def test_defaults_are_explicit_and_invalid_limits_reject(self):
         runtime = self.runtime()
         self.assertEqual(runtime.limits.request_limit, 8000)

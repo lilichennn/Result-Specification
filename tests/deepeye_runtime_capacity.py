@@ -43,6 +43,9 @@ def run_capacity(*, request_cap=64, coordinator_cap=32, transport='fake', deadli
                     http_connections=request_cap, coordinator_workers=coordinator_cap,
                     start_rate=100000, request_timeout=deadline, stop_event=stop,
                     emit=recorder.record_admission)
+                futures = []
+                completed = False
+                result = None
                 try:
                     active = peak = 0
                     release = asyncio.Event()
@@ -83,8 +86,8 @@ def run_capacity(*, request_cap=64, coordinator_cap=32, transport='fake', deadli
                         with recorder.context(attempt), runtime.context():
                             return execute_group(request, parse_message, n=n,
                                 recovery_identity={'offline_capacity_request': True})
-                    futures = [runtime.submit_coordinator(coordinate, attempt, n)
-                               for attempt, n in zip(attempts, group_sizes)]
+                    for attempt, n in zip(attempts, group_sizes):
+                        futures.append(runtime.submit_coordinator(coordinate, attempt, n))
                     outcomes = [future.result(deadline + 10) for future in futures]
                     snapshot = runtime.snapshot()
                     result = dict(transport=transport, request_cap=request_cap,
@@ -102,12 +105,16 @@ def run_capacity(*, request_cap=64, coordinator_cap=32, transport='fake', deadli
                         capacity_only_start_rate=100000, production_start_rate=50,
                         elapsed_seconds=time.monotonic() - started,
                         barrier_threads=barrier_threads)
+                    completed = True
                     return result
                 finally:
-                    if any(not future.done() for future in locals().get('futures', [])):
+                    # Partial submit failure can make the joint barrier
+                    # unreachable. Stop on every abnormal exit, even when the
+                    # failing submission did not return a Future to append.
+                    if not completed:
                         runtime.stop(cancel_active=True)
                     runtime.close()
-                    if 'result' in locals():
+                    if result is not None:
                         result['cleanup'] = dict(
                             http_loop_stopped=not runtime.dispatch._thread.is_alive(),
                             sample_threads_stopped=all(not t.is_alive() for t in runtime.samples._pool._threads),

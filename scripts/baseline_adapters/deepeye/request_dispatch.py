@@ -142,14 +142,23 @@ class RequestDispatcher:
                 now = time.monotonic()
                 # Backoff lives in this queue, not in a worker holding a permit
                 # or in the dispatcher head, so other groups can still start.
+                candidate = None
                 for _ in range(len(self._rotation)):
-                    candidate = self._groups[self._rotation[0]][0]
-                    if candidate.eligible_at <= now:
+                    queue = self._groups[self._rotation[0]]
+                    for work in queue:
+                        if work.eligible_at <= now:
+                            candidate = work
+                            break
+                        delay = min(delay, work.eligible_at - now)
+                    if candidate is not None:
+                        # A delayed retry must not block ready first attempts
+                        # from its own group. Preserve all other queue order.
+                        if queue[0] is not candidate:
+                            queue.remove(candidate)
+                            queue.appendleft(candidate)
                         break
-                    delay = min(delay, candidate.eligible_at - now)
                     self._rotation.rotate(-1)
-                candidate = self._groups[self._rotation[0]][0]
-                if candidate.eligible_at > now:
+                if candidate is None:
                     try:
                         await asyncio.wait_for(self._wake.wait(), timeout=delay)
                     except TimeoutError:

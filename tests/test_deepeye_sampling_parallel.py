@@ -6,6 +6,7 @@ import importlib.util
 import threading
 import time
 import unittest
+from unittest.mock import patch
 
 from tests.test_deepeye_sampling import response
 from app.llm.sampling import execute_group, sampling_identity
@@ -76,6 +77,102 @@ class ParallelSamplingTests(unittest.TestCase):
             group = future.result(3)
         self.assertEqual(finished, [4, 2, 0, 3, 1])
         self.assertEqual(group.results, [f'SELECT {i}' for i in range(5)])
+
+    def test_failed_sample_thread_start_cannot_execute_unowned_sample(self):
+        runtime = self.runtime(request_workers=2, start_rate=10000)
+        release = threading.Event()
+        entered = []
+        original_start = threading.Thread.start
+        injected = False
+        def start(thread):
+            nonlocal injected
+            if thread.name.startswith('deepeye-sample') and not injected:
+                injected = True
+                raise RuntimeError('injected sample thread creation failure')
+            return original_start(thread)
+        def request():
+            index = sampling_identity()['sample_index']
+            entered.append(index)
+            if index == 0:
+                release.wait(2)
+            return response()
+        try:
+            with patch.object(threading.Thread, 'start', start), runtime.context():
+                with self.assertRaisesRegex(RuntimeError, 'injected sample thread'):
+                    execute_group(request, parse_message, n=3)
+            self.assertTrue(injected)
+            self.assertCountEqual(entered, [1, 2])
+        finally:
+            release.set()
+            runtime.close()
+        self.assertCountEqual(entered, [1, 2])
+        self.assertEqual(runtime.samples.snapshot()['active'], 0)
+
+    def test_failed_coordinator_thread_start_cannot_execute_unowned_parent(self):
+        runtime = self.runtime(request_workers=1, coordinator_workers=2, start_rate=10000)
+        release = threading.Event()
+        entered = threading.Event()
+        original_start = threading.Thread.start
+        injected = False
+        def start(thread):
+            nonlocal injected
+            if thread.name.startswith('deepeye-coordinator') and not injected:
+                injected = True
+                raise RuntimeError('injected coordinator thread creation failure')
+            return original_start(thread)
+        def unowned():
+            entered.set()
+            release.wait(2)
+        try:
+            with patch.object(threading.Thread, 'start', start):
+                with self.assertRaisesRegex(RuntimeError, 'injected coordinator thread'):
+                    runtime.submit_coordinator(unowned)
+                second = runtime.submit_coordinator(lambda: 'owned second')
+                third = runtime.submit_coordinator(lambda: 'owned third')
+                self.assertEqual(second.result(1), 'owned second')
+                self.assertEqual(third.result(1), 'owned third')
+            self.assertFalse(entered.is_set(), 'A rejected coordinator executed without an owned Future')
+        finally:
+            release.set()
+            runtime.close()
+        self.assertFalse(entered.is_set())
+
+    def test_capacity_partial_submission_stops_and_drains_before_close(self):
+        from scripts.baseline_adapters.deepeye.run_resources import SamplingRuntime
+        from tests.deepeye_runtime_capacity import run_capacity
+        original_submit = SamplingRuntime.submit_coordinator
+        original_close = SamplingRuntime.close
+        submissions = 0
+        observed = []
+        def submit(runtime, *args, **kwargs):
+            nonlocal submissions
+            submissions += 1
+            if submissions == 2:
+                raise RuntimeError('injected partial capacity submission')
+            future = original_submit(runtime, *args, **kwargs)
+            deadline = time.monotonic() + 2
+            while runtime.dispatch.snapshot()['in_flight'] == 0 and time.monotonic() < deadline:
+                time.sleep(.001)
+            self.assertEqual(runtime.dispatch.snapshot()['in_flight'], 1)
+            return future
+        def close(runtime):
+            was_stopped = runtime.stop_event.is_set()
+            if not was_stopped:
+                # Bound RED teardown without waiting for a30s barrier deadline.
+                runtime.stop(cancel_active=True)
+            original_close(runtime)
+            observed.append(dict(stopped_before_close=was_stopped,
+                inflight=runtime.dispatch.snapshot()['in_flight'],
+                http_stopped=not runtime.dispatch._thread.is_alive(),
+                samples_stopped=all(not t.is_alive() for t in runtime.samples._pool._threads),
+                coordinators_stopped=all(not t.is_alive() for t in runtime.coordinators._threads)))
+        started = time.monotonic()
+        with patch.object(SamplingRuntime, 'submit_coordinator', submit), patch.object(SamplingRuntime, 'close', close):
+            with self.assertRaisesRegex(RuntimeError, 'injected partial capacity submission'):
+                run_capacity(request_cap=2, coordinator_cap=2, transport='fake', deadline=30)
+        self.assertLess(time.monotonic() - started, 3)
+        self.assertEqual(observed, [dict(stopped_before_close=True, inflight=0,
+                                       http_stopped=True, samples_stopped=True, coordinators_stopped=True)])
 
     def test_one_parse_retry_does_not_repeat_successes(self):
         runtime = self.runtime(request_workers=5, start_rate=10000)

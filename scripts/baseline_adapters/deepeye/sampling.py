@@ -5,6 +5,28 @@ import contextvars
 import threading
 
 
+def submit_owned(executor, function, /, *args, **kwargs):
+    """Do not enter user work until submit has returned its owned Future.
+
+    ThreadPoolExecutor queues its wrapper before trying to start a thread. If
+    thread creation fails, that queued wrapper can still run on another worker.
+    Release it as a no-op on submission failure, never as untracked user work.
+    """
+    ready = threading.Event()
+    committed = False
+    def enter():
+        ready.wait()
+        if committed:
+            return function(*args, **kwargs)
+        return None
+    try:
+        future = executor.submit(enter)
+        committed = True
+        return future
+    finally:
+        ready.set()
+
+
 class SampleScheduler:
     """Only sample leaves use this executor; their waiting parents run elsewhere.
 
@@ -29,7 +51,7 @@ class SampleScheduler:
             self._active += 1
             self._peak = max(self._peak, self._active)
             try:
-                future = self._pool.submit(context.run, fn, *args, **kwargs)
+                future = submit_owned(self._pool, context.run, fn, *args, **kwargs)
             except BaseException as error:
                 self._active -= 1
                 result.set_exception(error)

@@ -41,6 +41,7 @@ class SamplingRuntime:
 
     def submit_coordinator(self, function, /, *args, **kwargs):
         from app.llm.sampling import SamplingPaused
+        from .sampling import submit_owned
         nested = _COORDINATOR_RUNTIME.get() is self
         if self._closed or (self._closing and not nested) or self.stop_event.is_set():
             raise SamplingPaused('Coordinator submissions stopped')
@@ -66,7 +67,7 @@ class SamplingRuntime:
                 with self._coordinator_lock:
                     self._coordinator_active -= 1
                 _COORDINATOR_RUNTIME.reset(token)
-        return self.coordinators.submit(context.run, run)
+        return submit_owned(self.coordinators, context.run, run)
 
     def stop(self, *, cancel_active=False):
         self.dispatch.stop(cancel_active=cancel_active)
