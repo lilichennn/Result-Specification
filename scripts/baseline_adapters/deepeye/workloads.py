@@ -180,13 +180,13 @@ def _scope_schema(schema, meta, *, validate=False):
         if validate and set(col_lookup) != allowed_columns:
             raise ValueError(f'Prepared schema columns differ from Meta: {table}')
         selected_columns = {}
-        for name, description in columns.items():
+        for name in columns:
             if name.casefold() not in col_lookup:
                 raise ValueError(f'Meta column absent from native schema: {table}.{name}')
             native_col = col_lookup[name.casefold()]
             selected_columns[native_col] = native['columns'][native_col]
-            if not validate and description.get('column_description'):
-                selected_columns[native_col]['description'] = description['column_description']
+            # Meta sets visibility here, not a replacement description format.
+            # Retain the native loader's expanded/value descriptions and flags.
         native['columns'] = selected_columns
         selected[native_name] = native
     result['tables'] = selected

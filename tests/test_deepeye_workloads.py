@@ -123,6 +123,28 @@ class WorkloadTests(unittest.TestCase):
             tables, _ = workloads._meta_tables(workloads.load_workload(path), 'db')
             self.assertEqual(tables['visible']['id']['column_description'], 'identifier – official')
 
+    def test_raw_bird_scope_preserves_complete_native_descriptions(self):
+        from app.db_utils.schema import load_database_schema_dict
+        workloads, _ = self.modules()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path, _ = self.fixture(root, 'bird', 'dev')
+            meta = ('original_column_name,column_name,column_description,data_format,value_description\n'
+                    'id,Public identifier,Record identity,INTEGER,not useful unusedful\n')
+            (root/'meta/db/visible.csv').write_text(meta)
+            descriptions = root/'resources/database_description'
+            descriptions.mkdir()
+            (descriptions/'visible.csv').write_text(meta)
+            native = load_database_schema_dict(str(root/'resources/db.sqlite'))
+            workload = workloads.load_workload(path); workload.pop('prepared_dataset')
+            tasks, _, _ = workloads.load_items(workload, require_prepared=False)
+            expected = native['tables']['visible']['columns']['id']
+            actual = tasks[0][1].database_schema['tables']['visible']['columns']['id']
+            self.assertIn('Expanded Column Name: Public identifier', expected['description'])
+            self.assertIn('Value Description: unusedful', expected['description'])
+            self.assertTrue(expected['is_unuseful'])
+            self.assertEqual(actual, expected)
+
     def test_config_and_backend_allow_sqlite_and_bigquery_without_postgres(self):
         _, entry = self.modules()
         for cloud in (False, True):
@@ -276,6 +298,27 @@ class WorkloadTests(unittest.TestCase):
             self.assertEqual([item.question_id for _, item in tasks], [7, 19])
             self.assertNotIn('SECRET_GOLD', output.with_name(output.name+'.data').joinpath('items.jsonl').read_text())
             self.assertNotIn('secret', json.dumps(report))
+
+    def test_preparation_outputs_do_not_implicitly_share_native_indexes(self):
+        from scripts.baseline_adapters.deepeye.workload_preparation import prepare_native
+        _, entry = self.modules()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            observed = []
+            original = entry.build_runtime_config
+            def capture(*args, **kwargs):
+                config = original(*args, **kwargs)
+                observed.append((config.few_shot_index_config.save_path,
+                                 config.vector_database_config.store_root_path))
+                return config
+            env = {'DASH_MODELS':'test', 'DASH_BASE_URL':'https://example.test/v1', 'DASH_API_KEY':'offline'}
+            with patch.object(entry, 'build_runtime_config', side_effect=capture):
+                for benchmark in ('bird', 'spider'):
+                    path, _ = self.fixture(root/benchmark, benchmark, 'dev')
+                    prepare_native(path, root/(benchmark+'.snapshot'), env, workers=1)
+            self.assertEqual(len(observed), 2)
+            self.assertNotEqual(observed[0][0], observed[1][0])
+            self.assertNotEqual(observed[0][1], observed[1][1])
 
     def test_raw_native_loading_clips_meta_without_reindexing(self):
         workloads, _ = self.modules()

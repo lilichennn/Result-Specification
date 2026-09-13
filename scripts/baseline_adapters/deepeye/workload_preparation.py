@@ -34,11 +34,14 @@ Existing successful native VR and few-shot inputs are retained on continuation.
     output = Path(output).resolve()
     if output.exists():
         raise FileExistsError(f'Preparation output already exists: {output}')
+    # Independent output snapshots must not silently reuse each other's native
+    # indexes. Explicit native_config paths still allow intentional sharing.
+    preparation_root = output.with_name(output.name + '.preparation')
     args = entry._build_parser().parse_args(['prepare', '--workload', workload['_path'],
-                                          '--run-dir', str(output.parent)])
+                                          '--run-dir', str(preparation_root)])
     args.workload = workload
     args.coordinator_workers = workers
-    config = entry.build_runtime_config(environment, args, output.parent)
+    config = entry.build_runtime_config(environment, args, preparation_root)
     tasks, _, sources = load_items(workload, require_prepared=False)
     items = [item for _, item in tasks]
     needs_vr = any(item.database_schema_after_value_retrieval is None for item in items)
