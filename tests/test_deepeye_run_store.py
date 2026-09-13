@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 import datetime as dt
 import enum
+import hashlib
 import json
 import math
 import os
@@ -22,6 +23,7 @@ from pydantic import BaseModel
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "baselines/DeepEye-SQL"))
 
+from scripts.baseline_adapters.deepeye import run_store as run_store_module
 from scripts.baseline_adapters.deepeye.run_store import (
     RunStore,
     restore_jsonable,
@@ -46,6 +48,41 @@ class ExampleModel(BaseModel):
 
 
 class RunStoreTests(unittest.TestCase):
+    def test_manifest_is_decoded_once_and_returned_as_defensive_copies(self):
+        with tempfile.TemporaryDirectory() as temp:
+            run_dir = Path(temp) / "run"
+            decoder = run_store_module._decode_json
+            with patch.object(run_store_module, "_decode_json", wraps=decoder) as decode:
+                with RunStore.create(run_dir, {"items": [{"id": 1}]}) as store:
+                    returned = store.manifest
+                    returned["items"][0]["id"] = 9
+                    self.assertEqual(store.manifest["items"][0]["id"], 1)
+                    self.assertEqual(
+                        store.manifest_fingerprint,
+                        "a30a9d83355d7257e16cfbf9455601e7df5108455bd5290941845bf90dd92d1c",
+                    )
+                    self.assertEqual(decode.call_count, 1)
+
+    def test_manifest_fingerprint_uses_canonical_business_value_not_storage_text(self):
+        with tempfile.TemporaryDirectory() as temp:
+            run_dir = Path(temp) / "run"
+            with RunStore.create(run_dir, {"items": [{"id": 1}]}):
+                pass
+            noncanonical = '{ "items": [ { "id": 1 } ] }'
+            storage_checksum = hashlib.sha256(noncanonical.encode("utf-8")).hexdigest()
+            with sqlite3.connect(run_dir / "run.sqlite3") as connection:
+                connection.execute("DROP TRIGGER manifest_no_update")
+                connection.execute(
+                    "UPDATE manifest SET payload_json = ?, payload_checksum = ? WHERE singleton = 1",
+                    (noncanonical, storage_checksum),
+                )
+            with RunStore.open(run_dir, read_only=True) as store:
+                self.assertEqual(
+                    store.manifest_fingerprint,
+                    "a30a9d83355d7257e16cfbf9455601e7df5108455bd5290941845bf90dd92d1c",
+                )
+                self.assertNotEqual(store.manifest_fingerprint, storage_checksum)
+
     def test_create_records_manifest_and_refuses_an_existing_directory(self):
         with tempfile.TemporaryDirectory() as temp:
             run_dir = Path(temp) / "run"
@@ -87,6 +124,22 @@ class RunStoreTests(unittest.TestCase):
                     store.completed("db/q1", "generate", "unseen")
                 self.assertEqual([row["attempt_no"] for row in store.attempts()], [1, 2, 3])
                 self.assertEqual(store.events(first)[0]["payload"], {"tokens": 9})
+
+    def test_completed_finish_payload_is_decoded_once(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with RunStore.create(Path(temp) / "run", {}) as store:
+                attempt_id = store.begin_attempt("q", "stage", "fp")
+                store.finish_attempt(attempt_id, "succeeded", {"answer": 1})
+                decoder = run_store_module._decode_json
+                with patch.object(run_store_module, "_decode_json", wraps=decoder) as decode:
+                    self.assertEqual(
+                        store.completed("q", "stage", "fp")["payload"],
+                        {"answer": 1},
+                    )
+                finish_decodes = [
+                    call for call in decode.call_args_list if call.args[2].startswith("finish ")
+                ]
+                self.assertEqual(len(finish_decodes), 1)
 
     def test_completed_returns_none_when_no_successful_lineage_exists(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -411,6 +464,32 @@ sys.stdin.read()
                     store.summary(),
                     {"attempts": 3, "succeeded": 1, "failed": 1, "interrupted": 1, "events": 1},
                 )
+
+    def test_summary_accepts_a_current_successful_verification(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with RunStore.create(Path(temp) / "run", {}) as store:
+                store.begin_attempt("q", "stage", "fp")
+                with store._read_snapshot():
+                    verification = store.verify()
+                    with patch.object(store, "verify", side_effect=AssertionError("verified twice")):
+                        self.assertEqual(
+                            store.summary(verification=verification),
+                            {"attempts": 1, "succeeded": 0, "failed": 0, "interrupted": 1, "events": 0},
+                        )
+
+    def test_summary_rejects_failed_or_invalid_precomputed_verification(self):
+        invalid = (
+            {"ok": False, "sqlite_integrity": ["ok"], "checksum_errors": 1, "records_checked": 1},
+            {},
+            {"ok": 1, "sqlite_integrity": ["ok"], "checksum_errors": 0, "records_checked": 1},
+            {"ok": "yes", "sqlite_integrity": ["ok"], "checksum_errors": 0, "records_checked": 1},
+            True,
+        )
+        with tempfile.TemporaryDirectory() as temp:
+            with RunStore.create(Path(temp) / "run", {}) as store:
+                for verification in invalid:
+                    with self.subTest(verification=verification), self.assertRaises((TypeError, ValueError)):
+                        store.summary(verification=verification)  # type: ignore[arg-type]
 
 
 class JsonableTests(unittest.TestCase):

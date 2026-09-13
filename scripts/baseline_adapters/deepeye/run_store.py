@@ -9,6 +9,7 @@ from __future__ import annotations
 import base64
 from collections.abc import Callable, Mapping
 from contextlib import contextmanager
+import copy
 import dataclasses
 import datetime as dt
 from decimal import Decimal
@@ -263,6 +264,7 @@ class RunStore:
         connection: sqlite3.Connection,
         manifest_json: str,
         manifest_checksum: str,
+        manifest: dict[str, Any],
         *,
         read_only: bool,
         lock_file: Any | None,
@@ -271,6 +273,10 @@ class RunStore:
         self._connection = connection
         self._manifest_json = manifest_json
         self._manifest_checksum = manifest_checksum
+        self._manifest = manifest
+        self._manifest_fingerprint = hashlib.sha256(
+            _canonical_dumps(to_jsonable(manifest)).encode("utf-8")
+        ).hexdigest()
         self._read_only = read_only
         self._lock_file = lock_file
         self._mutex = threading.RLock()
@@ -283,6 +289,9 @@ class RunStore:
         if not isinstance(manifest, dict):
             raise TypeError("run manifest must be a dictionary")
         manifest_json, manifest_checksum = _encode_json(manifest)
+        verified_manifest = _decode_json(manifest_json, manifest_checksum, "manifest")
+        if not isinstance(verified_manifest, dict):
+            raise ValueError("run manifest must be a dictionary")
         run_dir.mkdir()
         lock_file = None
         connection = None
@@ -306,6 +315,7 @@ class RunStore:
                 connection,
                 manifest_json,
                 manifest_checksum,
+                verified_manifest,
                 read_only=False,
                 lock_file=lock_file,
             )
@@ -324,7 +334,7 @@ class RunStore:
     ) -> "RunStore":
         run_dir = Path(run_dir)
         database = run_dir / _DATABASE_NAME
-        manifest_json, manifest_checksum = cls._read_manifest(database)
+        manifest_json, manifest_checksum, manifest = cls._read_manifest(database)
         if expected_manifest is not None:
             expected_json, _ = _encode_json(expected_manifest)
             if expected_json != manifest_json:
@@ -344,6 +354,7 @@ class RunStore:
                 connection,
                 manifest_json,
                 manifest_checksum,
+                manifest,
                 read_only=read_only,
                 lock_file=lock_file,
             )
@@ -378,7 +389,7 @@ class RunStore:
         return connection
 
     @classmethod
-    def _read_manifest(cls, database: Path) -> tuple[str, str]:
+    def _read_manifest(cls, database: Path) -> tuple[str, str, dict[str, Any]]:
         connection = cls._connect_reader(database)
         try:
             cls._check_schema_version(connection)
@@ -390,7 +401,7 @@ class RunStore:
             manifest = _decode_json(row["payload_json"], row["payload_checksum"], "manifest")
             if not isinstance(manifest, dict):
                 raise ValueError("run manifest must be a dictionary")
-            return row["payload_json"], row["payload_checksum"]
+            return row["payload_json"], row["payload_checksum"], manifest
         finally:
             connection.close()
 
@@ -435,10 +446,11 @@ class RunStore:
 
     @property
     def manifest(self) -> dict[str, Any]:
-        manifest = _decode_json(self._manifest_json, self._manifest_checksum, "manifest")
-        if not isinstance(manifest, dict):
-            raise ValueError("run manifest must be a dictionary")
-        return manifest
+        return copy.deepcopy(self._manifest)
+
+    @property
+    def manifest_fingerprint(self) -> str:
+        return self._manifest_fingerprint
 
     def __enter__(self) -> "RunStore":
         self._assert_open()
@@ -610,9 +622,9 @@ class RunStore:
             raise ValueError(f"checksum mismatch for attempt {row['attempt_id']}")
 
     @staticmethod
-    def _verify_finish_row(row: sqlite3.Row) -> None:
+    def _verify_finish_row(row: sqlite3.Row) -> Any | None:
         if row["status"] is None:
-            return
+            return None
         record = {
             "attempt_id": row["attempt_id"],
             "status": row["status"],
@@ -622,18 +634,17 @@ class RunStore:
         }
         if _record_checksum(record) != row["finish_checksum"]:
             raise ValueError(f"checksum mismatch for finish {row['attempt_id']}")
-        _decode_json(row["finish_payload_json"], row["finish_payload_checksum"], f"finish {row['attempt_id']}")
+        return _decode_json(
+            row["finish_payload_json"],
+            row["finish_payload_checksum"],
+            f"finish {row['attempt_id']}",
+        )
 
     @staticmethod
     def _attempt_dict(row: sqlite3.Row) -> dict[str, Any]:
         RunStore._verify_attempt_row(row)
-        RunStore._verify_finish_row(row)
+        payload = RunStore._verify_finish_row(row)
         status = row["status"] if row["status"] is not None else "interrupted"
-        payload = None
-        if row["status"] is not None:
-            payload = _decode_json(
-                row["finish_payload_json"], row["finish_payload_checksum"], f"finish {row['attempt_id']}"
-            )
         return {
             "attempt_id": row["attempt_id"],
             "item_key": row["item_key"],
@@ -850,11 +861,29 @@ class RunStore:
             "events": int(event_count),
         }
 
-    def summary(self) -> dict[str, int]:
+    @staticmethod
+    def _validate_verification(verification: Mapping[str, Any]) -> None:
+        if not isinstance(verification, Mapping):
+            raise TypeError("verification must be a RunStore verification mapping")
+        required = {"ok", "sqlite_integrity", "checksum_errors", "records_checked"}
+        if not required.issubset(verification):
+            raise ValueError("verification is missing required fields")
+        if type(verification["ok"]) is not bool:
+            raise TypeError("verification ok field must be a boolean")
+        for name in ("checksum_errors", "records_checked"):
+            if type(verification[name]) is not int or verification[name] < 0:
+                raise TypeError(f"verification {name} field must be a non-negative integer")
+        integrity = verification["sqlite_integrity"]
+        if not isinstance(integrity, list) or not all(isinstance(item, str) for item in integrity):
+            raise TypeError("verification sqlite_integrity field must be a list of strings")
+        if verification["ok"] is not True or integrity != ["ok"] or verification["checksum_errors"] != 0:
+            raise ValueError("cannot summarize a RunStore that fails verification")
+
+    def summary(self, *, verification: Mapping[str, Any] | None = None) -> dict[str, int]:
         with self._read_snapshot():
-            verification = self.verify()
-            if not verification["ok"]:
-                raise ValueError("cannot summarize a RunStore that fails verification")
+            if verification is None:
+                verification = self.verify()
+            self._validate_verification(verification)
             return self._summary_counts()
 
     @staticmethod
