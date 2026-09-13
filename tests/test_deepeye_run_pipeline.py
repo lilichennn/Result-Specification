@@ -92,8 +92,9 @@ class PipelineTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp, Store.create(Path(temp) / 'run', {}) as store:
             recorder = TraceRecorder(store)
             # This fixture only has stage entry points, no native component tree.
-            with patch.object(recorder, 'instrument_runner', return_value=lambda: None):
+            with patch.object(recorder, 'instrument_runner', return_value=lambda: None), patch('app.llm_extractor.extractor.logger.warning') as warning:
                 result = pipeline.run_pipeline(store, [('lite', item())], factory, recorder, workers=1)
+            warning.assert_called_once()
             self.assertEqual((result['failed'], len(calls)), (1, 8))
             row = next(a for a in store.attempts() if a['stage'] == 'schema_linking')
             self.assertEqual(row['status'], 'failed')

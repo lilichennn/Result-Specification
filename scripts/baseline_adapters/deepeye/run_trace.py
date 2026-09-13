@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 import contextvars
 import base64
 import dataclasses
@@ -192,7 +192,7 @@ class TraceRecorder:
     Transport retries performed internally by that SDK are not separately visible.
     """
 
-    def __init__(self, store, secrets=(), api_call=None):
+    def __init__(self, store, secrets=(), api_call=None, stop_event=None):
         self.store = store
         self.secrets = tuple(
             str(secret) for secret in secrets if secret is not None and str(secret)
@@ -204,6 +204,9 @@ class TraceRecorder:
         self._error_lock = threading.Lock()
         self._instrument_lock = threading.RLock()
         self._instrumented: dict[tuple[int, str], dict[str, Any]] = {}
+        self.stop_event = stop_event if stop_event is not None else threading.Event()
+        from .run_sampling import SamplingCheckpoints
+        self.sampling_checkpoints = SamplingCheckpoints(store, self._remember_error) if hasattr(store, 'attempt') else None
 
     @contextmanager
     def context(self, attempt_id: str) -> Iterator[None]:
@@ -212,11 +215,17 @@ class TraceRecorder:
         attempt_token = _ATTEMPT_ID.set(attempt_id)
         branch_token = _BRANCH_PATH.set(())
         component_token = _COMPONENT_CALL_IDS.set(())
+        session = None
         try:
-            from app.llm.sampling import observe_sampling
-            with observe_sampling(self.record_sampling):
+            from app.llm.sampling import observe_sampling, sampling_checkpoints
+            from .run_sampling import stable_sampling_node
+            session = self.sampling_checkpoints.session(attempt_id, self) if self.sampling_checkpoints else None
+            checkpoint_context = sampling_checkpoints(session) if session else nullcontext()
+            with observe_sampling(self.record_sampling), checkpoint_context, stable_sampling_node('stage'):
                 yield
         finally:
+            if session is not None:
+                session.close()
             _COMPONENT_CALL_IDS.reset(component_token)
             _BRANCH_PATH.reset(branch_token)
             _ATTEMPT_ID.reset(attempt_token)
@@ -236,7 +245,9 @@ class TraceRecorder:
             (*_COMPONENT_CALL_IDS.get(), call_id)
         )
         try:
-            yield
+            from .run_sampling import stable_sampling_node
+            with stable_sampling_node(branch):
+                yield
         finally:
             _COMPONENT_CALL_IDS.reset(component_token)
             _BRANCH_PATH.reset(branch_token)
@@ -322,6 +333,8 @@ class TraceRecorder:
         def traced(*args, **kwargs):
             if _ATTEMPT_ID.get() is None:
                 return original(*args, **kwargs)
+            from app.llm.sampling import check_sampling_stop
+            check_sampling_stop()
             call_id = uuid.uuid4().hex
             self._append("api_request", {
                 **self._base_payload(),
@@ -380,6 +393,8 @@ class TraceRecorder:
         def traced(*args, **kwargs):
             if _ATTEMPT_ID.get() is None:
                 return original(*args, **kwargs)
+            from app.llm.sampling import check_sampling_stop
+            check_sampling_stop()
             component_call_id = uuid.uuid4().hex
             component_ids = _COMPONENT_CALL_IDS.get()
             parent_component_call_id = component_ids[-1] if component_ids else None

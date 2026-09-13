@@ -25,7 +25,8 @@ def _same_output(payload, source):
 
 
 def _replay(stage, target, unchanged, source):
-    return source is not None and unchanged and (stage != target or source['api_trace']['requests'] == 0)
+    return source is not None and unchanged and (stage != target or (
+        source['api_trace']['requests'] == 0 and not source['api_trace'].get('restored_samples')))
 
 
 def _stage_hash(manifest, key, stage, item):
@@ -33,7 +34,7 @@ def _stage_hash(manifest, key, stage, item):
                    'input': item.model_dump(exclude={'gold_sql'})})
 
 
-def _preflight(store):
+def _preflight(store, checkpoints=None):
     if not store.verify()['ok']:
         raise ValueError('Experiment RunStore verification failed')
     manifest = validate_manifest(store.manifest)
@@ -52,6 +53,8 @@ def _preflight(store):
         for index, stage in enumerate(stages):
             prior = store.completed(key, stage, _stage_hash(manifest, key, stage, state))
             if prior is not None:
+                if checkpoints is not None:
+                    checkpoints.validate_stage(prior)
                 _restore(state, stage, prior['payload'])
                 if not _valid_output(state, stage):
                     raise ValueError(f'Invalid completed RC checkpoint: {key}/{stage}')
@@ -79,6 +82,9 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
     """
     if type(workers) is not int or workers < 1:
         raise ValueError('workers must be a positive integer')
+    from app.llm.sampling import SamplingPaused
+    stop = getattr(recorder, 'stop_event', threading.Event())
+    paused = set()
     if not _PIPELINE_LOCK.acquire(blocking=False):
         raise RuntimeError('Only one native DeepEye pipeline may run per process')
     resources, question_pool, question_futures = [], None, []
@@ -87,7 +93,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
     tickets, failed = {}, {}
     halted = threading.Event()
     try:
-        manifest, plans, needed = _preflight(store)
+        manifest, plans, needed = _preflight(store, getattr(recorder, 'sampling_checkpoints', None))
         target = manifest['target_stage']
         runners = {}
         for stage in STAGES:
@@ -115,6 +121,9 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
             status = 'succeeded'
             try:
                 for stage in plan['remaining']:
+                    if stop.is_set():
+                        paused.add(key)
+                        return 'failed'
                     if halted.is_set():
                         return 'failed'
                     recorder.raise_if_failed()
@@ -153,10 +162,18 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         try:
                             with native_stage_work():
                                 getattr(runners[stage], STAGE_METHODS[stage])(updated)
+                        except SamplingPaused:
+                            stop.set()
                         except Exception as exc:
                             error = exc
                         recorder.raise_if_failed()
+                        if stop.is_set():
+                            store.append_event(attempt, 'stage_paused', {'resumable': True})
+                            paused.add(key)
+                            return 'failed'
                         payload = _checkpoint(updated, stage)
+                        if getattr(recorder, 'sampling_checkpoints', None):
+                            payload['sampling_implementation_version'] = recorder.sampling_checkpoints.source_version
                         trace = api_trace(store.iter_events(attempt))
                         if trace['unanswered_requests']:
                             raise RuntimeError('Stage finished with incomplete API trace')
@@ -167,15 +184,21 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                             payload['sampling'] = trace['sampling']
                             payload['completion_semantics'] = 'required_samples_and_native_fields_present_not_sql_correctness'
                         count = 0
+                        restored = trace.get('restored_samples', 0)
+                        restored_rc = trace.get('restored_rc_samples', 0)
                         if block is not None:
                             from .injection import count_rc_requests
                             count = count_rc_requests(list(store.iter_events(attempt, kinds='api_request')), block)
                         payload.update(execution_origin='executed', source_provenance=provenance,
                                        attempt_wall_seconds=time.monotonic() - started,
-                                       rc_participation={'status': 'participating' if count else 'rc_not_participating',
+                                       rc_participation={'status': 'participating' if count or restored_rc else 'rc_not_participating',
                                                          'actual_request_count': count,
+                                                         'restored_sample_count': restored,
+                                                         'restored_rc_sample_count': restored_rc,
                                                          'native_request_count': trace['requests'],
                                                          'reason': ('participating' if count else
+                                                                    'restored_rc_samples' if restored_rc else
+                                                                    'restored_control_samples' if restored else
                                                                     'no_native_llm_call' if not trace['requests'] else
                                                                     'control' if contract is None else 'rc_not_in_request')})
                         status = 'succeeded' if error is None and _valid_output(updated, stage) else 'failed'
@@ -209,7 +232,10 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         slots.release(tickets.pop(key), status=status)
                 recorder.raise_if_failed()
                 slots.set_pending(len(pending))
-                while pending and not halted.is_set():
+                if stop.is_set():
+                    paused.update(pending)
+                    pending.clear()
+                while pending and not halted.is_set() and not stop.is_set():
                     key = pending[0]
                     ticket = slots.try_acquire(key)
                     if ticket is None:
@@ -222,9 +248,9 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                 if futures:
                     wait(futures, timeout=0.1, return_when=FIRST_COMPLETED)
             recorder.raise_if_failed()
-        return {'succeeded': len(plans) - len(failed), 'failed': len(failed),
+        return {'succeeded': len(plans) - len(failed) - len(paused), 'failed': len(failed), 'paused': len(paused),
                 'accuracy_evaluated': False, 'target_stage': target, 'condition': manifest['condition'],
-                'items': {key: {'status': 'failed' if key in failed else 'succeeded',
+                'items': {key: {'status': 'paused' if key in paused else 'failed' if key in failed else 'succeeded',
                                 'failed_stage': failed.get(key),
                                 'final_selected_sql': plan['state'].final_selected_sql} for key, plan in plans.items()}}
     finally:

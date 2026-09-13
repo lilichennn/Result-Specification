@@ -103,8 +103,9 @@ def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_control
 
     Inputs must be pristine, gold-free precomputed DataItems. Failed item mutations
     never leak to retry; errors of the recorder/store stop execution, not just that
-    item. A crash can leave an unfinished attempt and already-paid calls; its next
-    attempt reruns that stage. It cannot guarantee exactly-once remote inference.
+    item. A crash or cooperative pause leaves a resumable stage: rerunning its
+    native control flow restores durable samples and their consumed budgets.
+    Uncommitted responses remain uncertain, not exactly-once remote inference.
     """
     if isinstance(workers, bool) or not isinstance(workers, int) or workers < 1:
         raise ValueError('workers must be a positive integer')
@@ -120,6 +121,8 @@ def run_pipeline(store, tasks, runner_factory, recorder, workers=4, slot_control
 
 
 def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
+    from app.llm.sampling import SamplingPaused
+    stop = getattr(recorder, 'stop_event', threading.Event())
     states, identities = {}, {}
     for variant, item in tasks:
         key = task_key(variant, item)
@@ -143,6 +146,8 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
             input_hash = fingerprint({'input': identities[key], 'stage': stage})
             prior = store.completed(key, stage, input_hash)
             if prior:
+                if getattr(recorder, 'sampling_checkpoints', None):
+                    recorder.sampling_checkpoints.validate_stage(prior)
                 _restore(state, stage, prior['payload'])
                 if not _valid_output(state, stage):
                     raise ValueError(f'Invalid completed checkpoint for {key}/{stage}')
@@ -152,7 +157,7 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                 remaining[key] = STAGES[index:]
                 break
 
-    failed, runners, resources = {}, {}, []
+    failed, runners, resources, paused = {}, {}, [], set()
     pending = deque(remaining)
     halted = threading.Event()
     admission_lock = threading.Lock()
@@ -194,6 +199,10 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                 links = list(reused[key])
                 status, failed_stage = 'succeeded', None
                 for stage in remaining[key]:
+                    if stop.is_set():
+                        paused.add(key)
+                        status = 'paused'
+                        break
                     if halted.is_set():
                         raise fatal_errors[0]
                     recorder.raise_if_failed()
@@ -209,16 +218,25 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                         try:
                             with native_stage_work():
                                 getattr(runners[stage], STAGE_METHODS[stage])(target)
+                        except SamplingPaused:
+                            stop.set()
                         except Exception as exc:
                             error_type, error_message = type(exc).__name__, str(exc)
                             for secret in getattr(recorder, 'secrets', ()):
                                 error_message = error_message.replace(secret, '[REDACTED]')
                         recorder.raise_if_failed()
+                        if stop.is_set():
+                            store.append_event(attempt_id, 'stage_paused', {'resumable': True})
+                            paused.add(key)
+                            status = 'paused'
+                            break
                         sampling = sampling_completeness(store.iter_events(attempt_id))
                         if not sampling['complete'] and error_type is None:
                             error_type = 'IncompleteSamplingGroup'
                             error_message = 'Required sampling group did not retain all requested samples'
                         payload = _checkpoint(target, stage)
+                        if getattr(recorder, 'sampling_checkpoints', None):
+                            payload['sampling_implementation_version'] = recorder.sampling_checkpoints.source_version
                         if sampling['groups']:
                             payload['sampling'] = sampling
                             payload['completion_semantics'] = 'required_samples_and_native_fields_present_not_sql_correctness'
@@ -236,11 +254,14 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                     identities[key] = fingerprint({'input': input_hash, 'output': payload})
                 terminal = {'ticket': ticket, 'stage_attempts': links, 'failed_stage': failed_stage}
                 store.append_event(master, 'pipeline_release_intent', {**terminal, 'status': status})
-                store.finish_attempt(master, status, terminal)
+                if status == 'paused':
+                    store.append_event(master, 'pipeline_paused', terminal)
+                else:
+                    store.finish_attempt(master, status, terminal)
                 # Release only after both the terminal native stage and master
                 # outcome are durable.
                 with admission_lock:
-                    slot_controller.release(ticket, status=status)
+                    slot_controller.release(ticket, status='failed' if status == 'paused' else status)
                     unreleased.pop(key)
                 return key
             except BaseException as exc:
@@ -264,9 +285,12 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                             del futures[future]
                     recorder.raise_if_failed()
                     with admission_lock:
-                        if not halted.is_set():
+                        if stop.is_set():
+                            paused.update(pending)
+                            pending.clear()
+                        if not halted.is_set() and not stop.is_set():
                             slot_controller.set_pending(len(pending))
-                            while pending and not halted.is_set():
+                            while pending and not halted.is_set() and not stop.is_set():
                                 key = pending[0]
                                 ticket = slot_controller.try_acquire(key)
                                 if ticket is None:
@@ -304,12 +328,12 @@ def _run_pipeline(store, tasks, runner_factory, recorder, slot_controller):
                     slot_controller.release(ticket, status='failed')
 
     items = {key: {
-        'status': 'failed' if key in failed else 'succeeded',
+        'status': 'paused' if key in paused else 'failed' if key in failed else 'succeeded',
         'failed_stage': failed.get(key),
         'final_selected_sql': state.final_selected_sql,
         'total_time': state.total_time,
         'total_llm_cost': to_jsonable(state.total_llm_cost),
         'metric_semantics': 'native_completed_lineage_including_reused_precompute_excluding_failed_attempts',
     } for key, state in states.items()}
-    return {'succeeded': len(states) - len(failed), 'failed': len(failed),
+    return {'succeeded': len(states) - len(failed) - len(paused), 'failed': len(failed), 'paused': len(paused),
         'accuracy_evaluated': False, 'rc_enabled': False, 'items': items}

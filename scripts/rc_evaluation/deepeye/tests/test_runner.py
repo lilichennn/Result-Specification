@@ -72,7 +72,9 @@ class RunnerTests(OfflineTestCase):
                 complete_stage(item, stage)
             return SimpleNamespace(_llm=llm, _checkers=[], _revise_sql=revise, _clean_up=lambda: None)
         with tempfile.TemporaryDirectory() as temporary, self.prepared(temporary) as store:
-            result = run_experiment(store, factory, TraceRecorder(store), workers=1)
+            with patch('app.llm_extractor.extractor.logger.warning') as warning:
+                result = run_experiment(store, factory, TraceRecorder(store), workers=1)
+            warning.assert_called_once()
             self.assertEqual((result['failed'], len(calls)), (1, 8))
             self.assertEqual(store.attempts()[0]['payload']['error_type'], 'IncompleteSamplingGroup')
 

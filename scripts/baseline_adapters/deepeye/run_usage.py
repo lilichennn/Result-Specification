@@ -27,6 +27,7 @@ def sampling_completeness(events):
         group_id = payload.get('group_id')
         if not isinstance(group_id, str) or not group_id:
             raise ValueError('sampling group has no identity')
+        group_id = (event.get('attempt_id'), group_id)
         if kind == 'sampling_group_start':
             if group_id in groups:
                 raise ValueError('duplicate sampling group start')
@@ -54,8 +55,16 @@ def _effective_sampling(events):
         payload = event['payload']
         identity = (payload['group_id'], payload['sample_index'])
         if identity in results:
-            raise ValueError('duplicate sample result')
-        results[identity] = payload
+            prior = results[identity]
+            if (payload.get('restored_from_event') is None or not payload['succeeded']
+                    or any(payload.get(key) != prior.get(key) for key in ('result', 'usage', 'response_id'))):
+                # Failed samples can be retried using their remaining original
+                # allowance, but successful results must only be restored.
+                if prior['succeeded'] or event.get('attempt_id') == prior.get('_stage_attempt'):
+                    raise ValueError('duplicate sample result')
+            if prior['succeeded']:
+                continue
+        results[identity] = {**payload, '_stage_attempt': event.get('attempt_id')}
     retained = [value for value in results.values() if value['succeeded']]
     known = {field: 0 for field in _TOKEN_FIELDS}
     missing, missing_reasoning, reasoning = 0, 0, 0

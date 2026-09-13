@@ -7,6 +7,7 @@ import threading
 
 
 _STAGE_WORK = contextvars.ContextVar('deepeye_native_stage_work', default=None)
+_SUBMISSION_INDEX = contextvars.ContextVar('deepeye_native_submission_index', default=0)
 _POOL_NAMES = ('_thread_pool_executor', '_inner_thread_pool_executor', '_column_query_executor')
 
 
@@ -20,6 +21,7 @@ def native_stage_work():
     """
     pending, lock = [], threading.Lock()
     token = _STAGE_WORK.set((pending, lock))
+    submission_token = _SUBMISSION_INDEX.set(0)
     try:
         yield
     finally:
@@ -34,6 +36,7 @@ def native_stage_work():
                 index += 1
         finally:
             _STAGE_WORK.reset(token)
+            _SUBMISSION_INDEX.reset(submission_token)
 
 
 def instrument_native_pools(runner):
@@ -57,11 +60,18 @@ def instrument_native_pools(runner):
             undo.callback(restore)
             @functools.wraps(original)
             def submit(fn, /, *args, _original=original, _tracked=tracked, _tracked_lock=tracked_lock, **kwargs):
+                from app.llm.sampling import check_sampling_stop
+                check_sampling_stop()
                 work = _STAGE_WORK.get()
                 if work is None:
                     future = _original(fn, *args, **kwargs)
                 else:
-                    context = contextvars.copy_context()
+                    from .run_sampling import stable_sampling_node
+                    position = _SUBMISSION_INDEX.get()
+                    _SUBMISSION_INDEX.set(position + 1)
+                    with stable_sampling_node(('submission', position)):
+                        context = contextvars.copy_context()
+                    context.run(_SUBMISSION_INDEX.set, 0)
                     future = _original(context.run, fn, *args, **kwargs)
                     pending, lock = work
                     with lock:

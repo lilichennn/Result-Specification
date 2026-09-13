@@ -4,6 +4,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "baselines/DeepEye-SQL"))
@@ -97,8 +98,9 @@ class ObservedUsageTests(unittest.TestCase):
             cleanup = recorder.instrument_runner(SimpleNamespace(_llm=llm, _checkers=[]), 'sql_revision')
             try:
                 attempt = store.begin_attempt('q', 'stage', 'fp')
-                with recorder.context(attempt):
+                with recorder.context(attempt), patch('app.llm_extractor.extractor.logger.warning') as warning:
                     LLMExtractor().extract_with_retry(llm, [], parse, n=5)
+                warning.assert_called_once()
                 usage = observed_usage(store)
                 self.assertEqual((usage['requests'], usage['unknown_usage_attempts']), (8, 4))
                 self.assertEqual(usage['effective_sampling']['known_tokens']['total_tokens'], 120)

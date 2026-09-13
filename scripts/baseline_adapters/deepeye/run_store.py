@@ -683,6 +683,15 @@ class RunStore:
             "payload": attempt["payload"],
         }
 
+    def attempt(self, attempt_id: str) -> dict[str, Any]:
+        """Read one verified attempt without rescanning the run's history."""
+        self._assert_open()
+        with self._mutex:
+            row = self._connection.execute(self._attempt_query('WHERE a.attempt_id = ?'), (attempt_id,)).fetchone()
+        if row is None:
+            raise ValueError('unknown attempt')
+        return self._attempt_dict(row)
+
     def attempts(self) -> list[dict[str, Any]]:
         self._assert_open()
         with self._mutex:

@@ -39,12 +39,20 @@ def api_trace(events):
     sampling = sampling_completeness(events)
     result = {'requests': len(calls), 'responses': responses, 'errors': errors,
             'unanswered_requests': unanswered, 'complete': unanswered == 0 and sampling['complete']}
+    restored = [e['payload'] for e in events if e['kind'] == 'sample_result'
+                and e['payload'].get('restored_from_event') is not None]
+    if restored:
+        result['restored_samples'] = len(restored)
+        result['restored_rc_samples'] = sum(p.get('rc_applied') is True for p in restored)
     if sampling['groups']:
         result['sampling'] = sampling
     return result
 
 
 def _source_trace(store, row, stage, seen=()):
+    if not hasattr(store, '_source_sampling_index'):
+        from scripts.baseline_adapters.deepeye.run_sampling import SamplingCheckpoints
+        store._source_sampling_index = SamplingCheckpoints(store)
     provenance = row['payload'].get('inheritance')
     if row['payload'].get('execution_origin') == 'inherited_successful_checkpoint':
         if not isinstance(provenance, dict):
@@ -67,7 +75,7 @@ def _source_trace(store, row, stage, seen=()):
     result = api_trace(store.iter_events(row['attempt_id']))
     if not result['complete']:
         raise ValueError('Source API trace has unanswered requests or incomplete sampling')
-    if not result['requests']:
+    if not result['requests'] and not result.get('restored_samples'):
         usage = restore_jsonable(row['payload']['artifact']).get(stage + '_llm_cost')
         if not isinstance(usage, dict) or any(usage.get(field) != 0 for field in
                 ('prompt_tokens', 'completion_tokens', 'total_tokens')):

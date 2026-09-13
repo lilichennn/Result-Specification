@@ -60,7 +60,20 @@ class LLM:
             kwargs['timeout'] = timeout
         outcome = execute_group(lambda: self.request_once(messages,
             system_message=system_message, **kwargs), lambda message: message,
-            n=n, max_attempts=self.sample_max_attempts)
+            n=n, max_attempts=self.sample_max_attempts,
+            recovery_identity=self.sampling_request_identity(messages, system_message=system_message,
+                                                              parser={'kind': 'message'}, **kwargs))
         if not outcome.complete:
             raise SamplingIncompleteError(outcome)
         return outcome.results, outcome.effective_usage
+
+    def sampling_request_identity(self, messages, system_message=None, *, parser=None, **kwargs):
+        """Exact logical request, excluding credentials; shared by both callers."""
+        config = self._config
+        params = dict(model=config.model, max_tokens=config.max_tokens,
+                      temperature=config.temperature, reasoning_effort=config.reasoning_effort,
+                      extra_body=config.extra_body, api_type=config.api_type,
+                      base_url=str(config.base_url), api_version=getattr(config, 'api_version', None))
+        params.update(kwargs)
+        return {'messages': [system_message] + messages if system_message else messages,
+                'params': params, 'parser': parser}

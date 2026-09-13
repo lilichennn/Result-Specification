@@ -4,12 +4,61 @@ from contextvars import ContextVar
 from dataclasses import dataclass, field
 from typing import Any, Callable
 from uuid import uuid4
+import hashlib
+import marshal
 from openai import RateLimitError, APITimeoutError, APIConnectionError, InternalServerError
 
 MAX_SAMPLE_ATTEMPTS = 4
 TOKEN_FIELDS = ('prompt_tokens', 'completion_tokens', 'total_tokens')
 _OBSERVER = ContextVar('deepeye_sampling_observer', default=None)
 _IDENTITY = ContextVar('deepeye_sampling_identity', default=None)
+_CHECKPOINTS = ContextVar('deepeye_sampling_checkpoints', default=None)
+
+
+class SamplingPaused(BaseException):
+    """Cooperative stop; native Exception fallbacks must not swallow it."""
+
+
+@contextmanager
+def sampling_checkpoints(checkpoints):
+    token = _CHECKPOINTS.set(checkpoints)
+    try:
+        yield
+    finally:
+        _CHECKPOINTS.reset(token)
+
+
+def check_sampling_stop():
+    checkpoints = _CHECKPOINTS.get()
+    if checkpoints is not None:
+        checkpoints.check_stop()
+
+
+def _parser_owner(value, names, seen):
+    """Capture the attributes a parser references, not executor/client state."""
+    if value is None or isinstance(value, (bool, int, float, str, dict, list, tuple, set)):
+        return value
+    if callable(value):
+        return parser_identity(value, seen)
+    kind = {'module': type(value).__module__, 'name': type(value).__qualname__}
+    if id(value) in seen:
+        return kind
+    seen = (*seen, id(value))
+    return {**kind, 'attributes': {name: _parser_owner(getattr(value, name), (), seen)
+            for name in names if hasattr(value, name)}}
+
+
+def parser_identity(parser, seen=()):
+    code = getattr(parser, '__code__', None)
+    closure = getattr(parser, '__closure__', None) or ()
+    names = code.co_names if code else ()
+    return {'module': getattr(parser, '__module__', type(parser).__module__),
+            'name': getattr(parser, '__qualname__', type(parser).__qualname__),
+            'code': hashlib.sha256(marshal.dumps(code)).hexdigest() if code else None,
+            'defaults': getattr(parser, '__defaults__', None),
+            'keyword_defaults': getattr(parser, '__kwdefaults__', None),
+            'owner': _parser_owner(getattr(parser, '__self__', None), names, seen),
+            'closure': [_parser_owner(cell.cell_contents, names, seen) for cell in closure]}
 
 
 @contextmanager
@@ -82,6 +131,9 @@ class SampleOutcome:
     attempts: list[SampleAttempt] = field(default_factory=list)
     succeeded: bool = False
     fatal: bool = False
+    response_id: str | None = None
+    restored_from_event: int | None = None
+    rc_applied: bool = False
 
 
 @dataclass
@@ -117,9 +169,17 @@ def execute_sample(request: Callable, parser: Callable, *, group_id: str,
     """One fixed sample; schedulers may reuse this function unchanged."""
     if isinstance(max_attempts, bool) or not isinstance(max_attempts, int) or not 1 <= max_attempts <= MAX_SAMPLE_ATTEMPTS:
         raise ValueError('sample attempts must be between 1 and 4, including first')
-    outcome = SampleOutcome(group_id, sample_index)
-    for number in range(1, max_attempts + 1):
+    checkpoints = _CHECKPOINTS.get()
+    check_sampling_stop()
+    outcome = checkpoints.restore(group_id, sample_index) if checkpoints else SampleOutcome(group_id, sample_index)
+    limit = checkpoints.attempt_limit(group_id, sample_index) if checkpoints else max_attempts
+    for number in range(len(outcome.attempts) + 1, limit + 1):
+        if outcome.succeeded or outcome.fatal:
+            break
+        check_sampling_stop()
         identity = {'group_id': group_id, 'sample_index': sample_index, 'sample_attempt': number}
+        if checkpoints:
+            checkpoints.start_attempt(identity)
         token = _IDENTITY.set(identity)
         error_text, usage = None, None
         try:
@@ -147,23 +207,31 @@ def execute_sample(request: Callable, parser: Callable, *, group_id: str,
                         status, error_text = 'parse_rejected', f'{type(error).__name__}: {error}'
                     if status == 'succeeded':
                         outcome.result, outcome.usage, outcome.succeeded = result, usage, True
+                        outcome.response_id = _get(response, 'id')
         finally:
             _IDENTITY.reset(token)
         outcome.attempts.append(SampleAttempt(number, status, usage, error_text))
+        if checkpoints:
+            checkpoints.finish_sample_attempt(identity, outcome)
         _emit('sample_attempt', {**identity, 'status': status, 'usage': usage, 'error': error_text})
         if outcome.succeeded or outcome.fatal:
             break
     _emit('sample_result', {'group_id': group_id, 'sample_index': sample_index,
         'succeeded': outcome.succeeded, 'fatal': outcome.fatal, 'result': outcome.result,
-        'usage': outcome.usage, 'attempt_count': len(outcome.attempts)})
+        'usage': outcome.usage, 'attempt_count': len(outcome.attempts),
+        'response_id': outcome.response_id, 'restored_from_event': outcome.restored_from_event,
+        'rc_applied': outcome.rc_applied})
     return outcome
 
 
 def execute_group(request: Callable, parser: Callable, *, n: int,
-                  max_attempts: int = MAX_SAMPLE_ATTEMPTS):
+                  max_attempts: int = MAX_SAMPLE_ATTEMPTS, recovery_identity=None):
     if isinstance(n, bool) or not isinstance(n, int) or n < 1:
         raise ValueError('sampling target must be a positive integer')
-    group = GroupOutcome(uuid4().hex, n, [])
+    check_sampling_stop()
+    checkpoints = _CHECKPOINTS.get()
+    group_id = checkpoints.group(recovery_identity, n, max_attempts) if checkpoints else uuid4().hex
+    group = GroupOutcome(group_id, n, [])
     _emit('sampling_group_start', {'group_id': group.group_id, 'target_n': n})
     for index in range(n):
         sample = execute_sample(request, parser, group_id=group.group_id,
@@ -173,4 +241,5 @@ def execute_group(request: Callable, parser: Callable, *, n: int,
             break
     _emit('sampling_group_result', {'group_id': group.group_id, 'target_n': n,
         'success_count': len(group.results), 'complete': group.complete})
+    check_sampling_stop()
     return group

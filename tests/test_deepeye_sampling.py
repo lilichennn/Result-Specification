@@ -58,8 +58,9 @@ class SamplingTests(unittest.TestCase):
         from app.llm.sampling import observe_sampling
         events = []
         llm, requests = llm_fixture(sequence)
-        with observe_sampling(lambda kind, payload: events.append((kind, payload))):
+        with observe_sampling(lambda kind, payload: events.append((kind, payload))), patch('app.llm_extractor.extractor.logger.warning') as warning:
             result, usage = LLMExtractor().extract_with_retry(llm, [], parse, n=n, **kwargs)
+        self.assertEqual(warning.call_count, int(len(result) < n))
         return result, usage, requests, events
 
     def test_fixed_sample_identity_success_is_not_repeated(self):

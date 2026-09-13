@@ -1,5 +1,5 @@
 """Rule parsing shares the sample's bounded transport retry budget."""
-from app.llm.sampling import execute_group, MAX_SAMPLE_ATTEMPTS
+from app.llm.sampling import execute_group, MAX_SAMPLE_ATTEMPTS, parser_identity
 from app.logger import logger
 
 DEFAULT_LLM_EXTRACTOR_MAX_RETRY = 3
@@ -26,7 +26,10 @@ class LLMExtractor:
                 content += end_token
             return rule_parser(content, **(parser_kwargs or {}))
         outcome = execute_group(lambda: llm.request_once(messages, **llm_kwargs), parse,
-            n=n, max_attempts=getattr(llm, 'sample_max_attempts', min(retries + 1, MAX_SAMPLE_ATTEMPTS)))
+            n=n, max_attempts=getattr(llm, 'sample_max_attempts', min(retries + 1, MAX_SAMPLE_ATTEMPTS)),
+            recovery_identity=llm.sampling_request_identity(messages, parser={
+                'rule': parser_identity(rule_parser), 'kwargs': parser_kwargs,
+                'fix_end_token': fix_end_token, 'end_token': end_token}, **llm_kwargs))
         if not outcome.complete:
             logger.warning(f'Incomplete sampling group: {len(outcome.results)}/{n}')
         return outcome.results, outcome.effective_usage
