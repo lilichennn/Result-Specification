@@ -16,7 +16,7 @@ PROJECT_ROOT = SCRIPT_DIR.parents[1]
 def dataset_paths(dataset: str, split: str) -> tuple[Path, Path, Path, Path, str]:
     dataset_split = f"{dataset}_{split}"
     instances_path = SCRIPT_DIR / dataset_split / "preprocessed_data" / f"{dataset_split}.json"
-    output_path = SCRIPT_DIR / dataset_split / "gold_schema_linking.json"
+    output_path = SCRIPT_DIR / dataset_split / "gold_sql_schema_linking.json"
 
     if dataset == "spider":
         gold_path = PROJECT_ROOT / "Spider" / "data" / f"{split}.json"
@@ -130,7 +130,7 @@ def main() -> None:
     rows = extract(args.dataset, args.split)
     print(
         f"Wrote {len(rows)} instances to "
-        f"{SCRIPT_DIR / f'{args.dataset}_{args.split}' / 'gold_schema_linking.json'}"
+        f"{SCRIPT_DIR / f'{args.dataset}_{args.split}' / 'gold_sql_schema_linking.json'}"
     )
 
 

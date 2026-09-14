@@ -4,10 +4,12 @@ import argparse
 import csv
 import json
 import logging
+import random
+import shutil
 import sys
 import threading
 import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
@@ -15,12 +17,14 @@ from typing import Any, Callable, Mapping, Sequence
 SCRIPT_DIR = Path(__file__).resolve().parent
 CODE_ROOT = SCRIPT_DIR.parent
 DEFAULT_CONCURRENCY = 50
-MIN_CONCURRENCY = 10
-MAX_CONCURRENCY = 500
-CONCURRENCY_STEP = 5
-STREAK_THRESHOLD = 10
+MIN_CONCURRENCY = 1
+MAX_CONCURRENCY = 2000
+CONCURRENCY_GROWTH_MIN = 40
+CONCURRENCY_GROWTH_MAX = 60
+CONCURRENCY_GROWTH_INTERVAL_SECONDS = 1
 MAX_ATTEMPTS = 3
-CONCURRENCY_REPORT_INTERVAL_SECONDS = 15
+CONCURRENCY_REPORT_INTERVAL_SECONDS = 10
+COMPLETION_REPORT_INTERVAL_SECONDS = 5
 LOGGER = logging.getLogger("generate_rc")
 GREEN = "\033[32m"
 RED = "\033[31m"
@@ -31,15 +35,19 @@ if str(CODE_ROOT) not in sys.path:
     sys.path.insert(0, str(CODE_ROOT))
 
 from result_contract.rc import (
+    MODEL_ALIASES,
     ModelCall,
     Round1RC,
     Round2RC,
+    Round3RC,
+    call_model,
     generate_round1,
     generate_round2,
+    generate_round3,
 )
 
 
-class AdaptiveConcurrency:
+class RampConcurrency:
     def __init__(self, initial: int) -> None:
         if not MIN_CONCURRENCY <= initial <= MAX_CONCURRENCY:
             raise ValueError(
@@ -47,8 +55,6 @@ class AdaptiveConcurrency:
             )
         self._limit = initial
         self._active = 0
-        self._success_streak = 0
-        self._failure_streak = 0
         self._condition = threading.Condition()
 
     @property
@@ -62,41 +68,130 @@ class AdaptiveConcurrency:
                 self._condition.wait()
             self._active += 1
 
-    def release(self, succeeded: bool) -> None:
+    def release(self) -> None:
         with self._condition:
             self._active -= 1
-            if succeeded:
-                self._success_streak += 1
-                self._failure_streak = 0
-                if self._success_streak == STREAK_THRESHOLD:
-                    self._limit = min(
-                        MAX_CONCURRENCY,
-                        self._limit + CONCURRENCY_STEP,
-                    )
-                    self._success_streak = 0
-            else:
-                self._failure_streak += 1
-                self._success_streak = 0
-                if self._failure_streak == STREAK_THRESHOLD:
-                    self._limit = max(
-                        MIN_CONCURRENCY,
-                        self._limit - CONCURRENCY_STEP,
-                    )
-                    self._failure_streak = 0
+            self._condition.notify_all()
+
+    def grow(self) -> None:
+        with self._condition:
+            self._limit = min(
+                MAX_CONCURRENCY,
+                self._limit
+                + random.randint(CONCURRENCY_GROWTH_MIN, CONCURRENCY_GROWTH_MAX),
+            )
             self._condition.notify_all()
 
 
 class ConsoleColorFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         text = super().format(record)
-        text = text.replace(
-            " | success in attempt ",
-            f" | {GREEN}success{RESET} in attempt ",
+        text = text.replace(" | success", f" | {GREEN}success{RESET}")
+        return text.replace(" | fail", f" | {RED}fail{RESET}")
+
+
+class LiveStatusConsoleHandler(logging.StreamHandler):
+    def __init__(self) -> None:
+        super().__init__()
+        self.terminal_rows = 0
+
+    def update_status(self, text: str) -> None:
+        self.acquire()
+        try:
+            rows = max(2, shutil.get_terminal_size(fallback=(80, 24)).lines)
+            if rows != self.terminal_rows:
+                self.stream.write(
+                    f"\033[r\033[1;{rows - 1}r"
+                    f"\033[{rows};1H\033[2K{text}"
+                    f"\033[{rows - 1};1H"
+                )
+                self.terminal_rows = rows
+            else:
+                self.stream.write(
+                    f"\0337\033[{rows};1H\033[2K{text}\0338"
+                )
+            self.flush()
+        finally:
+            self.release()
+
+    def finish_status(self, text: str) -> None:
+        self.acquire()
+        try:
+            rows = self.terminal_rows or max(
+                2, shutil.get_terminal_size(fallback=(80, 24)).lines
+            )
+            self.stream.write(
+                f"\033[r\033[{rows};1H\033[2K{text}{self.terminator}"
+            )
+            self.terminal_rows = 0
+            self.flush()
+        finally:
+            self.release()
+
+
+class CompletionReporter:
+    def __init__(
+        self,
+        instances: Sequence[Mapping[str, Any]],
+        records_by_index: Mapping[InstanceIndex, Mapping[str, Any]],
+    ) -> None:
+        self.instances = instances
+        self.records_by_index = records_by_index
+        self.stop_event = threading.Event()
+        self.thread = threading.Thread(target=self._run, daemon=True)
+        self.console_handler = next(
+            (
+                handler
+                for handler in logging.getLogger().handlers
+                if isinstance(handler, LiveStatusConsoleHandler)
+                and handler.stream.isatty()
+            ),
+            None,
         )
-        return text.replace(
-            " | fail in attempt ",
-            f" | {RED}fail{RESET} in attempt ",
+
+    def start(self) -> None:
+        if self.console_handler is not None:
+            self.console_handler.update_status(self._line())
+        self.thread.start()
+
+    def _run(self) -> None:
+        while not self.stop_event.wait(COMPLETION_REPORT_INTERVAL_SECONDS):
+            if self.console_handler is not None:
+                self.console_handler.update_status(self._line())
+            else:
+                _log_completion_counts(self.instances, self.records_by_index)
+
+    def close(self) -> None:
+        self.stop_event.set()
+        self.thread.join()
+        if self.console_handler is not None:
+            self.console_handler.finish_status(self._line())
+
+    def _line(self) -> str:
+        return (
+            f"{time.strftime('%Y-%m-%d %H:%M:%S')} | INFO | "
+            f"{_completion_counts_message(self.instances, self.records_by_index)}"
         )
+
+
+def _start_concurrency_control(
+    concurrency: RampConcurrency,
+) -> tuple[threading.Event, tuple[threading.Thread, threading.Thread]]:
+    stop = threading.Event()
+
+    def grow() -> None:
+        while not stop.wait(CONCURRENCY_GROWTH_INTERVAL_SECONDS):
+            concurrency.grow()
+
+    def report() -> None:
+        while not stop.wait(CONCURRENCY_REPORT_INTERVAL_SECONDS):
+            LOGGER.info("current concurrency=%d", concurrency.limit)
+
+    growth_thread = threading.Thread(target=grow, daemon=True)
+    report_thread = threading.Thread(target=report, daemon=True)
+    growth_thread.start()
+    report_thread.start()
+    return stop, (growth_thread, report_thread)
 
 
 def generate_rc_file(
@@ -148,29 +243,14 @@ def generate_rc_file(
         else:
             pending_round2_instances.append(instance)
 
-    round1_counts = _round_status_counts(instances, records_by_index, round_number=1)
-    round2_counts = _round_status_counts(instances, records_by_index, round_number=2)
-    LOGGER.info(
-        "instances=%d | round1 success=%d fail=%d empty=%d | "
-        "round2 success=%d fail=%d empty=%d",
-        len(instances),
-        round1_counts["success"],
-        round1_counts["fail"],
-        round1_counts["empty"],
-        round2_counts["success"],
-        round2_counts["fail"],
-        round2_counts["empty"],
+    _log_completion_counts(instances, records_by_index)
+    completion_reporter = CompletionReporter(instances, records_by_index)
+    completion_reporter.start()
+
+    adaptive_concurrency = RampConcurrency(concurrency)
+    stop_reporting, control_threads = _start_concurrency_control(
+        adaptive_concurrency
     )
-
-    adaptive_concurrency = AdaptiveConcurrency(concurrency)
-    stop_reporting = threading.Event()
-
-    def report_concurrency() -> None:
-        while not stop_reporting.wait(CONCURRENCY_REPORT_INTERVAL_SECONDS):
-            LOGGER.info("current concurrency=%d", adaptive_concurrency.limit)
-
-    reporter = threading.Thread(target=report_concurrency, daemon=True)
-    reporter.start()
     try:
         unfinished_instances = (
             recovery_instances + pending_round2_instances + new_instances
@@ -189,24 +269,139 @@ def generate_rc_file(
         _write_json_atomic(output_path, output)
     finally:
         stop_reporting.set()
-        reporter.join()
+        for thread in control_threads:
+            thread.join()
+        completion_reporter.close()
+    return output
+
+
+def generate_round3_file(
+    input_path: str | Path,
+    gold_path: str | Path,
+    output_path: str | Path,
+    model_call: ModelCall | None = None,
+    concurrency: int = DEFAULT_CONCURRENCY,
+) -> list[dict[str, Any]]:
+    """Correct existing Round-2 contracts using gold SQL."""
+    if not MIN_CONCURRENCY <= concurrency <= MAX_CONCURRENCY:
+        raise ValueError(
+            f"concurrency must be between {MIN_CONCURRENCY} and {MAX_CONCURRENCY}"
+        )
+
+    input_path = Path(input_path).resolve()
+    gold_path = Path(gold_path).resolve()
+    output_path = Path(output_path).resolve()
+    instances = _load_instances(input_path)
+    gold_rows = json.loads(gold_path.read_text(encoding="utf-8"))
+    if not isinstance(gold_rows, list):
+        raise ValueError(f"Gold SQL file must be a JSON array: {gold_path}")
+    gold_by_index: dict[InstanceIndex, Mapping[str, Any]] = {}
+    for row in gold_rows:
+        if not isinstance(row, Mapping) or not _is_valid_instance_index(
+            row.get("index")
+        ):
+            raise ValueError(f"Invalid record in Gold SQL file: {gold_path}")
+        if row["index"] in gold_by_index:
+            raise ValueError(f"Duplicate Gold SQL index: {row['index']}")
+        gold_by_index[row["index"]] = row
+
+    if set(gold_by_index) != {instance["index"] for instance in instances}:
+        raise ValueError("Preprocessed data and Gold SQL file have different ID sets")
+
+    round3_instances: list[dict[str, Any]] = []
+    for instance in instances:
+        gold = gold_by_index[instance["index"]]
+        if (
+            gold.get("db_id") != instance["db_id"]
+            or gold.get("question") != instance["question"]
+        ):
+            raise ValueError(
+                f"Gold SQL record does not match instance {instance['index']!r}"
+            )
+        if not isinstance(gold.get("gold_sql"), str) or not gold["gold_sql"].strip():
+            raise ValueError(f"Instance {instance['index']!r} has no non-empty gold_sql")
+        round3_instances.append({**instance, "gold_sql": gold["gold_sql"]})
+    instances = round3_instances
+
+    existing_records = _load_existing_records(output_path)
+    records_by_index = {
+        instance["index"]: existing_records[instance["index"]]
+        for instance in instances
+        if instance["index"] in existing_records
+    }
+    unavailable = [
+        instance["index"]
+        for instance in instances
+        if not _has_reusable_round2(
+            instance,
+            records_by_index.get(instance["index"], {}),
+        )
+    ]
+    if unavailable:
+        raise ValueError(
+            "Round 3 requires reusable Round-2 contracts; unavailable indexes: "
+            f"{unavailable}"
+        )
+
+    failed_instances = [
+        instance
+        for instance in instances
+        if records_by_index[instance["index"]].get("round3_status") == "failed"
+    ]
+    new_instances = [
+        instance
+        for instance in instances
+        if records_by_index[instance["index"]].get("round3_status") != "failed"
+        and not _has_reusable_round3(instance, records_by_index[instance["index"]])
+    ]
+    pending_instances = failed_instances + new_instances
+    _log_completion_counts(instances, records_by_index)
+    completion_reporter = CompletionReporter(instances, records_by_index)
+    completion_reporter.start()
+
+    adaptive_concurrency = RampConcurrency(concurrency)
+    stop_reporting, control_threads = _start_concurrency_control(
+        adaptive_concurrency
+    )
+    try:
+        _run_round3_phase(
+            phase_instances=pending_instances,
+            all_instances=instances,
+            records_by_index=records_by_index,
+            output_path=output_path,
+            model_call=model_call,
+            adaptive_concurrency=adaptive_concurrency,
+        )
+        output = _ordered_records(instances, records_by_index)
+        _write_json_atomic(output_path, output)
+    finally:
+        stop_reporting.set()
+        for thread in control_threads:
+            thread.join()
+        completion_reporter.close()
     return output
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate two-round Result Contracts for a dataset split."
+        description="Generate or gold-correct Result Contracts for a dataset split."
     )
     parser.add_argument(
         "--dataset_split",
         required=True,
         help="Dataset split directory name, for example bird_dev or spider_test.",
     )
+    parser.add_argument("--llm", required=True, choices=MODEL_ALIASES)
     parser.add_argument(
         "--concurrency",
         type=int,
         default=DEFAULT_CONCURRENCY,
-        help=f"Initial adaptive API concurrency (default: {DEFAULT_CONCURRENCY}).",
+        help=f"Initial API concurrency (default: {DEFAULT_CONCURRENCY}).",
+    )
+    parser.add_argument(
+        "--round3",
+        action="store_true",
+        help="Correct existing Round-2 contracts using gold_sql_schema_linking.json.",
     )
     return parser.parse_args()
 
@@ -218,23 +413,40 @@ def main() -> None:
     )
     if not input_path.is_file():
         raise FileNotFoundError(f"Preprocessed dataset split not found: {input_path}")
-    if not meta_root.is_dir():
+    if not args.round3 and not meta_root.is_dir():
         raise FileNotFoundError(f"Preprocessed metadata directory not found: {meta_root}")
 
     configure_logging(log_path)
-    rows = generate_rc_file(
-        input_path=input_path,
-        meta_root=meta_root,
-        output_path=output_path,
-        concurrency=args.concurrency,
-    )
-    counts = _status_counts(rows)
-    print(
-        f"Finished {len(rows)} instances: complete={counts['complete']}, "
-        f"round1_failed={counts['round1_failed']}, "
-        f"round2_failed={counts['round2_failed']}, "
-        f"output={output_path.resolve()}"
-    )
+    model_call = lambda messages: call_model(messages, llm=args.llm)
+    if args.round3:
+        rows = generate_round3_file(
+            input_path=input_path,
+            gold_path=output_path.parent / "gold_sql_schema_linking.json",
+            output_path=output_path,
+            model_call=model_call,
+            concurrency=args.concurrency,
+        )
+        records_by_index = {row["index"]: row for row in rows}
+        counts = _round_status_counts(rows, records_by_index, round_number=3)
+        print(
+            f"Finished {len(rows)} instances: round3_success={counts['success']}, "
+            f"round3_failed={counts['fail']}, output={output_path.resolve()}"
+        )
+    else:
+        rows = generate_rc_file(
+            input_path=input_path,
+            meta_root=meta_root,
+            output_path=output_path,
+            model_call=model_call,
+            concurrency=args.concurrency,
+        )
+        counts = _status_counts(rows)
+        print(
+            f"Finished {len(rows)} instances: complete={counts['complete']}, "
+            f"round1_failed={counts['round1_failed']}, "
+            f"round2_failed={counts['round2_failed']}, "
+            f"output={output_path.resolve()}"
+        )
 
 
 def _dataset_split_paths(dataset_split: str) -> tuple[Path, Path, Path, Path]:
@@ -266,7 +478,7 @@ def configure_logging(log_path: str | Path) -> None:
     )
     file_handler = logging.FileHandler(resolved_log_path, encoding="utf-8")
     file_handler.setFormatter(formatter)
-    console_handler = logging.StreamHandler()
+    console_handler = LiveStatusConsoleHandler()
     console_handler.setFormatter(
         ConsoleColorFormatter(
             fmt="%(asctime)s | %(levelname)s | %(message)s",
@@ -423,6 +635,19 @@ def _has_reusable_round2(
     return _has_reusable_round1(instance, record)
 
 
+def _has_reusable_round3(
+    instance: Mapping[str, Any],
+    record: Mapping[str, Any],
+) -> bool:
+    if record.get("round3_status") != "succeeded":
+        return False
+    try:
+        Round3RC.from_value(record.get("rc_round3"))
+    except ValueError:
+        return False
+    return _has_reusable_round2(instance, record)
+
+
 def _round_status_counts(
     instances: Sequence[Mapping[str, Any]],
     records_by_index: Mapping[InstanceIndex, Mapping[str, Any]],
@@ -442,6 +667,31 @@ def _round_status_counts(
     return counts
 
 
+def _log_completion_counts(
+    instances: Sequence[Mapping[str, Any]],
+    records_by_index: Mapping[InstanceIndex, Mapping[str, Any]],
+) -> None:
+    LOGGER.info(_completion_counts_message(instances, records_by_index))
+
+
+def _completion_counts_message(
+    instances: Sequence[Mapping[str, Any]],
+    records_by_index: Mapping[InstanceIndex, Mapping[str, Any]],
+) -> str:
+    completed = {
+        round_number: _round_status_counts(
+            instances,
+            records_by_index,
+            round_number=round_number,
+        )["success"]
+        for round_number in (1, 2, 3)
+    }
+    return (
+        f"indexes={len(instances)} | round1 completed={completed[1]} | "
+        f"round2 completed={completed[2]} | round3 completed={completed[3]}"
+    )
+
+
 def _run_phase(
     phase_instances: list[dict[str, Any]],
     all_instances: list[dict[str, Any]],
@@ -449,18 +699,20 @@ def _run_phase(
     metadata_by_db: Mapping[str, Sequence[Mapping[str, Any]]],
     output_path: Path,
     model_call: ModelCall | None,
-    adaptive_concurrency: AdaptiveConcurrency,
+    adaptive_concurrency: RampConcurrency,
 ) -> None:
     if not phase_instances:
         return
-    with ThreadPoolExecutor(max_workers=len(phase_instances)) as executor:
-        work_items = iter(enumerate(phase_instances, start=1))
+    with ThreadPoolExecutor(
+        max_workers=min(MAX_CONCURRENCY, len(phase_instances))
+    ) as executor:
+        work_items = iter(phase_instances)
         futures: dict[Any, dict[str, Any]] = {}
 
         def fill_available_slots() -> None:
             while len(futures) < adaptive_concurrency.limit:
                 try:
-                    _, instance = next(work_items)
+                    instance = next(work_items)
                 except StopIteration:
                     return
                 future = executor.submit(
@@ -475,14 +727,59 @@ def _run_phase(
 
         fill_available_slots()
         while futures:
-            future = next(as_completed(futures))
-            instance = futures.pop(future)
-            record = future.result()
-            records_by_index[instance["index"]] = record
-            _write_json_atomic(
-                output_path,
-                _ordered_records(all_instances, records_by_index),
-            )
+            done, _ = wait(futures, timeout=1, return_when=FIRST_COMPLETED)
+            for future in done:
+                instance = futures.pop(future)
+                record = future.result()
+                records_by_index[instance["index"]] = record
+                _write_json_atomic(
+                    output_path,
+                    _ordered_records(all_instances, records_by_index),
+                )
+            fill_available_slots()
+
+
+def _run_round3_phase(
+    phase_instances: list[dict[str, Any]],
+    all_instances: list[dict[str, Any]],
+    records_by_index: dict[InstanceIndex, dict[str, Any]],
+    output_path: Path,
+    model_call: ModelCall | None,
+    adaptive_concurrency: RampConcurrency,
+) -> None:
+    if not phase_instances:
+        return
+    with ThreadPoolExecutor(
+        max_workers=min(MAX_CONCURRENCY, len(phase_instances))
+    ) as executor:
+        work_items = iter(phase_instances)
+        futures: dict[Any, dict[str, Any]] = {}
+
+        def fill_available_slots() -> None:
+            while len(futures) < adaptive_concurrency.limit:
+                try:
+                    instance = next(work_items)
+                except StopIteration:
+                    return
+                future = executor.submit(
+                    _generate_round3_record,
+                    instance,
+                    records_by_index[instance["index"]],
+                    model_call,
+                    adaptive_concurrency,
+                )
+                futures[future] = instance
+
+        fill_available_slots()
+        while futures:
+            done, _ = wait(futures, timeout=1, return_when=FIRST_COMPLETED)
+            for future in done:
+                instance = futures.pop(future)
+                records_by_index[instance["index"]] = future.result()
+                _write_json_atomic(
+                    output_path,
+                    _ordered_records(all_instances, records_by_index),
+                )
             fill_available_slots()
 
 
@@ -491,7 +788,7 @@ def _generate_record(
     existing: Mapping[str, Any] | None,
     metadata: Sequence[Mapping[str, Any]],
     model_call: ModelCall | None,
-    adaptive_concurrency: AdaptiveConcurrency,
+    adaptive_concurrency: RampConcurrency,
 ) -> dict[str, Any]:
     prefix = {
         "index": instance["index"],
@@ -503,12 +800,10 @@ def _generate_record(
     if existing is not None and _has_reusable_round1(instance, existing):
         round1_rc = Round1RC.from_value(existing["rc_round1"])
     else:
-        round1_mode = "recover" if existing is not None else "begin"
         try:
             round1_rc = _run_round(
                 index=instance["index"],
                 round_number=1,
-                mode=round1_mode,
                 adaptive_concurrency=adaptive_concurrency,
                 operation=lambda: generate_round1(
                     question=instance["question"],
@@ -532,16 +827,10 @@ def _generate_record(
                 "rc_round2": None,
             }
 
-    round2_mode = (
-        "recover"
-        if existing is not None and existing.get("round2_status") == "failed"
-        else "begin"
-    )
     try:
         round2_rc = _run_round(
             index=instance["index"],
             round_number=2,
-            mode=round2_mode,
             adaptive_concurrency=adaptive_concurrency,
             operation=lambda: generate_round2(
                 question=instance["question"],
@@ -576,50 +865,67 @@ def _generate_record(
     }
 
 
+def _generate_round3_record(
+    instance: dict[str, Any],
+    existing: Mapping[str, Any],
+    model_call: ModelCall | None,
+    adaptive_concurrency: RampConcurrency,
+) -> dict[str, Any]:
+    round2_rc = Round2RC.from_value(existing["rc_round2"])
+    try:
+        round3_rc = _run_round(
+            index=instance["index"],
+            round_number=3,
+            adaptive_concurrency=adaptive_concurrency,
+            operation=lambda: generate_round3(
+                question=instance["question"],
+                evidence=instance["evidence"],
+                round2_rc=round2_rc,
+                gold_sql=instance["gold_sql"],
+                model_call=model_call,
+                max_attempts=1,
+            ),
+        )
+    except Exception as exc:
+        root_error = _deepest_error(exc)
+        return {
+            **existing,
+            "round3_status": "failed",
+            "round3_error": _error_value(root_error),
+            "rc_round3": None,
+        }
+
+    return {
+        **existing,
+        "round3_status": "succeeded",
+        "round3_error": None,
+        "rc_round3": round3_rc.to_dict(),
+    }
+
+
 def _run_round(
     index: InstanceIndex,
     round_number: int,
-    mode: str,
-    adaptive_concurrency: AdaptiveConcurrency,
+    adaptive_concurrency: RampConcurrency,
     operation: Callable[[], Any],
 ) -> Any:
     last_error: Exception | None = None
     for attempt in range(1, MAX_ATTEMPTS + 1):
         adaptive_concurrency.acquire()
-        LOGGER.info(
-            "%5s | round%d | %s | attempt %d/%d",
-            index,
-            round_number,
-            mode,
-            attempt,
-            MAX_ATTEMPTS,
-        )
         try:
             result = operation()
         except Exception as exc:
-            adaptive_concurrency.release(succeeded=False)
+            adaptive_concurrency.release()
             last_error = _deepest_error(exc)
-            LOGGER.info(
-                "%5s | round%d | fail in attempt %d/%d",
-                index,
-                round_number,
-                attempt,
-                MAX_ATTEMPTS,
-            )
             if attempt < MAX_ATTEMPTS:
                 time.sleep(attempt)
         else:
-            adaptive_concurrency.release(succeeded=True)
-            LOGGER.info(
-                "%5s | round%d | success in attempt %d/%d",
-                index,
-                round_number,
-                attempt,
-                MAX_ATTEMPTS,
-            )
+            adaptive_concurrency.release()
+            LOGGER.info("%5s | round%d | success", index, round_number)
             return result
 
     assert last_error is not None
+    LOGGER.info("%5s | round%d | fail", index, round_number)
     raise RuntimeError(
         f"Round-{round_number} RC generation failed after {MAX_ATTEMPTS} attempts"
     ) from last_error
