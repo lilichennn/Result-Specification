@@ -281,8 +281,14 @@ def generate_round3_file(
     output_path: str | Path,
     model_call: ModelCall | None = None,
     concurrency: int = DEFAULT_CONCURRENCY,
+    *,
+    allow_partial_gold: bool = False,
 ) -> list[dict[str, Any]]:
-    """Correct existing Round-2 contracts using gold SQL."""
+    """Correct selected contracts, preserving every existing output record.
+
+    By default gold must cover the entire preprocessed input. Explicit partial
+    mode selects the gold file's IDs; unknown IDs and mismatches still fail.
+    """
     if not MIN_CONCURRENCY <= concurrency <= MAX_CONCURRENCY:
         raise ValueError(
             f"concurrency must be between {MIN_CONCURRENCY} and {MAX_CONCURRENCY}"
@@ -305,11 +311,16 @@ def generate_round3_file(
             raise ValueError(f"Duplicate Gold SQL index: {row['index']}")
         gold_by_index[row["index"]] = row
 
-    if set(gold_by_index) != {instance["index"] for instance in instances}:
+    input_indices = {instance["index"] for instance in instances}
+    if not set(gold_by_index).issubset(input_indices):
+        raise ValueError("Gold SQL file contains IDs outside preprocessed data")
+    if not allow_partial_gold and set(gold_by_index) != input_indices:
         raise ValueError("Preprocessed data and Gold SQL file have different ID sets")
 
     round3_instances: list[dict[str, Any]] = []
     for instance in instances:
+        if instance["index"] not in gold_by_index:
+            continue
         gold = gold_by_index[instance["index"]]
         if (
             gold.get("db_id") != instance["db_id"]
@@ -323,18 +334,21 @@ def generate_round3_file(
         round3_instances.append({**instance, "gold_sql": gold["gold_sql"]})
     instances = round3_instances
 
-    existing_records = _load_existing_records(output_path)
-    records_by_index = {
-        instance["index"]: existing_records[instance["index"]]
-        for instance in instances
-        if instance["index"] in existing_records
+    # Never reconstruct output from a subset of inputs. Keep original order,
+    # extra fields and even records outside this invocation's question list.
+    records_by_index = _load_existing_records(output_path, infer_round1_status=False)
+    output_order = list(records_by_index.values())
+    validation_records = {
+        index: _normalize_round1_status(record)
+        for index, record in records_by_index.items()
+        if index in gold_by_index
     }
     unavailable = [
         instance["index"]
         for instance in instances
         if not _has_reusable_round2(
             instance,
-            records_by_index.get(instance["index"], {}),
+            validation_records.get(instance["index"], {}),
         )
     ]
     if unavailable:
@@ -352,9 +366,16 @@ def generate_round3_file(
         instance
         for instance in instances
         if records_by_index[instance["index"]].get("round3_status") != "failed"
-        and not _has_reusable_round3(instance, records_by_index[instance["index"]])
+        and not _has_reusable_round3(instance, validation_records[instance["index"]])
     ]
     pending_instances = failed_instances + new_instances
+    LOGGER.info(
+        "Round3 selected=%d, pending=%d, reusable=%d, unselected_records=%d",
+        len(instances), len(pending_instances), len(instances) - len(pending_instances),
+        len(records_by_index) - len(instances),
+    )
+    if not pending_instances:
+        return _ordered_records(output_order, records_by_index)
     _log_completion_counts(instances, records_by_index)
     completion_reporter = CompletionReporter(instances, records_by_index)
     completion_reporter.start()
@@ -366,14 +387,13 @@ def generate_round3_file(
     try:
         _run_round3_phase(
             phase_instances=pending_instances,
-            all_instances=instances,
+            all_instances=output_order,
             records_by_index=records_by_index,
             output_path=output_path,
             model_call=model_call,
             adaptive_concurrency=adaptive_concurrency,
         )
-        output = _ordered_records(instances, records_by_index)
-        _write_json_atomic(output_path, output)
+        output = _ordered_records(output_order, records_by_index)
     finally:
         stop_reporting.set()
         for thread in control_threads:
@@ -403,7 +423,18 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Correct existing Round-2 contracts using gold_sql_schema_linking.json.",
     )
-    return parser.parse_args()
+    parser.add_argument(
+        "--gold-file", type=Path,
+        help="Round3 reference SQL JSON; defaults to the dataset's gold_sql_schema_linking.json.",
+    )
+    parser.add_argument(
+        "--allow-partial-gold", action="store_true",
+        help="Round3 only: generate for IDs present in the gold file and preserve all other RC records.",
+    )
+    args = parser.parse_args()
+    if not args.round3 and (args.gold_file is not None or args.allow_partial_gold):
+        parser.error("--gold-file and --allow-partial-gold require --round3")
+    return args
 
 
 def main() -> None:
@@ -421,16 +452,18 @@ def main() -> None:
     if args.round3:
         rows = generate_round3_file(
             input_path=input_path,
-            gold_path=output_path.parent / "gold_sql_schema_linking.json",
+            gold_path=(args.gold_file if args.gold_file is not None
+                       else output_path.parent / "gold_sql_schema_linking.json"),
             output_path=output_path,
             model_call=model_call,
             concurrency=args.concurrency,
+            allow_partial_gold=args.allow_partial_gold,
         )
         records_by_index = {row["index"]: row for row in rows}
         counts = _round_status_counts(rows, records_by_index, round_number=3)
         print(
-            f"Finished {len(rows)} instances: round3_success={counts['success']}, "
-            f"round3_failed={counts['fail']}, output={output_path.resolve()}"
+            f"Stored {len(rows)} records: total_round3_success={counts['success']}, "
+            f"total_round3_failed={counts['fail']}, output={output_path.resolve()}"
         )
     else:
         rows = generate_rc_file(
@@ -573,7 +606,19 @@ def _read_metadata_csv(path: Path) -> list[dict[str, Any]]:
     raise last_error
 
 
-def _load_existing_records(path: Path) -> dict[InstanceIndex, dict[str, Any]]:
+def _normalize_round1_status(record: Mapping[str, Any]) -> dict[str, Any]:
+    normalized = dict(record)
+    if "round1_status" not in normalized:
+        normalized["round1_status"] = (
+            "succeeded" if normalized.get("rc_round1") is not None else "failed"
+        )
+        normalized.setdefault("round1_error", None)
+    return normalized
+
+
+def _load_existing_records(
+    path: Path, *, infer_round1_status: bool = True,
+) -> dict[InstanceIndex, dict[str, Any]]:
     if not path.exists():
         return {}
     value = json.loads(path.read_text(encoding="utf-8"))
@@ -589,13 +634,7 @@ def _load_existing_records(path: Path) -> dict[InstanceIndex, dict[str, Any]]:
         index = record["index"]
         if index in records:
             raise ValueError(f"Duplicate index in existing RC output: {index}")
-        normalized = dict(record)
-        if "round1_status" not in normalized:
-            normalized["round1_status"] = (
-                "succeeded" if normalized.get("rc_round1") is not None else "failed"
-            )
-            normalized.setdefault("round1_error", None)
-        records[index] = normalized
+        records[index] = _normalize_round1_status(record) if infer_round1_status else dict(record)
     return records
 
 
