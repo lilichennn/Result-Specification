@@ -42,6 +42,8 @@ def build_few_shot_index(
     max_samples_per_db: Optional[int] = None,
     force_rebuild: bool = False,
     skip_mask_llm: bool = False,
+    embedding_function: Any = None,
+    embedding_map: Any = None,
 ) -> FewShotIndexBuildResult:
     save_path = Path(save_path)
     manifest_path = save_path / "manifest.json"
@@ -102,16 +104,17 @@ def build_few_shot_index(
     examples_path = save_path / "examples.jsonl"
     _write_examples(examples_path=examples_path, examples=examples, mask_results=mask_results)
 
-    embedding_function = get_embedding_function(
-        model_name_or_path=embedding_config.embedding_model_name_or_path,
-        api_type=embedding_config.api_type,
-        use_qwen3_embedding=embedding_config.use_qwen3_embedding,
-        local_files_only=embedding_config.local_files_only,
-        normalize_embeddings=embedding_config.normalize_embeddings,
-        base_url=embedding_config.base_url,
-        api_key=embedding_config.api_key,
-        embedding_device=embedding_config.embedding_device,
-    )
+    if embedding_function is None:
+        embedding_function = get_embedding_function(
+            model_name_or_path=embedding_config.embedding_model_name_or_path,
+            api_type=embedding_config.api_type,
+            use_qwen3_embedding=embedding_config.use_qwen3_embedding,
+            local_files_only=embedding_config.local_files_only,
+            normalize_embeddings=embedding_config.normalize_embeddings,
+            base_url=embedding_config.base_url,
+            api_key=embedding_config.api_key,
+            embedding_device=embedding_config.embedding_device,
+        )
     embedding_checkpoint_key = _embedding_checkpoint_key(embedding_config, embedding_batch_size)
 
     question_embeddings = _embed_texts(
@@ -122,6 +125,7 @@ def build_few_shot_index(
         progress_log_interval=progress_log_interval,
         checkpoint_dir=checkpoint_dir / "question_embeddings",
         checkpoint_key=embedding_checkpoint_key,
+        embedding_map=embedding_map,
     )
     sql_embeddings = _embed_texts(
         texts=[mask_result.masked_sql for mask_result in mask_results],
@@ -131,6 +135,7 @@ def build_few_shot_index(
         progress_log_interval=progress_log_interval,
         checkpoint_dir=checkpoint_dir / "sql_embeddings",
         checkpoint_key=embedding_checkpoint_key,
+        embedding_map=embedding_map,
     )
 
     question_embeddings_path = save_path / "question_embeddings.npy"
@@ -236,8 +241,8 @@ def _embed_texts(
     progress_log_interval: int,
     checkpoint_dir: Path,
     checkpoint_key: str,
+    embedding_map: Any = None,
 ) -> np.ndarray:
-    embeddings: List[List[float]] = []
     total = len(texts)
     _prepare_embedding_checkpoint(
         checkpoint_dir=checkpoint_dir,
@@ -247,14 +252,36 @@ def _embed_texts(
         embedding_batch_size=embedding_batch_size,
         label=label,
     )
+    batches = []
+    shards = {}
+    missing = []
     for start in range(0, total, embedding_batch_size):
         batch = texts[start : start + embedding_batch_size]
         shard_path = checkpoint_dir / f"{start:08d}_{start + len(batch):08d}.npy"
+        batches.append((start, batch, shard_path))
         batch_embeddings = _load_embedding_shard(shard_path, expected_rows=len(batch))
         if batch_embeddings is None:
-            batch_embeddings = np.asarray(embedding_function(batch), dtype=np.float32)
-            _save_npy_atomic(shard_path, batch_embeddings)
-        embeddings.extend(batch_embeddings)
+            missing.append((start, batch, shard_path))
+        else:
+            shards[start] = batch_embeddings
+
+    def embed_missing(spec):
+        start, batch, shard_path = spec
+        batch_embeddings = np.asarray(embedding_function(batch), dtype=np.float32)
+        if batch_embeddings.ndim != 2 or batch_embeddings.shape[0] != len(batch):
+            raise ValueError(
+                f"Embedding function returned invalid shard shape for {label}: {batch_embeddings.shape}"
+            )
+        _save_npy_atomic(shard_path, batch_embeddings)
+        return start, batch_embeddings
+
+    map_function = embedding_map or map
+    for start, batch_embeddings in map_function(embed_missing, missing):
+        shards[start] = batch_embeddings
+
+    embeddings: List[List[float]] = []
+    for start, batch, _ in batches:
+        embeddings.extend(shards[start])
         log_progress(
             f"Embedding {label}",
             min(start + len(batch), total),

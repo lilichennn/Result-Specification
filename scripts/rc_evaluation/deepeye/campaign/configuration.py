@@ -37,7 +37,8 @@ def derive(native_args, items):
 
 def configure(args):
     from scripts.rc_evaluation.deepeye.cli import production_hash
-    from scripts.rc_evaluation.deepeye.contracts import load_contracts
+    from scripts.rc_evaluation.deepeye.contracts import load_contracts, resolve_rc_version
+    workload = None
     native_args = ['--env-file', str(args.env_file.resolve())]
     if getattr(args, 'workload', None) is not None:
         from scripts.baseline_adapters.deepeye.workloads import load_workload
@@ -54,10 +55,12 @@ def configure(args):
                             '--few-shot-source', str(args.few_shot_source.resolve())])
         paths = {'lite': args.rc_lite.resolve(), 'full': args.rc_full.resolve()}
     tasks, manifest = derive(native_args, args.item_keys)
-    load_contracts(paths, tasks)
+    version = resolve_rc_version(getattr(args, 'rc_version', None), workload)
+    load_contracts(paths, tasks, rc_version=version)
     config = {'items': [row['task_key'] for row in manifest['items']],
               'native_args': native_args, 'native_manifest': manifest,
               'env_file': str(args.env_file.resolve()),
+              'rc_version': version, 'gold_corrected': version == 3,
               'rc_sources': {key: str(path) for key, path in paths.items()},
               'rc_hashes': {key: file_hash(path) for key, path in paths.items()},
               'rc_code_hash': production_hash(), 'campaign_code_hash': campaign_code_hash(),

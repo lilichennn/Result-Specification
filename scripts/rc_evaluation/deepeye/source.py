@@ -283,8 +283,20 @@ def validate_manifest(manifest, *, item_keys=None, seeds=None):
                                    ('question', raw['question']), ('evidence', raw['evidence'])):
                 if contract.get(name) != expected:
                     raise ValueError(f'RC contract {name} differs from source input')
-            from .contracts import render_rc_block
-            render_rc_block(contract)
+            from .injection import render_rc_block, manifest_prompt
+            if 'rc_version' in manifest:
+                from .contracts import resolve_rc_version, _record_sha256
+                version = resolve_rc_version(manifest['rc_version'])
+                if (contract.get('rc_version') != version or
+                        contract.get('source_field') != f'rc_round{version}' or
+                        contract.get('gold_corrected') != (version == 3) or
+                        manifest.get('gold_corrected') != (version == 3)):
+                    raise ValueError('RC contract version/provenance differs from manifest')
+                if _record_sha256(contract.get('final_rc')) != contract.get('final_rc_sha256'):
+                    raise ValueError('RC final content hash mismatch')
+                if 'rc_prompt' not in manifest:
+                    raise ValueError('Versioned RC manifest requires frozen prompt')
+            render_rc_block(contract, prompt_template=manifest_prompt(manifest))
         identity = input_identity(source, source_digest, snapshot['input'])
         required = STAGES[:STAGES.index(target) + 1]
         if any(stage not in snapshot['stages'] for stage in required):

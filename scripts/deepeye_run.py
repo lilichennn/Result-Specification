@@ -50,6 +50,7 @@ def code_source_hashes() -> dict[str, str]:
     """Hash executable Python and dependency locks without binding output paths."""
 
     baseline_files = list((BASELINE_ROOT / "app").rglob("*.py"))
+    baseline_files.append(BASELINE_ROOT / "runner/create_vector_db_parallel.py")
     adapter_files = list((CODE_ROOT / "scripts/baseline_adapters/deepeye").glob("*.py"))
     support_files = [CODE_ROOT / "scripts/deepeye_bird_interact_smoke.py",
                      CODE_ROOT / "scripts/deepeye_bird_interact_precompute.py",
@@ -482,10 +483,12 @@ def _build_parser() -> argparse.ArgumentParser:
     export.add_argument("--run-dir", type=Path, required=True)
     export.add_argument("--export-dir", type=Path, required=True)
     native = commands.add_parser('prepare-native', help='Run native value retrieval and few-shot preparation')
-    native.add_argument('--workload', type=Path, required=True)
-    native.add_argument('--output', type=Path, required=True)
+    native.add_argument('--workload', type=Path, action='append', required=True)
+    native.add_argument('--output', type=Path)
+    native.add_argument('--output-dir', type=Path)
     native.add_argument('--env-file', type=Path, default=CODE_ROOT / 'config/.env')
-    native.add_argument('--preparation-workers', type=int, default=2)
+    native.add_argument('--preparation-workers', type=int, default=200)
+    native.add_argument('--embedding-config', type=Path, help='JSON overrides for shared EmbeddingLimits')
     return parser
 
 
@@ -675,7 +678,8 @@ def _native_runtime_config(environment, args, run_dir):
     dataset.setdefault('max_value_example_length', 100 if workload['benchmark'] == 'bird_interact' else 50)
     if workload.get('bigquery_credential_path'):
         dataset['bigquery_credential_path'] = workload['bigquery_credential_path']
-    vector = dict(raw.get('vector_database', {}))
+    dynamic = workload.get('few_shot_strategy') == 'native_dynamic'
+    vector = {**raw.get('embedding', {}), **raw.get('vector_database', {})}
     vector.setdefault('store_root_path', str(output / 'value_index'))
     vector.setdefault('build_backend', raw.get('value_retrieval', {}).get('backend', 'local_index'))
     vector.setdefault('embedding_device', 'cpu')
@@ -692,11 +696,44 @@ def _native_runtime_config(environment, args, run_dir):
     few_shot['llm'] = preparation_llm(few_shot, 'few_shot_index')
     few_shot['embedding'] = _resolve_embedding_config(raw.get('embedding'), few_shot.get('embedding'),
                                                      'few_shot_index', required=False)
+    if dynamic:
+        from app.config.config import EmbeddingConfig
+        few_shot.setdefault('num_examples', 7)
+        few_shot.setdefault('question_weight', .6)
+        few_shot.setdefault('sql_weight', .4)
+        few_shot['llm'] = few_shot['llm'] or llm
+        if environment.get('EMBEDDING_MODEL'):
+            few_shot['embedding'] = EmbeddingConfig(api_type='openai',
+                embedding_model_name_or_path=environment['EMBEDDING_MODEL'],
+                base_url=environment.get('EMBEDDING_BASE_URL'), api_key=environment.get('EMBEDDING_API_KEY'),
+                embedding_device='cpu')
     preliminary = dict(few_shot.get('preliminary_sql', {}))
     preliminary['llm'] = preparation_llm(preliminary, 'few_shot_index.preliminary_sql')
+    if dynamic:
+        preliminary.setdefault('enabled', True)
+        preliminary.setdefault('dc_sampling_budget', 4)
+        preliminary.setdefault('skeleton_sampling_budget', 4)
+        preliminary['llm'] = preliminary['llm'] or llm
     few_shot['preliminary_sql'] = preliminary
+    run = {**raw.get('run', {}), 'parallelism': runtime_limits(args)['coordinator_workers']}
+    if dynamic:
+        run.setdefault('embedding_batch_size', 20)
+        run.setdefault('llm_timeout', args.chat_timeout)
+    if dynamic and workload.get('preparation_root'):
+        from scripts.baseline_adapters.deepeye.precompute_cache import fingerprint
+        shared = Path(workload['preparation_root'])
+        train_type = workload.get('few_shot_dataset', 'bird' if workload['benchmark'] == 'bird_interact' else workload['benchmark'])
+        def public(value):
+            return {k: v for k, v in value.model_dump(mode='json').items() if k != 'api_key'} if value else None
+        key = fingerprint({'dataset': train_type, 'source': workload.get('few_shot_source'),
+                           'embedding': public(few_shot['embedding']), 'llm': public(few_shot['llm'])})[:16]
+        if 'save_path' not in raw.get('few_shot_index', {}):
+            few_shot['save_path'] = str(shared / 'few_shot' / (train_type + '-' + key))
+        if 'store_root_path' not in raw.get('vector_database', {}):
+            vector['store_root_path'] = str(shared / 'values' / (workload['benchmark'] + '-' +
+                fingerprint({'resource_root': workload['resource_root'], 'model': vector.get('embedding_model_name_or_path')})[:16]))
     config = SimpleNamespace(dataset_config=dataset_cls(**dataset),
-        run_config=RunConfig(**{**raw.get('run', {}), 'parallelism': runtime_limits(args)['coordinator_workers']}),
+        run_config=RunConfig(**run),
         vector_database_config=VectorDatabaseConfig(**vector),
         few_shot_index_config=FewShotIndexConfig(**few_shot),
         llm_extractor_config=LLMExtractorConfig(max_retry=args.extractor_retries))
@@ -860,9 +897,9 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     try:
         if args.command == 'prepare-native':
-            from scripts.baseline_adapters.deepeye.workload_preparation import prepare_native
-            report = prepare_native(args.workload, args.output,
-                read_environment(args.env_file, args=args), workers=args.preparation_workers)
+            from scripts.baseline_adapters.deepeye.workload_preparation import prepare_many
+            report = prepare_many(args.workload, args.output, args.output_dir,
+                args.env_file, workers=args.preparation_workers, embedding_config=args.embedding_config)
             print(json.dumps(report, ensure_ascii=False, sort_keys=True))
             return 0
         if args.command in ('samples', 'renew-samples'):

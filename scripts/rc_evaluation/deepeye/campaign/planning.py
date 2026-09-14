@@ -35,6 +35,8 @@ def _ingest(ledger, jobs, observations):
             raise ValueError('observed run members differ from job')
         if job['kind'] == 'rc':
             manifest = observed['manifest']
+            if manifest.get('rc_version', 2) != ledger.config.get('rc_version', 2):
+                raise ValueError('observed RC version differs from campaign')
             if (manifest.get('target_stage') != job['target_stage'] or
                     not isinstance(manifest.get('source_run'), str) or
                     str(Path(manifest['source_run']).resolve()) != job['source_run']):

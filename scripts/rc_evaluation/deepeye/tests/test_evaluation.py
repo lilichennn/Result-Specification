@@ -13,6 +13,74 @@ def result(value):
 
 
 class EvaluationTests(unittest.TestCase):
+    def test_spider2_gold_subset_matches_external_ids_not_original_row_positions(self):
+        from copy import deepcopy
+        from scripts.rc_evaluation.deepeye.evaluation import _references, _reference
+        original = [{'index': f'local{i:03d}', 'db_id': 'demo'} for i in range(280)]
+        selected = original[159:]
+        path = self.root / 'spider2-gold.json'
+        path.write_text(json.dumps([{**row, 'gold_sql': f'SELECT {row["index"][5:]}'}
+                                    for row in reversed(selected)]))
+        bindings = [{'task_key': f'spider2/lite/s:{row["index"]}', 'benchmark': 'spider2',
+            'partition': 'spider2/lite', 'external_id': row['index'], 'database_id': 'demo',
+            'reference': {'path': str(path), 'source_row': position}}
+            for position, row in enumerate(original) if position >= 159]
+        before = deepcopy(bindings)
+        records, _ = _references({}, bindings)
+        self.assertEqual(len(records), 121)
+        for binding in bindings:
+            reference = _reference(binding, records)
+            self.assertEqual(reference['status'], 'available')
+            self.assertEqual(reference['sql'], f'SELECT {binding["external_id"][5:]}')
+        self.assertEqual(bindings, before, 'Reference answers must not be copied into run bindings')
+
+    def test_spider2_existing_sql_reference_fields_remain_supported(self):
+        from scripts.rc_evaluation.deepeye.evaluation import _reference
+        binding = {'task_key': 'spider2/lite/s:local003', 'benchmark': 'spider2', 'database_id': 'demo'}
+        for field in ('sql', 'SQL', 'query'):
+            with self.subTest(field=field):
+                row = {'db_id': 'demo', field: 'SELECT 1', 'gold_sql': 'SELECT 2'}
+                result = _reference(binding, {binding['task_key']: [row]})
+                self.assertEqual(result['status'], 'available')
+                self.assertEqual(result['sql'], 'SELECT 1')
+
+    def test_supplied_spider2_profile_binds_all_121_reference_sqls_by_identity(self):
+        from scripts.baseline_adapters.deepeye.workloads import load_workload, question_rows
+        from scripts.rc_evaluation.deepeye.evaluation import _references, _reference
+        root = Path(__file__).resolve().parents[4]
+        workload = load_workload(root / 'config/deepeye/spider2_lite_rc3.json')
+        self.assertEqual(Path(workload.get('reference_questions', '')).resolve(),
+                         root / 'scripts/spider2_lite/gold_sql.json')
+        if not Path(workload['questions']).is_file() or not Path(workload['reference_questions']).is_file():
+            self.skipTest('Supplied Spider2 source/reference artifacts are not installed')
+        rows = question_rows(workload)
+        bindings = [{'task_key': f'spider2/lite/s:{row["external_id"]}', 'benchmark': 'spider2',
+            'partition': 'spider2/lite', 'external_id': row['external_id'],
+            'database_id': row['database_id'], 'reference': {'path': workload['reference_questions'],
+                                                          'source_row': row['source_row']}}
+            for row in rows]
+        records, _ = _references({}, bindings)
+        self.assertEqual(len(rows), 121)
+        self.assertTrue(any(row['source_row'] >= 121 for row in rows))
+        self.assertTrue(all(_reference(binding, records)['status'] == 'available' for binding in bindings))
+
+    def test_rc_evaluations_of_different_versions_cannot_be_paired(self):
+        for version in (2, 3):
+            run = self.make_run(f'rc{version}', condition='rc',
+                mutate=lambda m, version=version: m.update(rc_version=version))
+            report = self.evaluate(run, f'eval{version}')
+            self.assertEqual(report['rc_version'], version)
+            self.assertEqual(report['gold_corrected'], version == 3)
+        with self.assertRaisesRegex(ValueError, 'version'):
+            compare_evaluations(self.root / 'eval2', self.root / 'eval3', self.root / 'paired')
+
+    def test_token_pairing_rejects_contract_version_mismatch(self):
+        from scripts.rc_evaluation.deepeye.evaluation import stage_token_pairs
+        manifest = {'condition': 'rc', 'target_stage': 'sql_generation', 'rc_version': 3,
+                    'contracts': {'a': {'rc_version': 2}}, 'source_checkpoints': {}}
+        with self.assertRaisesRegex(ValueError, 'version'):
+            stage_token_pairs(manifest, [], [])
+
     def test_retained_stage_token_pair_excludes_failures_and_missing_usage_without_zero_fill(self):
         from scripts.rc_evaluation.deepeye import evaluation
         from scripts.rc_evaluation.deepeye.source import api_trace

@@ -10,7 +10,7 @@ Field meanings:
 - meta_review: the metadata contribution accepted into the final contract, or that no relevant refinement was found.
 
 Final RC:
-<<FINAL_RC>>
+<<ROUND2_RC>>
 
 When completing the current stage task, consult this RC.
 </result_contract>

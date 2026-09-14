@@ -90,7 +90,7 @@ def _reference(binding, records):
            or 'cleanup' in key.lower().replace('_', '') or key.lower() in ('pre_sql', 'post_sql')):
         return {**provenance, 'status': 'unsupported_reference_setup'}
     fields = {'bird': ('SQL', 'sql'), 'spider': ('query', 'sql'),
-              'spider2': ('sql', 'SQL', 'query'), 'bird_interact': ('sol_sql',)}
+              'spider2': ('sql', 'SQL', 'query', 'gold_sql'), 'bird_interact': ('sol_sql',)}
     sql = next((row[field] for field in fields.get(binding.get('benchmark'), ('sol_sql',))
                 if row.get(field)), None)
     if isinstance(sql, list) and len(sql) == 1:
@@ -257,7 +257,7 @@ def _selection_trace(events, source_events, attempt, threshold=None):
 
 def _usage(attempts, events, manifest):
     from scripts.baseline_adapters.deepeye.run_usage import observed_usage
-    from .injection import count_rc_requests, render_rc_block
+    from .injection import count_rc_requests, render_rc_block, manifest_prompt, rc_labels
     ids = {a['attempt_id'] for a in attempts}
     current = [e for e in events if e['attempt_id'] in ids]
     observed = observed_usage(SimpleNamespace(iter_events=lambda kinds: (e for e in current if e['kind'] in kinds)))
@@ -274,9 +274,9 @@ def _usage(attempts, events, manifest):
                 continue
             key = attempt['item_key']
             if key not in blocks:
-                blocks[key] = render_rc_block(manifest['contracts'][key])
+                blocks[key] = render_rc_block(manifest['contracts'][key], prompt_template=manifest_prompt(manifest))
             rc_requests += count_rc_requests(requests, blocks[key])
-    return {**observed, 'api_requests': observed['requests'], 'usage': observed['reported_tokens'],
+    return {**observed, **rc_labels(manifest), 'api_requests': observed['requests'], 'usage': observed['reported_tokens'],
             'rc_actual_requests': rc_requests,
             'rc_participation': participation, 'scope': 'current_run_attempts_only_including_failed_retries'}
 
@@ -288,10 +288,15 @@ def stage_token_pairs(manifest, attempts, events):
     all-attempt usage ledger. Legacy traces cannot prove the new sampling budget.
     """
     from .source import api_trace
-    from .injection import count_rc_requests, render_rc_block
+    from .injection import count_rc_requests, render_rc_block, manifest_prompt, rc_labels
     target = manifest['target_stage']
     if manifest['condition'] != 'rc':
         raise ValueError('Native-source token pairing requires condition=rc')
+    if 'rc_version' in manifest:
+        from .contracts import resolve_rc_version
+        version = resolve_rc_version(manifest['rc_version'])
+        if any(contract.get('rc_version') != version for contract in manifest.get('contracts', {}).values()):
+            raise ValueError('RC contract version differs from token pairing manifest')
     latest = {row['item_key']: row for row in attempts if row['stage'] == target}
     by_attempt = {}
     for event in events:
@@ -331,7 +336,7 @@ def stage_token_pairs(manifest, attempts, events):
             if requests:
                 contract = manifest.get('contracts', {}).get(key)
                 applied = applied and contract is not None and count_rc_requests(
-                    requests, render_rc_block(contract)) == len(requests)
+                    requests, render_rc_block(contract, prompt_template=manifest_prompt(manifest))) == len(requests)
             if not applied:
                 exclusions.append('rc_participation_unproven')
         eligible = not exclusions
@@ -346,7 +351,7 @@ def stage_token_pairs(manifest, attempts, events):
         summary[side + '_tokens'] = ({field: sum(row[side]['known_tokens'][field] for row in eligible)
                                      for field in ('prompt_tokens', 'completion_tokens', 'total_tokens')}
                                     if eligible else None)
-    return {'target_stage': target, 'metric': 'finally_retained_successful_samples_only_v1',
+    return {'target_stage': target, **rc_labels(manifest), 'metric': 'finally_retained_successful_samples_only_v1',
             'control': 'frozen_native_source_no_extra_calls',
             'reasoning_semantics': 'subset_of_completion_tokens_not_added_to_total',
             'items': items, 'summary': summary}
@@ -653,7 +658,8 @@ def _evaluate(identity, output_dir, records, attempts, events, source_events, ex
             row['downstream_final'] = selected
             store.finish_attempt(aid, 'succeeded', row)
             items[key] = row
-    return {'format': EVALUATION_VERSION, 'items': items, 'summary': _summary(items)}
+    from .injection import rc_labels
+    return {'format': EVALUATION_VERSION, **rc_labels(manifest), 'items': items, 'summary': _summary(items)}
 
 
 def compare_evaluations(left_dir: Path, right_dir: Path, output_dir: Path) -> dict:
@@ -661,6 +667,11 @@ def compare_evaluations(left_dir: Path, right_dir: Path, output_dir: Path) -> di
     right, ra, _ = _read_run(right_dir)
     if left.get('format') != EVALUATION_VERSION or right.get('format') != EVALUATION_VERSION:
         raise ValueError('Expected independent evaluation RunStores')
+    from .injection import rc_labels
+    labels = {'left': rc_labels(left['run_manifest']), 'right': rc_labels(right['run_manifest'])}
+    if (all(manifest['run_manifest'].get('condition') == 'rc' for manifest in (left, right))
+            and labels['left'] != labels['right']):
+        raise ValueError('Paired RC evaluations have incompatible RC versions')
     def pairing(manifest):
         run = manifest['run_manifest']
         return {'target_stage': run.get('target_stage', 'sql_selection'), 'items': run['items'],
@@ -684,7 +695,7 @@ def compare_evaluations(left_dir: Path, right_dir: Path, output_dir: Path) -> di
         items[key] = {'left_bag_equal': l.get('bag_equal'), 'right_bag_equal': r.get('bag_equal'),
                       'change': _transition(l.get('bag_equal'), r.get('bag_equal')),
                       'ordered_change': _transition(l.get('ordered_equal'), r.get('ordered_equal'))}
-    report = {'items': items, 'summary': {'tasks': len(items), **{status: sum(row['change'] == status for row in items.values())
+    report = {'rc_provenance': labels, 'items': items, 'summary': {'tasks': len(items), **{status: sum(row['change'] == status for row in items.values())
               for status in ('repair', 'harm', 'unchanged_correct', 'unchanged_incorrect', 'unknown')}}}
     report['summary']['ordered'] = {status: sum(row['ordered_change'] == status for row in items.values())
                                    for status in ('repair', 'harm', 'unchanged_correct', 'unchanged_incorrect', 'unknown')}

@@ -76,6 +76,7 @@ def make_vector_db_for_db_path(
     embedding_batch_size: int,
     work_semaphore: threading.BoundedSemaphore,
     progress_log_interval: int,
+    embedding_function=None,
 ):
     db_id = Path(db_path).stem
     success_flag_file = Path(vector_database_config.store_root_path) / db_id / "success_flag"
@@ -85,7 +86,8 @@ def make_vector_db_for_db_path(
         return True
 
     try:
-        embedding_function = _get_worker_embedding_function(vector_database_config)
+        if embedding_function is None:
+            embedding_function = _get_worker_embedding_function(vector_database_config)
         
         success = make_vector_db(
             db_path=db_path,
@@ -124,11 +126,16 @@ def run_vector_db_creation(
     parallelism: int,
     embedding_batch_size: int,
     progress_log_interval: int,
+    embedding_function=None,
+    database_parallelism: int | None = None,
 ) -> None:
     if parallelism < 1:
         raise ValueError(f"parallelism must be >= 1, got {parallelism}")
     if embedding_batch_size < 1:
         raise ValueError(f"embedding_batch_size must be >= 1, got {embedding_batch_size}")
+    database_parallelism = parallelism if database_parallelism is None else database_parallelism
+    if type(database_parallelism) is not int or database_parallelism < 1:
+        raise ValueError('database_parallelism must be a positive integer')
 
     logger.info(f"Loading dataset from {dataset_snapshot_path}")
     dataset = load_dataset(dataset_snapshot_path)
@@ -147,7 +154,7 @@ def run_vector_db_creation(
     )
 
     work_semaphore = threading.BoundedSemaphore(parallelism)
-    with ThreadPoolExecutor(max_workers=parallelism) as executor:
+    with ThreadPoolExecutor(max_workers=database_parallelism) as executor:
         futures = {
             executor.submit(
                 make_vector_db_for_db_path,
@@ -157,6 +164,7 @@ def run_vector_db_creation(
                 embedding_batch_size=embedding_batch_size,
                 work_semaphore=work_semaphore,
                 progress_log_interval=progress_log_interval,
+                embedding_function=embedding_function,
             ): db_path
             for db_path in db_paths
         }

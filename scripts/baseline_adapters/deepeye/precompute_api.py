@@ -1,7 +1,9 @@
-"""Shared adaptive admission, bounded retries and cost audit for precomputation."""
+"""Adaptive chat admission and compatibility delegation to cached embeddings."""
 from __future__ import annotations
 
 from collections import deque
+from contextlib import ExitStack
+from dataclasses import asdict
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -15,6 +17,9 @@ import uuid
 
 import httpx
 import openai
+
+from .embedding_service import EmbeddingService, embedding_namespace
+from .precompute_cache import VectorCache
 
 _T = TypeVar("_T")
 _TOKEN_FIELDS = ("prompt_tokens", "completion_tokens", "total_tokens")
@@ -30,16 +35,17 @@ def _empty_usage() -> dict[str, Any]:
 
 
 class AdaptiveAPI:
-    """Synchronous chat and embedding requests share one adaptive concurrency limit.
+    """Keep native keyword-chat semantics; embeddings use their own shared service.
 
-    Each attempt is appended to ``api_calls.jsonl``. Token totals include only
+    Each chat attempt is appended to ``api_calls.jsonl``. Token totals include only
     reported usage; unknown counts remain None, with usage_missing tracking gaps.
     close() stops admission and waits for admitted requests without cancelling them.
     """
 
     def __init__(self, values: dict, output_dir: Path, *, initial_concurrency=200,
                  step=50, max_concurrency=600, min_concurrency=1, window_seconds=60,
-                 chat_max_tokens=2048, thinking_budget=1024):
+                 chat_max_tokens=2048, thinking_budget=1024, embedding_service=None,
+                 embedding_limits=None):
         integer_options = (initial_concurrency, step, max_concurrency, min_concurrency,
                            chat_max_tokens, thinking_budget)
         if any(type(value) is not int or value < 1 for value in integer_options):
@@ -71,7 +77,11 @@ class AdaptiveAPI:
         self._counts = {"attempts": 0, "successes": 0, "failures": 0, "retries": 0}
         self._usage: dict[str, dict[str, Any]] = {}
         self._call_usage: dict[str, dict[str, Any]] = {}
-        self._embedding_dimension: int | None = None
+        if embedding_service is not None and embedding_limits is not None:
+            raise ValueError('Injected embedding service already owns its limits')
+        self._embedding_service = embedding_service
+        self._embedding_dimension = None
+        self._owned_embeddings = ExitStack()
         self._session_id = uuid.uuid4().hex
         self._secrets = sorted({value for key, value in values.items()
                                 if isinstance(value, str) and value
@@ -89,21 +99,31 @@ class AdaptiveAPI:
         self._audit = self.audit_path.open("a", encoding="utf-8")
         self._clients: list[openai.OpenAI] = []
         try:
-            for prefix, timeout in (("DASH", 300), ("EMBEDDING", 60)):
-                transport = httpx.Client(timeout=timeout, limits=httpx.Limits(
-                    max_connections=max_concurrency, max_keepalive_connections=max_concurrency))
-                try:
-                    client = openai.OpenAI(api_key=values[f"{prefix}_API_KEY"],
-                                           base_url=values[f"{prefix}_BASE_URL"],
-                                           max_retries=0, timeout=timeout, http_client=transport)
-                except BaseException:
-                    transport.close()
-                    raise
-                self._clients.append(client)
+            transport = httpx.Client(timeout=300, limits=httpx.Limits(
+                max_connections=max_concurrency, max_keepalive_connections=max_concurrency))
+            try:
+                client = openai.OpenAI(api_key=values['DASH_API_KEY'],
+                    base_url=values['DASH_BASE_URL'], max_retries=0, timeout=300, http_client=transport)
+            except BaseException:
+                transport.close()
+                raise
+            self._clients.append(client)
+            if self._embedding_service is None:
+                namespace = embedding_namespace(values, dimension=(
+                    embedding_limits.dimension if embedding_limits is not None else 1024))
+                cache = self._owned_embeddings.enter_context(VectorCache(
+                    Path(output_dir) / 'vectors.sqlite', namespace))
+                self._embedding_service = self._owned_embeddings.enter_context(EmbeddingService(
+                    values, cache, Path(output_dir) / 'embedding_calls.jsonl', limits=embedding_limits))
+            self._config.update(
+                embedding_model=self._embedding_service.cache.namespace_config['model'],
+                embedding_timeout=self._embedding_service.limits.request_timeout,
+                embedding_namespace=dict(self._embedding_service.cache.namespace_config),
+                embedding_policy=asdict(self._embedding_service.limits))
         except BaseException:
             self.close()
             raise
-        self._chat_client, self._embedding_client = self._clients
+        self._chat_client = self._clients[0]
 
     def _adjust(self, now: float) -> None:
         window = self._config["window_seconds"]
@@ -228,41 +248,13 @@ class AdaptiveAPI:
         raise RuntimeError("Unreachable retry state")
 
     def embed(self, texts: list[str]) -> list[list[float]]:
+        """Compatibility facade; the service owns caching, pacing, and all retries."""
+        with self._condition:
+            if self._closed:
+                raise RuntimeError('AdaptiveAPI is closed')
         if not texts:
             return []
-
-        def validate(response: Any) -> list[list[float]]:
-            rows = getattr(response, "data", None)
-            if not rows:
-                raise EmptyResponseError("Embedding response is empty")
-            if len(rows) != len(texts):
-                raise ValueError("Embedding response count does not match input count")
-            vectors: dict[int, list[float]] = {}
-            dimension = None
-            for row in rows:
-                index = getattr(row, "index", None)
-                if type(index) is not int or not 0 <= index < len(texts) or index in vectors:
-                    raise ValueError("Embedding response indices are incomplete or duplicated")
-                raw = getattr(row, "embedding", None)
-                if not isinstance(raw, list) or not raw:
-                    raise ValueError("Embedding vector is missing")
-                if any(type(value) not in (float, int) for value in raw):
-                    raise ValueError("Embedding vector must contain numbers")
-                vector = [float(value) for value in raw]
-                if not all(math.isfinite(value) for value in vector) or not any(vector):
-                    raise ValueError("Embedding vector must be finite and nonzero")
-                if dimension is not None and len(vector) != dimension:
-                    raise ValueError("Embedding dimensions differ within a batch")
-                dimension = len(vector)
-                vectors[index] = vector
-            with self._condition:
-                if self._embedding_dimension is not None and dimension != self._embedding_dimension:
-                    raise ValueError("Embedding dimension changed between batches")
-                self._embedding_dimension = dimension
-            return [vectors[index] for index in range(len(texts))]
-
-        return self._call("embedding", texts, lambda: self._embedding_client.embeddings.create(
-            model=self._config["embedding_model"], input=texts, encoding_format="float", timeout=60), validate)
+        return self._embedding_service.embed(texts, purpose='precompute_compatibility').tolist()
 
     def chat(self, messages: list[dict]) -> str:
         return self.chat_with_usage(messages)["content"]
@@ -294,9 +286,12 @@ class AdaptiveAPI:
 
     def summary(self) -> dict:
         with self._condition:
+            if not self._closed:
+                self._embedding_dimension = self._embedding_service.cache.dimension
             return {"session_id": self._session_id, "config": dict(self._config), **self._counts,
                     "concurrency": self._limit, "in_flight": self._in_flight,
-                    "embedding_dimension": self._embedding_dimension, "closed": self._closed,
+                    "embedding_dimension": self._embedding_dimension,
+                    "embedding_accounting": "delegated_to_embedding_service", "closed": self._closed,
                     "elapsed_seconds": max(0., monotonic() - self._started),
                     "adjustments": [dict(change) for change in self._changes],
                     "audit_path": str(self.audit_path)}
@@ -306,6 +301,8 @@ class AdaptiveAPI:
             if self._resources_closed:
                 return
             with self._condition:
+                if self._embedding_service is not None:
+                    self._embedding_dimension = self._embedding_service.cache.dimension
                 self._closed = True
                 self._condition.notify_all()
                 self._condition.wait_for(lambda: self._in_flight == 0)
@@ -313,8 +310,11 @@ class AdaptiveAPI:
                 for client in self._clients:
                     client.close()
             finally:
-                self._audit.close()
-                self._resources_closed = True
+                try:
+                    self._owned_embeddings.close()
+                finally:
+                    self._audit.close()
+                    self._resources_closed = True
 
     def __enter__(self) -> AdaptiveAPI:
         with self._condition:

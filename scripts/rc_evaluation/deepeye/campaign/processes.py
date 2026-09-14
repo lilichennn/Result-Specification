@@ -63,6 +63,7 @@ def commands(config, job):
     contracts = [value for partition, path in paths.items() for value in ('--rc', f'{partition}={path}')]
     prepare = base + ['prepare', '--source-run', job['source_run'], '--run-dir', job['run_dir'],
                       '--target-stage', job['target_stage'], '--condition', 'rc',
+                      '--rc-version', str(config.get('rc_version', 2)),
                       *contracts,
                       '--env-file', config['env_file'], *items]
     return prepare, base + ['resume', '--run-dir', job['run_dir'], '--env-file', config['env_file'], '--unfinished-only']

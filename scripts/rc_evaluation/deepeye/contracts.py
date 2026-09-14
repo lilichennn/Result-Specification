@@ -12,6 +12,16 @@ from result_contract.rc import Round1RC, Round2RC
 from .injection import render_rc_block
 
 
+def resolve_rc_version(explicit=None, workload=None) -> int:
+    configured = (workload or {}).get('rc_version')
+    for value in (explicit, configured):
+        if value is not None and (type(value) is not int or value not in (2, 3)):
+            raise ValueError('rc_version must be 2 or 3')
+    if explicit is not None and configured is not None and explicit != configured:
+        raise ValueError('RC version conflicts with workload rc_version')
+    return explicit if explicit is not None else configured if configured is not None else 2
+
+
 def _sha256(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
 
@@ -76,6 +86,7 @@ def _validated_contract(
     record: Mapping[str, Any],
     source_file: Path,
     source_file_sha256: str,
+    rc_version: int,
 ) -> dict[str, Any]:
     expected = {
         "database": (record.get("db_id"), getattr(item, "database_id", None)),
@@ -88,17 +99,18 @@ def _validated_contract(
                 f"RC {label} mismatch for {task_key}: source={actual!r}, task={wanted!r}"
             )
 
-    if record.get("round1_status") != "succeeded":
+    if rc_version == 2 and record.get("round1_status") != "succeeded":
         raise ValueError(
             f"Round 1 RC failed for {task_key}: {record.get('round1_error')!r}"
         )
-    if record.get("round2_status") != "succeeded":
+    if record.get(f"round{rc_version}_status") != "succeeded":
         raise ValueError(
-            f"Round 2 RC failed for {task_key}: {record.get('round2_error')!r}"
+            f"Round {rc_version} RC failed for {task_key}: {record.get(f'round{rc_version}_error')!r}"
         )
     try:
-        round1 = Round1RC.from_value(record.get("rc_round1")).to_dict()
-        round2 = Round2RC.from_value(record.get("rc_round2")).to_dict()
+        final_rc = Round2RC.from_value(record.get(f"rc_round{rc_version}")).to_dict()
+        prior = ({'round1': Round1RC.from_value(record.get('rc_round1')).to_dict(),
+                  'round2': final_rc} if rc_version == 2 else {})
     except ValueError as error:
         raise ValueError(f"Invalid RC for {task_key}: {error}") from error
 
@@ -107,8 +119,12 @@ def _validated_contract(
         "db_id": record["db_id"],
         "question": record["question"],
         "evidence": record["evidence"],
-        "round1": round1,
-        "round2": round2,
+        **prior,
+        "rc_version": rc_version,
+        "source_field": f"rc_round{rc_version}",
+        "final_rc": final_rc,
+        "final_rc_sha256": _record_sha256(final_rc),
+        "gold_corrected": rc_version == 3,
         "source_file": str(source_file.resolve()),
         "source_file_sha256": source_file_sha256,
         "record_sha256": _record_sha256(record),
@@ -116,7 +132,7 @@ def _validated_contract(
 
 
 def load_contracts(
-    paths: dict[str, Path], tasks: list[tuple]
+    paths: dict[str, Path], tasks: list[tuple], *, rc_version: int = 2
 ) -> dict[str, dict]:
     """Load and validate the pre-generated RC for every selected task.
 
@@ -124,6 +140,7 @@ def load_contracts(
     invokes either RC generation function.
     """
 
+    rc_version = resolve_rc_version(rc_version)
     if not isinstance(paths, Mapping):
         raise TypeError("paths must map variants to RC source files")
     if not isinstance(tasks, Sequence) or isinstance(tasks, (str, bytes)):
@@ -154,5 +171,6 @@ def load_contracts(
             record=record,
             source_file=source_file,
             source_file_sha256=file_hash,
+            rc_version=rc_version,
         )
     return contracts

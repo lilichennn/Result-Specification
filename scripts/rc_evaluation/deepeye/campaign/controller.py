@@ -168,8 +168,9 @@ def status(path):
     """Read-only, offline, including an explicit timestamp for stale snapshots."""
     path = Path(path).resolve()
     with CampaignLedger.open(path, read_only=True) as ledger:
+        from ..injection import rc_labels
         snapshot = read_json(path / 'status.json') or {}
-        return {**snapshot, 'campaign_dir': str(path), **control(path),
+        return {**snapshot, 'campaign_dir': str(path), **control(path), **rc_labels({'condition': 'rc', **ledger.config}),
                 'jobs': ledger.jobs(), 'items': len(ledger.config['items']),
                 'controller': read_json(path / 'controller.json')}
 

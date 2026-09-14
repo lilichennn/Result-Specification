@@ -40,6 +40,53 @@ def native_args():
 
 
 class CliTests(OfflineTestCase):
+    def test_old_rc_inspect_export_preserve_original_manifest_hash(self):
+        from .test_contracts import ROUND2
+        from scripts.rc_evaluation.deepeye.source import snapshot_source
+        with tempfile.TemporaryDirectory() as temporary:
+            root, inputs, _, _ = self.fixture(temporary)
+            data = experiment_manifest(snapshot_source(root / 'source', inputs[0], 'sql_revision'), condition='rc')
+            original = inputs[0][0][1]
+            data['contracts'] = {'lite/a': {'task_key': 'lite/a', 'db_id': original.database_id,
+                'question': original.question, 'evidence': original.evidence, 'round2': ROUND2}}
+            data['sources'] = {**data['sources'], 'rc_evaluation_code_sha256': 'historical-source-hash'}
+            with RunStore.create(root / 'old', data) as store:
+                before = store.manifest_fingerprint
+            self.assertEqual(self.invoke(['inspect', '--run-dir', str(root / 'old')]), 0)
+            self.assertEqual(self.invoke(['export', '--run-dir', str(root / 'old'),
+                                         '--export-dir', str(root / 'export')]), 0)
+            with RunStore.open(root / 'old', read_only=True) as store:
+                self.assertEqual(store.manifest_fingerprint, before)
+                self.assertNotIn('rc_version', store.manifest)
+                self.assertEqual(store.manifest['sources']['rc_evaluation_code_sha256'], 'historical-source-hash')
+
+    def test_rc3_prepare_freezes_selected_value_template_and_resume_identity(self):
+        from .test_contracts import _record, ROUND2
+        from scripts.rc_evaluation.deepeye.injection import render_rc_block
+        with tempfile.TemporaryDirectory() as temporary:
+            root, inputs, args, environment = self.fixture(temporary)
+            item = inputs[0][0][1]
+            path = root / 'rc.json'
+            path.write_text(json.dumps([_record(item.instance_id, db_id=item.database_id,
+                question=item.question, evidence=item.evidence, round3_status='succeeded',
+                rc_round3={**ROUND2, 'population': 'unique-round-three'})]))
+            args[args.index('none')] = 'rc'
+            with patch.object(cli, 'prepare_inputs', return_value=inputs):
+                self.assertEqual(self.invoke(args + ['--rc-version', '3', '--rc-lite', str(path)]), 0)
+            with RunStore.open(root / 'run') as store:
+                frozen = store.manifest
+                self.assertEqual(frozen['rc_version'], 3)
+                self.assertTrue(frozen['gold_corrected'])
+                self.assertIn('<<FINAL_RC>>', frozen['rc_prompt']['text'])
+                self.assertEqual(len(frozen['rc_prompt']['sha256']), 64)
+                self.assertIn('unique-round-three', render_rc_block(frozen['contracts']['lite/a']))
+                cli._check_frozen(store, ENV)
+                payload = json.loads(path.read_text())
+                payload[0]['rc_round3']['population'] = 'changed'
+                path.write_text(json.dumps(payload))
+                with self.assertRaisesRegex(ValueError, 'changed'):
+                    cli._check_frozen(store, ENV)
+
     def invoke(self, arguments):
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             try:

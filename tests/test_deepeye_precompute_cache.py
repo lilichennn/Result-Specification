@@ -17,6 +17,22 @@ except ModuleNotFoundError as exc:
 
 
 class VectorCacheTests(unittest.TestCase):
+    def test_bulk_reads_and_writes_preserve_existing_format_and_validate_atomically(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / 'vectors.sqlite'
+            with self.cache(path) as cache:
+                cache.embed(['old'], lambda _: [[1., 2.]])
+                cache.put_many(['a', 'b'], [[3., 4.], [5., 6.]])
+                found = cache.get_many(['b', 'old', 'missing', 'b'])
+                np.testing.assert_equal(found['b'], [5., 6.])
+                np.testing.assert_equal(found['old'], [1., 2.])
+                self.assertIsNone(found['missing'])
+                with self.assertRaises(ValueError):
+                    cache.put_many(['c', 'd'], [[7., 8.], [0., 0.]])
+                self.assertIsNone(cache.get('c'))
+            with self.cache(path) as cache:
+                np.testing.assert_equal(cache.read(['a', 'old']), [[3., 4.], [1., 2.]])
+
     def cache(self, path, namespace=None):
         self.assertIsNotNone(cache_module, 'Persistent vector cache is missing')
         return cache_module.VectorCache(path, namespace or {'model': 'test'})

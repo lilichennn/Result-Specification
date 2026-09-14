@@ -188,9 +188,13 @@ def prepare_command(args):
     if {row['task_key']: row for row in bindings} != {row['task_key']: row for row in snapshot['items']}:
         raise ValueError('Prepared input bindings differ from baseline')
     contracts = {}
+    rc_metadata = {}
     if args.condition == 'rc':
-        from scripts.rc_evaluation.deepeye.contracts import load_contracts
-        contracts = load_contracts(_contract_paths(args, baseline), tasks)
+        from scripts.rc_evaluation.deepeye.contracts import load_contracts, resolve_rc_version
+        from scripts.rc_evaluation.deepeye.injection import freeze_prompt
+        version = resolve_rc_version(getattr(args, 'rc_version', None), workload)
+        contracts = load_contracts(_contract_paths(args, baseline), tasks, rc_version=version)
+        rc_metadata = {'rc_version': version, 'gold_corrected': version == 3, 'rc_prompt': freeze_prompt()}
     elif args.rc_lite is not None or args.rc_full is not None or args.rc:
         raise ValueError('RC files are only accepted for condition=rc')
     manifest = {
@@ -199,7 +203,7 @@ def prepare_command(args):
         'condition': args.condition, 'repeat_id': args.repeat_id,
         'continue_downstream': args.continue_downstream, 'item_count': len(tasks),
         'effective_config': effective, 'sources': {**sources, 'rc_evaluation_code_sha256': production_hash()},
-        'contracts': contracts, **snapshot,
+        'contracts': contracts, **snapshot, **rc_metadata,
     }
     validate_manifest(manifest)
     args.run_dir.resolve().parent.mkdir(parents=True, exist_ok=True)
@@ -236,7 +240,7 @@ def _check_frozen(store, environment, *, prepared=None):
                 raise ValueError('Multiple RC sources for one partition')
             paths[partition] = path
             tasks.append((partition, prepared.plans[key]['state']))
-        if load_contracts(paths, tasks) != manifest['contracts']:
+        if load_contracts(paths, tasks, rc_version=manifest.get('rc_version', 2)) != manifest['contracts']:
             raise ValueError('RC source records changed since preparation')
     return args
 
@@ -288,6 +292,8 @@ def build_parser():
     prepare.add_argument('--run-dir', type=Path, required=True)
     prepare.add_argument('--target-stage', choices=STAGES, required=True)
     prepare.add_argument('--condition', choices=('none', 'rc'), required=True)
+    prepare.add_argument('--rc-version', type=int, choices=(2, 3),
+                         help='Explicit RC version; must agree with the workload (legacy default: 2)')
     prepare.add_argument('--repeat-id', default='1')
     prepare.add_argument('--continue-downstream', action='store_true')
     prepare.add_argument('--precompute-dir', type=Path)
@@ -377,8 +383,10 @@ def main(argv=None):
                     result = {'export_dir': str(store.export(args.export_dir.resolve(),
                                                            extra_reports={'usage.json': observed_usage}))}
                 else:
+                    from scripts.rc_evaluation.deepeye.injection import rc_labels
                     result = {'summary': store.summary(), 'observed_usage': observed_usage(store),
-                              'target_stage': store.manifest['target_stage'], 'condition': store.manifest['condition']}
+                              'target_stage': store.manifest['target_stage'], 'condition': store.manifest['condition'],
+                              **rc_labels(store.manifest)}
         elif args.command == 'evaluate':
             from scripts.rc_evaluation.deepeye.evaluation import evaluate_run
             references = _evaluation_paths(args)

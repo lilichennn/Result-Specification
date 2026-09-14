@@ -227,6 +227,36 @@ class RecoveryTests(unittest.TestCase):
 
 
 class ProcessTests(unittest.TestCase):
+    def test_rc3_campaign_configures_strict_version_from_cli(self):
+        from tests.test_deepeye_workloads import WorkloadTests
+        from scripts.rc_evaluation.deepeye.tests.test_contracts import _record, ROUND2
+        from scripts.rc_evaluation.deepeye.campaign import cli, configuration, controller
+        from scripts.rc_evaluation.deepeye.campaign.ledger import CampaignLedger
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workload, _ = WorkloadTests().fixture(root, 'spider', 'dev')
+            (root / 'rc.json').write_text(json.dumps([_record(i, db_id='db',
+                question=f'question {i}', evidence='', round3_status='succeeded', rc_round3=ROUND2)
+                for i in (7, 19)]))
+            env = root / 'fixture.env'
+            env.write_text('DASH_MODELS=qwen3.6\nDASH_BASE_URL=https://example.test/v1\nDASH_API_KEY=offline\n')
+            args = cli.build_parser().parse_args(['configure', '--campaign-dir', str(root/'campaign'),
+                '--workload', str(workload), '--env-file', str(env), '--rc-version', '3'])
+            workload_data = json.loads(workload.read_text())
+            workload_data['rc_version'] = 3
+            workload.write_text(json.dumps(workload_data))
+            with patch.object(configuration.native, 'code_source_hashes', return_value={}):
+                args.rc_version = 2
+                with self.assertRaisesRegex(ValueError, 'conflict'):
+                    configuration.configure(args)
+                self.assertFalse((root / 'campaign').exists())
+                args.rc_version = None
+                configuration.configure(args)
+            with CampaignLedger.open(root/'campaign', read_only=True) as ledger:
+                self.assertEqual(ledger.config['rc_version'], 3)
+                self.assertTrue(ledger.config['gold_corrected'])
+            self.assertEqual(controller.status(root/'campaign')['rc_version'], 3)
+
     def test_generic_campaign_configures_from_the_real_native_preparation(self):
         from tests.test_deepeye_workloads import WorkloadTests
         from scripts.rc_evaluation.deepeye.tests.test_contracts import _record

@@ -45,12 +45,13 @@ def validate_vectors(values, count: int, dimension: int | None = None) -> np.nda
 
 
 class VectorCache:
-    """Thread-safe SQLite storage; submit disjoint batches to avoid duplicate in-flight calls."""
+    """Thread-safe float32 storage; request deduplication belongs to the service."""
 
     def __init__(self, path: Path, namespace: dict):
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
         self.namespace = fingerprint(namespace)
+        self.namespace_config = dict(namespace)
         self._lock = threading.RLock()
         self._connection = sqlite3.connect(path, check_same_thread=False, timeout=60)
         self._connection.execute('PRAGMA journal_mode=WAL')
@@ -82,20 +83,48 @@ class VectorCache:
             return self._connection.execute('SELECT dimension FROM namespaces WHERE id=?', (self.namespace,)).fetchone()[0]
 
     def get(self, text: str):
-        if not isinstance(text, str) or not text:
+        return self.get_many([text])[text]
+
+    def get_many(self, texts):
+        texts = list(texts)
+        if any(not isinstance(text, str) or not text for text in texts):
             raise ValueError('Embedding input must be nonempty text')
+        hashes = {fingerprint(text): text for text in dict.fromkeys(texts)}
+        found = dict.fromkeys(texts)
         with self._lock:
-            row = self._connection.execute(
-                'SELECT text, dimension, vector, checksum FROM vectors WHERE namespace=? AND text_hash=?',
-                (self.namespace, fingerprint(text))).fetchone()
-        if row is None:
-            return None
-        stored_text, dimension, blob, checksum = row
-        if stored_text != text or len(blob) != dimension * 4 or hashlib.sha256(blob).hexdigest() != checksum:
-            raise ValueError('Corrupted embedding cache entry')
-        vector = np.frombuffer(blob, dtype='<f4').copy()
-        validate_vectors(vector.reshape(1, -1), 1, self.dimension)
-        return vector
+            dimension = self.dimension
+            keys = list(hashes)
+            for offset in range(0, len(keys), 500):
+                batch = keys[offset:offset + 500]
+                placeholders = ','.join('?' for _ in batch)
+                rows = self._connection.execute(
+                    f'SELECT text_hash, text, dimension, vector, checksum FROM vectors '
+                    f'WHERE namespace=? AND text_hash IN ({placeholders})', (self.namespace, *batch))
+                for key, stored_text, size, blob, checksum in rows:
+                    if (stored_text != hashes[key] or len(blob) != size * 4
+                            or hashlib.sha256(blob).hexdigest() != checksum):
+                        raise ValueError('Corrupted embedding cache entry')
+                    vector = np.frombuffer(blob, dtype='<f4').copy()
+                    validate_vectors(vector.reshape(1, -1), 1, dimension)
+                    found[stored_text] = vector
+        return found
+
+    def put_many(self, texts, vectors):
+        texts = list(texts)
+        if any(not isinstance(text, str) or not text for text in texts):
+            raise ValueError('Embedding input must be nonempty text')
+        if not texts:
+            return
+        with self._lock, self._connection:
+            array = validate_vectors(vectors, len(texts), self.dimension)
+            rows = []
+            for text, vector in zip(texts, array):
+                blob = vector.tobytes()
+                rows.append((self.namespace, fingerprint(text), text, len(vector), blob,
+                             hashlib.sha256(blob).hexdigest()))
+            self._connection.execute('UPDATE namespaces SET dimension=? WHERE id=?',
+                                     (array.shape[1], self.namespace))
+            self._connection.executemany('INSERT OR IGNORE INTO vectors VALUES (?, ?, ?, ?, ?, ?)', rows)
 
     def embed(self, texts, embed_batch, batch_size=20) -> np.ndarray:
         if not isinstance(batch_size, int) or batch_size < 1:
@@ -104,20 +133,13 @@ class VectorCache:
         if not texts:
             return np.empty((0, self.dimension or 0), dtype='<f4')
         unique = list(dict.fromkeys(texts))
-        found = {text: self.get(text) for text in unique}
+        found = self.get_many(unique)
         missing = [text for text in unique if found[text] is None]
         for offset in range(0, len(missing), batch_size):
             batch = missing[offset:offset + batch_size]
             array = validate_vectors(embed_batch(batch), len(batch), self.dimension)
-            with self._lock, self._connection:
-                # Another batch can establish the dimension during the service call.
-                validate_vectors(array, len(batch), self.dimension)
-                self._connection.execute('UPDATE namespaces SET dimension=? WHERE id=?', (array.shape[1], self.namespace))
-                for text, vector in zip(batch, array):
-                    blob = vector.tobytes()
-                    self._connection.execute('INSERT OR IGNORE INTO vectors VALUES (?, ?, ?, ?, ?, ?)',
-                                             (self.namespace, fingerprint(text), text, len(vector), blob, hashlib.sha256(blob).hexdigest()))
-                    found[text] = vector
+            self.put_many(batch, array)
+            found.update(zip(batch, array))
         return np.stack([found[text] for text in texts])
 
     def read(self, texts):

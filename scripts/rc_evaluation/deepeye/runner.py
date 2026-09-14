@@ -14,6 +14,7 @@ from scripts.baseline_adapters.deepeye.run_resources import close_runners, instr
 from scripts.baseline_adapters.deepeye.run_slots import PipelineSlots
 from scripts.baseline_adapters.deepeye.run_store import restore_jsonable
 from .source import api_trace, digest, restore_seed, validate_manifest, TRACE_KINDS
+from .injection import manifest_prompt, rc_labels
 
 
 class MissingRCParticipation(RuntimeError):
@@ -232,7 +233,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                         payload.update(execution_origin=('reused_no_native_llm_call' if stage == target
                                                          else 'reused_unchanged_upstream'),
                                        source_provenance=provenance, attempt_wall_seconds=0.0,
-                                       rc_participation={'status': 'rc_not_participating', 'actual_request_count': 0, 'native_request_count': 0,
+                                       rc_participation={**rc_labels(manifest), 'status': 'rc_not_participating', 'actual_request_count': 0, 'native_request_count': 0,
                                                          'reason': ('no_native_llm_call' if stage == target
                                                                     else 'unchanged_upstream')})
                         store.finish_attempt(attempt, 'succeeded', payload)
@@ -248,7 +249,9 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                     else:
                         from .injection import rc_context
                         from .contracts import render_rc_block
-                        context, block = rc_context(stage, key, contract), render_rc_block(contract)
+                        template = manifest_prompt(manifest)
+                        context = rc_context(stage, key, contract, prompt_template=template)
+                        block = render_rc_block(contract, prompt_template=template)
                     with recorder.context(attempt), context, runtime.context() if runtime else nullcontext():
                         started = time.monotonic()
                         error = None
@@ -284,7 +287,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                                     f'{restored_rc}/{restored} restored samples')
                         payload.update(execution_origin='executed', source_provenance=provenance,
                                        attempt_wall_seconds=time.monotonic() - started,
-                                       rc_participation={'status': 'participating' if count or restored_rc else 'rc_not_participating',
+                                       rc_participation={**rc_labels(manifest), 'status': 'participating' if count or restored_rc else 'rc_not_participating',
                                                          'actual_request_count': count,
                                                          'restored_sample_count': restored,
                                                          'restored_rc_sample_count': restored_rc,
@@ -349,7 +352,7 @@ def run_experiment(store, runner_factory, recorder, *, workers=4, slot_controlle
                     wait(futures, timeout=0.1, return_when=FIRST_COMPLETED)
             recorder.raise_if_failed()
         return {'succeeded': len(plans) - len(failed) - len(paused), 'failed': len(failed), 'paused': len(paused),
-                'accuracy_evaluated': False, 'target_stage': target, 'condition': manifest['condition'],
+                'accuracy_evaluated': False, 'target_stage': target, 'condition': manifest['condition'], **rc_labels(manifest),
                 'items': {key: {'status': 'paused' if key in paused else 'failed' if key in failed else 'succeeded',
                                 'failed_stage': failed.get(key),
                                 'final_selected_sql': plan['state'].final_selected_sql} for key, plan in plans.items()}}

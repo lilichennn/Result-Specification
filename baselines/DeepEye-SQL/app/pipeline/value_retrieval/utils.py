@@ -9,7 +9,6 @@ import json
 from app.logger import logger
 from tenacity import(
     retry,
-    retry_if_exception_type,
     stop_after_attempt,
     wait_random_exponential
 )
@@ -78,26 +77,37 @@ def extract_keywords(
     return keywords_list, total_token_usage
 
 
+def _retry_unmanaged_embedding_error(retry_state) -> bool:
+    exception = retry_state.outcome.exception()
+    if not isinstance(exception, (RateLimitError, APITimeoutError)):
+        return False
+    embedding_function = (
+        retry_state.args[1]
+        if len(retry_state.args) > 1
+        else retry_state.kwargs.get("embedding_function")
+    )
+    return not getattr(embedding_function, "manages_retries", False)
+
+
 @retry(
     wait=wait_random_exponential(multiplier=1, max=60),
     stop=stop_after_attempt(10),
-    retry=retry_if_exception_type((RateLimitError, APITimeoutError))
+    retry=_retry_unmanaged_embedding_error,
 )
 def embed_keywords(keywords: List[str], embedding_function: Any, embedding_batch_size: int) -> List[List[float]]:
-    """
-    Independently embed keywords with batching and retry logic.
-    """
+    """Embed keywords, deferring retries to callables that manage their own."""
+    if getattr(embedding_function, 'manages_retries', False):
+        # Native split fallback can retain an empty evidence token. Keep its
+        # recorded keyword list, but send only actual text to the shared API.
+        keywords = [keyword for keyword in keywords if keyword.strip()]
     if not keywords:
         return []
 
     all_embeddings = []
-    
-    # Manual batching to respect API limits (e.g., max 10 per request)
     for i in range(0, len(keywords), embedding_batch_size):
         batch = keywords[i : i + embedding_batch_size]
         batch_embeddings = embedding_function(batch)
         all_embeddings.extend(batch_embeddings)
-        
     return all_embeddings
 
 

@@ -14,6 +14,33 @@ from scripts.baseline_adapters.deepeye.run_store import RunStore
 
 
 class CampaignStateTest(unittest.TestCase):
+    def test_rc3_campaign_rejects_rc2_child_before_counting_completion(self):
+        self.config['rc_version'] = 3
+        ledger = self.ledger(['lite/a'])
+        first = ledger.jobs()[0]
+        self.native(self.prepare(ledger, first), 'lite/a')
+        result = self.tick(ledger, {first['job_id']: self.observe(first)})
+        job = result['jobs'][0]
+        store = self.prepare(ledger, job)
+        self.rc(store, 'lite/a', job['target_stage'])
+        observation = self.observe(job)
+        observation['manifest']['rc_version'] = 2
+        with self.assertRaisesRegex(ValueError, 'version'):
+            self.tick(ledger, {job['job_id']: observation})
+        self.assertEqual(ledger.opened_stages(), ['schema_linking'])
+        observation['manifest']['rc_version'] = 3
+        self.assertIn('sql_generation', self.tick(ledger, {job['job_id']: observation})['opened_stages'])
+
+    def test_rc_child_command_passes_frozen_campaign_version(self):
+        from scripts.rc_evaluation.deepeye.campaign.processes import commands
+        ledger = self.ledger(['lite/a'])
+        job = ledger.claim_job(kind='rc', items=['lite/a'], target_stage='schema_linking',
+                               source_run=ledger.jobs()[0]['run_dir'])
+        prepare, resume = commands({**ledger.config, 'rc_version': 3}, job)
+        self.assertIn('--rc-version', prepare)
+        self.assertEqual(prepare[prepare.index('--rc-version') + 1], '3')
+        self.assertNotIn('--rc-version', resume)
+
     def test_generic_typed_keys_can_be_frozen_without_lite_full_assumptions(self):
         ledger = self.ledger(['spider/dev/i:7', 'spider/dev/i:19'])
         self.assertEqual(ledger.jobs()[0]['items'], ['spider/dev/i:19', 'spider/dev/i:7'])

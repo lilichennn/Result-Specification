@@ -51,6 +51,43 @@ def _item(instance_id: str = "item_1", **changes: object) -> SimpleNamespace:
 
 
 class LoadContractsTest(TestCase):
+    def test_rc3_selects_only_final_six_fields_without_prior_round_dependency(self):
+        selected = {**ROUND2, 'population': 'unique-round-three'}
+        record = _record(rc_round2={**ROUND2, 'population': 'unique-round-two'},
+                         rc_round3=selected, round3_status='succeeded',
+                         gold_sql='target-gold-sentinel', messages=['generation-message-sentinel'])
+        del record['rc_round1']
+        path = self._write([record])
+        contract = load_contracts({'lite': path}, [('lite', _item())], rc_version=3)['lite/item_1']
+        self.assertEqual(contract['final_rc'], selected)
+        self.assertEqual(contract['rc_version'], 3)
+        self.assertEqual(contract['source_field'], 'rc_round3')
+        self.assertTrue(contract['gold_corrected'])
+        self.assertEqual(len(contract['final_rc_sha256']), 64)
+        block = contracts_module.render_rc_block(contract)
+        self.assertIn('unique-round-three', block)
+        for sentinel in ('unique-round-two', 'target-gold-sentinel', 'generation-message-sentinel'):
+            self.assertNotIn(sentinel, block)
+        self.assertNotIn('round2', contract)
+
+    def test_rc3_never_falls_back_to_valid_rc2(self):
+        for change in ({}, {'round3_status': 'failed', 'rc_round3': ROUND2},
+                       {'round3_status': 'succeeded', 'rc_round3': {}},
+                       {'round3_status': 'succeeded', 'rc_round3': {**ROUND2, 'population': ''}}):
+            with self.subTest(change=change):
+                path = self._write([_record(**change)])
+                with self.assertRaises(ValueError):
+                    load_contracts({'lite': path}, [('lite', _item())], rc_version=3)
+
+    def test_version_resolution_rejects_conflicts_and_non_integer_versions(self):
+        resolve = getattr(contracts_module, 'resolve_rc_version', None)
+        self.assertTrue(callable(resolve))
+        self.assertEqual(resolve(), 2)
+        self.assertEqual(resolve(None, {'rc_version': 3}), 3)
+        for explicit, workload in ((2, {'rc_version': 3}), (True, None), ('3', None), (4, None)):
+            with self.assertRaises(ValueError):
+                resolve(explicit, workload)
+
     def test_generic_original_integer_id_does_not_match_string_record(self):
         from app.dataset.dataset import DataItem
         item = DataItem(question_id=7, question='Question one?', evidence='Evidence one.',
@@ -104,6 +141,12 @@ class LoadContractsTest(TestCase):
                 "evidence": "Evidence one.",
                 "round1": ROUND1,
                 "round2": ROUND2,
+                "rc_version": 2,
+                "source_field": "rc_round2",
+                "final_rc": ROUND2,
+                "final_rc_sha256": hashlib.sha256(json.dumps(ROUND2, ensure_ascii=False,
+                    sort_keys=True, separators=(',', ':')).encode()).hexdigest(),
+                "gold_corrected": False,
                 "source_file": str(path.resolve()),
                 "source_file_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
                 "record_sha256": hashlib.sha256(canonical).hexdigest(),

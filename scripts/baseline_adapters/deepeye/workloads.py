@@ -5,19 +5,21 @@ remain in their source files; only their locators are attached to run bindings.
 """
 from __future__ import annotations
 
+from contextlib import closing
 from copy import deepcopy
 import csv
 import hashlib
 import io
 import json
 from pathlib import Path
+import sqlite3
 from urllib.parse import quote
 
 SELECTIONS = {('bird', 'dev'), ('spider', 'dev'), ('spider', 'test'),
               ('spider2', 'lite'), ('bird_interact', 'lite'), ('bird_interact', 'full')}
 PATH_FIELDS = ('questions', 'meta', 'resource_root', 'rc', 'precompute_dir',
                'few_shot_source', 'prepared_dataset', 'native_config', 'reference_questions',
-               'bigquery_credential_path')
+               'bigquery_credential_path', 'preparation_root')
 
 
 def _types():
@@ -78,6 +80,14 @@ def load_workload(path) -> dict:
         base = path.parent
     if (result.get('benchmark'), result.get('split')) not in SELECTIONS:
         raise ValueError('Unsupported workload benchmark/split')
+    if 'rc_version' in result and (type(result['rc_version']) is not int or result['rc_version'] not in (2, 3)):
+        raise ValueError('rc_version must be the integer 2 or 3')
+    if result.get('few_shot_strategy') not in (None, 'native_dynamic', 'none'):
+        raise ValueError('Unsupported few_shot_strategy')
+    if result.get('few_shot_strategy') == 'none' and result['benchmark'] != 'spider2':
+        raise ValueError('Only native Spider2 workloads skip few-shot preparation')
+    if result.get('few_shot_strategy') == 'native_dynamic' and result['benchmark'] == 'spider2':
+        raise ValueError('Native Spider2 does not use dynamic few-shot retrieval')
     for field in ('questions', 'meta', 'resource_root', 'rc'):
         if not result.get(field):
             raise ValueError(f'Workload requires {field}')
@@ -125,6 +135,15 @@ def question_rows(workload):
                        'database_id': db_id, 'question': row['question'],
                        'evidence': row.get('evidence') or '', 'source_row': position,
                        'external_knowledge_path': row.get('external_knowledge')})
+    if 'question_ids' in workload:
+        chosen = workload['question_ids']
+        expected_type = str if special else int
+        if (not isinstance(chosen, list) or not chosen or
+                any(type(value) is not expected_type for value in chosen) or
+                len(set(chosen)) != len(chosen) or not set(chosen).issubset(seen)):
+            raise ValueError('question_ids must be distinct, present, correctly typed original identities')
+        chosen = set(chosen)
+        result = [row for row in result if row['external_id'] in chosen]
     return result
 
 
@@ -205,6 +224,93 @@ def _scope_schema(schema, meta, *, validate=False):
     return result
 
 
+def _sqlite_meta_scope(meta, db_id):
+    """Map only Spider2's exact logical DB.DB.TABLE names to SQLite names."""
+    result, seen = {}, set()
+    for name, columns in meta.items():
+        parts = name.split('.')
+        if len(parts) != 1:
+            if (len(parts) != 3 or not parts[2] or
+                    any(part.casefold() != db_id.casefold() for part in parts[:2])):
+                raise ValueError(f'Unsupported SQLite Meta namespace: {name}')
+            name = parts[2]
+        if name.casefold() in seen:
+            raise ValueError(f'SQLite Meta table alias collision: {name}')
+        if len({column.casefold() for column in columns}) != len(columns):
+            raise ValueError(f'SQLite Meta column alias collision: {name}')
+        seen.add(name.casefold())
+        result[name] = columns
+    return result
+
+
+def _supplement_sqlite_meta_schema(schema, db_path, meta):
+    """Fill only explicit, physically verified native-loader omissions.
+
+    Native table_info omits generated columns and its table inventory excludes
+    sqlite_sequence. Do not use this on prepared snapshots: their completeness
+    must be validated without repairing them from another source.
+    """
+    result = deepcopy(schema)  # The native loader returns a shared cached dict.
+    tables = result['tables']
+    lookup = {name.casefold(): name for name in tables}
+    pending = []
+    for name, columns in meta.items():
+        native_name = lookup.get(name.casefold())
+        if native_name is None:
+            if name.casefold() == 'sqlite_sequence':
+                pending.append((name, columns, True))
+        else:
+            existing = {column.casefold() for column in tables[native_name]['columns']}
+            missing = {column for column in columns if column.casefold() not in existing}
+            if missing:
+                pending.append((native_name, missing, False))
+    if not pending:
+        return result
+    uri = Path(db_path).resolve().as_uri() + '?mode=ro'
+    with closing(sqlite3.connect(uri, uri=True)) as connection:
+        actual_tables = {row[0].casefold(): row[0] for row in connection.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'")}
+
+        def table_info(name):
+            quoted = '"' + name.replace('"', '""') + '"'
+            return list(connection.execute(f'PRAGMA table_xinfo({quoted})'))
+
+        for name, columns, sequence in pending:
+            actual = actual_tables.get(name.casefold())
+            if actual is None:
+                continue  # Let the normal Meta scope check report the absence.
+            requested = {column.casefold() for column in columns}
+            added = [row for row in table_info(actual) if row[1].casefold() in requested
+                     and (sequence or row[6] in (2, 3))]
+            if not added:
+                continue
+            if sequence:
+                tables[actual] = {'table_name': actual, 'columns': {}}
+            quoted = '"' + actual.replace('"', '""') + '"'
+            foreign_keys = list(connection.execute(f'PRAGMA foreign_key_list({quoted})'))
+            for row in added:
+                refs = []
+                for foreign_key in foreign_keys:
+                    if foreign_key[3].casefold() != row[1].casefold():
+                        continue
+                    target_table, target_column = foreign_key[2], foreign_key[4]
+                    if target_column is None:
+                        keys = [entry[1] for entry in table_info(target_table) if entry[5]]
+                        target_column = (keys[0] if len(keys) == 1 else next(
+                            (key for key in keys if key.casefold() == row[1].casefold()), None))
+                        if target_column is None:
+                            raise ValueError(f'Unresolved SQLite foreign key: {actual}.{row[1]}')
+                    pair = (target_table, target_column)
+                    if pair not in refs:
+                        refs.append(pair)
+                tables[actual]['columns'][row[1]] = {
+                    'column_name': row[1], 'column_type': row[2], 'is_unuseful': False,
+                    'primary_key': bool(row[5]), 'foreign_keys': refs, 'description': '',
+                    'value_examples': [] if row[2].casefold() == 'blob' else None,
+                    'value_statistics': None}
+    return result
+
+
 def _prepared_items(path, benchmark):
     """Read native structured snapshots without the native arbitrary class importer."""
     path = Path(path)
@@ -223,6 +329,10 @@ def _prepared_items(path, benchmark):
     if root.resolve().parent != path.parent.resolve():
         raise ValueError('Prepared native snapshot root must be adjacent to manifest')
     items_path = root / 'items.jsonl'
+    items_hash = file_sha256(items_path)
+    expected_hash = manifest.get('preparation', {}).get('items_sha256')
+    if expected_hash is not None and items_hash != expected_hash:
+        raise ValueError('Prepared snapshot content checksum mismatch')
     cls = _types()[benchmark if benchmark in ('spider2', 'bird_interact') else 'native']
     items = {}
     for line in items_path.read_text(encoding='utf-8').splitlines():
@@ -247,7 +357,7 @@ def _prepared_items(path, benchmark):
         items[identity] = item
     if manifest.get('num_items') != len(items):
         raise ValueError('Prepared native snapshot item count mismatch')
-    return items, {'manifest_sha256': file_sha256(path), 'items_sha256': file_sha256(items_path)}
+    return items, {'manifest_sha256': file_sha256(path), 'items_sha256': items_hash}
 
 
 def _database_path(workload, db_id, db_type):
@@ -282,27 +392,34 @@ def load_items(workload, *, require_prepared=True):
     workload = load_workload(workload)
     rows = question_rows(workload)
     benchmark = workload['benchmark']
-    precomputed = benchmark == 'bird_interact' and workload.get('precompute_dir') and not workload.get('prepared_dataset')
+    dynamic = workload.get('few_shot_strategy') == 'native_dynamic'
+    prepared_path = workload.get('prepared_dataset')
+    if prepared_path and not Path(prepared_path).is_file() and not require_prepared:
+        prepared_path = None
+    precomputed = benchmark == 'bird_interact' and workload.get('precompute_dir') and not prepared_path
+    if precomputed and not require_prepared and not (Path(workload['precompute_dir'])/'run_config.json').exists():
+        precomputed = False
     if require_prepared and not workload.get('prepared_dataset') and not precomputed:
         raise ValueError('Prepared native inputs are missing; use deepeye_run.py prepare-native --workload PATH --output PATH')
-    prepared, snapshot_hashes = (_prepared_items(workload['prepared_dataset'], benchmark)
-                                 if workload.get('prepared_dataset') else ({}, {}))
+    prepared, snapshot_hashes = (_prepared_items(prepared_path, benchmark)
+                                 if prepared_path else ({}, {}))
     tables, meta_hashes, schemas = {}, {}, {}
     precompute_sources = {}
     if precomputed:
         from .precompute_pipeline import PrecomputedInputReader, read_record
         from scripts.deepeye_bird_interact_smoke import IndependentExampleReader
-        if not workload.get('few_shot_source'):
+        if not dynamic and not workload.get('few_shot_source'):
             raise ValueError('BIRD-Interact precomputation requires few_shot_source')
         reader = PrecomputedInputReader(workload['precompute_dir'])
-        examples = IndependentExampleReader(Path(workload['few_shot_source']))
+        examples = None if dynamic else IndependentExampleReader(Path(workload['few_shot_source']))
         root = Path(workload['precompute_dir'])
         inputs_record = read_record(root / 'inputs.json')
         config_record = read_record(root / 'run_config.json')
         precompute_sources = {'precompute_inputs_content_hash': inputs_record['content_hash'],
             'precompute_config_content_hash': config_record['content_hash'],
-            'precompute_semantic_config': config_record['config'],
-            'few_shot_source_sha256': examples.source_sha256}
+            'precompute_semantic_config': config_record['config']}
+        if examples is not None:
+            precompute_sources['few_shot_source_sha256'] = examples.source_sha256
     tasks, bindings = [], []
     for row in rows:
         identity, db_id = row['external_id'], row['database_id']
@@ -319,7 +436,9 @@ def load_items(workload, *, require_prepared=True):
         else:
             db_type = 'sqlite'
         db_path = _database_path(workload, db_id, db_type)
-        if prepared:
+        spider2_sqlite = benchmark == 'spider2' and db_type == 'sqlite'
+        meta_scope = (_sqlite_meta_scope(tables[db_id], db_id) if spider2_sqlite else tables[db_id])
+        if prepared_path:
             if identity not in prepared:
                 raise ValueError(f'Prepared dataset lacks original identity: {identity!r}')
             item = prepared[identity]
@@ -329,16 +448,18 @@ def load_items(workload, *, require_prepared=True):
             if ((db_type == 'sqlite' and Path(item.database_path).resolve() != Path(db_path).resolve()) or
                     (db_type != 'sqlite' and item.database_path != db_path)):
                 raise ValueError(f'Prepared database resource does not match workload: {identity!r}')
-            item.database_schema = _scope_schema(item.database_schema, tables[db_id], validate=True)
+            item.database_schema = _scope_schema(item.database_schema, meta_scope, validate=True)
             if item.database_schema_after_value_retrieval is not None:
                 item.database_schema_after_value_retrieval = _scope_schema(
-                    item.database_schema_after_value_retrieval, tables[db_id], validate=True)
+                    item.database_schema_after_value_retrieval, meta_scope, validate=True)
         else:
             cache_key = (db_id, db_type)
             if cache_key not in schemas:
                 if db_type == 'sqlite':
                     from app.db_utils.schema import load_database_schema_dict
                     schema = load_database_schema_dict(db_path)
+                    if spider2_sqlite:
+                        schema = _supplement_sqlite_meta_schema(schema, db_path, meta_scope)
                 elif db_type == 'bigquery':
                     from app.db_utils.cloud_schema import load_cloud_database_schema_dict
                     schema = load_cloud_database_schema_dict(db_id, db_type, workload['resource_root'], max_value_example_length=50)
@@ -347,7 +468,7 @@ def load_items(workload, *, require_prepared=True):
                     schema = {'db_id': db_id, 'db_path': db_id, 'db_type': db_type,
                               'tables': {name: _load_meta_table(Path(name + '.csv'), rows=list(columns.values()))
                                          for name, columns in tables[db_id].items()}}
-                schemas[cache_key] = _scope_schema(schema, tables[db_id], validate=db_type == 'postgresql')
+                schemas[cache_key] = _scope_schema(schema, meta_scope, validate=db_type == 'postgresql')
             cls = _types()[benchmark if benchmark in ('spider2', 'bird_interact') else 'native']
             fields = {key: row[key] for key in ('question_id', 'question', 'evidence', 'database_id')}
             if benchmark in ('spider2', 'bird_interact'):
@@ -357,9 +478,16 @@ def load_items(workload, *, require_prepared=True):
             item = cls(**fields, database_path=db_path, database_schema=deepcopy(schemas[cache_key]), gold_sql='')
         if precomputed:
             item = reader.load(workload['split'], identity, expected_item=item)
-            item.few_shot_examples, provenance = examples.select(item, count=3)
-            item.few_shot_preparation_metadata = {'mode': 'static_independent_bird_train',
-                                                 'num_examples': 3, 'provenance': provenance}
+            if examples is not None:
+                item.few_shot_examples, provenance = examples.select(item, count=3)
+                item.few_shot_preparation_metadata = {'mode': 'static_independent_bird_train',
+                                                     'num_examples': 3, 'provenance': provenance}
+        if dynamic and (item.few_shot_preparation_metadata or {}).get('mode') != 'native_dynamic':
+            if require_prepared:
+                raise ValueError(f'Dynamic few-shot strategy requires matching prepared examples: {identity!r}')
+            item.few_shot_examples = None
+            item.few_shot_preliminary_sql = None
+            item.few_shot_preparation_metadata = None
         if benchmark == 'spider2' and item.database_schema_after_value_retrieval is None:
             item.question_keywords, item.retrieved_values = [], {}
             item.database_schema_after_value_retrieval = deepcopy(item.database_schema)

@@ -271,10 +271,10 @@ class SamplingSession:
                 contract = manifest.get('contracts', {}).get(self.attempt['item_key'])
                 if (manifest.get('condition') == 'rc' and manifest.get('target_stage') == self.attempt['stage']
                         and contract is not None):
-                    from scripts.rc_evaluation.deepeye.contracts import render_rc_block
+                    from scripts.rc_evaluation.deepeye.injection import render_rc_block, manifest_prompt
                     item_key = self.attempt['item_key']
                     if item_key not in cp.rc_blocks:
-                        cp.rc_blocks[item_key] = render_rc_block(contract)
+                        cp.rc_blocks[item_key] = render_rc_block(contract, prompt_template=manifest_prompt(manifest))
                     block = cp.rc_blocks[item_key]
                     rc_applied = any(block in str(message.get('content', ''))
                                      for message in request_identity.get('messages', ()) if isinstance(message, dict))

@@ -14,6 +14,8 @@ from unittest.mock import patch
 import httpx
 import openai
 
+from scripts.baseline_adapters.deepeye.embedding_service import EmbeddingLimits
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "baselines/DeepEye-SQL"))
 MODULE = "scripts.baseline_adapters.deepeye.precompute_api"
 try:
@@ -71,6 +73,7 @@ class AdaptiveAPITests(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as directory:
             self.output = Path(directory)
+            kwargs.setdefault('embedding_limits', EmbeddingLimits(dimension=2, retry_delay=0))
             with patch.object(api_module.httpx, "Client", OfflineClient):
                 client = api_module.AdaptiveAPI(VALUES, self.output, **kwargs)
             try:
@@ -100,22 +103,50 @@ class AdaptiveAPITests(unittest.TestCase):
             self.assertEqual(requests[1][1]["max_tokens"], 2048)
             self.assertEqual(requests[1][1]["thinking_budget"], 1024)
             self.assertEqual(requests[1][2]["timeout"]["read"], 300)
-            self.assertTrue(all(limit.max_connections >= 600 for limit in self.pool_limits))
-            self.assertTrue(all(limit.max_keepalive_connections >= 600 for limit in self.pool_limits))
+            self.assertEqual([limit.max_connections for limit in self.pool_limits], [600, 64])
+            self.assertEqual([limit.max_keepalive_connections for limit in self.pool_limits], [600, 64])
             events = self.events()
-            self.assertEqual(len(events), 2)
-            self.assertEqual(events[1]["total_tokens"], 5)
-            self.assertEqual(events[1]["request_id"], "request-123")
-            self.assertEqual(events[1]["input_hash"], hashlib.sha256(json.dumps(
+            self.assertEqual(len(events), 1)
+            self.assertEqual(events[0]["total_tokens"], 5)
+            self.assertEqual(events[0]["request_id"], "request-123")
+            self.assertEqual(events[0]["input_hash"], hashlib.sha256(json.dumps(
                 messages, sort_keys=True, ensure_ascii=False, separators=(",", ":"),
                 allow_nan=False).encode()).hexdigest())
             self.assertNotIn("private prompt", json.dumps(events))
             self.assertEqual(api.summary()["config"]["temperature"], 0.6)
+            embedding_events = [json.loads(line) for line in
+                (self.output / 'embedding_calls.jsonl').read_text().splitlines()]
+            self.assertEqual(sum(event['kind'] == 'embedding_cache' for event in embedding_events), 1)
+            embedding_events = [event for event in embedding_events if event['kind'] == 'embedding_request']
+            self.assertEqual(len(embedding_events), 1)
+            self.assertEqual(embedding_events[0]['usage']['total_tokens'], 4)
 
     def test_empty_embedding_input_makes_no_request(self):
         with self.api(lambda _: self.fail("Empty input must not call HTTP")) as api:
             self.assertEqual(api.embed([]), [])
             self.assertEqual(api.summary()["attempts"], 0)
+
+    def test_full_chat_admission_does_not_block_shared_embedding_admission(self):
+        chat_entered, release_chat = threading.Event(), threading.Event()
+
+        def handler(request):
+            if request.url.path.endswith('embeddings'):
+                return embed_reply([[1., 2.]])
+            chat_entered.set()
+            release_chat.wait(timeout=5)
+            return chat_reply()
+
+        with self.api(handler, initial_concurrency=1, max_concurrency=1) as api:
+            with ThreadPoolExecutor(max_workers=2) as pool:
+                chat = pool.submit(api.chat, [])
+                try:
+                    self.assertTrue(chat_entered.wait(timeout=3))
+                    embedding = pool.submit(api.embed, ['independent'])
+                    self.assertEqual(embedding.result(timeout=3), [[1., 2.]])
+                    self.assertEqual(api.summary()['in_flight'], 1)
+                finally:
+                    release_chat.set()
+                self.assertEqual(chat.result(timeout=3), 'answer')
 
     def test_malformed_embeddings_are_rejected_before_return(self):
         cases = [([[1., 2.]], [0]), ([[1., 2.], [3., 4.]], [0, 0]),
@@ -346,7 +377,7 @@ class AdaptiveAPITests(unittest.TestCase):
                     api.chat([])
             self.assertEqual(api.summary()["concurrency"], 200)
 
-    def test_real_threads_share_limit_and_release_slots_after_errors(self):
+    def test_real_chat_threads_share_limit_and_release_slots_after_errors(self):
         entered = threading.Condition()
         release = threading.Event()
         state = {"active": 0, "peak": 0, "calls": 0}
@@ -367,8 +398,7 @@ class AdaptiveAPITests(unittest.TestCase):
 
         with self.api(handler, initial_concurrency=2, max_concurrency=2) as api:
             with ThreadPoolExecutor(max_workers=8) as executor:
-                futures = [executor.submit(api.chat, []) if i % 2 else executor.submit(api.embed, ["x"])
-                           for i in range(8)]
+                futures = [executor.submit(api.chat, []) for _ in range(8)]
                 try:
                     with entered:
                         self.assertTrue(entered.wait_for(lambda: state["calls"] >= 2, timeout=3))

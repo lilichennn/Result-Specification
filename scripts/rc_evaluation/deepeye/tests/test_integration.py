@@ -26,7 +26,7 @@ class NativeRCIntegrationTests(unittest.TestCase):
         from app.db_utils.execution import SQLExecutionResult
         from .test_cli import ENV, native_args
         from .test_dynamic_concurrency import AsyncClientFixture, completion
-        from .test_contracts import _record
+        from .test_contracts import _record, ROUND2
         from .test_runner import experiment_manifest
         from tests.test_deepeye_run_inheritance import make_item
         from scripts.rc_evaluation.deepeye.contracts import load_contracts
@@ -63,17 +63,31 @@ class NativeRCIntegrationTests(unittest.TestCase):
                              ['api_trace']['effective_sampling']['retained_samples'], 12)
             contract_path = root / 'contract.json'
             contract_path.write_text(json.dumps([_record('a', db_id='db', question=target.question,
-                                                        evidence=target.evidence)]))
+                evidence=target.evidence, round3_status='succeeded',
+                rc_round3={**ROUND2, 'population': 'unique-round-three'},
+                gold_sql='target-gold-sentinel', messages=['generation-message-sentinel'])]))
             data = experiment_manifest(source, condition='rc')
-            data.update(target_stage='sql_generation', contracts=load_contracts({'lite': contract_path}, tasks))
+            import hashlib
+            template = 'Frozen run definition\nFinal RC:\n<<FINAL_RC>>'
+            data.update(target_stage='sql_generation', rc_version=3, gold_corrected=True,
+                rc_prompt={'text': template, 'sha256': hashlib.sha256(template.encode()).hexdigest()},
+                contracts=load_contracts({'lite': contract_path}, tasks, rc_version=3))
             data['sources'] = {**data['sources'], 'rc_evaluation_code_sha256': cli.production_hash()}
             with RunStore.create(root / 'rc', data) as rc:
                 self.assertEqual(cli.execute_run(rc, ENV)['succeeded'], 1)
             self.assertEqual(len(sent) - native_count, 12)
+            for request in sent[native_count:]:
+                prompt = json.dumps(request)
+                self.assertIn('Frozen run definition', prompt)
+                self.assertIn('unique-round-three', prompt)
+                self.assertNotIn('target-gold-sentinel', prompt)
+                self.assertNotIn('generation-message-sentinel', prompt)
             output = io.StringIO()
             with redirect_stdout(output):
                 self.assertEqual(cli.main(['token-pairs', '--run-dir', str(root / 'rc')]), 0)
             report = json.loads(output.getvalue())
+            self.assertEqual(report['rc_version'], 3)
+            self.assertTrue(report['gold_corrected'])
             self.assertEqual(report['summary']['eligible_pairs'], 1)
             self.assertEqual(report['summary']['native_tokens']['total_tokens'], 60)
             self.assertEqual(report['summary']['rc_tokens']['total_tokens'], 60)

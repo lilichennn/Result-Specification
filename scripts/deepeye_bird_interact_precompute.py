@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import ExitStack, nullcontext
 import json
 from pathlib import Path
 import sys
@@ -19,6 +20,7 @@ sys.path.insert(0, str(BASELINE_ROOT))
 import numpy as np
 
 from scripts.baseline_adapters.deepeye.dataset import BirdInteractDataset, BirdInteractDatasetConfig
+from scripts.baseline_adapters.deepeye.embedding_service import EmbeddingService, embedding_namespace
 from scripts.baseline_adapters.deepeye.precompute_cache import VectorCache, atomic_json, fingerprint
 from scripts.baseline_adapters.deepeye.precompute_pipeline import (
     build_native_index, file_hash, item_directory, load_precomputed_item,
@@ -129,11 +131,12 @@ def sampling_identity(manifests):
             for db, manifest in manifests.items()}
 
 
-def semantic_config(env, manifests):
+def semantic_config(env, manifests, *, embedding_config=None):
     from app.pipeline.value_retrieval import utils
     return {'version': 2,
-        'embedding': {'model': env['EMBEDDING_MODEL'], 'endpoint': env['EMBEDDING_BASE_URL'].rstrip('/'),
-                      'encoding_format': 'float', 'storage': 'float32', 'local_metric': 'cosine'},
+        'embedding': (dict(embedding_config) if embedding_config is not None else {
+            'model': env['EMBEDDING_MODEL'], 'endpoint': env['EMBEDDING_BASE_URL'].rstrip('/'),
+            'encoding_format': 'float', 'storage': 'float32', 'local_metric': 'cosine'}),
         'chat': {'model': env['DASH_MODELS'], 'endpoint': env['DASH_BASE_URL'].rstrip('/'),
                  'temperature': 0.6, 'max_tokens': 2048, 'thinking_budget': 1024,
                  'parser_source_hash': file_hash(utils.__file__), 'parse_attempts': 3, 'fallback': 'fail'},
@@ -152,7 +155,8 @@ def freeze_config(root, config):
     return write_record(path, {'config': config, 'created_at': utc_now()})
 
 
-def compute(args, tasks, databases, env):
+def compute(args, tasks, databases, env, *, embedding_service=None):
+    """Prepare PG artifacts using one vector ledger; injected services stay caller-owned."""
     import resource
     import torch
     from app.vector_db.local_index import LocalValueIndex
@@ -164,25 +168,63 @@ def compute(args, tasks, databases, env):
         resource.setrlimit(resource.RLIMIT_NOFILE, (desired, hard))
     torch.set_num_threads(1)
     manifests = collect_manifests(args.output_dir, databases, args.sample_cap)
-    config = semantic_config(env, manifests)
     for manifest in manifests.values():
         source = manifest['provenance']['source']
         if source['host'] != env['PG_HOST'] or source['port'] != int(env['PG_PORT']):
             raise ValueError('Database source changed since sample collection')
-    freeze_config(args.output_dir, config)
-    freeze_inventory(args.output_dir, tasks, databases)
     chosen = tasks[:args.limit] if args.limit else tasks
     unique_documents = sorted({value for manifest in manifests.values() for col in manifest['columns'] for value in col['documents']})
     print(f'COMPUTE inputs={len(tasks)} databases={len(databases)} unique_database_texts={len(unique_documents)}', flush=True)
     api_dir = args.output_dir / 'api_runs' / utc_now().replace(':', '-').replace('.', '-')
-    with AdaptiveAPI(env, api_dir, initial_concurrency=args.initial_concurrency,
-            max_concurrency=args.max_concurrency, window_seconds=args.window_seconds) as api, \
-            VectorCache(args.output_dir / 'vectors.sqlite', config['embedding']) as cache:
+    with ExitStack() as resources:
+        if embedding_service is None:
+            frozen = args.output_dir / 'run_config.json'
+            namespace = (read_record(frozen)['config']['embedding'] if frozen.exists()
+                         else embedding_namespace(env))
+            cache = resources.enter_context(VectorCache(args.output_dir / 'vectors.sqlite', namespace))
+            embedding_service = resources.enter_context(EmbeddingService(
+                env, cache, api_dir / 'embedding_calls.jsonl'))
+        cache = embedding_service.cache
+        config = semantic_config(env, manifests, embedding_config=cache.namespace_config)
+        freeze_config(args.output_dir, config)
+        freeze_inventory(args.output_dir, tasks, databases)
+        api = resources.enter_context(AdaptiveAPI(env, api_dir,
+            initial_concurrency=args.initial_concurrency, max_concurrency=args.max_concurrency,
+            window_seconds=args.window_seconds, embedding_service=embedding_service))
+
+        def embed_texts(label, texts, purpose):
+            # The shared service handles cache hits, concurrent text deduplication,
+            # batching, request/token admission and retries. No second vector cache.
+            # Its bounded map also avoids retaining an all-database vector array.
+            batch_size = embedding_service.limits.batch_size
+            batches = (texts[start:start + batch_size] for start in range(0, len(texts), batch_size))
+            completed, failure = 0, None
+            started = last_log = time.monotonic()
+
+            def progress():
+                atomic_json(args.output_dir / f'{label}_progress.json', {
+                    'unit': 'texts', 'total': len(texts), 'completed': completed,
+                    'succeeded': completed, 'failures': {'embedding': failure} if failure else {},
+                    'updated_at': utc_now()})
+
+            try:
+                results = embedding_service.map(
+                    lambda batch: len(embedding_service.embed(batch, purpose=purpose)), batches)
+                for batch_number, count in enumerate(results, 1):
+                    completed += count
+                    now = time.monotonic()
+                    if batch_number % 25 == 0 or completed == len(texts) or now - last_log >= 15:
+                        progress()
+                        print(f'{label} {completed}/{len(texts)} texts; elapsed={now-started:.1f}s', flush=True)
+                        last_log = now
+            except Exception as exc:
+                failure = type(exc).__name__
+                raise
+            finally:
+                progress()
+
         try:
-            missing = [text for text in unique_documents if cache.get(text) is None]
-            batches = [(str(i // 20), missing[i:i+20]) for i in range(0, len(missing), 20)]
-            parallel_map('database_embeddings', batches,
-                lambda texts: len(cache.embed(texts, api.embed)), workers=args.max_concurrency, output=args.output_dir)
+            embed_texts('database_embeddings', unique_documents, 'database_values')
             index_records = {}
             for db, manifest in manifests.items():
                 index_records[db] = build_native_index(args.output_dir / 'value_index' / db, manifest, cache)
@@ -196,10 +238,7 @@ def compute(args, tasks, databases, env):
             keyword_records = parallel_map('keywords', [(f'{variant}/{item.instance_id}', (variant, item)) for variant, item in chosen],
                 keywords_for, workers=args.max_concurrency, output=args.output_dir)
             unique_keywords = sorted({text for record in keyword_records.values() for text in record['keywords']})
-            missing = [text for text in unique_keywords if cache.get(text) is None]
-            batches = [(str(i // 20), missing[i:i+20]) for i in range(0, len(missing), 20)]
-            parallel_map('keyword_embeddings', batches,
-                lambda texts: len(cache.embed(texts, api.embed)), workers=args.max_concurrency, output=args.output_dir)
+            embed_texts('keyword_embeddings', unique_keywords, 'question_keywords')
 
             indexes = {db: LocalValueIndex(args.output_dir / 'value_index' / db / 'local_index', device='cpu') for db in databases}
             def finish_item(task):
@@ -237,7 +276,7 @@ def compute(args, tasks, databases, env):
             print('API_SUMMARY', json.dumps(api.summary(), ensure_ascii=False), flush=True)
 
 
-def verify(args, tasks, databases):
+def verify(args, tasks, databases, *, embedding_service=None):
     started = time.monotonic()
     config = read_record(args.output_dir / 'run_config.json')['config']
     freeze_inventory(args.output_dir, tasks, databases)
@@ -247,7 +286,11 @@ def verify(args, tasks, databases):
     indexes = {db: verify_native_index(args.output_dir / 'value_index' / db) for db in databases}
     errors = {}
     counts = {'lite': 0, 'full': 0}
-    with VectorCache(args.output_dir / 'vectors.sqlite', config['embedding']) as cache:
+    if embedding_service is not None and embedding_service.cache.namespace_config != config['embedding']:
+        raise ValueError('Verification service embedding namespace differs from frozen configuration')
+    cache_context = (nullcontext(embedding_service.cache) if embedding_service is not None else
+                     VectorCache(args.output_dir / 'vectors.sqlite', config['embedding']))
+    with cache_context as cache:
         for db, manifest in manifests.items():
             if (indexes[db]['identity'] != native_index_identity(manifest, cache.namespace)
                     or indexes[db]['schema_hash'] != manifest['schema_hash']

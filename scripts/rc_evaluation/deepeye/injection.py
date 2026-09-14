@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from functools import wraps
 import json
+import hashlib
 from pathlib import Path
 import threading
 from typing import Any, Iterator, Mapping
@@ -14,7 +15,7 @@ from result_contract.rc import Round2RC
 
 
 _PROMPT_PATH = Path(__file__).with_name("rc_prompt.txt")
-_ROUND2_MARKER = "<<ROUND2_RC>>"
+_FINAL_MARKER = "<<FINAL_RC>>"
 _STAGES = frozenset(
     {"schema_linking", "sql_generation", "sql_revision", "sql_selection"}
 )
@@ -35,32 +36,61 @@ _INSTALL_LOCK = threading.Lock()
 _INSTALLED = False
 
 
-def _prompt_template() -> str:
+def _prompt_template(*, legacy=False) -> str:
+    path = _PROMPT_PATH.with_name('rc_prompt_legacy.txt') if legacy else _PROMPT_PATH
     try:
-        template = _PROMPT_PATH.read_text(encoding="utf-8").strip()
+        template = path.read_text(encoding="utf-8").strip()
     except OSError as error:
         raise RuntimeError(f"RC prompt definition cannot be read: {_PROMPT_PATH}") from error
-    if template.count(_ROUND2_MARKER) != 1:
-        raise RuntimeError("RC prompt definition must contain exactly one Round2 marker")
+    marker = '<<ROUND2_RC>>' if legacy else _FINAL_MARKER
+    if template.count(marker) != 1:
+        raise RuntimeError("RC prompt definition must contain exactly one final RC marker")
     return template
 
 
-def render_rc_block(contract: dict) -> str:
-    """Render only the fixed definition and the contract's final Round2 value."""
+def freeze_prompt() -> dict:
+    text = _prompt_template()
+    return {'text': text, 'sha256': hashlib.sha256(text.encode('utf-8')).hexdigest()}
+
+
+def manifest_prompt(manifest: Mapping) -> str | None:
+    frozen = manifest.get('rc_prompt')
+    if frozen is None:
+        return None
+    text = frozen['text']
+    if hashlib.sha256(text.encode('utf-8')).hexdigest() != frozen['sha256']:
+        raise ValueError('Frozen RC prompt hash mismatch')
+    return text
+
+
+def rc_labels(manifest: Mapping) -> dict:
+    version = manifest.get('rc_version', 2) if manifest.get('condition') == 'rc' else None
+    return {'rc_version': version, 'gold_corrected': version == 3}
+
+
+def render_rc_block(contract: dict, *, prompt_template: str | None = None) -> str:
+    """Render only six selected fields; legacy contracts use archived prose."""
 
     if not isinstance(contract, Mapping):
         raise TypeError("contract must be a dictionary")
     try:
-        round2 = Round2RC.from_value(contract.get("round2")).to_dict()
+        versioned = 'rc_version' in contract
+        if versioned and (type(contract['rc_version']) is not int or contract['rc_version'] not in (2, 3)):
+            raise ValueError('Unsupported RC version')
+        final_rc = Round2RC.from_value(contract.get('final_rc') if versioned else contract.get('round2')).to_dict()
     except ValueError as error:
-        raise ValueError(f"contract has no valid final Round2 RC: {error}") from error
-    serialized = json.dumps(round2, ensure_ascii=False, indent=2)
-    return _prompt_template().replace(_ROUND2_MARKER, serialized)
+        raise ValueError(f"contract has no valid final RC: {error}") from error
+    serialized = json.dumps(final_rc, ensure_ascii=False, indent=2)
+    template = prompt_template if prompt_template is not None else _prompt_template(legacy=not versioned)
+    marker = _FINAL_MARKER if _FINAL_MARKER in template else '<<ROUND2_RC>>'
+    if template.count(marker) != 1:
+        raise ValueError('RC prompt template must have exactly one final RC marker')
+    return template.replace(marker, serialized)
 
 
 @contextmanager
 def rc_context(
-    stage: str, task_key: str, contract: dict | None
+    stage: str, task_key: str, contract: dict | None, *, prompt_template: str | None = None
 ) -> Iterator[None]:
     """Bind one task's RC block to the current execution context."""
 
@@ -77,7 +107,7 @@ def rc_context(
             raise ValueError(
                 f"RC task key mismatch: context={task_key!r}, contract={contract.get('task_key')!r}"
             )
-        block = render_rc_block(dict(contract))
+        block = render_rc_block(dict(contract), prompt_template=prompt_template)
     token = _RC_BLOCK.set(block)
     try:
         yield

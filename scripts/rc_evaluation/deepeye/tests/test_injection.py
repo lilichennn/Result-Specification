@@ -70,6 +70,23 @@ When completing the current stage task, consult this RC.
 
 
 class RenderRCBlockTest(TestCase):
+    def test_native_report_is_not_labeled_as_an_rc2_experiment(self):
+        from scripts.rc_evaluation.deepeye.injection import rc_labels
+        self.assertEqual(rc_labels({'format': 'deepeye-run-v2'}),
+                         {'rc_version': None, 'gold_corrected': False})
+
+    def test_explicit_final_value_and_frozen_template_override_live_definition(self):
+        contract = {**_contract(), 'rc_version': 3,
+                    'final_rc': {**ROUND2, 'population': 'unique-round-three'}}
+        block = render_rc_block(contract, prompt_template='frozen-definition\nFinal RC:\n<<FINAL_RC>>')
+        self.assertTrue(block.startswith('frozen-definition\nFinal RC:'))
+        self.assertIn('unique-round-three', block)
+        self.assertNotIn('eligible entities', block)
+
+    def test_explicit_version_cannot_render_legacy_round2_without_final_value(self):
+        with self.assertRaises(ValueError):
+            render_rc_block({**_contract(), 'rc_version': 3})
+
     def test_fixed_definition_contains_only_six_meanings_final_rc_and_request(self) -> None:
         contract = _contract()
 

@@ -13,6 +13,7 @@ def build_parser():
         if name == 'configure':
             sub.add_argument('--env-file', type=Path, required=True)
             sub.add_argument('--workload', type=Path)
+            sub.add_argument('--rc-version', type=int, choices=(2, 3))
             for field in ('precompute-dir', 'few-shot-source', 'rc-lite', 'rc-full'):
                 sub.add_argument('--' + field, type=Path)
             sub.add_argument('--tail-fraction', type=float, default=.8)
