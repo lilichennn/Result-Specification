@@ -87,8 +87,8 @@ class VectorCache:
 
     def get_many(self, texts):
         texts = list(texts)
-        if any(not isinstance(text, str) or not text for text in texts):
-            raise ValueError('Embedding input must be nonempty text')
+        if any(not isinstance(text, str) for text in texts):
+            raise ValueError('Embedding input must be text')
         hashes = {fingerprint(text): text for text in dict.fromkeys(texts)}
         found = dict.fromkeys(texts)
         with self._lock:
@@ -111,8 +111,8 @@ class VectorCache:
 
     def put_many(self, texts, vectors):
         texts = list(texts)
-        if any(not isinstance(text, str) or not text for text in texts):
-            raise ValueError('Embedding input must be nonempty text')
+        if any(not isinstance(text, str) for text in texts):
+            raise ValueError('Embedding input must be text')
         if not texts:
             return
         with self._lock, self._connection:

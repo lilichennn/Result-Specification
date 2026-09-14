@@ -28,6 +28,31 @@ class DynamicPreparationTests(unittest.TestCase):
         self.assertEqual(pools, [4])
         self.assertEqual(build.call_args.kwargs['parallelism'], 16)
 
+    def test_incomplete_native_value_index_stops_before_keyword_requests(self):
+        from app.dataset.utils import load_dataset, save_dataset
+        from scripts.baseline_adapters.deepeye.workload_preparation import prepare_native
+        env = {'DASH_MODELS': 'test', 'DASH_BASE_URL': 'https://example.test/v1', 'DASH_API_KEY': 'key'}
+        for index_succeeds in (False, True):
+            with self.subTest(index_succeeds=index_succeeds), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                path, _ = self.fixture(root)
+                source = root/'prepared.snapshot'
+                dataset = load_dataset(str(source))
+                for item in dataset:
+                    item.database_schema_after_value_retrieval = None
+                save_dataset(dataset, str(source))
+                output = root/'ready.snapshot'
+                # Keep the real native database wrapper and its success_flag
+                # handling; replace only the expensive column-index builder.
+                with patch('runner.create_vector_db_parallel.make_vector_db', return_value=index_succeeds), \
+                     patch('app.pipeline.value_retrieval.value_retrieval.ValueRetrievalRunner.from_config',
+                           side_effect=RuntimeError('reached value retrieval')), \
+                     patch('socket.socket.connect', side_effect=AssertionError('no paid calls')):
+                    expected = 'reached value retrieval' if index_succeeds else 'incomplete.*db'
+                    with self.assertRaisesRegex(RuntimeError, expected):
+                        prepare_native(path, output, env, workers=1, embedding_service=lambda texts: [])
+                self.assertFalse(output.exists(), 'unfinished preparation must not be published')
+
     def test_preparation_cli_accepts_several_workloads_without_requiring_one_output(self):
         from scripts.deepeye_run import _build_parser
         args = _build_parser().parse_args(['prepare-native', '--workload', 'a.json',

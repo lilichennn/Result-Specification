@@ -140,6 +140,13 @@ Existing successful native VR and few-shot inputs are retained on continuation.
                     min(workers, 16), config.run_config.embedding_batch_size, config.run_config.progress_log_interval,
                     database_parallelism=min(workers, 4),
                     **({'embedding_function': embedding_service} if embedding_service is not None else {}))
+                # The native batch builder logs failures instead of raising.
+                # Respect its completion markers before starting paid VR work.
+                incomplete = sorted({Path(path).stem for path in dataset.get_all_database_paths()
+                    if path.endswith('.sqlite') and Path(path).exists()
+                    and not (vector_root/Path(path).stem/'success_flag').is_file()})
+                if incomplete:
+                    raise RuntimeError('Native value index preparation incomplete: ' + ', '.join(incomplete))
             from app.pipeline.value_retrieval.value_retrieval import ValueRetrievalRunner
             runner = ValueRetrievalRunner.from_config(config,
                 **({'embedding_function': embedding_service} if embedding_service is not None else {}))

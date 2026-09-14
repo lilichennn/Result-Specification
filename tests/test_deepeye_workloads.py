@@ -487,15 +487,15 @@ class WorkloadTests(unittest.TestCase):
                     item.few_shot_examples = [{'question': 'independent', 'sql': 'SELECT 1'}]
             fake_llm = SimpleNamespace(llm_config=config.value_retrieval_config.llm, _client=Mock())
             with patch.object(entry, 'build_runtime_config', return_value=config), \
-                 patch('runner.create_vector_db_parallel.run_vector_db_creation', autospec=True) as build, \
+                 patch('runner.create_vector_db_parallel.make_vector_db', return_value=True), \
                  patch('app.pipeline.value_retrieval.value_retrieval.get_embedding_function', return_value=lambda **kw: []), \
                  patch('app.pipeline.value_retrieval.value_retrieval.LLM', return_value=fake_llm), \
                  patch.object(ValueRetrievalRunner, '_extract_keywords', return_value=([], {'prompt_tokens': 1, 'completion_tokens': 1, 'total_tokens': 2})), \
                  patch.object(ValueRetrievalRunner, '_get_local_value_index', return_value=object()), \
                  patch('scripts.baseline_adapters.deepeye.workload_preparation._prepare_examples', side_effect=examples), \
                  patch('socket.socket.connect', side_effect=AssertionError('network forbidden')):
-                result = prepare_native(workload, root/'ready.snapshot', env, workers=1)
-            self.assertEqual(build.call_count, 1)
+                result = prepare_native(workload, root/'ready.snapshot', env, workers=1,
+                                        embedding_service=lambda texts: [])
             self.assertEqual(result['prepared'], 2)
             tasks, _, _ = workloads.load_items({**workload, 'prepared_dataset': str(root/'ready.snapshot')})
             self.assertEqual([item.question_id for _, item in tasks], [7, 19])

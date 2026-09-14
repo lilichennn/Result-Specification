@@ -85,6 +85,44 @@ class EmbeddingServiceTests(unittest.TestCase):
     def request_rows(self):
         return [row for row in self.rows() if row['kind'] == 'embedding_request']
 
+    def test_empty_and_whitespace_inputs_deduplicate_verbatim_and_reuse_persistent_cache(self):
+        vectors = {'+': [1., 2.], '-': [3., 4.], '': [5., 6.],
+                   '+(': [7., 8.], ' ': [9., 10.], '\t\n': [11., 12.]}
+        calls = []
+        def create(**kwargs):
+            texts = kwargs['input']
+            calls.append(texts)
+            if '' in texts and texts != ['']:
+                raise EndpointError(400, 'Empty strings must be embedded in their own request')
+            return SimpleNamespace(data=[SimpleNamespace(index=index, embedding=vectors[text])
+                                         for index, text in reversed(list(enumerate(texts)))],
+                                   usage=SimpleNamespace(prompt_tokens=len(texts), total_tokens=len(texts)))
+        service, _ = self.service(create)
+        try:
+            actual = service(['+', '-', '', '+(', ' ', '', '\t\n', ' '])
+        except (ValueError, EndpointError) as error:
+            self.fail(f'Valid verbatim string values were rejected: {error}')
+        np.testing.assert_equal(actual, [[1., 2.], [3., 4.], [5., 6.], [7., 8.],
+                                         [9., 10.], [5., 6.], [11., 12.], [9., 10.]])
+        self.assertCountEqual(calls, [[''], ['+', '-', '+(', ' ', '\t\n']])
+        self.assertEqual(self.cache.count(), 6)
+        service.close()
+        with VectorCache(self.root / 'vectors.sqlite', self.namespace) as reopened:
+            client = FakeClient(lambda **_: self.fail('Persisted verbatim text was embedded again'))
+            with service_module.EmbeddingService(ENV, reopened, self.root / 'reopened.jsonl',
+                    limits=self.limits, client=client) as second:
+                np.testing.assert_equal(second([' ', '', '\t\n', '']),
+                                        [[9., 10.], [5., 6.], [11., 12.], [5., 6.]])
+
+    def test_nonstring_inputs_are_rejected_before_embedding_requests(self):
+        service, _ = self.service(lambda **_: self.fail('Nonstring input reached the endpoint'))
+        for invalid in (None, 0, False, b'', [], {}):
+            with self.subTest(invalid=invalid):
+                with self.assertRaises(ValueError):
+                    service(['valid', invalid])
+                self.assertEqual(self.cache.count(), 0)
+        self.assertEqual(self.request_rows(), [])
+
     def test_overlapping_calls_deduplicate_pending_text_and_preserve_order(self):
         release, two_batches = threading.Event(), threading.Event()
         lock, calls = threading.Lock(), []

@@ -330,6 +330,10 @@ class EmbeddingService:
             batch, estimate = [], 0
             target = min(self.limits.input_tokens_per_second, self.limits.input_tokens_per_minute)
             for text, tokens in owned:
+                # The provider accepts empty text alone but rejects mixed batches.
+                if text == '':
+                    self._queue.append(_Batch([text], tokens, purpose, time.monotonic(), uuid.uuid4().hex))
+                    continue
                 if batch and (len(batch) == self.limits.batch_size or estimate + tokens > target):
                     self._queue.append(_Batch(batch, estimate, purpose, time.monotonic(), uuid.uuid4().hex))
                     batch, estimate = [], 0

@@ -17,6 +17,32 @@ except ModuleNotFoundError as exc:
 
 
 class VectorCacheTests(unittest.TestCase):
+    def test_empty_and_whitespace_strings_roundtrip_verbatim(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / 'vectors.sqlite'
+            with self.cache(path) as cache:
+                try:
+                    cache.put_many(['', ' ', '\t\n', '+'],
+                                   [[1., 2.], [3., 4.], [5., 6.], [7., 8.]])
+                except ValueError as error:
+                    self.fail(f'Valid verbatim string values were rejected: {error}')
+                self.assertEqual(cache.count(), 4)
+            with self.cache(path) as reopened:
+                np.testing.assert_equal(reopened.read([' ', '', '+', '\t\n', '']),
+                                        [[3., 4.], [1., 2.], [7., 8.], [5., 6.], [1., 2.]])
+
+    def test_nonstring_inputs_are_rejected_before_cache_mutation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with self.cache(Path(temp) / 'vectors.sqlite') as cache:
+                for invalid in (None, 0, False, b'', [], {}):
+                    with self.subTest(invalid=invalid):
+                        with self.assertRaises(ValueError):
+                            cache.get_many(['valid', invalid])
+                        with self.assertRaises(ValueError):
+                            cache.put_many(['valid', invalid], [[1., 2.], [3., 4.]])
+                        self.assertEqual(cache.count(), 0)
+                        self.assertIsNone(cache.dimension)
+
     def test_bulk_reads_and_writes_preserve_existing_format_and_validate_atomically(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / 'vectors.sqlite'
