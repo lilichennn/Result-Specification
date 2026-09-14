@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import logging
-import os
 import re
 import time
 from dataclasses import asdict, dataclass
@@ -22,7 +21,8 @@ ROUND1_FIELDS = (
 PROMPT_DIR = Path(__file__).resolve().parent
 DEFAULT_CONFIG_PATH = Path(__file__).resolve().parents[2] / "config" / ".env"
 DEFAULT_MAX_ATTEMPTS = 3
-DEFAULT_TIMEOUT_SECONDS = 600
+DEFAULT_TIMEOUT_SECONDS = 900
+MODEL_ALIASES = ("qwen38", "kimik3", "gpt56", "opus48")
 LOGGER = logging.getLogger(__name__)
 
 
@@ -98,37 +98,59 @@ def generate_round1(
 
 def call_model(
     messages: Sequence[Mapping[str, str]],
+    llm: str,
     config_path: str | Path = DEFAULT_CONFIG_PATH,
     timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
 ) -> str:
     """Call the OpenAI-compatible endpoint configured in code/config/.env once."""
-    _load_env(Path(config_path))
-    base_url = os.environ["DASH_BASE_URL"].rstrip("/")
-    api_key = os.environ["DASH_API_KEY"]
-    model = os.environ["DASH_MODELS"]
+    model_config = _load_model_config(llm, Path(config_path))
     payload = json.dumps(
         {
-            "model": model,
+            "model": model_config["model"],
             "messages": [dict(message) for message in messages],
             "temperature": 0,
+            "stream": True,
         },
         ensure_ascii=False,
     ).encode("utf-8")
     request = Request(
-        f"{base_url}/chat/completions",
+        model_config["url"],
         data=payload,
         headers={
-            "Authorization": f"Bearer {api_key}",
+            "Authorization": f"Bearer {model_config['api_key']}",
+            "Accept": "text/event-stream",
             "Content-Type": "application/json",
         },
     )
+    content_parts: list[str] = []
     with urlopen(request, timeout=timeout_seconds) as response:
-        result = json.load(response)
-    try:
-        content = result["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError) as exc:
-        raise ValueError("model response does not contain choices[0].message.content") from exc
-    if not isinstance(content, str) or not content.strip():
+        for raw_line in response:
+            line = raw_line.decode("utf-8").strip()
+            if not line or line.startswith(":") or not line.startswith("data:"):
+                continue
+            data = line[5:].strip()
+            if data == "[DONE]":
+                break
+            try:
+                event = json.loads(data)
+            except json.JSONDecodeError as exc:
+                raise ValueError("model stream contains invalid JSON") from exc
+            if isinstance(event, Mapping) and event.get("error"):
+                raise RuntimeError(f"model stream error: {event['error']}")
+            if not isinstance(event, Mapping):
+                raise ValueError("model stream event must be a JSON object")
+            choices = event.get("choices")
+            if not choices:
+                continue
+            try:
+                content = choices[0]["delta"].get("content")
+            except (KeyError, TypeError, AttributeError) as exc:
+                raise ValueError("model stream choice has no delta") from exc
+            if isinstance(content, str):
+                content_parts.append(content)
+
+    content = "".join(content_parts)
+    if not content.strip():
         raise ValueError("model returned empty content")
     return content
 
@@ -170,12 +192,29 @@ def _load_prompt(filename: str) -> str:
     return prompt_path.read_text(encoding="utf-8").strip()
 
 
-def _load_env(path: Path) -> None:
+@lru_cache(maxsize=None)
+def _load_model_config(llm: str, path: Path) -> dict[str, str]:
+    if llm not in MODEL_ALIASES:
+        raise ValueError(f"Unknown LLM alias: {llm!r}")
     if not path.is_file():
         raise FileNotFoundError(f"LLM config not found: {path}")
+    config: dict[str, str] = {}
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
         key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+        config[key.strip()] = value.strip().strip('"').strip("'")
+
+    prefix = config.get(llm)
+    if not prefix:
+        raise ValueError(f"Missing model alias in .env: {llm}")
+    required = (prefix, f"{prefix}_API_KEY", f"{prefix}_BASE_URL")
+    missing = [key for key in required if not config.get(key)]
+    if missing:
+        raise ValueError(f"Missing model configuration keys: {missing}")
+    return {
+        "model": config[prefix],
+        "api_key": config[f"{prefix}_API_KEY"],
+        "url": config[f"{prefix}_BASE_URL"].rstrip("/") + "/chat/completions",
+    }

@@ -1,0 +1,35 @@
+You correct an existing six-dimensional Result Contract using the benchmark GOLD SQL as an oracle.
+
+Round 3 is a semantic correction pass, not a new contract-generation pass. Keep the same six fields, abstraction level, and information budget as Round 2. GOLD SQL is the sole authority for the benchmark's operational result semantics.
+
+Before producing the answer, independently compare every Round-2 field with the result semantics expressed by GOLD SQL. Preservation is allowed only after that field has been checked. If GOLD SQL and an existing Round-2 commitment disagree, you must correct the field. "Minimal correction" means changing only the conflicting meaning; it does not mean preferring no change when a conflict exists.
+
+Check the six dimensions as follows:
+
+- population: compare the target entity, every membership condition, Boolean relation, negation or existence requirement, and the scope of each condition. Distinguish conditions on the returned population from conditions used only to construct a reference population.
+- row_grain: compare whether the result is global, per entity, per group, per event, or a fixed number of selected rows. Account for semantic distinctness, grouping, aggregation, and the shape of the selected output.
+- column_role: compare the semantic objects and measures actually returned by the SELECT list. An entity used to identify, filter, join, rank, or contextualize a measure is not automatically a returned output. Remove a Round-2 output role when GOLD SQL does not return it, and restore one when GOLD SQL clearly returns it.
+- derivation: compare whether the returned value is a stored per-row value, an arithmetic expression, an aggregate across rows, or a count of entities. In particular, do not preserve SUM, AVG, COUNT, DISTINCT, or a recomputation claim when GOLD SQL operationalizes the result differently.
+- filter_policy: compare ranking, extrema, top-k, ordering, set selection, and other selection applied after population formation.
+- meta_review: revise only a concrete metadata conclusion whose semantic consequence is contradicted by GOLD SQL. Otherwise preserve it.
+
+A disagreement shown by projection, aggregation, DISTINCT or GROUP BY, predicate scope, ORDER BY, LIMIT, or set logic is a real result-level conflict when it changes one of the dimensions above. Do not dismiss such a conflict merely because the Round-2 wording is linguistically plausible from the question.
+
+Use QUESTION and EVIDENCE only to name and verbalize the semantic concepts implemented by GOLD SQL. They are not authorities for result semantics in Round 3 and must never override GOLD SQL. When QUESTION, EVIDENCE, or Round 2 conflicts with GOLD SQL because of ambiguity, annotation noise, or benchmark construction artifacts, align the contract with GOLD SQL while expressing the correction in natural semantic language. This is correction, not enrichment.
+
+Do not turn SQL implementation into contract information. Never add table names, column names, aliases, join paths, CTEs, subqueries, SQL syntax, casts, helper projections, or schema-linking details merely because they occur in GOLD SQL. Express every correction at the same semantic level as the Round-2 contract.
+
+Do not add a semantic detail that neither corrects nor replaces an existing Round-2 commitment. Do not make a correct broad statement more specific just because GOLD SQL contains implementation detail. Equivalent SQL implementations are not contract differences unless they alter the result semantics represented by the six fields.
+
+If all six fields agree after the independent comparison, copy Round 2 unchanged. Never mention GOLD SQL, oracle correction, Round 3, or the review process inside the contract.
+
+Return exactly one JSON object with these six string fields:
+
+- population
+- row_grain
+- column_role
+- derivation
+- filter_policy
+- meta_review
+
+Output JSON only, with no Markdown or commentary.
