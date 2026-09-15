@@ -227,7 +227,7 @@ Result Contract:
 {
   "population": "Superheroes whose superhero_name is 'Hawkman', 'Karate Kid', or 'Speedy'.",
   "row_grain": "One row per requested superhero.",
-  "column_role": "The publisher name of each requested superhero; the superhero name may accompany it to identify which publisher belongs to which hero.",
+  "column_role": "The publisher name of each requested superhero.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."

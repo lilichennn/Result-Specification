@@ -182,31 +182,27 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,County Name,School Name,Charter Funding Type]
-Table satscores, columns = [*,cds,sname,cname,NumTstTakr]
-Table schools, columns = [*,CDSCode,County,School,City,FundingType]
+Table frpm, columns = [*,CDSCode,County Name,Charter Funding Type]
+Table satscores, columns = [*,cds,cname,NumTstTakr]
+Table schools, columns = [*,CDSCode,County,FundingType]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "County Name", "School Name", "Charter Funding Type"]):
-[["01100170109835", "Alameda", "FAME Public Charter", "Directly funded"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "Directly funded"], ["01100170118489", "Alameda", "Aspire California College Preparatory Academy", "Directly funded"]]
+Sample rows from frpm (columns: ["CDSCode", "County Name", "Charter Funding Type"]):
+[["01100170109835", "Alameda", "Directly funded"], ["01100170112607", "Alameda", "Directly funded"], ["01100170118489", "Alameda", "Directly funded"]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County Name: column description -> County Code , value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column Charter Funding Type: column description -> Charter Funding Type, value description -> 
-Sample rows from satscores (columns: ["cds", "sname", "cname", "NumTstTakr"]):
-[["1100170000000", null, "Alameda", 88], ["1100170109835", "FAME Public Charter", "Alameda", 17], ["1100170112607", "Envision Academy for Arts & Technology", "Alameda", 71]]
+Sample rows from satscores (columns: ["cds", "cname", "NumTstTakr"]):
+[["1100170000000", "Alameda", 88], ["1100170109835", "Alameda", 17], ["1100170112607", "Alameda", 71]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
 Column cname: column description -> county name, value description -> 
 Column NumTstTakr: column description -> Number of Test Takers in this school, value description -> number of test takers in each school
-Sample rows from schools (columns: ["CDSCode", "County", "School", "City", "FundingType"]):
-[["01100170000000", "Alameda", null, "Hayward", null], ["01100170109835", "Alameda", "FAME Public Charter", "Newark", "Directly funded"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "Oakland", "Directly funded"]]
+Sample rows from schools (columns: ["CDSCode", "County", "FundingType"]):
+[["01100170000000", "Alameda", null], ["01100170109835", "Alameda", "Directly funded"], ["01100170112607", "Alameda", "Directly funded"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
-Column School: column description -> School, value description -> 
-Column City: column description -> City, value description -> 
 Column FundingType: column description -> Indicates the charter school funding type, value description -> Values are as follows:
 
 ·       Not in CS (California School) funding model

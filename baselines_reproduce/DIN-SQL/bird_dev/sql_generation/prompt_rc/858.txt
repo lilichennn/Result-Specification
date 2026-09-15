@@ -286,11 +286,11 @@ Schema_links: [constructors.nationality,constructorResults.points,constructorRes
 Result Contract:
 {
   "population": "Constructors that earned exactly 1 point in the race with raceId 24.",
-  "row_grain": "One constructor that earned 1 point in race No. 24.",
+  "row_grain": "One row for each constructor that earned exactly 1 point in race No. 24.",
   "column_role": "The constructor’s nationality, representing the country it is from.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that a constructor’s country is represented by constructors.nationality. Round-1 population and grain are preserved."
+  "meta_review": "Metadata confirms that a constructor’s country is represented by its nationality."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

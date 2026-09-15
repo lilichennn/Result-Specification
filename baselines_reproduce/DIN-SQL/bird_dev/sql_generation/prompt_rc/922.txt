@@ -285,12 +285,12 @@ Hint:
 Schema_links: [races.time,races.year,circuits.name,races.circuitId = circuits.circuitId,2010,Abu Dhabi Circuit]
 Result Contract:
 {
-  "population": "Formula 1 races held at the Abu Dhabi Circuit in the year 2010.",
+  "population": "Formula 1 race events in 2010 named the Abu Dhabi Grand Prix.",
   "row_grain": "One Formula 1 race event.",
-  "column_role": "The local time at which the race took place.",
+  "column_role": "The date and local time at which the race took place.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows that race events, not qualifying records, own the event time, so the row grain is a race event and the output is the race time. This validates the requested time as the race event’s local time rather than qualifying or driver finish times."
+  "meta_review": "Metadata shows that race events, not qualifying records, own the event date and time, so the row grain is a race event and the output is the race date and time. This validates the requested temporal information as the race event’s date and local time rather than qualifying or driver finish times."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

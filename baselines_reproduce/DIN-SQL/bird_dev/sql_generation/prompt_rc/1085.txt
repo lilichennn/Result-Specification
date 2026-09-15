@@ -415,12 +415,12 @@ Hint: player who perform best in crossing actions refers to MAX(crossing);
 Schema_links: [Player.player_name,Player_Attributes.crossing,Player_Attributes.player_api_id = Player.player_api_id,Alexis,Ariel Borysiuk,Arouna Kone]
 Result Contract:
 {
-  "population": "Players who are one of the three named candidates: Alexis, Ariel Borysiuk, or Arouna Kone.",
-  "row_grain": "One player, namely the single candidate selected as the best crossing performer.",
-  "column_role": "The identity (name) of the selected player.",
-  "derivation": "A recorded player crossing score for each candidate is used as the comparison measure; higher crossing score indicates better crossing performance.",
-  "filter_policy": "Select the single player with the maximum crossing value (argmax over crossing) among the candidates.",
-  "meta_review": "Metadata confirms Player_Attributes.crossing is the player's crossing score and that higher values indicate better crossing performance, resolving the metric owner and comparison direction."
+  "population": "Players named Alexis, Ariel Borysiuk, or Arouna Kone who have a recorded crossing score available for comparison.",
+  "row_grain": "One selected candidate, namely the best crossing performer, returned as a single row with the player's name and crossing score.",
+  "column_role": "The selected player's name and the crossing score used to identify the best performer.",
+  "derivation": "The crossing score is taken directly from the selected recorded score; no aggregate is computed, and higher values indicate better crossing performance.",
+  "filter_policy": "Select the single candidate with the highest crossing score; if multiple recorded scores tie for the highest value, one row is returned without a specified tie-breaker.",
+  "meta_review": "Metadata confirms that crossing is the player's crossing score and that higher values indicate better crossing performance, resolving the metric owner and comparison direction."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

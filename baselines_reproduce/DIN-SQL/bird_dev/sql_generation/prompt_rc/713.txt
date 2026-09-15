@@ -251,9 +251,9 @@ Hint: commented "R is also lazy evaluated." refers to Text of the comment;
 Schema_links: [users.UpVotes,comments.Text,comments.UserId = users.Id,"R is also lazy evaluated."]
 Result Contract:
 {
-  "population": "Users who authored at least one comment whose text is exactly \"R is also lazy evaluated.\"",
-  "row_grain": "One row per qualifying user.",
-  "column_role": "The up vote number of the qualifying user.",
+  "population": "Comments whose text is exactly \"R is also lazy evaluated.\" and that have an associated author.",
+  "row_grain": "One row per qualifying comment.",
+  "column_role": "The up vote number of the author of the qualifying comment.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata confirms users.UpVotes is a stored user-level upvote count, validating that the requested up vote number is an attribute of the comment author."

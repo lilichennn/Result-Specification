@@ -183,22 +183,14 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
-Table disp, columns = [*,account_id,type]
 Table district, columns = [*,district_id,A3]
 Table loan, columns = [*,account_id]
-Foreign_keys = [account.district_id = district.district_id,disp.account_id = account.account_id,loan.account_id = account.account_id]
+Foreign_keys = [account.district_id = district.district_id,loan.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
 [[1, 18], [2, 1], [3, 5]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from disp (columns: ["account_id", "type"]):
-[[1, "OWNER"], [2, "OWNER"], [2, "DISPONENT"]]
-Column descriptions and value descriptions for disp:
-Column account_id: column description -> id number of account, value description -> 
-Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
-commonsense evidence:
-the account can only have the right to issue permanent orders or apply for loans
 Sample rows from district (columns: ["district_id", "A3"]):
 [[1, "Prague"], [2, "central Bohemia"], [3, "central Bohemia"]]
 Column descriptions and value descriptions for district:

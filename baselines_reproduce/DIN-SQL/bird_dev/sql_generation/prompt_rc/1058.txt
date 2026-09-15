@@ -491,12 +491,12 @@ Hint: finishing rate refers to finishing; highest average finishing rate = MAX(A
 Schema_links: [Player.player_name,Player.height,Player_Attributes.finishing,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "Football players whose height equals the maximum height or the minimum height among all football players, i.e., the tallest player and the shortest player form the candidate set.",
-  "row_grain": "One football player, the single candidate selected from the tallest/shortest pair.",
-  "column_role": "The identity (name) of the selected football player.",
-  "derivation": "For each candidate player, an average finishing rate defined as the average of that player's finishing values.",
-  "filter_policy": "Return the candidate with the highest average finishing rate (argmax over the tallest and shortest players); tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "The two candidate groups of football players: those whose height equals the maximum height among all players and those whose height equals the minimum height among all players.",
+  "row_grain": "One selected height-extreme category, rather than one individual player.",
+  "column_role": "The identity of the selected height-extreme category (maximum-height group or minimum-height group).",
+  "derivation": "For each candidate category, the average finishing rate computed as the average of all finishing values associated with players in that category.",
+  "filter_policy": "Return the candidate category with the highest average finishing rate; tie handling is unspecified.",
+  "meta_review": "The result identifies the taller or shorter height-extreme category, not an individual player's name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

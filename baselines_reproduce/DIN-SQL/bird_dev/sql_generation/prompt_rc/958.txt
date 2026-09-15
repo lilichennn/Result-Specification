@@ -285,12 +285,12 @@ Hint:
 Schema_links: [drivers.forename,drivers.surname,lapTimes.milliseconds,lapTimes.driverId = drivers.driverId]
 Result Contract:
 {
-  "population": "All drivers who have a recorded lap time; no eligibility conditions restrict which drivers or laps are considered.",
-  "row_grain": "One driver, namely the single driver identified as having the fastest lap time.",
-  "column_role": "The driver's forename(s) and the driver's surname.",
+  "population": "Drivers whose race result records a fastest lap time.",
+  "row_grain": "A single selected row identifying the driver and the fastest lap time.",
+  "column_role": "The driver's forename(s), the driver's surname, and the fastest lap time.",
   "derivation": "none",
-  "filter_policy": "Select the driver whose lap-time duration is the minimum (fastest) among all recorded lap times, comparing durations by their numeric millisecond representation rather than formatted text; tie handling is not specified.",
-  "meta_review": "Metadata documents lapTimes.milliseconds as the numeric duration of a lap, alongside formatted lapTimes.time. The filter therefore compares lap times by numeric millisecond duration rather than text."
+  "filter_policy": "Select exactly one row by choosing the smallest recorded fastest lap time among the considered rows; tie handling is not specified.",
+  "meta_review": "The fastest lap time recorded with the driver’s performance is the duration used for ranking; the result does not depend on a separate millisecond representation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

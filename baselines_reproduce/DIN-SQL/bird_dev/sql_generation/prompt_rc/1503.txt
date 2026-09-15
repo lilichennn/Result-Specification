@@ -182,12 +182,12 @@ Hint:
 Schema_links: [products.Description,customers.Currency,transactions_1k.ProductID = products.ProductID,transactions_1k.CustomerID = customers.CustomerID,'EUR']
 Result Contract:
 {
-  "population": "Products that were bought in at least one transaction conducted in euro, with euro status determined by the currency of the transaction's associated customer.",
-  "row_grain": "One product bought in a euro transaction.",
-  "column_role": "The product description of each qualifying product.",
+  "population": "Products that were bought in at least one transaction whose associated customer's currency is euro.",
+  "row_grain": "One distinct qualifying product, represented by its product identifier and description.",
+  "column_role": "The product identifier and product description of each qualifying product.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows customers.Currency is the only currency representation, so euro-transaction eligibility is resolved through the associated customer's currency."
+  "meta_review": "Metadata shows the customer's currency is the only currency representation, so euro-transaction eligibility is resolved through the associated customer's currency."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

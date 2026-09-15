@@ -296,12 +296,12 @@ Hint: normal level of anti-ribonuclear protein refers to RNP = '-', '+-'; And'-'
 Schema_links: [Laboratory.RNP,Patient.Admission,Patient.ID,Laboratory.ID = Patient.ID,'-','+-','+']
 Result Contract:
 {
-  "population": "Patients whose patient-level Admission status is '+' (admitted to the hospital) and who have a normal anti-ribonuclear protein (RNP) laboratory value, i.e., RNP equals '-' (negative) or '+-' (0).",
+  "population": "Patients with a laboratory anti-ribonuclear protein (RNP) value of 'negative', regardless of admission status, together with patients whose RNP value is '0' and whose patient-level Admission status is '+' (admitted to the hospital).",
   "row_grain": "One global summary row for the entire eligible patient population.",
   "column_role": "A single value: the number of qualifying patients.",
-  "derivation": "Count the eligible patients, counting each patient only once even if they have multiple qualifying records.",
+  "derivation": "Count the eligible patients, counting each patient only once even if they have multiple qualifying laboratory records.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies RNP as Laboratory.RNP and Admission as Patient.Admission, validating that eligibility combines a laboratory RNP value with a patient-level admission status. This supports counting distinct patients rather than laboratory-test records."
+  "meta_review": "Metadata still supports counting distinct patients rather than laboratory-test records, but the admission condition is operationally limited to the RNP value '0'; a 'negative' RNP value qualifies without admission."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

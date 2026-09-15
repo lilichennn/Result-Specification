@@ -248,12 +248,12 @@ Hint: Percentage of male clients = [count(male clients who requested weekly stat
 Schema_links: [client.client_id,client.gender,account.frequency,client.client_id = disp.client_id,disp.account_id = account.account_id,'M','POPLATEK TYDNE']
 Result Contract:
 {
-  "population": "Eligible clients are those associated with an account whose statement issuance frequency is weekly ('POPLATEK TYDNE'); the target subpopulation is male clients (gender = 'M') among them, and the reference population is all eligible clients.",
+  "population": "Eligible records are client-account associations in which the linked account has weekly statement issuance ('POPLATEK TYDNE'); the target subpopulation is associations whose client is male (gender = 'M'), and the reference population is all such associations.",
   "row_grain": "One global summary row representing the entire reference population.",
-  "column_role": "A single value: the percentage of male clients among clients who requested weekly statements.",
-  "derivation": "Compute (count of male clients who requested weekly statements / count of all clients who requested weekly statements) * 100.",
+  "column_role": "A single value: the percentage of qualifying weekly-statement client-account associations whose client is male.",
+  "derivation": "Compute a real-valued percentage as (number of qualifying associations whose client is male / number of all qualifying associations) * 100, counting each qualifying association once and not deduplicating clients.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that weekly statement issuance is the account frequency value 'POPLATEK TYDNE' and male is client gender 'M'. This resolves the weekly-statement condition as an account-level setting while keeping clients as the counted entity."
+  "meta_review": "Metadata establishes weekly statement issuance as the account frequency value 'POPLATEK TYDNE' and male as client gender 'M'. The weekly-statement condition remains an account-level setting, but the counted units are qualifying client-account associations rather than distinct clients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

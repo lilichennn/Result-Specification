@@ -297,12 +297,12 @@ Hint: Story Spotlight card refers to isStorySpotlight = 1; French is the languag
 Schema_links: [cards.id,foreign_data.language,cards.isStorySpotlight,foreign_data.uuid = cards.uuid,French,1]
 Result Contract:
 {
-  "population": "All cards that are Story Spotlight cards (isStorySpotlight = 1) form the reference population; the target subpopulation is those Story Spotlight cards whose language is French.",
-  "row_grain": "One global summary row for the entire Story Spotlight card population.",
-  "column_role": "The percentage of Story Spotlight cards whose language is French.",
-  "derivation": "Percentage = (count of distinct Story Spotlight cards with language French divided by count of all Story Spotlight cards) multiplied by 100.",
+  "population": "Foreign-language entries associated with Story Spotlight cards form the reference population; the target subpopulation is those entries whose language is French.",
+  "row_grain": "One global summary row for the entire Story Spotlight foreign-language entry population.",
+  "column_role": "The percentage of Story Spotlight foreign-language entries whose language is French.",
+  "derivation": "Percentage = (count of Story Spotlight foreign-language entries with French language divided by count of all Story Spotlight foreign-language entries) multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes cards.id as the card identity from foreign_data.id as a row identifier for foreign-language data, so the numerator counts distinct Story Spotlight cards rather than language rows. The denominator remains all Story Spotlight cards."
+  "meta_review": "The counting unit is a foreign-language entry associated with a Story Spotlight card, not a distinct card; therefore the denominator counts all such language entries and the numerator counts only French entries."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

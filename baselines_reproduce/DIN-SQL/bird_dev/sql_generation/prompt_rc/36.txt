@@ -352,12 +352,12 @@ Hint: full name means first name, last name; There are at most 3 administrators 
 Schema_links: [schools.AdmFName1,schools.AdmLName1,schools.AdmFName2,schools.AdmLName2,schools.AdmFName3,schools.AdmLName3,satscores.NumGE1500,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools, each with its number of students scoring 1500 or more on the SAT (NumGE1500), form the candidate set; the reported entities are the administrators of the school selected from this set.",
-  "row_grain": "One administrator of the selected school, with one row per administrator (a school may have up to three administrators).",
-  "column_role": "The administrator's full name, consisting of first name and last name.",
-  "derivation": "For each school, the number of its students scoring 1500 or more on the SAT (NumGE1500) is the metric on which schools are compared.",
+  "population": "Schools with a reported number of students scoring 1500 or more on the SAT form the candidate set; the result reports the administrators of the single school selected from this set.",
+  "row_grain": "One row for the selected school, containing full-name information for its administrators (up to three administrators).",
+  "column_role": "The first and last names of the selected school's administrators, providing full names for up to three administrators.",
+  "derivation": "For each school, the number of its students scoring 1500 or more on the SAT is the metric on which schools are compared.",
   "filter_policy": "Argmax: select the school with the highest number of students scoring 1500 or more on the SAT; tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

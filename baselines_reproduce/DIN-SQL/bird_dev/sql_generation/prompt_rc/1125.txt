@@ -419,8 +419,8 @@ Result Contract:
   "row_grain": "One player, namely the single selected eldest player.",
   "column_role": "The player's name.",
   "derivation": "none",
-  "filter_policy": "Select the one player with the maximum age, where age is the difference between the current local timestamp and the player's birthday.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select the one player with the earliest birthday, i.e., the eldest among the qualified players.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

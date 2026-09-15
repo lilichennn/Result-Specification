@@ -486,10 +486,10 @@ Result Contract:
 {
   "population": "All players are eligible; no membership conditions restrict the set.",
   "row_grain": "One row representing the single player identified as the tallest.",
-  "column_role": "The player's height and the player's name.",
+  "column_role": "The player's name.",
   "derivation": "none",
   "filter_policy": "Select the player whose height is the maximum among all players (argmax on height); tie handling is unspecified.",
-  "meta_review": "Player.height is a player-level integer attribute, and Player.player_name stores the player's name. This validates that the requested height and name are owned by the Player entity."
+  "meta_review": "Player.height is a player-level integer attribute, and Player.player_name stores the player's name. This validates that the returned name and the height used for ranking are owned by the Player entity."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

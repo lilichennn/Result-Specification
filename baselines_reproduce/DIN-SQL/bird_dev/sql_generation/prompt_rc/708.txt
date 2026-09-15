@@ -251,12 +251,12 @@ Hint: commented with webiste refers to the value contains 'http://'
 Schema_links: [users.CreationDate,users.Age,comments.Text,comments.UserId = users.Id,http://]
 Result Contract:
 {
-  "population": "Users who have at least one comment whose text contains 'http://'.",
-  "row_grain": "One row per user who commented with a website.",
-  "column_role": "The user's creation date and the user's age.",
+  "population": "Comments whose text contains 'http://', together with the user who made each such comment.",
+  "row_grain": "One row per qualifying comment, so the same user may appear more than once if they made multiple qualifying comments.",
+  "column_role": "The associated user's creation date and age.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,11 +183,11 @@ Schema_links: [gasstations.Country,transactions_1k.Date,transactions_1k.Time,tra
 Result Contract:
 {
   "population": "Deal/transaction records whose date is 2012-08-24 and whose time is 12:42:00.",
-  "row_grain": "One deal/transaction record occurring at the specified date and time.",
+  "row_grain": "One row per matching deal/transaction record occurring at the specified date and time.",
   "column_role": "The country of the gas station where the deal occurred.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes gasstations.Country as the country attribute, so the requested country is the country of the gas station associated with the matching deal/transaction."
+  "meta_review": "The requested country is the country attribute of the gas station associated with the matching deal/transaction."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

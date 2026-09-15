@@ -307,11 +307,11 @@ Schema_links: [member.first_name,member.last_name,member.phone,expense.cost,expe
 Result Contract:
 {
   "population": "Members who have at least one expense record whose cost is greater than the average cost computed across all expense records.",
-  "row_grain": "One row per member who has at least one above-average expense.",
+  "row_grain": "One distinct row per member who has at least one above-average expense.",
   "column_role": "The member's full name (first name and last name) and the member's contact number (phone).",
   "derivation": "The average expense cost over all expense records must be computed as the threshold for the above-average comparison.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

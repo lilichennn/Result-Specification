@@ -182,20 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,Tags]
-Table tags, columns = [*,Id,TagName,Count]
+Table tags, columns = [*,Id,TagName]
 Foreign_keys = []
-Sample rows from posts (columns: ["Id", "Tags"]):
-[[1, "<bayesian><prior><elicitation>"], [2, "<distributions><normality>"], [3, "<software><open-source>"]]
-Column descriptions and value descriptions for posts:
-Column Id: column description -> the post id, value description -> 
-Column Tags: column description -> the tag of the post, value description -> 
-Sample rows from tags (columns: ["Id", "TagName", "Count"]):
-[[1, "bayesian", 1342], [2, "prior", 168], [3, "elicitation", 6]]
+Sample rows from tags (columns: ["Id", "TagName"]):
+[[1, "bayesian"], [2, "prior"], [3, "elicitation"]]
 Column descriptions and value descriptions for tags:
 Column Id: column description -> the tag id, value description -> 
 Column TagName: column description -> the name of the tag, value description -> 
-Column Count: column description -> the count of posts that contain this tag, value description -> more counts --> this tag is more popular
 
 Q: Count the number of posts with a tag specified as 'careers'.
 Hint: tag specified as 'careers' refers to TagName = 'careers';

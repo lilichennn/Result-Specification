@@ -296,12 +296,12 @@ Hint: The larger the birthday value, the younger the person is, and vice versa; 
 Schema_links: [Examination.Symptoms,Examination.Diagnosis,Patient.Birthday,Examination.ID = Patient.ID]
 Result Contract:
 {
-  "population": "Patients who have undergone at least one medical examination.",
-  "row_grain": "Each row represents one recorded medical examination of the selected youngest patient for which the symptoms value is not NULL, carrying the observed symptoms and the diagnosis of that patient.",
+  "population": "Medical examination records linked to patients, where the examination has observed symptoms (symptoms is not NULL).",
+  "row_grain": "A single selected medical examination record, carrying the observed symptoms and the diagnosis of the associated patient.",
   "column_role": "The observed symptoms, where observed means the symptoms value is not NULL, and the diagnosis of that patient.",
   "derivation": "none",
-  "filter_policy": "Restrict the result to the single youngest eligible patient, defined as argmax on the patient's Birthday value since a larger Birthday means a younger person; within that patient, retain only medical-examination records whose symptoms value is not NULL. Tie handling is unspecified.",
-  "meta_review": "Metadata confirms Birthday belongs to Patient and Symptoms belongs to Examination. Therefore youngest selection is by Patient.Birthday and result rows are Examination records with non-NULL Symptoms."
+  "filter_policy": "Among examination records with observed symptoms, choose exactly one record belonging to the youngest patient, defined by the largest Birthday value; if several patients tie or the chosen patient has several such records, the returned record is unspecified.",
+  "meta_review": "Metadata confirms Birthday belongs to Patient and Symptoms belongs to Examination. Youngest selection is by Patient.Birthday, and the result is a single Examination record with non-NULL Symptoms."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -192,7 +192,7 @@ Result Contract:
   "column_role": "The total number of qualifying atoms.",
   "derivation": "Count the atoms belonging to the carcinogenic (label '+') molecules.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms molecule.label is the carcinogenic flag and atom.molecule_id links each atom to its molecule. This validates the Round-1 population and count without refinement."
+  "meta_review": "Metadata confirms molecule.label is the carcinogenic flag and atom.molecule_id links each atom to its molecule. This validates the population and count without refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

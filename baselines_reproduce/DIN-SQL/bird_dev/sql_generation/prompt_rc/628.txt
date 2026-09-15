@@ -327,10 +327,10 @@ Hint: users have the highest number of views refer to DisplayName where MAX(View
 Schema_links: [users.DisplayName,users.Views]
 Result Contract:
 {
-  "population": "All users are eligible; no membership conditions restrict the set.",
+  "population": "All users are eligible; no membership conditions restrict the base set.",
   "row_grain": "One user per result row.",
-  "column_role": "The user's display name (DisplayName) identifying each user with the highest views.",
-  "derivation": "Each user's number of views (Views) is the stored user-level metric used for comparison across users.",
+  "column_role": "The user's identifier and display name (DisplayName) identifying each user with the highest views.",
+  "derivation": "The returned identifier and display name are stored per-row user attributes; each user's number of views (Views) is the stored user-level metric used for comparison across users.",
   "filter_policy": "Retain only the user(s) whose view count equals the maximum view count across all users (argmax, including ties).",
   "meta_review": "Metadata confirms users.Views is an integer view count owned by each user, resolving the metric's grain and stored nature. It also confirms DisplayName on the user entity is the requested user display name."
 }

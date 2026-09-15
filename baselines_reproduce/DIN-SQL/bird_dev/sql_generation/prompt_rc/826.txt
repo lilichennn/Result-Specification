@@ -229,8 +229,8 @@ Result Contract:
   "row_grain": "One superhero, namely the single heaviest one.",
   "column_role": "The superhero_name of the superhero.",
   "derivation": "none",
-  "filter_policy": "Among superheroes with a known weight (weight_kg is not NULL and not 0), select the superhero with the maximum weight_kg.",
-  "meta_review": "Metadata states superhero.weight_kg NULL or 0 means missing weight, so the maximum-weight selection is restricted to non-missing weights. It also confirms superhero_name, not full_name, is the requested superhero name."
+  "filter_policy": "Among superheroes whose publisher is DC Comics, select the superhero with the maximum weight_kg.",
+  "meta_review": "The requested identifier is superhero_name, not full_name; the selection is based on maximum weight_kg without an additional known-weight or non-zero restriction."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

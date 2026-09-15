@@ -251,12 +251,12 @@ Hint: user no. 24 refers to UserId = OwnerUserId = '24'; times of his/her post t
 Schema_links: [posts.Id,posts.OwnerUserId,votes.Id,votes.UserId,24]
 Result Contract:
 {
-  "population": "Posts owned by the user with OwnerUserId = '24' and votes cast by the user with UserId = '24'.",
+  "population": "Vote-post pairs for user No. 24, where each pair consists of a vote cast by user No. 24 and a post owned by user No. 24.",
   "row_grain": "One global summary row for user No. 24.",
-  "column_role": "The numeric value of how many times the user's post count is compared to the user's vote count.",
-  "derivation": "Divide the count of the user's posts by the count of votes cast by the user, i.e., Count(posts) / Count(votes) for user '24'.",
+  "column_role": "The numeric ratio of post occurrences to distinct votes represented in those vote-post pairs.",
+  "derivation": "Divide the count of post occurrences in the vote-post pairs by the count of distinct votes represented in those pairs for user No. 24.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms votes.UserId identifies the voter and posts.OwnerUserId identifies the post owner, so the contract counts posts owned by user No. 24 and votes cast by that user."
+  "meta_review": "Metadata confirms the voter and post-owner roles, so the summary is based on user-specific vote-post pairs for user No. 24."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

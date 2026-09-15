@@ -367,11 +367,11 @@ Schema_links: [cards.subtypes,cards.supertypes,cards.name,'Molimo,Maro-Sorcerer'
 Result Contract:
 {
   "population": "The card whose name is 'Molimo, Maro-Sorcerer'.",
-  "row_grain": "One row for the card 'Molimo, Maro-Sorcerer'.",
+  "row_grain": "One row for each distinct combination of the card's subtypes and supertypes.",
   "column_role": "The card's subtypes and the card's supertypes, together constituting its list of all types.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.subtypes and cards.supertypes are card-level list fields, and cards.supertypes explicitly notes that the list of all types is the union of subtypes and supertypes. This validates returning those two values for the named card without expanding list elements."
+  "meta_review": "Metadata confirms subtypes and supertypes are card-level list fields, and supertypes explicitly notes that the list of all types is the union of subtypes and supertypes. This validates returning those two values for the named card without expanding list elements."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

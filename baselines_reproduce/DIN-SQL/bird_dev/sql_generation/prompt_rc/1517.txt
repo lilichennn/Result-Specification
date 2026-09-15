@@ -182,11 +182,11 @@ Hint:
 Schema_links: [customers.Segment,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID]
 Result Contract:
 {
-  "population": "All customers are eligible; no membership conditions are stated.",
-  "row_grain": "One customer.",
+  "population": "Transaction records associated with customers; only customers having at least one transaction are eligible.",
+  "row_grain": "One selected transaction record, returning the linked customer's segment.",
   "column_role": "The customer's client segment.",
   "derivation": "none",
-  "filter_policy": "Select the single earliest customer (argmin over customers on a temporal attribute); the specific time attribute that defines 'earliest' is not determined by the question.",
+  "filter_policy": "Select the single earliest transaction record by transaction date and return the associated customer's segment.",
   "meta_review": "Metadata distinguishes customers.Segment as the client segment, so the requested output is the customer's segment rather than a similarly named gas-station segment."
 }
 

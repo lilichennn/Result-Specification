@@ -420,7 +420,7 @@ Result Contract:
   "column_role": "A single value representing the number of qualifying matches.",
   "derivation": "Count the matches belonging to the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Match has its own country_id referencing Country.name, validating that 'held in Belgium' is a match-level country condition. No other Round-1 semantics changed."
+  "meta_review": "Metadata confirms that the match's country is a match-level attribute, validating that 'held in Belgium' is a match-level country condition. No other semantics changed."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

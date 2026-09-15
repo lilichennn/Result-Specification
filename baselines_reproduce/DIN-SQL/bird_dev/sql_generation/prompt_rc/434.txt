@@ -297,12 +297,12 @@ Hint: Japanese refers to language = 'Japanese'; not in Magic: The Gathering Onli
 Schema_links: [sets.id,sets.mtgoCode,set_translations.language,set_translations.setCode = sets.code,'Japanese','']
 Result Contract:
 {
-  "population": "Sets whose language is 'Japanese' and that are not available on Magic: The Gathering Online, meaning their mtgoCode is null or an empty string.",
+  "population": "Sets that are available in Japanese and that are not available on Magic: The Gathering Online, meaning their MTGO code is null or an empty string.",
   "row_grain": "One global summary row for the entire qualifying set population.",
   "column_role": "A single value representing the number of qualifying sets.",
   "derivation": "Count the sets belonging to the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms sets.mtgoCode being null or empty means the set is not available on Magic: The Gathering Online. No other Round-1 semantics required change."
+  "meta_review": "Metadata confirms that a null or empty MTGO code means the set is not available on Magic: The Gathering Online."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

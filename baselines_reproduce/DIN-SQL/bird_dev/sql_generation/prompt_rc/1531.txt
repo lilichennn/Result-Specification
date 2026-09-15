@@ -258,12 +258,12 @@ Hint: average price per single item = Total(price) / Total(amount)
 Schema_links: [customers.CustomerID,customers.Currency,transactions_1k.Price,transactions_1k.Amount,transactions_1k.CustomerID = customers.CustomerID]
 Result Contract:
 {
-  "population": "All customers are eligible, with no Boolean membership conditions restricting which customers or their purchases are considered.",
-  "row_grain": "One summary row representing the single top-spending customer.",
-  "column_role": "The identity of the top-spending customer, the average price per single item purchased by that customer, and the currency associated with that customer.",
-  "derivation": "Each customer's total spending is the sum of total price over that customer's purchases, where total price for a purchase is Amount × Price. The average price per single item for the selected customer is the customer's total price divided by the customer's total amount.",
-  "filter_policy": "Select the single customer with the highest total spending, computed as the sum of Amount × Price over that customer's purchases.",
-  "meta_review": "Metadata for transactions_1k.Price states total price = Amount × Price, resolving total spending and average price per item as sums of Amount × Price divided by Amount. Metadata also places Currency on customers, validating that the selected customer's currency is the requested currency."
+  "population": "The returned population is limited to the customer chosen from the consumption records as the highest-consumption customer. The consumption records are used only to identify that customer; the purchase records considered for the returned measure are only the selected customer's purchases.",
+  "row_grain": "One aggregate summary row representing the selected customer and the currency associated with that customer.",
+  "column_role": "The identity of the selected customer, the requested average price per single item for that customer, and the currency associated with that customer.",
+  "derivation": "The customer identity and currency are returned as stored attributes. The requested average price per single item is computed by dividing the price by the amount for each of the selected customer's purchases and summing those values.",
+  "filter_policy": "Select the single customer with the greatest recorded consumption value from the consumption history, not by recomputing spending from purchases, and then aggregate only that customer's purchases.",
+  "meta_review": "Metadata should be understood as placing currency on the customer and using recorded consumption for top-customer selection. It does not make the result depend on amount times price or on total price divided by total amount."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

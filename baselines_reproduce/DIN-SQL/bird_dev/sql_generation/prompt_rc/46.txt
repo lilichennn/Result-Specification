@@ -352,12 +352,12 @@ Hint: State Special Schools refers to DOC = 31; Grades 1 through 12 means K-12
 Schema_links: [schools.School,schools.DOC,frpm.`Enrollment (K-12)`,frpm.CDSCode = schools.CDSCode,31]
 Result Contract:
 {
-  "population": "Schools that are State Special Schools, i.e., DOC = 31.",
-  "row_grain": "One row per qualifying state special school.",
-  "column_role": "The identity (name) of each state special school having the highest enrollment; the enrollment count is the ranking measure, not a required output column.",
-  "derivation": "For each school, the number of enrollees in grades 1 through 12, which the evidence equates with the school's K-12 enrollment.",
-  "filter_policy": "Argmax: retain only the school(s) whose grades 1-12 (K-12) enrollment equals the maximum among state special schools; no tie-breaking, ordering, or limit beyond that is specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "State Special Schools (DOC = 31) that have a corresponding K-12 enrollment record.",
+  "row_grain": "A single row for the one selected state special school.",
+  "column_role": "The identity (name) of the selected state special school; the K-12 enrollment is only the ranking measure and is not returned.",
+  "derivation": "The returned school identity is a stored attribute; the selection measure is the stored K-12 enrollment value, interpreted as grades 1-12 enrollees.",
+  "filter_policy": "Top-1 selection by descending K-12 enrollment; exactly one school is returned, with no specified tie-breaking.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

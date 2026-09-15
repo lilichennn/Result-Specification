@@ -296,12 +296,12 @@ Hint: female refers to SEX = 'F'; white blood cells that were below 3.5 refers t
 Schema_links: [Patient.ID,Patient.SEX,Laboratory.WBC,Patient.ID = Laboratory.ID,'F',3.5]
 Result Contract:
 {
-  "population": "Female patients (SEX = 'F') who have a white blood cell measurement below 3.5 (WBC < 3.5); both conditions must hold.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The count of qualifying patients.",
-  "derivation": "Count the distinct patients satisfying the population conditions.",
+  "population": "Laboratory-test occurrences for female patients (SEX = 'F') where the white blood cell measurement is below 3.5 (WBC < 3.5); both conditions must hold.",
+  "row_grain": "One global summary row for the qualifying laboratory-test occurrences.",
+  "column_role": "The count of qualifying laboratory-test occurrences for female patients.",
+  "derivation": "Count the qualifying patient-laboratory occurrences; repeated occurrences are counted separately rather than collapsed to distinct patients.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows SEX is patient-level in Patient and WBC is a laboratory-test measurement in Laboratory. The count is therefore over female patients with a qualifying WBC measurement, not over laboratory-test rows."
+  "meta_review": "SEX is patient-level and WBC is a laboratory-test measurement. The result counts qualifying laboratory-test occurrences for female patients, not unique patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,20 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table budget, columns = [*,budget_id,spent,remaining,amount,event_status,link_to_event]
+Table budget, columns = [*,remaining,event_status,link_to_event]
 Table event, columns = [*,event_id,event_name,status]
-Table expense, columns = [*,cost,link_to_budget]
-Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id]
-Sample rows from budget (columns: ["budget_id", "spent", "remaining", "amount", "event_status", "link_to_event"]):
-[["rec0QmEc3cSQFQ6V2", 67.81, 7.19, 75, "Closed", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", 121.14, 28.86, 150, "Closed", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", 20.2, -0.199999999999999, 20, "Closed", "recJ4Witp9tpjaugn"]]
+Foreign_keys = [budget.link_to_event = event.event_id]
+Sample rows from budget (columns: ["remaining", "event_status", "link_to_event"]):
+[[7.19, "Closed", "recI43CzsZ0Q625ma"], [28.86, "Closed", "recggMW2eyCYceNcy"], [-0.199999999999999, "Closed", "recJ4Witp9tpjaugn"]]
 Column descriptions and value descriptions for budget:
-Column budget_id: column description -> A unique identifier for the budget entry, value description -> 
-Column spent: column description -> The total amount spent in the budgeted category for an event., value description -> the unit is dollar. This is summarized from the Expense table
 Column remaining: column description -> A value calculated as the amount budgeted minus the amount spent, value description -> the unit is dollar 
 commonsense evidence: If the remaining < 0, it means that the cost has exceeded the budget.
-Column amount: column description -> The amount budgeted for the specified category and event, value description -> the unit is dollar 
-commonsense evidence:
-some computation like: amount = spent + remaining 
 Column event_status: column description -> the status of the event, value description -> Closed / Open/ Planning 
 commonsense evidence: 
  Closed: It means that the event is closed. The spent and the remaining won't change anymore.
@@ -208,11 +202,6 @@ Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
 Column status: column description -> One of three values indicating if the event is in planning, is opened, or is closed, value description -> Open/ Closed/ Planning
-Sample rows from expense (columns: ["cost", "link_to_budget"]):
-[[122.06, "recvKTAWAFKkVNnXQ"], [20.2, "recy8KY5bUdzF81vv"], [51.81, "recwXIiKoBMjXJsGZ"]]
-Column descriptions and value descriptions for expense:
-Column cost: column description -> The dollar amount of the expense, value description -> the unit is dollar
-Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table
 
 Q: Indicate the name of the closed event whose cost has exceeded the budget the most.
 Hint: closed events refers to event_name where status = 'Closed'; exceed the budget the most refers to MIN(remaining) where remaining < 0

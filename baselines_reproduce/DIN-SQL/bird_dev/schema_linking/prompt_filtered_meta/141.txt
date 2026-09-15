@@ -183,31 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
-Table client, columns = [*,client_id,district_id]
-Table disp, columns = [*,client_id,account_id]
-Table district, columns = [*,district_id,A2]
+Table district, columns = [*,district_id]
 Table trans, columns = [*,trans_id,account_id,date,amount]
-Foreign_keys = [account.district_id = district.district_id,client.district_id = district.district_id,disp.client_id = client.client_id,disp.account_id = account.account_id,trans.account_id = account.account_id]
+Foreign_keys = [account.district_id = district.district_id,trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
 [[1, 18], [2, 1], [3, 5]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from client (columns: ["client_id", "district_id"]):
-[[1, 18], [2, 1], [3, 1]]
-Column descriptions and value descriptions for client:
-Column client_id: column description -> the unique number, value description -> 
-Column district_id: column description -> location of branch, value description -> 
-Sample rows from disp (columns: ["client_id", "account_id"]):
-[[1, 1], [2, 2], [3, 2]]
-Column descriptions and value descriptions for disp:
-Column client_id: column description -> id number of client, value description -> 
-Column account_id: column description -> id number of account, value description -> 
-Sample rows from district (columns: ["district_id", "A2"]):
-[[1, "Hl.m. Praha"], [2, "Benesov"], [3, "Beroun"]]
+Sample rows from district (columns: ["district_id"]):
+[[1], [2], [3]]
 Column descriptions and value descriptions for district:
 Column district_id: column description -> location of branch, value description -> 
-Column A2: column description -> district_name, value description -> 
 Sample rows from trans (columns: ["trans_id", "account_id", "date", "amount"]):
 [[1, 1, "1995-03-24", 1000], [5, 1, "1995-04-13", 3679], [6, 1, "1995-05-13", 3679]]
 Column descriptions and value descriptions for trans:

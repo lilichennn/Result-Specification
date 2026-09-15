@@ -363,8 +363,8 @@ Result Contract:
 {
   "population": "Drivers who have at least one recorded lap time in a Formula 1 race.",
   "row_grain": "One driver per result row.",
-  "column_role": "The driver's full name, composed of forename and surname.",
-  "derivation": "Each driver's shortest lap time ever recorded in a Formula 1 race, defined as the minimum of that driver's recorded lap times (MIN(time)).",
+  "column_role": "The driver's forename and surname, which together form the full name, and the driver identifier.",
+  "derivation": "The returned driver identity fields are stored driver attributes; each driver's shortest lap time is derived as the minimum lap-time duration across that driver's recorded lap times and is used for ranking rather than returned as a separate output.",
   "filter_policy": "Retain the top 20 drivers ranked by their shortest-ever lap time, ascending (smallest minimum lap time first).",
   "meta_review": "Metadata confirms lapTimes.time is described as a race lap-time measurement linked to drivers, validating the use of recorded race lap times for the minimum."
 }

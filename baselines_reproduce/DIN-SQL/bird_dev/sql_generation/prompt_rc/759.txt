@@ -225,12 +225,12 @@ Hint: the heaviest superhero refers to MAX(weight_kg); eye colour refers to colo
 Schema_links: [colour.colour,superhero.weight_kg,superhero.eye_colour_id = colour.id]
 Result Contract:
 {
-  "population": "Superheroes whose weight_kg is not missing (weight_kg is not NULL and not 0) are eligible candidates.",
-  "row_grain": "One result row representing the single superhero selected as the heaviest.",
-  "column_role": "The eye colour (colour value) of the selected superhero.",
+  "population": "Superheroes with a resolvable eye colour are candidates; no condition excludes zero or missing weights from candidacy.",
+  "row_grain": "One result row representing the eye colour of the single superhero selected as the heaviest.",
+  "column_role": "The eye colour of the selected superhero.",
   "derivation": "none",
-  "filter_policy": "Select the superhero with the maximum non-missing weight_kg (weight_kg is not NULL and not 0); tie handling is unspecified.",
-  "meta_review": "Metadata states superhero.weight_kg is missing when NULL or 0, so the maximum-weight selection ignores missing weights. It also confirms colour.colour is the eye-colour value linked through superhero.eye_colour_id."
+  "filter_policy": "Select one candidate by ordering candidates by weight from largest to smallest and taking the first; tie handling is unspecified.",
+  "meta_review": "The returned value is the colour associated with the superhero's eye colour reference. The heaviest selection is a descending-weight single selection and does not exclude zero weights as missing."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

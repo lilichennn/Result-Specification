@@ -184,9 +184,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId]
 Table races, columns = [*,raceId,date]
-Table results, columns = [*,raceId,driverId,time,statusId]
-Table status, columns = [*,statusId,status]
-Foreign_keys = [results.statusId = status.statusId,results.driverId = drivers.driverId,results.raceId = races.raceId]
+Table results, columns = [*,resultId,raceId,driverId,time]
+Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId"]):
 [[452], [625], [103]]
 Column descriptions and value descriptions for drivers:
@@ -196,18 +195,13 @@ Sample rows from races (columns: ["raceId", "date"]):
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column date: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "time", "statusId"]):
-[[18, 1, "1:34:50.616", 1], [18, 2, "+5.478", 1], [18, 3, "+8.163", 1]]
+Sample rows from results (columns: ["resultId", "raceId", "driverId", "time"]):
+[[1, 18, 1, "1:34:50.616"], [2, 18, 2, "+5.478"], [3, 18, 3, "+8.163"]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 Column time: column description -> , value description -> 
-Column statusId: column description -> , value description -> 
-Sample rows from status (columns: ["statusId", "status"]):
-[[1, "Finished"], [2, "Disqualified"], [3, "Accident"]]
-Column descriptions and value descriptions for status:
-Column statusId: column description -> , value description -> 
-Column status: column description -> , value description -> 
 
 Q: For the race happened on 2015/11/29, how many drivers finished the game?
 Hint: game and race are synonyms; drivers who finished the race should have record in time;

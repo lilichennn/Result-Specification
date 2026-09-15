@@ -183,43 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
-Table district, columns = [*,district_id,A2]
-Table trans, columns = [*,trans_id,account_id,date,type,operation,amount,balance,k_symbol,bank,account]
-Foreign_keys = [account.district_id = district.district_id,trans.account_id = account.account_id]
+Table trans, columns = [*,trans_id,account_id]
+Foreign_keys = [trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
 [[1, 18], [2, 1], [3, 5]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from district (columns: ["district_id", "A2"]):
-[[1, "Hl.m. Praha"], [2, "Benesov"], [3, "Beroun"]]
-Column descriptions and value descriptions for district:
-Column district_id: column description -> location of branch, value description -> 
-Column A2: column description -> district_name, value description -> 
-Sample rows from trans (columns: ["trans_id", "account_id", "date", "type", "operation", "amount", "balance", "k_symbol", "bank", "account"]):
-[[1, 1, "1995-03-24", "PRIJEM", "VKLAD", 1000, 1000, null, null, null], [5, 1, "1995-04-13", "PRIJEM", "PREVOD Z UCTU", 3679, 4679, null, "AB", 41403269], [6, 1, "1995-05-13", "PRIJEM", "PREVOD Z UCTU", 3679, 20977, null, "AB", 41403269]]
+Sample rows from trans (columns: ["trans_id", "account_id"]):
+[[1, 1], [5, 1], [6, 1]]
 Column descriptions and value descriptions for trans:
 Column trans_id: column description -> transaction id, value description -> 
 Column account_id: column description -> , value description -> 
-Column date: column description -> date of transaction, value description -> 
-Column type: column description -> +/- transaction, value description -> "PRIJEM" stands for credit
-"VYDAJ" stands for withdrawal
-Column operation: column description -> mode of transaction, value description -> "VYBER KARTOU": credit card withdrawal
-"VKLAD": credit in cash
-"PREVOD Z UCTU" :collection from another bank
-"VYBER": withdrawal in cash
-"PREVOD NA UCET": remittance to another bank
-Column amount: column description -> amount of money, value description -> Unit：USD
-Column balance: column description -> balance after transaction, value description -> Unit：USD
-Column k_symbol: column description -> , value description -> "POJISTNE": stands for insurrance payment
-"SLUZBY": stands for payment for statement
-"UROK": stands for interest credited
-"SANKC. UROK": sanction interest if negative balance
-"SIPO": stands for household
-"DUCHOD": stands for old-age pension
-"UVER": stands for loan payment
-Column bank: column description -> , value description -> each bank has unique two-letter code
-Column account: column description -> , value description -> 
 
 Q: Please list all the transactions made by accounts from district 5.
 A: Let’s think step by step.

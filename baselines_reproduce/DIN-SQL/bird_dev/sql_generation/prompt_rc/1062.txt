@@ -415,12 +415,12 @@ Hint: overall_rating > 80; from 2008 to 2010 refers to strftime('%Y', date) BETW
 Schema_links: [Player.player_name,Player_Attributes.overall_rating,Player_Attributes.date,Player.player_api_id = Player_Attributes.player_api_id,80,2008,2010]
 Result Contract:
 {
-  "population": "Players who have at least one overall rating record with overall_rating > 80 whose rating date falls in the years 2008 through 2010 inclusive.",
-  "row_grain": "One row per qualifying player.",
+  "population": "Player names of players who have at least one overall rating record with overall_rating > 80 whose rating date falls in the years 2008 through 2010 inclusive.",
+  "row_grain": "One row per distinct qualifying player name.",
   "column_role": "The player's name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Player_Attributes.date and overall_rating confirm that ratings are dated player-attribute records, while Player.player_name provides the requested name. This validates the Round-1 population and one-row-per-player grain."
+  "meta_review": "Dated overall rating records confirm the 2008 through 2010 qualification, and the requested output is the player name. This validates the population and one-row-per-distinct-player-name grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

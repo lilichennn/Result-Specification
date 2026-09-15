@@ -376,9 +376,9 @@ Result Contract:
   "population": "All cards with status = 'Banned', each associated with its play format.",
   "row_grain": "One row per banned card belonging to the selected play format.",
   "column_role": "The play format and the name of each banned card in that format.",
-  "derivation": "For each play format, the count of cards with status = 'Banned'.",
-  "filter_policy": "Retain only the play format(s) whose banned-card count equals the maximum across all formats (argmax); tie handling is not specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The returned play format and card name are stored values; the per-format banned-card count is computed only to select the top format.",
+  "filter_policy": "Retain exactly one play format with the highest banned-card count; tie handling is not specified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

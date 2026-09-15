@@ -185,9 +185,9 @@ Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,circuitRef,name,country]
 Table drivers, columns = [*,driverId]
 Table lapTimes, columns = [*,raceId,driverId,time,milliseconds]
-Table pitStops, columns = [*,raceId,driverId,duration,milliseconds]
-Table races, columns = [*,raceId,year,circuitId,name]
-Table results, columns = [*,raceId,driverId,rank,fastestLapTime]
+Table pitStops, columns = [*,raceId,driverId,stop,duration,milliseconds]
+Table races, columns = [*,raceId,circuitId,name]
+Table results, columns = [*,resultId,raceId,driverId,fastestLapTime]
 Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId,pitStops.driverId = drivers.driverId,pitStops.raceId = races.raceId,races.circuitId = circuits.circuitId,results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from circuits (columns: ["circuitId", "circuitRef", "name", "country"]):
 [[2, "sepang", "Sepang International Circuit", "Malaysia"], [3, "bahrain", "Bahrain International Circuit", "Bahrain"], [4, "catalunya", "Circuit de Barcelona-Catalunya", "Spain"]]
@@ -207,26 +207,26 @@ Column raceId: column description -> , value description ->
 Column driverId: column description -> , value description -> 
 Column time: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
-Sample rows from pitStops (columns: ["raceId", "driverId", "duration", "milliseconds"]):
-[[841, 1, "23.227", 23227], [841, 1, "23.199", 23199], [841, 2, "22.994", 22994]]
+Sample rows from pitStops (columns: ["raceId", "driverId", "stop", "duration", "milliseconds"]):
+[[841, 1, 1, "23.227", 23227], [841, 1, 2, "23.199", 23199], [841, 2, 1, "22.994", 22994]]
 Column descriptions and value descriptions for pitStops:
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
+Column stop: column description -> , value description -> 
 Column duration: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "circuitId", "name"]):
-[[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 17, "Chinese Grand Prix"]]
+Sample rows from races (columns: ["raceId", "circuitId", "name"]):
+[[1, 1, "Australian Grand Prix"], [2, 2, "Malaysian Grand Prix"], [3, 17, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Column year: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "rank", "fastestLapTime"]):
-[[18, 1, 2, "1:27.452"], [18, 2, 3, "1:27.739"], [18, 3, 5, "1:28.090"]]
+Sample rows from results (columns: ["resultId", "raceId", "driverId", "fastestLapTime"]):
+[[1, 18, 1, "1:27.452"], [2, 18, 2, "1:27.739"], [3, 18, 3, "1:28.090"]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
-Column rank: column description -> , value description -> 
 Column fastestLapTime: column description -> , value description -> 
 
 Q: In the race a driver set the lap record for the Austrian Grand Prix Circuit, how long did he spent at the pit stop at that same race?

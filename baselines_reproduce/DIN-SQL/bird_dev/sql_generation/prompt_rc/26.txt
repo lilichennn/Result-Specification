@@ -352,12 +352,12 @@ Hint: Full communication address should include Street, City, State and zip code
 Schema_links: [schools.School,schools.MailStreet,schools.MailCity,schools.MailState,schools.MailZip,schools.SOCType,schools.County,frpm."FRPM Count (Ages 5-17)",frpm.CDSCode = schools.CDSCode,Monterey,High Schools (Public),800]
 Result Contract:
 {
-  "population": "High schools located in Monterey whose number of free or reduced price meals for ages 15-17 is greater than 800.",
+  "population": "Public high schools in Monterey County whose free meal count for ages 5-17 is greater than 800.",
   "row_grain": "One row per qualifying high school.",
   "column_role": "The school's name and its full communication address, comprising street, city, state, and zip code when a zip code is available.",
-  "derivation": "Each school has a free-or-reduced-price-meal count for ages 15-17 used as the qualifying metric; the complete catalog provides no confirmed metric for that exact age range, and the available FRPM count for ages 5-17 is not a confirmed substitute.",
+  "derivation": "Each school has a free meal count for ages 5-17 used as the qualifying metric; the returned name and address components are stored attributes.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows only a FRPM count for ages 5-17, not the requested ages 15-17, so the exact qualifying metric is unsupported and cannot be substituted. No other metadata refinement changes the Round-1 contract."
+  "meta_review": "The meal-count metadata supports the free meal count for ages 5-17 as the qualifying measure, not an ages 15-17 measure. No other metadata refinement changes the contract."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

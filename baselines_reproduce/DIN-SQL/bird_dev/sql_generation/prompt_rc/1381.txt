@@ -232,8 +232,8 @@ Result Contract:
 {
   "population": "Students whose count of attended events (event links) is greater than 7.",
   "row_grain": "One student.",
-  "column_role": "The student's full name, composed of first name and last name.",
-  "derivation": "For each student, count the number of attended events via their event links.",
+  "column_role": "The student's full name, returned as first name and last name.",
+  "derivation": "The returned first and last name are stored values; eligibility is determined by a per-student count of attendance event links.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

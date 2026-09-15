@@ -296,12 +296,12 @@ Hint: abnormal C-reactive protein refers to CRP ='+'; don't have data recorded r
 Schema_links: [Laboratory.CRP,Patient.Description,Patient.ID,Laboratory.ID = Patient.ID,'+']
 Result Contract:
 {
-  "population": "Patients who have a C-reactive protein (CRP) value of '+' and whose patient-level Description is NULL; both conditions must hold together.",
-  "row_grain": "One global summary row for the entire eligible patient population.",
-  "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the distinct patients in the eligible population.",
+  "population": "Patient identifiers associated with a C-reactive protein laboratory result of '+' and whose patient-level Description is NULL; both conditions must hold together.",
+  "row_grain": "One global summary row for the entire eligible population.",
+  "column_role": "A single value representing the number of qualifying patient identifiers.",
+  "derivation": "Count all qualifying patient-identifier occurrences, without requiring distinct patients.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms CRP is a laboratory-test value and Description is a patient-level recording date whose null value means not recorded. This supports counting distinct patients, not laboratory-test rows, when both conditions hold."
+  "meta_review": "Metadata confirms CRP is a laboratory-test value and Description is a patient-level recording field whose null value means not recorded. This supports counting qualifying patient identifiers associated with laboratory results, not counting distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

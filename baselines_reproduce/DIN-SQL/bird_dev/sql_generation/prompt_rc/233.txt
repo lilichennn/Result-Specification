@@ -187,12 +187,12 @@ Hint: TR006 is the molecule id
 Schema_links: [bond.bond_id,bond.molecule_id,TR006]
 Result Contract:
 {
-  "population": "All bonds belonging to the molecule whose molecule id is TR006.",
-  "row_grain": "One bond belonging to molecule TR006.",
+  "population": "All bonds connected to an atom in the molecule whose molecule id is TR006.",
+  "row_grain": "One distinct bond identifier for each eligible bond.",
   "column_role": "The bond identifier for each listed bond; this is the value to which alphabetical ordering applies.",
-  "derivation": "none",
-  "filter_policy": "Retain only the two eligible bonds whose bond identifiers come first in ascending alphabetical order, limiting the output to two rows.",
-  "meta_review": "Metadata shows bond.bond_id is the unique identifier representing bonds and bond.molecule_id records the molecule in which the bond appears. This resolves the listed bond value as the bond identifier and eligibility as bonds belonging to molecule TR006."
+  "derivation": "Stored bond identifier, with duplicate identifiers collapsed.",
+  "filter_policy": "Among the distinct eligible bonds, retain only the two whose bond identifiers come first in ascending alphabetical order, limiting the output to two rows.",
+  "meta_review": "Metadata identifies the bond identifier as the listed bond value and resolves eligibility through the molecule association of atoms connected to bonds, so the eligible bonds are those connected to atoms of molecule TR006."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

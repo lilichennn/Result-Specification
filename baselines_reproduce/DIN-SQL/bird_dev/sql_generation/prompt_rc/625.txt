@@ -325,7 +325,7 @@ Result Contract:
   "column_role": "The count of qualifying users.",
   "derivation": "Count the users whose Location is New York.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms users.Location is the user's location, validating that New York filters the users entity. Round-1 contract otherwise preserved."
+  "meta_review": "Metadata confirms Location is the user's location, validating that New York filters the users entity."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

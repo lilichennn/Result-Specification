@@ -183,8 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table bond, columns = [*,bond_id,molecule_id,bond_type]
-Table molecule, columns = [*,molecule_id]
-Foreign_keys = [bond.molecule_id = molecule.molecule_id]
+Foreign_keys = []
 Sample rows from bond (columns: ["bond_id", "molecule_id", "bond_type"]):
 [["TR000_1_2", "TR000", "-"], ["TR000_2_3", "TR000", "-"], ["TR000_2_4", "TR000", "-"]]
 Column descriptions and value descriptions for bond:
@@ -196,11 +195,6 @@ Column bond_type: column description -> type of the bond, value description -> c
 -: single bond
 '=': double bond
 '#': triple bond
-Sample rows from molecule (columns: ["molecule_id"]):
-[["TR000"], ["TR001"], ["TR002"]]
-Column descriptions and value descriptions for molecule:
-Column molecule_id: column description -> unique id of molecule, value description -> "+" --> this molecule / compound is carcinogenic
-'-' this molecule is not / compound carcinogenic
 
 Q: What is the percentage of double bonds in the molecule TR008? Please provide your answer as a percentage with five decimal places.
 Hint: double bond refers to bond_type = '='; TR008 is the molecule id; percentage = DIVIDE(SUM(bond_type = '='), COUNT(bond_id)) as percent where molecule_id = 'TR008'

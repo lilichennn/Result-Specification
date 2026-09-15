@@ -296,12 +296,12 @@ Hint: abnormal Ig M level refers to IGM <=40 OR IGM >= 400; most common disease 
 Schema_links: [Laboratory.IGM,Patient.Diagnosis,Laboratory.ID = Patient.ID,40,400]
 Result Contract:
 {
-  "population": "Patients with an abnormal immunoglobulin M (IGM) level, defined as IGM <= 40 OR IGM >= 400.",
-  "row_grain": "One disease (diagnosis), namely the single most common one among the eligible patients.",
-  "column_role": "The identity/name of the patient-level disease (diagnosis); the patient count used for ranking is not a required output column.",
-  "derivation": "For each patient-level diagnosis, count the eligible patients diagnosed with it, giving a per-diagnosis patient frequency over the abnormal-IgM population.",
-  "filter_policy": "Argmax: retain the diagnosis whose count of eligible patients is the highest.",
-  "meta_review": "Metadata identifies Laboratory.IGM as immunoglobulin M with normal range 40 < N < 400, distinguishing it from anti-cardiolipin IgM and validating the abnormal cutoffs. It also confirms Patient.Diagnosis as a patient-level disease-name field, resolving the requested disease to the patient's diagnosis."
+  "population": "Patients with an abnormal immunoglobulin M (IGM) laboratory result, where abnormal means IGM < 40 or IGM > 400.",
+  "row_grain": "One disease (diagnosis), namely the single most common one among the qualifying abnormal-IgM laboratory occurrences for those patients.",
+  "column_role": "The identity/name of the patient-level disease (diagnosis); the frequency count used for ranking is not a required output column.",
+  "derivation": "For each diagnosis, count the qualifying abnormal-IgM laboratory occurrences associated with patients having that diagnosis, giving a per-diagnosis frequency over the abnormal-IgM population.",
+  "filter_policy": "Argmax: retain one diagnosis whose count of qualifying abnormal-IgM laboratory occurrences is the highest.",
+  "meta_review": "Metadata identifies the IGM laboratory measurement as immunoglobulin M with normal range 40 through 400 inclusive, distinguishing it from anti-cardiolipin IgM and validating the abnormal cutoffs. It also confirms the patient diagnosis as a patient-level disease-name field, resolving the requested disease to the patient's diagnosis."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

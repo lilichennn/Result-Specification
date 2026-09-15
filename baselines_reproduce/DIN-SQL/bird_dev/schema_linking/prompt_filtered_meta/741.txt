@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table hero_power, columns = [*,hero_id,power_id]
 Table superhero, columns = [*,id,superhero_name]
-Table superpower, columns = [*,id,power_name]
+Table superpower, columns = [*,id]
 Foreign_keys = [hero_power.power_id = superpower.id,hero_power.hero_id = superhero.id]
 Sample rows from hero_power (columns: ["hero_id", "power_id"]):
 [[1, 1], [1, 18], [1, 26]]
@@ -199,11 +199,10 @@ Sample rows from superhero (columns: ["id", "superhero_name"]):
 Column descriptions and value descriptions for superhero:
 Column id: column description -> the unique identifier of the superhero, value description -> 
 Column superhero_name: column description -> the name of the superhero, value description -> 
-Sample rows from superpower (columns: ["id", "power_name"]):
-[[1, "Agility"], [2, "Accelerated Healing"], [3, "Lantern Power Ring"]]
+Sample rows from superpower (columns: ["id"]):
+[[1], [2], [3]]
 Column descriptions and value descriptions for superpower:
 Column id: column description -> the unique identifier of the superpower, value description -> 
-Column power_name: column description -> the superpower name, value description -> 
 
 Q: What is the name of the superhero that has the most powers?
 Hint: name of the superhero refers to superhero_name; superhero that has the most powers refers to MAX(COUNT(superhero_name))

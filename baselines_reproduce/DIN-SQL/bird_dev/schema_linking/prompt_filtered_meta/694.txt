@@ -183,9 +183,9 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table comments, columns = [*,Id,PostId,Text,CreationDate,UserId,UserDisplayName]
-Table posts, columns = [*,Id,Title]
-Table users, columns = [*,Id,DisplayName]
-Foreign_keys = [comments.UserId = users.Id,comments.PostId = posts.Id]
+Table posts, columns = [*,Id,OwnerUserId,Title,OwnerDisplayName]
+Table users, columns = [*,Id,CreationDate,DisplayName]
+Foreign_keys = [comments.UserId = users.Id,comments.PostId = posts.Id,posts.OwnerUserId = users.Id]
 Sample rows from comments (columns: ["Id", "PostId", "Text", "CreationDate", "UserId", "UserDisplayName"]):
 [[1, 3, "Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'.", "2010-07-19 19:15:52.0", 13, null], [2, 5, "Yes, R is nice- but WHY is it 'valuable'.", "2010-07-19 19:16:14.0", 13, null], [3, 9, "Again- why?  How would I convince my boss to use this over, say, Excel.", "2010-07-19 19:18:54.0", 13, null]]
 Column descriptions and value descriptions for comments:
@@ -195,15 +195,18 @@ Column Text: column description -> the detailed content of the comment, value de
 Column CreationDate: column description -> the creation date of the comment, value description -> 
 Column UserId: column description -> the id of the user who post the comment, value description -> 
 Column UserDisplayName: column description -> user's display name, value description -> 
-Sample rows from posts (columns: ["Id", "Title"]):
-[[1, "Eliciting priors from experts"], [2, "What is normality?"], [3, "What are some valuable Statistical Analysis open source projects?"]]
+Sample rows from posts (columns: ["Id", "OwnerUserId", "Title", "OwnerDisplayName"]):
+[[1, 8, "Eliciting priors from experts", null], [2, 24, "What is normality?", null], [3, 18, "What are some valuable Statistical Analysis open source projects?", null]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
+Column OwnerUserId: column description -> the id of the owner user, value description -> 
 Column Title: column description -> the title of the post, value description -> 
-Sample rows from users (columns: ["Id", "DisplayName"]):
-[[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
+Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 
+Sample rows from users (columns: ["Id", "CreationDate", "DisplayName"]):
+[[-1, "2010-07-19 06:55:26.0", "Community"], [2, "2010-07-19 14:01:36.0", "Geoff Dalgas"], [3, "2010-07-19 15:34:50.0", "Jarrod Dixon"]]
 Column descriptions and value descriptions for users:
 Column Id: column description -> the user id, value description -> 
+Column CreationDate: column description -> the creation date of the user account, value description -> 
 Column DisplayName: column description -> the user's display name, value description -> 
 
 Q: Provide the text of the latest 10 comments to the post with the title 'Analysing wind data with R' and the display name of the user who left it.

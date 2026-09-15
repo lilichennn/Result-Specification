@@ -365,12 +365,12 @@ Hint: 'Behcet' refers to diagnosis; exam between 01/01/1997 and 12/31/1997 refer
 Schema_links: [Patient.ID,Patient.Diagnosis,Patient.Description,Behcet,1997-1-1,1998-1-1]
 Result Contract:
 {
-  "population": "Patients whose patient-level diagnosis is Behcet's and whose Description date (the date specified by evidence for the exam interval) is on or after 1997-01-01 and before 1998-01-01 (i.e., within calendar year 1997); both conditions must hold.",
-  "row_grain": "One row per qualifying patient.",
-  "column_role": "The patient identifier (ID) for each qualifying patient.",
+  "population": "Patient identifiers drawn from examination records whose examination date is from 1997-01-01 through 1997-12-31 inclusive and whose diagnosis is Behcet's; both conditions must hold.",
+  "row_grain": "One row per qualifying examination record, so the same patient identifier can appear more than once.",
+  "column_role": "The patient identifier (ID) for each qualifying examination record.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata provides a patient-level Description date and a patient-level Diagnosis, supporting the evidence's mapping of the exam interval and diagnosis condition to the patient entity. This preserves one row per qualifying patient ID rather than per examination record."
+  "meta_review": "The date and diagnosis conditions apply to individual examination records rather than to a deduplicated patient-level entity, so the result is not guaranteed to be unique by patient."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

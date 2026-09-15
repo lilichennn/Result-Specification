@@ -182,12 +182,12 @@ Hint: Czech Republic can be represented as the Country value in the gasstations 
 Schema_links: [transactions_1k.TransactionID,transactions_1k.Date,gasstations.Country,transactions_1k.GasStationID = gasstations.GasStationID,'CZE','2012-01-01']
 Result Contract:
 {
-  "population": "Transactions that occurred at gas stations located in the Czech Republic (Country = 'CZE') and whose transaction date is after 2012-01-01.",
+  "population": "Transactions that occurred at gas stations located in the Czech Republic (Country = 'CZE') and whose transaction year is 2012 or later.",
   "row_grain": "One global summary row for all qualifying transactions.",
   "column_role": "The count of qualifying transactions.",
   "derivation": "Count the transactions in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The temporal condition is interpreted as the transaction year being 2012 or later."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -373,12 +373,12 @@ Hint: set of cards with "Angel of Mercy" in it refers to name = 'Angel of Mercy'
 Schema_links: [set_translations.translation,cards.name,cards.setCode = set_translations.setCode,'Angel of Mercy']
 Result Contract:
 {
-  "population": "All foreign-language card translation records associated with any card whose name is 'Angel of Mercy'.",
+  "population": "All non-null translation values recorded for card sets that contain a card named 'Angel of Mercy'.",
   "row_grain": "One global summary row for the entire set of qualifying translations.",
   "column_role": "A single value representing the number of translations.",
-  "derivation": "Count the qualifying foreign-language card translation records.",
+  "derivation": "Count the distinct qualifying translation values.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that foreign_data contains foreign-language card data linked to cards, resolving the requested translations as card-level translation records. Round-1 count semantics preserved."
+  "meta_review": "The requested translations are resolved as set-level translation values for sets containing the named card, with duplicate and missing translation values excluded from the count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

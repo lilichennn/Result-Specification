@@ -189,10 +189,10 @@ Result Contract:
 {
   "population": "Molecules that contain the atom TR001_1.",
   "row_grain": "One molecule.",
-  "column_role": "The carcinogenicity status of the molecule (whether it is carcinogenic).",
-  "derivation": "Carcinogenicity is determined from the molecule's label, where label '+' means the molecule is carcinogenic.",
+  "column_role": "The molecule's carcinogenicity label.",
+  "derivation": "The returned value is the stored carcinogenicity label of the molecule, with '+' indicating that the molecule is carcinogenic.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms atom.molecule_id links atom TR001_1 to its molecule and molecule.label stores the carcinogenicity status. This validates the Round-1 use of label '+' as the carcinogenic indicator."
+  "meta_review": "Metadata confirms that the atom identifies its containing molecule and that the molecule stores a carcinogenicity label, with '+' indicating carcinogenic."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

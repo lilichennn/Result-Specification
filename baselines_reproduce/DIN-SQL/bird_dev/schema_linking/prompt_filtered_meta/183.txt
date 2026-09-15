@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id,date]
-Table district, columns = [*,district_id,A2,A3]
+Table district, columns = [*,district_id,A2]
 Foreign_keys = [account.district_id = district.district_id]
 Sample rows from account (columns: ["account_id", "district_id", "date"]):
 [[1, 18, "1995-03-24"], [2, 1, "1993-02-26"], [3, 5, "1997-07-07"]]
@@ -191,12 +191,11 @@ Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
 Column date: column description -> the creation date of the account, value description -> in the form YYMMDD
-Sample rows from district (columns: ["district_id", "A2", "A3"]):
-[[1, "Hl.m. Praha", "Prague"], [2, "Benesov", "central Bohemia"], [3, "Beroun", "central Bohemia"]]
+Sample rows from district (columns: ["district_id", "A2"]):
+[[1, "Hl.m. Praha"], [2, "Benesov"], [3, "Beroun"]]
 Column descriptions and value descriptions for district:
 Column district_id: column description -> location of branch, value description -> 
 Column A2: column description -> district_name, value description -> 
-Column A3: column description -> region, value description -> 
 
 Q: How many accounts in Beroun were opened after 1996?
 A: Let’s think step by step.

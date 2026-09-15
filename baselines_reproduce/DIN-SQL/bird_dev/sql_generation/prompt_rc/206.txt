@@ -187,12 +187,12 @@ Hint: TR004_8_9 bond atoms refers to bond_id = 'TR004_8_9';
 Schema_links: [atom.element,connected.bond_id,connected.atom_id = atom.atom_id,connected.atom_id2 = atom.atom_id,TR004_8_9]
 Result Contract:
 {
-  "population": "All bond atoms belonging to the bond with bond_id = 'TR004_8_9'.",
-  "row_grain": "One row per atom that is part of the specified bond.",
-  "column_role": "The element of each atom in the bond.",
-  "derivation": "none",
+  "population": "The elements of atoms associated with the bond identified as 'TR004_8_9'.",
+  "row_grain": "One row per distinct element, not one row per atom.",
+  "column_role": "The element of each atom in the specified bond.",
+  "derivation": "Stored element values returned with duplicate elements collapsed; no arithmetic computation.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a distinct element list for the specified bond."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,15 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table customers, columns = [*,CustomerID,Segment,Currency]
+Table customers, columns = [*,CustomerID,Segment]
 Table yearmonth, columns = [*,CustomerID,Date,Consumption]
 Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
-Sample rows from customers (columns: ["CustomerID", "Segment", "Currency"]):
-[[3, "SME", "EUR"], [5, "LAM", "EUR"], [6, "SME", "EUR"]]
+Sample rows from customers (columns: ["CustomerID", "Segment"]):
+[[3, "SME"], [5, "LAM"], [6, "SME"]]
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Segment: column description -> client segment, value description -> 
-Column Currency: column description -> Currency, value description -> 
 Sample rows from yearmonth (columns: ["CustomerID", "Date", "Consumption"]):
 [[5, "201207", 528.3], [5, "201302", 1598.28], [5, "201303", 1931.36]]
 Column descriptions and value descriptions for yearmonth:

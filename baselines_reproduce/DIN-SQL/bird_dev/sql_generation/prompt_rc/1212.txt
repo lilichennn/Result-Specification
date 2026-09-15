@@ -296,12 +296,12 @@ Hint: alkaliphophatase (ALP) within normal range refers to ALP < 300; inpatient 
 Schema_links: [Laboratory.ALP,Patient.Admission,Laboratory.ID = Patient.ID,300,'+','-']
 Result Contract:
 {
-  "population": "Patients whose alkaliphosphatase (ALP) value is within the normal range, defined as ALP < 300.",
-  "row_grain": "One row per patient whose ALP is within the normal range.",
-  "column_role": "The treatment setting of each qualifying patient, expressed as inpatient (admission = '+') or outpatient (admission = '-').",
+  "population": "Patients who have at least one alkaline phosphatase (ALP) laboratory result within the normal range, defined as ALP < 300.",
+  "row_grain": "One row for each qualifying patient-laboratory association with ALP < 300, without deduplicating patients.",
+  "column_role": "The treatment setting of the associated patient, expressed as inpatient (admission = '+') or outpatient (admission = '-').",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Patient.Admission is the patient-level inpatient/outpatient indicator, with '+' admitted and '-' outpatient. This validates the Round-1 treatment-setting output without changing the contract."
+  "meta_review": "Metadata confirms the patient-level admission indicator uses '+' for inpatient and '-' for outpatient."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

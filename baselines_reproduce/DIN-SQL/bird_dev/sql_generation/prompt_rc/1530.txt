@@ -182,12 +182,12 @@ Hint: Description of products contains full name
 Schema_links: [products.Description,transactions_1k.Amount,products.ProductID = transactions_1k.ProductID,5]
 Result Contract:
 {
-  "population": "All products are eligible; no membership conditions restrict the set.",
-  "row_grain": "One row per product.",
+  "population": "Recorded sales transactions that are associated with a product; each eligible row is a transaction with its linked product.",
+  "row_grain": "One row per selected sales transaction, not one distinct product; the same product may appear multiple times.",
   "column_role": "The full name of the product, as given in the product description.",
-  "derivation": "A per-product total sales measure aggregated over that product's sales; whether sales means units sold or revenue is not specified.",
-  "filter_policy": "Select the five products with the highest sales measure (best selling), ranked in descending order of that measure.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The returned product full name is a stored per-row value; the ordering measure is the individual transaction sales amount, with no per-product aggregation.",
+  "filter_policy": "Return the five rows with the highest individual sales amount, ordered from highest to lowest.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

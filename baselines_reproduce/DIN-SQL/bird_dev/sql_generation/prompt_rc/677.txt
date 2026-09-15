@@ -251,7 +251,7 @@ Hint: DisplayName = 'Jay Stevens'; in 2010 refers to YEAR(CreationDate) = 2010;
 Schema_links: [posts.Id,users.DisplayName,posts.CreaionDate,users.Id = posts.OwnerUserId,'Jay Stevens',2010]
 Result Contract:
 {
-  "population": "Posts owned by the user whose display name is 'Jay Stevens' and whose post creation date falls in the year 2010.",
+  "population": "Posts owned by users whose display name is 'Jay Stevens' and whose post creation date falls in the year 2010.",
   "row_grain": "One global summary row for the entire qualifying set of posts.",
   "column_role": "The number of qualifying posts.",
   "derivation": "Count the posts belonging to the eligible population.",

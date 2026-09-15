@@ -182,12 +182,11 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,artist,availability,isTextless]
+Table cards, columns = [*,artist,availability,isTextless]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "artist", "availability", "isTextless"]):
-[[1, "Pete Venters", "mtgo,paper", 0], [2, "Volkan Baǵa", "mtgo,paper", 0], [3, "Justin Sweet", "mtgo,paper", 0]]
+Sample rows from cards (columns: ["artist", "availability", "isTextless"]):
+[["Pete Venters", "mtgo,paper", 0], ["Volkan Baǵa", "mtgo,paper", 0], ["Justin Sweet", "mtgo,paper", 0]]
 Column descriptions and value descriptions for cards:
-Column id: column description -> , value description -> 
 Column artist: column description -> The name of the artist that illustrated the card art., value description -> 
 Column availability: column description -> A list of the card's available printing types., value description -> "arena", "dreamcast", "mtgo", "paper", "shandalar"
 Column isTextless: column description -> If the card does not have a text box., value description -> commonsense evidence:

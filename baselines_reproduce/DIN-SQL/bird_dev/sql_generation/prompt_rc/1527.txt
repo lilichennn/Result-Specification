@@ -251,12 +251,12 @@ Hint:
 Schema_links: [transactions_1k.GasStationID,transactions_1k.Amount,transactions_1k.Price]
 Result Contract:
 {
-  "population": "All gas stations.",
+  "population": "Gas stations represented in the transaction records.",
   "row_grain": "One gas station.",
   "column_role": "The identity of the gas station, expressed as its gas station identifier.",
-  "derivation": "Revenue for each gas station is computed by summing the total price of its transactions, where total price is Amount multiplied by Price.",
+  "derivation": "Revenue for each gas station is computed by summing the price of its transactions.",
   "filter_policy": "Argmax: return the gas station with the highest computed revenue amount.",
-  "meta_review": "Metadata identifies GasStationID as the gas-station identifier and establishes transaction total price as Amount x Price in transactions_1k. This resolves the output as the station identifier and revenue as the per-station sum of transaction total price rather than a stored station metric."
+  "meta_review": "Metadata identifies the gas-station identity field and establishes transaction price as the revenue measure. This resolves the output as the station identifier and revenue as the per-station sum of transaction price rather than a stored station metric."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

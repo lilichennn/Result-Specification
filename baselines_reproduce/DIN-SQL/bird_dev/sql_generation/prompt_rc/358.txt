@@ -366,12 +366,12 @@ Hint: name of card  = 'Ancestor''s Chosen' ;
 Schema_links: [cards.borderColor,cards.name,Ancestor's Chosen]
 Result Contract:
 {
-  "population": "The card whose name is 'Ancestor''s Chosen'.",
-  "row_grain": "One row representing the named card.",
+  "population": "The border color values for cards whose name is \"Ancestor's Chosen\".",
+  "row_grain": "One row for each distinct border color among cards whose name is \"Ancestor's Chosen\".",
   "column_role": "The border color of the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.borderColor is the color of the card border, distinguishing it from card color properties. This validates the Round-1 output semantics without requiring refinement."
+  "meta_review": "Metadata confirms the border color property is the color of the card border, distinguishing it from card color properties."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

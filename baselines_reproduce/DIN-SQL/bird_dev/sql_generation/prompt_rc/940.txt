@@ -361,12 +361,12 @@ Hint: COUNT(raceID) > 0 reveals that this driver participated in races; drivers 
 Schema_links: [results.driverId,results.time,results.raceId,races.year,races.name,results.raceId = races.raceId,2008,Chinese Grand Prix]
 Result Contract:
 {
-  "population": "Drivers who finished the 2008 Chinese Grand Prix, meaning their race-result time has a value in that race, and who have participated in at least one Formula 1 race, meaning the count of their race-result raceID records is greater than 0.",
+  "population": "Drivers who finished the 2008 Chinese Grand Prix, meaning their race-result time has a value in that race, with participation in Formula 1 races established by the existence of that race-result record.",
   "row_grain": "One global summary row for the whole qualifying driver set.",
   "column_role": "The number of qualifying drivers.",
-  "derivation": "Count the drivers in the eligible population, where each driver's participation is measured by the count of their race-result records.",
+  "derivation": "Count the distinct drivers in the eligible population, treating the existence of a race-result record as proof of participation.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that results.time is the finish-time attribute and that a value indicates the driver finished the race. It also supports measuring participation by a driver's race-result records identified by raceId."
+  "meta_review": "Metadata confirms that a non-null race-result time indicates the driver finished the race and that participation can be measured by the presence of race-result records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

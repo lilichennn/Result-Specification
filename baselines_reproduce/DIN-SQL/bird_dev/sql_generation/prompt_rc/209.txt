@@ -187,12 +187,12 @@ Hint: type of bond refers to bond_type; chlorine refers to element = 'cl'
 Schema_links: [bond.bond_type,atom.element,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,cl]
 Result Contract:
 {
-  "population": "All bond records that are connected to at least one atom whose element is 'cl'.",
-  "row_grain": "One distinct bond record involving chlorine.",
-  "column_role": "The type of bond (bond_type) for each qualifying bond.",
+  "population": "Bond types of bonds connected to at least one atom whose element is 'cl'.",
+  "row_grain": "One row per distinct bond type, rather than one row per bond.",
+  "column_role": "The bond type is the returned output.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows element is stored on atom and bonds are linked through connected, so eligibility is bonds connected to an atom with element = 'cl'. This refines the representation of 'involving chlorine' while preserving the bond-level row grain."
+  "meta_review": "Eligibility is based on bonds connected to chlorine atoms, but the result returns distinct bond type values rather than individual bond records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

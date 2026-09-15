@@ -415,12 +415,12 @@ Hint: build up play passing refers to buildUpPlayPassing; buildUpPlayPassing > 7
 Schema_links: [Team.team_short_name,Team_Attributes.buildUpPlayPassing,Team_Attributes.team_api_id = Team.team_api_id,70]
 Result Contract:
 {
-  "population": "Teams whose build up play passing value is greater than 70.",
-  "row_grain": "One team per result row.",
+  "population": "Teams with a build up play passing value greater than 70.",
+  "row_grain": "One unique team short name per result row.",
   "column_role": "The team's short name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

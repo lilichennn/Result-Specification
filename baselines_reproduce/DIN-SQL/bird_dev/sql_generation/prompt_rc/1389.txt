@@ -230,12 +230,12 @@ Hint: event refers to event_name; lowest cost means MIN(cost)
 Schema_links: [event.event_name,expense.cost,expense.link_to_budget = budget.budget_id,budget.link_to_event = event.event_id]
 Result Contract:
 {
-  "population": "All events are eligible; no membership conditions are stated.",
+  "population": "Events that have at least one associated expense cost; events without such an expense are not eligible.",
   "row_grain": "One event, namely the event associated with the lowest expense cost.",
-  "column_role": "The event name (event_name) of the selected event.",
+  "column_role": "The event name of the selected event.",
   "derivation": "The cost is the stored dollar amount of an expense associated with the event; no aggregation or other computation is specified.",
-  "filter_policy": "Argmin: select the event associated with the minimum cost (MIN(cost)) among all eligible events.",
-  "meta_review": "Metadata establishes that cost is the expense-level dollar amount expense.cost, so the selected event is identified through its associated expense cost."
+  "filter_policy": "Argmin: select the event associated with the minimum expense cost among eligible events.",
+  "meta_review": "Metadata establishes that cost is an expense-level dollar amount, so the selected event is identified through its associated expense cost."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -317,12 +317,12 @@ Hint:
 Schema_links: [disp.disp_id,disp.type,disp.account_id,OWNER,DISPONENT,1,10]
 Result Contract:
 {
-  "population": "All dispositions whose type is \"OWNER\" or \"DISPONENT\" and whose account number lies in the range from 1 to 10.",
+  "population": "All dispositions whose account number lies in the range from 1 to 10.",
   "row_grain": "One global summary row.",
-  "column_role": "A single value representing the number of qualifying dispositions.",
-  "derivation": "Count the dispositions belonging to the eligible population.",
+  "column_role": "Two values: the number of dispositions of type \"OWNER\" and the number of dispositions of type \"DISPONENT\".",
+  "derivation": "Count the dispositions separately for each requested disposition type among the eligible dispositions.",
   "filter_policy": "none",
-  "meta_review": "Metadata resolves the requested disposition type values to \"OWNER\" and \"DISPONENT\", refining only the categorical representation of the eligibility condition. No other Round-1 semantics change."
+  "meta_review": "Metadata resolves the requested disposition type values to \"OWNER\" and \"DISPONENT\", with the result reporting separate counts for these categories rather than a single combined count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -249,9 +249,9 @@ Schema_links: [client.client_id,client.birth_date,card.type,disp.type,card.disp_
 Result Contract:
 {
   "population": "Clients linked to a high-level credit card (card.type = 'gold') through a disposition whose type is 'OWNER'; the high-level card condition and the loan-eligibility condition must apply to the same disposition connecting the client to the card.",
-  "row_grain": "One row per qualifying client.",
+  "row_grain": "One row per qualifying client-card disposition.",
   "column_role": "The client's identifier and the client's age.",
-  "derivation": "none",
+  "derivation": "The client identifier is returned directly; the age is computed as the current year minus the client's birth year.",
   "filter_policy": "none",
   "meta_review": "Metadata shows card records are connected to clients through disposition records, so the gold-card and OWNER conditions must be evaluated on the same disposition linking the client to the card."
 }

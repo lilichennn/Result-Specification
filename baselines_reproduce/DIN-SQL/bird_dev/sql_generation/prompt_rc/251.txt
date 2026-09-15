@@ -266,8 +266,8 @@ Result Contract:
   "population": "All molecules with label = '+'; the candidate elements are the elements recorded for atoms belonging to those carcinogenic molecules.",
   "row_grain": "One row representing the single least common element across the carcinogenic molecules.",
   "column_role": "The identity of the element, as its lowercase element code/symbol (e.g., c, h, cl).",
-  "derivation": "For each element recorded among the atoms of carcinogenic molecules, compute its frequency of occurrence; the request does not determine whether frequency counts distinct carcinogenic molecules containing the element or total atom occurrences.",
-  "filter_policy": "Argmin: select the element with the lowest occurrence frequency; tie-breaking is unspecified.",
+  "derivation": "For each element recorded among the atoms of carcinogenic molecules, compute the number of distinct carcinogenic molecules containing that element; the result is based on this molecule-level frequency rather than raw atom occurrence counts.",
+  "filter_policy": "Argmin: select the element with the lowest number of distinct carcinogenic molecules containing it; tie-breaking is unspecified.",
   "meta_review": "Metadata establishes that elements are atom-level codes in atom.element linked to molecules, while carcinogenic status is molecule.label = '+'. This refined the element output to its stored code/symbol and located element occurrences in atom records."
 }
 

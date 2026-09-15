@@ -248,12 +248,12 @@ Hint: k_symbol = 'SIPO' refers to household payment
 Schema_links: [account.account_id,order.k_symbol,district.A2,account.account_id = order.account_id,account.district_id = district.district_id,'SIPO','Pisek']
 Result Contract:
 {
-  "population": "Accounts whose branch location is the district named Pisek and that placed at least one order for household payment, i.e., an order with k_symbol = 'SIPO'; both conditions must hold together.",
+  "population": "Accounts whose branch location is the district named Pisek and that have at least one household-payment transaction, i.e., a transaction with k_symbol = 'SIPO'; both conditions must hold together.",
   "row_grain": "One row per qualifying account.",
   "column_role": "The account identifier of each qualifying account.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms order.k_symbol is the order's payment purpose, supporting household-payment qualification on orders. It also resolves account location to the branch district name and account_id as the account identifier."
+  "meta_review": "Metadata confirms the transaction's k_symbol identifies household-payment purpose, supporting household-payment qualification. It also resolves account location to the branch district name and account_id as the account identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

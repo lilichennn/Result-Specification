@@ -296,12 +296,12 @@ Hint: highest anti-nucleus antibody concentration level refers to MAX(ANA); norm
 Schema_links: [Examination.ANA,Laboratory.CRE,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,1.5]
 Result Contract:
 {
-  "population": "Patients with a normal creatinine level, defined as creatinine (CRE) less than 1.5.",
-  "row_grain": "One global summary across all eligible patients.",
-  "column_role": "The highest anti-nucleus antibody (ANA) concentration level as a single value.",
-  "derivation": "Compute the maximum ANA concentration value over the eligible patient population.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Anti-nucleus antibody (ANA) measurements for patients with a normal creatinine level, defined as creatinine (CRE) less than 1.5.",
+  "row_grain": "A single top-selected ANA measurement, returned as one value.",
+  "column_role": "The ANA concentration level of the selected measurement; no patient identifier or other attribute is returned.",
+  "derivation": "The returned value is the stored ANA concentration of the eligible measurement selected as the highest.",
+  "filter_policy": "Among eligible measurements, keep only the one with the highest ANA concentration.",
+  "meta_review": "The result is a top-one selected measurement rather than an aggregated summary."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

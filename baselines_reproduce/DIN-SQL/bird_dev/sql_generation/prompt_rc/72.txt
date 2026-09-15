@@ -352,10 +352,10 @@ Hint: State Special School means EdOpsCode = 'SSS'
 Schema_links: [frpm.`Enrollment (Ages 5-17)`,frpm.`Academic Year`,schools.EdOpsCode,schools.City,frpm.CDSCode = schools.CDSCode,SSS,Fremont,2014-2015]
 Result Contract:
 {
-  "population": "Students aged 5 to 17 who are enrolled at a school that is a State Special School (EdOpsCode = 'SSS'), located in Fremont, for the 2014-2015 academic year; all conditions apply conjunctively.",
-  "row_grain": "One global summary for the entire qualifying student population.",
-  "column_role": "A single value: the number of qualifying enrolled students.",
-  "derivation": "Use the stored school-level enrollment metric for ages 5-17 for qualifying schools in the 2014-2015 academic year; if more than one qualifying school-year record exists, sum those enrollment values.",
+  "population": "School-year enrollment records representing students aged 5 to 17 at schools that are State Special Schools (EdOpsCode = 'SSS'), located in Fremont, with academic year between 2014 and 2015 inclusive; all conditions apply conjunctively.",
+  "row_grain": "One row per qualifying school-year enrollment record.",
+  "column_role": "A single measure: the stored enrollment count of students aged 5-17 for each qualifying record.",
+  "derivation": "Return the stored school-year enrollment metric for ages 5-17 directly for each qualifying record; do not count individual students or combine multiple records.",
   "filter_policy": "none",
   "meta_review": "Metadata shows frpm contains a stored school-year Enrollment (Ages 5-17) metric, while schools.EdOpsCode identifies State Special Schools. The derivation therefore uses the stored enrollment metric for qualifying schools rather than counting individual student rows."
 }

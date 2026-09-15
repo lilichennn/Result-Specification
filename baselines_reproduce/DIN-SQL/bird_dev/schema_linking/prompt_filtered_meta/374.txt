@@ -182,14 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,availability,borderColor]
+Table cards, columns = [*,id,availability,borderColor,isOnlineOnly]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "availability", "borderColor"]):
-[[1, "mtgo,paper", "black"], [2, "mtgo,paper", "black"], [3, "mtgo,paper", "black"]]
+Sample rows from cards (columns: ["id", "availability", "borderColor", "isOnlineOnly"]):
+[[1, "mtgo,paper", "black", 0], [2, "mtgo,paper", "black", 0], [3, "mtgo,paper", "black", 0]]
 Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
 Column availability: column description -> A list of the card's available printing types., value description -> "arena", "dreamcast", "mtgo", "paper", "shandalar"
 Column borderColor: column description -> The color of the card border., value description -> "black", "borderless", "gold", "silver", "white"
+Column isOnlineOnly: column description -> If the card is only available in online game variations., value description -> 0: is not 1: is
 
 Q: How many black border cards are only available on mtgo?
 Hint: black border card refers to borderColor = black; available on mtgo refers to availability = mtgo;

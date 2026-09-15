@@ -251,12 +251,12 @@ Hint: most answers count refers to MAX(AnswerCount); post by slashnick refers to
 Schema_links: [posts.Id,posts.AnswerCount,users.DisplayName,posts.OwnerUserId = users.Id,'slashnick']
 Result Contract:
 {
-  "population": "All posts owned by the user whose DisplayName is 'slashnick'.",
-  "row_grain": "One post, namely the single qualifying post selected as the answer.",
+  "population": "Posts associated with the user whose display name is 'slashnick' through a post-history entry made by that user.",
+  "row_grain": "One post, namely the single post selected as the answer.",
   "column_role": "The post ID of the selected post.",
-  "derivation": "Answer count is the stored post-level AnswerCount.",
-  "filter_policy": "Select the post with the maximum answer count (AnswerCount) among the eligible posts; tie handling is not specified.",
-  "meta_review": "Metadata establishes users.DisplayName as the user's display name, so 'post by slashnick' means posts owned by that user. It also confirms posts.AnswerCount is a stored post-level answer count."
+  "derivation": "The returned post ID is a stored identifier; the answer count used for selection is a stored post-level value.",
+  "filter_policy": "Select the eligible post with the highest answer count; tie handling is not specified.",
+  "meta_review": "The user is identified by display name. A post by the user is treated as a post linked to that user through post-history activity, and answer count is a stored post-level attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -491,12 +491,12 @@ Hint:
 Schema_links: [Country.name,League.name,League.country_id = Country.id,Poland Ekstraklasa]
 Result Contract:
 {
-  "population": "The league named \"Poland Ekstraklasa\".",
-  "row_grain": "One country in which the Poland Ekstraklasa took place.",
+  "population": "Countries associated with the league named \"Poland Ekstraklasa\".",
+  "row_grain": "One row for each country associated with the league named \"Poland Ekstraklasa\".",
   "column_role": "The name of the country where the Poland Ekstraklasa took place.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata resolves that leagues have names and an associated country label through League.country_id to Country.name. This supports returning the country name for the league named Poland Ekstraklasa."
+  "meta_review": "Metadata resolves that leagues have names and an associated country name. This supports returning the country name for the league named Poland Ekstraklasa."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

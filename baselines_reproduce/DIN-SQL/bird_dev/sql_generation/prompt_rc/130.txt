@@ -248,12 +248,12 @@ Hint: A3 contains the region names; South Bohemia is one of region names.
 Schema_links: [client.client_id,district.A3,card.card_id,client.district_id = district.district_id,disp.client_id = client.client_id,card.disp_id = disp.disp_id,'South Bohemia']
 Result Contract:
 {
-  "population": "Account holders whose account is in the South Bohemia region (a region name stored in A3) and who do not own any credit card.",
-  "row_grain": "One global summary row covering all qualifying account holders.",
-  "column_role": "A single value representing the number of qualifying account holders.",
-  "derivation": "Count the account holders that satisfy the population conditions.",
+  "population": "Client-account relationships for clients in the region named South Bohemia, where the relationship type is not owner.",
+  "row_grain": "One global summary row covering all qualifying client-account relationships.",
+  "column_role": "A single value representing the number of qualifying client-account relationships.",
+  "derivation": "Count the qualifying client-account relationships.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

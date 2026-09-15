@@ -321,11 +321,11 @@ Schema_links: [badges.Id,badges.Name,"Revival"]
 Result Contract:
 {
   "population": "All badge award records whose Name is 'Revival'.",
-  "row_grain": "One awarded badge record named 'Revival'.",
-  "column_role": "The awarded badge's identifier (Id), which is the 'number' requested.",
-  "derivation": "none",
+  "row_grain": "One global result row giving the count of qualifying badge award records.",
+  "column_role": "The count of qualifying badge award records, representing the requested number of 'Revival' badges.",
+  "derivation": "count of entities",
   "filter_policy": "none",
-  "meta_review": "Metadata shows badges rows are individual badge awards (UserId, Date), so the result grain is an awarded badge record rather than a unique badge name. The requested 'number' remains the Id of each qualifying record."
+  "meta_review": "Although badge rows represent individual badge awards, the requested result is a single aggregate count of those rows rather than individual identifiers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

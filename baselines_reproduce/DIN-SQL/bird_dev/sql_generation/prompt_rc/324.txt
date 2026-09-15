@@ -259,9 +259,9 @@ Result Contract:
   "population": "All bond records in the database are eligible; every bond contributes to the total count regardless of bond type.",
   "row_grain": "One global summary row representing the entire set of bonds.",
   "column_role": "The percentage of bonds that are single bonds.",
-  "derivation": "Compute the percentage as the number of bonds with bond_type = '-' divided by the total number of bonds, i.e., DIVIDE(SUM(bond_type = '-'), COUNT(bond_id)).",
+  "derivation": "Compute the percentage as the count of bonds whose bond type is '-' divided by the total count of bonds, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

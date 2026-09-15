@@ -296,12 +296,12 @@ Hint: female patient refers to Sex = 'F'; age 50 and above = SUBTRACT(year(curre
 Schema_links: [Patient.SEX,Patient.Birthday,Laboratory.RBC,Patient.Admission,Laboratory.ID = Patient.ID,'F',50,3.5,6.0,'+','-']
 Result Contract:
 {
-  "population": "All patients who are female (Sex = 'F'), whose age (current year minus birth year) is 50 or above, and whose red blood cell count is abnormal (RBC <= 3.5 or RBC >= 6.0); the sex, age, and RBC conditions all apply together, with the RBC condition being an OR.",
+  "population": "All patients who are female (Sex = 'F'), whose age (current year minus birth year) is 50 or above, and who have an abnormal red blood cell count result (RBC <= 3.5 or RBC >= 6.0); the sex, age, and RBC conditions all apply together, with the RBC condition being an OR.",
   "row_grain": "One row per eligible patient.",
   "column_role": "The identity of the patient and whether that patient was admitted to the hospital.",
-  "derivation": "Determine each patient's admission status (admitted vs not admitted) from the admission indicator, where '+' means admitted and '-' means not admitted; patient age is obtained as the current year minus the birth year.",
+  "derivation": "Admission status is taken from the stored admission indicator, where '+' means admitted and '-' means not admitted; patient age for eligibility is obtained as the current year minus the birth year.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

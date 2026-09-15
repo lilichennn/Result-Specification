@@ -415,8 +415,8 @@ Hint:
 Schema_links: [Player.player_name,Player_Attributes.attacking_work_rate,Player_Attributes.player_api_id = Player.player_api_id,Franco Zennaro]
 Result Contract:
 {
-  "population": "The football player named Franco Zennaro.",
-  "row_grain": "One row representing the player Franco Zennaro.",
+  "population": "The attacking work rate values recorded for the football player named Franco Zennaro.",
+  "row_grain": "One row for each distinct attacking work rate value recorded for the player.",
   "column_role": "The attacking work rate value of the player.",
   "derivation": "none",
   "filter_policy": "none",

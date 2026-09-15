@@ -225,12 +225,12 @@ Hint: percentage = MULTIPLY(DIVIDE(SUM(colour = 'Blue' WHERE gender = 'Female'),
 Schema_links: [colour.colour,gender.gender,superhero.skin_colour_id = colour.id,superhero.gender_id = gender.id,Blue,Female]
 Result Contract:
 {
-  "population": "The reference population is all superheroes whose gender is 'Female'; within it, the target subset is those female superheroes whose skin colour is 'Blue', and only that subset contributes to the numerator.",
-  "row_grain": "One global summary row over the entire female superhero population.",
-  "column_role": "A single output value: the percentage of blue female superheroes among all female superheroes.",
-  "derivation": "Compute 100 times the ratio of the count of female superheroes whose skin colour is 'Blue' to the count of all female superheroes.",
+  "population": "The reference population is female superheroes with a recorded skin colour; within it, the target subset is those whose skin colour is 'Blue', and only that subset contributes to the numerator.",
+  "row_grain": "One global summary row over the reference population.",
+  "column_role": "A single output value: the percentage of blue female superheroes among the female superheroes in the reference population.",
+  "derivation": "Compute 100 times the ratio of the count of female superheroes whose skin colour is 'Blue' to the count of female superheroes in the reference population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms superhero.skin_colour_id maps to colour.id and colour.colour stores the colour label, so 'Blue' must be evaluated as skin colour rather than eye or hair colour. This refines the blue subset in the numerator."
+  "meta_review": "Metadata confirms that 'Blue' must be evaluated as skin colour rather than eye or hair colour, refining the numerator subset."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: race number refers to raceId; finished 0:0M:SS in the Q3 refers to q3 LIKE
 Schema_links: [qualifying.number,qualifying.raceId,qualifying.q3,903,1:54%]
 Result Contract:
 {
-  "population": "Drivers with a qualifying record in race No. 903 (raceId = 903) whose Q3 time is 0:01:54, i.e., q3 matching the pattern '1:54%'.",
-  "row_grain": "One driver, namely the qualifying driver satisfying the stated Q3 time condition.",
+  "population": "Drivers with a qualifying record in race No. 903 (raceId = 903) whose Q3 time matches the pattern '1:54%'.",
+  "row_grain": "One row per qualifying driver satisfying the stated race and Q3 time condition.",
   "column_role": "The driver's number.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is not limited to a single driver; all matching qualifying drivers are returned."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -231,11 +231,11 @@ Schema_links: [income.date_received,income.source,member.first_name,member.last_
 Result Contract:
 {
   "population": "All records of funds received from the member whose full name is Connor Hilton where the source is 'Dues'.",
-  "row_grain": "One dues receipt event for Connor Hilton.",
+  "row_grain": "One row per dues receipt event for Connor Hilton.",
   "column_role": "The date on which the dues payment was received.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that dues are represented as income receipts, with income.date_received as the requested date and income.source identifying 'Dues'. This refines the population from generic payment records to dues receipt records associated with the member Connor Hilton."
+  "meta_review": "Metadata confirms that dues are represented as income receipts, with the date received as the requested date and the source identifying 'Dues'. This refines the population from generic payment records to dues receipt records associated with the member Connor Hilton."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -357,11 +357,11 @@ Schema_links: [drivers.nationality,drivers.driverId]
 Result Contract:
 {
   "population": "All drivers.",
-  "row_grain": "One global summary row identifying the single citizenship (nationality) held by the majority of drivers.",
-  "column_role": "The citizenship (nationality) value shared by the majority of drivers.",
-  "derivation": "The number of drivers holding each nationality, used to compare nationalities by how many drivers hold them.",
-  "filter_policy": "Select the nationality with the greatest number of drivers (argmax by driver count); tie handling is unspecified.",
-  "meta_review": "Metadata confirms drivers.nationality is the nationality of drivers, validating the driver-owned citizenship output. Round-1 contract preserved."
+  "row_grain": "One global summary row identifying the single citizenship (nationality) held by the largest number of drivers.",
+  "column_role": "The citizenship (nationality) value held by the largest number of drivers.",
+  "derivation": "The citizenship value is selected by comparing the number of drivers holding each nationality.",
+  "filter_policy": "Select the nationality with the greatest number of drivers; tie handling is unspecified.",
+  "meta_review": "Metadata confirms drivers.nationality is the nationality of drivers, validating the driver-owned citizenship output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

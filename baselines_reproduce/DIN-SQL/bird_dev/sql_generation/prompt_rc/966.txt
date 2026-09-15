@@ -354,12 +354,12 @@ Hint:
 Schema_links: [results.driverId,results.raceId,18]
 Result Contract:
 {
-  "population": "All driver race-result records associated with race ID number 18.",
+  "population": "All driver standing records associated with race ID number 18.",
   "row_grain": "One global summary for race ID number 18.",
-  "column_role": "The number of drivers who participated in that race.",
-  "derivation": "Count the distinct drivers whose race-result records are associated with race ID number 18.",
+  "column_role": "The number of drivers recorded for that race.",
+  "derivation": "Count the driver identifiers in the driver standing records associated with race ID number 18.",
   "filter_policy": "none",
-  "meta_review": "The results table records individual race results by driver and race, establishing the representation of race participation. This supports counting distinct driver identifiers for race ID 18."
+  "meta_review": "Driver standing records associate drivers with races, establishing the representation of race participation. This supports counting driver identifiers for race ID 18."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

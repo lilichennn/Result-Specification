@@ -297,12 +297,12 @@ Hint: unknown power cards refers to power is null or power = '*';contain info ab
 Schema_links: [cards.id,cards.power,cards.text,'*','triggered ability']
 Result Contract:
 {
-  "population": "Cards whose power is unknown (power is null or power equals '*') and whose card rules text contains 'triggered ability'; both conditions must hold.",
-  "row_grain": "One global summary row for the entire qualifying card set.",
-  "column_role": "A single value representing the number of qualifying cards.",
-  "derivation": "Count the cards satisfying the population conditions.",
+  "population": "Ruling text entries associated with cards whose power is unknown (power is null or power equals '*') and whose text contains 'triggered ability'; both conditions must hold.",
+  "row_grain": "One row for each qualifying ruling text entry.",
+  "column_role": "The qualifying ruling text that contains information about the triggered ability.",
+  "derivation": "Return the stored ruling text value for each qualifying entry; no count or aggregation is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.power treats null or '*' as unknown power and identifies cards.text as the card's rules text. This validates applying the text condition to the card's own rules text."
+  "meta_review": "The relevant text is ruling text associated with cards, not the card's own rules text, and the result is a retrieval of matching texts rather than a numeric count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

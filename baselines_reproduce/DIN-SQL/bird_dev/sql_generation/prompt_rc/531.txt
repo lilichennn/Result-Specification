@@ -328,11 +328,11 @@ Schema_links: [users.DisplayName,users.Reputation,Harlan,Jarrod Dixon]
 Result Contract:
 {
   "population": "Users whose DisplayName is either \"Harlan\" or \"Jarrod Dixon\".",
-  "row_grain": "One user: the single candidate among the two with the higher reputation.",
-  "column_role": "The identity of that user, expressed by their DisplayName.",
+  "row_grain": "One row per qualifying user whose Reputation equals the highest Reputation among the eligible users.",
+  "column_role": "The identity of the qualifying user or users, expressed by DisplayName.",
   "derivation": "none",
-  "filter_policy": "Argmax: retain the candidate user with the highest Reputation (Max(Reputation)) among the eligible users.",
-  "meta_review": "Metadata confirms users.Reputation is stored per user and users.DisplayName identifies users, validating the Round-1 user-level argmax."
+  "filter_policy": "Retain the eligible users whose Reputation equals the maximum Reputation among the eligible users.",
+  "meta_review": "Metadata confirms Reputation is stored per user and DisplayName identifies users, supporting selection by maximum Reputation among the named users."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

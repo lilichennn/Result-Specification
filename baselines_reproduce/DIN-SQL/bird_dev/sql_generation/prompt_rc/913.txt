@@ -358,7 +358,7 @@ Result Contract:
   "row_grain": "One row representing the single circuit with the highest altitude.",
   "column_role": "The country in which that circuit is located.",
   "derivation": "none",
-  "filter_policy": "Select the circuit whose altitude equals the maximum altitude (max(alt)) across all circuits.",
+  "filter_policy": "Select the single circuit ranked first by altitude, from highest to lowest.",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }
 

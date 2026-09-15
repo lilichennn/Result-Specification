@@ -230,10 +230,10 @@ Hint: meeting events refers to type = 'Meeting'; percentage = DIVIDE( SUM(cost),
 Schema_links: [expense.cost,event.event_id,event.type,expense.link_to_budget = budget.budget_id,budget.link_to_event = event.event_id,Meeting]
 Result Contract:
 {
-  "population": "All events whose type is 'Meeting'.",
-  "row_grain": "One global summary row covering all meeting events.",
-  "column_role": "The requested percentage value for the meeting events.",
-  "derivation": "Compute the percentage as the sum of expense cost dollars associated with the meeting events divided by the count of event_id across the same meeting events, multiplied by 100.",
+  "population": "All event-related expense costs, with the subset linked to events whose type is 'Meeting' identified as meeting-event costs.",
+  "row_grain": "One global summary row covering all event-related expense costs.",
+  "column_role": "The percentage share of total event-related expense cost attributable to meeting events.",
+  "derivation": "Multiply the sum of expense costs linked to events whose type is 'Meeting' by 100 and divide by the sum of expense costs linked to all events.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that cost is the dollar amount recorded for an expense and that 'Meeting' is a value of event type, so the numerator is expense cost associated with meeting events."
 }

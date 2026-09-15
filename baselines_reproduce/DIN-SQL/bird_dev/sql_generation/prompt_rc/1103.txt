@@ -416,7 +416,7 @@ Schema_links: [Player_Attributes.overall_rating,Player.player_name,Player_Attrib
 Result Contract:
 {
   "population": "Player rating records for the player named 'Aaron Mooy' whose date begins with '2016-02-04'.",
-  "row_grain": "One rating record for Aaron Mooy on that date.",
+  "row_grain": "One row per matching player rating record for Aaron Mooy on that date.",
   "column_role": "The overall rating value.",
   "derivation": "none",
   "filter_policy": "none",

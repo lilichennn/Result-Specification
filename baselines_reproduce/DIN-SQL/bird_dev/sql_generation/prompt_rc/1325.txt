@@ -299,12 +299,12 @@ Hint: item in support of club events refers to expense_description; most expensi
 Schema_links: [expense.expense_description,expense.cost]
 Result Contract:
 {
-  "population": "All expense records whose description indicates the spending was in support of club events.",
+  "population": "All expense records.",
   "row_grain": "One row representing the expense item identified as the most expensive.",
   "column_role": "The description of the item that the expense was spent on.",
   "derivation": "none",
-  "filter_policy": "Retain the eligible expense with the highest cost (argmax on cost).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Retain the expense record with the highest cost (argmax on cost).",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

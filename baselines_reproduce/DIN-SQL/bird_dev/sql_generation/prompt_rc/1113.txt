@@ -417,10 +417,10 @@ Result Contract:
 {
   "population": "Team attribute records for the team whose long name is 'Hannover 96' and whose date is 2015-09-10.",
   "row_grain": "One team attribute observation for Hannover 96 on 2015-09-10.",
-  "column_role": "The defence aggression class value of the team on that date.",
+  "column_role": "The chance creation shooting class value of the team on that date.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Team_Attributes.defenceAggressionClass is the team-level defence aggression class and that dates are timestamped text, validating the 2015-09-10 prefix condition."
+  "meta_review": "Metadata confirms the returned team attribute is the chance creation shooting class and that dates are timestamped text, validating the 2015-09-10 prefix condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

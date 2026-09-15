@@ -251,12 +251,12 @@ Hint: Owner refers to OwnerUserId; 'Eliciting priors from experts' is the Title 
 Schema_links: [users.Location,posts.OwnerUserId,posts.Title,posts.OwnerUserId = users.Id,"Eliciting priors from experts"]
 Result Contract:
 {
-  "population": "Posts whose title is 'Eliciting priors from experts'.",
-  "row_grain": "One row per qualifying post's owner, i.e., the single user who owns that post.",
+  "population": "Posts whose title is 'Eliciting priors from experts' and whose owner user can be resolved.",
+  "row_grain": "One row for each qualifying post, returning the location of that post's owner.",
   "column_role": "The location of the post's owner.",
-  "derivation": "Resolve the owner of each qualifying post through the post's OwnerUserId and take that user's location.",
+  "derivation": "Resolve the owner of each qualifying post and take that owner's stored location.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.OwnerUserId identifies the post's owner and users.Location stores that user's location. This validates the Round-1 owner-location resolution without changing it."
+  "meta_review": "Metadata confirms that a post's owner is represented by a user and that the requested output is the owner's location."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

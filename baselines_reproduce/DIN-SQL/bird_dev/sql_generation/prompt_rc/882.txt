@@ -355,11 +355,11 @@ Schema_links: [races.year,races.name,Singapore Grand Prix]
 Result Contract:
 {
   "population": "All races that are the Singapore Grand Prix.",
-  "row_grain": "One global summary row representing the earliest Singapore Grand Prix.",
+  "row_grain": "One selected row representing the earliest Singapore Grand Prix.",
   "column_role": "The year in which the first Singapore Grand Prix took place.",
-  "derivation": "The minimum year across all Singapore Grand Prix races.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The stored year of the earliest Singapore Grand Prix race.",
+  "filter_policy": "Select only the earliest Singapore Grand Prix by year.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

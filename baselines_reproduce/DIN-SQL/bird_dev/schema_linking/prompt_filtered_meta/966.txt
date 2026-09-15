@@ -182,10 +182,16 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
+Table driverStandings, columns = [*,driverStandingsId,raceId,driverId]
 Table drivers, columns = [*,driverId]
 Table races, columns = [*,raceId]
-Table results, columns = [*,resultId,raceId,driverId]
-Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Foreign_keys = [driverStandings.driverId = drivers.driverId,driverStandings.raceId = races.raceId]
+Sample rows from driverStandings (columns: ["driverStandingsId", "raceId", "driverId"]):
+[[1, 18, 1], [2, 18, 2], [3, 18, 3]]
+Column descriptions and value descriptions for driverStandings:
+Column driverStandingsId: column description -> , value description -> 
+Column raceId: column description -> , value description -> 
+Column driverId: column description -> , value description -> 
 Sample rows from drivers (columns: ["driverId"]):
 [[452], [625], [103]]
 Column descriptions and value descriptions for drivers:
@@ -194,12 +200,6 @@ Sample rows from races (columns: ["raceId"]):
 [[837], [833], [838]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId"]):
-[[1, 18, 1], [2, 18, 2], [3, 18, 3]]
-Column descriptions and value descriptions for results:
-Column resultId: column description -> the unique identification number identifying race result , value description -> 
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column driverId: column description -> , value description -> 
 
 Q: How many driver participated in race ID number 18?
 A: Let’s think step by step.

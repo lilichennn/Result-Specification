@@ -298,11 +298,11 @@ Schema_links: [cards.name,cards.availability,foreign_data.language,foreign_data.
 Result Contract:
 {
   "population": "All cards whose availability is 'paper' and that have a Japanese language recorded for the card.",
-  "row_grain": "One row per qualifying card, not per language record.",
-  "column_role": "A value identifying each qualifying card, as the requested entity is the cards themselves.",
+  "row_grain": "One row per qualifying card-language association, without a requirement that each card appear only once.",
+  "column_role": "The card name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata describes foreign_data.language as the foreign language of a card, resolving the language condition at card grain. The contract therefore keeps one row per qualifying card rather than per language record."
+  "meta_review": "Metadata describes foreign_data.language as the foreign language of a card, so the language condition is resolved through associated language records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

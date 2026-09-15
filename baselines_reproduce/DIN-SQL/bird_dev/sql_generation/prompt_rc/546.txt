@@ -251,12 +251,12 @@ Hint: the post that is well-finished refers to ClosedDate IS NOT Null
 Schema_links: [users.DisplayName,posts.ClosedDate,posts.OwnerUserId = users.Id]
 Result Contract:
 {
-  "population": "All users who own at least one post that is well-finished, meaning the post's ClosedDate is not null.",
-  "row_grain": "One user who owns at least one well-finished post.",
+  "population": "Users who own at least one post that is well-finished, meaning the post's ClosedDate is not null.",
+  "row_grain": "One row for each well-finished post owned by a user, so the same user may appear more than once.",
   "column_role": "The display name of the user.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

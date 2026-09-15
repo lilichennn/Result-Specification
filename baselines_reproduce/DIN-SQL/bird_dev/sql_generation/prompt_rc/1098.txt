@@ -415,12 +415,12 @@ Hint: Ajax's refers to team_long_name = 'Ajax'; chance creation passing score re
 Schema_links: [Team.team_long_name,Team_Attributes.chanceCreationPassing,Team_Attributes.chanceCreationPassingClass,Team.team_api_id = Team_Attributes.team_api_id,'Ajax']
 Result Contract:
 {
-  "population": "All records belonging to the team Ajax (team_long_name = 'Ajax').",
-  "row_grain": "One summary row for Ajax.",
+  "population": "Team attribute records for the team named Ajax.",
+  "row_grain": "One selected row for Ajax.",
   "column_role": "The highest chance creation passing score and the classification label of that score.",
-  "derivation": "Take the maximum chanceCreationPassing value across Ajax's records and report the chanceCreationPassingClass associated with that maximum score.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "Use the stored chance creation passing score and classification from the Ajax record having the greatest chance creation passing score.",
+  "filter_policy": "Select only the single record with the highest chance creation passing score.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

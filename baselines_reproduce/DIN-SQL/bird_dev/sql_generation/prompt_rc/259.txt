@@ -263,12 +263,12 @@ Hint: single bond refers to bond_type = '-';
 Schema_links: [atom.element,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'-']
 Result Contract:
 {
-  "population": "Elements that belong to molecules having a single bond, where a single bond is a bond with bond_type '-'.",
+  "population": "Distinct chemical elements that occur in molecules having at least one single bond, where a single bond is a bond with bond type '-'.",
   "row_grain": "One global summary for the entire eligible set of elements.",
-  "column_role": "The count of qualifying elements.",
-  "derivation": "Count the elements that are part of molecules with a single bond (bond_type '-').",
+  "column_role": "The count of qualifying distinct elements.",
+  "derivation": "Count distinct elements that occur in molecules with at least one single bond (bond type '-').",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a distinct element count, not a count of element occurrences."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

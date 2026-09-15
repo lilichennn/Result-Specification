@@ -296,12 +296,12 @@ Hint: accepted to the hospital refers to Admission = '+'; normal level of white 
 Schema_links: [Patient.ID,Patient.Admission,Laboratory.WBC,Patient.ID = Laboratory.ID,'+',3.5,9.0]
 Result Contract:
 {
-  "population": "Patients who were accepted to the hospital (Admission = '+') and whose white blood cell level is normal (WBC between 3.5 and 9.0).",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The number of qualifying patients.",
-  "derivation": "Count the distinct patients satisfying both the admission and WBC-range conditions.",
+  "population": "Patient cases accepted to the hospital (Admission = '+') that have a white blood cell level in the normal range (WBC between 3.5 and 9.0).",
+  "row_grain": "One global summary row for the qualifying accepted patient cases.",
+  "column_role": "The number of qualifying accepted patient cases.",
+  "derivation": "Count the qualifying accepted patient cases with a normal white blood cell level, without de-duplicating by patient.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Patient.Admission is a patient-level admission status and Laboratory.WBC is a laboratory-test attribute, so the count is over distinct qualifying patients rather than laboratory-test rows. The evidence-specified WBC range is preserved."
+  "meta_review": "The admission status is patient-level and the WBC measurement is laboratory-test-level, but the result counts qualifying accepted patient cases rather than de-duplicated patients; the evidence-specified WBC range is preserved."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

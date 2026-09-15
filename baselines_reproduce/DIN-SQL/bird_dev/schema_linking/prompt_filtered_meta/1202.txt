@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Examination Date,Diagnosis]
-Table Patient, columns = [*,ID,SEX,Admission,Diagnosis]
+Table Patient, columns = [*,ID,SEX,Admission]
 Foreign_keys = [Examination.ID = Patient.ID]
 Sample rows from Examination (columns: ["ID", "Examination Date", "Diagnosis"]):
 [[14872, "1997-05-27", "MCTD, AMI"], [48473, "1992-12-21", "SLE"], [102490, "1995-04-20", "PSS"]]
@@ -191,13 +191,12 @@ Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
 Column Examination Date: column description -> Examination Date, value description -> 
 Column Diagnosis: column description -> disease names, value description -> 
-Sample rows from Patient (columns: ["ID", "SEX", "Admission", "Diagnosis"]):
-[[2110, "F", "+", "RA susp."], [11408, "F", "+", "PSS"], [12052, "F", "+", "SLE"]]
+Sample rows from Patient (columns: ["ID", "SEX", "Admission"]):
+[[2110, "F", "+"], [11408, "F", "+"], [12052, "F", "+"]]
 Column descriptions and value descriptions for Patient:
 Column ID: column description -> identification of the patient, value description -> 
 Column SEX: column description -> Sex, value description -> F: female; M: male
 Column Admission: column description -> patient was admitted to the hospital (+) or followed at the outpatient clinic (-), value description -> patient was admitted to the hospital (+) or followed at the outpatient clinic (-)
-Column Diagnosis: column description -> disease names, value description -> 
 
 Q: How many male patients who underwent testing between 1995 and 1997 and were subsequently diagnosed with Behcet disease did not stay in the hospital for treatment?
 Hint: male refers to SEX = 'M'; underwent testing between 1995 and 1997 refers to `Examination Date` between '1995' and '1997'; Behcet refers to diagnosis; did not stay in the hospital refers to Admission = '-'

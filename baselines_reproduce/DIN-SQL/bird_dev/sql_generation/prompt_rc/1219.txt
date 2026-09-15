@@ -372,11 +372,11 @@ Hint: uric acid (UA) with normal range refers to UA < 8.0 and SEX = 'M' or UA < 
 Schema_links: [Laboratory.UA,Laboratory.Date,Patient.SEX,Patient.ID,Laboratory.ID = Patient.ID,'M','F',8.0,6.5]
 Result Contract:
 {
-  "population": "Patients whose latest laboratory examination result shows normal uric acid, where normal means UA < 8.0 for patients with SEX = 'M' or UA < 6.5 for patients with SEX = 'F'.",
-  "row_grain": "One global summary row spanning all eligible patients.",
-  "column_role": "The average UA index, i.e., the mean of the qualifying patients' UA values.",
-  "derivation": "For each patient, take the UA value from their latest laboratory examination, then compute the average of these UA values across all eligible patients (AVG(UA)).",
-  "filter_policy": "none",
+  "population": "Laboratory examination UA measurements considered normal: UA < 6.5 for female patients and UA < 8.0 for male patients.",
+  "row_grain": "One global summary row spanning all qualifying measurements.",
+  "column_role": "The average UA index, i.e., the mean of the qualifying measurements' UA values.",
+  "derivation": "Average the UA values of the qualifying laboratory examination measurements; the result is not based on one latest measurement per patient.",
+  "filter_policy": "Male measurements are restricted to the overall latest laboratory examination date; female measurements are not date-restricted.",
   "meta_review": "Laboratory.UA metadata describes the normal range with the opposite inequality from the explicit evidence. The evidence-defined normal thresholds are preserved."
 }
 

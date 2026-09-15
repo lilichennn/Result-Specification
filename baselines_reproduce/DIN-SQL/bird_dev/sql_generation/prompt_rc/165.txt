@@ -248,10 +248,10 @@ Hint:
 Schema_links: [trans.trans_id,account.district_id,trans.account_id = account.account_id,5]
 Result Contract:
 {
-  "population": "All transactions made by an account whose branch is located in district 5.",
-  "row_grain": "One transaction.",
-  "column_role": "The details describing each qualifying transaction, as the request asks to list the transactions themselves without specifying particular attributes.",
-  "derivation": "none",
+  "population": "All transactions made by an account whose district is district 5.",
+  "row_grain": "One transaction identifier per qualifying transaction.",
+  "column_role": "The transaction identifier of each qualifying transaction.",
+  "derivation": "Stored transaction identifier.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms account.district_id represents the account's branch district and trans records are one row per transaction, validating the account-based district filter and transaction row grain."
 }

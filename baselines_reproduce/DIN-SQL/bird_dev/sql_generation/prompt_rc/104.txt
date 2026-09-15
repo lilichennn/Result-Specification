@@ -249,11 +249,11 @@ Schema_links: [trans.amount,trans.date,account.date,trans.account_id = account.a
 Result Contract:
 {
   "population": "The account(s) associated with a transaction whose amount is 840 USD and whose date is 1998/10/14.",
-  "row_grain": "One account, namely the account that carried out the qualifying transaction.",
+  "row_grain": "One output row for each qualifying transaction, giving the opening date of the account associated with that transaction.",
   "column_role": "The date on which the account was opened.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

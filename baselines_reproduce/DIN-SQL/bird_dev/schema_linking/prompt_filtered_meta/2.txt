@@ -182,39 +182,30 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,Academic Year,County Code,District Code,School Code,County Name,District Name,School Name,District Type,Charter School (Y/N),Charter School Number]
-Table schools, columns = [*,CDSCode,County,District,School,Zip,MailZip,Charter,CharterNum,DOC,DOCType]
+Table frpm, columns = [*,CDSCode,County Name,District Name,District Type,Charter School (Y/N)]
+Table schools, columns = [*,CDSCode,County,District,Zip,Charter,DOC,DOCType]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "Academic Year", "County Code", "District Code", "School Code", "County Name", "District Name", "School Name", "District Type", "Charter School (Y/N)", "Charter School Number"]):
-[["01100170109835", "2014-2015", "01", 10017, "0109835", "Alameda", "Alameda County Office of Education", "FAME Public Charter", "County Office of Education (COE)", 1, "0728"], ["01100170112607", "2014-2015", "01", 10017, "0112607", "Alameda", "Alameda County Office of Education", "Envision Academy for Arts & Technology", "County Office of Education (COE)", 1, "0811"], ["01100170118489", "2014-2015", "01", 10017, "0118489", "Alameda", "Alameda County Office of Education", "Aspire California College Preparatory Academy", "County Office of Education (COE)", 1, "1049"]]
+Sample rows from frpm (columns: ["CDSCode", "County Name", "District Name", "District Type", "Charter School (Y/N)"]):
+[["01100170109835", "Alameda", "Alameda County Office of Education", "County Office of Education (COE)", 1], ["01100170112607", "Alameda", "Alameda County Office of Education", "County Office of Education (COE)", 1], ["01100170118489", "Alameda", "Alameda County Office of Education", "County Office of Education (COE)", 1]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column Academic Year: column description -> Academic Year, value description -> 
-Column County Code: column description -> County Code, value description -> 
-Column District Code: column description -> District Code, value description -> 
-Column School Code: column description -> , value description -> 
 Column County Name: column description -> County Code , value description -> 
 Column District Name: column description -> , value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column District Type: column description -> District Type, value description -> 
 Column Charter School (Y/N): column description -> Charter School (Y/N), value description -> 0: N;
 1: Y
-Column Charter School Number: column description -> Charter School Number, value description -> 
-Sample rows from schools (columns: ["CDSCode", "County", "District", "School", "Zip", "MailZip", "Charter", "CharterNum", "DOC", "DOCType"]):
-[["01100170000000", "Alameda", "Alameda County Office of Education", null, "94544-1136", "94544-1136", null, null, "00", "County Office of Education (COE)"], ["01100170109835", "Alameda", "Alameda County Office of Education", "FAME Public Charter", "94560-5359", "94560-5359", 1, "0728", "00", "County Office of Education (COE)"], ["01100170112607", "Alameda", "Alameda County Office of Education", "Envision Academy for Arts & Technology", "94612-3355", "94612", 1, "0811", "00", "County Office of Education (COE)"]]
+Sample rows from schools (columns: ["CDSCode", "County", "District", "Zip", "Charter", "DOC", "DOCType"]):
+[["01100170000000", "Alameda", "Alameda County Office of Education", "94544-1136", null, "00", "County Office of Education (COE)"], ["01100170109835", "Alameda", "Alameda County Office of Education", "94560-5359", 1, "00", "County Office of Education (COE)"], ["01100170112607", "Alameda", "Alameda County Office of Education", "94612-3355", 1, "00", "County Office of Education (COE)"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
 Column District: column description -> District, value description -> 
-Column School: column description -> School, value description -> 
 Column Zip: column description -> Zip, value description -> 
-Column MailZip: column description -> , value description -> The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.
 Column Charter: column description -> This field identifies a charter school. , value description -> The field is coded as follows:
 
 ·       1 = The school is a charter
 
 ·       0 = The school is not a charter
-Column CharterNum: column description -> The charter school number,, value description -> 4-digit number assigned to a charter school.
 Column DOC: column description -> District Ownership Code, value description -> The District Ownership Code (DOC) is the numeric code used to identify the category of the Administrative Authority.
 •       00 - County Office of Education
 •       02 – State Board of Education

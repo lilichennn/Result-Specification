@@ -187,12 +187,12 @@ Hint: element Tin refers to element = 'sn'; double bond refers to bond_type = ' 
 Schema_links: [bond.bond_type,atom.element,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'sn']
 Result Contract:
 {
-  "population": "Atoms whose element is Tin (element = 'sn'), together with the bonds in which those atoms participate as either endpoint of the atom-to-bond connection.",
-  "row_grain": "One row per bond type found among the bonds involving a Tin atom.",
-  "column_role": "The bond type of each qualifying bond, where single bond is '-', double bond is '=', and triple bond is '#'.",
+  "population": "Bonds connected to atoms whose element is Tin ('sn') through the recorded atom-to-bond connection.",
+  "row_grain": "One row per distinct bond type found among the qualifying bonds.",
+  "column_role": "The bond type values of the qualifying bonds, where single bond is '-', double bond is '=', and triple bond is '#'.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The connected table records each bond with two atom endpoints, resolving that Tin atoms qualify whether they appear as atom_id or atom_id2. This refines participation scope without changing the requested bond-type output."
+  "meta_review": "The participation scope is based on the recorded atom-to-bond connection for the Tin atom, not on an alternative opposite endpoint. This refines participation scope without changing the requested bond-type output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

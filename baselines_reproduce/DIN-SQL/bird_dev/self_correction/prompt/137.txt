@@ -1,0 +1,196 @@
+[SYSTEM]
+
+For the given question, use the provided tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+Hint helps you to write the correct sqlite SQL query.
+Use the following instructions for fixing the sqlite SQL query:
+1) Avoid redundant columns in SELECT clause, all of the columns should be mentioned in the question.
+2) Pay attention to the columns that are used for the JOIN by checking the Foreign keys.
+3) Pay attention to the columns that are used for the WHERE statement.
+4) Pay attention to the columns that are used for the GROUP BY statement.
+5) Pay attention to the columns that are used for the ORDER BY statement.
+6) check that all of the columns exist in the table and there are no typos.
+7) Use CAST when is needed.
+8) USE CASE WHEN is needed.
+###
+Few examples of this task are:
+###
+Schema of the database with sample rows and column descriptions:
+#
+CREATE TABLE movies (
+        movie_id INTEGER NOT NULL, 
+        movie_title TEXT, 
+        movie_release_year INTEGER, 
+        movie_url TEXT, 
+        movie_title_language TEXT, 
+        movie_popularity INTEGER, 
+        movie_image_url TEXT, 
+        director_id TEXT, 
+        director_name TEXT, 
+        director_url TEXT, 
+        PRIMARY KEY (movie_id)
+)
+
+/*
+3 rows from movies table:
+movie_id        movie_title     movie_release_year      movie_url       movie_title_language    movie_popularity        movie_image_url director_id     director_namedirector_url
+1       La Antena       2007    http://mubi.com/films/la-antena en      105     https://images.mubicdn.net/images/film/1/cache-7927-1581389497/image-w1280.jpg  131  Esteban Sapir    http://mubi.com/cast/esteban-sapir
+2       Elementary Particles    2006    http://mubi.com/films/elementary-particles      en      23      https://images.mubicdn.net/images/film/2/cache-512179-1581389841/image-w1280.jpg      73      Oskar Roehler   http://mubi.com/cast/oskar-roehler
+3       It's Winter     2006    http://mubi.com/films/its-winter        en      21      https://images.mubicdn.net/images/film/3/cache-7929-1481539519/image-w1280.jpg82      Rafi Pitts      http://mubi.com/cast/rafi-pitts
+*/
+
+Table: movies
+Column movie_id: column description -> ID related to the movie on Mubi
+Column movie_title: column description -> Name of the movie
+Column movie_release_year: column description -> Release year of the movie
+Column movie_url: column description -> URL to the movie page on Mubi
+Column movie_title_language: column description -> By default, the title is in English., value description -> Only contains one value which is 'en'
+Column movie_popularity: column description -> Number of Mubi users who love this movie
+Column movie_image_url: column description -> Image URL to the movie on Mubi
+Column director_id: column description -> ID related to the movie director on Mubi
+Column director_name: column description -> Full Name of the movie director
+Column director_url : column description -> URL to the movie director page on Mubi
+#
+Q: Name movie titles released in year 1945. Sort the listing by the descending order of movie popularity.
+Hint: released in the year 1945 refers to movie_release_year = 1945;
+SQL: SELECT movie_title, movie_popularity FROM movies WHERE movie_release_year = 1945/01/01 ORDER BY movie_popularity DESC LIMIT 1
+A: Let's think step by step to find the correct answer.
+1) The column movie_popularity is not mentioned in the question so it's redundant.
+2) JOIN is not required as there is no need to join any tables.
+3) The condition movie_release_year = 1945/01/01 is not correct. The correct condition is movie_release_year = 1945.
+4) GROUP BY is not required as there is no need to group any columns.
+5) The ORDER BY clause is correct.
+6) all columns are correct and there are no typo errors.
+7) CAST is not required as there is no need to cast any columns.
+8) CASE is not required as there is no need to use CASE.
+So, the final sqlite SQL query answer to the question the given question is =
+Revised_SQL: SELECT movie_title FROM movies WHERE movie_release_year = 1945 ORDER BY movie_popularity DESC LIMIT 1
+
+
+[USER]
+
+Evaluate the correctness of this query for the given question.
+Hint helps you to write the correct SQL query.
+Correct it if there are any issues. If there are no issues, return the SQLite SQL QUERY as is.
+Schema of the database with sample rows and column descriptions:
+#
+Table account, columns = [*,account_id,district_id,frequency,date]
+Table card, columns = [*,card_id,disp_id,type,issued]
+Table client, columns = [*,client_id,gender,birth_date,district_id]
+Table disp, columns = [*,disp_id,client_id,account_id,type]
+Table district, columns = [*,district_id,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15,A16]
+Table loan, columns = [*,loan_id,account_id,date,amount,duration,payments,status]
+Table order, columns = [*,order_id,account_id,bank_to,account_to,amount,k_symbol]
+Table trans, columns = [*,trans_id,account_id,date,type,operation,amount,balance,k_symbol,bank,account]
+Foreign_keys = [account.district_id = district.district_id,card.disp_id = disp.disp_id,client.district_id = district.district_id,disp.client_id = client.client_id,disp.account_id = account.account_id,loan.account_id = account.account_id,order.account_id = account.account_id,trans.account_id = account.account_id]
+Sample rows from account (columns: ["account_id", "district_id", "frequency", "date"]):
+[[1, 18, "POPLATEK MESICNE", "1995-03-24"], [2, 1, "POPLATEK MESICNE", "1993-02-26"], [3, 5, "POPLATEK MESICNE", "1997-07-07"]]
+Column descriptions and value descriptions for account:
+Column account_id: column description -> the id of the account, value description -> 
+Column district_id: column description -> location of branch, value description -> 
+Column frequency: column description -> frequency of the acount, value description -> 
+Column date: column description -> the creation date of the account, value description -> in the form YYMMDD
+Sample rows from card (columns: ["card_id", "disp_id", "type", "issued"]):
+[[1, 9, "gold", "1998-10-16"], [2, 19, "classic", "1998-03-13"], [3, 41, "gold", "1995-09-03"]]
+Column descriptions and value descriptions for card:
+Column card_id: column description -> id number of credit card, value description -> 
+Column disp_id: column description -> disposition id, value description -> 
+Column type: column description -> type of credit card, value description -> "junior": junior class of credit card; 
+"classic": standard class of credit card; 
+"gold": high-level credit card
+Column issued: column description -> the date when the credit card issued , value description -> in the form YYMMDD
+Sample rows from client (columns: ["client_id", "gender", "birth_date", "district_id"]):
+[[1, "F", "1970-12-13", 18], [2, "M", "1945-02-04", 1], [3, "F", "1940-10-09", 1]]
+Column descriptions and value descriptions for client:
+Column client_id: column description -> the unique number, value description -> 
+Column gender: column description -> , value description -> F：female 
+M：male 
+Column birth_date: column description -> birth date, value description -> 
+Column district_id: column description -> location of branch, value description -> 
+Sample rows from disp (columns: ["disp_id", "client_id", "account_id", "type"]):
+[[1, 1, 1, "OWNER"], [2, 2, 2, "OWNER"], [3, 3, 2, "DISPONENT"]]
+Column descriptions and value descriptions for disp:
+Column disp_id: column description -> unique number of identifying this row of record, value description -> 
+Column client_id: column description -> id number of client, value description -> 
+Column account_id: column description -> id number of account, value description -> 
+Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
+commonsense evidence:
+the account can only have the right to issue permanent orders or apply for loans
+Sample rows from district (columns: ["district_id", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "A16"]):
+[[1, "Hl.m. Praha", "Prague", "1204953", "0", "0", "0", 1, 1, 100.0, 12541, 0.2, 0.43, 167, 85677, 99107], [2, "Benesov", "central Bohemia", "88884", "80", "26", "6", 2, 5, 46.7, 8507, 1.6, 1.85, 132, 2159, 2674], [3, "Beroun", "central Bohemia", "75232", "55", "26", "4", 1, 5, 41.7, 8980, 1.9, 2.21, 111, 2824, 2813]]
+Column descriptions and value descriptions for district:
+Column district_id: column description -> location of branch, value description -> 
+Column A2: column description -> district_name, value description -> 
+Column A3: column description -> region, value description -> 
+Column A4: column description -> , value description -> 
+Column A5: column description -> municipality < district < region, value description -> 
+Column A6: column description -> municipality < district < region, value description -> 
+Column A7: column description -> municipality < district < region, value description -> 
+Column A8: column description -> municipality < district < region, value description -> 
+Column A9: column description -> , value description -> not useful
+Column A10: column description -> ratio of urban inhabitants, value description -> 
+Column A11: column description -> average salary, value description -> 
+Column A12: column description -> unemployment rate 1995, value description -> 
+Column A13: column description -> unemployment rate 1996, value description -> 
+Column A14: column description -> no. of entrepreneurs per 1000 inhabitants, value description -> 
+Column A15: column description -> no. of committed crimes 1995, value description -> 
+Column A16: column description -> no. of committed crimes 1996, value description -> 
+Sample rows from loan (columns: ["loan_id", "account_id", "date", "amount", "duration", "payments", "status"]):
+[[4959, 2, "1994-01-05", 80952, 24, 3373.0, "A"], [4961, 19, "1996-04-29", 30276, 12, 2523.0, "B"], [4962, 25, "1997-12-08", 30276, 12, 2523.0, "A"]]
+Column descriptions and value descriptions for loan:
+Column loan_id: column description -> the id number identifying the loan data, value description -> 
+Column account_id: column description -> the id number identifying the account, value description -> 
+Column date: column description -> the date when the loan is approved, value description -> 
+Column amount: column description -> approved amount, value description -> unit：US dollar
+Column duration: column description -> loan duration, value description -> unit：month
+Column payments: column description -> monthly payments, value description -> unit：month
+Column status: column description -> repayment status, value description -> 'A' stands for contract finished, no problems;
+'B' stands for contract finished, loan not paid;
+'C' stands for running contract, OK so far;
+'D' stands for running contract, client in debt
+Sample rows from order (columns: ["order_id", "account_id", "bank_to", "account_to", "amount", "k_symbol"]):
+[[29401, 1, "YZ", 87144583, 2452.0, "SIPO"], [29402, 2, "ST", 89597016, 3372.7, "UVER"], [29403, 2, "QR", 13943797, 7266.0, "SIPO"]]
+Column descriptions and value descriptions for order:
+Column order_id: column description -> identifying the unique order, value description -> 
+Column account_id: column description -> id number of account, value description -> 
+Column bank_to: column description -> bank of the recipient, value description -> 
+Column account_to: column description -> account of the recipient, value description -> each bank has unique two-letter code
+Column amount: column description -> debited amount, value description -> 
+Column k_symbol: column description -> purpose of the payment, value description -> "POJISTNE" stands for insurance payment
+"SIPO" stands for household payment
+"LEASING" stands for leasing
+"UVER" stands for loan payment
+Sample rows from trans (columns: ["trans_id", "account_id", "date", "type", "operation", "amount", "balance", "k_symbol", "bank", "account"]):
+[[1, 1, "1995-03-24", "PRIJEM", "VKLAD", 1000, 1000, null, null, null], [5, 1, "1995-04-13", "PRIJEM", "PREVOD Z UCTU", 3679, 4679, null, "AB", 41403269], [6, 1, "1995-05-13", "PRIJEM", "PREVOD Z UCTU", 3679, 20977, null, "AB", 41403269]]
+Column descriptions and value descriptions for trans:
+Column trans_id: column description -> transaction id, value description -> 
+Column account_id: column description -> , value description -> 
+Column date: column description -> date of transaction, value description -> 
+Column type: column description -> +/- transaction, value description -> "PRIJEM" stands for credit
+"VYDAJ" stands for withdrawal
+Column operation: column description -> mode of transaction, value description -> "VYBER KARTOU": credit card withdrawal
+"VKLAD": credit in cash
+"PREVOD Z UCTU" :collection from another bank
+"VYBER": withdrawal in cash
+"PREVOD NA UCET": remittance to another bank
+Column amount: column description -> amount of money, value description -> Unit：USD
+Column balance: column description -> balance after transaction, value description -> Unit：USD
+Column k_symbol: column description -> , value description -> "POJISTNE": stands for insurrance payment
+"SLUZBY": stands for payment for statement
+"UROK": stands for interest credited
+"SANKC. UROK": sanction interest if negative balance
+"SIPO": stands for household
+"DUCHOD": stands for old-age pension
+"UVER": stands for loan payment
+Column bank: column description -> , value description -> each bank has unique two-letter code
+Column account: column description -> , value description -> 
+
+
+#
+Q: How many accounts have running contracts in Branch location 1?
+Hint: Status = 'C' stands for running contract, OK so far; Status = 'D' stands for running contract, client in debt
+SQL: SELECT COUNT(T1.account_id)
+FROM account AS T1
+INNER JOIN loan AS T2 ON T1.account_id = T2.account_id
+WHERE T1.district_id = 1
+  AND (T2.status = 'C' OR T2.status = 'D');
+A: Let's think step by step to find the correct answer.

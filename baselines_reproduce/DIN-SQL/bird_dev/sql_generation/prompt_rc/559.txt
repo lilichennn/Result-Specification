@@ -321,11 +321,11 @@ Schema_links: [votes.CreationDate,votes.Id]
 Result Contract:
 {
   "population": "All vote records are eligible, with each vote contributing to the vote count of its creation date.",
-  "row_grain": "One creation date, namely the date on which the most votes were recorded.",
+  "row_grain": "One creation date, namely the date selected as having the highest vote count.",
   "column_role": "The creation date value.",
-  "derivation": "For each creation date, the number of votes is the count of vote Ids recorded on that date.",
-  "filter_policy": "Select the creation date whose vote count equals the maximum vote count across all creation dates (argmax on vote count).",
-  "meta_review": "Metadata confirms votes.CreationDate is the creation date of an individual vote and votes.Id identifies each vote. This validates the vote-record grain of the count."
+  "derivation": "The returned creation date is a stored date value; the vote count used to select it is an aggregate count of votes per creation date.",
+  "filter_policy": "Select exactly one creation date with the greatest vote count; if multiple dates tie for the greatest count, one of them is returned without further distinction.",
+  "meta_review": "Metadata confirms the creation date is recorded for each vote and each vote has an identifier, validating the vote-record grain of the count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

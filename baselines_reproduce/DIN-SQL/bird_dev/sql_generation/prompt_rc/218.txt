@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic; contain fluorine refers to el
 Schema_links: [molecule.label,molecule.molecule_id,atom.element,atom.atom_id,atom.molecule_id = molecule.molecule_id,'+','f']
 Result Contract:
 {
-  "population": "The reference population is all molecules with label = '+' (carcinogenic); the target subpopulation is those carcinogenic molecules that contain no fluorine, i.e., have no distinct atom with element = 'f'.",
-  "row_grain": "One global summary row over the entire carcinogenic-molecule population.",
-  "column_role": "A single output value: the percentage of carcinogenic molecules that do not contain fluorine.",
-  "derivation": "Compute 100 times the count of carcinogenic molecules having no fluorine atom divided by the count of all carcinogenic molecules, equivalently 100 minus the percentage of carcinogenic molecules containing at least one distinct fluorine atom.",
+  "population": "The reference population is carcinogenic molecules, identified by the '+' label, that have at least one associated atom. The target subpopulation is those reference molecules that have at least one associated atom whose element is not fluorine.",
+  "row_grain": "One global summary row over the reference carcinogenic-molecule population.",
+  "column_role": "A single output value: the percentage of reference carcinogenic molecules that contain at least one non-fluorine atom.",
+  "derivation": "Compute 100 times the ratio of the number of unique carcinogenic molecules with at least one non-fluorine atom to the number of unique carcinogenic molecules in the reference population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms molecule.label = '+' identifies carcinogenic molecules and atom.element = 'f' identifies fluorine atoms linked to molecules via atom.molecule_id, validating the molecule-level fluorine-existence condition."
+  "meta_review": "Metadata confirms the carcinogenic '+' label and fluorine element 'f'; the relevant molecule-level condition is presence of at least one non-fluorine atom, not complete absence of fluorine."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

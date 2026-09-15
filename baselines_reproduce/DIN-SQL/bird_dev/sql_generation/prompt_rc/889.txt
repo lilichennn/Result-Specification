@@ -286,11 +286,11 @@ Schema_links: [races.year,circuits.name,races.name,races.circuitId = circuits.ci
 Result Contract:
 {
   "population": "Formula 1 British Grand Prix events that were hosted at the Brands Hatch circuit.",
-  "row_grain": "One global summary representing the single most recent eligible season.",
-  "column_role": "The year of the last British Grand Prix hosted at Brands Hatch.",
+  "row_grain": "One selected row representing the most recent eligible British Grand Prix event.",
+  "column_role": "The date of the last British Grand Prix hosted at Brands Hatch.",
   "derivation": "none",
-  "filter_policy": "Select the maximum year among the eligible British Grand Prix events at Brands Hatch.",
-  "meta_review": "The metadata confirms that races carry a season year and race name while circuits carry a full circuit name. This validates the eligible British Grand Prix events at Brands Hatch and the maximum season-year output."
+  "filter_policy": "Select the eligible British Grand Prix event with the most recent season year.",
+  "meta_review": "The metadata supports identifying British Grand Prix events at Brands Hatch, choosing the one with the most recent season year, and returning that event's date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

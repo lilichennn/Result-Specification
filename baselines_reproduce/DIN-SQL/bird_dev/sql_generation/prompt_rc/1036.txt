@@ -491,12 +491,12 @@ Hint: long name of teams refers to team_long_name; build-up play passing refers 
 Schema_links: [Team.team_long_name,Team_Attributes.buildUpPlayPassing,Team_Attributes.date,Team.team_api_id = Team_Attributes.team_api_id,2012]
 Result Contract:
 {
-  "population": "Eligible teams are teams that have a dated team attribute record in 2012 with buildUpPlayPassing greater than the average buildUpPlayPassing; the reference population for the average is all team attribute records where buildUpPlayPassing is not null.",
-  "row_grain": "One result row represents one team that has a qualifying 2012 buildUpPlayPassing record.",
+  "population": "Eligible teams are teams that have a team attribute record dated in 2012 with buildUpPlayPassing greater than the average buildUpPlayPassing; the reference population for the average is the 2012 team attribute records associated with teams.",
+  "row_grain": "One result row represents one distinct long name of a team that has a qualifying 2012 buildUpPlayPassing record.",
   "column_role": "The long name of the qualifying team (team_long_name).",
-  "derivation": "The comparison threshold is the average buildUpPlayPassing, computed as the sum of buildUpPlayPassing divided by the count of team_long_name over team attribute records where buildUpPlayPassing is not null.",
-  "filter_policy": "none",
-  "meta_review": "Metadata shows Team_Attributes owns buildUpPlayPassing and the date used for the 2012 condition, while Team owns team_long_name. This resolves that eligibility is evaluated on dated team attribute records while the result remains one team long name per qualifying team."
+  "derivation": "The comparison threshold is the average buildUpPlayPassing, computed as the sum of buildUpPlayPassing divided by the count of 2012 team attribute records associated with teams.",
+  "filter_policy": "Duplicate qualifying team long names are collapsed so each long name appears once.",
+  "meta_review": "Metadata shows Team_Attributes owns buildUpPlayPassing and the date used for the 2012 condition, while Team owns team_long_name. This resolves that eligibility is evaluated on dated team attribute records while the result remains one distinct team long name for qualifying teams."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

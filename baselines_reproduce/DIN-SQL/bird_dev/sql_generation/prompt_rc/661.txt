@@ -327,12 +327,12 @@ Hint: How old describes age; the most influential refers to user where MAX(Reput
 Schema_links: [users.Age,users.Reputation]
 Result Contract:
 {
-  "population": "All users are eligible; no Boolean membership conditions restrict the set.",
-  "row_grain": "One row representing the single most influential user.",
-  "column_role": "The age of the selected user.",
+  "population": "All users are eligible as candidates; no Boolean membership conditions restrict the candidate set.",
+  "row_grain": "One row for each user whose reputation equals the maximum reputation; ties can produce multiple rows.",
+  "column_role": "The age of each selected user.",
   "derivation": "none",
-  "filter_policy": "Select the user with the maximum reputation (argmax over reputation); tie handling is unspecified.",
-  "meta_review": "Metadata confirms users.Reputation represents influence and users.Age stores the requested age, validating the Round-1 argmax and output."
+  "filter_policy": "Select the users with the maximum reputation; all users tied at the maximum are retained.",
+  "meta_review": "Metadata confirms user reputation represents influence and user age stores the requested age, supporting selection by maximum reputation and age output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

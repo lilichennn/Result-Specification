@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Player, columns = [*,player_api_id,player_fifa_api_id,birthday]
-Table Player_Attributes, columns = [*,player_fifa_api_id,player_api_id,date,preferred_foot]
+Table Player_Attributes, columns = [*,player_fifa_api_id,player_api_id,preferred_foot]
 Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id]
 Sample rows from Player (columns: ["player_api_id", "player_fifa_api_id", "birthday"]):
 [[505942, 218353, "1992-02-29 00:00:00"], [155782, 189615, "1989-12-15 00:00:00"], [162549, 186170, "1991-05-13 00:00:00"]]
@@ -193,12 +193,11 @@ Column player_fifa_api_id: column description -> the id of the player fifa api, 
 Column birthday: column description -> the player's birthday, value description -> e.g. 1992-02-29 00:00:00 
 commonsense reasoning: 
 Player A is older than player B means that A's birthday is earlier than B's
-Sample rows from Player_Attributes (columns: ["player_fifa_api_id", "player_api_id", "date", "preferred_foot"]):
-[[218353, 505942, "2016-02-18 00:00:00", "right"], [218353, 505942, "2015-11-19 00:00:00", "right"], [218353, 505942, "2015-09-21 00:00:00", "right"]]
+Sample rows from Player_Attributes (columns: ["player_fifa_api_id", "player_api_id", "preferred_foot"]):
+[[218353, 505942, "right"], [218353, 505942, "right"], [218353, 505942, "right"]]
 Column descriptions and value descriptions for Player_Attributes:
 Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column player_api_id: column description -> the id of the player api, value description -> 
-Column date: column description -> date, value description -> e.g. 2016-02-18 00:00:00
 Column preferred_foot: column description -> the player's preferred foot when attacking, value description -> right/ left
 
 Q: What is the preferred foot when attacking of the youngest football player?

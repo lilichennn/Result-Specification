@@ -296,12 +296,12 @@ Hint: creatinine (CRE) not within the normal range refers to CRE > = 1.5; male r
 Schema_links: [Patient.SEX,Laboratory.CRE,Laboratory.ID = Patient.ID,'M','F',1.5]
 Result Contract:
 {
-  "population": "All patients with at least one laboratory creatinine (CRE) value not within the normal range, i.e., CRE >= 1.5; within this eligible set, a male subpopulation (Sex = 'M') and a female subpopulation (Sex = 'F') are compared.",
-  "row_grain": "One global summary row representing the single comparison across the eligible patient population.",
-  "column_role": "A Boolean true/false value indicating whether the male count exceeds the female count.",
-  "derivation": "Count distinct eligible patients with Sex = 'M' and count distinct eligible patients with Sex = 'F', then evaluate whether the male count is greater than the female count.",
+  "population": "All creatinine laboratory results not within the normal range, i.e., CRE >= 1.5, each considered together with the patient it belongs to; within these qualifying result occurrences, those belonging to male patients (Sex = 'M') and female patients (Sex = 'F') are compared.",
+  "row_grain": "One global summary row representing the single comparison across the qualifying creatinine result occurrences.",
+  "column_role": "A true/false value indicating whether the male total exceeds the female total.",
+  "derivation": "For each qualifying creatinine result occurrence, add one to the male total when the associated patient sex is M and one to the female total when it is F, then return true if the male total is greater than the female total.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms CRE is a Laboratory measurement and Patient.SEX uses M/F codes. This resolves eligibility as a patient-level condition based on a qualifying laboratory CRE value and keeps the comparison a count of distinct patients, not laboratory records."
+  "meta_review": "Metadata confirms CRE is a laboratory measurement and patient sex uses M/F codes. The comparison is based on qualifying CRE laboratory occurrences grouped by patient sex, not on distinct patient counts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

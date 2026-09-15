@@ -297,7 +297,7 @@ Hint: legacy card refers to format = 'legacy'; foreign language refers to langua
 Schema_links: [cards.uuid,foreign_data.language,legalities.format,foreign_data.uuid = cards.uuid,legalities.uuid = cards.uuid,'legacy']
 Result Contract:
 {
-  "population": "All cards associated with a legalities record whose format is 'legacy' (legacy cards).",
+  "population": "Foreign-language entries associated with cards that have a legalities record whose format is 'legacy' (legacy cards).",
   "row_grain": "One row per foreign language entry associated with a legacy card.",
   "column_role": "The uuid of the legacy card and the foreign language of that card (language from foreign_data).",
   "derivation": "none",

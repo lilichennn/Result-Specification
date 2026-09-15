@@ -182,20 +182,19 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table comments, columns = [*,Id,PostId,Score]
-Table posts, columns = [*,Id,CommentCount]
+Table comments, columns = [*,Id,PostId]
+Table posts, columns = [*,Id,Score,CommentCount]
 Foreign_keys = [comments.PostId = posts.Id]
-Sample rows from comments (columns: ["Id", "PostId", "Score"]):
-[[1, 3, 5], [2, 5, 0], [3, 9, 0]]
+Sample rows from comments (columns: ["Id", "PostId"]):
+[[1, 3], [2, 5], [3, 9]]
 Column descriptions and value descriptions for comments:
 Column Id: column description -> the comment Id, value description -> 
 Column PostId: column description -> the unique id of the post, value description -> 
-Column Score: column description -> rating score, value description -> commonsense evidence:
-The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. 
-Sample rows from posts (columns: ["Id", "CommentCount"]):
-[[1, 1], [2, 1], [3, 4]]
+Sample rows from posts (columns: ["Id", "Score", "CommentCount"]):
+[[1, 23, 1], [2, 22, 1], [3, 54, 4]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
+Column Score: column description -> the score of the post, value description -> 
 Column CommentCount: column description -> the total number of comments of the post, value description -> 
 
 Q: In posts with 1 comment, how many of the comments have 0 score?

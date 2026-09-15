@@ -15,20 +15,17 @@ if str(CODE_ROOT) not in sys.path:
 from result_contract.data_preprocess import (
     preprocess_bird,
     preprocess_spider,
-    preprocess_spider2_snow,
 )
 
 
 DEFAULT_DATASET_ROOTS = {
     "bird": Path("BIRD"),
     "spider": Path("Spider"),
-    "spider2": Path("Spider2.0"),
 }
 SUPPORTED_SPLITS = {
     "bird": {"dev"},
     "spider": {"dev", "test"},
     "birdinteract": set(),
-    "spider2": {"snow"},
 }
 
 
@@ -64,11 +61,6 @@ def preprocess_dataset(
             split=split,
             output_dir=resolved_output_dir,
         )
-    elif dataset == "spider2":
-        summary = preprocess_spider2_snow(
-            spider2_root=resolved_dataset_root,
-            output_dir=resolved_output_dir,
-        )
     else:
         raise ValueError(f"No preprocessor implemented for dataset: {dataset!r}")
 
@@ -83,12 +75,12 @@ def parse_args() -> argparse.Namespace:
         "--dataset",
         required=True,
         choices=tuple(sorted(SUPPORTED_SPLITS)),
-        help="Dataset to preprocess. choose from [bird, spider, birdinteract, spider2]",
+        help="Dataset to preprocess. choose from [bird, spider, birdinteract]",
     )
     parser.add_argument(
         "--split",
         required=True,
-        choices=("dev", "test", "snow"),
+        choices=("dev", "test"),
         help="Dataset split to preprocess.",
     )
     parser.add_argument(

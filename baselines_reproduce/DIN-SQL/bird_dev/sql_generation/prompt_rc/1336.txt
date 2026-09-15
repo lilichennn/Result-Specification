@@ -230,12 +230,12 @@ Hint:
 Schema_links: [major.department,member.last_name,member.link_to_major = major.major_id,Pierce,Guidi]
 Result Contract:
 {
-  "population": "Departments that offer the major taken by the individuals named Pierce and Guidi; the major must be one that Pierce took and that Guidi took (a single shared major, per the singular phrasing).",
-  "row_grain": "One department offering the major taken by Pierce and Guidi.",
-  "column_role": "The identity (name) of the department that offers that major.",
-  "derivation": "none",
+  "population": "Departments offering a major taken by a member whose last name is Pierce or Guidi; the condition is disjunctive, so qualification does not require the same major to have been taken by both.",
+  "row_grain": "One row for each qualifying member-major association, so the same department may appear more than once and different departments may appear for different qualifying members.",
+  "column_role": "The identity/name of the department; member and major details are not returned.",
+  "derivation": "Stored department value returned for each qualifying association, with no arithmetic, aggregation, or duplicate elimination.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

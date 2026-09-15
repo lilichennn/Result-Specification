@@ -251,12 +251,12 @@ Hint: post no. 65041 refers to Id = '65041'; reputation point refers to Reputati
 Schema_links: [users.Reputation,posts.Id,posts.OwnerUserId = users.Id,65041]
 Result Contract:
 {
-  "population": "The single user who is the owner of the post with Id = '65041'.",
+  "population": "The single user who is the owner of the post with Id 65041.",
   "row_grain": "One row representing the owner user of post 65041.",
   "column_role": "The reputation points of that owner user.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

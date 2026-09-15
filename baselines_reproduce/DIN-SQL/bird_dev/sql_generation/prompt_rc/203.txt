@@ -259,9 +259,9 @@ Result Contract:
   "population": "All atoms whose element is not 'br' (bromine).",
   "row_grain": "One global summary row for the entire eligible atom population.",
   "column_role": "The count of qualifying atoms.",
-  "derivation": "Count the atoms belonging to the eligible population.",
+  "derivation": "Count the distinct atoms belonging to the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms atom.element uses the lowercase code 'br' for bromine and atom.atom_id uniquely identifies atoms, validating the Round-1 eligibility filter and count grain."
+  "meta_review": "Metadata confirms the element code for bromine is lowercase 'br' and atoms have unique identifiers, supporting the eligibility filter and global count grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -491,11 +491,11 @@ Hint: strongest players refers to player has MAX(overall_rating)
 Schema_links: [Player.player_name,Player_Attributes.overall_rating,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no Boolean membership condition restricts the set.",
-  "row_grain": "One result row representing a single player, the strongest one.",
+  "population": "Players with recorded overall ratings; a player is considered only if an attribute record exists for them.",
+  "row_grain": "One row for each distinct player name satisfying the maximum-rating condition; multiple rows are possible in ties.",
   "column_role": "The name of the player.",
   "derivation": "none",
-  "filter_policy": "Select the player associated with the maximum recorded overall_rating (argmax by overall_rating).",
+  "filter_policy": "Select all qualifying players whose overall_rating equals the maximum recorded overall_rating; no ordering or single-row limit is applied.",
   "meta_review": "Metadata places overall_rating in Player_Attributes and player_name in Player, validating that the strongest-player comparison uses recorded player attribute ratings while the output is the player's name."
 }
 

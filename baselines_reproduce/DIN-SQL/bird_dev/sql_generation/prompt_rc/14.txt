@@ -352,12 +352,12 @@ Hint:
 Schema_links: [frpm.`Enrollment (Ages 5-17)`,schools.NCESSchool,frpm.CDSCode = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible; the question states no membership conditions restricting which schools qualify.",
+  "population": "Schools that have an associated Enrollment (Ages 5-17) measure.",
   "row_grain": "One row per selected school.",
   "column_role": "The 5-digit NCES school identification number of each selected school.",
   "derivation": "none",
   "filter_policy": "Retain the five schools with the highest Enrollment (Ages 5-17) and order them descending from highest to lowest by that enrollment measure.",
-  "meta_review": "Metadata confirms schools.NCESSchool is the 5-digit NCES school identification number, resolving the requested identifier representation. No other Round-1 semantics are refined."
+  "meta_review": "Metadata confirms the requested identifier is the 5-digit NCES school identification number; eligibility is limited to schools with an associated Enrollment (Ages 5-17) measure."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

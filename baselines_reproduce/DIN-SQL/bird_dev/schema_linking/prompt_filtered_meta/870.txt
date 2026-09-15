@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,driverRef,forename,surname]
-Table qualifying, columns = [*,qualifyId,raceId,driverId,position,q1]
+Table qualifying, columns = [*,qualifyId,raceId,driverId,q1]
 Table races, columns = [*,raceId]
 Foreign_keys = [qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId", "driverRef", "forename", "surname"]):
@@ -193,13 +193,12 @@ Column driverId: column description -> , value description ->
 Column driverRef: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from qualifying (columns: ["qualifyId", "raceId", "driverId", "position", "q1"]):
-[[1, 18, 1, 1, "1:26.572"], [2, 18, 9, 2, "1:26.103"], [3, 18, 5, 3, "1:25.664"]]
+Sample rows from qualifying (columns: ["qualifyId", "raceId", "driverId", "q1"]):
+[[1, 18, 1, "1:26.572"], [2, 18, 9, "1:26.103"], [3, 18, 5, "1:25.664"]]
 Column descriptions and value descriptions for qualifying:
 Column qualifyId: column description -> , value description -> 
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
 Column q1: column description -> , value description -> 
 Sample rows from races (columns: ["raceId"]):
 [[837], [833], [838]]

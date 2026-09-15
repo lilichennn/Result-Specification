@@ -367,11 +367,11 @@ Schema_links: [cards.artist,cards.flavorName,'Battra,Dark Destroyer']
 Result Contract:
 {
   "population": "Cards whose promotional name (flavorName) is exactly \"Battra, Dark Destroyer\".",
-  "row_grain": "One card matching the stated promotional name.",
+  "row_grain": "One artist value for each card matching the stated promotional name.",
   "column_role": "The artist who designed the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.flavorName is the promotional card name and cards.artist stores the artist name, validating the Round-1 population and output."
+  "meta_review": "Metadata confirms cards.flavorName is the promotional card name and cards.artist stores the artist name, validating the population and output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

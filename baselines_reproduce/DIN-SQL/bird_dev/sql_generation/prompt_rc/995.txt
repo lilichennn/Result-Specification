@@ -285,12 +285,12 @@ Hint: Average score = AVG(points)
 Schema_links: [results.points,drivers.forename,drivers.surname,races.name,results.driverId = drivers.driverId,results.raceId = races.raceId,"Lewis","Hamilton","Turkish Grand Prix"]
 Result Contract:
 {
-  "population": "All race result records belonging to driver Lewis Hamilton at the Turkish Grand Prix.",
+  "population": "All driver standing score records for Lewis Hamilton associated with races named Turkish Grand Prix.",
   "row_grain": "One global summary row for the whole eligible set of records.",
-  "column_role": "A single value representing Lewis Hamilton's average score across Turkish Grand Prix results.",
-  "derivation": "Compute the average of points (AVG(points)) over all eligible records.",
+  "column_role": "A single value representing Lewis Hamilton's average score across the eligible Turkish Grand Prix records.",
+  "derivation": "Compute the average of points over all eligible records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The eligible records are driver standing score entries associated with the Turkish Grand Prix."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,8 +297,8 @@ Hint: Japanese name refers to language = 'Japanese'; card "Fellwar Stone" refers
 Schema_links: [set_translations.translation,set_translations.language,cards.name,cards.setCode = set_translations.setCode,'Japanese','Fellwar Stone']
 Result Contract:
 {
-  "population": "Sets that contain a card with name = 'Fellwar Stone'.",
-  "row_grain": "One set containing the card 'Fellwar Stone'.",
+  "population": "Japanese set-name translations for sets that contain a card with name = 'Fellwar Stone', where the Japanese translated name is present.",
+  "row_grain": "One row per qualifying Japanese set-name translation for a set containing the card 'Fellwar Stone'.",
   "column_role": "The set's Japanese translated name, i.e., the set translation value where language = 'Japanese'.",
   "derivation": "none",
   "filter_policy": "none",

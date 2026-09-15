@@ -494,8 +494,8 @@ Result Contract:
   "population": "All players are eligible; no Boolean membership conditions are stated.",
   "row_grain": "One result row per player who qualifies as most tallest.",
   "column_role": "The player's name.",
-  "derivation": "A ranking of players by height in descending order defines each player's height rank.",
-  "filter_policy": "Retain only players whose descending height rank equals 1.",
+  "derivation": "The returned player name is a stored attribute; a ranking of players by height in descending order defines each player's height rank.",
+  "filter_policy": "Retain all players whose descending height rank equals 1, including ties for the greatest height.",
   "meta_review": "Metadata confirms Player.height and Player.player_name are player-level attributes, so the ranking is over players rather than dated Player_Attributes records."
 }
 

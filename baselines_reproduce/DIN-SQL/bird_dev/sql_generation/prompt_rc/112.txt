@@ -249,11 +249,11 @@ Schema_links: [client.gender,client.birth_date,district.A2,disp.client_id = clie
 Result Contract:
 {
   "population": "Clients who are female (gender = 'F') and were born on 1976-01-29.",
-  "row_grain": "One row per matching client, with the question presupposing a single such client.",
-  "column_role": "The district name (A2) of the branch location where the client's account was opened.",
+  "row_grain": "One row per matching client.",
+  "column_role": "The district name (A2) associated with the matching client.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms the account entity has a branch-location district and district.A2 provides the district name. This validates returning the account's district name rather than a client-level district attribute."
+  "meta_review": "Metadata supports returning the district name from the client's district association, not an account-level branch district."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

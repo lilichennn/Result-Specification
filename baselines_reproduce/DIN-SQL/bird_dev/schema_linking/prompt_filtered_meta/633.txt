@@ -182,16 +182,21 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,OwnerUserId,AnswerCount,OwnerDisplayName]
+Table postHistory, columns = [*,PostId,UserId,UserDisplayName]
+Table posts, columns = [*,Id,AnswerCount]
 Table users, columns = [*,Id,DisplayName]
-Foreign_keys = [posts.OwnerUserId = users.Id]
-Sample rows from posts (columns: ["Id", "OwnerUserId", "AnswerCount", "OwnerDisplayName"]):
-[[1, 8, 5, null], [2, 24, 7, null], [3, 18, 19, null]]
+Foreign_keys = [postHistory.UserId = users.Id,postHistory.PostId = posts.Id]
+Sample rows from postHistory (columns: ["PostId", "UserId", "UserDisplayName"]):
+[[1, 8, ""], [1, 8, ""], [1, 8, ""]]
+Column descriptions and value descriptions for postHistory:
+Column PostId: column description -> the unique id of the post, value description -> 
+Column UserId: column description -> the user who post the post, value description -> 
+Column UserDisplayName: column description -> user's display name, value description -> 
+Sample rows from posts (columns: ["Id", "AnswerCount"]):
+[[1, 5], [2, 7], [3, 19]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
-Column OwnerUserId: column description -> the id of the owner user, value description -> 
 Column AnswerCount: column description -> the total number of answers of the post, value description -> 
-Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 
 Sample rows from users (columns: ["Id", "DisplayName"]):
 [[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
 Column descriptions and value descriptions for users:

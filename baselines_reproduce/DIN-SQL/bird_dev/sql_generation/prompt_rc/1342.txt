@@ -299,12 +299,12 @@ Hint: 'Poster' is an event description; on 2019/9/14 refers to event_date = '201
 Schema_links: [expense.cost,expense.expense_description,expense.expense_date,Posters,2019-09-04]
 Result Contract:
 {
-  "population": "Event records whose event description is \"Posters\" and whose event date, ignoring any time component, is 2019-09-04.",
-  "row_grain": "One matching event record.",
-  "column_role": "The dollar cost of the matching event.",
+  "population": "Expense records whose description is \"Posters\" and whose date is 2019-09-04.",
+  "row_grain": "One row for each matching expense record.",
+  "column_role": "The dollar cost of each matching expense.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata indicates event_date may include a time component, so the date condition applies the date portion. It also confirms cost values are dollar amounts."
+  "meta_review": "The date condition is an exact calendar-date match to 2019-09-04; cost values are dollar amounts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -352,12 +352,12 @@ Hint:
 Schema_links: [schools.EdOpsName,satscores.AvgScrMath,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible; no Boolean membership condition restricts which schools are considered.",
+  "population": "Schools that have an associated average Math score are eligible; no other Boolean membership condition restricts which such schools are considered.",
   "row_grain": "One school, namely the single school selected as the answer.",
   "column_role": "The type of education offered by the selected school.",
   "derivation": "Each school's average Math score is the stored school-level average Math score used to compare schools.",
   "filter_policy": "Select the school with the highest average Math score (argmax over schools by average Math score).",
-  "meta_review": "Metadata establishes that average Math score is a stored school-level metric (satscores.AvgScrMath), resolving the storage-versus-computation uncertainty."
+  "meta_review": "Metadata establishes that average Math score is a stored school-level metric, resolving the storage-versus-computation uncertainty."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

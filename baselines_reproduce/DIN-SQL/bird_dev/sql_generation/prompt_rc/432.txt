@@ -299,10 +299,10 @@ Result Contract:
 {
   "population": "All card sets whose set language is 'Russian'.",
   "row_grain": "One card set.",
-  "column_role": "The identity (name) of the card set.",
+  "column_role": "The unique identifier of the card set.",
   "derivation": "none",
   "filter_policy": "Select the single eligible set with the maximum baseSetSize (total number of cards); tie handling is unspecified.",
-  "meta_review": "Metadata identifies the relevant language as the set-level language in set_translations, not the card-level foreign_data language. It also distinguishes sets.name as the set identity from set_translations.translation, so the output remains the set name."
+  "meta_review": "Metadata identifies the relevant language as the set-level language in set_translations, not the card-level foreign_data language. It also distinguishes the set identity from set_translations.translation, so the output is the set's unique identifier rather than its name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -415,12 +415,12 @@ Hint: Kevin Berigaud refers to player_name = 'Kevin Berigaud'; on 2013/2/22 refe
 Schema_links: [Player_Attributes.defensive_work_rate,Player.player_name,Player_Attributes.date,Player_Attributes.player_api_id = Player.player_api_id,'Kevin Berigaud','2013-02-22 00:00:00']
 Result Contract:
 {
-  "population": "Dated player attribute records for the player named 'Kevin Berigaud' with attribute date '2013-02-22 00:00:00'.",
-  "row_grain": "One player attribute record for Kevin Berigaud on the specified date.",
+  "population": "Dated player attribute records for the player named 'Kevin Berigaud' with an attribute date on 2013-02-22.",
+  "row_grain": "The defensive work rate for each matching dated player attribute record.",
   "column_role": "The defensive work rate value for that player on that date.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows defensive_work_rate is a dated player attribute in Player_Attributes, so the result is a player-attribute record rather than a generic player record. This fixes the semantic owner and grain of the requested value."
+  "meta_review": "Metadata shows defensive work rate is a dated player attribute, so the result is player-attribute records rather than generic player records. This fixes the semantic owner and grain of the requested value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -365,12 +365,12 @@ Hint: medical information first documented refers to Description; disease refers
 Schema_links: [Patient.Description,Patient.Diagnosis,Patient.ID,48473]
 Result Contract:
 {
-  "population": "The patient-level medical information record belonging to the patient whose patient number (id) is 48473.",
+  "population": "The patient-level medical information record belonging to the patient whose patient number is 48473.",
   "row_grain": "One row representing the patient-level medical information of patient 48473.",
-  "column_role": "The Description date indicating when the medical information was first documented, and the patient-level Diagnosis indicating the disease the patient had.",
+  "column_role": "The date indicating when the patient's medical information was first documented, and the patient-level diagnosis indicating the disease the patient had.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Patient.Description is the first date when patient data was recorded and Patient.Diagnosis contains disease names, resolving the requested outputs as patient-level first-documentation date and patient disease."
+  "meta_review": "Metadata supports the patient-level first-documentation date and diagnosis as the requested outputs, resolving the result as the date the patient's medical information was first documented and the patient's disease."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

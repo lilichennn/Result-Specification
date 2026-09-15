@@ -251,12 +251,12 @@ Hint: the latest created user account refers to MAX(CreationDate);
 Schema_links: [users.CreationDate,posts.Id,comments.Id,comments.UserId = users.Id,posts.OwnerUserId = users.Id]
 Result Contract:
 {
-  "population": "All user accounts are candidates for the latest-account selection, and the items eligible for counting are posts and comments authored by the selected user.",
-  "row_grain": "One global summary row for the single selected user.",
-  "column_role": "The number of posts by the selected user and the number of comments by the selected user.",
-  "derivation": "Count the posts authored by the selected user and separately count the comments authored by the selected user.",
-  "filter_policy": "Select the user with the latest created account, defined as the argmax of CreationDate over all users.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Comments attached to posts authored by user accounts.",
+  "row_grain": "One global summary row.",
+  "column_role": "A single numeric measure: the count of those comments.",
+  "derivation": "Count the qualifying comment occurrences on posts associated with user accounts; multiple comments on the same post are counted separately, and no separate post count is returned.",
+  "filter_policy": "No latest-account or single-user selection is effectively applied; the count is global over the qualifying population.",
+  "meta_review": "The result is a single global count of comments on posts associated with user accounts, not separate post and comment counts for the latest user."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

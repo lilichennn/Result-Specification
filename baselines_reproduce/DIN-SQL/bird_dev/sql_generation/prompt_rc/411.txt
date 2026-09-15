@@ -297,12 +297,12 @@ Hint:
 Schema_links: [cards.artist,foreign_data.text,foreign_data.uuid = cards.uuid,"Das perfekte Gegenmittel zu einer dichten Formation"]
 Result Contract:
 {
-  "population": "Cards whose foreign-language card text is exactly \"Das perfekte Gegenmittel zu einer dichten Formation\".",
-  "row_grain": "One card matching the specified foreign-language text.",
-  "column_role": "The artist credited for the card.",
+  "population": "Artists credited for cards whose foreign-language flavor text contains \"Das perfekte Gegenmittel zu einer dichten Formation\".",
+  "row_grain": "One row for each distinct artist among the matching cards.",
+  "column_role": "The artist credited for the matching card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes cards.text from foreign_data.text, so the German phrase is matched as foreign-language card text in foreign_data.text. This resolves the text representation without changing the requested card-level artist output."
+  "meta_review": "Metadata distinguishes card text from foreign-language flavor text, so the German phrase is matched as a contained phrase in foreign-language flavor text rather than as exact card text. This resolves the text representation without changing the requested artist output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

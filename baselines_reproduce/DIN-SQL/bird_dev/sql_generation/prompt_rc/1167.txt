@@ -298,7 +298,7 @@ Result Contract:
 {
   "population": "Laboratory test records with a date between '1998-01-01' and '1998-12-31' where the tested patient is male according to the patient sex field (SEX = 'M').",
   "row_grain": "One global summary for the entire year.",
-  "column_role": "A single numeric value: the average number of male patients tested in the lab per month.",
+  "column_role": "A single numeric value: the average monthly number of male patient laboratory test records.",
   "derivation": "Count the qualifying laboratory test records (COUNT(ID)) and divide that count by 12 to obtain the monthly average.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that laboratory tests are represented by Laboratory records with Date and patient ID, while sex is owned by Patient.SEX. This validates applying the 1998 date filter to laboratory records and the male filter to the patient sex field without changing the COUNT(ID)/12 average semantics."

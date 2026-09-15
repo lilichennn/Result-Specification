@@ -296,12 +296,12 @@ Hint: youngest patient refers to MAX(Birthday); abnormal anti-ribonuclear protei
 Schema_links: [Patient.Birthday,Laboratory.RNP,Laboratory.ID = Patient.ID,'-','+-']
 Result Contract:
 {
-  "population": "Patients who have an anti-ribonuclear protein (RNP) laboratory value that is abnormal, meaning the RNP value is neither '-' nor '+-'.",
-  "row_grain": "One patient, namely the single youngest patient satisfying the population condition.",
-  "column_role": "The date of birth (Birthday) of the selected patient.",
+  "population": "Patients having at least one anti-ribonuclear protein laboratory result with a recorded RNP value other than '-'.",
+  "row_grain": "One output row containing the date of birth of one youngest eligible patient.",
+  "column_role": "The date of birth of the selected patient.",
   "derivation": "none",
-  "filter_policy": "Select the patient with the maximum Birthday (youngest) among the eligible population.",
-  "meta_review": "Laboratory.RNP is documented as anti-ribonuclear protein with normal values '-' and '+-', so abnormal eligibility is based on an RNP laboratory value outside those normal values. Patient.Birthday is documented as the patient’s birthday, validating the requested date-of-birth output and maximum-Birthday youngest criterion."
+  "filter_policy": "Select one eligible patient with the latest date of birth; if several eligible patients share the latest date of birth, one is selected.",
+  "meta_review": "The anti-ribonuclear protein laboratory measure supplies the eligibility condition, with a recorded value other than '-' treated as qualifying and '+-' not separately excluded. The patient’s birthday supplies the date of birth and the youngest criterion via the latest birth date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

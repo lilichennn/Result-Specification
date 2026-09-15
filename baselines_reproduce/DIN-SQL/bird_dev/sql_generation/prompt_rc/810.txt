@@ -225,12 +225,12 @@ Hint: maximum attribute value refers to MAX(attribute_value);
 Schema_links: [race.race,hero_attribute.attribute_value,hero_attribute.hero_id = superhero.id,superhero.race_id = race.id]
 Result Contract:
 {
-  "population": "All superheroes.",
-  "row_grain": "One superhero.",
+  "population": "Superheroes with a recorded attribute value and an associated race.",
+  "row_grain": "One selected race label for the qualifying superhero.",
   "column_role": "The race of the superhero, returned as the race label rather than an identifier.",
   "derivation": "none",
-  "filter_policy": "Argmax: select the superhero whose recorded attribute value is the maximum (MAX(attribute_value)) across all superheroes.",
-  "meta_review": "Metadata shows attribute_value is a hero-attribute measurement, so the maximum applies to recorded attribute values rather than a superhero-level field. It also distinguishes race.race as the race label from race.id."
+  "filter_policy": "Top-1 selection: choose the superhero associated with the greatest recorded attribute value and return that superhero's race.",
+  "meta_review": "Metadata shows the maximum applies to recorded hero-attribute values rather than a superhero-level field, and it distinguishes the race label from the race identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

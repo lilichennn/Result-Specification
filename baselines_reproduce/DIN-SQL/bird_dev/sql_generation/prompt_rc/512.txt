@@ -366,12 +366,12 @@ Hint: unknown power refers to power IS NULL or power = '*'; can't be found in fo
 Schema_links: [cards.id,cards.power,cards.hasFoil,cards.duelDeck,0,a,*,null]
 Result Contract:
 {
-  "population": "Cards whose power is unknown (power is null or equal to '*'), that cannot be found in foil (hasFoil = 0), and that are in duel deck A (duelDeck = 'a'); all three conditions must hold.",
+  "population": "Cards that cannot be found in foil (hasFoil = 0) and are in duel deck A (duelDeck = 'a'); the cards contributing to the result are those among these whose power is unknown (power is null or equal to '*').",
   "row_grain": "One global summary row for the entire qualifying card set.",
-  "column_role": "The number of qualifying cards.",
-  "derivation": "Count the cards belonging to the eligible population.",
+  "column_role": "The number of cards with unknown power among the qualifying cards.",
+  "derivation": "For each card in the qualifying set, contribute 1 if its power is unknown and 0 otherwise, then total the contributions.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The measure is a conditional aggregate total over the qualifying card set."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -415,12 +415,12 @@ Hint: height > 180; volley score refers to volleys; volleys > 70;
 Schema_links: [Player.height,Player_Attributes.volleys,Player.player_api_id = Player_Attributes.player_api_id,180,70]
 Result Contract:
 {
-  "population": "Players whose height is over 180 and whose volley score (volleys) is over 70; both conditions must hold for a player to be counted.",
+  "population": "Players whose height is over 180 and who have a volley score (volleys) over 70; both conditions must hold for a player to be counted.",
   "row_grain": "One global summary row for the entire qualifying player population.",
   "column_role": "The count of qualifying players.",
-  "derivation": "Count the players satisfying both the height and volleys conditions.",
+  "derivation": "Count the unique players satisfying both the height and volleys conditions.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -225,7 +225,7 @@ Hint: superpowers refers to power_name;
 Schema_links: [alignment.alignment,superpower.power_name,superhero.superhero_name,superhero.alignment_id = alignment.id,hero_power.hero_id = superhero.id,hero_power.power_id = superpower.id,Atom IV]
 Result Contract:
 {
-  "population": "The superhero whose name is Atom IV.",
+  "population": "The superpowers held by the superhero named Atom IV.",
   "row_grain": "One row per superpower of the superhero Atom IV.",
   "column_role": "The superhero's alignment, and the name of each superpower (power_name) held by Atom IV.",
   "derivation": "none",

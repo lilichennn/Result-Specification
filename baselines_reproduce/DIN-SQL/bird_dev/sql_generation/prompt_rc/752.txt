@@ -230,7 +230,7 @@ Result Contract:
   "column_role": "The superhero's name (superhero_name).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms superhero.superhero_name, not full_name, is the superhero's name. Round-1 contract preserved."
+  "meta_review": "Metadata confirms superhero.superhero_name, not full_name, is the superhero's name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

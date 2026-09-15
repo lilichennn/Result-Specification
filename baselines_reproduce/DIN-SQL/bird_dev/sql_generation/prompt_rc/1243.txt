@@ -296,12 +296,12 @@ Hint: older than 55 years old = SUBTRACT(year(current_timestamp), year(Birthday)
 Schema_links: [Patient.Birthday,Patient.SEX,Laboratory.PT,Laboratory.ID = Patient.ID,55,14,'F']
 Result Contract:
 {
-  "population": "Patients older than 55 years (current year minus birth year greater than 55); within this population, the reference subgroup is patients with at least one laboratory prothrombin time (PT) value >= 14, and the target subgroup is female patients (sex = 'F') with at least one such abnormal PT.",
-  "row_grain": "One global summary row across the entire eligible patient population.",
-  "column_role": "A single value: the percentage that female patients constitute among patients with abnormal prothrombin time.",
-  "derivation": "Count distinct patients in the target subgroup (female with abnormal PT) and the reference subgroup (all with abnormal PT) within the eligible population, divide the target count by the reference count, and multiply by 100.",
+  "population": "Laboratory-test records associated with patients older than 55 years (current year minus birth year greater than 55). The reference set is all such records; the target set is records with a prothrombin time value >= 14 belonging to female patients.",
+  "row_grain": "One global summary row across the eligible laboratory-test records.",
+  "column_role": "A single value: the percentage of eligible laboratory-test records that are abnormal prothrombin time records for female patients.",
+  "derivation": "Count the target laboratory-test records, count all eligible laboratory-test records, divide the target count by the total count, and multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows PT is a dated laboratory-test value in Laboratory, while SEX and Birthday are patient-level attributes in Patient. This supports qualifying a patient as having abnormal PT when at least one PT measurement is >= 14 and counting patients rather than laboratory-test rows."
+  "meta_review": "Prothrombin time is a laboratory-test measurement, while sex and birth date are patient-level attributes. The result is computed over laboratory-test records associated with older patients, without deduplicating patients and without restricting the denominator to abnormal prothrombin time records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

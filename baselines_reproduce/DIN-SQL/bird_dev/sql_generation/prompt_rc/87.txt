@@ -352,12 +352,12 @@ Hint: Intermediate/Middle Schools refers to SOC = 62; Unified School refers to D
 Schema_links: [schools.AdmEmail1,schools.County,schools.District,schools.OpenDate,schools.SOC,schools.DOC,'San Bernardino','San Bernardino City Unified','2009-01-01','2010-12-31',62,54]
 Result Contract:
 {
-  "population": "Schools located in San Bernardino county and in the City of San Bernardino City Unified that are public, opened between 1/1/2009 and 12/31/2010, and are classified as both Intermediate/Middle Schools (SOC = 62) and Unified Schools (DOC = 54), together with the administrator of each such school.",
-  "row_grain": "One row per administrator of a qualifying school.",
-  "column_role": "The valid e-mail address of the school's administrator.",
+  "population": "Schools located in San Bernardino county and in the city of San Bernardino that opened between 1/1/2009 and 12/31/2010 and are classified as Intermediate/Middle Schools (SOC = 62) and Unified Schools (DOC = 54), together with the administrator contact information for each such school.",
+  "row_grain": "One row per qualifying school, carrying its administrator e-mail address fields.",
+  "column_role": "The administrator e-mail addresses for the school, returned as two address fields.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that schools.SOC = 62 and schools.DOC = 54 represent the requested public Intermediate/Middle School and Unified School types, and that administrator e-mail is a school-level attribute. This validates the Round-1 population and column semantics without requiring refinement."
+  "meta_review": "The school-type codes and calendar-year open-date condition capture the requested qualifications, and the location condition is San Bernardino county with city San Bernardino. The administrator e-mail output consists of two address fields per qualifying school, not a single address."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

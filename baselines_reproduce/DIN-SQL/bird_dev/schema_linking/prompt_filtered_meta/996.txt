@@ -183,18 +183,13 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table races, columns = [*,raceId,year,date]
-Table seasons, columns = [*,year]
-Foreign_keys = [races.year = seasons.year]
+Foreign_keys = []
 Sample rows from races (columns: ["raceId", "year", "date"]):
 [[1, 2009, "2009-03-29"], [2, 2009, "2009-04-05"], [3, 2009, "2009-04-19"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
 Column date: column description -> , value description -> 
-Sample rows from seasons (columns: ["year"]):
-[[1950], [1951], [1952]]
-Column descriptions and value descriptions for seasons:
-Column year: column description -> , value description -> 
 
 Q: What is the annual average number of races held during the first 10 years of the 21st century?
 Hint: races in date between '2000-01-01' and '2010-12-31'

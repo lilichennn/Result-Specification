@@ -182,56 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table schools, columns = [*,CDSCode,NCESDist,NCESSchool,StatusType,County,District,School,MailZip,DOC,DOCType,SOC,SOCType,AdmFName1,AdmLName1,AdmFName2,AdmLName2]
+Table schools, columns = [*,CDSCode,School,MailZip,AdmFName1,AdmLName1,AdmFName2,AdmLName2]
 Foreign_keys = []
-Sample rows from schools (columns: ["CDSCode", "NCESDist", "NCESSchool", "StatusType", "County", "District", "School", "MailZip", "DOC", "DOCType", "SOC", "SOCType", "AdmFName1", "AdmLName1", "AdmFName2", "AdmLName2"]):
-[["01100170000000", "0691051", null, "Active", "Alameda", "Alameda County Office of Education", null, "94544-1136", "00", "County Office of Education (COE)", null, null, "L Karen", "Monroe", null, null], ["01100170109835", "0691051", "10546", "Closed", "Alameda", "Alameda County Office of Education", "FAME Public Charter", "94560-5359", "00", "County Office of Education (COE)", "65", "K-12 Schools (Public)", null, null, null, null], ["01100170112607", "0691051", "10947", "Active", "Alameda", "Alameda County Office of Education", "Envision Academy for Arts & Technology", "94612", "00", "County Office of Education (COE)", "66", "High Schools (Public)", "Laura", "Robell", null, null]]
+Sample rows from schools (columns: ["CDSCode", "School", "MailZip", "AdmFName1", "AdmLName1", "AdmFName2", "AdmLName2"]):
+[["01100170000000", null, "94544-1136", "L Karen", "Monroe", null, null], ["01100170109835", "FAME Public Charter", "94560-5359", null, null, null, null], ["01100170112607", "Envision Academy for Arts & Technology", "94612", "Laura", "Robell", null, null]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column NCESDist: column description -> This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number. The first 2 digits identify the state and the last 5 digits identify the school district. Combined, they make a unique 7-digit ID for each school district., value description -> 
-Column NCESSchool: column description -> This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school., value description -> 
-Column StatusType: column description -> This field identifies the status of the district. , value description -> Definitions of the valid status types are listed below:
-·       Active: The district is in operation and providing instructional services.
-·       Closed: The district is not in operation and no longer providing instructional services.
-·       Merged: The district has combined with another district or districts.
-·       Pending: The district has not opened for operation and instructional services yet, but plans to open within the next 9–12 months.
-Column County: column description -> County name, value description -> 
-Column District: column description -> District, value description -> 
 Column School: column description -> School, value description -> 
 Column MailZip: column description -> , value description -> The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.
-Column DOC: column description -> District Ownership Code, value description -> The District Ownership Code (DOC) is the numeric code used to identify the category of the Administrative Authority.
-•       00 - County Office of Education
-•       02 – State Board of Education
-•       03 – Statewide Benefit Charter
-•       31 – State Special Schools
-•       34 – Non-school Location*
-•       52 – Elementary School District
-•       54 – Unified School District
-•       56 – High School District
-•       98 – Regional Occupational Center/Program (ROC/P)
-commonsense evidence:
-*Only the California Education Authority has been included in the non-school location category.
-Column DOCType: column description -> The District Ownership Code Type is the text description of the DOC category., value description -> (See text values in DOC field description above)
-Column SOC: column description -> The School Ownership Code is a numeric code used to identify the type of school., value description -> •      08 - Preschool      
-•       09 – Special Education Schools (Public)
-•      11 – Youth Authority Facilities (CEA)
-•       13 – Opportunity Schools
-•       14 – Juvenile Court Schools
-•       15 – Other County or District Programs
-•       31 – State Special Schools
-•       60 – Elementary School (Public)
-•       61 – Elementary School in 1 School District (Public)
-•       62 – Intermediate/Middle Schools (Public)
-•       63 – Alternative Schools of Choice
-•       64 – Junior High Schools (Public)
-•       65 – K-12 Schools (Public)
-•       66 – High Schools (Public)
-•       67 – High Schools in 1 School District (Public)
-•       68 – Continuation High Schools
-•       69 – District Community Day Schools
-•       70 – Adult Education Centers
-•       98 – Regional Occupational Center/Program (ROC/P)
-Column SOCType: column description -> The School Ownership Code Type is the text description of the type of school., value description -> The School Ownership Code Type is the text description of the type of school.
 Column AdmFName1: column description -> administrator's first name, value description -> The superintendent’s or principal’s first name.
 
 commonsense evidence:

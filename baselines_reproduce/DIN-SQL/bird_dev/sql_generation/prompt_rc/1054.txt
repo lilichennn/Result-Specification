@@ -416,12 +416,12 @@ Hint:
 Schema_links: [Player_Attributes.defensive_work_rate,Player.player_name,Player_Attributes.player_api_id = Player.player_api_id,David Wilson]
 Result Contract:
 {
-  "population": "The football player(s) named David Wilson.",
-  "row_grain": "One football player named David Wilson.",
+  "population": "The defensive work rate values associated with football player(s) named David Wilson.",
+  "row_grain": "One row for each distinct defensive work rate value associated with David Wilson.",
   "column_role": "The player's defensive work rate value.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Only distinct defensive work rate values are returned.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

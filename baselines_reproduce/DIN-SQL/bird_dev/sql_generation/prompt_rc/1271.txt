@@ -296,12 +296,12 @@ Hint: normal anti-SSA refers to SSA IN('-','+-'); came to the hospital before 20
 Schema_links: [Patient.ID,Laboratory.SSA,Patient.`First Date`,Laboratory.ID = Patient.ID,'-','+-',2000]
 Result Contract:
 {
-  "population": "Patients whose anti-SSA result is normal (SSA is '-' or '+-') and who came to the hospital before 2000, meaning the year of their first date is less than 2000.",
+  "population": "Patients who have at least one laboratory result showing normal anti-SSA, recorded as negative or zero, where the date of that laboratory result is before 2000.",
   "row_grain": "One global summary row over the entire eligible patient population.",
   "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the distinct patients belonging to the eligible population.",
+  "derivation": "Count the distinct patients who satisfy the qualifying laboratory-result condition.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms SSA is the anti-SSA laboratory value and Patient.`First Date` is the date the patient came to the hospital, validating the patient-level distinct count rather than a laboratory-row count."
+  "meta_review": "A patient-level distinct count is appropriate, but the anti-SSA condition and the pre-2000 timing are evaluated on the laboratory result date rather than on a patient's first hospital date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

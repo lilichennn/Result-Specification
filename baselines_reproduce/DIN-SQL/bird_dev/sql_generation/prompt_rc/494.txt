@@ -297,12 +297,12 @@ Hint: all cards illustrated by Jim Pavelec refers to artist = 'Jim Pavelec'; the
 Schema_links: [cards.artist,rulings.text,cards.hasContentWarning,rulings.uuid = cards.uuid,'Jim Pavelec',1]
 Result Contract:
 {
-  "population": "All cards illustrated by Jim Pavelec, i.e., cards with artist = 'Jim Pavelec'.",
-  "row_grain": "One row per ruling associated with an eligible card, with no specified handling for eligible cards that have no ruling.",
+  "population": "All rulings associated with cards illustrated by Jim Pavelec.",
+  "row_grain": "One row per ruling associated with an eligible card; an eligible card with no ruling produces no row.",
   "column_role": "The text of the ruling associated with the card and an indication of whether the card has missing or degraded properties and values.",
   "derivation": "For each ruling associated with an eligible card, return the ruling text and indicate whether the associated card has missing or degraded properties and values: it does when hasContentWarning = 1 and does not otherwise.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies rulings.text, not cards.text, as the ruling text, so the requested output is the ruling description linked to the card. Metadata also identifies each ruling as a separate record, so the result grain is one ruling row for an eligible card."
+  "meta_review": "Metadata identifies rulings.text, not cards.text, as the ruling text, so the requested output is the ruling description linked to the card. Metadata also identifies each ruling as a separate record, so the result grain is one row per ruling associated with an eligible card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

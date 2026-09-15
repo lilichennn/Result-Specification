@@ -225,12 +225,12 @@ Hint: superpowers refers to power_name; Helen Parr is the full name of superhero
 Schema_links: [superpower.power_name,superhero.full_name,hero_power.hero_id = superhero.id,hero_power.power_id = superpower.id,Helen Parr]
 Result Contract:
 {
-  "population": "The superhero whose full name is \"Helen Parr\"; only superpowers associated with that superhero are eligible.",
-  "row_grain": "One superpower of the qualifying superhero.",
-  "column_role": "The superpower name (power_name) of the superhero.",
+  "population": "Superpowers associated with the superhero whose full name is exactly \"Helen Parr\".",
+  "row_grain": "One row for each superpower associated with that superhero.",
+  "column_role": "The superpower name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

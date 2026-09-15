@@ -415,12 +415,12 @@ Hint: Landon Donovan's refers to player_name = 'Landon Donovan'; Jordan Bowery r
 Schema_links: [Player.player_name,Player_Attributes.overall_rating,Player_Attributes.date,Player_Attributes.player_api_id = Player.player_api_id,'Landon Donovan','Jordan Bowery','2013-07-12 00:00:00']
 Result Contract:
 {
-  "population": "The overall rating records for the players named 'Landon Donovan' and 'Jordan Bowery' on the date 2013/7/12.",
-  "row_grain": "One global summary row representing the single requested percentage comparison.",
+  "population": "Overall rating records dated 2013-07-12, with the records for Landon Donovan and Jordan Bowery identified within that date for the comparison.",
+  "row_grain": "One global summary row representing the requested percentage comparison.",
   "column_role": "The percentage by which Landon Donovan's overall rating is higher than Jordan Bowery's.",
-  "derivation": "Compute (Landon Donovan's overall rating minus Jordan Bowery's overall rating) divided by Landon Donovan's overall rating, multiplied by 100, using each player's overall rating on 2013/7/12.",
+  "derivation": "Compute the sum of Landon Donovan's overall ratings and the sum of Jordan Bowery's overall ratings among records dated 2013-07-12, then calculate ((Landon Donovan's sum minus Jordan Bowery's sum) multiplied by 100) divided by Landon Donovan's sum.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

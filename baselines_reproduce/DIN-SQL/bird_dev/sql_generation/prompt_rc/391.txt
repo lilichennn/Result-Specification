@@ -297,12 +297,12 @@ Hint: Artifact card refers to originalType = 'Artifact'; black color refers to c
 Schema_links: [cards.name,cards.originalType,cards.colors,foreign_data.language,foreign_data.uuid = cards.uuid,'Artifact','B']
 Result Contract:
 {
-  "population": "Cards that are Artifact cards (originalType = 'Artifact'), are black in color (colors = 'B'), and have at least one foreign language translation (an associated foreign_data entry with a language).",
-  "row_grain": "One qualifying card.",
-  "column_role": "The identity of each qualifying card, as the requested entity.",
+  "population": "Cards that are Artifact cards (originalType = 'Artifact'), are black in color (colors = 'B'), and have at least one foreign-language translation (an associated foreign_data entry).",
+  "row_grain": "One row for each distinct qualifying card name.",
+  "column_role": "The name of each qualifying card, as the requested entity.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms foreign_data.language is the foreign language of a card, distinguishing it from set_translations.language for sets, validating the foreign-language condition on foreign_data. No other Round-1 semantics changed."
+  "meta_review": "Metadata confirms foreign_data.language is the foreign language of a card, distinguishing it from set_translations.language for sets; the foreign-language condition is satisfied by an associated foreign_data entry."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

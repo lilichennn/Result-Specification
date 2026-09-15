@@ -297,12 +297,12 @@ Hint: frame styles refers to frameVersion; cards Allen Williams worked on refers
 Schema_links: [cards.frameVersion,cards.name,cards.artist,legalities.status,cards.uuid = legalities.uuid,'Allen Williams','Banned']
 Result Contract:
 {
-  "population": "Cards whose artist is 'Allen Williams'.",
-  "row_grain": "One row per frame style and card combination among the cards Allen Williams worked on.",
-  "column_role": "The frame style (frameVersion), the card name, and an indication of whether the card has any legality status = 'banned'.",
-  "derivation": "For each card, flag it as banned if any associated legality record has status = 'banned'; otherwise indicate not banned.",
+  "population": "Cards whose artist is 'Allen Williams' and that have at least one associated legality record.",
+  "row_grain": "One row per distinct combination of frame style, card name, and derived banned indicator; the same frame style and card can appear more than once when its associated legalities include both banned and non-banned statuses.",
+  "column_role": "The frame style, the card name, and a derived banned indicator that shows the card name when the associated legality status is 'Banned' and 'NO' otherwise.",
+  "derivation": "The frame style and card name are returned as stored card attributes; the third output is computed from each associated legality status, producing the card name for 'Banned' and 'NO' for other statuses, with duplicate combinations removed.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies cards.name as the card name and legalities.status as the legality status, documented with lowercase value 'banned'. The contract therefore outputs card names and derives a card-level banned flag from the existence of any related legalities.status = 'banned', preserving one row per card/frameVersion."
+  "meta_review": "Metadata identifies the card name and legality status, with the banned value spelled 'Banned'. The result is not a single card-level banned flag per frame style/card; it reports distinct banned/non-banned indications derived from associated legality statuses."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

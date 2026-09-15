@@ -369,9 +369,9 @@ Result Contract:
   "population": "All cards with frameEffects = 'legendary'; within this population, cards with isOnlineOnly = 1 form the qualifying subset counted in the numerator.",
   "row_grain": "One global summary row across all legendary frame effect cards.",
   "column_role": "A single value representing the percentage of legendary frame effect cards that are online-only.",
-  "derivation": "Compute the percentage as the count of legendary cards with isOnlineOnly = 1 divided by the total count of legendary cards.",
+  "derivation": "Compute the percentage as the count of legendary cards with isOnlineOnly = 1 divided by the total count of legendary cards, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.isOnlineOnly is a card-level 0/1 flag and cards.frameEffects supports the value 'legendary', validating the Round-1 population and numerator."
+  "meta_review": "Metadata confirms cards.isOnlineOnly is a card-level 0/1 flag and cards.frameEffects supports the value 'legendary'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

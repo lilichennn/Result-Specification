@@ -248,8 +248,8 @@ Hint: A2, A3 contains the information about district and region respectively.
 Schema_links: [district.A2,district.A3,loan.loan_id,loan.account_id = account.account_id,account.district_id = district.district_id,4990]
 Result Contract:
 {
-  "population": "The single loan identified by loan ID '4990'.",
-  "row_grain": "One row representing the requested loan.",
+  "population": "The district associated with the account of the loan identified by loan ID '4990'.",
+  "row_grain": "One row representing that district for the requested loan.",
   "column_role": "The district name and region for the district associated with the loan's account branch.",
   "derivation": "none",
   "filter_policy": "none",

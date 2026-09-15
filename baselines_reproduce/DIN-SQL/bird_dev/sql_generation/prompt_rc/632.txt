@@ -251,12 +251,12 @@ Hint: DisplayName = 'Harlan';
 Schema_links: [votes.Id,users.DisplayName,votes.UserId = users.Id,'Harlan']
 Result Contract:
 {
-  "population": "All votes made by the user whose DisplayName is 'Harlan'.",
-  "row_grain": "One global summary row for the qualifying votes.",
-  "column_role": "The number of votes made by Harlan.",
-  "derivation": "Count the votes in the eligible population.",
+  "population": "All occurrences pairing a post-history entry of the user whose display name is 'Harlan' with a vote on the same post, regardless of who cast the vote.",
+  "row_grain": "One global summary row for the qualifying occurrences.",
+  "column_role": "The number of qualifying post-history/vote occurrences associated with Harlan.",
+  "derivation": "Count the qualifying occurrences.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms votes.UserId identifies the voter and users.DisplayName is the user's display name, validating that qualifying votes are vote records associated with the user named Harlan."
+  "meta_review": "The count is tied to Harlan through post-history entries on posts that received votes, not through a direct voter relationship."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

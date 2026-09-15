@@ -328,11 +328,11 @@ Schema_links: [users.Id,users.Reputation]
 Result Contract:
 {
   "population": "All users are eligible; no membership conditions are stated.",
-  "row_grain": "One user, specifically the single user with the highest reputation.",
-  "column_role": "The user ID of the user with the highest reputation.",
+  "row_grain": "One row per user whose reputation equals the highest reputation; multiple rows are possible when there is a tie.",
+  "column_role": "The user identifier of each qualifying user.",
   "derivation": "none",
-  "filter_policy": "Select the user whose reputation equals the maximum reputation (Max(Reputation)) across all users.",
-  "meta_review": "The users table confirms Reputation is a user-level attribute and Id is the user identifier, validating the requested owner and output identity."
+  "filter_policy": "Select every user whose reputation equals the maximum reputation across all users.",
+  "meta_review": "Reputation is a user-level attribute, and the requested output is the user identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

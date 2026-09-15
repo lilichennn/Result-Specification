@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,forename,surname]
-Table lapTimes, columns = [*,raceId,driverId,lap,time,milliseconds]
+Table lapTimes, columns = [*,raceId,driverId,milliseconds]
 Table races, columns = [*,raceId,name]
 Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId", "forename", "surname"]):
@@ -192,13 +192,11 @@ Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "lap", "time", "milliseconds"]):
-[[1, 1, 1, "1:49.088", 109088], [1, 1, 2, "1:33.740", 93740], [1, 1, 3, "1:31.600", 91600]]
+Sample rows from lapTimes (columns: ["raceId", "driverId", "milliseconds"]):
+[[1, 1, 109088], [1, 1, 93740], [1, 1, 91600]]
 Column descriptions and value descriptions for lapTimes:
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
-Column lap: column description -> , value description -> 
-Column time: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "name"]):
 [[1, "Australian Grand Prix"], [2, "Malaysian Grand Prix"], [3, "Chinese Grand Prix"]]

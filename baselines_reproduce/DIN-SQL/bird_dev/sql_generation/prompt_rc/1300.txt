@@ -298,10 +298,10 @@ Result Contract:
 {
   "population": "Patients with a triglyceride (TG) laboratory measurement within the normal range, i.e., TG < 200.",
   "row_grain": "One patient, namely the single patient selected from the eligible population.",
-  "column_role": "The patient-level disease name (Diagnosis) of the selected patient.",
+  "column_role": "The disease name (Diagnosis) of the selected patient.",
   "derivation": "none",
   "filter_policy": "Argmax: select the patient associated with the highest TG laboratory value among values < 200; tie handling is unspecified.",
-  "meta_review": "Metadata identifies Laboratory.TG as the triglyceride measurement with normal range < 200 and Patient.Diagnosis as the patient-owned disease-name field. This resolved the metric representation and distinguished the requested patient diagnosis from examination-level diagnosis."
+  "meta_review": "Metadata identifies the triglyceride measurement as the laboratory value with normal range < 200 and the disease name as the diagnosis attribute of the linked clinical record returned for the selected patient. This resolved the metric representation and the requested diagnosis output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: label = '-' means molecules are non-carcinogenic; carbon refers to element
 Schema_links: [atom.atom_id,atom.element,molecule.label,atom.molecule_id = molecule.molecule_id,'c','-']
 Result Contract:
 {
-  "population": "Molecules (compounds) that contain at least one atom of element carbon (element = 'c') AND that are non-carcinogenic (label = '-'); both conditions must hold together.",
-  "row_grain": "One row per qualifying molecule.",
-  "column_role": "The identity of the molecule, i.e., the value that answers 'which one'.",
+  "population": "Atoms whose element is carbon and whose containing compound is non-carcinogenic.",
+  "row_grain": "One row per qualifying atom.",
+  "column_role": "The identity of the atom.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

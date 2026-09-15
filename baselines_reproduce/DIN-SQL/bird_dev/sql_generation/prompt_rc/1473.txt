@@ -182,7 +182,7 @@ Hint: Average Monthly consumption = AVG(Consumption) / 12; Year 2013 can be pres
 Schema_links: [yearmonth.Consumption,yearmonth.Date,customers.Segment,yearmonth.CustomerID = customers.CustomerID,SME,201301,201312]
 Result Contract:
 {
-  "population": "Consumption records belonging to customers whose client segment is SME, restricted to the year 2013 (yearmonth between 201301 and 201312, equivalently date values whose first four characters represent 2013).",
+  "population": "Consumption records belonging to customers whose client segment is SME, restricted to the year 2013 (date values whose first four characters represent 2013).",
   "row_grain": "One global summary row covering all eligible SME customer consumption in 2013.",
   "column_role": "A single value representing the average monthly consumption.",
   "derivation": "Average monthly consumption equals the average of Consumption over the eligible records divided by 12 (AVG(Consumption) / 12).",

@@ -299,8 +299,8 @@ Result Contract:
 {
   "population": "The card set identified by having a card named 'Adarkar Valkyrie'.",
   "row_grain": "One global yes/no verdict about whether that card set is available only outside the United States.",
-  "column_role": "A single boolean answer indicating whether the relevant card set is foreign-only.",
-  "derivation": "Identify the set associated with the card named 'Adarkar Valkyrie' and return whether the set-level foreign-only availability flag equals 1.",
+  "column_role": "A single yes/no answer indicating whether the relevant card set is foreign-only.",
+  "derivation": "Identify the set associated with the card named 'Adarkar Valkyrie' and return yes if the set-level foreign-only availability flag equals 1, otherwise no.",
   "filter_policy": "none",
   "meta_review": "Metadata shows sets.isForeignOnly describes whether a set is available only outside the United States, while cards has no such foreign-only attribute. This resolves the owner of the foreign-only status as the card set associated with the named card, not the card record itself."
 }

@@ -299,12 +299,12 @@ Hint: zip codes that have post office boxes refers to type = 'PO Box'
 Schema_links: [zip_code.county,zip_code.type,'PO Box']
 Result Contract:
 {
-  "population": "The country associated with zip codes, resolved as the United States, for which there exists at least one zip code whose type is 'PO Box'.",
-  "row_grain": "One country.",
-  "column_role": "The identity of the country (e.g., its name), as requested by 'which countries'.",
+  "population": "Counties associated with zip codes whose type is 'PO Box' and whose county value is present.",
+  "row_grain": "One row per distinct county.",
+  "column_role": "The identity of the county.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "The zip_code.zip_code description states that ZIP codes identify U.S. post offices, resolving the requested country associated with qualifying zip codes as the United States."
+  "filter_policy": "Duplicate county values are collapsed; missing county values are excluded.",
+  "meta_review": "The requested 'countries' is operationalized as counties associated with qualifying zip codes, not as a single country."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

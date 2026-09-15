@@ -428,12 +428,12 @@ Hint: Exclusively virtual refers to Virtual = 'F'; respective counties means PAR
 Schema_links: [schools.School,schools.Virtual,schools.County,satscores.AvgScrRead,satscores.cds = schools.CDSCode,'F',5]
 Result Contract:
 {
-  "population": "Schools that are exclusively virtual (Virtual = 'F').",
+  "population": "Exclusively virtual schools (Virtual = 'F') for which an average reading score is available.",
   "row_grain": "One row per qualifying virtual school.",
   "column_role": "The school's name.",
-  "derivation": "A school-level average reading score metric for each school, serving as the ranking measure.",
-  "filter_policy": "Within each county, retain the top 5 eligible schools ranked by average reading score, highest first.",
-  "meta_review": "Metadata confirms schools.Virtual = 'F' identifies exclusively virtual schools and satscores.AvgScrRead is the school-level average reading score. This validates the Round-1 population and ranking metric without changing the contract."
+  "derivation": "The returned school name is a stored identifier; the recorded average reading score is the ranking measure.",
+  "filter_policy": "Within each county, retain schools whose rank by average reading score, highest first, is 5 or better; tied schools are retained.",
+  "meta_review": "Metadata confirms Virtual = 'F' identifies exclusively virtual schools and the average reading score is the school-level ranking metric."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

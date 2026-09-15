@@ -182,25 +182,22 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,County Code,County Name,School Name,Charter School (Y/N),Charter Funding Type]
-Table schools, columns = [*,CDSCode,County,School,Charter,FundingType]
+Table frpm, columns = [*,CDSCode,County Name,Charter School (Y/N),Charter Funding Type]
+Table schools, columns = [*,CDSCode,County,Charter,FundingType]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "County Code", "County Name", "School Name", "Charter School (Y/N)", "Charter Funding Type"]):
-[["01100170109835", "01", "Alameda", "FAME Public Charter", 1, "Directly funded"], ["01100170112607", "01", "Alameda", "Envision Academy for Arts & Technology", 1, "Directly funded"], ["01100170118489", "01", "Alameda", "Aspire California College Preparatory Academy", 1, "Directly funded"]]
+Sample rows from frpm (columns: ["CDSCode", "County Name", "Charter School (Y/N)", "Charter Funding Type"]):
+[["01100170109835", "Alameda", 1, "Directly funded"], ["01100170112607", "Alameda", 1, "Directly funded"], ["01100170118489", "Alameda", 1, "Directly funded"]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column County Code: column description -> County Code, value description -> 
 Column County Name: column description -> County Code , value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column Charter School (Y/N): column description -> Charter School (Y/N), value description -> 0: N;
 1: Y
 Column Charter Funding Type: column description -> Charter Funding Type, value description -> 
-Sample rows from schools (columns: ["CDSCode", "County", "School", "Charter", "FundingType"]):
-[["01100170000000", "Alameda", null, null, null], ["01100170109835", "Alameda", "FAME Public Charter", 1, "Directly funded"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", 1, "Directly funded"]]
+Sample rows from schools (columns: ["CDSCode", "County", "Charter", "FundingType"]):
+[["01100170000000", "Alameda", null, null], ["01100170109835", "Alameda", 1, "Directly funded"], ["01100170112607", "Alameda", 1, "Directly funded"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
-Column School: column description -> School, value description -> 
 Column Charter: column description -> This field identifies a charter school. , value description -> The field is coded as follows:
 
 ·       1 = The school is a charter

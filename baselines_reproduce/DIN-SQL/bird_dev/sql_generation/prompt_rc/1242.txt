@@ -296,9 +296,9 @@ Hint: laboratory examinations take in 1984 refers to YEAR(Date) = '1984'; below 
 Schema_links: [Laboratory.Date,Patient.ID,Patient.Birthday,Laboratory.PLT,Laboratory.ID = Patient.ID,1984,50,100,400]
 Result Contract:
 {
-  "population": "Patients who have a laboratory-test record in 1984 (year of the laboratory-test date = 1984), whose platelet level (PLT) in that laboratory test is normal (between 100 and 400), and who are below 50 years old (current year minus birth year < 50); all conditions must hold together.",
-  "row_grain": "One patient.",
-  "column_role": "Values identifying each listed patient (the requested entity); no other specific attributes are explicitly required.",
+  "population": "Patients with at least one laboratory-test record in 1984 whose platelet level in that record is normal (between 100 and 400) and who are below 50 years old in the laboratory-test year (laboratory-test year minus birth year < 50); all conditions must hold for the same laboratory-test record.",
+  "row_grain": "One distinct patient.",
+  "column_role": "Values identifying each listed patient; no other attributes are returned.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata shows that PLT and Date for laboratory tests are owned by the Laboratory table, while Examination has a separate examination date and no PLT. The contract therefore scopes the 1984 and platelet conditions to the laboratory-test record rather than a generic examination record."

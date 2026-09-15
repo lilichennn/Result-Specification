@@ -225,12 +225,12 @@ Hint: percentage = MULTIPLY(DIVIDE(SUM(superhero_name WHERE color = 'Blue'), COU
 Schema_links: [superhero.superhero_name,colour.colour,superhero.eye_colour_id = colour.id,Blue,7]
 Result Contract:
 {
-  "population": "The reference population is all superheroes; the target subpopulation is those superheroes whose eye color is 'Blue' (eye colour id 7).",
-  "row_grain": "One global summary row over the entire superhero population.",
+  "population": "The reference population is superheroes with an associated eye colour; the target subpopulation is those whose associated eye colour is 'Blue'.",
+  "row_grain": "One global summary row over the reference population.",
   "column_role": "A single numeric value representing the percentage of superheroes with blue eyes.",
-  "derivation": "Divide the count of superheroes whose eye color is 'Blue' (eye colour id 7) by the count of all superheroes, then multiply by 100.",
+  "derivation": "Divide the count of superheroes whose associated eye colour is 'Blue' by the count of superheroes with an associated eye colour, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms superhero.eye_colour_id references colour.id and colour.colour stores color names. This validates identifying blue-eyed superheroes by the Blue eye colour identifier (id 7)."
+  "meta_review": "Metadata supports using the superhero-to-eye-colour association and the colour name 'Blue' to identify blue-eyed superheroes."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

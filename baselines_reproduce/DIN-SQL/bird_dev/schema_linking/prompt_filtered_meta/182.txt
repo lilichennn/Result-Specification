@@ -185,8 +185,8 @@ Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id]
 Table client, columns = [*,client_id,gender,birth_date]
 Table disp, columns = [*,client_id,account_id,type]
-Table order, columns = [*,account_id,amount,k_symbol]
-Table trans, columns = [*,account_id,type,amount,k_symbol]
+Table order, columns = [*,order_id,account_id,amount,k_symbol]
+Table trans, columns = [*,trans_id,account_id,type,amount,k_symbol]
 Foreign_keys = [disp.client_id = client.client_id,disp.account_id = account.account_id,order.account_id = account.account_id,trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id"]):
 [[1], [2], [3]]
@@ -207,18 +207,20 @@ Column account_id: column description -> id number of account, value description
 Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
 commonsense evidence:
 the account can only have the right to issue permanent orders or apply for loans
-Sample rows from order (columns: ["account_id", "amount", "k_symbol"]):
-[[1, 2452.0, "SIPO"], [2, 3372.7, "UVER"], [2, 7266.0, "SIPO"]]
+Sample rows from order (columns: ["order_id", "account_id", "amount", "k_symbol"]):
+[[29401, 1, 2452.0, "SIPO"], [29402, 2, 3372.7, "UVER"], [29403, 2, 7266.0, "SIPO"]]
 Column descriptions and value descriptions for order:
+Column order_id: column description -> identifying the unique order, value description -> 
 Column account_id: column description -> id number of account, value description -> 
 Column amount: column description -> debited amount, value description -> 
 Column k_symbol: column description -> purpose of the payment, value description -> "POJISTNE" stands for insurance payment
 "SIPO" stands for household payment
 "LEASING" stands for leasing
 "UVER" stands for loan payment
-Sample rows from trans (columns: ["account_id", "type", "amount", "k_symbol"]):
-[[1, "PRIJEM", 1000, null], [1, "PRIJEM", 3679, null], [1, "PRIJEM", 3679, null]]
+Sample rows from trans (columns: ["trans_id", "account_id", "type", "amount", "k_symbol"]):
+[[1, 1, "PRIJEM", 1000, null], [5, 1, "PRIJEM", 3679, null], [6, 1, "PRIJEM", 3679, null]]
 Column descriptions and value descriptions for trans:
+Column trans_id: column description -> transaction id, value description -> 
 Column account_id: column description -> , value description -> 
 Column type: column description -> +/- transaction, value description -> "PRIJEM" stands for credit
 "VYDAJ" stands for withdrawal

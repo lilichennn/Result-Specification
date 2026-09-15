@@ -252,11 +252,11 @@ Schema_links: [users.DisplayName,badges.Name,badges.Date,badges.UserId = users.I
 Result Contract:
 {
   "population": "All badge acquisition events where the badge name is 'Autobiographer'.",
-  "row_grain": "One user, namely the user who acquired the earliest Autobiographer badge.",
+  "row_grain": "One selected row containing the display name of the user associated with the earliest Autobiographer badge acquisition.",
   "column_role": "The display name of that user.",
   "derivation": "none",
-  "filter_policy": "Select the user whose Autobiographer badge acquisition date is the minimum (earliest) among the eligible population.",
-  "meta_review": "Metadata confirms badges.Date is the badge acquisition datetime and users.DisplayName is the user's display name. This validates the earliest-acquisition selection and the requested output representation."
+  "filter_policy": "Select a single earliest Autobiographer badge acquisition event and return its associated user.",
+  "meta_review": "Metadata confirms the badge acquisition datetime and the user's display name, supporting earliest-acquisition selection and the requested output representation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

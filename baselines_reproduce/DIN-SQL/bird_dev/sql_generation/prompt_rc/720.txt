@@ -225,12 +225,12 @@ Hint: 15 super powers refers to COUNT(full_name) > 15
 Schema_links: [superhero.full_name,hero_power.hero_id,hero_power.hero_id = superhero.id,15]
 Result Contract:
 {
-  "population": "All superheroes whose number of super powers is greater than 15, with the evidence clarifying the condition as a count greater than 15.",
-  "row_grain": "One row per superhero who has over 15 super powers.",
+  "population": "Superhero full names for which the total number of associated superpowers is greater than 15.",
+  "row_grain": "One row per distinct superhero full name meeting that total-count condition.",
   "column_role": "The full name of the superhero.",
-  "derivation": "Determine each superhero's count of super powers as a per-superhero metric so it can be compared against the threshold of 15.",
+  "derivation": "Compute the total count of associated superpowers for each full name and compare it with 15.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes hero_power as the superhero-to-superpower association, validating that the count is computed per superhero from superpower links."
+  "meta_review": "The count is derived from superhero-to-superpower associations and is evaluated at the level of each returned full name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

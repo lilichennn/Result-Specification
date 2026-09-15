@@ -182,13 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table driverStandings, columns = [*,driverId,points,wins]
+Table driverStandings, columns = [*,driverStandingsId,driverId,points,wins]
 Table drivers, columns = [*,driverId,forename,surname,nationality]
-Table results, columns = [*,driverId,points]
-Foreign_keys = [driverStandings.driverId = drivers.driverId,results.driverId = drivers.driverId]
-Sample rows from driverStandings (columns: ["driverId", "points", "wins"]):
-[[1, 10.0, 1], [2, 8.0, 0], [3, 6.0, 0]]
+Foreign_keys = [driverStandings.driverId = drivers.driverId]
+Sample rows from driverStandings (columns: ["driverStandingsId", "driverId", "points", "wins"]):
+[[1, 1, 10.0, 1], [2, 2, 8.0, 0], [3, 3, 6.0, 0]]
 Column descriptions and value descriptions for driverStandings:
+Column driverStandingsId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
 Column points: column description -> , value description -> 
 Column wins: column description -> wins , value description -> 
@@ -199,11 +199,6 @@ Column driverId: column description -> , value description ->
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
-Sample rows from results (columns: ["driverId", "points"]):
-[[1, 10.0], [2, 8.0], [3, 6.0]]
-Column descriptions and value descriptions for results:
-Column driverId: column description -> , value description -> 
-Column points: column description -> , value description -> 
 
 Q: Name the driver with the most winning. Mention his nationality and what is his maximum point scores.
 Hint: Full name of the driver refers to drivers.forename and drivers.surname; the most winning refers to MAX(COUNT(wins)); average point scores refers to MAX(points);

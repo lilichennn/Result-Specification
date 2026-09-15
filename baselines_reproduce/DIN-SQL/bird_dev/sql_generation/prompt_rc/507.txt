@@ -373,12 +373,12 @@ Hint: Brazil Portuguese translation refers to language = 'Portuguese (Brazil)'; 
 Schema_links: [set_translations.language,sets.isOnlineOnly,set_translations.setCode = sets.code,'Portuguese (Brazil)',1]
 Result Contract:
 {
-  "population": "All cards that have a Brazil Portuguese card translation, identified by card translation language = 'Portuguese (Brazil)'; within this set, only cards whose card-level isOnlineOnly = 1 contribute to the online-only count.",
-  "row_grain": "One global summary row over the entire set of Brazil Portuguese cards.",
-  "column_role": "The percentage of Brazil Portuguese cards that are only available online.",
-  "derivation": "Divide the count of Brazil Portuguese cards whose card-level isOnlineOnly = 1 by the total count of Brazil Portuguese cards, then multiply by 100.",
+  "population": "All card sets that have at least one Brazil Portuguese translation; within this set, only sets whose set-level online-only flag is true contribute to the online-only count.",
+  "row_grain": "One global summary row over the entire set of Brazil Portuguese card sets.",
+  "column_role": "The percentage of Brazil Portuguese card sets that are only available online.",
+  "derivation": "Divide the count of Brazil Portuguese card sets whose set-level online-only flag is true by the total count of Brazil Portuguese card sets, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that translation language for cards is foreign_data.language and online-only status for cards is cards.isOnlineOnly. The contract therefore uses card-level Brazil Portuguese translation eligibility and card-level online-only status."
+  "meta_review": "Metadata confirms that Brazil Portuguese eligibility is based on set translation language and online-only status is set-level, so the contract uses set-level translation eligibility and set-level online-only status."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -375,9 +375,9 @@ Result Contract:
   "population": "Laboratory test records dated in 1995 belonging to the patient whose first hospital date is 1991-06-13 and who was diagnosed with SJS.",
   "row_grain": "One global summary for the qualifying patient.",
   "column_role": "The total number of the patient's qualifying laboratory tests.",
-  "derivation": "Count of eligible laboratory test records (COUNT(ID), with ID identifying the patient on laboratory records) over the eligible population.",
+  "derivation": "Count of eligible laboratory test records over the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that Laboratory.ID is patient identification, so the evidence's COUNT(ID) counts eligible laboratory records rather than separate test identifiers. Laboratory.Date confirms that the 1995 condition applies to laboratory-test dates."
+  "meta_review": "Metadata establishes that laboratory records are linked to the qualifying patient through the patient identifier, so the count measures eligible laboratory records rather than separate test identifiers. The laboratory date confirms that the 1995 condition applies to laboratory-test dates."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

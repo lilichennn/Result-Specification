@@ -183,10 +183,9 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table atom, columns = [*,atom_id,molecule_id,element]
-Table bond, columns = [*,bond_id,molecule_id,bond_type]
-Table connected, columns = [*,atom_id,atom_id2,bond_id]
+Table bond, columns = [*,molecule_id,bond_type]
 Table molecule, columns = [*,molecule_id]
-Foreign_keys = [atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,connected.bond_id = bond.bond_id,connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
+Foreign_keys = [atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id]
 Sample rows from atom (columns: ["atom_id", "molecule_id", "element"]):
 [["TR000_1", "TR000", "cl"], ["TR000_2", "TR000", "c"], ["TR000_3", "TR000", "cl"]]
 Column descriptions and value descriptions for atom:
@@ -208,23 +207,14 @@ Column element: column description -> the element of the toxicology , value desc
  pb: lead
  te: tellurium
  ca: Calcium
-Sample rows from bond (columns: ["bond_id", "molecule_id", "bond_type"]):
-[["TR000_1_2", "TR000", "-"], ["TR000_2_3", "TR000", "-"], ["TR000_2_4", "TR000", "-"]]
+Sample rows from bond (columns: ["molecule_id", "bond_type"]):
+[["TR000", "-"], ["TR000", "-"], ["TR000", "-"]]
 Column descriptions and value descriptions for bond:
-Column bond_id: column description -> unique id representing bonds, value description -> TRxxx_A1_A2:
-TRXXX refers to which molecule
-A1 and A2 refers to which atom
 Column molecule_id: column description -> identifying the molecule in which the bond appears, value description -> 
 Column bond_type: column description -> type of the bond, value description -> commonsense evidence:
 -: single bond
 '=': double bond
 '#': triple bond
-Sample rows from connected (columns: ["atom_id", "atom_id2", "bond_id"]):
-[["TR000_1", "TR000_2", "TR000_1_2"], ["TR000_2", "TR000_1", "TR000_1_2"], ["TR000_2", "TR000_3", "TR000_2_3"]]
-Column descriptions and value descriptions for connected:
-Column atom_id: column description -> id of the first atom, value description -> 
-Column atom_id2: column description -> id of the second atom, value description -> 
-Column bond_id: column description -> bond id representing bond between two atoms, value description -> 
 Sample rows from molecule (columns: ["molecule_id"]):
 [["TR000"], ["TR001"], ["TR002"]]
 Column descriptions and value descriptions for molecule:

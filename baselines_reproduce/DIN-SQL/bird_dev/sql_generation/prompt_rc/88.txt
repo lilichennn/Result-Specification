@@ -355,7 +355,7 @@ Result Contract:
   "population": "Schools with SAT test takers, where only test takers whose total SAT score is at least 1500 contribute to each school's qualifying count.",
   "row_grain": "One school, specifically the single school selected as the answer.",
   "column_role": "The school's name and its administrator's email address.",
-  "derivation": "For each school, the reported school-level number of test takers whose total SAT score is at least 1500.",
+  "derivation": "The returned school name and administrator email address are stored school attributes for the selected school; the qualifying count is used only for selection and is not returned.",
   "filter_policy": "Select the school with the highest qualifying count of test takers whose total SAT score is at least 1500 (argmax); tie handling is unspecified.",
   "meta_review": "Metadata establishes satscores.NumGE1500 as the school-level count of test takers whose total SAT scores are at least 1500, resolving the qualifying metric as a total-score count. It also confirms schools.AdmEmail1 as the school administrator’s email address."
 }

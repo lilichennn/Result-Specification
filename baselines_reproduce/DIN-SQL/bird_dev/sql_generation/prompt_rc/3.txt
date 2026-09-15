@@ -352,10 +352,10 @@ Hint:
 Schema_links: [schools.MailStreet,frpm.`FRPM Count (K-12)`,frpm.CDSCode = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible candidates; no Boolean membership condition is stated, and the K-12 scope qualifies the FRPM count metric rather than restricting school membership.",
+  "population": "Candidate schools are those with an associated Free or Reduced Price Meal count record; no other Boolean membership condition is stated, and the K-12 scope qualifies the FRPM count metric rather than restricting school membership.",
   "row_grain": "One school, namely the single school selected by the ranking.",
   "column_role": "The selected school's unabbreviated mailing street address, not an abbreviated mailing address or the physical street address.",
-  "derivation": "Each school is associated with the stored Free or Reduced Price Meal count for K-12 students, which serves as the comparison measure.",
+  "derivation": "Each candidate school is associated with the stored Free or Reduced Price Meal count for K-12 students, which serves as the comparison measure.",
   "filter_policy": "Select the school with the highest FRPM count for K-12 students (argmax); tie handling is unspecified.",
   "meta_review": "Metadata resolves the output to schools.MailStreet, the unabbreviated mailing street address, and the comparison measure to frpm.\"FRPM Count (K-12)\", distinguishing them from abbreviated/physical address fields and other meal counts."
 }

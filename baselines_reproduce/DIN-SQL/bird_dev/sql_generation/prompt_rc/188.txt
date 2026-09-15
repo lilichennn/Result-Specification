@@ -249,11 +249,11 @@ Schema_links: [account.account_id,loan.duration,loan.amount,account.date,loan.ac
 Result Contract:
 {
   "population": "Accounts whose loan duration is more than 24 months and whose account creation date is before 1997.",
-  "row_grain": "One row per selected account.",
-  "column_role": "The account identifier of each selected account.",
+  "row_grain": "A single row for the selected account.",
+  "column_role": "The account identifier of the selected account.",
   "derivation": "none",
-  "filter_policy": "Retain only the account or accounts having the lowest approved loan amount within the eligible population; tie handling is unspecified.",
-  "meta_review": "Metadata confirms loan.duration is loan duration in months, loan.amount is the approved amount, and account.date is the account creation date. This validates the eligibility and lowest-amount comparison semantics and supports identifying selected accounts by their account identifier."
+  "filter_policy": "From the eligible population, return only one account having the lowest approved loan amount; if multiple accounts tie for the lowest amount, only one is returned and the choice among ties is unspecified.",
+  "meta_review": "Metadata confirms loan.duration is loan duration in months, loan.amount is the approved amount, and account.date is the account creation date. This validates the eligibility and lowest-amount comparison semantics and supports identifying the selected account by its account identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,30 +183,21 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table League, columns = [*,id,name]
-Table Match, columns = [*,id,league_id,date,home_team_api_id,away_team_api_id,home_team_goal,away_team_goal]
-Table Team, columns = [*,team_api_id,team_long_name,team_short_name]
-Foreign_keys = [Match.away_team_api_id = Team.team_api_id,Match.home_team_api_id = Team.team_api_id,Match.league_id = League.id]
+Table Match, columns = [*,id,league_id,date,home_team_goal,away_team_goal]
+Foreign_keys = [Match.league_id = League.id]
 Sample rows from League (columns: ["id", "name"]):
 [[1, "Belgium Jupiler League"], [1729, "England Premier League"], [4769, "France Ligue 1"]]
 Column descriptions and value descriptions for League:
 Column id: column description -> the unique id for leagues, value description -> 
 Column name: column description -> league name, value description -> 
-Sample rows from Match (columns: ["id", "league_id", "date", "home_team_api_id", "away_team_api_id", "home_team_goal", "away_team_goal"]):
-[[1, 1, "2008-08-17 00:00:00", 9987, 9993, 1, 1], [2, 1, "2008-08-16 00:00:00", 10000, 9994, 0, 0], [3, 1, "2008-08-16 00:00:00", 9984, 8635, 0, 3]]
+Sample rows from Match (columns: ["id", "league_id", "date", "home_team_goal", "away_team_goal"]):
+[[1, 1, "2008-08-17 00:00:00", 1, 1], [2, 1, "2008-08-16 00:00:00", 0, 0], [3, 1, "2008-08-16 00:00:00", 0, 3]]
 Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
 Column league_id: column description -> league id, value description -> 
 Column date: column description -> the date of the match, value description -> e.g. 2008-08-17 00:00:00
-Column home_team_api_id: column description -> the id of the home team api, value description -> 
-Column away_team_api_id: column description -> the id of the away team api, value description -> 
 Column home_team_goal: column description -> the goal of the home team, value description -> 
 Column away_team_goal: column description -> the goal of the away team, value description -> 
-Sample rows from Team (columns: ["team_api_id", "team_long_name", "team_short_name"]):
-[[9987, "KRC Genk", "GEN"], [9993, "Beerschot AC", "BAC"], [10000, "SV Zulte-Waregem", "ZUL"]]
-Column descriptions and value descriptions for Team:
-Column team_api_id: column description -> the id of the team api, value description -> 
-Column team_long_name: column description -> the team's long name, value description -> 
-Column team_short_name: column description -> the team's short name, value description -> 
 
 Q: What was the final score for the match on September 24, 2008, in the Belgian Jupiler League between the home team and the away team?
 Hint: September 24, 2008 refers to date like '2008-09-24%'; in the Belgian Jupiler League refers to League.name = 'Belgium Jupiler League'; final score for home team refers to home_team_goal; final score for away team refers to away_team_goal

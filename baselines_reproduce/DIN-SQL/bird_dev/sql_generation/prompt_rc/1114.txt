@@ -418,9 +418,9 @@ Result Contract:
   "population": "All rating records for the player named 'Marko Arnautovic' whose stored date, using its first 10 characters, falls between 2007-02-22 and 2016-04-21 inclusive.",
   "row_grain": "One global summary row for the entire eligible set of ratings.",
   "column_role": "The average overall rating value.",
-  "derivation": "Compute the arithmetic mean of the overall rating across all eligible rating records.",
+  "derivation": "Compute the average by summing the overall rating across all eligible rating records and dividing by the number of eligible rating records.",
   "filter_policy": "none",
-  "meta_review": "Player_Attributes.date is stored as text with a time component, so the date eligibility condition uses the first 10 characters as specified. No other Round-1 semantic was changed."
+  "meta_review": "The stored date includes a time component, so the date eligibility condition uses the first 10 characters as specified."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

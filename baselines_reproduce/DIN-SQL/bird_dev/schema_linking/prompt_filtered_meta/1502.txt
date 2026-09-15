@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Currency]
-Table gasstations, columns = [*,GasStationID,ChainID,Segment]
+Table gasstations, columns = [*,GasStationID,ChainID]
 Table transactions_1k, columns = [*,TransactionID,CustomerID,GasStationID]
 Foreign_keys = []
 Sample rows from customers (columns: ["CustomerID", "Currency"]):
@@ -191,12 +191,11 @@ Sample rows from customers (columns: ["CustomerID", "Currency"]):
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Currency: column description -> Currency, value description -> 
-Sample rows from gasstations (columns: ["GasStationID", "ChainID", "Segment"]):
-[[44, 13, "Value for money"], [45, 6, "Premium"], [46, 23, "Other"]]
+Sample rows from gasstations (columns: ["GasStationID", "ChainID"]):
+[[44, 13], [45, 6], [46, 23]]
 Column descriptions and value descriptions for gasstations:
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column ChainID: column description -> Chain ID, value description -> 
-Column Segment: column description -> chain segment, value description -> 
 Sample rows from transactions_1k (columns: ["TransactionID", "CustomerID", "GasStationID"]):
 [[1, 31543, 3704], [2, 46707, 3704], [3, 46707, 3704]]
 Column descriptions and value descriptions for transactions_1k:

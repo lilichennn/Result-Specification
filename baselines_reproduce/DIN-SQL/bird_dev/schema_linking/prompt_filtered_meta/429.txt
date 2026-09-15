@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table set_translations, columns = [*,id,language,setCode]
-Table sets, columns = [*,id,code,type]
+Table sets, columns = [*,code,type]
 Foreign_keys = [set_translations.setCode = sets.code]
 Sample rows from set_translations (columns: ["id", "language", "setCode"]):
 [[1, "Chinese Simplified", "10E"], [2, "Chinese Traditional", "10E"], [3, "French", "10E"]]
@@ -191,10 +191,9 @@ Column descriptions and value descriptions for set_translations:
 Column id: column description -> unique id identifying this set, value description -> 
 Column language: column description -> language of this card set, value description -> 
 Column setCode: column description -> the set code for this set, value description -> 
-Sample rows from sets (columns: ["id", "code", "type"]):
-[[1, "10E", "core"], [2, "2ED", "core"], [3, "2XM", "masters"]]
+Sample rows from sets (columns: ["code", "type"]):
+[["10E", "core"], ["2ED", "core"], ["2XM", "masters"]]
 Column descriptions and value descriptions for sets:
-Column id: column description -> unique id identifying this set, value description -> 
 Column code: column description -> The set code for the set., value description -> 
 Column type: column description -> The expansion type of the set., value description -> "alchemy", "archenemy", "arsenal", "box", "commander", "core", "draft_innovation", "duel_deck", "expansion", "from_the_vault", "funny", "masterpiece", "masters", "memorabilia", "planechase", "premium_deck", "promo", "spellbook", "starter", "token", "treasure_chest", "vanguard"
 

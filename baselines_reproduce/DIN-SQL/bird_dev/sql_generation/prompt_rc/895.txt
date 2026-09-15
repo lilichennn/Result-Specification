@@ -290,7 +290,7 @@ Result Contract:
   "column_role": "The average lap time value for Lewis Hamilton in the 2009 Malaysian Grand Prix.",
   "derivation": "Compute the average of the lap time measure (milliseconds) across all race lap-time records in the population.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies lapTimes.milliseconds as the lap-time measure for race lap records, correcting the Round-1 reference to qualifying laps. Races.year supports the 2009 restriction for the named race."
+  "meta_review": "The lap-time measure for race lap records is milliseconds, not a qualifying-lap measure. The race year supports the 2009 restriction for the named race."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -184,9 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table lapTimes, columns = [*,raceId,time,milliseconds]
 Table races, columns = [*,raceId,year]
-Table results, columns = [*,raceId,fastestLapTime,fastestLapSpeed]
-Table seasons, columns = [*,year]
-Foreign_keys = [lapTimes.raceId = races.raceId,races.year = seasons.year,results.raceId = races.raceId]
+Foreign_keys = [lapTimes.raceId = races.raceId]
 Sample rows from lapTimes (columns: ["raceId", "time", "milliseconds"]):
 [[1, "1:49.088", 109088], [1, "1:33.740", 93740], [1, "1:31.600", 91600]]
 Column descriptions and value descriptions for lapTimes:
@@ -197,16 +195,6 @@ Sample rows from races (columns: ["raceId", "year"]):
 [[1, 2009], [2, 2009], [3, 2009]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Column year: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "fastestLapTime", "fastestLapSpeed"]):
-[[18, "1:27.452", "218.300"], [18, "1:27.739", "217.586"], [18, "1:28.090", "216.719"]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column fastestLapTime: column description -> , value description -> 
-Column fastestLapSpeed: column description -> , value description -> 
-Sample rows from seasons (columns: ["year"]):
-[[1950], [1951], [1952]]
-Column descriptions and value descriptions for seasons:
 Column year: column description -> , value description -> 
 
 Q: Which year has the lowest speed of lap time?

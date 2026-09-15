@@ -230,12 +230,12 @@ Hint: taken place in 2020-03-24T12:00:00 refers to event_date = '2020-03-24T12:0
 Schema_links: [budget.category,event.event_date,budget.link_to_event = event.event_id,'2020-03-24T12:00:00']
 Result Contract:
 {
-  "population": "Events whose event_date equals '2020-03-24T12:00:00'.",
-  "row_grain": "One event matching the specified event date.",
-  "column_role": "The category of the event, i.e., its type or kind.",
+  "population": "Budget entries linked to events whose event date equals '2020-03-24T12:00:00'.",
+  "row_grain": "One row per qualifying budget entry, returning its category.",
+  "column_role": "The category of the budget entry associated with the event.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that event.type is the kind/category of an event, resolving the requested category representation."
+  "meta_review": "The requested category is the budget-associated category linked to the event, not an event type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

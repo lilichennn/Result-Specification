@@ -415,12 +415,12 @@ Hint: short name of the football team refers to team_short_name; home team goal 
 Schema_links: [Team.team_short_name,Match.home_team_goal,Match.home_team_api_id = Team.team_api_id,10]
 Result Contract:
 {
-  "population": "Football teams that are the home team in at least one match where home_team_goal equals 10.",
-  "row_grain": "One row per qualifying football team.",
+  "population": "Football teams that are the home team in matches where the home team goal equals 10.",
+  "row_grain": "One row for each qualifying home-match occurrence, so the same team short name can appear more than once.",
   "column_role": "The short name of the football team.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows home_team_goal is stored at Match grain and the home team is represented by home_team_api_id, so the condition qualifies Team entities through home matches. This refines the population and preserves one row per qualifying team rather than per match."
+  "meta_review": "Metadata shows home-team goals are stored at match grain and the home team is represented by a home-team reference, so the condition qualifies team names through home matches and returns one row per qualifying home match rather than one row per team."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

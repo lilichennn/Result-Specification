@@ -251,12 +251,12 @@ Hint: name of users refers to DisplayName; the Organizer Badges refer to badges 
 Schema_links: [users.DisplayName,badges.Name,badges.UserId = users.Id,Organizer]
 Result Contract:
 {
-  "population": "Users who obtained at least one badge whose Name is 'Organizer'.",
-  "row_grain": "One row per user who obtained an Organizer badge.",
-  "column_role": "The user's display name (DisplayName).",
+  "population": "User display names associated with badge awards named 'Organizer'.",
+  "row_grain": "One row per qualifying badge award, so the same user display name may appear more than once.",
+  "column_role": "The user's display name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that users.DisplayName is the user account display name and badges.Name is the badge name obtained by the user. This validates the Round-1 semantic output and badge filter."
+  "meta_review": "Metadata confirms the user display name and the badge name obtained by the user, supporting the Organizer badge condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

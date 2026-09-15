@@ -352,12 +352,12 @@ Hint: Average score for all subjects can be computed by AvgScrMath + AvgScrRead 
 Schema_links: [satscores.AvgScrMath,satscores.AvgScrRead,satscores.AvgScrWrite,schools.County,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools.",
-  "row_grain": "One row representing the single school that has the lowest all-subjects score.",
+  "population": "Schools with a non-missing average math score.",
+  "row_grain": "One row representing a single school with the lowest all-subjects score.",
   "column_role": "The selected school's average math score, and the county name in which that school is located.",
-  "derivation": "Each school's all-subjects score is the sum of its average math, average reading, and average writing scores (AvgScrMath + AvgScrRead + AvgScrWrite).",
-  "filter_policy": "Retain only the school with the minimum all-subjects score (argmin); no further ordering or limit is requested.",
-  "meta_review": "Metadata identifies county representation as a name (e.g., satscores.cname), resolving the requested county output as a county name rather than a county code."
+  "derivation": "The returned average math score and county are reported per-school values; the all-subjects score used to select the school is the sum of average math, average reading, and average writing scores.",
+  "filter_policy": "Retain a single school with the minimum all-subjects score.",
+  "meta_review": "The requested county output is a county name rather than a county code."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

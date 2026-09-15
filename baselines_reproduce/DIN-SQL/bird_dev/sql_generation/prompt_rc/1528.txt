@@ -251,12 +251,12 @@ Hint:
 Schema_links: [gasstations.Segment,gasstations.Country,Premium,SVK]
 Result Contract:
 {
-  "population": "All gas-station records with Country = \"SVK\"; within this population, the target subpopulation is gas-station records whose Segment is \"premium\" and the reference population is all gas-station records in SVK regardless of Segment.",
+  "population": "All gas-station records with Country = \"SVK\"; within this population, the target subpopulation is gas-station records whose Segment is \"Premium\" and the reference population is all gas-station records in SVK regardless of Segment.",
   "row_grain": "One global summary for Country = \"SVK\".",
-  "column_role": "The percentage that the \"premium\" segment represents of the overall gas-station segment population in SVK.",
-  "derivation": "The count of gas-station records with Country = \"SVK\" and Segment = \"premium\" divided by the count of all gas-station records with Country = \"SVK\", expressed as a percentage.",
+  "column_role": "The percentage that the \"Premium\" segment represents of the overall gas-station population in SVK.",
+  "derivation": "The count of gas-station records with Country = \"SVK\" and Segment = \"Premium\" divided by the count of all gas-station records with Country = \"SVK\", expressed as a percentage.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows gasstations owns both Country and Segment, resolving the requested SVK segment percentage to gas-station records. This fixes the population entity without changing the percentage computation."
+  "meta_review": "Metadata shows the gas-station entity owns both Country and Segment, resolving the requested SVK segment percentage to gas-station records. This fixes the population entity without changing the percentage computation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

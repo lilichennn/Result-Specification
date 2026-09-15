@@ -302,7 +302,7 @@ Result Contract:
   "column_role": "The name of the artist.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that card language is represented by foreign_data.language and artist name by cards.artist, resolving that Chinese Simplified selects cards via card-level foreign-language data and the requested output is the card artist name. Round-1 semantics otherwise preserved."
+  "meta_review": "Metadata establishes that card language is represented by foreign_data.language and artist name by cards.artist, resolving that Chinese Simplified selects cards via card-level foreign-language data and the requested output is the card artist name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

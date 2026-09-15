@@ -365,10 +365,10 @@ Hint: 'SLE' diagnosed patient means Diagnosis = 'SLE'; inpatient refers to Admis
 Schema_links: [Patient.ID,Patient.Admission,Patient.Diagnosis,'SLE','+','-']
 Result Contract:
 {
-  "population": "All patient-level records (counted by ID) with Diagnosis = 'SLE', partitioned into an inpatient subpopulation where Admission = '+' and an outpatient subpopulation where Admission = '-'.",
+  "population": "All patient-level records with Diagnosis = 'SLE', with an inpatient subpopulation where Admission = '+' and an outpatient subpopulation where Admission = '-'.",
   "row_grain": "One global summary row representing a single ratio across all SLE-diagnosed patient-level records.",
-  "column_role": "A single numeric value for the requested ratio between the two SLE patient subpopulation counts.",
-  "derivation": "Divide the count of patient-level records with Diagnosis = 'SLE' and Admission = '+' (inpatient) by the count of patient-level records with Diagnosis = 'SLE' and Admission = '-' (outpatient), as defined by the evidence calculation.",
+  "column_role": "A single numeric value for the ratio of the inpatient SLE patient count to the outpatient SLE patient count.",
+  "derivation": "Divide the count of patient-level records with Diagnosis = 'SLE' and Admission = '+' by the count of patient-level records with Diagnosis = 'SLE' and Admission = '-'.",
   "filter_policy": "none",
   "meta_review": "Metadata shows Patient.Admission and Patient.Diagnosis are patient-level attributes, with Admission '+' meaning admitted and '-' meaning followed at the outpatient clinic. This validates counting patient-level records rather than separate treatment events."
 }

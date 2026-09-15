@@ -296,12 +296,12 @@ Hint: female refers to sex = 'F'; total protein not within the normal range refe
 Schema_links: [Patient.SEX,Laboratory.TP,Patient.ID,Laboratory.ID = Patient.ID,'F',6.0,8.5]
 Result Contract:
 {
-  "population": "Target population: patients who are female (sex = 'F') and whose total protein is not within the normal range (TP < 6.0 or TP > 8.5); reference population serving as the percentage base: all patients.",
-  "row_grain": "One global summary row over the whole patient population.",
+  "population": "Target population: laboratory measurements for female patients whose total protein is outside the normal range (below 6.0 or above 8.5); reference population: all laboratory measurements for female patients.",
+  "row_grain": "One global summary row over the female-patient laboratory-measurement population.",
   "column_role": "A single output value: the requested percentage.",
-  "derivation": "Compute (count of target-population patients divided by count of all patients) multiplied by 100.",
+  "derivation": "Compute the percentage as the count of target-population laboratory measurements divided by the count of reference-population laboratory measurements, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The percentage base is restricted to female patient laboratory measurements, not all patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

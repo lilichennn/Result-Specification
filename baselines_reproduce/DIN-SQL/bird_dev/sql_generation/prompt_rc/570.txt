@@ -251,12 +251,12 @@ Hint: "DatEpicCoderGuyWhoPrograms" is the DisplayName;
 Schema_links: [badges.Name,users.DisplayName,badges.UserId = users.Id,DatEpicCoderGuyWhoPrograms]
 Result Contract:
 {
-  "population": "Badge awards belonging to the user whose display name is \"DatEpicCoderGuyWhoPrograms\".",
-  "row_grain": "One badge award of the qualifying user.",
+  "population": "Badge awards belonging to users whose display name is \"DatEpicCoderGuyWhoPrograms\".",
+  "row_grain": "One row for each badge award of a qualifying user.",
   "column_role": "The name of the badge.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows badges rows are badge awards obtained by users, with badges.Name as the badge name and users.DisplayName as the user display name. This refined the population and row grain to badge awards while preserving the requested badge name output."
+  "meta_review": "Metadata shows badge records are badge awards obtained by users, with the badge name on the badge award and the user display name on the user. This refined the population and row grain to badge awards while preserving the requested badge name output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

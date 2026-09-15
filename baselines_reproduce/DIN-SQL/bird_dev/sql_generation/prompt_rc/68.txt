@@ -421,12 +421,12 @@ Hint: Youth Authority Facilities (CEA) refers to SOC = 11; 1980s = years between
 Schema_links: [schools.County,schools.ClosedDate,schools.SOC,schools.CDSCode,11,1980,1989]
 Result Contract:
 {
-  "population": "School closure events where the school's closure date has a year between 1980 and 1989 inclusive and the school has school ownership code SOC = 11 (Youth Authority Facilities (CEA)).",
+  "population": "Closed schools whose closure date has a year between 1980 and 1989 inclusive and whose school ownership code is SOC = 11 (Youth Authority Facilities (CEA)).",
   "row_grain": "One county.",
   "column_role": "The identity (name) of the county.",
-  "derivation": "For each county, count the qualifying school closures attributed to that county.",
-  "filter_policy": "Select the county with the highest count of qualifying closures (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata establishes schools.ClosedDate as the school closure date and schools.SOC value 11 as Youth Authority Facilities (CEA), so closure eligibility is based on the year of ClosedDate. No other Round-1 semantic choice was changed."
+  "derivation": "For each county, count the qualifying closed schools attributed to that county.",
+  "filter_policy": "Select the county with the highest count of qualifying closed schools; tie handling is unspecified.",
+  "meta_review": "Metadata establishes the closure date field and SOC value 11 as Youth Authority Facilities (CEA); qualifying records must also have closed status, so closure eligibility is based on closed status and the year of the closure date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

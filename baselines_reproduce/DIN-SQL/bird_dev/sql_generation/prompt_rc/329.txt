@@ -263,12 +263,12 @@ Hint: label = '+' mean molecules are carcinogenic; molecule that have the highes
 Schema_links: [molecule.molecule_id,molecule.label,atom.molecule_id,atom.molecule_id = molecule.molecule_id,'+']
 Result Contract:
 {
-  "population": "All molecules that are carcinogenic, i.e., molecules whose label is '+'.",
-  "row_grain": "One molecule.",
-  "column_role": "The unique identifier of the molecule requested by the question.",
-  "derivation": "For each eligible molecule, the number of atoms it consists of, computed as the count of atom records linked to that molecule.",
-  "filter_policy": "Select the molecule with the highest atom count (argmax over the per-molecule atom count).",
-  "meta_review": "Metadata establishes molecule.molecule_id as the unique molecule identity and atom.molecule_id as the link from each atom to its molecule. This supports outputting the molecule identifier and computing the per-molecule atom count; no other Round-1 semantics changed."
+  "population": "All carcinogenic molecules with at least one linked atom record, i.e., molecules whose label is '+' and for which atom records exist.",
+  "row_grain": "One selected molecule.",
+  "column_role": "The unique identifier of the selected molecule.",
+  "derivation": "The returned value is the stored unique identifier of the selected molecule.",
+  "filter_policy": "Select a single molecule whose per-molecule count of linked atom records is highest.",
+  "meta_review": "Metadata establishes molecule.molecule_id as the unique molecule identity and atom.molecule_id as the link from each atom to its molecule. This supports outputting the molecule identifier and computing the per-molecule atom count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,12 +297,12 @@ Hint: ranked 1st on EDHRec refers to edhrecRank = 1; banned refers to status = '
 Schema_links: [cards.edhrecRank,cards.name,legalities.format,legalities.status,legalities.uuid = cards.uuid,1,Banned]
 Result Contract:
 {
-  "population": "Each eligible item pairs a card ranked 1st on EDHRec (edhrecRank = 1) with a play format in which that card's status is 'Banned'.",
-  "row_grain": "One row per qualifying card per banned play format.",
+  "population": "Each eligible item pairs the name of a card ranked 1st on EDHRec (edhrecRank = 1) with a play format in which that card's status is 'Banned'.",
+  "row_grain": "One distinct row per qualifying card name and banned play format.",
   "column_role": "The card's name and the play format in which it is banned.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

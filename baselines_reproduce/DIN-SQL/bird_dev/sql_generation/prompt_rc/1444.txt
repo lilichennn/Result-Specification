@@ -299,12 +299,12 @@ Hint: expense refers to expense_description; spend more than fifty dollars on av
 Schema_links: [expense.expense_description,expense.cost,expense.expense_id,50]
 Result Contract:
 {
-  "population": "Expenses whose average cost, defined as the sum of their costs divided by the number of their expense records, is greater than fifty dollars.",
-  "row_grain": "One row per qualifying expense (expense description).",
+  "population": "Expense descriptions whose average cost across their expense records is greater than fifty dollars.",
+  "row_grain": "One row per qualifying expense description.",
   "column_role": "The expense description identifying each qualifying expense.",
-  "derivation": "For each expense, compute the average cost as the sum of its cost values divided by the count of its expense records.",
+  "derivation": "The expense description is returned as a stored identifying value, while the qualifying average cost is an aggregate measure per expense description.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

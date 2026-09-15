@@ -182,15 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,Academic Year,School Name,School Type,Educational Option Type,Enrollment (Ages 5-17),Free Meal Count (Ages 5-17),Percent (%) Eligible Free (Ages 5-17)]
-Table schools, columns = [*,CDSCode,School,SOC,SOCType,EdOpsCode,EdOpsName]
+Table frpm, columns = [*,CDSCode,School Type,Educational Option Type,Enrollment (Ages 5-17),Free Meal Count (Ages 5-17),Percent (%) Eligible Free (Ages 5-17)]
+Table schools, columns = [*,CDSCode,SOC,SOCType,EdOpsCode,EdOpsName]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "Academic Year", "School Name", "School Type", "Educational Option Type", "Enrollment (Ages 5-17)", "Free Meal Count (Ages 5-17)", "Percent (%) Eligible Free (Ages 5-17)"]):
-[["01100170109835", "2014-2015", "FAME Public Charter", "K-12 Schools (Public)", "Traditional", 1070.0, 553.0, 0.516822429906542], ["01100170112607", "2014-2015", "Envision Academy for Arts & Technology", "High Schools (Public)", "Traditional", 376.0, 182.0, 0.484042553191489], ["01100170118489", "2014-2015", "Aspire California College Preparatory Academy", "High Schools (Public)", "Traditional", 230.0, 128.0, 0.556521739130435]]
+Sample rows from frpm (columns: ["CDSCode", "School Type", "Educational Option Type", "Enrollment (Ages 5-17)", "Free Meal Count (Ages 5-17)", "Percent (%) Eligible Free (Ages 5-17)"]):
+[["01100170109835", "K-12 Schools (Public)", "Traditional", 1070.0, 553.0, 0.516822429906542], ["01100170112607", "High Schools (Public)", "Traditional", 376.0, 182.0, 0.484042553191489], ["01100170118489", "High Schools (Public)", "Traditional", 230.0, 128.0, 0.556521739130435]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column Academic Year: column description -> Academic Year, value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column School Type: column description -> , value description -> 
 Column Educational Option Type: column description -> Educational Option Type, value description -> 
 Column Enrollment (Ages 5-17): column description -> Enrollment (Ages 5-17), value description -> 
@@ -198,11 +196,10 @@ Column Free Meal Count (Ages 5-17): column description -> Free Meal Count (Ages 
 
 eligible free rate = Free Meal Count / Enrollment
 Column Percent (%) Eligible Free (Ages 5-17): column description -> , value description -> 
-Sample rows from schools (columns: ["CDSCode", "School", "SOC", "SOCType", "EdOpsCode", "EdOpsName"]):
-[["01100170000000", null, null, null, null, null], ["01100170109835", "FAME Public Charter", "65", "K-12 Schools (Public)", "TRAD", "Traditional"], ["01100170112607", "Envision Academy for Arts & Technology", "66", "High Schools (Public)", "TRAD", "Traditional"]]
+Sample rows from schools (columns: ["CDSCode", "SOC", "SOCType", "EdOpsCode", "EdOpsName"]):
+[["01100170000000", null, null, null, null], ["01100170109835", "65", "K-12 Schools (Public)", "TRAD", "Traditional"], ["01100170112607", "66", "High Schools (Public)", "TRAD", "Traditional"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 Column SOC: column description -> The School Ownership Code is a numeric code used to identify the type of school., value description -> •      08 - Preschool      
 •       09 – Special Education Schools (Public)
 •      11 – Youth Authority Facilities (CEA)

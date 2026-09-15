@@ -182,14 +182,9 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table atom, columns = [*,atom_id]
 Table bond, columns = [*,bond_id,bond_type]
-Table connected, columns = [*,atom_id,atom_id2,bond_id]
-Foreign_keys = [connected.bond_id = bond.bond_id,connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
-Sample rows from atom (columns: ["atom_id"]):
-[["TR000_1"], ["TR000_2"], ["TR000_3"]]
-Column descriptions and value descriptions for atom:
-Column atom_id: column description -> the unique id of atoms, value description -> 
+Table connected, columns = [*,atom_id,bond_id]
+Foreign_keys = [connected.bond_id = bond.bond_id]
 Sample rows from bond (columns: ["bond_id", "bond_type"]):
 [["TR000_1_2", "-"], ["TR000_2_3", "-"], ["TR000_2_4", "-"]]
 Column descriptions and value descriptions for bond:
@@ -200,11 +195,10 @@ Column bond_type: column description -> type of the bond, value description -> c
 -: single bond
 '=': double bond
 '#': triple bond
-Sample rows from connected (columns: ["atom_id", "atom_id2", "bond_id"]):
-[["TR000_1", "TR000_2", "TR000_1_2"], ["TR000_2", "TR000_1", "TR000_1_2"], ["TR000_2", "TR000_3", "TR000_2_3"]]
+Sample rows from connected (columns: ["atom_id", "bond_id"]):
+[["TR000_1", "TR000_1_2"], ["TR000_2", "TR000_1_2"], ["TR000_2", "TR000_2_3"]]
 Column descriptions and value descriptions for connected:
 Column atom_id: column description -> id of the first atom, value description -> 
-Column atom_id2: column description -> id of the second atom, value description -> 
 Column bond_id: column description -> bond id representing bond between two atoms, value description -> 
 
 Q: List the bond type and the bond ID of the atom 45.

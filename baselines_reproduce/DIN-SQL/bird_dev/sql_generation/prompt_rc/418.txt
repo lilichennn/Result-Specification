@@ -367,11 +367,11 @@ Schema_links: [cards.availability,cards.artist,'Daren Bader']
 Result Contract:
 {
   "population": "Cards whose artist is 'Daren Bader'.",
-  "row_grain": "One card created by Daren Bader.",
+  "row_grain": "One row for each distinct kind of printing, represented by availability, among cards created by Daren Bader.",
   "column_role": "The card's availability, i.e., its available printing type(s).",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.availability is the card-level list of available printing types, validating the evidence mapping and indicating no expansion to separate rows per printing type. Round-1 contract preserved."
+  "filter_policy": "Duplicate availability values are eliminated, so each printing kind is reported once.",
+  "meta_review": "Metadata confirms availability is the card-level list of available printing types; the result reports distinct availability values without splitting them into separate rows per printing type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

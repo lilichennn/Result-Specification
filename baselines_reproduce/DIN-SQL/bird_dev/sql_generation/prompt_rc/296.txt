@@ -189,10 +189,10 @@ Result Contract:
 {
   "population": "Bonds identified as TR000_1_2 whose first atom is named TR000_1.",
   "row_grain": "One qualifying bond.",
-  "column_role": "The identifier of the molecule to which the qualifying bond belongs.",
+  "column_role": "The identifier of the molecule to which the qualifying bond belongs, along with the bond identifier and the first-atom identifier.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata defines connected.atom_id as the first atom and bond.molecule_id as the molecule in which the bond appears. This directly validates the first-atom condition and the bond-owned molecule identifier without changing the Round-1 contract."
+  "meta_review": "Metadata defines the atom associated with the bond as the first atom and the bond-owned molecule as the molecule in which the bond appears."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

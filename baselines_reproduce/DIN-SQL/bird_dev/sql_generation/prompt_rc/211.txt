@@ -187,12 +187,12 @@ Hint: label = '-' means molecules are non-carcinogenic
 Schema_links: [connected.atom_id,connected.atom_id2,molecule.label,connected.bond_id = bond.bond_id,bond.molecule_id = molecule.molecule_id,'-']
 Result Contract:
 {
-  "population": "All atom-to-atom connections that occur within molecules whose label is '-' (non-carcinogenic).",
-  "row_grain": "One row per connection between two atoms within a non-carcinogenic molecule.",
-  "column_role": "The identifiers of the two atoms forming each connection.",
+  "population": "Atoms belonging to molecules labeled '-' (non-carcinogenic) that participate in at least one recorded atom connection.",
+  "row_grain": "One row for each distinct qualifying atom.",
+  "column_role": "The identifier of the qualifying atom.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that connections are represented as pairs of atom identifiers and that carcinogenicity is recorded by molecule label. This supports keeping the result at one atom-pair per qualifying molecule and outputting the two atom identifiers."
+  "meta_review": "Metadata supports that connectivity is represented by atom participation and carcinogenicity by molecule label, so the result should list distinct atom identifiers rather than pairs of connected atoms."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

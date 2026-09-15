@@ -298,7 +298,7 @@ Schema_links: [foreign_data.language,foreign_data.flavorText,cards.name,foreign_
 Result Contract:
 {
   "population": "Italian-language foreign card records for the card whose name is 'Ancestor''s Chosen'.",
-  "row_grain": "One Italian-language foreign card entry for the named card.",
+  "row_grain": "One row for each Italian-language foreign card entry for the card whose name is 'Ancestor''s Chosen'.",
   "column_role": "The foreign flavor text of the card in Italian.",
   "derivation": "none",
   "filter_policy": "none",

@@ -366,12 +366,12 @@ Hint: created by Aleksi Briclot refers to artist = 'Aleksi Briclot'; doesn't hav
 Schema_links: [cards.availability,cards.isTextless,cards.artist,'Aleksi Briclot',1]
 Result Contract:
 {
-  "population": "Cards whose artist is 'Aleksi Briclot' AND that are textless (isTextless = 1); both conditions must hold for a card to be eligible.",
-  "row_grain": "One row per eligible card's availability value, which is a single list-valued card property containing the card's available printing types.",
-  "column_role": "The availability value, representing the card's available printing types as stored.",
+  "population": "Cards whose artist is 'Aleksi Briclot' and that are textless (have no text box); both conditions must hold for a card to be eligible.",
+  "row_grain": "One row per distinct availability value among the eligible cards, where availability is a single list-valued card property containing available printing types.",
+  "column_role": "The availability value, representing the available printing types as stored.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata identifies cards.availability as a card-level list of available printing types, so the output remains the availability value owned by each eligible card rather than separate rows per list element."
+  "filter_policy": "Duplicate availability values are eliminated so each distinct value appears once.",
+  "meta_review": "Availability is treated as a card-level list of available printing types; the result is the set of distinct availability values for eligible cards, not values expanded into individual printing types or repeated for each card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

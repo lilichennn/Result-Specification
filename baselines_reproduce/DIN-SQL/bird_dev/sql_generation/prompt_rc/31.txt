@@ -422,7 +422,7 @@ Schema_links: [frpm.`Free Meal Count (K-12)`,frpm.`Enrollment (K-12)`]
 Result Contract:
 {
   "population": "All schools.",
-  "row_grain": "One row per selected school, namely the schools ranked 10th and 11th by K-12 enrollment.",
+  "row_grain": "One row for each of the two selected schools, namely the schools appearing at positions 10 and 11 after ordering by K-12 enrollment from highest to lowest.",
   "column_role": "The eligible free rate for K-12 of each selected school.",
   "derivation": "For each school, eligible free rate (K-12) = Free Meal Count (K-12) divided by Enrollment (K-12).",
   "filter_policy": "Order schools by Enrollment (K-12) from highest to lowest and retain the schools at positions 10 and 11.",

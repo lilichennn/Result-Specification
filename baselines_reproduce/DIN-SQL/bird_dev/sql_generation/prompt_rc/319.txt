@@ -187,12 +187,12 @@ Hint: element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' m
 Schema_links: [atom.element,connected.bond_id,connected.atom_id = atom.atom_id,TR001_3_4]
 Result Contract:
 {
-  "population": "Element records for atoms that participate as endpoints of the bond identified by bond_id 'TR001_3_4'.",
+  "population": "Distinct chemical elements associated with atoms that participate as endpoints of the bond identified by bond_id 'TR001_3_4'.",
   "row_grain": "One global summary row for the specified bond.",
-  "column_role": "The number of elements contained in bond 'TR001_3_4'.",
-  "derivation": "Count the element records of the endpoint atoms associated with bond_id 'TR001_3_4'.",
+  "column_role": "The number of distinct elements contained in bond 'TR001_3_4'.",
+  "derivation": "Count the distinct element values of the endpoint atoms associated with bond_id 'TR001_3_4'.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows that a bond is represented by endpoint atom identifiers and that element is an atom property, so the count applies to elements of atoms participating in the specified bond. This resolves the otherwise vague 'associated with bond' population."
+  "meta_review": "Metadata shows that a bond is represented by endpoint atom identifiers and that element is an atom property, so the count applies to distinct element values of atoms participating in the specified bond. This resolves the otherwise vague 'associated with bond' population."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

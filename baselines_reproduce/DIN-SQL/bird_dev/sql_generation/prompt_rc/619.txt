@@ -251,12 +251,12 @@ Hint: Supporter is the Name of badge; adult refers to Age BETWEEN 19 AND 65
 Schema_links: [badges.Name,users.Age,badges.UserId = users.Id,Supporter,19,65]
 Result Contract:
 {
-  "population": "Persons who are adults, meaning Age BETWEEN 19 AND 65, and who obtained the badge whose Name is 'Supporter'.",
+  "population": "Badge awards recording that persons who are adults, meaning Age BETWEEN 19 AND 65, obtained the badge named 'Supporter'.",
   "row_grain": "One global summary row for the entire qualifying population.",
-  "column_role": "The count of qualifying adults.",
-  "derivation": "Count the distinct persons satisfying the population conditions.",
+  "column_role": "The count of qualifying Supporter badge awards to adults.",
+  "derivation": "Count all qualifying badge-award occurrences, without deduplicating by person.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms users.Age owns the adult criterion and badges.Name records a badge obtained by a user, so the result counts distinct qualifying users rather than badge award records."
+  "meta_review": "Metadata confirms the adult criterion belongs to the person and the badge name records a badge obtained by a user, but the result counts qualifying adult badge-award occurrences rather than distinct qualifying users."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

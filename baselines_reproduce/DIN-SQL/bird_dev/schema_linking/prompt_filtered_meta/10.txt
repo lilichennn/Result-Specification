@@ -182,27 +182,24 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,School Name,FRPM Count (Ages 5-17)]
-Table satscores, columns = [*,cds,sname,AvgScrRead]
-Table schools, columns = [*,CDSCode,School]
+Table frpm, columns = [*,CDSCode,FRPM Count (Ages 5-17)]
+Table satscores, columns = [*,cds,AvgScrRead]
+Table schools, columns = [*,CDSCode]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "School Name", "FRPM Count (Ages 5-17)"]):
-[["01100170109835", "FAME Public Charter", 702.0], ["01100170112607", "Envision Academy for Arts & Technology", 182.0], ["01100170118489", "Aspire California College Preparatory Academy", 168.0]]
+Sample rows from frpm (columns: ["CDSCode", "FRPM Count (Ages 5-17)"]):
+[["01100170109835", 702.0], ["01100170112607", 182.0], ["01100170118489", 168.0]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column FRPM Count (Ages 5-17): column description -> , value description -> 
-Sample rows from satscores (columns: ["cds", "sname", "AvgScrRead"]):
-[["1100170000000", null, 418], ["1100170109835", "FAME Public Charter", 503], ["1100170112607", "Envision Academy for Arts & Technology", 397]]
+Sample rows from satscores (columns: ["cds", "AvgScrRead"]):
+[["1100170000000", 418], ["1100170109835", 503], ["1100170112607", 397]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
 Column AvgScrRead: column description -> average scores in Reading, value description -> average scores in Reading
-Sample rows from schools (columns: ["CDSCode", "School"]):
-[["01100170000000", null], ["01100170109835", "FAME Public Charter"], ["01100170112607", "Envision Academy for Arts & Technology"]]
+Sample rows from schools (columns: ["CDSCode"]):
+[["01100170000000"], ["01100170109835"], ["01100170112607"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 
 Q: For the school with the highest average score in Reading in the SAT test, what is its FRPM count for students aged 5-17?
 A: Let’s think step by step.

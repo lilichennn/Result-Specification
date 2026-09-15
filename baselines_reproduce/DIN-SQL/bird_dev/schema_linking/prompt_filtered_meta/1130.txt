@@ -182,23 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Team, columns = [*,id,team_api_id,team_fifa_api_id,team_short_name]
-Table Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,chanceCreationPassing,chanceCreationPassingClass]
+Table Team, columns = [*,team_api_id,team_fifa_api_id,team_short_name]
+Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,chanceCreationPassingClass]
 Foreign_keys = [Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]
-Sample rows from Team (columns: ["id", "team_api_id", "team_fifa_api_id", "team_short_name"]):
-[[1, 9987, 673, "GEN"], [2, 9993, 675, "BAC"], [3, 10000, 15005, "ZUL"]]
+Sample rows from Team (columns: ["team_api_id", "team_fifa_api_id", "team_short_name"]):
+[[9987, 673, "GEN"], [9993, 675, "BAC"], [10000, 15005, "ZUL"]]
 Column descriptions and value descriptions for Team:
-Column id: column description -> the unique id for teams, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_short_name: column description -> the team's short name, value description -> 
-Sample rows from Team_Attributes (columns: ["id", "team_fifa_api_id", "team_api_id", "chanceCreationPassing", "chanceCreationPassingClass"]):
-[[1, 434, 9930, 60, "Normal"], [2, 434, 9930, 54, "Normal"], [3, 434, 9930, 54, "Normal"]]
+Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "chanceCreationPassingClass"]):
+[[434, 9930, "Normal"], [434, 9930, "Normal"], [434, 9930, "Normal"]]
 Column descriptions and value descriptions for Team_Attributes:
-Column id: column description -> the unique id for teams, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
-Column chanceCreationPassing: column description -> Amount of risk in pass decision and run support, value description -> 
 Column chanceCreationPassingClass: column description -> the chance creation passing class, value description -> commonsense reasoning: 
  Safe: 1-33
  Normal: 34-66

@@ -227,10 +227,10 @@ Result Contract:
 {
   "population": "All superheroes whose gender is 'Female' and whose publisher is 'Dark Horse Comics'.",
   "row_grain": "One female superhero published by Dark Horse Comics.",
-  "column_role": "The eye colour, hair colour, and skin colour values of each qualifying superhero.",
+  "column_role": "The eye colour identifier, hair colour identifier, and skin colour identifier of each qualifying superhero.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The colour table stores human-readable colour values while superhero stores only colour identifiers, so the requested outputs are colour values rather than raw identifiers. Round-1 semantics otherwise preserved."
+  "meta_review": "The outputs are eye, hair, and skin colour identifiers rather than human-readable colour names."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

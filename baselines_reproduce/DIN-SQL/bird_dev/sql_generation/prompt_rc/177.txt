@@ -250,10 +250,10 @@ Result Contract:
 {
   "population": "Accounts associated with client number 4 and with transaction 851.",
   "row_grain": "One row per such account.",
-  "column_role": "The account's balance following transaction 851, and the gender (man or woman) of the client recorded as the account's owner.",
-  "derivation": "The balance recorded after transaction 851 for the account, and the recorded gender of the client designated as owner of the account.",
+  "column_role": "The account's balance following transaction 851, and the gender (man or woman) of client number 4 associated with the account.",
+  "derivation": "The balance recorded after transaction 851 for the account, and the recorded gender of client number 4 associated with the account.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows trans.balance is the balance after a transaction identified by trans_id, and disp.type with client.gender identifies the account owner's gender as female or male. This fixes the requested sum to the recorded post-transaction balance and the requested gender to the owner's gender."
+  "meta_review": "The transaction's balance is the balance after the identified transaction, and the client's gender is the gender of the client associated with the account. This fixes the requested sum to the recorded post-transaction balance and the requested gender to that client's gender."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

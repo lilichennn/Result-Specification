@@ -296,12 +296,12 @@ Hint: abnormal platelet level refers to PLT <= 100 or PLT >= 400; platelet level
 Schema_links: [Laboratory.PLT,Patient.ID,Laboratory.ID = Patient.ID,100,400]
 Result Contract:
 {
-  "population": "Patients with abnormal platelet level, defined as PLT <= 100 or PLT >= 400; within this set, the lower-than-normal subgroup is patients with PLT < 100 and the higher-than-normal subgroup is patients with PLT > 400.",
-  "row_grain": "One global summary row across all eligible patients.",
-  "column_role": "The number of patients with lower-than-normal platelet level, and the comparison of that number against the number of patients with higher-than-normal platelet level.",
-  "derivation": "Count the patients with PLT < 100, count the patients with PLT > 400, and subtract the higher-than-normal count from the lower-than-normal count to express the comparison.",
+  "population": "Patient laboratory platelet measurements with abnormal platelet level, where the lower abnormal category is PLT <= 100 and the higher abnormal category is PLT >= 400.",
+  "row_grain": "One global summary row across all considered patient laboratory platelet measurements.",
+  "column_role": "A single comparative measure: the difference between the number of lower abnormal platelet results and the number of higher abnormal platelet results.",
+  "derivation": "Count each qualifying platelet result with PLT <= 100, count each qualifying platelet result with PLT >= 400, and subtract the higher abnormal count from the lower abnormal count.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a single difference rather than separate counts, uses inclusive threshold boundaries, and counts qualifying platelet result occurrences rather than distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

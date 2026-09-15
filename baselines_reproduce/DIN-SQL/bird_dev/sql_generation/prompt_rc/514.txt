@@ -374,10 +374,10 @@ Schema_links: [cards.name,cards.manaCost,legalities.format,legalities.uuid = car
 Result Contract:
 {
   "population": "Eligible entities are cards in the duels format, i.e., cards whose format-of-play legality has format = 'duel'.",
-  "row_grain": "One row per card.",
+  "row_grain": "One row per distinct card name.",
   "column_role": "The identity of each qualifying card (its name); the mana cost serves as the ranking measure and is not a required output value.",
-  "derivation": "Each card's uncoverted mana cost is defined as MAX(manaCost) over that card's records, as clarified by the evidence.",
-  "filter_policy": "Select the 10 cards with the highest uncoverted mana cost, ranked in descending order of that metric.",
+  "derivation": "The returned card name is a stored value; the ranking measure is the stored mana cost, not a computed maximum aggregate.",
+  "filter_policy": "Select the top 10 distinct card names ordered by descending mana cost.",
   "meta_review": "Metadata shows format is recorded in legalities, so duels eligibility is based on a card's legality record with format = 'duel'. It also confirms cards.manaCost is the unconverted mana cost, validating the ranking measure."
 }
 

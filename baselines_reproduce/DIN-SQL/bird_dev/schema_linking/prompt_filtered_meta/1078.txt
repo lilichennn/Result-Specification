@@ -182,12 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Player, columns = [*,player_name,birthday]
+Table Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id,birthday]
 Foreign_keys = []
-Sample rows from Player (columns: ["player_name", "birthday"]):
-[["Aaron Appindangoye", "1992-02-29 00:00:00"], ["Aaron Cresswell", "1989-12-15 00:00:00"], ["Aaron Doran", "1991-05-13 00:00:00"]]
+Sample rows from Player (columns: ["id", "player_api_id", "player_name", "player_fifa_api_id", "birthday"]):
+[[1, 505942, "Aaron Appindangoye", 218353, "1992-02-29 00:00:00"], [2, 155782, "Aaron Cresswell", 189615, "1989-12-15 00:00:00"], [3, 162549, "Aaron Doran", 186170, "1991-05-13 00:00:00"]]
 Column descriptions and value descriptions for Player:
+Column id: column description -> the unique id for players, value description -> 
+Column player_api_id: column description -> the id of the player api, value description -> 
 Column player_name: column description -> player name, value description -> 
+Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column birthday: column description -> the player's birthday, value description -> e.g. 1992-02-29 00:00:00 
 commonsense reasoning: 
 Player A is older than player B means that A's birthday is earlier than B's

@@ -182,24 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Team, columns = [*,id,team_api_id,team_fifa_api_id,team_long_name,team_short_name]
-Table Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,date,buildUpPlayPositioningClass]
+Table Team, columns = [*,team_api_id,team_fifa_api_id,team_long_name]
+Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,buildUpPlayPositioningClass]
 Foreign_keys = [Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]
-Sample rows from Team (columns: ["id", "team_api_id", "team_fifa_api_id", "team_long_name", "team_short_name"]):
-[[1, 9987, 673, "KRC Genk", "GEN"], [2, 9993, 675, "Beerschot AC", "BAC"], [3, 10000, 15005, "SV Zulte-Waregem", "ZUL"]]
+Sample rows from Team (columns: ["team_api_id", "team_fifa_api_id", "team_long_name"]):
+[[9987, 673, "KRC Genk"], [9993, 675, "Beerschot AC"], [10000, 15005, "SV Zulte-Waregem"]]
 Column descriptions and value descriptions for Team:
-Column id: column description -> the unique id for teams, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_long_name: column description -> the team's long name, value description -> 
-Column team_short_name: column description -> the team's short name, value description -> 
-Sample rows from Team_Attributes (columns: ["id", "team_fifa_api_id", "team_api_id", "date", "buildUpPlayPositioningClass"]):
-[[1, 434, 9930, "2010-02-22 00:00:00", "Organised"], [2, 434, 9930, "2014-09-19 00:00:00", "Organised"], [3, 434, 9930, "2015-09-10 00:00:00", "Organised"]]
+Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "buildUpPlayPositioningClass"]):
+[[434, 9930, "Organised"], [434, 9930, "Organised"], [434, 9930, "Organised"]]
 Column descriptions and value descriptions for Team_Attributes:
-Column id: column description -> the unique id for teams, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
-Column date: column description -> Date, value description -> e.g. 2010-02-22 00:00:00
 Column buildUpPlayPositioningClass: column description -> A team's freedom of movement in the 1st two thirds of the pitch, value description -> Organised / Free Form
 
 Q: What is the ADO Den Haag team freedom of movement in the 1st two thirds of the pitch?

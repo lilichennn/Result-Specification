@@ -251,12 +251,12 @@ Hint: "csgillespie" is the DisplayName of user; the most number of answer refers
 Schema_links: [posts.AnswerCount,users.DisplayName,posts.OwnerUserId = users.Id,csgillespie]
 Result Contract:
 {
-  "population": "Posts owned by the user whose DisplayName is \"csgillespie\".",
-  "row_grain": "One row representing the single post selected from the eligible population.",
-  "column_role": "The number of answers the selected post received (its answer count).",
-  "derivation": "A per-post answer-count metric (AnswerCount), i.e., how many answers each post received; the output value is this count for the selected post.",
-  "filter_policy": "Select the post with the maximum answer count (argmax on AnswerCount) among the eligible posts.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Posts owned by the user whose display name is \"csgillespie\".",
+  "row_grain": "One global row containing a single aggregate value for the eligible posts.",
+  "column_role": "The maximum number of answers received by any eligible post.",
+  "derivation": "The maximum over the per-post answer counts within the eligible population.",
+  "filter_policy": "Retain only the greatest answer count among the eligible posts.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,9 +230,9 @@ Hint: Brent Thomason is the full name; full name refers to first_name, last_name
 Schema_links: [member.first_name,member.last_name,major.major_name,member.link_to_major = major.major_id,Brent,Thomason]
 Result Contract:
 {
-  "population": "The member whose first name is \"Brent\" and last name is \"Thomason\" (full name Brent Thomason).",
-  "row_grain": "One member, the individual named Brent Thomason.",
-  "column_role": "The major name of that member.",
+  "population": "The major linked to a member whose first name is \"Brent\" and last name is \"Thomason\" (full name Brent Thomason).",
+  "row_grain": "One row for each qualifying member's linked major.",
+  "column_role": "The name of the linked major.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata confirms the person is represented as a member and the member's major is represented by a reference to a major whose name is major_name. This validates returning the linked major name for the identified member."

@@ -299,12 +299,12 @@ Hint: MAX(amount) where category = 'Advertisement'
 Schema_links: [budget.budget_id,budget.amount,budget.category,'Advertisement']
 Result Contract:
 {
-  "population": "All budgets whose category is Advertising (category = 'Advertisement').",
-  "row_grain": "One row per qualifying Advertising budget.",
-  "column_role": "The identity of each budget, which is the requested entity.",
+  "population": "All budgets whose category is Advertising.",
+  "row_grain": "One row per selected Advertising budget, limited to the top three by budgeted amount.",
+  "column_role": "The identity of each selected budget, which is the requested entity.",
   "derivation": "none",
   "filter_policy": "Select the top three budgets ranked by their budgeted amount from highest to lowest.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -356,12 +356,12 @@ Hint: victories refer to wins; 91st refers to points
 Schema_links: [driverStandings.points,driverStandings.wins,91]
 Result Contract:
 {
-  "population": "All drivers, over which the points-based ranking is defined.",
-  "row_grain": "One driver, namely the single driver holding the 91st position by points.",
-  "column_role": "The number of victories (wins) acquired by that driver.",
-  "derivation": "The reported value is the selected driver's total number of victories (wins); each driver's number of points acquired defines the ranking used for selection.",
-  "filter_policy": "Select the driver ranked 91st when drivers are ordered by number of points acquired.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Driver standing entries whose number of points acquired is exactly 91.",
+  "row_grain": "A single aggregate value summarizing the qualifying entries.",
+  "column_role": "The total number of victories (wins) associated with those entries.",
+  "derivation": "The result is the aggregate sum of victories over entries with 91 points; points are used as a filtering value, not to compute an ordinal rank.",
+  "filter_policy": "Include only entries with exactly 91 points; no ranking, ordering, or single-driver selection is applied.",
+  "meta_review": "The benchmark operationalizes '91st' as the point value 91 rather than an ordinal rank, and returns an aggregate total rather than a single driver's win count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: single type bond refers to bond_type = '-';
 Schema_links: [connected.atom_id,connected.atom_id2,bond.bond_type,connected.bond_id = bond.bond_id,'-']
 Result Contract:
 {
-  "population": "Atoms that appear as either the first or second atom in a connection whose bond has bond_type '-' (single type bond).",
-  "row_grain": "One atom that is connected by a single-type bond.",
-  "column_role": "The unique identifier of each qualifying atom.",
+  "population": "Atom pairs connected by a bond whose bond type is '-' (single type bond).",
+  "row_grain": "One connected atom pair for each single-type bond connection.",
+  "column_role": "The identifiers of both atoms in each qualifying connected pair.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows connected records store both endpoints of a bond as atom_id and atom_id2, so single-bond eligibility includes either endpoint. This resolved endpoint representation while keeping the result grain at one atom."
+  "meta_review": "The endpoint representation means both connected atoms are returned together for each qualifying connection, rather than collapsing endpoints into separate atoms."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

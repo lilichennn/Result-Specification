@@ -251,12 +251,12 @@ Hint:
 Schema_links: [posts.CommentCount,posts.ViewCount,1910]
 Result Contract:
 {
-  "population": "Posts whose view count equals 1910.",
-  "row_grain": "One row representing the post with 1910 views.",
-  "column_role": "The number of comments received by that post.",
-  "derivation": "The post-level total number of comments for the qualifying post.",
+  "population": "Comments associated with posts whose view count equals 1910.",
+  "row_grain": "A single global aggregate row giving the total number of such comments.",
+  "column_role": "The returned measure is the number of comments associated with the qualifying posts.",
+  "derivation": "A count of comment entries linked to the qualifying posts.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that posts.CommentCount is the total number of comments of a post, so the requested metric is available at post grain."
+  "meta_review": "The result is obtained by counting linked comment entries rather than by reading a stored post-level comment count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

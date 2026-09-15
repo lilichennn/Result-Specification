@@ -373,11 +373,11 @@ Hint: with the most ruling information refers to Max(count(rulings.uuid)); the c
 Schema_links: [cards.name,cards.artist,rulings.uuid,cards.isPromo,cards.uuid = rulings.uuid,1]
 Result Contract:
 {
-  "population": "All cards are eligible; no Boolean membership condition restricts which cards are considered.",
-  "row_grain": "One result row represents the single card selected as having the most ruling information.",
+  "population": "Promotional-printing cards that have at least one ruling entry and whose artist is among the artists with the maximum number of distinct promotional cards.",
+  "row_grain": "One result row represents a single selected promotional card.",
   "column_role": "The card's name, its artist's name, and an indicator of whether the card is a promotional printing (isPromo = 1 for promotional, 0 for not).",
-  "derivation": "For each card, compute the count of its associated ruling entries (count of rulings.uuid).",
-  "filter_policy": "Select the card whose ruling-entry count is maximal (argmax); tie handling is unspecified.",
+  "derivation": "The returned card name, artist, and promotional indicator are stored attributes of the selected card.",
+  "filter_policy": "The maximum is determined by counting distinct promotional cards per artist over all promotional-printing cards, and one qualifying card is returned; choice among tied artists or multiple qualifying cards is unspecified.",
   "meta_review": "Metadata confirms isPromo is the card promotional-printing flag with 1 meaning promotional and 0 meaning not, fixing the promotional indicator representation."
 }
 

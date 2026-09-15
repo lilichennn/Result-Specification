@@ -296,10 +296,10 @@ Result Contract:
 {
   "population": "All superheroes are eligible; no membership conditions are stated.",
   "row_grain": "One superhero.",
-  "column_role": "The superhero's name (superhero_name).",
+  "column_role": "The superhero's name.",
   "derivation": "none",
-  "filter_policy": "Select the single superhero with the maximum height in centimeters, treating height_cm that is NULL or 0 as missing and therefore not a valid height; tie handling is unspecified.",
-  "meta_review": "Metadata confirms superhero.superhero_name is the requested name output and superhero.height_cm is the height in centimeters, with NULL or 0 indicating missing height; the maximum-height comparison therefore ignores missing heights."
+  "filter_policy": "Select the single superhero with the maximum height in centimeters; tie handling is unspecified.",
+  "meta_review": "Metadata confirms the superhero's name is the requested output and height in centimeters is the measure used for the maximum-height selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

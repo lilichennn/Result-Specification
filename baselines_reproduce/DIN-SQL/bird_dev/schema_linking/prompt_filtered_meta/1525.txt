@@ -183,16 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Currency]
-Table transactions_1k, columns = [*,Date,CustomerID]
+Table transactions_1k, columns = [*,TransactionID,Date,CustomerID]
 Foreign_keys = []
 Sample rows from customers (columns: ["CustomerID", "Currency"]):
 [[3, "EUR"], [5, "EUR"], [6, "EUR"]]
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Currency: column description -> Currency, value description -> 
-Sample rows from transactions_1k (columns: ["Date", "CustomerID"]):
-[["2012-08-24", 31543], ["2012-08-24", 46707], ["2012-08-24", 46707]]
+Sample rows from transactions_1k (columns: ["TransactionID", "Date", "CustomerID"]):
+[[1, "2012-08-24", 31543], [2, "2012-08-24", 46707], [3, "2012-08-24", 46707]]
 Column descriptions and value descriptions for transactions_1k:
+Column TransactionID: column description -> Transaction ID, value description -> 
 Column Date: column description -> Date, value description -> 
 Column CustomerID: column description -> Customer ID, value description -> 
 

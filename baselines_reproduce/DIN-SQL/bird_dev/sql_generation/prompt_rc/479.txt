@@ -297,12 +297,12 @@ Hint: card set Coldsnap refers to name = 'Coldsnap'; converted mana cost higher 
 Schema_links: [cards.id,cards.convertedManaCost,cards.power,sets.name,cards.setCode = sets.code,'Coldsnap',5,'*']
 Result Contract:
 {
-  "population": "Cards in the set named 'Coldsnap' with converted mana cost greater than 5 and with unknown power, where unknown power means power equals '*' or power is null.",
-  "row_grain": "One global summary row for the entire qualifying card population.",
-  "column_role": "A single value representing how many qualifying cards have unknown power.",
-  "derivation": "Count the cards satisfying all population conditions.",
+  "population": "Cards in the set named 'Coldsnap' with converted mana cost greater than 5; unknown power, meaning power equals '*' or power is null, is the condition evaluated for each card rather than an additional population filter.",
+  "row_grain": "One global summary row for the entire base card population.",
+  "column_role": "A single value representing how many of those cards have unknown power.",
+  "derivation": "An aggregate sum of a one-or-zero indicator for unknown power over the base card population, yielding the number of cards with unknown power.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms sets.name owns the set name and cards.power documents null or '*' as unknown power, validating the Round-1 set and unknown-power conditions."
+  "meta_review": "Metadata confirms the set name and that power can be null or '*' to represent unknown power, supporting the set and unknown-power concepts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

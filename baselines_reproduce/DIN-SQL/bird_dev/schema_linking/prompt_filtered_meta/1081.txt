@@ -183,16 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Country, columns = [*,id,name]
-Table League, columns = [*,country_id,name]
+Table League, columns = [*,id,country_id,name]
 Foreign_keys = [League.country_id = country.id]
 Sample rows from Country (columns: ["id", "name"]):
 [[1, "Belgium"], [1729, "England"], [4769, "France"]]
 Column descriptions and value descriptions for Country:
 Column id: column description -> the unique id for countries, value description -> 
 Column name: column description -> country name, value description -> 
-Sample rows from League (columns: ["country_id", "name"]):
-[[1, "Belgium Jupiler League"], [1729, "England Premier League"], [4769, "France Ligue 1"]]
+Sample rows from League (columns: ["id", "country_id", "name"]):
+[[1, 1, "Belgium Jupiler League"], [1729, 1729, "England Premier League"], [4769, 4769, "France Ligue 1"]]
 Column descriptions and value descriptions for League:
+Column id: column description -> the unique id for leagues, value description -> 
 Column country_id: column description -> the unique id for countries, value description -> 
 Column name: column description -> league name, value description -> 
 

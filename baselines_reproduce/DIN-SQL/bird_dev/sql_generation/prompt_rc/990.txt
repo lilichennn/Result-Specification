@@ -289,8 +289,8 @@ Result Contract:
   "row_grain": "One single summary row representing the champion's constructor.",
   "column_role": "The constructor reference name (constructorRef) of the champion's constructor and that constructor's website (url).",
   "derivation": "none",
-  "filter_policy": "Select the champion as the race result with the maximum finish time, where the champion's finish time is expressed in the minutes:seconds.milliseconds format.",
-  "meta_review": "Metadata confirms results.time is the finish time and only the champion's time uses the full minutes:seconds.millisecond format, validating the champion-selection condition. It also confirms constructors.constructorRef and constructors.url are the requested constructor reference name and website."
+  "filter_policy": "Select the champion as the race result whose finish time is expressed in the full formatted race-time format with fractional seconds.",
+  "meta_review": "Metadata confirms results.time is the finish time and the champion's time is identifiable by the full formatted race-time format, supporting the time-format selection. It also confirms constructors.constructorRef and constructors.url are the requested constructor reference name and website."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

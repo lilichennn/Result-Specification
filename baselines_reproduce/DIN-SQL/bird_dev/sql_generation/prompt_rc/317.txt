@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic; percentage = DIVIDE(SUM(label
 Schema_links: [molecule.label,atom.element,molecule.molecule_id,atom.molecule_id = molecule.molecule_id,'+','cl']
 Result Contract:
 {
-  "population": "The eligible population is all carcinogenic molecules (label = '+'). Within that population, a molecule contributes to the numerator only if it contains at least one atom whose element is 'cl'.",
-  "row_grain": "One global summary row over the entire carcinogenic-molecule population.",
-  "column_role": "A single numeric value representing the percentage of carcinogenic molecules that contain chlorine.",
-  "derivation": "Compute the percentage as the count of distinct carcinogenic molecules that have at least one associated atom with element = 'cl' divided by the count of distinct carcinogenic molecules.",
+  "population": "The evaluated population is all atom occurrences associated with a molecule. An occurrence contributes to the numerator only when its molecule is carcinogenic (label = '+') and the atom's element is chlorine ('cl').",
+  "row_grain": "One global summary row over the entire set of associated atom occurrences.",
+  "column_role": "A single numeric value representing the percentage of associated atom occurrences that are chlorine atoms belonging to carcinogenic molecules.",
+  "derivation": "Compute the percentage as 100 times the count of associated atom occurrences whose molecule is carcinogenic and whose element is chlorine, divided by the count of all associated atom occurrences.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows element is recorded per atom while carcinogenic status is recorded per molecule, so a molecule with multiple chlorine atoms must be counted once. The contract therefore uses distinct molecule-level counts rather than atom-row counts."
+  "meta_review": "Although element is recorded per atom and carcinogenic status per molecule, the result is computed over atom occurrences rather than distinct molecules, so multiple chlorine atoms in one molecule contribute multiple occurrences and the denominator includes all associated atom occurrences."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

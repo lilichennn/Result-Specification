@@ -252,11 +252,11 @@ Schema_links: [users.DisplayName,comments.Text,comments.UserId = users.Id,"thank
 Result Contract:
 {
   "population": "Users who authored at least one comment whose text is 'thank you user93!'.",
-  "row_grain": "One user who posted such a comment.",
+  "row_grain": "One row for each qualifying comment, giving the author's display name.",
   "column_role": "The display name of the user.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

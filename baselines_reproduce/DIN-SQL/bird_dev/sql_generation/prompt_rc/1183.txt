@@ -372,12 +372,12 @@ Hint: 'SLE' AND original diagnose refers to diagnosis; 1997/1/27 refer to `Exami
 Schema_links: [Examination.Diagnosis,Examination.Examination Date,Patient.Diagnosis,Patient.First Date,Examination.ID = Patient.ID,'SLE','1997-01-27']
 Result Contract:
 {
-  "population": "Patients for whom an examination record shows Diagnosis = 'SLE' on Examination Date = '1997-01-27'.",
-  "row_grain": "One row per qualifying patient.",
-  "column_role": "The patient's original diagnosis, i.e., the diagnosis recorded when the patient first came to the hospital.",
-  "derivation": "The original diagnosis is the diagnosis associated with the patient's first hospital visit, identified by the patient's First Date.",
+  "population": "Patients with an examination record showing Diagnosis = 'SLE' on Examination Date = '1997-01-27' and with an examination record dated on the patient's First Date.",
+  "row_grain": "One row per qualifying patient's first hospital visit.",
+  "column_role": "The patient's original diagnosis, i.e., the diagnosis recorded for the patient at first hospital contact.",
+  "derivation": "The returned value is the patient's diagnosis for the identified patient, with the first hospital visit confirmed by matching the patient's First Date to an examination date.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Examination contains dated diagnoses, supporting use of Examination Date and Diagnosis to identify the SLE event. It also confirms Patient.First Date is the date the patient came to the hospital, validating its use to identify the first visit."
+  "meta_review": "Metadata confirms Examination contains dated diagnoses for identifying the SLE event, and Patient contains the first hospital visit date and the patient's diagnosis, supporting return of the patient's diagnosis as the original diagnosis."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

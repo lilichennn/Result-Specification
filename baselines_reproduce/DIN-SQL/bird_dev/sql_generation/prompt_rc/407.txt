@@ -297,12 +297,12 @@ Hint: German refer to language; all types refer to the subtypes, supertypes; sub
 Schema_links: [cards.subtypes,cards.supertypes,foreign_data.language,foreign_data.uuid = cards.uuid,German]
 Result Contract:
 {
-  "population": "Cards with at least one German-language foreign-data record and whose subtypes and supertypes are not null.",
-  "row_grain": "One row per eligible card, returning the card's stored subtypes and supertypes values.",
-  "column_role": "The card's subtypes and supertypes, both required as output values.",
+  "population": "Card–foreign-data associations in which the foreign-data language is German and the associated card has non-null subtypes and non-null supertypes.",
+  "row_grain": "One row per qualifying German-language foreign-data association, returning the associated card's stored subtypes and supertypes; the same card's values may appear more than once if it has multiple qualifying associations.",
+  "column_role": "The associated card's subtypes and supertypes, both required as output values.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows language is owned by foreign_data, while cards.subtypes and cards.supertypes are list-valued card properties. This resolves German as an associated language condition and keeps the result at one card row with stored subtype/supertype values rather than expanding list elements."
+  "meta_review": "Metadata shows language is an attribute of foreign-data records, while subtypes and supertypes are list-valued card properties. This resolves German as an associated language condition and keeps the result at stored subtype/supertype values for qualifying foreign-data associations rather than expanding list elements or collapsing repeated card values."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -296,12 +296,12 @@ Hint: abnormal anti-SM refers to SM NOT IN ('negative', '0'); youngest refers to
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.SM,Laboratory.ID = Patient.ID,negative,0]
 Result Contract:
 {
-  "population": "Patients whose anti-SM laboratory result is abnormal, meaning the SM value is not 'negative' and not '0'.",
-  "row_grain": "One row per qualifying patient.",
+  "population": "Patient-laboratory occurrences for patients whose anti-SM laboratory result is abnormal, meaning the SM value is not 'negative' and not '0'.",
+  "row_grain": "One row per qualifying patient-laboratory occurrence, limited to three rows; the same patient may appear more than once if they have multiple qualifying abnormal anti-SM laboratory occurrences.",
   "column_role": "The patient identifier (ID).",
   "derivation": "none",
-  "filter_policy": "Select the three patients with the maximum (latest) Birthday, i.e., the youngest; tie-breaking is unspecified.",
-  "meta_review": "Metadata confirms anti-SM is Laboratory.SM, so the abnormal result condition is a patient qualification based on a laboratory result. The Round-1 patient grain, latest Birthday selection, and patient ID output are preserved."
+  "filter_policy": "Select the three qualifying occurrences with the latest patient birthdays, i.e., the youngest; tie-breaking is unspecified and distinct patients are not required.",
+  "meta_review": "Metadata confirms anti-SM is represented by the SM laboratory value, so the abnormal result condition qualifies patient-laboratory occurrences. The output is the patient ID, and the result is limited to the three latest birthdays without guaranteeing three distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

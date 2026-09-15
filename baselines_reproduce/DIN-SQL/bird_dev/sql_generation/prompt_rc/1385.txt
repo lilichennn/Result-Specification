@@ -231,7 +231,7 @@ Schema_links: [member.first_name,member.last_name,income.amount,income.link_to_m
 Result Contract:
 {
   "population": "Students who generated income with an amount greater than $40, i.e., students having at least one linked income record with amount > 40.",
-  "row_grain": "One row per qualifying student.",
+  "row_grain": "One row per qualifying income record linked to a student, so a student may appear more than once if multiple income records exceed $40.",
   "column_role": "The full name of the qualifying student.",
   "derivation": "The full name is composed from the student's first name and last name.",
   "filter_policy": "none",

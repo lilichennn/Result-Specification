@@ -249,7 +249,7 @@ Schema_links: [disp.client_id,account.frequency,disp.type,disp.account_id = acco
 Result Contract:
 {
   "population": "Clients who hold a disposition of type 'DISPONENT' to an account whose statement issuance frequency is 'POPLATEK PO OBRATU'.",
-  "row_grain": "One client.",
+  "row_grain": "One client identifier occurrence for each qualifying disposition.",
   "column_role": "The client's id number.",
   "derivation": "none",
   "filter_policy": "none",

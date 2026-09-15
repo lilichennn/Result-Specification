@@ -256,12 +256,12 @@ Hint: triple bond refers to bond_type = '#';
 Schema_links: [molecule.molecule_id,bond.bond_type,bond.molecule_id = molecule.molecule_id,'#']
 Result Contract:
 {
-  "population": "All chemical compounds/molecules recorded in the database; the qualifying subpopulation is compounds that have at least one bond with bond_type = '#'.",
-  "row_grain": "One global summary row over the entire compound population.",
-  "column_role": "The percentage of compounds that form a triple bond.",
-  "derivation": "Count distinct compounds that have at least one associated bond with bond_type = '#'; divide by the count of all distinct compounds, expressed as a percentage.",
+  "population": "All chemical bond records in the database; the target subset is bond records whose bond type is '#'.",
+  "row_grain": "One global summary row over the entire bond-record population.",
+  "column_role": "The percentage of bond records that are triple bonds.",
+  "derivation": "Count the bond records whose bond type is '#', divide by the count of all bond records, and express the ratio as a percentage.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that compounds are represented as molecule records and that bond rows record individual bonds, with bond_type = '#' indicating a triple bond. The contract therefore counts distinct compounds with at least one such bond rather than counting bond rows."
+  "meta_review": "The percentage is a ratio over individual bond records, not a compound-level share of distinct compounds having at least one triple bond."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

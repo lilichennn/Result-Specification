@@ -248,12 +248,12 @@ Hint: Male refers to gender = 'M'
 Schema_links: [loan.amount,client.gender,disp.type,loan.account_id = account.account_id,disp.account_id = account.account_id,disp.client_id = client.client_id,M,OWNER]
 Result Contract:
 {
-  "population": "All loans whose borrower is male, i.e., borrower gender = 'M'.",
+  "population": "Approved loan amount values associated with borrowers whose gender is 'M'.",
   "row_grain": "One global summary row for the entire eligible population.",
   "column_role": "The average approved loan amount value.",
-  "derivation": "Compute the arithmetic mean of approved loan amounts across all eligible loans made to male borrowers.",
+  "derivation": "Compute the arithmetic mean of the approved loan amount values across all qualifying male-borrower loan associations.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms loan.amount is the approved loan amount, validating the Round-1 loan amount metric."
+  "meta_review": "Metadata confirms the loan amount attribute represents the approved loan amount, validating the loan amount metric."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

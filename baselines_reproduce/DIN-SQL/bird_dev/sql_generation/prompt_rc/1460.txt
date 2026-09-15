@@ -230,12 +230,12 @@ Hint: full name refers to first_name, last name; spent money for refers expense 
 Schema_links: [member.first_name,member.last_name,expense.cost,expense.expense_description,expense.link_to_member = member.member_id,'Water,Veggie tray,supplies']
 Result Contract:
 {
-  "population": "Members who have an expense whose expense description equals 'Water, Veggie tray, supplies'.",
-  "row_grain": "One matching expense event, reported together with the member who incurred it.",
+  "population": "Expense events whose expense description equals 'Water, Veggie tray, supplies', each reported with the member who incurred it.",
+  "row_grain": "One row per matching expense event, reported together with the member who incurred it.",
   "column_role": "The member's full name and the cost of that expense.",
-  "derivation": "The full name is composed from the member's first name and last name; the cost is the expense amount associated with the matching expense.",
+  "derivation": "The full name is represented by the member's first name and last name; the cost is the expense amount associated with the matching expense.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms expense.cost is the dollar amount of an individual expense and expense.link_to_member identifies the member who incurred it. This validates the Round-1 expense-level cost and member ownership."
+  "meta_review": "Metadata confirms expense.cost is the dollar amount of an individual expense and expense.link_to_member identifies the member who incurred it."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

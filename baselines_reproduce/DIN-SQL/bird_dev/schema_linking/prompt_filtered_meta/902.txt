@@ -184,11 +184,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table driverStandings, columns = [*,raceId,driverId,position]
 Table drivers, columns = [*,driverId,forename,surname]
-Table lapTimes, columns = [*,raceId,driverId,position]
-Table qualifying, columns = [*,raceId,driverId,position]
 Table races, columns = [*,raceId,name]
-Table results, columns = [*,raceId,driverId,position]
-Foreign_keys = [driverStandings.driverId = drivers.driverId,driverStandings.raceId = races.raceId,lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId,qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId,results.driverId = drivers.driverId,results.raceId = races.raceId]
+Foreign_keys = [driverStandings.driverId = drivers.driverId,driverStandings.raceId = races.raceId]
 Sample rows from driverStandings (columns: ["raceId", "driverId", "position"]):
 [[18, 1, 1], [18, 2, 2], [18, 3, 3]]
 Column descriptions and value descriptions for driverStandings:
@@ -201,29 +198,11 @@ Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "position"]):
-[[1, 1, 13], [1, 1, 12], [1, 1, 11]]
-Column descriptions and value descriptions for lapTimes:
-Column raceId: column description -> , value description -> 
-Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
-Sample rows from qualifying (columns: ["raceId", "driverId", "position"]):
-[[18, 1, 1], [18, 9, 2], [18, 5, 3]]
-Column descriptions and value descriptions for qualifying:
-Column raceId: column description -> , value description -> 
-Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "name"]):
 [[1, "Australian Grand Prix"], [2, "Malaysian Grand Prix"], [3, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "position"]):
-[[18, 1, 1], [18, 2, 2], [18, 3, 3]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
 
 Q: Which race was Alex Yoong in when he was in track number less than 20?
 Hint: Alex Yoong refers to the full name of the driver; Full name of the driver refers to drivers.forename and drivers.surname;track number less than 10 refers to position < 20

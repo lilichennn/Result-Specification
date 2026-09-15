@@ -251,12 +251,12 @@ Hint: created on 7/19/2010 7:19:56 PM refers to CreationDate = '2010-07-19 19:19
 Schema_links: [comments.Score,posts.CreaionDate,comments.PostId = posts.Id,'2010-07-19 19:19:56.0']
 Result Contract:
 {
-  "population": "Comments that belong to the post whose creation timestamp is 2010-07-19 19:19:56.0.",
-  "row_grain": "One row per comment on the qualifying post.",
+  "population": "Comments that belong to a post and whose own creation timestamp is 2010-07-19 19:19:56.0.",
+  "row_grain": "One row per qualifying comment.",
   "column_role": "The comment's rating score.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

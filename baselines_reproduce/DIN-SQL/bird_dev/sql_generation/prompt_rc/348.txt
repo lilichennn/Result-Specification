@@ -298,11 +298,11 @@ Schema_links: [rulings.text,cards.name,cards.number,rulings.uuid = cards.uuid,'S
 Result Contract:
 {
   "population": "All rulings belonging to the card whose name is 'Sublime Epiphany' and whose number is '74s'.",
-  "row_grain": "One ruling record for the qualifying card.",
+  "row_grain": "One row per ruling record associated with the qualifying card.",
   "column_role": "The text (information) of each ruling.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that rulings.text is the description of a ruling, while cards.text is the card's rules text, so the requested information maps to ruling text rather than card text. No other Round-1 semantic was changed."
+  "meta_review": "The requested information maps to ruling text rather than card text."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,12 +297,12 @@ Hint: set number 5 refers to id = 5
 Schema_links: [sets.name,set_translations.translation,sets.id,sets.code = set_translations.setCode,5]
 Result Contract:
 {
-  "population": "The single set whose id equals 5.",
-  "row_grain": "One set.",
+  "population": "The set associated with the set translation whose identifier is 5, together with that translation.",
+  "row_grain": "One set-translation pair.",
   "column_role": "The set's name and the translation of that set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The identifier 5 applies to the set translation associated with the set, not to the set itself."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

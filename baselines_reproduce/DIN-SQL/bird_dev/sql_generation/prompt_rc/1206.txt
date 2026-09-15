@@ -366,11 +366,11 @@ Schema_links: [Laboratory.Date,Laboratory.ID,Laboratory.GOT,48473,60]
 Result Contract:
 {
   "population": "Laboratory test records belonging to patient '48473' whose AST glutamic oxaloacetic transaminase (GOT) index is greater than or equal to 60.",
-  "row_grain": "One qualifying laboratory test record.",
+  "row_grain": "Each qualifying laboratory test record is represented as a separate row.",
   "column_role": "The date of the qualifying laboratory test record.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that laboratory test records own the patient identifier, test date, and GOT value with normal range N < 60, validating the qualifying event and date output. No other Round-1 semantics were changed."
+  "meta_review": "Metadata confirms that laboratory test records own the patient identifier, test date, and GOT value, with GOT at least 60 representing an above-normal result."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,16 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Segment]
-Table transactions_1k, columns = [*,Date,Time,CustomerID]
+Table transactions_1k, columns = [*,TransactionID,Date,Time,CustomerID]
 Foreign_keys = []
 Sample rows from customers (columns: ["CustomerID", "Segment"]):
 [[3, "SME"], [5, "LAM"], [6, "SME"]]
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Segment: column description -> client segment, value description -> 
-Sample rows from transactions_1k (columns: ["Date", "Time", "CustomerID"]):
-[["2012-08-24", "09:41:00", 31543], ["2012-08-24", "10:03:00", 46707], ["2012-08-24", "10:03:00", 46707]]
+Sample rows from transactions_1k (columns: ["TransactionID", "Date", "Time", "CustomerID"]):
+[[1, "2012-08-24", "09:41:00", 31543], [2, "2012-08-24", "10:03:00", 46707], [3, "2012-08-24", "10:03:00", 46707]]
 Column descriptions and value descriptions for transactions_1k:
+Column TransactionID: column description -> Transaction ID, value description -> 
 Column Date: column description -> Date, value description -> 
 Column Time: column description -> Time, value description -> 
 Column CustomerID: column description -> Customer ID, value description -> 

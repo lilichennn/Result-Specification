@@ -285,12 +285,12 @@ Hint: born before 1982 refers to year(dob) < 1982; latest lap time refers to Max
 Schema_links: [drivers.forename,drivers.surname,drivers.nationality,drivers.dob,lapTimes.time,lapTimes.driverId = drivers.driverId,Spanish,1982]
 Result Contract:
 {
-  "population": "Drivers who are Spanish and who were born before 1982, i.e., year of birth (year(dob)) < 1982; both conditions must hold.",
-  "row_grain": "One row per qualifying driver.",
-  "column_role": "Each row must identify the driver (e.g., the driver's name); the lap time used for ranking is not a required output column.",
-  "derivation": "For each driver, the latest lap time is defined as the maximum of that driver's recorded lap times (Max(time)).",
-  "filter_policy": "Rank the qualifying drivers by their latest lap time from greatest (latest) downward and retain only the top 10; tie-breaking is unspecified.",
-  "meta_review": "Metadata identifies lapTimes.time as the lap-time value in driver lap records, validating the per-driver Max(time) derivation. No other Round-1 semantics changed."
+  "population": "Driver identifiers associated with pit-stop occurrences for drivers whose nationality is Spanish and whose birth year is before 1982.",
+  "row_grain": "One row for each selected pit-stop occurrence; the same driver may appear more than once.",
+  "column_role": "Each row returns only the driver identifier; the time used for ordering is not returned.",
+  "derivation": "The ordering time is the stored time of each pit-stop occurrence; no maximum, aggregation, or distinct computation is applied.",
+  "filter_policy": "Keep the first 10 pit-stop occurrences ordered by their recorded time from greatest to least; tie-breaking is unspecified.",
+  "meta_review": "The applicable time semantics are pit-stop times used per occurrence, not lap-time maxima or per-driver aggregation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

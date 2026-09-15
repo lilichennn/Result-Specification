@@ -352,7 +352,7 @@ Hint: Fresno Unified is a name of district;
 Schema_links: [schools.Phone,satscores.AvgScrRead,schools.District,satscores.cds = schools.CDSCode,Fresno Unified]
 Result Contract:
 {
-  "population": "Schools belonging to the district named Fresno Unified.",
+  "population": "Schools belonging to the district named Fresno Unified that have a recorded average reading score.",
   "row_grain": "One school, namely the single school selected from the eligible population.",
   "column_role": "The telephone number of the selected school, excluding any phone extension.",
   "derivation": "Each school's average score in reading, using the school-level average reading score metric.",

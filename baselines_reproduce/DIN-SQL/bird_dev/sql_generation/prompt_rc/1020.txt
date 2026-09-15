@@ -484,11 +484,11 @@ Hint: highest overall rating refers to MAX(overall_rating);
 Schema_links: [Player_Attributes.player_api_id,Player_Attributes.overall_rating]
 Result Contract:
 {
-  "population": "All players are eligible; no membership conditions are stated.",
-  "row_grain": "One player, the one identified as having the highest overall rating.",
+  "population": "All player attribute records are eligible; no membership conditions are stated.",
+  "row_grain": "One player attribute record, returning its player api id.",
   "column_role": "The player's player_api_id (the player api id).",
   "derivation": "none",
-  "filter_policy": "Select the player whose overall rating is the maximum overall rating across all players (argmax on overall rating).",
+  "filter_policy": "Select exactly one player attribute record with the highest overall rating and return its player api id.",
   "meta_review": "Metadata identifies Player.player_api_id as the player api id, distinct from Player.id and Player.player_fifa_api_id. This resolves the requested identifier output."
 }
 

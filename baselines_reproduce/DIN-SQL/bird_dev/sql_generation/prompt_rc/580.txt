@@ -251,12 +251,12 @@ Hint: "Necromancer" is the Name of badge; users refers to DisplayName
 Schema_links: [users.DisplayName,badges.Name,badges.UserId = users.Id,Necromancer]
 Result Contract:
 {
-  "population": "Users who have at least one badge whose name is 'Necromancer'.",
-  "row_grain": "One distinct user per row; badge-award records for the same user do not create additional result rows.",
+  "population": "Users associated with badge awards whose badge name is 'Necromancer', with each qualifying award representing a returned user display-name entry.",
+  "row_grain": "One row per qualifying badge award, not one distinct user per row; the same user may appear multiple times.",
   "column_role": "The user's display name.",
   "derivation": "none",
-  "filter_policy": "Return 10 users; no ordering or selection criterion among qualifying users is specified.",
-  "meta_review": "Metadata shows badges.Name is the badge name on badge-award rows linked to users, and users.DisplayName is the user's display name. This validates returning one distinct user per row rather than one row per badge award."
+  "filter_policy": "Return 10 qualifying rows; no ordering or selection criterion among qualifying rows is specified.",
+  "meta_review": "Metadata identifies the badge name on badge-award rows and the user's display name, but it does not imply deduplication; the result may contain repeated display names for the same user."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

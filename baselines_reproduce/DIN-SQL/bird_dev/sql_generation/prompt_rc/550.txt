@@ -327,12 +327,12 @@ Hint: most popular tag refers to Max(Count); excerpt from refer to ExcerptPostId
 Schema_links: [tags.Count,posts.Body,tags.ExcerptPostId = posts.Id]
 Result Contract:
 {
-  "population": "All tags are eligible candidates; no Boolean condition restricts them.",
+  "population": "The returned post is the post referenced by the selected tag's excerpt; all tags are eligible reference candidates, and no Boolean condition restricts them.",
   "row_grain": "One post, namely the post from which the selected tag's excerpt is taken.",
   "column_role": "The body of that post.",
-  "derivation": "The output post is the one referenced by the tag's ExcerptPostId, i.e., the source post of the tag's excerpt.",
-  "filter_policy": "Select the single most popular tag, defined as the tag with the maximum Count (argmax over Count).",
-  "meta_review": "Metadata confirms tags.Count is the tag popularity metric and tags.ExcerptPostId identifies the excerpt post whose body is requested. No Round-1 field required change."
+  "derivation": "The returned body is the stored body of the post identified by the selected tag's ExcerptPostId.",
+  "filter_policy": "Select the single tag with the maximum Count; if multiple tags tie for maximum Count, only one is selected.",
+  "meta_review": "Metadata confirms Count is the tag popularity metric and ExcerptPostId identifies the excerpt post whose body is requested."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

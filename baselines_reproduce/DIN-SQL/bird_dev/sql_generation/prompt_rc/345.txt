@@ -297,12 +297,12 @@ Hint: Artifact type of cards refers to types = 'Artifact'; card does not have mu
 Schema_links: [cards.types,cards.side,legalities.status,legalities.format,legalities.uuid = cards.uuid,'Artifact','vintage']
 Result Contract:
 {
-  "population": "Cards whose types = 'Artifact' and whose side is NULL (cards without multiple faces on the same card).",
-  "row_grain": "One row per eligible artifact single-faced card.",
-  "column_role": "The card and its legalities status for the vintage play format (format = 'vintage').",
+  "population": "Vintage-format legalities status values associated with artifact cards that do not have multiple faces on the same card.",
+  "row_grain": "One row per distinct legalities status value.",
+  "column_role": "The legalities status for the vintage play format.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -367,11 +367,11 @@ Schema_links: [sets.name,sets.type,"From the Vault: Lore"]
 Result Contract:
 {
   "population": "All sets whose name contains 'From the Vault: Lore'.",
-  "row_grain": "One matching set.",
-  "column_role": "The expansion type (type) of the set.",
+  "row_grain": "One row for each matching set.",
+  "column_role": "The expansion type of the set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms sets.name is the set name and sets.type is described as the expansion type of the set, validating the Round-1 population and output."
+  "meta_review": "Metadata confirms the set name and expansion type concepts, validating the population and output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

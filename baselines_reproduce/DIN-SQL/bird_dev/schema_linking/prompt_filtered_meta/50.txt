@@ -182,28 +182,21 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,School Name]
 Table satscores, columns = [*,cds,sname,AvgScrMath]
-Table schools, columns = [*,CDSCode,School,MailStreet,MailStrAbr]
-Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "School Name"]):
-[["01100170109835", "FAME Public Charter"], ["01100170112607", "Envision Academy for Arts & Technology"], ["01100170118489", "Aspire California College Preparatory Academy"]]
-Column descriptions and value descriptions for frpm:
-Column CDSCode: column description -> CDSCode, value description -> 
-Column School Name: column description -> School Name , value description -> 
+Table schools, columns = [*,CDSCode,School,MailStreet]
+Foreign_keys = [satscores.cds = schools.CDSCode]
 Sample rows from satscores (columns: ["cds", "sname", "AvgScrMath"]):
 [["1100170000000", null, 418], ["1100170109835", "FAME Public Charter", 546], ["1100170112607", "Envision Academy for Arts & Technology", 387]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
 Column sname: column description -> school name, value description -> 
 Column AvgScrMath: column description -> average scores in Math, value description -> average scores in Math
-Sample rows from schools (columns: ["CDSCode", "School", "MailStreet", "MailStrAbr"]):
-[["01100170000000", null, "313 West Winton Avenue", "313 West Winton Ave."], ["01100170109835", "FAME Public Charter", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335"], ["01100170112607", "Envision Academy for Arts & Technology", "1515 Webster Street", "1515 Webster St."]]
+Sample rows from schools (columns: ["CDSCode", "School", "MailStreet"]):
+[["01100170000000", null, "313 West Winton Avenue"], ["01100170109835", "FAME Public Charter", "39899 Balentine Drive, Suite 335"], ["01100170112607", "Envision Academy for Arts & Technology", "1515 Webster Street"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column School: column description -> School, value description -> 
 Column MailStreet: column description -> MailStreet, value description -> The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.
-Column MailStrAbr: column description -> , value description -> the abbreviated mailing street address of the school, district, or administrative authority.Note: Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStrAbr cells with StreetAbr data.
 
 Q: What is the postal street address for the school with the 7th highest Math average? Indicate the school's name.
 Hint: Postal street and mailing street are synonyms.

@@ -297,12 +297,12 @@ Hint: in French refers to language = 'French'; cards without power refers to pow
 Schema_links: [cards.power,foreign_data.language,foreign_data.uuid = cards.uuid,French,*]
 Result Contract:
 {
-  "population": "All cards without power, i.e., cards whose power is null or '*'.",
-  "row_grain": "One global summary row for the entire population of cards without power.",
-  "column_role": "The percentage of cards without power whose card language is French.",
-  "derivation": "Compute the count of cards without power whose card language is 'French', divide by the total count of cards without power, and multiply by 100.",
+  "population": "Foreign-language entries associated with cards whose power is missing or marked '*', i.e., cards without power.",
+  "row_grain": "One global summary row for the entire population of foreign-language entries for cards without power.",
+  "column_role": "The percentage of those foreign-language entries whose language is French.",
+  "derivation": "Count the foreign-language entries for cards without power whose language is French, divide by the total count of foreign-language entries for cards without power, and multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.power treats NULL or '*' as no/unknown power and records the card's foreign language in foreign_data.language. This supports applying the French condition to card language while preserving the Round-1 percentage semantics."
+  "meta_review": "Metadata supports treating missing or '*' power as without power and using the language of the associated foreign-language entry as the language concept. The percentage is over foreign-language entries associated with such cards, not over distinct cards."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

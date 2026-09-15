@@ -373,12 +373,12 @@ Hint: set 10E refers to setCode = '10E'; converted mana of 5 refers to converted
 Schema_links: [cards.name,cards.setCode,cards.convertedManaCost,set_translations.translation,set_translations.language,cards.setCode = set_translations.setCode,'10E',5]
 Result Contract:
 {
-  "population": "Cards in set '10E' with convertedManaCost equal to 5 that have at least one card-level translation; the languages reported are those of the translations belonging to these qualifying cards.",
-  "row_grain": "One row per card-level translation of a qualifying card, pairing each card with the language of that translation.",
-  "column_role": "The identity of the qualifying card and the language of its card-level translation.",
+  "population": "Cards with convertedManaCost equal to 5 that are associated with a translation entry for set '10E'; the languages reported are the languages recorded for those translation entries.",
+  "row_grain": "One row per translation entry for set '10E' associated with a qualifying card, pairing the card with the language of that entry.",
+  "column_role": "The identity of the qualifying card and the language of the associated translation entry for set '10E'.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies foreign_data.language as the foreign language of a card, whereas set_translations.language belongs to a set. This confirms that the requested translation languages are owned by the qualifying cards, not by set 10E."
+  "meta_review": "Metadata distinguishes card foreign languages from set-translation languages; the result uses the latter, so the reported languages are set-translation languages associated with the qualifying set '10E' entries rather than card-owned foreign languages."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

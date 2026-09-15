@@ -285,12 +285,12 @@ Hint: haven't finished the race refers to time is null;
 Schema_links: [drivers.driverId,drivers.nationality,results.time,drivers.driverId = results.driverId,Italian]
 Result Contract:
 {
-  "population": "Drivers whose nationality is Italian and who have at least one race result whose finish time is null, meaning they did not finish that race.",
+  "population": "Race-result instances for drivers whose nationality is Italian, where the result's finish time is null, indicating the driver did not finish that race.",
   "row_grain": "One global summary row.",
-  "column_role": "The count of qualifying drivers.",
-  "derivation": "Count the eligible drivers once each.",
+  "column_role": "The count of qualifying race-result instances.",
+  "derivation": "Count each qualifying race-result instance once.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies drivers.nationality as driver nationality and results.time as the finish time for a driver's race result. This resolves 'time is null' as a result-level did-not-finish condition applied to Italian drivers."
+  "meta_review": "Metadata identifies driver nationality and race-result finish time. This resolves a null finish time as a result-level did-not-finish condition, and the result is a count over qualifying Italian-driver race results."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

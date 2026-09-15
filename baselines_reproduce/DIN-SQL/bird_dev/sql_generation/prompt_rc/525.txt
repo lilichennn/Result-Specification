@@ -366,12 +366,12 @@ Hint: old school format refers to format = 'oldschool'; restricted or banned ref
 Schema_links: [cards.uuid,legalities.format,legalities.status,legalities.uuid = cards.uuid,oldschool,banned,restricted]
 Result Contract:
 {
-  "population": "Cards whose legality record for the old school format (format = 'oldschool') has status 'banned' or 'restricted'.",
-  "row_grain": "One card that is banned or restricted in the old school format.",
-  "column_role": "The uuid identifier of each qualifying card, as explicitly requested.",
+  "population": "Cards whose legality record for the old school format (format = 'oldschool') has status 'Banned' or 'Restricted'.",
+  "row_grain": "One qualifying old-school legality status, represented by its card uuid.",
+  "column_role": "The card uuid associated with each qualifying old-school legality status.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that format and status are legality attributes and that the requested uuid is the card-level universal unique identifier, not a legality-row identifier. No contract change was required."
+  "meta_review": "Metadata confirms that format and status are legality attributes and that the requested uuid is the card-level universal unique identifier, not a legality-row identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

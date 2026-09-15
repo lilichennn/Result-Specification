@@ -415,12 +415,12 @@ Hint: balance score refers to balance; highest balance score refers to MAX(balan
 Schema_links: [Player.player_name,Player_Attributes.balance,Player_Attributes.potential,Player.player_api_id = Player_Attributes.player_api_id,61]
 Result Contract:
 {
-  "population": "All football players whose potential score equals 61.",
-  "row_grain": "One row per qualifying football player.",
-  "column_role": "The identity of the football player, as the requested listed entity.",
+  "population": "Football players with a recorded potential score of 61.",
+  "row_grain": "At most one row: the single selected football player.",
+  "column_role": "The football player's name, as the requested listed entity.",
   "derivation": "none",
-  "filter_policy": "Retain only the player(s) whose balance score equals the maximum balance among the eligible players (argmax on balance), keeping all players tied at that maximum.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Retain only one top-ranked player by balance score among the eligible players; players tied at the highest balance are not all retained.",
+  "meta_review": "The result is a single top-ranked selection, not a complete list of all players sharing the maximum balance."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Symptoms]
 Table Laboratory, columns = [*,ID,TG]
-Table Patient, columns = [*,ID]
-Foreign_keys = [Examination.ID = Patient.ID,Laboratory.ID = Patient.ID]
+Foreign_keys = []
 Sample rows from Examination (columns: ["ID", "Symptoms"]):
 [[14872, "AMI"], [48473, null], [102490, null]]
 Column descriptions and value descriptions for Examination:
@@ -198,10 +197,6 @@ Column ID: column description -> identification of the patient, value descriptio
 Column TG: column description -> triglyceride, value description -> Commonsense evidence:
 
 Normal range: N < 200
-Sample rows from Patient (columns: ["ID"]):
-[[2110], [11408], [12052]]
-Column descriptions and value descriptions for Patient:
-Column ID: column description -> identification of the patient, value description -> 
 
 Q: Among the patients with the normal level of triglyceride, how many of them have other symptoms observed?
 Hint: normal level of triglyceride refers to TG < 200; have other symptoms refers to Symptoms is not null;

@@ -256,12 +256,12 @@ Hint: element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' m
 Schema_links: [atom.element,atom.molecule_id,'TR151']
 Result Contract:
 {
-  "population": "Elements that are constituents of the molecule TR151 and that are toxic.",
-  "row_grain": "One toxic element found in molecule TR151.",
-  "column_role": "The identity of the toxic element (its element code or corresponding element name as clarified by the evidence).",
-  "derivation": "none",
+  "population": "Element codes that occur in molecule TR151.",
+  "row_grain": "One row for each distinct element code found in molecule TR151.",
+  "column_role": "The identity of the element, represented by its element code.",
+  "derivation": "distinct",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

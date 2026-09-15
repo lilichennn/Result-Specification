@@ -251,12 +251,12 @@ Hint:
 Schema_links: [comments.Score,users.Age,users.Id,comments.UserId = users.Id,0,40]
 Result Contract:
 {
-  "population": "Product comments with a score of 0, restricted to those whose commenting user is 40 years old; both the score-0 condition and the age-40 condition determine which records contribute to the count.",
+  "population": "Product comments with a score of 0, restricted to those whose commenting user is 40 years old; both the score-0 condition and the age-40 condition determine which comments contribute to the count.",
   "row_grain": "One global summary row covering the entire qualifying population.",
-  "column_role": "A single value representing the total number of distinct qualifying users.",
-  "derivation": "Count distinct users aged 40 who are associated with product comments having a score of 0.",
+  "column_role": "A single value representing the total number of qualifying product comments.",
+  "derivation": "Count the distinct qualifying comment records associated with users aged 40, rather than counting distinct users.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that comments are individual comment records linked to users, while users represent unique user entities with age. Therefore, the requested total number of users is counted as distinct users, not comment rows."
+  "meta_review": "Comments are individual comment records linked to users, while users provide the age attribute. The result counts distinct qualifying comment records, not unique user entities."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

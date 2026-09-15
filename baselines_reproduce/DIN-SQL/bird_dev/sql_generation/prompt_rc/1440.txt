@@ -230,12 +230,12 @@ Hint: expense_date BETWEEN '2019-09-10' and '2019-11-19'; cost > 20
 Schema_links: [member.email,expense.cost,expense.expense_date,expense.link_to_member = member.member_id,20,'2019-09-10','2019-11-19']
 Result Contract:
 {
-  "population": "Members who incurred at least one expense with cost greater than 20 dollars and an expense date between 2019-09-10 and 2019-11-19 inclusive.",
-  "row_grain": "One row per qualifying member, represented by their email.",
-  "column_role": "The email address of each qualifying member.",
+  "population": "Email addresses associated with members who incurred at least one expense with cost greater than 20 dollars and an expense date between 2019-09-10 and 2019-11-19 inclusive.",
+  "row_grain": "One row per distinct qualifying email address.",
+  "column_role": "The email address of the qualifying member.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that expense.link_to_member identifies the member who incurred the expense and member.email stores the member's email. This resolves the person/email owner for qualifying payments, so the population is stated as members."
+  "meta_review": "Metadata establishes the expense-to-member ownership and the member's email, so the result is stated as qualifying member email addresses."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

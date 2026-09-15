@@ -251,12 +251,12 @@ Hint: DIVIDE(COUNT(PostId WHERE TagName = 'r')), (COUNT(PostId WHERE DisplayName
 Schema_links: [posts.Id,posts.Tags,tags.TagName,users.DisplayName,posts.OwnerUserId = users.Id,'Community','r']
 Result Contract:
 {
-  "population": "Posts posted by Community (DisplayName = 'Community'); within this set, the posts counted as using the R language are those with TagName = 'r'.",
-  "row_grain": "One global summary row spanning all Community posts.",
-  "column_role": "A single value: the percentage of Community posts that use the R language.",
-  "derivation": "The percentage equals the count of Community posts tagged 'r' divided by the count of all Community posts.",
+  "population": "Post-history records attributed to the Community user, restricted to records whose referenced post is the excerpt post of a tag; within this set, records whose associated tag is 'r' represent R-language usage.",
+  "row_grain": "One global summary row spanning all qualifying Community post-history records.",
+  "column_role": "A single value: the percentage of qualifying Community post-history records that are associated with the 'r' tag.",
+  "derivation": "The percentage is 100 times the count of qualifying records whose associated tag is 'r' divided by the count of all qualifying records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,8 +230,8 @@ Hint: approved from 1/10/2019 to 11/19/2019 refers to approved = 'true' and expe
 Schema_links: [member.first_name,member.last_name,attendance.link_to_event,expense.approved,expense.expense_date,expense.link_to_member = member.member_id,attendance.link_to_member = member.member_id,'true','2019-01-10','2019-11-19']
 Result Contract:
 {
-  "population": "Members linked to expense records with approved = 'true' and expense_date between '2019-01-10' and '2019-11-19', and who attended an event.",
-  "row_grain": "One row per qualifying member-event attendance (a member together with the event they attended).",
+  "population": "Member-event attendance pairs where the member is linked to an expense record with approved = 'true' and expense_date between '2019-01-10' and '2019-11-19'.",
+  "row_grain": "One row per distinct qualifying member-event attendance pair.",
   "column_role": "The identity of the member and the link to the event they attended.",
   "derivation": "none",
   "filter_policy": "none",

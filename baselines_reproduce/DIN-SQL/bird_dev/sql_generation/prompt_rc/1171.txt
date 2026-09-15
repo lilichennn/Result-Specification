@@ -296,12 +296,12 @@ Hint: underage patients refers to year(Birthday) < 18; three-year period from 19
 Schema_links: [Patient.ID,Patient.Birthday,Examination.`Examination Date`,Examination.ID = Patient.ID,18,1990,1993]
 Result Contract:
 {
-  "population": "Patients who are underage, defined as birth year less than 18, and who were examined at least once with an examination year between 1990 and 1993 inclusive.",
-  "row_grain": "One global summary row for the entire eligible patient population.",
-  "column_role": "A single value representing the number of qualifying underage patients.",
-  "derivation": "Count of the patients belonging to the eligible population.",
+  "population": "Patient-examination records in which the examination occurred between 1990 and 1993 inclusive and the patient was under 18 at the time of examination, meaning the examination year minus the birth year was less than 18.",
+  "row_grain": "One global summary row for the count of qualifying patient-examination records.",
+  "column_role": "A single value representing the number of qualifying examination records involving underage patients.",
+  "derivation": "Aggregate count of the qualifying patient-examination records, counting each qualifying examination separately even if multiple examinations belong to the same patient.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

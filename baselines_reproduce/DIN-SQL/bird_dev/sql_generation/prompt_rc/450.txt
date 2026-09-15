@@ -368,8 +368,8 @@ Result Contract:
 {
   "population": "Cards whose artist is 'Aaron Miller' and that are incredibly powerful, meaning both cardKingdomFoilId is not null and cardKingdomId is not null.",
   "row_grain": "One global summary row for the entire qualifying card population.",
-  "column_role": "The count of qualifying cards.",
-  "derivation": "Count the cards satisfying all population conditions.",
+  "column_role": "The total number of qualifying cards.",
+  "derivation": "Produce a global total by adding one for each card that satisfies all population conditions and zero for every other card.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that cards.cardKingdomFoilId paired with a non-null cards.cardKingdomId represents an incredibly powerful card, validating the population condition. No other refinement is needed."
 }

@@ -187,12 +187,12 @@ Hint: calcium refers to element = 'ca'; label = '+' mean molecules are carcinoge
 Schema_links: [atom.element,molecule.label,atom.molecule_id = molecule.molecule_id,ca,+,-]
 Result Contract:
 {
-  "population": "Chemical compounds (molecules) that contain Calcium, i.e., that have at least one atom whose element is 'ca'.",
-  "row_grain": "One row per chemical compound containing Calcium (the question presumes a single such compound).",
-  "column_role": "The molecule-level carcinogenicity status of the compound, expressed by its label where '+' means carcinogenic and '-' means non-carcinogenic.",
+  "population": "Chemical compounds (molecules) that contain Calcium, represented by each atom occurrence whose element is 'ca' and the molecule to which it belongs.",
+  "row_grain": "One row per matching Calcium atom occurrence associated with a chemical compound, not necessarily one distinct row per compound.",
+  "column_role": "The molecule-level carcinogenicity status of the associated compound, expressed by its label where '+' means carcinogenic and '-' means non-carcinogenic.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that element is an atom-level attribute linked to molecules and that carcinogenicity is recorded as a molecule-level label. The contract therefore treats Calcium containment as the presence of a Calcium atom in a molecule and reports the molecule's label."
+  "meta_review": "Metadata establishes that element is an atom-level attribute linked to molecules and that carcinogenicity is recorded as a molecule-level label. The contract therefore treats the Calcium condition as an atom-level match and reports the associated molecule’s label for each matching Calcium occurrence."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

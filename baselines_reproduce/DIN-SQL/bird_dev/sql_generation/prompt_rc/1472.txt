@@ -182,12 +182,12 @@ Hint: Year 2012 can be presented as Between 201201 And 201212; The first 4 strin
 Schema_links: [customers.CustomerID,customers.Segment,yearmonth.Date,yearmonth.Consumption,yearmonth.CustomerID = customers.CustomerID,LAM,201201,201212]
 Result Contract:
 {
-  "population": "Customers whose client segment is LAM and who have consumption in 2012, where 2012 is defined as yearmonth values between 201201 and 201212 (equivalently, the first four characters of the Date value equal 2012).",
+  "population": "Customers whose client segment is LAM and who have consumption records in 2012, where 2012 is identified by the year part of the year-month value.",
   "row_grain": "One customer, i.e., the single 'who' identified by the question.",
-  "column_role": "The customer identity (customer identifier); the consumption amount itself is a ranking measure and is not required as an output value.",
-  "derivation": "A per-customer consumption measure for LAM during 2012; the input does not determine whether this value is stored directly or aggregated across multiple records.",
-  "filter_policy": "Argmin: retain the customer with the least consumption among the eligible population; tie handling is unspecified.",
-  "meta_review": "Metadata shows yearmonth.Consumption is associated with CustomerID and customers.Segment is the client segment, so the requested 'who' is a customer and LAM qualifies the customer segment. It does not resolve whether 2012 consumption is a single stored value or an aggregation of monthly records."
+  "column_role": "The customer identity is returned; the consumption amount itself is a ranking measure and is not required as an output value.",
+  "derivation": "The returned customer identity is a stored identifier; the ranking measure is each customer's total consumption across all 2012 consumption records.",
+  "filter_policy": "Argmin: retain the customer with the least aggregated 2012 consumption among the eligible population; tie handling is unspecified.",
+  "meta_review": "Metadata supports that consumption records are linked to customers and that LAM qualifies the customer segment. The requested 2012 consumption is operationalized as a per-customer total over monthly records, not as a necessarily single stored value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

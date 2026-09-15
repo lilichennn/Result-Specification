@@ -230,12 +230,12 @@ Hint: amount spent refers to spent; spend on food in September Meeting refers to
 Schema_links: [budget.spent,budget.category,event.event_name,budget.link_to_event = event.event_id,'Advertisement','September Meeting']
 Result Contract:
 {
-  "population": "All Student_Club member spending summarized by budget category-event entries where the category is 'Advertisement' and the associated event_name is 'September Meeting'.",
-  "row_grain": "One global summary row covering all qualifying spending.",
-  "column_role": "The total amount spent.",
-  "derivation": "Sum the recorded amount spent over all eligible budget category-event entries.",
+  "population": "Budget category-event entries associated with the event named 'September Meeting' that occurs in September, where the budget category is 'Advertisement'.",
+  "row_grain": "One row for each qualifying budget category-event entry.",
+  "column_role": "The amount spent.",
+  "derivation": "Use the stored amount spent for each qualifying budget category-event entry.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows budget.spent is the stored total amount spent for a budgeted category and event. This resolved the amount metric to qualifying budget category-event totals for Advertisement and September Meeting."
+  "meta_review": "Metadata shows the amount spent is a stored value for a budgeted category and event. This resolves the amount metric to the stored amount spent for qualifying Advertisement entries associated with the September Meeting event occurring in September."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: TR001_10_11 is the bond id;
 Schema_links: [atom.element,connected.bond_id,connected.atom_id = atom.atom_id,connected.atom_id2 = atom.atom_id,TR001_10_11]
 Result Contract:
 {
-  "population": "Atoms participating in the bond whose bond id equals 'TR001_10_11'.",
-  "row_grain": "One row per participating atom of that bond, carrying its chemical element.",
-  "column_role": "The chemical element of the atom involved in the bond.",
-  "derivation": "For the specified bond id, obtain the element of each atom connected to that bond.",
-  "filter_policy": "Restrict to bond id 'TR001_10_11'.",
-  "meta_review": "Metadata shows connected.bond_id links a bond to atom_id and atom_id2, while atom.element stores the chemical element. This resolves 'elements' as the elements of the atoms participating in the specified bond, not attributes of the bond record."
+  "population": "Atoms linked to the bond whose bond identifier equals 'TR001_10_11' in the bond-connection records.",
+  "row_grain": "One row for each matching bond-atom connection, giving the linked atom's chemical element.",
+  "column_role": "The chemical element of the linked atom.",
+  "derivation": "For the specified bond identifier, retrieve the stored chemical element of each atom linked by a matching connection record.",
+  "filter_policy": "Restrict to connections whose bond identifier equals 'TR001_10_11'.",
+  "meta_review": "Metadata resolves the requested elements as atom elements obtained through the bond-connection relationship, not attributes of the bond record. The result follows the atom reference present in the matching connection records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

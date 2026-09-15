@@ -263,12 +263,12 @@ Hint: carcinogenic molecules refers to label = '+'; single-bonded refers to bond
 Schema_links: [molecule.label,bond.bond_type,atom.atom_id,atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,'+','-']
 Result Contract:
 {
-  "population": "All molecules labeled carcinogenic (label = '+'); the atoms and bonds belonging to these molecules are the contributing records.",
-  "row_grain": "One global summary row across all eligible carcinogenic molecules.",
-  "column_role": "A single value representing the average number of single bonds per atom for carcinogenic molecules.",
-  "derivation": "Compute the ratio of the total count of single bonds (bond_type = '-') to the total count of atoms across all eligible carcinogenic molecules.",
+  "population": "Carcinogenic molecules (label = '+') that have at least one atom and at least one single bond (bond_type = '-').",
+  "row_grain": "One global summary row containing the average of molecule-level counts.",
+  "column_role": "A single value representing the average molecule-level count of single-bond occurrences for qualifying carcinogenic molecules.",
+  "derivation": "For each qualifying molecule, count its single bonds once for each atom in that molecule, then average those counts across qualifying molecules.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

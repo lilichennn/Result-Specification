@@ -297,12 +297,12 @@ Hint:
 Schema_links: [foreign_data.name,cards.type,cards.watermark,foreign_data.uuid = cards.uuid,boros]
 Result Contract:
 {
-  "population": "Cards whose watermark is Boros.",
-  "row_grain": "One card that has a Boros watermark, reported together with its foreign name.",
-  "column_role": "The foreign name of the card, and the type of the card.",
+  "population": "Cards with Boros watermark that have at least one foreign-name entry.",
+  "row_grain": "One row per distinct card name and type combination.",
+  "column_role": "The card name and the card type.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Only distinct card name and type combinations are returned.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

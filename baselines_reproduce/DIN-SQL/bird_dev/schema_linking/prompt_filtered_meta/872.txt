@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,code]
 Table qualifying, columns = [*,raceId,driverId,q3]
-Table races, columns = [*,raceId]
-Foreign_keys = [qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId]
+Foreign_keys = [qualifying.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "code"]):
 [[1, "HAM"], [2, "HEI"], [3, "ROS"]]
 Column descriptions and value descriptions for drivers:
@@ -197,10 +196,6 @@ Column descriptions and value descriptions for qualifying:
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
 Column q3: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
 
 Q: In the race No. 45, for the driver who had the Q3 time as 0:01:33, what is his abbreviated code?
 Hint: race number refers to raceId; had the Q3 time as 0:0M:SS refers to q3 LIKE 'M:SS%'

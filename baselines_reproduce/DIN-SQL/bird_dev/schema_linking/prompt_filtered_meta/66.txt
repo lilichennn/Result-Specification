@@ -182,14 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table schools, columns = [*,CDSCode,County,School,OpenDate,FundingType]
+Table schools, columns = [*,CDSCode,County,OpenDate,FundingType]
 Foreign_keys = []
-Sample rows from schools (columns: ["CDSCode", "County", "School", "OpenDate", "FundingType"]):
-[["01100170000000", "Alameda", null, null, null], ["01100170109835", "Alameda", "FAME Public Charter", "2005-08-29", "Directly funded"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "2006-08-28", "Directly funded"]]
+Sample rows from schools (columns: ["CDSCode", "County", "OpenDate", "FundingType"]):
+[["01100170000000", "Alameda", null, null], ["01100170109835", "Alameda", "2005-08-29", "Directly funded"], ["01100170112607", "Alameda", "2006-08-28", "Directly funded"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
-Column School: column description -> School, value description -> 
 Column OpenDate: column description -> The date the school opened., value description -> 
 Column FundingType: column description -> Indicates the charter school funding type, value description -> Values are as follows:
 

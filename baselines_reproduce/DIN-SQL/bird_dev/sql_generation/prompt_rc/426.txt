@@ -366,12 +366,12 @@ Hint: don't appear in Magic: The Gathering Online refers to mtgoCode is NULL or 
 Schema_links: [sets.name,sets.mtgoCode,'',NULL]
 Result Contract:
 {
-  "population": "Magic: The Gathering sets that do not appear in Magic: The Gathering Online, meaning sets whose mtgoCode is NULL or whose mtgoCode equals '' (empty string), with these two conditions combined as OR.",
+  "population": "Magic: The Gathering sets that do not appear in Magic: The Gathering Online, meaning sets whose mtgoCode is NULL.",
   "row_grain": "One row per qualifying set.",
   "column_role": "The name of each qualifying set.",
   "derivation": "none",
-  "filter_policy": "Return only three sets (top-k with k = 3), but the ranking criterion determining which three count as \"top\" is not specified; the returned rows are presented in alphabetical order by set name.",
-  "meta_review": "Metadata confirms sets.mtgoCode is the Magic: The Gathering Online set code and that NULL or empty means the set does not appear online, validating the eligibility condition. No other metadata refinement affects the contract."
+  "filter_policy": "Return only three sets (top-k with k = 3), selected as the first qualifying sets in ascending alphabetical order by set name; the returned rows are presented in alphabetical order by set name.",
+  "meta_review": "Metadata confirms mtgoCode is the Magic: The Gathering Online set code and that a NULL value means the set does not appear online, validating the eligibility condition. No other metadata refinement affects the contract."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

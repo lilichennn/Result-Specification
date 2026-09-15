@@ -183,21 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table League, columns = [*,id,name]
-Table Match, columns = [*,id,league_id,season,date,match_api_id]
+Table Match, columns = [*,id,league_id,season]
 Foreign_keys = [Match.league_id = League.id]
 Sample rows from League (columns: ["id", "name"]):
 [[1, "Belgium Jupiler League"], [1729, "England Premier League"], [4769, "France Ligue 1"]]
 Column descriptions and value descriptions for League:
 Column id: column description -> the unique id for leagues, value description -> 
 Column name: column description -> league name, value description -> 
-Sample rows from Match (columns: ["id", "league_id", "season", "date", "match_api_id"]):
-[[1, 1, "2008/2009", "2008-08-17 00:00:00", 492473], [2, 1, "2008/2009", "2008-08-16 00:00:00", 492474], [3, 1, "2008/2009", "2008-08-16 00:00:00", 492475]]
+Sample rows from Match (columns: ["id", "league_id", "season"]):
+[[1, 1, "2008/2009"], [2, 1, "2008/2009"], [3, 1, "2008/2009"]]
 Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
 Column league_id: column description -> league id, value description -> 
 Column season: column description -> the season of the match, value description -> 
-Column date: column description -> the date of the match, value description -> e.g. 2008-08-17 00:00:00
-Column match_api_id: column description -> the id of the match api, value description -> 
 
 Q: Give the name of the league had the most matches in the 2008/2009 season?
 Hint: league that had the most matches in the 2008/2009 season refers to MAX(league_name WHERE season = '2008/2009');

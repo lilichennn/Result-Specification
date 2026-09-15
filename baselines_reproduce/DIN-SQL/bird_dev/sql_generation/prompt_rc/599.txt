@@ -327,10 +327,10 @@ Hint:
 Schema_links: [postHistory.PostHistoryTypeId,comments.UserId,postHistory.PostId = posts.Id,comments.PostId = posts.Id,posts.Id,3720]
 Result Contract:
 {
-  "population": "Post history records belonging to post ID 3720 supply the requested type IDs, and comments belonging to post ID 3720 supply the commenter user identifiers for the unique-user count.",
-  "row_grain": "One row per post history type ID reported for post ID 3720.",
+  "population": "Post history records belonging to post ID 3720 supply the returned type IDs, and comments belonging to post ID 3720 supply the commenter user identifiers for the unique-user count.",
+  "row_grain": "One row per post history record for post ID 3720.",
   "column_role": "The post history type ID, and the number of unique users who commented on post ID 3720.",
-  "derivation": "The unique commenter count is the count of distinct commenter user identifiers across all comments on post ID 3720; the type IDs are reported as recorded.",
+  "derivation": "The unique commenter count is the count of distinct commenter user identifiers across all comments on post ID 3720; the type ID is the stored value from each post history record.",
   "filter_policy": "none",
   "meta_review": "Metadata identifies comments.UserId as the commenter’s user id, so the unique-user count is based on distinct comment user identifiers rather than display names or total comment count."
 }

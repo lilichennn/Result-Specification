@@ -183,20 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table colour, columns = [*,id,colour]
-Table superhero, columns = [*,id,superhero_name,full_name,eye_colour_id,height_cm]
+Table superhero, columns = [*,id,superhero_name,eye_colour_id,height_cm]
 Foreign_keys = [superhero.eye_colour_id = colour.id]
 Sample rows from colour (columns: ["id", "colour"]):
 [[1, "No Colour"], [2, "Amber"], [3, "Auburn"]]
 Column descriptions and value descriptions for colour:
 Column id: column description -> the unique identifier of the color, value description -> 
 Column colour: column description -> the color of the superhero's skin/eye/hair/etc, value description -> 
-Sample rows from superhero (columns: ["id", "superhero_name", "full_name", "eye_colour_id", "height_cm"]):
-[[1, "3-D Man", "Charles Chandler", 9, 188], [2, "A-Bomb", "Richard Milhouse Jones", 33, 203], [3, "Abe Sapien", "Abraham Sapien", 7, 191]]
+Sample rows from superhero (columns: ["id", "superhero_name", "eye_colour_id", "height_cm"]):
+[[1, "3-D Man", 9, 188], [2, "A-Bomb", 33, 203], [3, "Abe Sapien", 7, 191]]
 Column descriptions and value descriptions for superhero:
 Column id: column description -> the unique identifier of the superhero, value description -> 
 Column superhero_name: column description -> the name of the superhero, value description -> 
-Column full_name: column description -> the full name of the superhero, value description -> commonsense evidence:
-The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is "John" and their surname is "Smith," their full name would be "John Smith."
 Column eye_colour_id: column description -> the id of the superhero's eye color, value description -> 
 Column height_cm: column description -> the height of the superhero, value description -> commonsense evidence:
 The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. 

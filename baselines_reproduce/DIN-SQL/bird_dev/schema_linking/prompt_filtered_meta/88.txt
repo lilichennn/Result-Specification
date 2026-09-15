@@ -182,36 +182,29 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table satscores, columns = [*,cds,sname,NumTstTakr,NumGE1500]
-Table schools, columns = [*,CDSCode,StatusType,School,AdmEmail1,AdmEmail2]
+Table satscores, columns = [*,cds,sname,NumGE1500]
+Table schools, columns = [*,CDSCode,School,AdmEmail1]
 Foreign_keys = [satscores.cds = schools.CDSCode]
-Sample rows from satscores (columns: ["cds", "sname", "NumTstTakr", "NumGE1500"]):
-[["1100170000000", null, 88, 14], ["1100170109835", "FAME Public Charter", 17, 9], ["1100170112607", "Envision Academy for Arts & Technology", 71, 5]]
+Sample rows from satscores (columns: ["cds", "sname", "NumGE1500"]):
+[["1100170000000", null, 14], ["1100170109835", "FAME Public Charter", 9], ["1100170112607", "Envision Academy for Arts & Technology", 5]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
 Column sname: column description -> school name, value description -> 
-Column NumTstTakr: column description -> Number of Test Takers in this school, value description -> number of test takers in each school
 Column NumGE1500: column description -> Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500, value description -> Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500
 
 commonsense evidence:
 
 Excellence Rate = NumGE1500 / NumTstTakr
-Sample rows from schools (columns: ["CDSCode", "StatusType", "School", "AdmEmail1", "AdmEmail2"]):
-[["01100170000000", "Active", null, "lkmonroe@acoe.org", null], ["01100170109835", "Closed", "FAME Public Charter", null, null], ["01100170112607", "Active", "Envision Academy for Arts & Technology", "laura@envisionacademy.org", null]]
+Sample rows from schools (columns: ["CDSCode", "School", "AdmEmail1"]):
+[["01100170000000", null, "lkmonroe@acoe.org"], ["01100170109835", "FAME Public Charter", null], ["01100170112607", "Envision Academy for Arts & Technology", "laura@envisionacademy.org"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column StatusType: column description -> This field identifies the status of the district. , value description -> Definitions of the valid status types are listed below:
-·       Active: The district is in operation and providing instructional services.
-·       Closed: The district is not in operation and no longer providing instructional services.
-·       Merged: The district has combined with another district or districts.
-·       Pending: The district has not opened for operation and instructional services yet, but plans to open within the next 9–12 months.
 Column School: column description -> School, value description -> 
 Column AdmEmail1: column description -> administrator's email address, value description -> The superintendent’s or principal’s email address.
 
 commonsense evidence:
 
 Only active and pending districts and schools will display administrator information, if applicable.
-Column AdmEmail2: column description -> , value description -> 
 
 Q: What is the administrator's email address for the school with the highest number of test takers who received SAT scores of at least 1500?Provide the name of the school.
 A: Let’s think step by step.

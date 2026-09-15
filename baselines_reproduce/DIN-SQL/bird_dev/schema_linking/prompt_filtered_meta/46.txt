@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table frpm, columns = [*,CDSCode,School Name,Enrollment (K-12)]
 Table satscores, columns = [*,cds,sname,enroll12]
-Table schools, columns = [*,CDSCode,School,DOC,DOCType]
+Table schools, columns = [*,CDSCode,School,DOC]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
 Sample rows from frpm (columns: ["CDSCode", "School Name", "Enrollment (K-12)"]):
 [["01100170109835", "FAME Public Charter", 1087.0], ["01100170112607", "Envision Academy for Arts & Technology", 395.0], ["01100170118489", "Aspire California College Preparatory Academy", 244.0]]
@@ -200,8 +200,8 @@ Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
 Column sname: column description -> school name, value description -> 
 Column enroll12: column description -> enrollment (1st-12nd grade), value description -> 
-Sample rows from schools (columns: ["CDSCode", "School", "DOC", "DOCType"]):
-[["01100170000000", null, "00", "County Office of Education (COE)"], ["01100170109835", "FAME Public Charter", "00", "County Office of Education (COE)"], ["01100170112607", "Envision Academy for Arts & Technology", "00", "County Office of Education (COE)"]]
+Sample rows from schools (columns: ["CDSCode", "School", "DOC"]):
+[["01100170000000", null, "00"], ["01100170109835", "FAME Public Charter", "00"], ["01100170112607", "Envision Academy for Arts & Technology", "00"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column School: column description -> School, value description -> 
@@ -217,7 +217,6 @@ Column DOC: column description -> District Ownership Code, value description -> 
 •       98 – Regional Occupational Center/Program (ROC/P)
 commonsense evidence:
 *Only the California Education Authority has been included in the non-school location category.
-Column DOCType: column description -> The District Ownership Code Type is the text description of the DOC category., value description -> (See text values in DOC field description above)
 
 Q: Which state special schools have the highest number of enrollees from grades 1 through 12?
 Hint: State Special Schools refers to DOC = 31; Grades 1 through 12 means K-12

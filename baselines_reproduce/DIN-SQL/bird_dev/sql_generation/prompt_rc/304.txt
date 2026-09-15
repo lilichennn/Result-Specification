@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic; element = 'cl' means Chlorine
 Schema_links: [molecule.molecule_id,atom.element,molecule.label,atom.molecule_id = molecule.molecule_id,'+']
 Result Contract:
 {
-  "population": "All molecules whose label is '+', meaning they are carcinogenic; the element code mappings in the evidence are translations, not restrictions on which elements qualify.",
-  "row_grain": "One row per carcinogenic molecule paired with one of its constituent elements.",
+  "population": "All molecules whose label is '+', meaning they are carcinogenic, together with their constituent elements; the element code mappings in the evidence are translations, not restrictions on which elements qualify.",
+  "row_grain": "One distinct row per carcinogenic molecule paired with one of its constituent elements; repeated occurrences of the same element within the same molecule are collapsed to a single molecule-element row.",
   "column_role": "The identity of the carcinogenic molecule and the element it contains (with element codes interpretable via the given names, e.g., 'cl' = Chlorine).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that molecule.label identifies carcinogenic molecules and atom.element stores element codes linked to molecules. This validates the Round-1 molecule-element result semantics without adding element filters."
+  "meta_review": "Metadata confirms that molecule.label identifies carcinogenic molecules and atom.element stores element codes linked to molecules. This validates the molecule-element result semantics without adding element filters."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

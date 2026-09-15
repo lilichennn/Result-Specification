@@ -286,11 +286,11 @@ Schema_links: [pitStops.duration,drivers.forename,drivers.surname,pitStops.drive
 Result Contract:
 {
   "population": "All pit stop events associated with the driver Lewis Hamilton.",
-  "row_grain": "One global summary value across all of Lewis Hamilton's pit stops.",
+  "row_grain": "One selected row containing the longest pit stop duration.",
   "column_role": "The longest pit stop duration value.",
-  "derivation": "Take the maximum of the pit stop duration over all of Lewis Hamilton's pit stops.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "Return the stored duration value from the pit stop selected as the longest.",
+  "filter_policy": "Rank the pit stops by duration from longest to shortest and keep only the top one.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

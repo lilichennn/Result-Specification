@@ -366,12 +366,12 @@ Hint: unknown power refers to power = '*' or power is null
 Schema_links: [cards.id,cards.borderColor,cards.power,white,*,NULL]
 Result Contract:
 {
-  "population": "Cards whose border color is white and whose power is unknown, where unknown power means power equals '*' or power is null.",
+  "population": "Cards whose border color is white and whose power is unknown, where unknown power means power contains '*' or power is null.",
   "row_grain": "One global summary row for the entire qualifying card set.",
-  "column_role": "The count of qualifying cards.",
-  "derivation": "Count the cards satisfying the population conditions.",
+  "column_role": "The total number of qualifying cards.",
+  "derivation": "Aggregate the total number of cards satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.borderColor includes the value 'white' and cards.power documents null or '*' as unknown power, validating the Round-1 population condition. No other semantic refinement is needed."
+  "meta_review": "Metadata supports white border color and unknown power indicated by null or an asterisk in power, with unknown power interpreted as power containing an asterisk. No other semantic refinement is needed."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

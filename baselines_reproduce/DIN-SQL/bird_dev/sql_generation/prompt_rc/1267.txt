@@ -296,12 +296,12 @@ Hint: normal anti-SM refers to SM IN('-', '+-'); SM = 'negative' means '-'; SM =
 Schema_links: [Patient.ID,Laboratory.SM,Examination.Thrombosis,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,'-','+-',0]
 Result Contract:
 {
-  "population": "Patients whose anti-SM is normal (SM in ('-', '+-')) and who do not have thrombosis (Thrombosis = 0); both conditions must hold for a patient to be counted.",
+  "population": "Patients whose anti-SM result is normal, meaning SM is recorded as 'negative' or '0' (the categories corresponding to '-' and '+-'), and who do not have thrombosis (Thrombosis = 0); both conditions must hold for a patient to be counted.",
   "row_grain": "One global summary row for the entire qualifying patient population.",
   "column_role": "The count of qualifying patients.",
   "derivation": "Count the patients satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that anti-SM is recorded as textual SM values with normal results '-' and '+-', and that Thrombosis code 0 means no thrombosis. This validates the Round-1 population conditions without changing them."
+  "meta_review": "Metadata confirms that normal anti-SM corresponds to SM values 'negative' and '0', which map to '-' and '+-', and that Thrombosis code 0 means no thrombosis."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

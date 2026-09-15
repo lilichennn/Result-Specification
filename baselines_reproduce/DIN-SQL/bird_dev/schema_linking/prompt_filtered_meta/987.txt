@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table races, columns = [*,raceId,year,name]
-Table results, columns = [*,resultId,raceId,driverId,rank,fastestLapTime]
+Table results, columns = [*,raceId,driverId,rank,fastestLapTime]
 Foreign_keys = [results.raceId = races.raceId]
 Sample rows from races (columns: ["raceId", "year", "name"]):
 [[1, 2009, "Australian Grand Prix"], [2, 2009, "Malaysian Grand Prix"], [3, 2009, "Chinese Grand Prix"]]
@@ -191,10 +191,9 @@ Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId", "rank", "fastestLapTime"]):
-[[1, 18, 1, 2, "1:27.452"], [2, 18, 2, 3, "1:27.739"], [3, 18, 3, 5, "1:28.090"]]
+Sample rows from results (columns: ["raceId", "driverId", "rank", "fastestLapTime"]):
+[[18, 1, 2, "1:27.452"], [18, 2, 3, "1:27.739"], [18, 3, 5, "1:28.090"]]
 Column descriptions and value descriptions for results:
-Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 Column rank: column description -> , value description -> 

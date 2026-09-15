@@ -258,12 +258,12 @@ Hint: annual average consumption of customer with the lowest consumption in each
 Schema_links: [yearmonth.Consumption,yearmonth.Date,customers.CustomerID,customers.Segment,customers.Currency,yearmonth.CustomerID = customers.CustomerID,CZK,SME,LAM,KAM,201301,201312]
 Result Contract:
 {
-  "population": "For each client segment SME, LAM, and KAM, eligible customers are the customers whose currency is CZK and whose total consumption for year 2013 is the lowest within that segment.",
+  "population": "The considered items are customer-month consumption entries for CZK customers dated in 2013 whose consumption amount equals the minimum consumption amount across all consumption amounts. Segment attribution is the associated customer's segment, with SME, LAM, and KAM as the compared segments.",
   "row_grain": "One global summary row presenting the three requested pairwise segment differences for 2013.",
-  "column_role": "Three difference values: SME annual average minus LAM annual average, LAM annual average minus KAM annual average, and KAM annual average minus SME annual average.",
-  "derivation": "For each client segment, compute each CZK customer's total 2013 consumption by summing that customer's monthly consumption values for months in 2013. Identify the minimum total within the segment and keep all customers tied at that minimum. The segment's annual average is the selected customers' total 2013 consumption divided by the number of selected customers. Each output is the difference between the two segment averages in the stated order.",
+  "column_role": "Three difference values: SME average minus LAM average, LAM average minus KAM average, and KAM average minus SME average.",
+  "derivation": "For SME, LAM, and KAM separately, sum the consumption amounts of the selected entries whose customer segment is that segment. Divide each of these sums by the total number of selected entries across all segments to obtain the segment average. Each output is the difference between the two segment averages in the stated order.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows customers.Segment and customers.Currency are customer attributes, so the segment and CZK conditions apply to customers rather than gas stations or consumption records. It also shows yearmonth.Consumption is a customer-month consumption measure, so annual totals are sums of those values."
+  "meta_review": "Segment and currency are customer attributes, so the segment and CZK conditions apply to customers rather than gas stations or consumption records. Consumption is a customer-month measure, so the calculation uses individual monthly consumption amounts rather than stored annual customer totals."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

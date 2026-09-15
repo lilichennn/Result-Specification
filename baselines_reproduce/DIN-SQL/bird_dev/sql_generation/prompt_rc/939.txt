@@ -288,9 +288,9 @@ Result Contract:
   "population": "Drivers with nationality 'British' who participated in the 2008 Australian Grand Prix; both conditions must hold.",
   "row_grain": "One global summary row for the entire participating driver population.",
   "column_role": "A single value representing the number of participating drivers.",
-  "derivation": "Count the distinct drivers in the eligible population.",
+  "derivation": "Count the eligible driver participation records for the 2008 Australian Grand Prix.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms drivers.nationality is the driver-level nationality attribute and distinguishes race-result participation from qualifying-session records. This supports counting participating drivers for the 2008 Australian Grand Prix rather than qualifying entries."
+  "meta_review": "Metadata confirms nationality is a driver-level attribute and distinguishes race-result participation from qualifying-session records. This supports counting participating drivers for the 2008 Australian Grand Prix rather than qualifying entries."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

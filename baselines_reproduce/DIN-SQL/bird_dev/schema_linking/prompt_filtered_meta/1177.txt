@@ -183,7 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Laboratory, columns = [*,ID,Date,T-CHO]
-Foreign_keys = []
+Table Patient, columns = [*,ID]
+Foreign_keys = [Laboratory.ID = Patient.ID]
 Sample rows from Laboratory (columns: ["ID", "Date", "T-CHO"]):
 [[27654, "1991-09-11", 165], [27654, "1991-09-17", null], [27654, "1991-09-19", null]]
 Column descriptions and value descriptions for Laboratory:
@@ -191,6 +192,10 @@ Column ID: column description -> identification of the patient, value descriptio
 Column Date: column description -> Date of the laboratory tests (YYMMDD), value description -> 
 Column T-CHO: column description -> total cholesterol, value description -> Commonsense evidence:
 Normal range: N < 250
+Sample rows from Patient (columns: ["ID"]):
+[[2110], [11408], [12052]]
+Column descriptions and value descriptions for Patient:
+Column ID: column description -> identification of the patient, value description -> 
 
 Q: Was the total cholesterol status for the patient id 2927464 on 1995-9-4 at the normal level?
 Hint: total cholesterol normal level refers to N < 250

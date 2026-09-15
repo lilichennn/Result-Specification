@@ -188,11 +188,11 @@ Schema_links: [connected.atom_id2,atom.element,connected.atom_id = atom.atom_id,
 Result Contract:
 {
   "population": "Atom id2 values from connection records whose corresponding first atom has element sulfur, i.e., element = 's'.",
-  "row_grain": "One row per qualifying connection record.",
-  "column_role": "The atom id2 value, i.e., the second atom identifier, for each qualifying connection.",
+  "row_grain": "One row per distinct qualifying atom id2 value.",
+  "column_role": "The atom id2 value, i.e., the second atom identifier.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows connected.atom_id2 is the second atom in a bond and connected.atom_id identifies the first atom, while element is an atom property. The contract therefore returns atom id2 from connection rows whose first atom has element = 's'."
+  "meta_review": "Metadata shows connected.atom_id2 is the second atom in a bond and connected.atom_id identifies the first atom, while element is an atom property. The contract therefore returns distinct atom id2 values from connection rows whose first atom has element = 's'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

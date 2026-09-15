@@ -299,12 +299,12 @@ Hint: DIVIDE(SUM(type = 'Community Service'), COUNT(event_id)) * 100 where event
 Schema_links: [event.type,event.event_id,event.event_date,'Community Service','2019-01-01','2019-12-31']
 Result Contract:
 {
-  "population": "All events held by the Student_Club whose event_date falls between 2019-01-01 and 2019-12-31.",
+  "population": "All events whose event date falls in 2019.",
   "row_grain": "One global summary row over the entire eligible event population.",
-  "column_role": "The percentage share of Community Service events among the eligible events.",
-  "derivation": "Divide the count of eligible events with type 'Community Service' by the total count of eligible events, then multiply by 100.",
+  "column_role": "The percentage share of Community Service events among eligible events with a recorded event type.",
+  "derivation": "Divide the count of eligible events whose event type is 'Community Service' by the count of eligible events with a recorded event type, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

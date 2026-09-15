@@ -285,12 +285,12 @@ Hint: born after 1975 refers to year(dob) >1975;
 Schema_links: [drivers.forename,drivers.surname,drivers.dob,results.rank,drivers.driverId = results.driverId,1975,2]
 Result Contract:
 {
-  "population": "Drivers whose year of birth is greater than 1975 and who have at least one race result whose rank is 2.",
-  "row_grain": "One qualifying driver.",
+  "population": "Drivers whose year of birth is greater than 1975, considered for each of their race results with rank 2.",
+  "row_grain": "One race result with rank 2 for a qualifying driver; the same driver may appear multiple times.",
   "column_role": "The driver's forename and the driver's surname.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies results.rank as the rank attribute of a race result, so 'ranked 2' is interpreted as a result-level rank of 2 rather than a generic position. This preserves one row per driver with at least one such result."
+  "meta_review": "The rank condition is a race-result rank rather than a generic position, and the result is not reduced to one row per driver."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

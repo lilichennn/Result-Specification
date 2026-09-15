@@ -296,12 +296,12 @@ Hint: abnormal level of glutamic oxaloacetic transaminase refers to GOT > = 60; 
 Schema_links: [Laboratory.GOT,Patient.Diagnosis,Patient.ID,Laboratory.ID = Patient.ID,60,'SLE']
 Result Contract:
 {
-  "population": "The reference population is all patients with an abnormal glutamic oxaloacetic transaminase level (GOT >= 60); the target subpopulation is those among them who have a patient-level diagnosis of SLE (Diagnosis = 'SLE').",
-  "row_grain": "One global summary row over the eligible patient population.",
-  "column_role": "A single value: the percentage of abnormal-GOT patients who are diagnosed with SLE.",
-  "derivation": "Divide the count of patients with GOT >= 60 and a patient-level diagnosis of SLE by the count of all patients with GOT >= 60, then multiply by 1.0.",
+  "population": "The counted population is patient laboratory records with an abnormal glutamic oxaloacetic transaminase level (GOT >= 60). A patient diagnosis containing SLE is evaluated for the numerator, but it does not restrict the counted population.",
+  "row_grain": "One global summary row over the abnormal-GOT patient laboratory records.",
+  "column_role": "A single value: the ratio returned as the requested SLE percentage over abnormal-GOT patient laboratory records.",
+  "derivation": "The numerator count is not limited to records with an SLE-containing diagnosis; it counts the same abnormal-GOT patient laboratory records as the denominator, and the result is the ratio of these two counts.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows Patient.Diagnosis records patient disease names, resolving that the requested SLE diagnosis is patient-level. No other Round-1 semantics were changed."
+  "meta_review": "The patient-level diagnosis conclusion is preserved, but SLE is identified by a diagnosis containing SLE, and the result is a global ratio over abnormal-GOT patient laboratory records rather than a distinct-patient percentage."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

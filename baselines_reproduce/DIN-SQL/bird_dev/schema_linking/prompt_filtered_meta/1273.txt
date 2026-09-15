@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Diagnosis]
 Table Laboratory, columns = [*,ID,SSB]
-Table Patient, columns = [*,ID]
+Table Patient, columns = [*,ID,Diagnosis]
 Foreign_keys = [Examination.ID = Patient.ID,Laboratory.ID = Patient.ID]
 Sample rows from Examination (columns: ["ID", "Diagnosis"]):
 [[14872, "MCTD, AMI"], [48473, "SLE"], [102490, "PSS"]]
@@ -198,10 +198,11 @@ Column ID: column description -> identification of the patient, value descriptio
 Column SSB: column description -> anti-SSB, value description -> Commonsense evidence:
 
 Normal range: N= -, +-
-Sample rows from Patient (columns: ["ID"]):
-[[2110], [11408], [12052]]
+Sample rows from Patient (columns: ["ID", "Diagnosis"]):
+[[2110, "RA susp."], [11408, "PSS"], [12052, "SLE"]]
 Column descriptions and value descriptions for Patient:
 Column ID: column description -> identification of the patient, value description -> 
+Column Diagnosis: column description -> disease names, value description -> 
 
 Q: How many patients have a normal anti-SSB and are diagnosed with SLE in the examination?
 Hint: normal anti-SSB refers to SSB IN('-', '+-'); '-' is expressed as 'negative' and '+-' is expressed as '0' in the database ; diagnosed with SLE refers to Diagnosis = 'SLE'; Should compute the number of distinct ones

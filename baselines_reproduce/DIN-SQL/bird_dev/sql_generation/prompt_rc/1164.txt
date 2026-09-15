@@ -296,12 +296,12 @@ Hint: the most serious thrombosis refers to Thrombosis = '1' (the most severe on
 Schema_links: [Examination.Thrombosis,Examination.Examination Date,Patient.SEX,Patient.ID,Examination.ID = Patient.ID,1,F,1997]
 Result Contract:
 {
-  "population": "Patients whose sex = 'F' and who have an examination dated in 1997 with Thrombosis = '1'; all three conditions must hold together.",
+  "population": "Examination cases of female patients, where the examination date falls in 1997 and the examination’s thrombosis degree is 1; all three conditions must hold together.",
   "row_grain": "One global summary row.",
-  "column_role": "The count of qualifying women patients.",
-  "derivation": "Count the patients belonging to the eligible population.",
+  "column_role": "The count of qualifying examination cases involving female patients.",
+  "derivation": "Count the qualifying examination cases belonging to the eligible population, with each qualifying case counted once.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Patient.SEX records patient sex while Examination.Thrombosis and Examination Date record the thrombosis degree and examination date. The contract therefore treats eligibility as female patients with a 1997 examination whose Thrombosis = '1'."
+  "meta_review": "Metadata confirms patient sex, thrombosis degree, and examination date. The contract therefore treats eligibility as female patients’ 1997 examinations with thrombosis degree 1 and counts those examination cases."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

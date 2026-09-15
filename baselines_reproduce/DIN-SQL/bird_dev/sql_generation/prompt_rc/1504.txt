@@ -251,12 +251,12 @@ Hint: In January, 2012 means Date contains '2012-01'
 Schema_links: [transactions_1k.Amount,transactions_1k.Price,transactions_1k.Date,'2012-01']
 Result Contract:
 {
-  "population": "All transactions whose date falls in January 2012, i.e., the transaction date contains '2012-01'.",
+  "population": "All transactions whose date falls in January 2012, i.e., the transaction date begins with '2012-01'.",
   "row_grain": "One global summary row covering all eligible transactions.",
-  "column_role": "A single value representing the average total price of the eligible transactions.",
-  "derivation": "Compute the arithmetic mean of the total price over all transactions in the eligible population, where each transaction's total price is Amount multiplied by Price.",
+  "column_role": "A single value representing the average total price of the eligible transactions, using the transaction amount as the total-price value.",
+  "derivation": "Compute the arithmetic mean of the stored transaction amount over all transactions in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata for transactions_1k states that total price is Amount multiplied by Price, resolving the transaction total-price metric as a computed value. The derivation was refined to average this computed total price."
+  "meta_review": "The total-price measure for this result is the transaction amount itself; no amount-times-price computation is applied before averaging."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

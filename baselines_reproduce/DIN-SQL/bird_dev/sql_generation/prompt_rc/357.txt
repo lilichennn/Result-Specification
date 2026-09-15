@@ -366,12 +366,12 @@ Hint: card Duress refers to name = 'Duress'; type of promotion refers to promoTy
 Schema_links: [cards.promoTypes,cards.name,Duress]
 Result Contract:
 {
-  "population": "Cards whose card name is 'Duress'.",
-  "row_grain": "One card named 'Duress'.",
+  "population": "Cards whose card name is 'Duress' and that have a promotion type value recorded.",
+  "row_grain": "One row for each such card, returning its promotion type value.",
   "column_role": "The type of promotion (promoTypes) associated with the card, as a list-valued property.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies the requested name as the card's own name and promoTypes as a card-owned list of promotional types. The contract keeps one card result and returns promoTypes as a single list value without expansion."
+  "meta_review": "Metadata identifies the requested name as the card's own name and promoTypes as a card-owned list of promotional types. The result returns the stored promoTypes for qualifying cards named 'Duress' with a recorded promotion type, without expanding the list."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

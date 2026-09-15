@@ -415,12 +415,12 @@ Hint: age are 30 years old and below refers to SUBTRACT(datetime(CURRENT_TIMESTA
 Schema_links: [Match.home_team_goal,Player.birthday,Match.home_player_1 = Player.player_api_id,31]
 Result Contract:
 {
-  "population": "Home team goals scored by players whose age, measured from their birthday to the current time, is less than 31 years (i.e., 30 years old and below).",
-  "row_grain": "One global summary row covering all qualifying goals.",
-  "column_role": "A single value representing the total home team goals scored by the qualifying players.",
-  "derivation": "Sum of home team goals over all goal contributions made by players aged 30 and below.",
+  "population": "Home team goal values from matches associated with players whose age, measured from their birthday to the current local time, is less than 31 years and who appear as the first away player.",
+  "row_grain": "One global summary row covering all qualifying match-player associations.",
+  "column_role": "A single value representing the total home team goals for the qualifying associations.",
+  "derivation": "Sum of home team goal values over all qualifying match-player associations.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

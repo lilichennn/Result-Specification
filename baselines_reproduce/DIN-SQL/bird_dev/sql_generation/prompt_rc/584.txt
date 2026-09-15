@@ -251,12 +251,12 @@ Hint: "Why square the difference instead of taking the absolute value in standar
 Schema_links: [comments.Text,posts.Title,comments.UserId = users.Id,postHistory.UserId = users.Id,postHistory.PostId = posts.Id,"Why square the difference instead of taking the absolute value in standard deviation?"]
 Result Contract:
 {
-  "population": "All comments whose author is a user who made at least one edit to the post titled 'Why square the difference instead of taking the absolute value in standard deviation?'.",
-  "row_grain": "One row per qualifying comment.",
-  "column_role": "The comment text (the comment content itself).",
+  "population": "All comments recorded in the history of the post titled 'Why square the difference instead of taking the absolute value in standard deviation?'.",
+  "row_grain": "One row per qualifying comment entry.",
+  "column_role": "The comment text.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The comment scope is the specified post's own history, not all comments by users who have edited that post."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

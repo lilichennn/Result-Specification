@@ -249,11 +249,11 @@ Schema_links: [account.account_id,account.frequency,loan.date,loan.amount,accoun
 Result Contract:
 {
   "population": "Accounts that have at least one loan approved in 1997 and whose account statement issuance frequency is weekly ('POPLATEK TYDNE').",
-  "row_grain": "One row per qualifying account.",
-  "column_role": "The account identifier for each qualifying account.",
+  "row_grain": "A single row for the selected account.",
+  "column_role": "The account identifier for the selected account.",
   "derivation": "none",
-  "filter_policy": "Retain only the account or accounts whose approved loan amount is the lowest among the eligible population.",
-  "meta_review": "Metadata confirms account.frequency stores the weekly issuance value 'POPLATEK TYDNE', and loan.date and loan.amount represent the loan approval date and approved amount. This validates the population, output identity, and minimum-amount filter semantics."
+  "filter_policy": "Retain exactly one account with the lowest approved loan amount among the eligible population.",
+  "meta_review": "Metadata confirms account.frequency stores the weekly issuance value 'POPLATEK TYDNE', and loan.date and loan.amount represent the loan approval date and approved amount. This validates the population, output identity, and single lowest-amount selection semantics."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

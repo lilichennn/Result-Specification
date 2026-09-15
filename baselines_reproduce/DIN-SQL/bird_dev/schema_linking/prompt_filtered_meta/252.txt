@@ -183,9 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table atom, columns = [*,atom_id,element]
-Table bond, columns = [*,bond_id]
 Table connected, columns = [*,atom_id,atom_id2,bond_id]
-Foreign_keys = [connected.bond_id = bond.bond_id,connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
+Foreign_keys = [connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
 Sample rows from atom (columns: ["atom_id", "element"]):
 [["TR000_1", "cl"], ["TR000_2", "c"], ["TR000_3", "cl"]]
 Column descriptions and value descriptions for atom:
@@ -205,12 +204,6 @@ Column element: column description -> the element of the toxicology , value desc
  pb: lead
  te: tellurium
  ca: Calcium
-Sample rows from bond (columns: ["bond_id"]):
-[["TR000_1_2"], ["TR000_2_3"], ["TR000_2_4"]]
-Column descriptions and value descriptions for bond:
-Column bond_id: column description -> unique id representing bonds, value description -> TRxxx_A1_A2:
-TRXXX refers to which molecule
-A1 and A2 refers to which atom
 Sample rows from connected (columns: ["atom_id", "atom_id2", "bond_id"]):
 [["TR000_1", "TR000_2", "TR000_1_2"], ["TR000_2", "TR000_1", "TR000_1_2"], ["TR000_2", "TR000_3", "TR000_2_3"]]
 Column descriptions and value descriptions for connected:

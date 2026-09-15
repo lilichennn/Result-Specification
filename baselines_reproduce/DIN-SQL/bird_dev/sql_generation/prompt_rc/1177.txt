@@ -365,12 +365,12 @@ Hint: total cholesterol normal level refers to N < 250
 Schema_links: [Laboratory.ID,Laboratory.Date,Laboratory.T-CHO,2927464,1995-09-04,250]
 Result Contract:
 {
-  "population": "The total cholesterol value from the laboratory test for the patient with id 2927464 dated 1995-9-4.",
-  "row_grain": "One row representing the single laboratory total cholesterol measurement event for that patient on that date.",
-  "column_role": "The yes/no determination of whether the total cholesterol value was at the normal level.",
-  "derivation": "Compare the total cholesterol value N against the normal-level threshold, classifying it as normal when N < 250.",
+  "population": "The total cholesterol laboratory measurement for patient 2927464 on 1995-09-04.",
+  "row_grain": "One row per matching laboratory total cholesterol measurement record for that patient and date.",
+  "column_role": "The normal/abnormal status of the total cholesterol measurement.",
+  "derivation": "Classify the total cholesterol value as Normal when it is less than 250 and Abnormal otherwise.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies total cholesterol as Laboratory.T-CHO and confirms the normal range N < 250, refining the measurement owner and validating the threshold."
+  "meta_review": "Metadata supports total cholesterol as the relevant laboratory measurement and confirms the normal threshold N < 250."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

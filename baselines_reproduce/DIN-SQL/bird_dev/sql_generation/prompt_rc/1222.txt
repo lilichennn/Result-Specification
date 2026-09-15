@@ -296,12 +296,12 @@ Hint: creatinine (CRE) out of the normal range refers to CRE > = 1.5; Male refer
 Schema_links: [Patient.SEX,Patient.ID,Laboratory.CRE,Laboratory.ID = Patient.ID,M,1.5]
 Result Contract:
 {
-  "population": "Patients who are male (Sex = 'M') and whose creatinine (CRE) value is out of the normal range, defined as CRE >= 1.5.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The count of qualifying male patients.",
-  "derivation": "Count the patients satisfying the population conditions.",
+  "population": "Creatinine laboratory results belonging to male patients (Sex = 'M') where the creatinine value is out of the normal range, defined as CRE >= 1.5.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "The count of qualifying male creatinine laboratory results.",
+  "derivation": "Count the qualifying laboratory results satisfying the population conditions, without deduplicating by patient.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Patient.SEX uses 'M' for male and Laboratory.CRE records creatinine with normal range N < 1.5, validating the Round-1 eligibility threshold. No additional grain or selection constraint is imposed."
+  "meta_review": "Metadata confirms male is coded as Sex = 'M' and out-of-range creatinine is CRE >= 1.5. The global count is over qualifying laboratory results rather than deduplicated patients, with no ranking or additional selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

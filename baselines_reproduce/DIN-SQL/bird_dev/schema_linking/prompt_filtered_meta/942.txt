@@ -182,38 +182,29 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table drivers, columns = [*,driverId,driverRef,code,forename,surname]
-Table lapTimes, columns = [*,raceId,driverId,lap,time,milliseconds]
+Table drivers, columns = [*,driverId,driverRef,number,code,forename,surname]
 Table races, columns = [*,raceId]
-Table results, columns = [*,resultId,raceId,driverId,fastestLap,fastestLapTime]
-Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId,results.driverId = drivers.driverId,results.raceId = races.raceId]
-Sample rows from drivers (columns: ["driverId", "driverRef", "code", "forename", "surname"]):
-[[1, "hamilton", "HAM", "Lewis", "Hamilton"], [2, "heidfeld", "HEI", "Nick", "Heidfeld"], [3, "rosberg", "ROS", "Nico", "Rosberg"]]
+Table results, columns = [*,resultId,raceId,driverId,fastestLapTime]
+Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Sample rows from drivers (columns: ["driverId", "driverRef", "number", "code", "forename", "surname"]):
+[[1, "hamilton", 44, "HAM", "Lewis", "Hamilton"], [2, "heidfeld", null, "HEI", "Nick", "Heidfeld"], [3, "rosberg", 6, "ROS", "Nico", "Rosberg"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column driverRef: column description -> , value description -> 
+Column number: column description -> , value description -> 
 Column code: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "lap", "time", "milliseconds"]):
-[[1, 1, 1, "1:49.088", 109088], [1, 1, 2, "1:33.740", 93740], [1, 1, 3, "1:31.600", 91600]]
-Column descriptions and value descriptions for lapTimes:
-Column raceId: column description -> , value description -> 
-Column driverId: column description -> , value description -> 
-Column lap: column description -> , value description -> 
-Column time: column description -> , value description -> 
-Column milliseconds: column description -> , value description -> 
 Sample rows from races (columns: ["raceId"]):
 [[837], [833], [838]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId", "fastestLap", "fastestLapTime"]):
-[[1, 18, 1, 39, "1:27.452"], [2, 18, 2, 41, "1:27.739"], [3, 18, 3, 41, "1:28.090"]]
+Sample rows from results (columns: ["resultId", "raceId", "driverId", "fastestLapTime"]):
+[[1, 18, 1, "1:27.452"], [2, 18, 2, "1:27.739"], [3, 18, 3, "1:28.090"]]
 Column descriptions and value descriptions for results:
 Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
-Column fastestLap: column description -> , value description -> 
 Column fastestLapTime: column description -> , value description -> 
 
 Q: What is the average fastest lap time in seconds for Lewis Hamilton in all the Formula_1 races?

@@ -300,9 +300,9 @@ Result Contract:
   "population": "All cards belonging to the card set whose set name is 'Coldsnap'.",
   "row_grain": "One global summary row for the entire Coldsnap set.",
   "column_role": "A single value: the percentage of Coldsnap cards whose converted mana cost is 7.",
-  "derivation": "Compute the number of Coldsnap cards with convertedManaCost = 7 divided by the total number of Coldsnap cards, multiplied by 100.",
+  "derivation": "Compute the number of Coldsnap cards with converted mana cost 7 divided by the total number of Coldsnap cards, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms sets.name is the set name and cards.name is the card name, resolving that 'Coldsnap' filters the set-owned name rather than a card name. Round-1 contract otherwise preserved."
+  "meta_review": "Metadata confirms the set name identifies the set, so 'Coldsnap' filters the set rather than a card name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

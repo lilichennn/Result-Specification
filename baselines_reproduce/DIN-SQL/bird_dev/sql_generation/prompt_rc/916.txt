@@ -354,7 +354,7 @@ Hint: Italian refers to nationality = 'italian'
 Schema_links: [drivers.surname,drivers.nationality,Italian]
 Result Contract:
 {
-  "population": "All drivers whose nationality is 'italian'.",
+  "population": "All drivers whose nationality is 'Italian'.",
   "row_grain": "One Italian driver per row.",
   "column_role": "The surname of the driver.",
   "derivation": "none",

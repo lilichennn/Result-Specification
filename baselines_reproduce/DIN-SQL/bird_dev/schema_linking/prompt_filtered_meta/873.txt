@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,driverRef,forename,surname]
 Table races, columns = [*,raceId]
-Table results, columns = [*,resultId,raceId,driverId,time,milliseconds]
+Table results, columns = [*,resultId,raceId,driverId,time]
 Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId", "driverRef", "forename", "surname"]):
 [[1, "hamilton", "Lewis", "Hamilton"], [2, "heidfeld", "Nick", "Heidfeld"], [3, "rosberg", "Nico", "Rosberg"]]
@@ -197,14 +197,13 @@ Sample rows from races (columns: ["raceId"]):
 [[837], [833], [838]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId", "time", "milliseconds"]):
-[[1, 18, 1, "1:34:50.616", 5690616], [2, 18, 2, "+5.478", 5696094], [3, 18, 3, "+8.163", 5698779]]
+Sample rows from results (columns: ["resultId", "raceId", "driverId", "time"]):
+[[1, 18, 1, "1:34:50.616"], [2, 18, 2, "+5.478"], [3, 18, 3, "+8.163"]]
 Column descriptions and value descriptions for results:
 Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 Column time: column description -> , value description -> 
-Column milliseconds: column description -> , value description -> 
 
 Q: What is the actual finish time for Bruce McLaren in the race No.743?
 Hint: race number refers to raceId;

@@ -183,7 +183,6 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Segment]
-Table transactions_1k, columns = [*,CustomerID,Amount,Price]
 Table yearmonth, columns = [*,CustomerID,Consumption]
 Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
 Sample rows from customers (columns: ["CustomerID", "Segment"]):
@@ -191,14 +190,6 @@ Sample rows from customers (columns: ["CustomerID", "Segment"]):
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Segment: column description -> client segment, value description -> 
-Sample rows from transactions_1k (columns: ["CustomerID", "Amount", "Price"]):
-[[31543, 28, 672.64], [46707, 18, 430.72], [46707, 1, 121.99]]
-Column descriptions and value descriptions for transactions_1k:
-Column CustomerID: column description -> Customer ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
-Column Price: column description -> Price, value description -> commonsense evidence:
-
-total price = Amount x Price
 Sample rows from yearmonth (columns: ["CustomerID", "Consumption"]):
 [[5, 528.3], [5, 1598.28], [5, 1931.36]]
 Column descriptions and value descriptions for yearmonth:

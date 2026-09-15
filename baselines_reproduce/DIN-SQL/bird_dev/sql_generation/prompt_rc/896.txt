@@ -285,12 +285,12 @@ Hint: percentage = DIVIDE(COUNT(raceId) where surname = 'Hamilton' and position>
 Schema_links: [drivers.surname,results.position,races.year,results.raceId,results.driverId = drivers.driverId,results.raceId = races.raceId,Hamilton,2010,1]
 Result Contract:
 {
-  "population": "Race result records for the driver with surname 'Hamilton' in races held in year >= 2010, with the numerator subset being those records where his finishing position > 1 (not 1st).",
-  "row_grain": "One global summary row representing a single percentage across all of Hamilton's races since 2010.",
-  "column_role": "One value: the percentage of Hamilton's races since 2010 in which he did not finish in 1st position.",
-  "derivation": "Percentage equal to the count of Hamilton's race results with position > 1 divided by the total count of Hamilton's race results, both counted over races with year >= 2010.",
+  "population": "Driver championship standing entries for the driver with surname 'Hamilton' in races held in year >= 2010, with the numerator subset being entries whose standing position is not 1.",
+  "row_grain": "One global summary row representing a single percentage across all of Hamilton's driver standing entries since 2010.",
+  "column_role": "One value: the percentage of Hamilton's driver standing entries since 2010 in which his standing position was not 1.",
+  "derivation": "Percentage equal to the count of Hamilton's driver standing entries with position not equal to 1 divided by the total count of Hamilton's driver standing entries, both counted over races with year >= 2010.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms results.position is the finishing position of a race result, validating the use of position > 1 on race results rather than other position fields."
+  "meta_review": "The relevant position is the driver championship standing position associated with each race, not a race-result finishing position."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

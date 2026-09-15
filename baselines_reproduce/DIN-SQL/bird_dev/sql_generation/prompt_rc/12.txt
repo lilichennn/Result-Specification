@@ -352,12 +352,12 @@ Hint: Excellence rate = NumGE1500 / NumTstTakr; Eligible free rates for students
 Schema_links: [satscores.NumGE1500,satscores.NumTstTakr,frpm.`Free Meal Count (Ages 5-17)`,frpm.`Enrollment (Ages 5-17)`,frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode,0.3]
 Result Contract:
 {
-  "population": "Schools whose SAT excellence rate (NumGE1500 / NumTstTakr) is strictly greater than 0.3.",
+  "population": "Schools with a recorded SAT excellence rate (NumGE1500 / NumTstTakr) strictly greater than 0.3 and with recorded free-meal and enrollment figures for students aged 5-17.",
   "row_grain": "One global summary across all qualifying schools.",
   "column_role": "A single numeric value: the highest eligible free rate for students aged 5-17 found among the qualifying schools.",
   "derivation": "For each qualifying school, the eligible free rate for students aged 5-17 is `Free Meal Count (Ages 5-17)` / `Enrollment (Ages 5-17)`; the output is the maximum of this rate over the qualifying schools.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

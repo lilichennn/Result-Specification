@@ -248,10 +248,10 @@ Hint:
 Schema_links: [client.birth_date,disp.client_id,disp.type,client.client_id = disp.client_id,130,OWNER]
 Result Contract:
 {
-  "population": "The account owner whose owner number is 130.",
-  "row_grain": "One account owner.",
-  "column_role": "The birth year of the account owner.",
-  "derivation": "Extract the calendar year from the account owner's recorded birth date.",
+  "population": "The client or clients associated with account number 130.",
+  "row_grain": "One row per client associated with account number 130.",
+  "column_role": "The calendar year of birth of the client.",
+  "derivation": "Extract the calendar year from the client's recorded birth date.",
   "filter_policy": "none",
   "meta_review": "Metadata shows client.birth_date is a full date, so the requested birth year is the calendar-year component of that date."
 }

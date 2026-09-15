@@ -248,12 +248,12 @@ Hint: A2 has region names; Woman and female share the same meaning; female refer
 Schema_links: [client.client_id,client.gender,district.A2,disp.client_id = client.client_id,disp.account_id = account.account_id,account.district_id = district.district_id,'F','Jesenik']
 Result Contract:
 {
-  "population": "Clients who are women (female) and who opened an account at the Jesenik branch; both conditions must hold together.",
+  "population": "Clients who are women (female) and who belong to the Jesenik branch; both conditions must hold together.",
   "row_grain": "One global summary row for the entire qualifying client population.",
   "column_role": "The number of qualifying clients.",
   "derivation": "Count the clients satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,15 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,School Name,Educational Option Type]
+Table frpm, columns = [*,CDSCode,Educational Option Type]
 Table satscores, columns = [*,cds,sname,AvgScrMath]
 Table schools, columns = [*,CDSCode,School,EdOpsCode,EdOpsName]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "School Name", "Educational Option Type"]):
-[["01100170109835", "FAME Public Charter", "Traditional"], ["01100170112607", "Envision Academy for Arts & Technology", "Traditional"], ["01100170118489", "Aspire California College Preparatory Academy", "Traditional"]]
+Sample rows from frpm (columns: ["CDSCode", "Educational Option Type"]):
+[["01100170109835", "Traditional"], ["01100170112607", "Traditional"], ["01100170118489", "Traditional"]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column Educational Option Type: column description -> Educational Option Type, value description -> 
 Sample rows from satscores (columns: ["cds", "sname", "AvgScrMath"]):
 [["1100170000000", null, 418], ["1100170109835", "FAME Public Charter", 546], ["1100170112607", "Envision Academy for Arts & Technology", 387]]

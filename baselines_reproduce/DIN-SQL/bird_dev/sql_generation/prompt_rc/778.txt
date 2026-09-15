@@ -226,7 +226,7 @@ Schema_links: [superhero.superhero_name,superpower.power_name,hero_power.hero_id
 Result Contract:
 {
   "population": "Superheroes who possess the power with power_name = 'Adaptation'.",
-  "row_grain": "One superhero who has the adaptation power.",
+  "row_grain": "One row per superhero who has the adaptation power.",
   "column_role": "The superhero's name, not the full name.",
   "derivation": "none",
   "filter_policy": "none",

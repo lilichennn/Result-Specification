@@ -286,11 +286,11 @@ Schema_links: [drivers.driverRef,drivers.nationality,drivers.dob,qualifying.q2,q
 Result Contract:
 {
   "population": "Drivers who have a qualifying entry in race number 23 with a non-null second qualifying lap (q2 is not null).",
-  "row_grain": "One row per driver who passed the second qualifying lap in race number 23.",
+  "row_grain": "One row per qualifying entry in race number 23 with a non-null second qualifying lap (q2 is not null).",
   "column_role": "The driver's reference name (driverRef), nationality, and birthday (dob).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

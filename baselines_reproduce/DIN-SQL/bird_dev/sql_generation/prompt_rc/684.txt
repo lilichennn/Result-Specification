@@ -325,7 +325,7 @@ Result Contract:
   "column_role": "The percentage of users who are teenagers.",
   "derivation": "The count of users aged 13 to 18 inclusive divided by the count of all users, expressed as a percentage.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms users.Age defines teenager as 13-18, validating the teenage condition applied to users.Id. Round-1 contract otherwise preserved."
+  "meta_review": "Metadata confirms users.Age defines teenager as 13-18, validating the teenage condition applied to users.Id."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

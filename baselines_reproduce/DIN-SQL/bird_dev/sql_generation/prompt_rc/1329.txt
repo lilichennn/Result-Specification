@@ -231,7 +231,7 @@ Schema_links: [member.first_name,member.last_name,zip_code.county,member.zip = z
 Result Contract:
 {
   "population": "The person named Sherri Ramsey.",
-  "row_grain": "One row representing the person Sherri Ramsey.",
+  "row_grain": "One row for each matching person named Sherri Ramsey, giving the county associated with that person's hometown ZIP code.",
   "column_role": "The county where Sherri Ramsey grew up.",
   "derivation": "Use the hometown ZIP code associated with Sherri Ramsey to obtain the corresponding county.",
   "filter_policy": "none",

@@ -417,10 +417,10 @@ Result Contract:
 {
   "population": "Matches of the Scotland Premier League in season '2009/2010' (the 2010 season) in which the away team won, i.e., away goals exceed home goals; the entities compared are the away teams of those matches.",
   "row_grain": "One away team, i.e., a single result row representing the selected team.",
-  "column_role": "The away team's long name (Team.team_long_name).",
-  "derivation": "For each away team, the count of eligible matches it won as the away team.",
+  "column_role": "The away team's long name.",
+  "derivation": "The returned value is the stored long name of the selected away team.",
   "filter_policy": "Argmax: return the away team with the highest count of away wins.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

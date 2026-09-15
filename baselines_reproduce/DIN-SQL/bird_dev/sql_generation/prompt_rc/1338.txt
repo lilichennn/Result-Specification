@@ -232,7 +232,7 @@ Result Contract:
 {
   "population": "All expenses associated with the event named 'October Meeting' held on 2019-10-08, where an expense is associated with the event through a budget entry linked to that event.",
   "row_grain": "One row per expense belonging to the October Meeting event on 2019-10-08.",
-  "column_role": "The identity of each expense and its approval status, where approved = True means the expense was approved and approved = False means it was not approved.",
+  "column_role": "The approval status of each expense, where approved = True means the expense was approved and approved = False means it was not approved.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata establishes that expense records are related to events through budget entries, so expense membership in the October Meeting event is scoped by the budget-linked event. No other Round-1 semantic commitment was changed."

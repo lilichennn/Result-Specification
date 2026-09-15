@@ -296,12 +296,12 @@ Hint: Excluding all P only ANA Pattern refers to `ANA Pattern`! = 'P'; women ref
 Schema_links: [Examination.ANA Pattern,Patient.SEX,Patient.Birthday,Patient.ID,Examination.ID = Patient.ID,'P','F',1980,1989]
 Result Contract:
 {
-  "population": "Patients whose ANA Pattern is not 'P', whose sex is female (SEX = 'F'), and whose birth date (BIRTHDAY) falls within the years 1980 through 1989; all three conditions must hold together.",
+  "population": "Patients who have at least one examination with an ANA Pattern other than 'P', whose sex is female, and whose birth year is between 1980 and 1989; all conditions must hold together.",
   "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the patients belonging to the eligible population.",
+  "column_role": "A single value representing the number of distinct qualifying patients.",
+  "derivation": "Count each qualifying patient once.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

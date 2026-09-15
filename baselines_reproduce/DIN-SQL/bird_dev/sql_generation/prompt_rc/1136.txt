@@ -491,12 +491,12 @@ Hint: highest potential score for crossing refers to MAX(crossing); preferred to
 Schema_links: [Player_Attributes.crossing,Player_Attributes.preferred_foot,Player_Attributes.player_api_id,'left']
 Result Contract:
 {
-  "population": "Players whose crossing score equals the maximum crossing score across all players and whose preferred foot is left.",
-  "row_grain": "One global summary row over the entire eligible player set.",
-  "column_role": "The count of qualifying players.",
-  "derivation": "Count the players in the eligible population, where eligibility compares each player's crossing score to the maximum crossing score over all players.",
+  "population": "Player attribute entries whose crossing score equals the maximum crossing score across all player attribute entries and whose preferred foot is left.",
+  "row_grain": "One global summary row over the entire eligible player attribute set.",
+  "column_role": "The count of qualifying player attribute entries.",
+  "derivation": "Count the qualifying player attribute entries, where eligibility compares each entry's crossing score to the maximum crossing score over all player attribute entries.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Player_Attributes.preferred_foot is the player's preferred foot when attacking and Player_Attributes.crossing is the player's crossing score, validating the Round-1 eligibility mapping."
+  "meta_review": "Metadata confirms the preferred-foot attribute represents attacking foot preference and the crossing attribute represents crossing score, supporting the eligibility mapping."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

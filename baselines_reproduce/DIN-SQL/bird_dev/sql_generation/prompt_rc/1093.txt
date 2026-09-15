@@ -415,12 +415,12 @@ Hint: average overall rating = DIVIDE(SUM(overall_rating), COUNT(id)); born befo
 Schema_links: [Player_Attributes.overall_rating,Player_Attributes.id,Player.birthday,Player_Attributes.player_api_id = Player.player_api_id,1986]
 Result Contract:
 {
-  "population": "All players whose birth year is before 1986, i.e., the year extracted from their birthday is less than 1986.",
-  "row_grain": "One global summary row covering the entire eligible player population.",
-  "column_role": "A single value representing the average overall rating of the eligible players.",
-  "derivation": "The average overall rating, defined as the sum of overall ratings divided by the count of players, computed across the eligible population.",
+  "population": "All player attribute records associated with players whose birth year, extracted from their birthday, is before 1986.",
+  "row_grain": "One global summary row covering the entire eligible player attribute population.",
+  "column_role": "A single value representing the average overall rating of the eligible player attribute records.",
+  "derivation": "The average overall rating, defined as the sum of overall ratings divided by the count of eligible player attribute records, computed across that population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -320,7 +320,7 @@ Hint: user no. 58 refers to UserId = 58; on 2010/7/19 refers to CreationDate = '
 Schema_links: [votes.Id,votes.UserId,votes.CreationDate,58,'2010-07-19']
 Result Contract:
 {
-  "population": "All vote records cast by the user with UserId = 58 whose CreationDate falls on 2010-07-19.",
+  "population": "All vote records cast by the user with UserId = 58 whose CreationDate is 2010-07-19.",
   "row_grain": "One global summary row for the qualifying votes.",
   "column_role": "The number of votes taken by that user on that date.",
   "derivation": "Count the vote records in the eligible population.",

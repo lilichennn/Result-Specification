@@ -187,12 +187,12 @@ Hint: TR060 is the molecule id;
 Schema_links: [atom.element,molecule.label,molecule.molecule_id,atom.molecule_id = molecule.molecule_id,TR060]
 Result Contract:
 {
-  "population": "The eligible set consists of the toxicology elements belonging to the molecule whose molecule id is TR060.",
-  "row_grain": "One row per toxicology element occurrence belonging to molecule TR060; the molecule-level label is included with each element row.",
+  "population": "The eligible set consists of the distinct toxicology element values recorded for the molecule whose molecule id is TR060.",
+  "row_grain": "One row per distinct toxicology element value for molecule TR060, with the molecule-level label accompanying that element.",
   "column_role": "The toxicology element and the molecule's label.",
-  "derivation": "Include the label of molecule TR060 with each of its toxicology elements; no aggregation or computed metric.",
+  "derivation": "Return the stored toxicology element and molecule label as semantically distinct element-label pairs; no arithmetic aggregation or computed metric.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies atom.element as the toxicology element and shows it is recorded per atom belonging to a molecule, while molecule.label is the molecule-level label. Therefore the contract uses one row per toxicology element occurrence of TR060 rather than a single molecule row."
+  "meta_review": "Metadata identifies atom.element as the toxicology element recorded per atom belonging to a molecule, while molecule.label is the molecule-level label. Therefore the contract uses one row per distinct toxicology element value of TR060 rather than one row per atom occurrence."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

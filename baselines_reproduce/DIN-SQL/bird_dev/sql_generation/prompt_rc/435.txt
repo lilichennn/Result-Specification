@@ -366,10 +366,10 @@ Hint: border with black color refers to borderColor = 'black'
 Schema_links: [cards.id,cards.borderColor,'black']
 Result Contract:
 {
-  "population": "All cards whose border is black, i.e., cards with borderColor = 'black'.",
-  "row_grain": "One row per qualifying card, since the individual card ids are to be listed.",
-  "column_role": "The unique card identifier of each qualifying card, and the total number of qualifying cards as the answer to 'how many'.",
-  "derivation": "The requested 'how many' is the count of the qualifying cards; each listed card id comes directly from a qualifying card.",
+  "population": "Cards whose border color is black.",
+  "row_grain": "One row for each distinct card identifier among the qualifying cards.",
+  "column_role": "The card identifier is the only returned output; no separate count column is returned.",
+  "derivation": "Each returned value is the stored card identifier of a qualifying card; the requested quantity is implicit in the number of returned identifier rows rather than a separate aggregate value.",
   "filter_policy": "none",
   "meta_review": "Metadata identifies cards.id as the unique id number identifying cards, resolving the requested card identifier."
 }

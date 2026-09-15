@@ -183,29 +183,39 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
-Table district, columns = [*,district_id,A2,A3]
-Table order, columns = [*,order_id,account_id,k_symbol]
-Foreign_keys = [account.district_id = district.district_id,order.account_id = account.account_id]
+Table district, columns = [*,district_id,A2]
+Table order, columns = [*,account_id,k_symbol]
+Table trans, columns = [*,account_id,k_symbol]
+Foreign_keys = [account.district_id = district.district_id,order.account_id = account.account_id,trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
 [[1, 18], [2, 1], [3, 5]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from district (columns: ["district_id", "A2", "A3"]):
-[[1, "Hl.m. Praha", "Prague"], [2, "Benesov", "central Bohemia"], [3, "Beroun", "central Bohemia"]]
+Sample rows from district (columns: ["district_id", "A2"]):
+[[1, "Hl.m. Praha"], [2, "Benesov"], [3, "Beroun"]]
 Column descriptions and value descriptions for district:
 Column district_id: column description -> location of branch, value description -> 
 Column A2: column description -> district_name, value description -> 
-Column A3: column description -> region, value description -> 
-Sample rows from order (columns: ["order_id", "account_id", "k_symbol"]):
-[[29401, 1, "SIPO"], [29402, 2, "UVER"], [29403, 2, "SIPO"]]
+Sample rows from order (columns: ["account_id", "k_symbol"]):
+[[1, "SIPO"], [2, "UVER"], [2, "SIPO"]]
 Column descriptions and value descriptions for order:
-Column order_id: column description -> identifying the unique order, value description -> 
 Column account_id: column description -> id number of account, value description -> 
 Column k_symbol: column description -> purpose of the payment, value description -> "POJISTNE" stands for insurance payment
 "SIPO" stands for household payment
 "LEASING" stands for leasing
 "UVER" stands for loan payment
+Sample rows from trans (columns: ["account_id", "k_symbol"]):
+[[1, null], [1, null], [1, null]]
+Column descriptions and value descriptions for trans:
+Column account_id: column description -> , value description -> 
+Column k_symbol: column description -> , value description -> "POJISTNE": stands for insurrance payment
+"SLUZBY": stands for payment for statement
+"UROK": stands for interest credited
+"SANKC. UROK": sanction interest if negative balance
+"SIPO": stands for household
+"DUCHOD": stands for old-age pension
+"UVER": stands for loan payment
 
 Q: Which accounts placed orders for household payment in Pisek?
 Hint: k_symbol = 'SIPO' refers to household payment

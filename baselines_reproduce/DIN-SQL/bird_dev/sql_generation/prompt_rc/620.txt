@@ -252,8 +252,8 @@ Schema_links: [users.Views,badges.Date,badges.UserId = users.Id,'2010-07-19 19:3
 Result Contract:
 {
   "population": "Users who obtained a badge at the timestamp Date = '2010-07-19 19:39:08.0'.",
-  "row_grain": "One row per user who obtained a badge at the specified timestamp.",
-  "column_role": "The number of views of each qualifying user.",
+  "row_grain": "One row for each badge award to a qualifying user at the specified timestamp.",
+  "column_role": "The number of views of the associated qualifying user.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata confirms users.Views is the user-level number of views, validating the requested output."

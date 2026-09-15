@@ -251,12 +251,12 @@ Hint: Outliers is the name of the badge;
 Schema_links: [users.LastAccessDate,users.Location,badges.Name,badges.UserId = users.Id,Outliers]
 Result Contract:
 {
-  "population": "Users who received the badge named 'Outliers'.",
-  "row_grain": "One row per user who received the Outliers badge.",
+  "population": "Users who received a badge award named 'outliers'.",
+  "row_grain": "One row per qualifying badge award named 'outliers', carrying the recipient user's details.",
   "column_role": "The user's last accessed date and the user's location.",
-  "derivation": "For each qualifying user, the last accessed date is the user account's stored last access date.",
+  "derivation": "For each qualifying badge award, the last accessed date and location are the recipient user account's stored last access date and stored location.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows users.LastAccessDate is the user account's last access date and badges.Name records the badge name awarded to UserId. This confirms the requested last accessed date is a user-level stored attribute and qualification is by an Outliers badge award."
+  "meta_review": "Metadata confirms the user profile stores last access date and location, and badge records identify the awarded badge name; qualification is by badge awards named 'outliers'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

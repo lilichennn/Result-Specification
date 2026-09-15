@@ -415,12 +415,12 @@ Hint: full name refers to player_name; players with highest number of penalties 
 Schema_links: [Player.player_name,Player_Attributes.penalties,Player.player_api_id = Player_Attributes.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no membership conditions are stated.",
-  "row_grain": "One row per player.",
-  "column_role": "The player's full name (player_name).",
-  "derivation": "Each player's number of penalties, given by the maximum penalties attribute score associated with that player.",
-  "filter_policy": "Select the 10 players with the highest number of penalties, ranked by penalties in descending order.",
-  "meta_review": "Metadata confirms penalties is a player attribute score in Player_Attributes, validating MAX(penalties) per player as the penalty metric. Player.player_name supplies the requested full name."
+  "population": "Player attribute records that are linked to a player; the result reports the associated player's full name.",
+  "row_grain": "One row per selected player attribute record, not one distinct row per player.",
+  "column_role": "The player's full name.",
+  "derivation": "The full name is a stored player property. The ranking uses the stored penalty score of each player attribute record, with no maximum, aggregation, or per-player recomputation.",
+  "filter_policy": "Select the first 10 player attribute records ordered by penalty score in descending order; duplicate player names are not removed.",
+  "meta_review": "Penalty score is a player attribute and full name is a player property, but the result treats each recorded penalty score as a separate candidate rather than computing a per-player maximum."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

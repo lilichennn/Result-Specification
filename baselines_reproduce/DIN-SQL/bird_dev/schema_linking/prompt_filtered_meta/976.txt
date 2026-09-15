@@ -183,33 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId]
-Table lapTimes, columns = [*,raceId,driverId,lap,time,milliseconds]
-Table races, columns = [*,raceId]
-Table results, columns = [*,raceId,driverId,fastestLap,fastestLapTime]
-Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId,results.driverId = drivers.driverId,results.raceId = races.raceId]
+Table lapTimes, columns = [*,driverId,lap,time,milliseconds]
+Foreign_keys = [lapTimes.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId"]):
 [[452], [625], [103]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "lap", "time", "milliseconds"]):
-[[1, 1, 1, "1:49.088", 109088], [1, 1, 2, "1:33.740", 93740], [1, 1, 3, "1:31.600", 91600]]
+Sample rows from lapTimes (columns: ["driverId", "lap", "time", "milliseconds"]):
+[[1, 1, "1:49.088", 109088], [1, 2, "1:33.740", 93740], [1, 3, "1:31.600", 91600]]
 Column descriptions and value descriptions for lapTimes:
-Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
 Column lap: column description -> , value description -> 
 Column time: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "fastestLap", "fastestLapTime"]):
-[[18, 1, 39, "1:27.452"], [18, 2, 41, "1:27.739"], [18, 3, 41, "1:28.090"]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column driverId: column description -> , value description -> 
-Column fastestLap: column description -> , value description -> 
-Column fastestLapTime: column description -> , value description -> 
 
 Q: List the driver's ID of the top five driver, by descending order, the fastest time during the first lap of the race.
 Hint: fastest time refers to Min(time);

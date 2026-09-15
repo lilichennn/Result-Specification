@@ -188,11 +188,11 @@ Schema_links: [atom.element,connected.bond_id,connected.atom_id = atom.atom_id,c
 Result Contract:
 {
   "population": "The atoms that participate in the bond whose bond id is 'TR001_10_11'.",
-  "row_grain": "One chemical element corresponding to one atom forming the specified bond.",
-  "column_role": "The name of the chemical element.",
-  "derivation": "Resolve each participating atom's element code to its element name using the provided code-to-name mapping; the bond id identifies the molecule and the two bonded atoms as described in the evidence.",
+  "row_grain": "One row for each participating atom, giving that atom's chemical element code.",
+  "column_role": "The chemical element code of the participating atom.",
+  "derivation": "The returned value is the recorded element code for each participating atom, not a resolved full element name.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,12 +230,12 @@ Hint: college most members go refers to MAX(COUNT(major.college))
 Schema_links: [major.college,member.member_id,member.link_to_major = major.major_id]
 Result Contract:
 {
-  "population": "All members, each associated with the college of their major.",
+  "population": "Members linked to a major, together with the college of that major.",
   "row_grain": "One college.",
   "column_role": "The name of the college.",
-  "derivation": "For each college, the count of members whose major belongs to that college.",
-  "filter_policy": "Select the single college whose member count is the maximum across all colleges (argmax).",
-  "meta_review": "Metadata confirms that a member's college is the college name associated with their major via member.link_to_major to major.college. This resolves the output to college name and grounds the member count by college."
+  "derivation": "The returned value is the college name of the major selected by counting members per major.",
+  "filter_policy": "Select one college associated with the major whose member count is highest.",
+  "meta_review": "A member's college is the college of their linked major; the result is based on member counts per major and returns that major's college, not a direct aggregate of members by college."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

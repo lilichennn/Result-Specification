@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic; label = '-' means molecules a
 Schema_links: [bond.bond_id,bond.bond_type,molecule.label,bond.molecule_id = molecule.molecule_id,bond.molecule_id,TR006,=,+]
 Result Contract:
 {
-  "population": "The single molecule identified as TR006, and for the count only those bonds of TR006 whose bond type is a double bond (bond_type = ' = ').",
+  "population": "The single molecule identified as TR006, and for the count only those bonds of TR006 whose bond type is the double-bond value ('=').",
   "row_grain": "One summary row for the molecule TR006.",
-  "column_role": "The number of double bonds in TR006 and whether TR006 is carcinogenic.",
-  "derivation": "Count the bonds of TR006 that are double bonds (bond_type = ' = '), and report carcinogenicity by mapping the molecule's label: '+' means carcinogenic and '-' means non-carcinogenic.",
+  "column_role": "The number of double bonds in TR006 and the carcinogenicity label of TR006.",
+  "derivation": "Count the bonds of TR006 whose bond type is the double-bond value ('='), and return the molecule's carcinogenicity label, where '+' means carcinogenic and '-' means non-carcinogenic.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

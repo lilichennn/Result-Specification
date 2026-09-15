@@ -297,7 +297,7 @@ Schema_links: [Patient.SEX,Laboratory.GPT,Laboratory.Date,Laboratory.ID = Patien
 Result Contract:
 {
   "population": "Patients who have a laboratory ALT glutamic pyruvic transaminase (GPT) value of 9 on the laboratory test date 1992-06-12.",
-  "row_grain": "One patient.",
+  "row_grain": "The patient’s sex for each qualifying laboratory test result.",
   "column_role": "The sex of the patient, indicating whether the patient is a man or a woman.",
   "derivation": "none",
   "filter_policy": "none",

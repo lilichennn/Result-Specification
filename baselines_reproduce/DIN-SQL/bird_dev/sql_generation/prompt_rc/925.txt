@@ -290,7 +290,7 @@ Result Contract:
   "column_role": "The URL of the website that shows more information about the circuit.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms circuits.url stores the website link for circuits, validating the circuit-level URL output. Round-1 contract preserved."
+  "meta_review": "Metadata confirms the circuit-level website link is stored and returned."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table frpm, columns = [*,CDSCode,School Name,Charter Funding Type,Enrollment (K-12),Enrollment (Ages 5-17)]
-Table schools, columns = [*,CDSCode,School,FundingType,DOC,DOCType]
+Table schools, columns = [*,CDSCode,School,FundingType,DOC]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
 Sample rows from frpm (columns: ["CDSCode", "School Name", "Charter Funding Type", "Enrollment (K-12)", "Enrollment (Ages 5-17)"]):
 [["01100170109835", "FAME Public Charter", "Directly funded", 1087.0, 1070.0], ["01100170112607", "Envision Academy for Arts & Technology", "Directly funded", 395.0, 376.0], ["01100170118489", "Aspire California College Preparatory Academy", "Directly funded", 244.0, 230.0]]
@@ -195,8 +195,8 @@ Column Enrollment (K-12): column description -> Enrollment (K-12), value descrip
 
 K-12: 1st grade - 12nd grade 
 Column Enrollment (Ages 5-17): column description -> Enrollment (Ages 5-17), value description -> 
-Sample rows from schools (columns: ["CDSCode", "School", "FundingType", "DOC", "DOCType"]):
-[["01100170000000", null, null, "00", "County Office of Education (COE)"], ["01100170109835", "FAME Public Charter", "Directly funded", "00", "County Office of Education (COE)"], ["01100170112607", "Envision Academy for Arts & Technology", "Directly funded", "00", "County Office of Education (COE)"]]
+Sample rows from schools (columns: ["CDSCode", "School", "FundingType", "DOC"]):
+[["01100170000000", null, null, "00"], ["01100170109835", "FAME Public Charter", "Directly funded", "00"], ["01100170112607", "Envision Academy for Arts & Technology", "Directly funded", "00"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column School: column description -> School, value description -> 
@@ -219,7 +219,6 @@ Column DOC: column description -> District Ownership Code, value description -> 
 •       98 – Regional Occupational Center/Program (ROC/P)
 commonsense evidence:
 *Only the California Education Authority has been included in the non-school location category.
-Column DOCType: column description -> The District Ownership Code Type is the text description of the DOC category., value description -> (See text values in DOC field description above)
 
 Q: Consider the average difference between K-12 enrollment and 15-17 enrollment of schools that are locally funded, list the names and DOC type of schools which has a difference above this average.
 Hint: Difference between K-12 enrollment and 15-17 enrollment can be computed by `Enrollment (K-12)` - `Enrollment (Ages 5-17)`

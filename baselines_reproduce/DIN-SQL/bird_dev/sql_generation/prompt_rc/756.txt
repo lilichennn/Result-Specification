@@ -225,7 +225,7 @@ Hint: bad superheroes refers to alignment_id = Bad
 Schema_links: [superhero.id,alignment.alignment,superhero.alignment_id = alignment.id,Bad]
 Result Contract:
 {
-  "population": "All superheroes whose alignment is Bad (alignment_id = Bad).",
+  "population": "All superheroes whose alignment is Bad.",
   "row_grain": "One global summary row for the entire eligible population.",
   "column_role": "The count of bad superheroes.",
   "derivation": "Count the superheroes belonging to the eligible population.",

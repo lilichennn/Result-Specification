@@ -285,12 +285,12 @@ Hint: finished second refers to position = 2;
 Schema_links: [drivers.forename,drivers.surname,results.position,races.name,races.year,results.driverId = drivers.driverId,results.raceId = races.raceId,2,'San Marino Grand Prix',2006]
 Result Contract:
 {
-  "population": "Race results for the San Marino Grand Prix held in 2006 where the recorded finishing position equals 2.",
+  "population": "Drivers with a result in the San Marino Grand Prix held in 2006 whose recorded finishing position equals 2.",
   "row_grain": "One driver, namely the second-place finisher of that race.",
   "column_role": "The identity (name) of the driver who finished second.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

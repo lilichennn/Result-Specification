@@ -418,7 +418,7 @@ Result Contract:
   "population": "All player attribute records associated with the player whose player name is 'Ahmed Samir Farag'.",
   "row_grain": "One global summary row for the player Ahmed Samir Farag.",
   "column_role": "The average number of long shots for Ahmed Samir Farag.",
-  "derivation": "The sum of long_shots values over the eligible player attribute records divided by the count of player_fifa_api_id occurrences within those records.",
+  "derivation": "The sum of long-shot values over the eligible player attribute records divided by the count of those records that have a recorded date.",
   "filter_policy": "none",
   "meta_review": "Metadata shows Player_Attributes.long_shots is the player-level long-shot score and Player.player_name identifies the player, resolving the eligible records as player attribute records linked to the named player."
 }

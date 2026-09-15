@@ -225,12 +225,12 @@ Hint: good refers to alignment.id = 1; female refers to gender.id = 2;
 Schema_links: [superhero.id,alignment.id,gender.id,superhero.alignment_id = alignment.id,superhero.gender_id = gender.id,1,2]
 Result Contract:
 {
-  "population": "Superheroes whose alignment is good (alignment.id = 1) and whose gender is female (gender.id = 2); both conditions must hold.",
+  "population": "Superheroes whose alignment is Good and whose gender is Female; both conditions must hold.",
   "row_grain": "One global summary row for the entire qualifying superhero population.",
   "column_role": "The count of qualifying superheroes.",
   "derivation": "Count the superheroes in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "Good and Female are interpreted as alignment and gender values, not fixed identifiers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

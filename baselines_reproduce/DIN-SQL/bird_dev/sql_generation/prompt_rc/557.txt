@@ -251,12 +251,12 @@ Hint: score of over 5 refers to Score > 5; elder user refers to Age > 65; percen
 Schema_links: [posts.Score,posts.Id,users.Age,posts.OwnerUserId = users.Id,5,65]
 Result Contract:
 {
-  "population": "All posts with Score > 5.",
+  "population": "All posts with a score greater than 5 that have an associated owner user.",
   "row_grain": "One global summary row for the entire eligible post population.",
   "column_role": "The requested percentage value.",
-  "derivation": "The percentage computed as the count of eligible posts owned by a user with Age > 65 divided by the count of all eligible posts, multiplied by 100.",
+  "derivation": "The percentage computed as the count of eligible posts whose owner is older than 65 divided by the count of all eligible posts, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.OwnerUserId identifies the post owner and users.Age records user age, with elder defined as Age > 65. No Round-1 semantic field required change."
+  "meta_review": "Metadata confirms the post-owner relationship and user age, with elder defined as age over 65."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

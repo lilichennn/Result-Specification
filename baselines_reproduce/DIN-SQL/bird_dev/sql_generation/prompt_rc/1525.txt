@@ -182,12 +182,12 @@ Hint: '2012/8/25' can be represented by '2012-08-25'
 Schema_links: [customers.CustomerID,customers.Currency,transactions_1k.Date,customers.CustomerID = transactions_1k.CustomerID,EUR,2012-08-25]
 Result Contract:
 {
-  "population": "The target population is unique customers whose customer currency is EUR and who have transaction activity on 2012-08-25; the reference population is the broader customer set against which the percentage is measured, whose exact scope (all customers versus only customers active on 2012-08-25) is not determined by the question or metadata.",
+  "population": "The reference population is customer-linked transaction events occurring on 2012-08-25. The target subset is those events whose associated customer has currency EUR.",
   "row_grain": "One global summary row representing the requested percentage.",
-  "column_role": "A single value: the percentage of customers who used EUR on 2012-08-25.",
-  "derivation": "Compute the percentage as the number of unique target customers divided by the number of customers in the reference population, expressed as a percentage.",
-  "filter_policy": "The date condition applies to transaction-event date 2012-08-25; no ranking, ordering, tie-breaking, or optional-entity policy is specified.",
-  "meta_review": "Metadata establishes that currency is a customer-level attribute (customers.Currency) and dated customer activity is recorded as transaction events (transactions_1k.Date), resolving that the target is unique EUR-currency customers with at least one transaction on 2012-08-25."
+  "column_role": "A single value: the percentage of the dated customer transaction events associated with EUR customers.",
+  "derivation": "Compute the percentage as the number of target transaction events divided by the total number of customer-linked transaction events on 2012-08-25, multiplied by 100; events are counted as occurrences and customers are not deduplicated.",
+  "filter_policy": "The date condition restricts the transaction events considered; currency is used to identify the numerator subset within those events. No ranking, ordering, tie-breaking, or optional-entity policy is specified.",
+  "meta_review": "Currency is a customer-level attribute and date is a transaction-event attribute; the requested percentage is operationalized over transaction occurrences on the date, not over distinct customers or all customers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

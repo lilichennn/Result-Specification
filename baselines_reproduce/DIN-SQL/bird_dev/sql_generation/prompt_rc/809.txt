@@ -225,12 +225,12 @@ Hint: superhero ID 38 refers to superhero.id = 38;
 Schema_links: [publisher.publisher_name,superhero.id,superhero.publisher_id = publisher.id,38]
 Result Contract:
 {
-  "population": "The superhero whose superhero.id equals 38.",
-  "row_grain": "One superhero, namely the one with ID 38.",
-  "column_role": "The name of the publisher associated with that superhero.",
+  "population": "The publisher associated with the superhero whose ID is 38.",
+  "row_grain": "One output row containing the publisher name for that superhero.",
+  "column_role": "The name of that publisher.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that publisher.publisher_name is the textual publisher name, validating that the requested output is the publisher's name rather than a publisher identifier."
+  "meta_review": "Metadata confirms that the requested output is the textual publisher name rather than a publisher identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

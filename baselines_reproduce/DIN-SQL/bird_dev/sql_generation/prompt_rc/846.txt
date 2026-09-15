@@ -285,12 +285,12 @@ Hint: driver reference name refers to driverRef; first qualifying period refers 
 Schema_links: [drivers.driverRef,qualifying.q1,qualifying.raceId,drivers.driverId = qualifying.driverId,20,5]
 Result Contract:
 {
-  "population": "Drivers who recorded a first qualifying period (q1) time in race number 20 (raceId = 20).",
+  "population": "Drivers with a qualifying entry in race number 20 (raceId = 20).",
   "row_grain": "One row per eliminated driver.",
   "column_role": "The driver's reference name (driverRef).",
   "derivation": "none",
-  "filter_policy": "Select the 5 drivers with the maximum q1 (first qualifying period) times.",
-  "meta_review": "Metadata confirms qualifying.q1 is the driver's first qualifying period time for a race and that the five slowest (maximum q1) drivers are eliminated, validating the Round-1 filter."
+  "filter_policy": "Select the 5 drivers with the largest q1 (first qualifying period) times.",
+  "meta_review": "Metadata confirms q1 is the driver's first qualifying period time for a race and that the five largest q1 times identify the drivers eliminated in that period."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

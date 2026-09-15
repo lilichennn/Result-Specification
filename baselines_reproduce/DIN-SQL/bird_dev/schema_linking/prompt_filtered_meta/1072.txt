@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id]
-Table Player_Attributes, columns = [*,id,player_fifa_api_id,player_api_id,date,overall_rating]
+Table Player_Attributes, columns = [*,id,player_fifa_api_id,player_api_id,overall_rating]
 Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id]
 Sample rows from Player (columns: ["id", "player_api_id", "player_name", "player_fifa_api_id"]):
 [[1, 505942, "Aaron Appindangoye", 218353], [2, 155782, "Aaron Cresswell", 189615], [3, 162549, "Aaron Doran", 186170]]
@@ -192,13 +192,12 @@ Column id: column description -> the unique id for players, value description ->
 Column player_api_id: column description -> the id of the player api, value description -> 
 Column player_name: column description -> player name, value description -> 
 Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
-Sample rows from Player_Attributes (columns: ["id", "player_fifa_api_id", "player_api_id", "date", "overall_rating"]):
-[[1, 218353, 505942, "2016-02-18 00:00:00", 67], [2, 218353, 505942, "2015-11-19 00:00:00", 67], [3, 218353, 505942, "2015-09-21 00:00:00", 62]]
+Sample rows from Player_Attributes (columns: ["id", "player_fifa_api_id", "player_api_id", "overall_rating"]):
+[[1, 218353, 505942, 67], [2, 218353, 505942, 67], [3, 218353, 505942, 62]]
 Column descriptions and value descriptions for Player_Attributes:
 Column id: column description -> the unique id for players, value description -> 
 Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column player_api_id: column description -> the id of the player api, value description -> 
-Column date: column description -> date, value description -> e.g. 2016-02-18 00:00:00
 Column overall_rating: column description -> the overall rating of the player, value description -> commonsense reasoning: 
 The rating is between 0-100 which is calculated by FIFA.
  Higher overall rating means the player has a stronger overall strength.

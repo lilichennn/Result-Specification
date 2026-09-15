@@ -367,8 +367,8 @@ Result Contract:
 {
   "population": "Male patients (SEX = 'M'), divided into two separately named compared subpopulations: male in-patients (Admission = '+') and male outpatients (Admission = '-').",
   "row_grain": "One global summary row comparing the male in-patient group against the male outpatient group.",
-  "column_role": "An indication of which group, male in-patient or male outpatient, is larger, and the deviation expressed as a percentage.",
-  "derivation": "Count the male in-patients and count the male outpatients, compare the two counts to determine which group is larger, and compute the percentage as the count of male in-patients divided by the count of male outpatients as defined in the evidence, with the deviation expressed as a percentage.",
+  "column_role": "A percentage comparing the count of male in-patients with the count of male outpatients.",
+  "derivation": "Count the male in-patients and count the male outpatients, then compute the percentage as the male in-patient count divided by the male outpatient count and multiplied by 100.",
   "filter_policy": "none",
   "meta_review": "Patient metadata confirms SEX value 'M' means male and Admission values '+' and '-' mean hospital-admitted versus outpatient clinic follow-up, validating the compared subpopulations."
 }

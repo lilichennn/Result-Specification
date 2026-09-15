@@ -231,11 +231,11 @@ Schema_links: [member.first_name,member.last_name,member.position,major.college,
 Result Contract:
 {
   "population": "Club members whose position is 'Secretary'.",
-  "row_grain": "One club member holding the position of 'Secretary'.",
-  "column_role": "The member's full name (first name and last name) and the college associated with the member's major.",
-  "derivation": "The full name is composed of the member's first name and last name, concatenated with a space. The member's college is the college of the major referenced by the member.",
+  "row_grain": "One row per qualifying club member.",
+  "column_role": "The member's full name, represented by first name and last name, and the college of the member's major.",
+  "derivation": "The first name and last name are returned as separate stored member attributes, and the college is the stored college of the major linked to the member; no concatenation or aggregation is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms full name is formed from first_name and last_name and that member.link_to_major references major, whose college column gives the member's college. This resolves the full-name composition and college representation."
+  "meta_review": "Metadata confirms full name is represented by first and last name and that the member's linked major provides the college."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

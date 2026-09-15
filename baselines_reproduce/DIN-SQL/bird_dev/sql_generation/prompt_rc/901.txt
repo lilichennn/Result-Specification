@@ -285,12 +285,12 @@ Hint: in September 2005 refers to MONTH(date) = 9 and YEAR(date) = 2005
 Schema_links: [races.name,circuits.name,circuits.location,races.date,races.circuitId = circuits.circuitId,9,2005]
 Result Contract:
 {
-  "population": "All F1 races whose race date falls in September 2005, i.e., month of the race date equals 9 and year equals 2005.",
-  "row_grain": "One row per race.",
+  "population": "All F1 races in the 2005 season whose race date falls in September, together with their hosting circuit.",
+  "row_grain": "One row per distinct returned combination of race name, circuit name, and circuit location among the qualifying races.",
   "column_role": "The race name, the name of the circuit hosting the race, and the location of that circuit.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms races.raceId uniquely identifies a race, establishing one row per race. It also confirms circuits.name and circuits.location represent the circuit's full name and location."
+  "meta_review": "Metadata confirms the circuit's full name and location are returned; the output grain is determined by distinct returned race/circuit/location combinations rather than by uniqueness of a race identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: maximum points = MAX(points); British is a nationality
 Schema_links: [constructorStandings.points,constructors.nationality,constructorStandings.constructorId = constructors.constructorId,British]
 Result Contract:
 {
-  "population": "All constructors whose nationality is British.",
-  "row_grain": "One global summary row for the whole population of British constructors.",
+  "population": "All recorded points values associated with constructors whose nationality is British.",
+  "row_grain": "One global summary row for the whole population of recorded points values associated with British constructors.",
   "column_role": "The maximum points value attained among British constructors.",
-  "derivation": "Take the maximum of the points metric over the set of British constructors; whether points is stored directly or derived is unspecified.",
+  "derivation": "Take the maximum of the points metric over the set of recorded points values associated with British constructors; whether points is stored directly or derived is unspecified.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -263,12 +263,12 @@ Hint: DIVIDE(COUNT(bond_id), COUNT(atom_id where MAX(COUNT(atom_id)) ))
 Schema_links: [bond.bond_id,atom.element,connected.bond_id = bond.bond_id,connected.atom_id = atom.atom_id,connected.atom_id2 = atom.atom_id]
 Result Contract:
 {
-  "population": "All bonds are eligible; no membership condition restricts which bonds contribute to either the numerator or the denominator.",
-  "row_grain": "One global summary row spanning the entire bond population.",
-  "column_role": "A single value: the percentage of bonds whose atoms' element combination is the most common combination.",
-  "derivation": "Group bonds by the combination of the element values of their two connected atoms, count the bonds in each combination group, take the maximum such group count, and divide it by the total count of all bonds, expressing the result as a percentage.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms that element is an atom property and that a bond is represented as connecting two endpoint atoms, so the combination is the pair of endpoint element values. Round-1 otherwise preserved."
+  "population": "The counted population is atom occurrences that are connected to bonds. The denominator includes all such connected atom occurrences; the numerator includes only those whose bond belongs to the most common bond-type group.",
+  "row_grain": "One global summary row containing a single percentage.",
+  "column_role": "A single value: the percentage of connected atom occurrences belonging to the most common bond type, which serves as the element-combination category for bonds.",
+  "derivation": "Group connected atom occurrences by bond type, select the group with the largest count, divide the number of connected atoms in that group by the total number of connected atoms, and multiply by 100.",
+  "filter_policy": "A top-1 selection keeps only the most frequent bond-type group for the numerator; no other post-population filter is applied.",
+  "meta_review": "Atoms have elements and bonds connect atoms, but the result uses the bond's recorded type as the combination category and counts atom-bond connection occurrences rather than distinct bonds or directly recomputed endpoint element pairs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

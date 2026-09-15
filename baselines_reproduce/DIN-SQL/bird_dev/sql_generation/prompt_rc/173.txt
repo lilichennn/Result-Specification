@@ -324,12 +324,12 @@ Hint: k_symbol refers to the purpose of payments
 Schema_links: [account.frequency,account.account_id,order.k_symbol,order.amount,account.account_id = order.account_id,3,3539]
 Result Contract:
 {
-  "population": "Two separate target sets: (a) the account with account number 3, for its account-statement-release frequency, and (b) the debit payment order(s) whose debited amount totals 3539.",
-  "row_grain": "One global summary row combining the answers to both sub-questions.",
-  "column_role": "The account statement release frequency for account number 3, and the stated purpose (aim) of the debit totaling 3539.",
-  "derivation": "Retrieve the account-level statement issuance frequency for account number 3; report the payment purpose of the debit payment order(s) whose debited amounts total 3539 without aggregating the purpose.",
-  "filter_policy": "Restrict the first sub-question to account number 3 and the second to debit payment orders whose combined debited amount is 3539; no ordering.",
-  "meta_review": "Metadata shows account.frequency is the account's statement-issuance frequency, so the first sub-question is an account-level frequency value rather than a count of request events. It also identifies order.amount as debited amount and order.k_symbol as payment purpose for the debit total."
+  "population": "Two linked target sets: (a) the account with account number 3, for its account-statement-release frequency, and (b) the payment-purpose group(s) for that same account whose summed payment amounts total 3539.",
+  "row_grain": "One row for each qualifying payment-purpose group of account number 3, each row combining the account's statement-release frequency and the purpose.",
+  "column_role": "The account statement release frequency for account number 3, and the stated purpose (aim) of the payment total of 3539 for that account.",
+  "derivation": "Retrieve the account-level statement issuance frequency for account number 3; report the payment purpose of each account-purpose group whose summed payment amounts total 3539, without aggregating the purpose in the output.",
+  "filter_policy": "Restrict the first sub-question to account number 3 and the second to payment-purpose groups for that same account whose combined payment amount is 3539; no ordering.",
+  "meta_review": "The first answer is an account-level statement-issuance frequency attribute, not a count of request events. The second answer is a payment-purpose label identified by summing payment amounts by purpose for the specified account, not by counting orders or applying a separate debit-type filter."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,12 +297,12 @@ Hint: restricted refers to status = 'restricted'; have text boxes refers to is T
 Schema_links: [cards.id,legalities.status,cards.isTextless,legalities.uuid = cards.uuid,'restricted',0]
 Result Contract:
 {
-  "population": "Distinct cards that have at least one legality status of 'restricted' and have text boxes (is Textless = 0).",
+  "population": "Distinct cards that have at least one legality status of 'Restricted' and have text boxes (not textless).",
   "row_grain": "One global summary row for the entire qualifying card population.",
   "column_role": "The count of qualifying cards.",
   "derivation": "Count the distinct cards satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.isTextless = 0 means a card has a text box and legalities.status is a separate legality attribute, so the count is over distinct cards with at least one restricted legality."
+  "meta_review": "Metadata confirms that not textless means a card has a text box and legality status is a separate legality attribute, so the count is over distinct cards with at least one Restricted legality."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

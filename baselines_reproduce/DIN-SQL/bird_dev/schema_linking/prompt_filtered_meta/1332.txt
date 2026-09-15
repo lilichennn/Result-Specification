@@ -183,10 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,category,spent,link_to_event]
-Table event, columns = [*,event_id,event_name]
-Table expense, columns = [*,expense_id,cost,link_to_member,link_to_budget]
-Table member, columns = [*,member_id]
-Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_member = member.member_id,expense.link_to_budget = budget.budget_id]
+Table event, columns = [*,event_id,event_name,event_date]
+Foreign_keys = [budget.link_to_event = event.event_id]
 Sample rows from budget (columns: ["budget_id", "category", "spent", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", "Advertisement", 67.81, "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "Food", 121.14, "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "Food", 20.2, "recJ4Witp9tpjaugn"]]
 Column descriptions and value descriptions for budget:
@@ -194,22 +192,12 @@ Column budget_id: column description -> A unique identifier for the budget entry
 Column category: column description -> The area for which the amount is budgeted, such as, advertisement, food, parking, value description -> 
 Column spent: column description -> The total amount spent in the budgeted category for an event., value description -> the unit is dollar. This is summarized from the Expense table
 Column link_to_event: column description -> The unique identifier of the event to which the budget line applies., value description -> References the Event table
-Sample rows from event (columns: ["event_id", "event_name"]):
-[["rec0Si5cQ4rJRVzd6", "March Meeting"], ["rec0akZnLLpGUloLH", "Officers meeting - January"], ["rec0dZPcWXF0QjNnE", "Spring Elections"]]
+Sample rows from event (columns: ["event_id", "event_name", "event_date"]):
+[["rec0Si5cQ4rJRVzd6", "March Meeting", "2020-03-10T12:00:00"], ["rec0akZnLLpGUloLH", "Officers meeting - January", "2020-01-14T09:30:00"], ["rec0dZPcWXF0QjNnE", "Spring Elections", "2019-11-24T09:00:00"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
-Sample rows from expense (columns: ["expense_id", "cost", "link_to_member", "link_to_budget"]):
-[["rec017x6R3hQqkLAo", 122.06, "rec4BLdZHS2Blfp4v", "recvKTAWAFKkVNnXQ"], ["rec1nIjoZKTYayqZ6", 20.2, "recro8T1MPMwRadVH", "recy8KY5bUdzF81vv"], ["rec1oMgNFt7Y0G40x", 51.81, "recD078PnS3x2doBe", "recwXIiKoBMjXJsGZ"]]
-Column descriptions and value descriptions for expense:
-Column expense_id: column description -> unique id of income, value description -> 
-Column cost: column description -> The dollar amount of the expense, value description -> the unit is dollar
-Column link_to_member: column description -> The member who incurred the expense, value description -> 
-Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table
-Sample rows from member (columns: ["member_id"]):
-[["rec1x5zBFIqoOuPW8"], ["rec280Sk7o31iG0Tx"], ["rec28ORZgcm1dtqBZ"]]
-Column descriptions and value descriptions for member:
-Column member_id: column description -> unique id of member, value description -> 
+Column event_date: column description -> The date the event took place or is scheduled to take place, value description -> e.g. 2020-03-10T12:00:00
 
 Q: How much did the Student_Club members spend on food in September Meeting?
 Hint: amount spent refers to spent; spend on food in September Meeting refers to category = 'Food' where event_name = 'September Meeting'

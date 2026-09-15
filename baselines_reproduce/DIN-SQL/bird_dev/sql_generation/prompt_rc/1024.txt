@@ -484,12 +484,12 @@ Hint: perform better in crossing actions refers to MAX(crossing)
 Schema_links: [Player.id,Player_Attributes.crossing,Player.player_api_id = Player_Attributes.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no Boolean membership conditions are stated.",
-  "row_grain": "One row per player.",
+  "population": "All recorded player attribute entries are eligible; no Boolean membership conditions are stated.",
+  "row_grain": "One row per selected player attribute entry, with five rows total; repeated player identifiers are not eliminated.",
   "column_role": "The player identifier.",
-  "derivation": "Each player's crossing performance is the maximum of that player's date-stamped crossing scores recorded as player attributes.",
-  "filter_policy": "Select the top 5 players ranked by their crossing performance (MAX(crossing)) in descending order.",
-  "meta_review": "Metadata identifies Player_Attributes.crossing as the player's crossing score and includes a date, establishing repeated per-player attribute records rather than match-event crossings. This resolves that MAX(crossing) is computed per player over attribute snapshots."
+  "derivation": "The ranking uses the stored crossing score of each player attribute entry; the returned identifier is the stored identifier for that entry, and no per-player maximum is computed.",
+  "filter_policy": "Select the first five rows ranked by crossing score in descending order.",
+  "meta_review": "Metadata identifies the player attribute crossing score as a recorded measure and includes a date, indicating repeated per-player attribute records; the result uses individual recorded crossing scores rather than a per-player maximum."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

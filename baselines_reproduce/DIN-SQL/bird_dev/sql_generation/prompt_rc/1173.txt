@@ -296,12 +296,12 @@ Hint: the most common illness refers to MAX(COUNT(Diagnosis)); lab work between 
 Schema_links: [Patient.Diagnosis,Examination.`Examination Date`,Examination.ID = Patient.ID,'1985-01-01','1995-12-31']
 Result Contract:
 {
-  "population": "Diagnoses (illnesses) identified among patients via the lab-work/examination records whose Examination Date is between 1985-01-01 and 1995-12-31, where the date range is a membership condition on the eligible examination/lab-work record and only illnesses recorded in this eligible set contribute to each illness's frequency.",
-  "row_grain": "One illness (one diagnosis value), namely the single most common one.",
+  "population": "Patient-level diagnoses for patients linked to examination/lab-work records whose examination/lab-work date is between 1985-01-01 and 1995-12-31; the date range is a membership condition on the eligible examination/lab-work occurrences used to connect patients to the counted diagnoses.",
+  "row_grain": "One illness (one patient diagnosis value), namely the single most common one across the eligible date-filtered examination/lab-work occurrences.",
   "column_role": "The identity (name or value) of the most common illness; the occurrence count behind it is a ranking measure, not a required output column.",
-  "derivation": "For each distinct illness, the count of its diagnosis values within the eligible date-filtered examination/lab-work records, defining that illness's frequency.",
+  "derivation": "For each distinct patient diagnosis, count the eligible date-filtered examination/lab-work occurrences associated with patients having that diagnosis; this count defines the illness's frequency.",
   "filter_policy": "Argmax: return the illness with the highest diagnosis count; tie-breaking is unspecified.",
-  "meta_review": "Metadata confirms that Examination.Diagnosis is on the same records that carry Examination Date, while Patient.Diagnosis is a separate patient-level attribute; this resolves the diagnosis owner as the date-filtered examination/lab-work record."
+  "meta_review": "The returned illness is the patient-level diagnosis associated with patients who have date-filtered examination/lab-work records, not a diagnosis recorded on the examination/lab-work event itself."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

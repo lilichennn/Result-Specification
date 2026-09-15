@@ -182,15 +182,17 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,County Code,County Name,Charter School (Y/N),Enrollment (K-12),Free Meal Count (K-12),Percent (%) Eligible Free (K-12)]
-Table schools, columns = [*,CDSCode,County,Charter]
+Table frpm, columns = [*,CDSCode,County Code,School Code,County Name,School Name,Charter School (Y/N),Enrollment (K-12),Free Meal Count (K-12),Percent (%) Eligible Free (K-12)]
+Table schools, columns = [*,CDSCode,County,School,Charter]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "County Code", "County Name", "Charter School (Y/N)", "Enrollment (K-12)", "Free Meal Count (K-12)", "Percent (%) Eligible Free (K-12)"]):
-[["01100170109835", "01", "Alameda", 1, 1087.0, 565.0, 0.519779208831647], ["01100170112607", "01", "Alameda", 1, 395.0, 186.0, 0.470886075949367], ["01100170118489", "01", "Alameda", 1, 244.0, 134.0, 0.549180327868853]]
+Sample rows from frpm (columns: ["CDSCode", "County Code", "School Code", "County Name", "School Name", "Charter School (Y/N)", "Enrollment (K-12)", "Free Meal Count (K-12)", "Percent (%) Eligible Free (K-12)"]):
+[["01100170109835", "01", "0109835", "Alameda", "FAME Public Charter", 1, 1087.0, 565.0, 0.519779208831647], ["01100170112607", "01", "0112607", "Alameda", "Envision Academy for Arts & Technology", 1, 395.0, 186.0, 0.470886075949367], ["01100170118489", "01", "0118489", "Alameda", "Aspire California College Preparatory Academy", 1, 244.0, 134.0, 0.549180327868853]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County Code: column description -> County Code, value description -> 
+Column School Code: column description -> , value description -> 
 Column County Name: column description -> County Code , value description -> 
+Column School Name: column description -> School Name , value description -> 
 Column Charter School (Y/N): column description -> Charter School (Y/N), value description -> 0: N;
 1: Y
 Column Enrollment (K-12): column description -> Enrollment (K-12), value description -> commonsense evidence:
@@ -200,11 +202,12 @@ Column Free Meal Count (K-12): column description -> Free Meal Count (K-12), val
 
 eligible free rate = Free Meal Count / Enrollment
 Column Percent (%) Eligible Free (K-12): column description -> , value description -> 
-Sample rows from schools (columns: ["CDSCode", "County", "Charter"]):
-[["01100170000000", "Alameda", null], ["01100170109835", "Alameda", 1], ["01100170112607", "Alameda", 1]]
+Sample rows from schools (columns: ["CDSCode", "County", "School", "Charter"]):
+[["01100170000000", "Alameda", null, null], ["01100170109835", "Alameda", "FAME Public Charter", 1], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", 1]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
+Column School: column description -> School, value description -> 
 Column Charter: column description -> This field identifies a charter school. , value description -> The field is coded as follows:
 
 ·       1 = The school is a charter

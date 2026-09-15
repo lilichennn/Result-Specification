@@ -296,12 +296,12 @@ Hint: male refers to Sex = 'M'; normal prothrombin time refer to PT < 14; averag
 Schema_links: [Patient.SEX,Laboratory.PT,Laboratory.ID = Patient.ID,M,14]
 Result Contract:
 {
-  "population": "Patients who are male (Sex = 'M') and have a normal prothrombin time (PT < 14).",
-  "row_grain": "One global summary across all eligible patients.",
-  "column_role": "The average prothrombin time of the eligible patients.",
-  "derivation": "Compute the average of prothrombin time (PT) over the eligible patient population.",
+  "population": "Prothrombin time measurements for male patients (Sex = 'M') that are normal (PT < 14).",
+  "row_grain": "One global summary across all eligible measurements.",
+  "column_role": "The average prothrombin time of the eligible measurements.",
+  "derivation": "Compute the average of the prothrombin time values over the eligible measurements.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result aggregates qualifying prothrombin time measurements rather than distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

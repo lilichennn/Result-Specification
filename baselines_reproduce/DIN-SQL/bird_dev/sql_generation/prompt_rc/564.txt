@@ -251,8 +251,8 @@ Hint: one comment refers to CommentCount = '1'
 Schema_links: [comments.Text,posts.ParentId,posts.CommentCount,comments.PostId = posts.Id,107829,1]
 Result Contract:
 {
-  "population": "Posts with ParentId = 107829 and CommentCount = 1.",
-  "row_grain": "One row represents one qualifying post.",
+  "population": "Comments of posts with ParentId = 107829 and CommentCount = 1.",
+  "row_grain": "One row represents the single comment of a qualifying post.",
   "column_role": "The text of the single comment associated with the qualifying post.",
   "derivation": "none",
   "filter_policy": "none",

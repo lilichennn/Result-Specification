@@ -183,23 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,frequency]
-Table loan, columns = [*,loan_id,account_id,duration,status]
+Table loan, columns = [*,loan_id,account_id,duration]
 Foreign_keys = [loan.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "frequency"]):
 [[1, "POPLATEK MESICNE"], [2, "POPLATEK MESICNE"], [3, "POPLATEK MESICNE"]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column frequency: column description -> frequency of the acount, value description -> 
-Sample rows from loan (columns: ["loan_id", "account_id", "duration", "status"]):
-[[4959, 2, 24, "A"], [4961, 19, 12, "B"], [4962, 25, 12, "A"]]
+Sample rows from loan (columns: ["loan_id", "account_id", "duration"]):
+[[4959, 2, 24], [4961, 19, 12], [4962, 25, 12]]
 Column descriptions and value descriptions for loan:
 Column loan_id: column description -> the id number identifying the loan data, value description -> 
 Column account_id: column description -> the id number identifying the account, value description -> 
 Column duration: column description -> loan duration, value description -> unit：month
-Column status: column description -> repayment status, value description -> 'A' stands for contract finished, no problems;
-'B' stands for contract finished, loan not paid;
-'C' stands for running contract, OK so far;
-'D' stands for running contract, client in debt
 
 Q: How many loan accounts are for pre-payment of duration of 24 months with weekly issuance of statement.
 Hint: Frequency = 'POPLATEK TYDNE' referes to weekly statement

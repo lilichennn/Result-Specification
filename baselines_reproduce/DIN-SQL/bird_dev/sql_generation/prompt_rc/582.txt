@@ -251,12 +251,12 @@ Hint: "Vebjorn Ljosa" is the DisplayName; last edited refers to LastEditorUserId
 Schema_links: [posts.Title,users.DisplayName,posts.LastEditorUserId = users.Id,Vebjorn Ljosa]
 Result Contract:
 {
-  "population": "Posts whose last editor is the user with DisplayName \"Vebjorn Ljosa\".",
+  "population": "Posts whose owner is the user with DisplayName \"Vebjorn Ljosa\".",
   "row_grain": "One row per qualifying post.",
   "column_role": "The title of the post.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.LastEditorUserId identifies the last editor's user and users.DisplayName stores the user's display name. This validates the population's user-identification semantics."
+  "meta_review": "Metadata confirms the user associated with a post as its owner can be identified by the user's display name. This validates the population's user-identification semantics."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

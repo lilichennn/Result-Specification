@@ -297,12 +297,12 @@ Hint: the oldest card refers to MIN(originalReleaseDate); mythic card refers to 
 Schema_links: [cards.originalReleaseDate,cards.rarity,legalities.format,legalities.status,cards.uuid = legalities.uuid,mythic,legal]
 Result Contract:
 {
-  "population": "Eligible cards are those with rarity = 'mythic', and the reported play formats are restricted to entries with status = 'legal' belonging to the selected card.",
-  "row_grain": "One row per legal play format of the oldest mythic card.",
-  "column_role": "The original release date of the oldest mythic card and the legal play format.",
+  "population": "Eligible records are legal play-format entries associated with mythic cards, where the card has a known originalReleaseDate and the legality entry has status = 'Legal'.",
+  "row_grain": "A single row representing one legal play format for a mythic card with the earliest known originalReleaseDate.",
+  "column_role": "The originalReleaseDate of the selected mythic card and the legal play format.",
   "derivation": "none",
-  "filter_policy": "Argmin selection: retain the mythic card with the minimum originalReleaseDate as the oldest card.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Top-1 selection by earliest originalReleaseDate among eligible legal play-format entries; only one row is returned.",
+  "meta_review": "The result is a single top-1 legal-format row, not a complete list of legal formats for the oldest mythic card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

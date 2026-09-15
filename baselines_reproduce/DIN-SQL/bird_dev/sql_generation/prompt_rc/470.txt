@@ -297,12 +297,12 @@ Hint: card set "Ancestor's Chosen" refers to name = 'Ancestor''s Chosen'; when r
 Schema_links: [sets.releaseDate,cards.name,cards.setCode = sets.code,Ancestor's Chosen]
 Result Contract:
 {
-  "population": "The card set containing a card whose card name is 'Ancestor''s Chosen'.",
-  "row_grain": "One card set.",
-  "column_role": "The release date of the card set.",
+  "population": "The card set or sets containing a card whose card name is 'Ancestor''s Chosen'.",
+  "row_grain": "The distinct release date or dates of the card set or sets.",
+  "column_role": "The release date of the card set or sets.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes cards.name (the card name) from sets.name and assigns releaseDate to sets. Therefore 'Ancestor''s Chosen' identifies the card whose containing set is requested, not a set named 'Ancestor''s Chosen'."
+  "meta_review": "Metadata distinguishes cards.name (the card name) from sets.name and assigns releaseDate to sets. Therefore 'Ancestor''s Chosen' identifies the card whose containing set or sets are requested, not a set named 'Ancestor''s Chosen'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

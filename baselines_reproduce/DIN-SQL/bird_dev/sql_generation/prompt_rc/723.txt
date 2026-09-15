@@ -230,7 +230,7 @@ Result Contract:
   "column_role": "The count of qualifying superheroes.",
   "derivation": "Count the superheroes satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms superhero.eye_colour_id maps to colour.id and hero_power links superheroes to superpower records whose power_name identifies the super power. This validates the Blue-eyed Agility population without changing the Round-1 contract."
+  "meta_review": "Metadata confirms the eye-colour mapping and the superhero-to-superpower linkage that identify the Blue-eyed Agility population."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

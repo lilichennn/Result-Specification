@@ -285,12 +285,12 @@ Hint: introduction of races refers to url; Circuit de Barcelona-Catalunya is a n
 Schema_links: [races.url,circuits.name,races.circuitId = circuits.circuitId,Circuit de Barcelona-Catalunya]
 Result Contract:
 {
-  "population": "All races held on the circuit whose name is \"Circuit de Barcelona-Catalunya\".",
-  "row_grain": "One row per qualifying race held on that circuit.",
-  "column_role": "The race-level URL that serves as the introduction of each race.",
+  "population": "The circuit named \"Circuit de Barcelona-Catalunya\" that has races, identified by its URL.",
+  "row_grain": "One row per distinct circuit URL.",
+  "column_role": "The URL that serves as the introduction for the races held at that circuit.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata describes races.url as the introduction of races, confirming the requested URL is the race-level introduction rather than a circuit or other entity URL."
+  "meta_review": "The requested introduction is operationalized as the circuit-level URL for the named circuit, not as separate race-level URLs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

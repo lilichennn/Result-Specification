@@ -230,12 +230,12 @@ Hint: name of major refers to major_name; 'Vice President' is position of Studen
 Schema_links: [major.major_name,member.position,member.link_to_major = major.major_id,Vice President]
 Result Contract:
 {
-  "population": "Student club members whose position is 'Vice President'; the eligible items are the majors associated with those members.",
-  "row_grain": "One row per major associated with a member holding the Vice President position.",
+  "population": "Major names associated with student club members whose position is 'Vice President'.",
+  "row_grain": "One row for each qualifying member-major association, so the same major name can appear more than once if multiple Vice Presidents are linked to it.",
   "column_role": "The name of the major (major_name).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms member.position stores the club position and member.link_to_major identifies the member's major, validating the Vice President-to-major association. No other semantic refinement is needed."
+  "meta_review": "Metadata confirms member.position stores the club position and member.link_to_major identifies the member's major, validating the Vice President-to-major association."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

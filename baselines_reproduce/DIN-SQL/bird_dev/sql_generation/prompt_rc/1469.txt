@@ -231,7 +231,7 @@ Schema_links: [member.first_name,member.last_name,member.position,zip_code.city,
 Result Contract:
 {
   "population": "Students whose hometown ZIP code is 28092, where that ZIP code's city is 'Lincolnton' and state is 'North Carolina'.",
-  "row_grain": "One student.",
+  "row_grain": "One row per qualifying student.",
   "column_role": "The student's full name (first name and last name) and the student's position.",
   "derivation": "none",
   "filter_policy": "none",

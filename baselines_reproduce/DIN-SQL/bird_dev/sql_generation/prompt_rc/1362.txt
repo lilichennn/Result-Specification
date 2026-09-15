@@ -299,12 +299,12 @@ Hint: Orange County is the county name, Virginia is the state name
 Schema_links: [zip_code.city,zip_code.county,zip_code.state,Orange County,Virginia]
 Result Contract:
 {
-  "population": "Cities located in the county whose county name is Orange County and whose state name is Virginia.",
-  "row_grain": "One global summary row for the entire eligible set of cities.",
-  "column_role": "The count of qualifying cities.",
-  "derivation": "Count the distinct city values belonging to the eligible population.",
+  "population": "City entries recorded for locations in the county whose county name is Orange County and whose state name is Virginia.",
+  "row_grain": "One global summary row for the entire eligible set of city entries.",
+  "column_role": "The count of qualifying city entries.",
+  "derivation": "Count the qualifying city values as they occur, without deduplication.",
   "filter_policy": "none",
-  "meta_review": "The zip_code table is at ZIP-code grain and carries city, county, and state, so the count must be distinct city values matching county='Orange County' and state='Virginia'. It also distinguishes full state name from short_state, supporting use of the full state name."
+  "meta_review": "The source data is at postal-code grain and carries city, county, and state, so the count is over matching recorded city values rather than distinct city names. It also distinguishes full state name from abbreviated state, supporting use of the full state name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

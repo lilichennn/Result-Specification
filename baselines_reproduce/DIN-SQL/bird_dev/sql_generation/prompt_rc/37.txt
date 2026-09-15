@@ -352,12 +352,12 @@ Hint: Execellence Rate = NumGE1500 / NumTstTakr; complete address has Street, Ci
 Schema_links: [schools.Street,schools.City,schools.Zip,schools.State,satscores.NumGE1500,satscores.NumTstTakr,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible candidates; no membership conditions restrict the school set.",
+  "population": "Schools that have an associated SAT score record are eligible candidates; no other membership conditions restrict the school set.",
   "row_grain": "One school, namely the school identified as having the lowest excellence rate.",
   "column_role": "The school's complete address components: Street, City, Zip, and State, using the school's location address rather than mailing or abbreviated address variants.",
-  "derivation": "Each school's excellence rate is the school-level ratio NumGE1500 / NumTstTakr, where NumGE1500 is the number of test takers with total SAT scores greater than or equal to 1500 and NumTstTakr is the number of test takers.",
+  "derivation": "The returned address components are stored school address values. The excellence rate used to choose the school is the school-level ratio NumGE1500 / NumTstTakr, where NumGE1500 is the number of test takers with total SAT scores greater than or equal to 1500 and NumTstTakr is the number of test takers.",
   "filter_policy": "Select the single school with the minimum excellence rate (argmin over schools by excellence rate).",
-  "meta_review": "Metadata confirms satscores.NumGE1500 and satscores.NumTstTakr are school-level SAT counts and explicitly define the excellence rate. It also distinguishes the requested Street/City/Zip/State location address from mailing or abbreviated address variants in schools."
+  "meta_review": "Metadata confirms the SAT count fields are school-level SAT counts and explicitly define the excellence rate. It also distinguishes the requested Street/City/Zip/State location address from mailing or abbreviated address variants in schools."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

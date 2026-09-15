@@ -298,7 +298,7 @@ Schema_links: [rulings.date,cards.name,rulings.uuid = cards.uuid,Reminisce]
 Result Contract:
 {
   "population": "Rulings associated with the card whose name is 'Reminisce'.",
-  "row_grain": "One ruling for the card 'Reminisce'.",
+  "row_grain": "One row for each ruling associated with the card 'Reminisce'.",
   "column_role": "The date on which the ruling was created.",
   "derivation": "none",
   "filter_policy": "none",

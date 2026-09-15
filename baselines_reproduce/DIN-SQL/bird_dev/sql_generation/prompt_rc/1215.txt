@@ -296,12 +296,12 @@ Hint: female refers to SEX = 'F'; total protein (TP) beyond the normal index ref
 Schema_links: [Patient.SEX,Laboratory.TP,Laboratory.ID = Patient.ID,'F',8.5]
 Result Contract:
 {
-  "population": "Female patients (SEX = 'F') whose total protein (TP) is beyond the normal index, i.e., TP > 8.5; both conditions must hold.",
-  "row_grain": "One row per eligible female patient with TP above 8.5.",
-  "column_role": "The deviation of the patient's TP index from the normal threshold.",
-  "derivation": "For each qualifying patient, the deviation is TP minus 8.5.",
+  "population": "Total protein measurements belonging to female patients and having total protein greater than 8.5; both conditions must hold.",
+  "row_grain": "One row per qualifying total protein measurement, without deduplication by patient.",
+  "column_role": "The deviation of the qualifying total protein measurement from the normal threshold.",
+  "derivation": "For each qualifying measurement, the deviation is total protein minus 8.5.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is measurement-level rather than a distinct patient-level list."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

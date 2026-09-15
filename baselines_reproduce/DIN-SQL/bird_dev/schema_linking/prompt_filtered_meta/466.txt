@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table cards, columns = [*,id,artist,setCode]
-Table set_translations, columns = [*,setCode,translation]
+Table set_translations, columns = [*,language,setCode,translation]
 Table sets, columns = [*,code]
 Foreign_keys = [set_translations.setCode = sets.code]
 Sample rows from cards (columns: ["id", "artist", "setCode"]):
@@ -192,9 +192,10 @@ Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
 Column artist: column description -> The name of the artist that illustrated the card art., value description -> 
 Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from set_translations (columns: ["setCode", "translation"]):
-[["10E", "核心系列第十版"], ["10E", "核心系列第十版"], ["10E", "Dixième édition"]]
+Sample rows from set_translations (columns: ["language", "setCode", "translation"]):
+[["Chinese Simplified", "10E", "核心系列第十版"], ["Chinese Traditional", "10E", "核心系列第十版"], ["French", "10E", "Dixième édition"]]
 Column descriptions and value descriptions for set_translations:
+Column language: column description -> language of this card set, value description -> 
 Column setCode: column description -> the set code for this set, value description -> 
 Column translation: column description -> translation of this card set, value description -> 
 Sample rows from sets (columns: ["code"]):

@@ -182,39 +182,23 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table comments, columns = [*,PostId,Text,UserId,UserDisplayName]
-Table postHistory, columns = [*,PostHistoryTypeId,PostId,UserId,Comment,UserDisplayName]
-Table posts, columns = [*,Id,Title,LastEditorUserId,LastEditDate,LastEditorDisplayName]
-Table users, columns = [*,Id,DisplayName]
-Foreign_keys = [comments.UserId = users.Id,comments.PostId = posts.Id,postHistory.UserId = users.Id,postHistory.PostId = posts.Id,posts.LastEditorUserId = users.Id]
-Sample rows from comments (columns: ["PostId", "Text", "UserId", "UserDisplayName"]):
-[[3, "Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'.", 13, null], [5, "Yes, R is nice- but WHY is it 'valuable'.", 13, null], [9, "Again- why?  How would I convince my boss to use this over, say, Excel.", 13, null]]
-Column descriptions and value descriptions for comments:
-Column PostId: column description -> the unique id of the post, value description -> 
-Column Text: column description -> the detailed content of the comment, value description -> 
-Column UserId: column description -> the id of the user who post the comment, value description -> 
-Column UserDisplayName: column description -> user's display name, value description -> 
-Sample rows from postHistory (columns: ["PostHistoryTypeId", "PostId", "UserId", "Comment", "UserDisplayName"]):
-[[2, 1, 8, "", ""], [1, 1, 8, "", ""], [3, 1, 8, "", ""]]
+Table postHistory, columns = [*,Id,PostHistoryTypeId,PostId,UserId,Comment,UserDisplayName]
+Table posts, columns = [*,Id,Title]
+Foreign_keys = [postHistory.PostId = posts.Id]
+Sample rows from postHistory (columns: ["Id", "PostHistoryTypeId", "PostId", "UserId", "Comment", "UserDisplayName"]):
+[[1, 2, 1, 8, "", ""], [2, 1, 1, 8, "", ""], [3, 3, 1, 8, "", ""]]
 Column descriptions and value descriptions for postHistory:
+Column Id: column description -> the post history id, value description -> 
 Column PostHistoryTypeId: column description -> the id of the post history type, value description -> 
 Column PostId: column description -> the unique id of the post, value description -> 
 Column UserId: column description -> the user who post the post, value description -> 
 Column Comment: column description -> comments of the post, value description -> 
 Column UserDisplayName: column description -> user's display name, value description -> 
-Sample rows from posts (columns: ["Id", "Title", "LastEditorUserId", "LastEditDate", "LastEditorDisplayName"]):
-[[1, "Eliciting priors from experts", null, null, null], [2, "What is normality?", 88, "2010-08-07 17:56:44.0", null], [3, "What are some valuable Statistical Analysis open source projects?", 183, "2011-02-12 05:50:03.0", null]]
+Sample rows from posts (columns: ["Id", "Title"]):
+[[1, "Eliciting priors from experts"], [2, "What is normality?"], [3, "What are some valuable Statistical Analysis open source projects?"]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column Title: column description -> the title of the post, value description -> 
-Column LastEditorUserId: column description -> the id of the last editor, value description -> 
-Column LastEditDate: column description -> the last edit date, value description -> 
-Column LastEditorDisplayName: column description -> the display name of the last editor, value description -> 
-Sample rows from users (columns: ["Id", "DisplayName"]):
-[[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
-Column descriptions and value descriptions for users:
-Column Id: column description -> the user id, value description -> 
-Column DisplayName: column description -> the user's display name, value description -> 
 
 Q: Write all the comments left by users who edited the post titled 'Why square the difference instead of taking the absolute value in standard deviation?'
 Hint: "Why square the difference instead of taking the absolute value in standard deviation?" is the Title of post;

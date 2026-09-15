@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Team, columns = [*,id,team_api_id,team_fifa_api_id,team_long_name,team_short_name]
-Table Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,date,buildUpPlaySpeed,buildUpPlaySpeedClass]
+Table Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,date,buildUpPlaySpeed]
 Foreign_keys = [Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]
 Sample rows from Team (columns: ["id", "team_api_id", "team_fifa_api_id", "team_long_name", "team_short_name"]):
 [[1, 9987, 673, "KRC Genk", "GEN"], [2, 9993, 675, "Beerschot AC", "BAC"], [3, 10000, 15005, "SV Zulte-Waregem", "ZUL"]]
@@ -193,18 +193,14 @@ Column team_api_id: column description -> the id of the team api, value descript
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_long_name: column description -> the team's long name, value description -> 
 Column team_short_name: column description -> the team's short name, value description -> 
-Sample rows from Team_Attributes (columns: ["id", "team_fifa_api_id", "team_api_id", "date", "buildUpPlaySpeed", "buildUpPlaySpeedClass"]):
-[[1, 434, 9930, "2010-02-22 00:00:00", 60, "Balanced"], [2, 434, 9930, "2014-09-19 00:00:00", 52, "Balanced"], [3, 434, 9930, "2015-09-10 00:00:00", 47, "Balanced"]]
+Sample rows from Team_Attributes (columns: ["id", "team_fifa_api_id", "team_api_id", "date", "buildUpPlaySpeed"]):
+[[1, 434, 9930, "2010-02-22 00:00:00", 60], [2, 434, 9930, "2014-09-19 00:00:00", 52], [3, 434, 9930, "2015-09-10 00:00:00", 47]]
 Column descriptions and value descriptions for Team_Attributes:
 Column id: column description -> the unique id for teams, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column date: column description -> Date, value description -> e.g. 2010-02-22 00:00:00
 Column buildUpPlaySpeed: column description -> the speed in which attacks are put together , value description -> the score which is between 1-00 to measure the team's attack speed
-Column buildUpPlaySpeedClass: column description -> the speed class, value description -> commonsense reasoning: 
- Slow: 1-33
- Balanced: 34-66
- Fast: 66-100
 
 Q: What are the speed in which attacks are put together of the top 4 teams with the highest build Up Play Speed?
 Hint: speed in which attacks are put together refers to buildUpPlaySpeed;highest build up play speed refers to MAX(buildUpPlaySpeed)

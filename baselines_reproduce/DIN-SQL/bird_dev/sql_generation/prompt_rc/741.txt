@@ -225,12 +225,12 @@ Hint: name of the superhero refers to superhero_name; superhero that has the mos
 Schema_links: [superhero.superhero_name,hero_power.power_id,superhero.id = hero_power.hero_id]
 Result Contract:
 {
-  "population": "All superheroes, each considered together with the superpowers associated with them.",
-  "row_grain": "One superhero entity.",
+  "population": "Superhero names that have at least one associated superpower.",
+  "row_grain": "A single selected superhero name.",
   "column_role": "The superhero's name (superhero_name).",
-  "derivation": "For each superhero entity, the count of their associated superpowers.",
-  "filter_policy": "Select the superhero whose power count is maximal (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata establishes that powers are superpower associations linked to superhero.id via hero_power. The contract therefore counts those associations per superhero entity and returns superhero_name."
+  "derivation": "The returned name is a stored value; the selection uses an aggregate count of associated superpowers per superhero name.",
+  "filter_policy": "Select the superhero name with the maximal associated-superpower count; tie handling is unspecified.",
+  "meta_review": "Metadata establishes that powers are superpower associations linked to superhero.id via hero_power. The contract therefore counts those associations per superhero name among superheroes with at least one association and returns superhero_name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

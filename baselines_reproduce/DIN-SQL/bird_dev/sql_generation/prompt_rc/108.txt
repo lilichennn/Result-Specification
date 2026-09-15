@@ -248,12 +248,12 @@ Hint:
 Schema_links: [disp.type,loan.amount,trans.amount,trans.date,account.date,loan.account_id = account.account_id,trans.account_id = account.account_id,disp.account_id = account.account_id,'OWNER']
 Result Contract:
 {
-  "population": "The reference population is clients who applied for loans; the target population is transactions associated with the selected client's account that occur after that account was opened.",
-  "row_grain": "The earliest post-opening transaction for the selected client.",
-  "column_role": "The transaction amount of that earliest post-opening transaction.",
+  "population": "Transactions linked to accounts associated with the largest loan amount, with no condition that they occur after the account was opened.",
+  "row_grain": "A single earliest-dated transaction among those linked to the largest loan amount.",
+  "column_role": "The transaction amount of that earliest transaction.",
   "derivation": "none",
-  "filter_policy": "Choose the client whose applied loan has the largest approved amount, then choose that client's earliest transaction after the account opening; tie handling is unspecified.",
-  "meta_review": "Metadata confirms loan.amount is the approved loan amount and account.date is the account creation/opening date, validating the largest-loan and post-opening conditions. Round-1 otherwise preserved."
+  "filter_policy": "Choose the largest loan amount, and among transactions associated with loans having that amount, choose the earliest-dated transaction; remaining ties are unspecified.",
+  "meta_review": "Loan amount is the semantic measure for the biggest loan, and transaction date is the semantic ordering for the first transaction; account opening date is not used."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

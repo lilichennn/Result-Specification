@@ -301,12 +301,12 @@ Hint: difference = SUBTRACT(SUM(weight_kg WHERE full_name = 'Emil Blonsky'), SUM
 Schema_links: [superhero.weight_kg,superhero.full_name,Emil Blonsky,Charles Chandler]
 Result Contract:
 {
-  "population": "Two target sets of superhero records: those whose full name is 'Emil Blonsky' and those whose full name is 'Charles Chandler'.",
+  "population": "The superheroes identified by full name matching 'Emil Blonsky' and 'Charles Chandler'.",
   "row_grain": "One global summary row representing the single requested comparison.",
   "column_role": "The numeric difference between Emil Blonsky's weight and Charles Chandler's weight.",
-  "derivation": "Subtract the total weight in kg of the 'Charles Chandler' records from the total weight in kg of the 'Emil Blonsky' records, with each person's weight being the sum of weight_kg over that person's records.",
+  "derivation": "Subtract the weight in kg of the superhero whose full name matches 'Charles Chandler' from the weight in kg of the superhero whose full name matches 'Emil Blonsky', using each named superhero's weight value directly rather than an aggregate.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

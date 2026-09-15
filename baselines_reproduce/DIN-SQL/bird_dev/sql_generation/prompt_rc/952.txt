@@ -285,12 +285,12 @@ Hint:
 Schema_links: [constructors.name,constructorStandings.position,constructorStandings.constructorId = constructors.constructorId,1]
 Result Contract:
 {
-  "population": "Constructors for which there exists at least one constructor standing record with position equal to 1.",
-  "row_grain": "One constructor per result row.",
-  "column_role": "The identity of the qualifying constructor, expressed by its full constructor name.",
+  "population": "Constructors for which there exists at least one result record with rank equal to 1.",
+  "row_grain": "One distinct qualifying constructor name per result row.",
+  "column_role": "The full constructor name identifying the qualifying constructor.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows constructorStandings records constructor-specific championship positions, so 'ranked 1' is interpreted as position = 1 in constructor standings. Metadata also identifies constructors.name as the full constructor identity for output."
+  "meta_review": "Metadata supports interpreting 'ranked 1' as a rank of 1 in constructor result records, not as a constructor championship standing position; the constructor's full name is the returned identity."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table driverStandings, columns = [*,driverId,points]
 Table drivers, columns = [*,driverId,forename,surname]
-Table results, columns = [*,driverId,points]
-Foreign_keys = [driverStandings.driverId = drivers.driverId,results.driverId = drivers.driverId]
+Foreign_keys = [driverStandings.driverId = drivers.driverId]
 Sample rows from driverStandings (columns: ["driverId", "points"]):
 [[1, 10.0], [2, 8.0], [3, 6.0]]
 Column descriptions and value descriptions for driverStandings:
@@ -197,11 +196,6 @@ Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from results (columns: ["driverId", "points"]):
-[[1, 10.0], [2, 8.0], [3, 6.0]]
-Column descriptions and value descriptions for results:
-Column driverId: column description -> , value description -> 
-Column points: column description -> , value description -> 
 
 Q: State the driver with the most points scored. Find his full name with that points.
 Hint: the most points scored refers to max(points); Full name of the driver refers to drivers.forename and drivers.surname;

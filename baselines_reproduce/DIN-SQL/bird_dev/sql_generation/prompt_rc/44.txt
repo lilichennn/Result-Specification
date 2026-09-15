@@ -357,7 +357,7 @@ Result Contract:
   "column_role": "The selected school's average writing score, and the city where the school is situated.",
   "derivation": "The output uses the selected school's school-level average writing score, and the ranking uses the school-level number of test takers whose total SAT score is greater than or equal to 1500; these are provided as school-level metrics rather than computed from individual test-taker records.",
   "filter_policy": "Select the one school with the greatest school-level number of test takers whose total SAT score is greater than or equal to 1500; tie handling is not specified.",
-  "meta_review": "Metadata establishes that satscores.NumGE1500 and satscores.AvgScrWrite are school-level metrics, resolving the Round-1 uncertainty about storage versus computation. No other Round-1 semantic ambiguity was narrowed."
+  "meta_review": "Metadata establishes that the number of test takers with total SAT score at least 1500 and the average writing score are school-level metrics, resolving storage versus computation uncertainty. No other semantic ambiguity was narrowed."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

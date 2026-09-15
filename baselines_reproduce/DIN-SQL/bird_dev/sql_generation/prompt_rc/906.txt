@@ -285,12 +285,12 @@ Hint: first race refers to min(Year); Lewis Hamiltonrefers to the full name of t
 Schema_links: [drivers.forename,drivers.surname,races.year,races.name,results.points,results.driverId = drivers.driverId,results.raceId = races.raceId,Lewis,Hamilton]
 Result Contract:
 {
-  "population": "All race result records associated with the driver whose full name (forename plus surname) is 'Lewis Hamilton'.",
-  "row_grain": "One row representing Lewis Hamilton's first race event.",
-  "column_role": "The name of the first race and the points Lewis Hamilton recorded in his race result for that race event.",
+  "population": "All driver standings records associated with the driver whose full name (forename plus surname) is 'Lewis Hamilton', each linked to a race event.",
+  "row_grain": "One row representing the selected earliest-year race event in Lewis Hamilton's driver standings records.",
+  "column_role": "The name of the first race and the points Lewis Hamilton had in the driver standings record for that race event.",
   "derivation": "none",
-  "filter_policy": "Retain the race event with the earliest year among the driver's race results, since 'first race' is defined as min(Year); handling of multiple races sharing that minimum year is unspecified.",
-  "meta_review": "Metadata confirms races.name is the race name and results.points is the driver-race result points. This resolves the requested race label and points owner."
+  "filter_policy": "Retain one driver standings record whose race event has the earliest year among the driver's driver standings records, since 'first race' is defined as the minimum year; handling of multiple records sharing that minimum year is unspecified.",
+  "meta_review": "Metadata confirms the race name and driver standings points are the relevant race label and points measure. This resolves the requested race label and points owner."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

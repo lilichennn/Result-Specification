@@ -248,11 +248,11 @@ Hint: A3 refers to district names; Active loan refers to running contracts; Stat
 Schema_links: [district.A3,loan.amount,loan.status,loan.account_id = account.account_id,account.district_id = district.district_id,'C','D']
 Result Contract:
 {
-  "population": "All districts, where only active loans—running contracts with status 'C' (OK so far) or 'D' (client in debt)—are eligible to contribute to each district's active-loan measure.",
+  "population": "Districts that have at least one active loan, where active loans are running contracts with status 'C' (OK so far) or 'D' (client in debt).",
   "row_grain": "One district.",
   "column_role": "The district name (A3).",
-  "derivation": "For each district, an active-loan measure over its running contracts (status 'C' or 'D'); the question does not determine whether this measure is a total loan amount, a count of active contracts, or a largest single loan amount.",
-  "filter_policy": "Argmax: return the single district with the highest active-loan measure, with the exact ranking quantity left unspecified because the aggregation of 'active loan' is not determined.",
+  "derivation": "For each district, the total amount of its active loans, aggregated over running contracts with status 'C' or 'D'.",
+  "filter_policy": "Rank districts by total active-loan amount in descending order and return the single top district.",
   "meta_review": "Metadata confirms loan.status values 'C' and 'D' as running contracts. It labels district.A3 as region rather than district name, conflicting with the evidence mapping; the evidence mapping is preserved."
 }
 

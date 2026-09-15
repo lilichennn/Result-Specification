@@ -187,12 +187,12 @@ Hint: label = '+' means molecules are carcinogenic; 4th atom of each molecule re
 Schema_links: [atom.element,atom.atom_id,molecule.label,atom.molecule_id = molecule.molecule_id,'+','4']
 Result Contract:
 {
-  "population": "Atoms that are the 4th atom of their molecule (substr(atom_id, 7, 1) = '4') and whose molecule is carcinogenic (label = '+').",
-  "row_grain": "One row per toxicology element value found among the qualifying 4th atoms.",
-  "column_role": "The toxicology element value and the tally (count) of qualifying 4th atoms having that element.",
-  "derivation": "Count the qualifying 4th atoms grouped by their toxicology element value.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Atoms that are the 4th atom of their molecule and whose molecule is carcinogenic (positive label).",
+  "row_grain": "One row per distinct toxicology element value among the qualifying 4th atoms.",
+  "column_role": "Only the toxicology element value is returned; no tally or count is included.",
+  "derivation": "Return the distinct stored toxicology element values of the qualifying atoms, not an aggregate count.",
+  "filter_policy": "Duplicate toxicology element values are eliminated so each element appears once; no ranking, ordering, or top-k selection is applied.",
+  "meta_review": "The result is a distinct list of toxicology element values rather than a counted tally."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

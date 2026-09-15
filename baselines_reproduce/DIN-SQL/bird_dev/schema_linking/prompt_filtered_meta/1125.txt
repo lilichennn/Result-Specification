@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id,birthday]
-Table Player_Attributes, columns = [*,id,player_fifa_api_id,player_api_id,date,finishing]
+Table Player_Attributes, columns = [*,player_fifa_api_id,player_api_id,finishing]
 Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id]
 Sample rows from Player (columns: ["id", "player_api_id", "player_name", "player_fifa_api_id", "birthday"]):
 [[1, 505942, "Aaron Appindangoye", 218353, "1992-02-29 00:00:00"], [2, 155782, "Aaron Cresswell", 189615, "1989-12-15 00:00:00"], [3, 162549, "Aaron Doran", 186170, "1991-05-13 00:00:00"]]
@@ -195,13 +195,11 @@ Column player_fifa_api_id: column description -> the id of the player fifa api, 
 Column birthday: column description -> the player's birthday, value description -> e.g. 1992-02-29 00:00:00 
 commonsense reasoning: 
 Player A is older than player B means that A's birthday is earlier than B's
-Sample rows from Player_Attributes (columns: ["id", "player_fifa_api_id", "player_api_id", "date", "finishing"]):
-[[1, 218353, 505942, "2016-02-18 00:00:00", 44], [2, 218353, 505942, "2015-11-19 00:00:00", 44], [3, 218353, 505942, "2015-09-21 00:00:00", 44]]
+Sample rows from Player_Attributes (columns: ["player_fifa_api_id", "player_api_id", "finishing"]):
+[[218353, 505942, 44], [218353, 505942, 44], [218353, 505942, 44]]
 Column descriptions and value descriptions for Player_Attributes:
-Column id: column description -> the unique id for players, value description -> 
 Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column player_api_id: column description -> the id of the player api, value description -> 
-Column date: column description -> date, value description -> e.g. 2016-02-18 00:00:00
 Column finishing: column description -> the player's finishing rate, value description -> 0-100 which is calculated by FIFA
 
 Q: Among the players with finishing rate of 1, pick the eldest player and state the player's name.

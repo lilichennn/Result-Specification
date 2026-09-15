@@ -263,12 +263,12 @@ Hint: element chlorine refers to element = 'cl'; single bond refers to bond_type
 Schema_links: [atom.element,atom.atom_id,bond.bond_type,atom.molecule_id = bond.molecule_id,'cl','-']
 Result Contract:
 {
-  "population": "All atom records belonging to molecules that contain at least one single bond (bond_type = '-'), forming the full set over which the chlorine composition is measured.",
-  "row_grain": "One global summary row representing the overall chlorine share across all atom records in single-bond molecules.",
+  "population": "Atom occurrences associated with a single bond (bond type '-') in the same molecule; an atom in a molecule with multiple single bonds contributes once for each single-bond association.",
+  "row_grain": "One global summary row representing the overall chlorine share across all atom occurrences in the single-bond population.",
   "column_role": "A single numeric value giving the chlorine composition as a percentage.",
-  "derivation": "The percentage equals the count of atoms whose element is chlorine (element = 'cl') divided by the total count of atom_id values in the single-bond-molecule population, expressed as a percentage.",
-  "filter_policy": "No additional filtering or ordering beyond molecule eligibility based on containing a single bond (bond_type = '-').",
-  "meta_review": "Metadata shows bond_type is a bond attribute and bonds are linked to molecules via bond.molecule_id, while atoms are linked to molecules via atom.molecule_id. This resolves 'single bond molecules' as molecules containing a bond with bond_type = '-' and makes the counted population the atoms belonging to those molecules."
+  "derivation": "The percentage equals the count of chlorine atom occurrences in the single-bond population divided by the total count of atom occurrences in that population, multiplied by 100.",
+  "filter_policy": "No ranking, extrema, or ordering; the only selection is that the atom occurrences are linked to single bonds (bond type '-').",
+  "meta_review": "Bond type is a bond attribute, and atoms and bonds are related through their molecule. This makes the measured population atom occurrences paired with single bonds, rather than distinct atoms of molecules merely containing a single bond."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

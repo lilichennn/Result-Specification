@@ -248,12 +248,12 @@ Hint:
 Schema_links: [client.client_id,client.birth_date,district.A3,disp.client_id = client.client_id,disp.account_id = account.account_id,account.district_id = district.district_id,1983,1987,East Bohemia]
 Result Contract:
 {
-  "population": "Clients whose birth occurred in calendar years 1983 through 1987 inclusive and who have an associated account whose branch district is in the East Bohemia region.",
-  "row_grain": "One client.",
-  "column_role": "The client's unique ID, as explicitly requested.",
+  "population": "Clients whose birth occurred in calendar years 1983 through 1987 inclusive, whose own district region is East Bohemia, and who have an associated account whose branch district is that same district.",
+  "row_grain": "One qualifying client-account association.",
+  "column_role": "The client's unique ID and the associated account's ID.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows account.district_id is the account branch location and district.A3 is the region, so East Bohemia applies to the account's district region rather than client.district_id. Metadata also identifies client.client_id as the unique client identifier requested."
+  "meta_review": "The East Bohemia condition applies to the client's district region, with the associated account branch required to be in the same district; the result includes both the client identifier and the associated account identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

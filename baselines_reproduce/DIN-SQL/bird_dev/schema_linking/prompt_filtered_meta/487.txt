@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table cards, columns = [*,id,cardKingdomFoilId,cardKingdomId,setCode]
-Table sets, columns = [*,id,baseSetSize,code,name,totalSetSize]
+Table sets, columns = [*,code,name]
 Foreign_keys = []
 Sample rows from cards (columns: ["id", "cardKingdomFoilId", "cardKingdomId", "setCode"]):
 [[1, null, "122719", "10E"], [2, null, "122720", "10E"], [3, null, "122725", "10E"]]
@@ -193,14 +193,11 @@ Column cardKingdomFoilId: column description -> card Kingdom Foil Id, value desc
 cardKingdomFoilId, when paired with cardKingdomId that is not Null, is incredibly powerful. 
 Column cardKingdomId: column description -> card Kingdom Id, value description -> A list of all the colors in the color indicator
 Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from sets (columns: ["id", "baseSetSize", "code", "name", "totalSetSize"]):
-[[1, 383, "10E", "Tenth Edition", 508], [2, 302, "2ED", "Unlimited Edition", 302], [3, 332, "2XM", "Double Masters", 384]]
+Sample rows from sets (columns: ["code", "name"]):
+[["10E", "Tenth Edition"], ["2ED", "Unlimited Edition"], ["2XM", "Double Masters"]]
 Column descriptions and value descriptions for sets:
-Column id: column description -> unique id identifying this set, value description -> 
-Column baseSetSize: column description -> The number of cards in the set., value description -> 
 Column code: column description -> The set code for the set., value description -> 
 Column name: column description -> The name of the set., value description -> 
-Column totalSetSize: column description -> The total number of cards in the set, including promotional and related supplemental products but excluding Alchemy modifications - however those cards are included in the set itself., value description -> 
 
 Q: What is the percentage of incredibly powerful cards in the set Coldsnap?
 Hint: card set Coldsnap refers to name = 'Coldsnap'; foil is incredibly powerful refers to cardKingdomFoilId is not null AND cardKingdomId is not null; the percentage of incredibly powerful cards in the set refers to DIVIDE(SUM(incredibly powerful), SUM(name = 'Coldsnap'))*100

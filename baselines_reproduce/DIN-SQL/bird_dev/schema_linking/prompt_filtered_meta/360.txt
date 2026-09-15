@@ -182,25 +182,25 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,asciiName,faceName,name,setCode]
-Table set_translations, columns = [*,language,setCode]
-Table sets, columns = [*,code]
+Table cards, columns = [*,name,setCode]
+Table set_translations, columns = [*,id,language,setCode]
+Table sets, columns = [*,id,code]
 Foreign_keys = [set_translations.setCode = sets.code]
-Sample rows from cards (columns: ["asciiName", "faceName", "name", "setCode"]):
-[[null, null, "Ancestor's Chosen", "10E"], [null, null, "Angel of Mercy", "10E"], [null, null, "Aven Cloudchaser", "10E"]]
+Sample rows from cards (columns: ["name", "setCode"]):
+[["Ancestor's Chosen", "10E"], ["Angel of Mercy", "10E"], ["Aven Cloudchaser", "10E"]]
 Column descriptions and value descriptions for cards:
-Column asciiName: column description -> The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters., value description -> 
-Column faceName: column description -> The name on the face of the card., value description -> 
 Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
 Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from set_translations (columns: ["language", "setCode"]):
-[["Chinese Simplified", "10E"], ["Chinese Traditional", "10E"], ["French", "10E"]]
+Sample rows from set_translations (columns: ["id", "language", "setCode"]):
+[[1, "Chinese Simplified", "10E"], [2, "Chinese Traditional", "10E"], [3, "French", "10E"]]
 Column descriptions and value descriptions for set_translations:
+Column id: column description -> unique id identifying this set, value description -> 
 Column language: column description -> language of this card set, value description -> 
 Column setCode: column description -> the set code for this set, value description -> 
-Sample rows from sets (columns: ["code"]):
-[["10E"], ["2ED"], ["2XM"]]
+Sample rows from sets (columns: ["id", "code"]):
+[[1, "10E"], [2, "2ED"], [3, "2XM"]]
 Column descriptions and value descriptions for sets:
+Column id: column description -> unique id identifying this set, value description -> 
 Column code: column description -> The set code for the set., value description -> 
 
 Q: cards are not directly linked to language but through table 'set'. you need to add set in covered table & rephrase your question

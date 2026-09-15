@@ -373,12 +373,12 @@ Hint: Simplified Chinese translation refers to language = 'Chinese Simplified'; 
 Schema_links: [set_translations.translation,set_translations.language,sets.name,set_translations.setCode = sets.code,Chinese Simplified,Mirrodin]
 Result Contract:
 {
-  "population": "Set name translations for the set whose name is 'Mirrodin' and whose language is 'Chinese Simplified'.",
-  "row_grain": "One translation of the set name for the specified set and language.",
+  "population": "Set-name translations linked to the set named 'Mirrodin' and having language 'Chinese Simplified'.",
+  "row_grain": "One row for each matching set-name translation.",
   "column_role": "The translated name of the set in Chinese Simplified.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms set_translations stores language-specific translations of card set names, validating the set-level owner of the requested translated name. No Round-1 field required refinement."
+  "meta_review": "Metadata confirms language-specific translations of card set names, validating the set-level owner of the requested translated name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

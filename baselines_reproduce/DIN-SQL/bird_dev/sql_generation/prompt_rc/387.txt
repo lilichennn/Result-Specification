@@ -375,10 +375,10 @@ Result Contract:
 {
   "population": "All cards that belong to the set with setCode = 'OGW'.",
   "row_grain": "One card belonging to set OGW.",
-  "column_role": "The card's name and the card's colour, interpreted as the card's colors rather than color identity, color indicator, or border color.",
+  "column_role": "The card's identifier and the card's colour, interpreted as the card's colors rather than color identity, color indicator, or border color.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies cards.colors as the card's colors, resolving the requested colour output. Round-1 contract otherwise preserved."
+  "meta_review": "The colour output is the card's colors, and the card output is the card identifier rather than the card name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -327,12 +327,12 @@ Hint: score more than 60 refers to Score > 60
 Schema_links: [posts.Id,posts.OwnerUserId,posts.Score,60]
 Result Contract:
 {
-  "population": "All posts whose post-level Score is greater than 60.",
-  "row_grain": "One row per qualifying post.",
-  "column_role": "The post identifier and the identifier of the user who created that post.",
+  "population": "All post-history events associated with posts whose score is greater than 60.",
+  "row_grain": "One row per qualifying post-history event.",
+  "column_role": "The post identifier and the user identifier recorded for the post-history event.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.Score is the score of a post and posts.OwnerUserId is the identifier of the post's owner, validating the post-level result semantics."
+  "meta_review": "Metadata confirms the score condition applies to the referenced post, and the returned user identifier is the user associated with the qualifying post-history event rather than the post's owner."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

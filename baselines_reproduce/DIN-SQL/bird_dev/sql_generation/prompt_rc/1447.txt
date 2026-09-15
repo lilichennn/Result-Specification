@@ -230,8 +230,8 @@ Hint: name of event refers to event_name; underspend its budget refers to remain
 Schema_links: [event.event_name,event.location,budget.remaining,event.event_id = budget.link_to_event,0]
 Result Contract:
 {
-  "population": "All events that have at least one associated budget entry with remaining greater than 0.",
-  "row_grain": "One row per event.",
+  "population": "Event name and location combinations associated with at least one budget entry whose remaining amount is greater than 0.",
+  "row_grain": "One row per distinct event name and location combination.",
   "column_role": "The event's name and the event's location.",
   "derivation": "none",
   "filter_policy": "none",

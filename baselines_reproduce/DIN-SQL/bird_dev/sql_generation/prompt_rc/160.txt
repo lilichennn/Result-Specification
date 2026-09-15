@@ -248,12 +248,12 @@ Hint: frequency = 'POPLATEK TYDNE' stands for weekly issuance
 Schema_links: [account.account_id,account.frequency,loan.amount,account.account_id = loan.account_id,'POPLATEK TYDNE',200000]
 Result Contract:
 {
-  "population": "Accounts with weekly issuance frequency (frequency = 'POPLATEK TYDNE') that have at least one approved loan amount under 200000.",
-  "row_grain": "One global summary row for the entire qualifying account population.",
-  "column_role": "The count of qualifying accounts.",
-  "derivation": "Count the accounts satisfying the population conditions.",
+  "population": "Account-loan occurrences associated with accounts whose issuance frequency is weekly and whose loan amount is under 200000.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "The count of qualifying account-loan occurrences.",
+  "derivation": "Count the qualifying account-loan occurrences satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that loan amount is the approved amount in loan.amount, distinguishing it from loan payments or duration. The result remains a count of accounts, not loan records."
+  "meta_review": "The amount condition applies to the loan amount itself, with no approval or loan-status condition. The result is a count over qualifying account-loan occurrences rather than a deduplicated account count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

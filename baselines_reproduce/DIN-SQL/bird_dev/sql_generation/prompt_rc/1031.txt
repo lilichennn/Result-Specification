@@ -416,11 +416,11 @@ Schema_links: [Player.birthday,Player_Attributes.sprint_speed,Player_Attributes.
 Result Contract:
 {
   "population": "Players who have a sprint speed record with sprint_speed >= 97 whose record date falls in a year from 2013 to 2015 inclusive, with both conditions holding on the same record.",
-  "row_grain": "One row per player who meets the sprint-speed and date conditions.",
+  "row_grain": "One row per distinct present-age value among the qualifying players.",
   "column_role": "The qualifying player's age at present.",
   "derivation": "Age at present is computed as the difference between the current datetime and the player's birthday.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

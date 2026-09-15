@@ -249,11 +249,11 @@ Schema_links: [account.account_id,district.A2,disp.type,account.district_id = di
 Result Contract:
 {
   "population": "Accounts whose district name is Tabor and that have a disposition of type 'OWNER', the condition that defines eligibility for loans.",
-  "row_grain": "One row per qualifying account.",
+  "row_grain": "One row per matching owner disposition, returning the associated account identifier.",
   "column_role": "Values identifying each qualifying account.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that loan eligibility is represented by disposition type 'OWNER' in disp, not an account-level type, and that district name is district.A2. The population was therefore refined to accounts linked to an OWNER disposition in district Tabor."
+  "meta_review": "Metadata establishes that loan eligibility is represented by disposition type 'OWNER', not an account-level type, and that the district condition refers to the district name. The population was therefore refined to accounts linked to an OWNER disposition in district Tabor."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

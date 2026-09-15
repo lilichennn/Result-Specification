@@ -228,8 +228,8 @@ Result Contract:
   "population": "All powers that superheroes have, with each superhero-power occurrence eligible to contribute to its power's count.",
   "row_grain": "One power.",
   "column_role": "The identity (name) of the power.",
-  "derivation": "For each power, count the superhero-power occurrences (COUNT of power_name) associated with that power.",
-  "filter_policy": "Select the power whose count is the maximum (argmax); tie handling is unspecified.",
+  "derivation": "For each power, count the superhero-power occurrences associated with that power.",
+  "filter_policy": "Select the power whose count is the maximum; tie handling is unspecified.",
   "meta_review": "Metadata distinguishes superpower.power_name from attribute.attribute_name, confirming the requested 'power' is a superpower name and that superhero possession is recorded as hero_power associations. This validates counting superhero-power occurrences per power and selecting the maximum."
 }
 

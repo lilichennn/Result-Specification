@@ -285,12 +285,12 @@ Hint:
 Schema_links: [results.laps,races.name,races.year,circuits.location,results.raceId = races.raceId,races.circuitId = circuits.circuitId]
 Result Contract:
 {
-  "population": "All Formula 1 races, each characterized by its number of laps; no eligibility restriction applies.",
-  "row_grain": "One row per race edition (a named race in a specific year) that attained the maximum lap count, including all tied editions.",
-  "column_role": "The maximum number of laps, plus for each qualifying race edition the race name, the year, and the circuit location where it was hosted.",
-  "derivation": "The maximum lap count taken over all F1 races, where each race's lap count is a race-level metric whether stored directly or computed.",
-  "filter_policy": "Argmax: retain only the race edition(s) whose lap count equals the maximum across all races; no additional ordering or limit is specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Recorded lap entries for Formula 1 races that are associated with a race edition and a circuit location.",
+  "row_grain": "A single row for the selected recorded lap entry with the greatest lap number.",
+  "column_role": "The highest recorded lap number, together with the race name, year, and circuit location associated with that lap entry.",
+  "derivation": "The lap value is taken directly from the selected recorded lap entry; the race name, year, and circuit location are associated descriptors, not aggregates over races.",
+  "filter_policy": "Top-1 selection by highest lap number; exactly one row is returned, and tied highest lap entries are not all included.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

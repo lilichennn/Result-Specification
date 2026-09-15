@@ -182,12 +182,12 @@ Hint: January 2012 refers to the Date value = '201201'
 Schema_links: [yearmonth.Consumption,yearmonth.CustomerID,yearmonth.Date,38508,'201201']
 Result Contract:
 {
-  "population": "For the first measure, gas-station transaction records belonging to customer 38508. For the second measure, customer-month consumption records belonging to customer 38508 with Date = '201201' (January 2012); no gas-station condition is stated for the second measure.",
+  "population": "For both totals, gas-station transaction records of customer 38508 that are associated with a customer-month record for that customer. The first total covers all such transaction-month pairings. The second total covers only the pairings whose monthly Date is '201201' (January 2012).",
   "row_grain": "One global summary value per asked measure (two totals in all), with no per-transaction, per-station, or per-date breakdown.",
-  "column_role": "The monetary amount spent by the customer at gas stations and the amount spent by the customer in January 2012; the customer identifier is a given literal, not a required output value.",
-  "derivation": "The first total is the sum of transaction total price, computed as Amount × Price, over the qualifying gas-station transaction records. The second total is the sum of the stored Consumption values over the qualifying customer-month records for January 2012.",
+  "column_role": "Two monetary totals: the customer's gas-station transaction spend and the customer's gas-station transaction spend associated with the January 2012 monthly date; the customer identifier is a given literal, not a required output value.",
+  "derivation": "The first total is the sum of the transaction total price over all qualifying transaction-month pairings. The second total is the sum of the same transaction total price over pairings whose monthly Date is '201201'; pairings with other monthly dates contribute zero.",
   "filter_policy": "none",
-  "meta_review": "Metadata states that transactions_1k.Price documents total price = Amount × Price, so gas-station spending is the sum of that transaction spend rather than the raw Amount value. It also provides yearmonth.Consumption with Date = '201201', resolving the January 2012 total as the stored customer-month consumption metric."
+  "meta_review": "The transaction total price is the monetary spending metric for both totals. January 2012 is identified by the monthly Date value '201201', but the January total is derived from transaction total price rather than from a stored monthly consumption value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

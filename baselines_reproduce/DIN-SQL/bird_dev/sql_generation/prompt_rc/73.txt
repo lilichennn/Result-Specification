@@ -352,12 +352,12 @@ Hint:
 Schema_links: [frpm.`FRPM Count (Ages 5-17)`,schools.EdOpsName,schools.MailStreet,frpm.CDSCode = schools.CDSCode,'Youth Authority School','PO Box 1040']
 Result Contract:
 {
-  "population": "Schools that are Youth Authority Schools (educational option code YTH) and have a mailing street address of PO Box 1040.",
+  "population": "Schools classified as Youth Authority Facilities and having a mailing street address of PO Box 1040.",
   "row_grain": "One row per qualifying school.",
   "column_role": "The free or reduced price meal count for ages 5 to 17 for the school.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata defines Youth Authority School as schools.EdOpsCode value YTH, refining the school-type condition. It also validates FRPM Count (Ages 5-17) as the requested school-level metric."
+  "meta_review": "The Youth Authority condition is satisfied by the school type Youth Authority Facilities, not by educational option code YTH. The requested metric remains the free or reduced price meal count for ages 5 to 17."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

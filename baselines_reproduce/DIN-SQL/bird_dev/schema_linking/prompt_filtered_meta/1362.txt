@@ -182,15 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table zip_code, columns = [*,city,county,state,short_state]
+Table zip_code, columns = [*,zip_code,city,county,state]
 Foreign_keys = []
-Sample rows from zip_code (columns: ["city", "county", "state", "short_state"]):
-[["Holtsville", "Suffolk County", "New York", "NY"], ["Holtsville", "Suffolk County", "New York", "NY"], ["Adjuntas", "Adjuntas Municipio", "Puerto Rico", "PR"]]
+Sample rows from zip_code (columns: ["zip_code", "city", "county", "state"]):
+[[501, "Holtsville", "Suffolk County", "New York"], [544, "Holtsville", "Suffolk County", "New York"], [601, "Adjuntas", "Adjuntas Municipio", "Puerto Rico"]]
 Column descriptions and value descriptions for zip_code:
+Column zip_code: column description -> The ZIP code itself. A five-digit number identifying a US post office., value description -> 
 Column city: column description -> The city to which the ZIP pertains, value description -> 
 Column county: column description -> The county to which the ZIP pertains, value description -> 
 Column state: column description -> The name of the state to which the ZIP pertains, value description -> 
-Column short_state: column description -> The abbreviation of the state to which the ZIP pertains, value description -> 
 
 Q: How many cities are there in Orange County, Virginia?
 Hint: Orange County is the county name, Virginia is the state name

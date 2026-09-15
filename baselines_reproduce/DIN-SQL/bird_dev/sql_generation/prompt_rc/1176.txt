@@ -365,8 +365,8 @@ Hint: anti-nucleus antibody refers to ANA; 1996/12/2 refers to `Examination Date
 Schema_links: [Examination.ANA,Examination.ID,Examination.`Examination Date`,3605340,'1996-12-02']
 Result Contract:
 {
-  "population": "Examination records for the patient with id 3605340 whose Examination Date is '1996-12-02' and that measure ANA (anti-nucleus antibody).",
-  "row_grain": "One ANA examination measurement for that patient on that date.",
+  "population": "Examination records for the patient with id 3605340 whose Examination Date is '1996-12-02'.",
+  "row_grain": "One ANA concentration level value for each matching examination record.",
   "column_role": "The ANA concentration level value.",
   "derivation": "none",
   "filter_policy": "none",

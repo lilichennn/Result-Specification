@@ -299,7 +299,7 @@ Hint:
 Schema_links: [major.major_id,major.college,major.department,"College of Agriculture and Applied Sciences","School of Applied Sciences,Technology and Education"]
 Result Contract:
 {
-  "population": "Majors that are under the department named \"School of Applied Sciences, Technology and Education\", which belongs to the College of Agriculture and Applied Sciences.",
+  "population": "Majors in the College of Agriculture and Applied Sciences whose department is the School of Applied Sciences, Technology and Education.",
   "row_grain": "One global summary for the entire qualifying set of majors.",
   "column_role": "The number of qualifying majors.",
   "derivation": "Count the majors in the eligible population.",

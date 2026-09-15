@@ -225,12 +225,12 @@ Hint: bad superheroes refers to alignment.id = 2; percentage = MULTIPLY(DIVIDE(S
 Schema_links: [alignment.id,gender.id,superhero.alignment_id = alignment.id,superhero.gender_id = gender.id,2]
 Result Contract:
 {
-  "population": "All superheroes whose alignment is bad (alignment.id = 2); within this population, the female subset is those with gender.id = 2.",
+  "population": "All superheroes whose alignment is Bad; within this population, the female subset is those whose gender is Female.",
   "row_grain": "One global summary row for the entire bad-superhero population.",
   "column_role": "A single value: the percentage of female superheroes among bad superheroes.",
-  "derivation": "Compute 100.0 times the count of bad superheroes who are female (gender.id = 2) divided by the total count of bad superheroes (alignment.id = 2).",
+  "derivation": "Compute 100 times the count of bad superheroes whose gender is Female divided by the total count of bad superheroes.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

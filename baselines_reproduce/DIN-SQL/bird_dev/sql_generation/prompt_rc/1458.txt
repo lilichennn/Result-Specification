@@ -230,12 +230,12 @@ Hint: SUBTRACT( DIVIDE( SUM(state = 'New Jersey'), COUNT(position = 'Member')), 
 Schema_links: [zip_code.state,member.position,member.zip = zip_code.zip_code,New Jersey,Vermont,Member]
 Result Contract:
 {
-  "population": "The reference population is all member records with position = 'Member'; within it, the two target subpopulations are members whose associated ZIP-code state name is New Jersey and members whose associated ZIP-code state name is Vermont.",
+  "population": "The reference population is all member records with an associated ZIP code; within it, the two target subpopulations are members whose associated ZIP-code state name is New Jersey and members whose associated ZIP-code state name is Vermont.",
   "row_grain": "One global summary row representing the single requested comparison across the member population.",
   "column_role": "A single value: the difference between the percentage of members in New Jersey and the percentage of members in Vermont (New Jersey minus Vermont).",
-  "derivation": "For each state, compute the percentage as the count of members with position = 'Member' whose associated ZIP-code state name equals that state divided by the total count of members with position = 'Member', then subtract the Vermont percentage from the New Jersey percentage.",
-  "filter_policy": "State comparisons use the full state name values 'New Jersey' and 'Vermont'; no other filtering or ordering.",
-  "meta_review": "Metadata establishes that a member's state is represented by the full state name in zip_code.state associated with the member's ZIP code. The contract uses this full-name state representation for New Jersey and Vermont membership counts."
+  "derivation": "Count members whose associated ZIP-code state name is New Jersey and members whose associated ZIP-code state name is Vermont, subtract the Vermont count from the New Jersey count, divide that difference by the total count of members in the reference population, and multiply by 100.",
+  "filter_policy": "State comparisons use the full state name values 'New Jersey' and 'Vermont'; no position restriction and no other filtering or ordering.",
+  "meta_review": "Metadata establishes that a member's state is represented by the full state name associated with the member's ZIP code. The contract uses this full-name state representation for New Jersey and Vermont membership counts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

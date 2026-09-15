@@ -320,12 +320,12 @@ Hint: created on 21st July, 2010 refers to CreationDate BETWEEN '2010-07-21 00:0
 Schema_links: [posts.Id,posts.CreaionDate,'2010-07-21 00:00:00','2010-07-21 23:59:59']
 Result Contract:
 {
-  "population": "Every post whose creation timestamp falls within the evidence-defined range for \"created on 21st July, 2010\", namely CreationDate BETWEEN '2010-07-21 00:00:00' AND '2012-07-21 23:59:59'.",
-  "row_grain": "One global summary row covering all qualifying posts.",
-  "column_role": "A single numeric value representing the number of qualifying posts.",
-  "derivation": "Count the posts belonging to the eligible population.",
+  "population": "Every post-history record whose creation timestamp falls on the calendar date 21 July 2010.",
+  "row_grain": "One global summary row covering all qualifying post-history records.",
+  "column_role": "A single numeric value representing the number of qualifying post-history records.",
+  "derivation": "Count the post-history records belonging to the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that the post-level creation timestamp is owned by the posts entity (posts.CreaionDate), distinguishing it from other CreationDate fields; this validates the Round-1 post population without changing it."
+  "meta_review": "The relevant creation timestamp is attached to post-history records, so the counted population is post-history records rather than posts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

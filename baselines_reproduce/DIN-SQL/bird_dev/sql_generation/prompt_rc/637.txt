@@ -251,12 +251,12 @@ Hint: used by Mark Meckes refers to DisplayName = 'Mark Meckes'; Doen't have com
 Schema_links: [posts.Tags,users.DisplayName,posts.CommentCount,posts.OwnerUserId = users.Id,'Mark Meckes',0]
 Result Contract:
 {
-  "population": "Tags attached to posts authored by the user with DisplayName = 'Mark Meckes' where the post's CommentCount = 0.",
-  "row_grain": "One row per tag used on at least one qualifying post.",
-  "column_role": "The tag value used on the qualifying posts.",
+  "population": "Tag lists of posts associated with Mark Meckes through a post-history entry, where the post has CommentCount = 0.",
+  "row_grain": "One row for each qualifying post-history association, carrying the associated post's tag list; duplicate tag lists are not eliminated.",
+  "column_role": "The full tag list associated with the qualifying post.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

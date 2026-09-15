@@ -296,12 +296,12 @@ Hint: the highest total bilirubin refers to MAX(T-BIL)
 Schema_links: [Laboratory.T-BIL,Patient.ID,Patient.SEX,Patient.Birthday,Laboratory.ID = Patient.ID]
 Result Contract:
 {
-  "population": "All patients who have a recorded total bilirubin (T-BIL) level.",
-  "row_grain": "One row per patient whose recorded total bilirubin level equals the highest recorded value.",
-  "column_role": "The patient's ID, the patient's sex, the patient's birthday, and the highest total bilirubin level.",
-  "derivation": "Determine the maximum total bilirubin level (MAX of T-BIL) across all recorded measurements.",
-  "filter_policy": "Retain only the patient(s) whose total bilirubin level equals the overall maximum (argmax on T-BIL), keeping all ties.",
-  "meta_review": "Metadata confirms that T-BIL is the total bilirubin measurement in Laboratory and that ID, SEX, and Birthday are patient attributes in Patient. This validates the Round-1 mapping without requiring a semantic refinement."
+  "population": "Patient laboratory records with a recorded total bilirubin (T-BIL) level.",
+  "row_grain": "A single row only, representing the selected patient laboratory record with the highest recorded total bilirubin.",
+  "column_role": "The patient's ID, sex, and birthday, together with the highest recorded total bilirubin level.",
+  "derivation": "The returned total bilirubin is the stored T-BIL value of the selected top-ranked laboratory record.",
+  "filter_policy": "Retain exactly one top-ranked laboratory record by total bilirubin; if multiple records tie, only one row is returned.",
+  "meta_review": "Metadata confirms that T-BIL is the total bilirubin measurement in Laboratory and that ID, SEX, and Birthday are patient attributes in Patient."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

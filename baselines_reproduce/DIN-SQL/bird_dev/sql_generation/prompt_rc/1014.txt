@@ -361,12 +361,12 @@ Hint: lap record means the fastest time recorded which refers to time
 Schema_links: [lapTimes.time,circuits.country,lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId,Italy]
 Result Contract:
 {
-  "population": "Circuits whose country is Italy; only lap records belonging to those circuits are eligible.",
-  "row_grain": "One lap record associated with a circuit in Italy.",
-  "column_role": "The lap record, i.e., the fastest recorded time, for each qualifying circuit.",
-  "derivation": "A lap record is the fastest (minimum) recorded time for the circuit. The catalog provides no circuit-level stored lap record, so the value is derived from recorded times; fastest is determined by elapsed time, using numeric millisecond values when available.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms circuits.country identifies Italy and lapTimes.time/milliseconds provide recorded lap time as text with an integer millisecond equivalent, while no circuit-level lap record is stored. This supports deriving one minimum lap time per Italian circuit, comparing elapsed milliseconds when available."
+  "population": "The reference population for the minimum is fastest lap times from races at circuits in Italy. The returned population is the fastest lap time value matching that overall minimum; it is not a per-circuit set and is not independently filtered to Italian circuits beyond matching the minimum.",
+  "row_grain": "One row only: a single selected lap record, not one row per circuit.",
+  "column_role": "The only returned output is the lap record time value itself; no circuit identifier or country is returned.",
+  "derivation": "No circuit-level lap record is stored; the returned value is a stored fastest-lap time text from race results, selected by the minimum converted elapsed seconds.",
+  "filter_policy": "Select the minimum elapsed time and limit the result to one matching record; ties are resolved arbitrarily by returning only one.",
+  "meta_review": "Metadata supports circuit country and race-result fastest lap time text convertible to elapsed seconds, with no stored circuit-level lap record. This supports one overall minimum selected across Italian circuits, not one lap record per circuit."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

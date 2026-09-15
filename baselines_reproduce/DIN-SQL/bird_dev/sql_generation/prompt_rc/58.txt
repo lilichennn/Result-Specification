@@ -422,7 +422,7 @@ Schema_links: [schools.Phone,schools.Ext,schools.School,schools.Zip,'95203-3704'
 Result Contract:
 {
   "population": "Schools whose ordinary, non-mailing zip code equals 95203-3704.",
-  "row_grain": "One school matching the given zip code.",
+  "row_grain": "One row for each school matching the given zip code.",
   "column_role": "The school's name, its phone number, and its extension number.",
   "derivation": "none",
   "filter_policy": "none",

@@ -248,12 +248,12 @@ Hint: Unemployment increment rate in percentage = [(unemployment rate 2016 - une
 Schema_links: [district.A2,district.A12,district.A13,loan.status,loan.account_id = account.account_id,account.district_id = district.district_id,D]
 Result Contract:
 {
-  "population": "Districts associated with at least one loan contract that is still running with the client in debt, i.e., loans with status = 'D'.",
-  "row_grain": "One row per district that has at least one qualifying loan contract.",
-  "column_role": "The district's identity and the percentage unemployment rate increment for that district.",
-  "derivation": "For each district, compute the percentage unemployment rate increment as [(unemployment rate in the later year - unemployment rate in the earlier year) / unemployment rate in the earlier year] * 100, using the district's unemployment rates for the two years referenced (1995 and 1996).",
+  "population": "Loan contracts that are still running with the client in debt, identified by status code 'D', each considered with its associated district.",
+  "row_grain": "One row for each qualifying loan contract; rows are not grouped or deduplicated by district.",
+  "column_role": "Only the percentage unemployment rate increment for the associated district; no district name, state, or other identifier is returned.",
+  "derivation": "For each qualifying loan, compute [(unemployment rate in 1996 - unemployment rate in 1995) / unemployment rate in 1995] * 100 using the unemployment rates of the associated district.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms loan.status = 'D' means a running contract with the client in debt, and district.A12/A13 are the unemployment rates for 1995 and 1996. This validates the qualifying population and the increment formula; no other contract change is needed."
+  "meta_review": "Metadata confirms that status code 'D' denotes a running contract with the client in debt and that the district unemployment rates for 1995 and 1996 support the increment formula; the returned result is the increment measure only, not district or state identifiers, and is not district-distinct."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

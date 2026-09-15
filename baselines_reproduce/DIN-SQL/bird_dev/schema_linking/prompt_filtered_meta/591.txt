@@ -183,8 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table badges, columns = [*,Id,UserId,Name,Date]
-Table users, columns = [*,Id]
-Foreign_keys = [badges.UserId = users.Id]
+Foreign_keys = []
 Sample rows from badges (columns: ["Id", "UserId", "Name", "Date"]):
 [[1, 5, "Teacher", "2010-07-19 19:39:07.0"], [2, 6, "Teacher", "2010-07-19 19:39:07.0"], [3, 8, "Teacher", "2010-07-19 19:39:07.0"]]
 Column descriptions and value descriptions for badges:
@@ -192,10 +191,6 @@ Column Id: column description -> the badge id, value description ->
 Column UserId: column description -> the unique id of the user, value description -> 
 Column Name: column description -> the badge name the user obtained, value description -> 
 Column Date: column description -> the date that the user obtained the badge, value description -> 
-Sample rows from users (columns: ["Id"]):
-[[-1], [2], [3]]
-Column descriptions and value descriptions for users:
-Column Id: column description -> the user id, value description -> 
 
 Q: How many users are awarded with supporter badge during year 2011?
 Hint: "Supporter" is the Name of badge; in year 2011 refers to year(Date) = 2011

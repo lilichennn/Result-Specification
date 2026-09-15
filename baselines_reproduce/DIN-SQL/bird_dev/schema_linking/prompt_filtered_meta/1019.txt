@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,country]
-Table lapTimes, columns = [*,raceId,milliseconds]
+Table lapTimes, columns = [*,raceId,driverId,lap,milliseconds]
 Table races, columns = [*,raceId,circuitId]
 Foreign_keys = [lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId]
 Sample rows from circuits (columns: ["circuitId", "country"]):
@@ -191,10 +191,12 @@ Sample rows from circuits (columns: ["circuitId", "country"]):
 Column descriptions and value descriptions for circuits:
 Column circuitId: column description -> unique identification number of the circuit , value description -> 
 Column country: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "milliseconds"]):
-[[1, 109088], [1, 93740], [1, 91600]]
+Sample rows from lapTimes (columns: ["raceId", "driverId", "lap", "milliseconds"]):
+[[1, 1, 1, 109088], [1, 1, 2, 93740], [1, 1, 3, 91600]]
 Column descriptions and value descriptions for lapTimes:
 Column raceId: column description -> , value description -> 
+Column driverId: column description -> , value description -> 
+Column lap: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "circuitId"]):
 [[1, 1], [2, 2], [3, 17]]

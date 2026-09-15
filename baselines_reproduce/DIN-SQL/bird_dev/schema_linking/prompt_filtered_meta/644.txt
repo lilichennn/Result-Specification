@@ -183,7 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table posts, columns = [*,Id,Title,LastEditorUserId,LastEditDate]
-Foreign_keys = []
+Table users, columns = [*,Id]
+Foreign_keys = [posts.LastEditorUserId = users.Id]
 Sample rows from posts (columns: ["Id", "Title", "LastEditorUserId", "LastEditDate"]):
 [[1, "Eliciting priors from experts", null, null], [2, "What is normality?", 88, "2010-08-07 17:56:44.0"], [3, "What are some valuable Statistical Analysis open source projects?", 183, "2011-02-12 05:50:03.0"]]
 Column descriptions and value descriptions for posts:
@@ -191,6 +192,10 @@ Column Id: column description -> the post id, value description ->
 Column Title: column description -> the title of the post, value description -> 
 Column LastEditorUserId: column description -> the id of the last editor, value description -> 
 Column LastEditDate: column description -> the last edit date, value description -> 
+Sample rows from users (columns: ["Id"]):
+[[-1], [2], [3]]
+Column descriptions and value descriptions for users:
+Column Id: column description -> the user id, value description -> 
 
 Q: Provide the last edit date and last edit user ID for the post "Detecting a given face in a database of facial images".
 Hint: Title = 'Detecting a given face in a database of facial images';

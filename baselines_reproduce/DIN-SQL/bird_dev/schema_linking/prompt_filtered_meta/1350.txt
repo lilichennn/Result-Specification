@@ -183,8 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,event_status,link_to_event]
-Table event, columns = [*,event_id,status]
-Table expense, columns = [*,expense_description,expense_date,link_to_budget]
+Table event, columns = [*,event_id]
+Table expense, columns = [*,expense_id,expense_description,expense_date,link_to_budget]
 Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id]
 Sample rows from budget (columns: ["budget_id", "event_status", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", "Closed", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "Closed", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "Closed", "recJ4Witp9tpjaugn"]]
@@ -196,14 +196,14 @@ commonsense evidence:
  Open: It means that the event is already opened. The spent and the remaining will change with new expenses.
  Planning: The event is not started yet but is planning. The spent and the remaining won't change at this stage. 
 Column link_to_event: column description -> The unique identifier of the event to which the budget line applies., value description -> References the Event table
-Sample rows from event (columns: ["event_id", "status"]):
-[["rec0Si5cQ4rJRVzd6", "Open"], ["rec0akZnLLpGUloLH", "Open"], ["rec0dZPcWXF0QjNnE", "Open"]]
+Sample rows from event (columns: ["event_id"]):
+[["rec0Si5cQ4rJRVzd6"], ["rec0akZnLLpGUloLH"], ["rec0dZPcWXF0QjNnE"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
-Column status: column description -> One of three values indicating if the event is in planning, is opened, or is closed, value description -> Open/ Closed/ Planning
-Sample rows from expense (columns: ["expense_description", "expense_date", "link_to_budget"]):
-[["Post Cards, Posters", "2019-08-20", "recvKTAWAFKkVNnXQ"], ["Water, Cookies", "2019-10-08", "recy8KY5bUdzF81vv"], ["Pizza", "2019-09-10", "recwXIiKoBMjXJsGZ"]]
+Sample rows from expense (columns: ["expense_id", "expense_description", "expense_date", "link_to_budget"]):
+[["rec017x6R3hQqkLAo", "Post Cards, Posters", "2019-08-20", "recvKTAWAFKkVNnXQ"], ["rec1nIjoZKTYayqZ6", "Water, Cookies", "2019-10-08", "recy8KY5bUdzF81vv"], ["rec1oMgNFt7Y0G40x", "Pizza", "2019-09-10", "recwXIiKoBMjXJsGZ"]]
 Column descriptions and value descriptions for expense:
+Column expense_id: column description -> unique id of income, value description -> 
 Column expense_description: column description -> A textual description of what the money was spend for, value description -> 
 Column expense_date: column description -> The date the expense was incurred, value description -> e.g. YYYY-MM-DD
 Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table

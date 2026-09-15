@@ -298,10 +298,10 @@ Result Contract:
 {
   "population": "All patients who have a recorded T-CHO laboratory value.",
   "row_grain": "One single patient.",
-  "column_role": "The patient ID and the patient's highest T-CHO index value.",
-  "derivation": "Oldest is determined by the earliest patient birthday; highest total cholesterol is the maximum T-CHO value among the patient's available laboratory measurements.",
-  "filter_policy": "Select the single patient who is oldest by minimum birthday and has the highest total cholesterol by maximum T-CHO laboratory value relative to all candidate patients, with both extremal criteria jointly identifying the returned patient.",
-  "meta_review": "Metadata shows T-CHO is a laboratory-test measurement linked to patients rather than a patient-level attribute, so the highest T-CHO is interpreted as the maximum available laboratory value for the selected patient. Round-1 selection semantics otherwise preserved."
+  "column_role": "The patient ID and the selected T-CHO index value.",
+  "derivation": "Oldest is determined by the earliest patient birthday; the returned T-CHO is the stored laboratory measurement value selected for the patient, not an aggregated recomputation.",
+  "filter_policy": "Select the single patient associated with the greatest recorded T-CHO value; if several patients are associated with that same greatest value, select the oldest patient by earliest birthday.",
+  "meta_review": "Metadata shows T-CHO is a laboratory-test measurement linked to patients rather than a patient-level attribute, so the returned T-CHO is a recorded laboratory value selected for the patient."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

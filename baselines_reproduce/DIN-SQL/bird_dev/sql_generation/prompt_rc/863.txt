@@ -285,7 +285,7 @@ Hint: race number refers to raceId;
 Schema_links: [seasons.url,races.year,races.raceId,races.year = seasons.year,901]
 Result Contract:
 {
-  "population": "The race whose race number (raceId) equals 901.",
+  "population": "The season corresponding to the year of the race whose race number (raceId) equals 901.",
   "row_grain": "One season, namely the season (year) in which that race took place.",
   "column_role": "The season page (website link/URL) for that season year.",
   "derivation": "Use the year of the selected race to identify the corresponding season and return its season page.",

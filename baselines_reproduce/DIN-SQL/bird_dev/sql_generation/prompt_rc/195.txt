@@ -263,12 +263,12 @@ Hint: most common bond type refers MAX(COUNT(bond_type))
 Schema_links: [bond.bond_type]
 Result Contract:
 {
-  "population": "All bond records that have a bond type; no eligibility conditions are stated.",
+  "population": "All bond records; no eligibility conditions are stated.",
   "row_grain": "One bond type, namely the single most frequently occurring one.",
   "column_role": "The bond type value.",
   "derivation": "For each bond type, the count of bond records having that bond type.",
   "filter_policy": "Argmax: retain the bond type whose occurrence count is maximal; tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

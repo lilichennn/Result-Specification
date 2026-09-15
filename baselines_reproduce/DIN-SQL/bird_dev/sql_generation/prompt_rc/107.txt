@@ -248,12 +248,12 @@ Hint: Earlier birthdate refers to older age; A11 refers to average salary
 Schema_links: [client.gender,client.birth_date,district.A11,disp.type,disp.client_id = client.client_id,disp.account_id = account.account_id,account.district_id = district.district_id,OWNER]
 Result Contract:
 {
-  "population": "Clients who opened an account whose branch district has the highest average salary (A11) among branches.",
+  "population": "Clients whose associated district has the highest average salary (A11).",
   "row_grain": "One client.",
   "column_role": "The client's gender.",
   "derivation": "none",
   "filter_policy": "Among the eligible clients, select the client with the earliest birthdate; tie handling is unspecified.",
-  "meta_review": "Metadata confirms account.district_id is the branch location and district.A11 is average salary, fixing the highest-salary branch qualifier to the account's branch district."
+  "meta_review": "Metadata confirms the district's average salary (A11) is the salary measure and fixes the highest-salary qualifier to the client's associated district rather than an account branch."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

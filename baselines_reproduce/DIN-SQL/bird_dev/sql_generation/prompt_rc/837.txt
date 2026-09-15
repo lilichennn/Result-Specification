@@ -301,12 +301,12 @@ Hint: lowest attribute value refers to MIN(attribute_value);
 Schema_links: [hero_attribute.hero_id,hero_attribute.attribute_value]
 Result Contract:
 {
-  "population": "Superheroes that have at least one recorded attribute value.",
-  "row_grain": "One superhero, namely a superhero associated with the lowest attribute value.",
-  "column_role": "The hero ID of the selected superhero.",
+  "population": "Superhero attribute associations with a recorded attribute value.",
+  "row_grain": "One row for each superhero-attribute association whose attribute value is the global minimum; the same hero ID may appear more than once.",
+  "column_role": "The hero ID associated with each selected superhero-attribute association.",
   "derivation": "none",
-  "filter_policy": "Select the superhero whose associated attribute value equals the minimum attribute value among all recorded superhero attribute values (argmin on attribute_value); tie handling is unspecified.",
-  "meta_review": "Metadata shows attribute_value belongs to a superhero-attribute association rather than a single superhero-level field. The contract therefore evaluates the minimum across recorded hero attribute values and returns the associated superhero's hero ID."
+  "filter_policy": "Include every association whose attribute value equals the minimum recorded attribute value; all ties are returned.",
+  "meta_review": "Metadata shows attribute value belongs to a superhero-attribute association rather than a single superhero-level field. The contract therefore evaluates the minimum across recorded hero attribute values and returns the associated hero ID for each matching association."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

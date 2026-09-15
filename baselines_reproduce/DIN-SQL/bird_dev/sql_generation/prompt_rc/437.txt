@@ -366,12 +366,12 @@ Hint: white card borders refers to borderColor = 'white'; has full artwork refer
 Schema_links: [cards.name,cards.borderColor,cards.isFullArt,black,1]
 Result Contract:
 {
-  "population": "Cards whose borderColor is 'black' and that have full artwork (isFullArt = 1).",
-  "row_grain": "One card.",
-  "column_role": "The identity of the card, as requested by 'which card'.",
+  "population": "Cards with black borders that have full artwork.",
+  "row_grain": "One row for each qualifying card.",
+  "column_role": "The identity of the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.borderColor has 'black' as a valid border color, resolving the black-border condition. It also confirms cards.isFullArt = 1 means full artwork, validating the full-art condition."
+  "meta_review": "Metadata confirms that black is a valid border color and that the full-art flag indicates full artwork."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

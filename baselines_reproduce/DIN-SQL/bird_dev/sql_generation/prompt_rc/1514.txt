@@ -182,12 +182,12 @@ Hint: '2012/8/24' can be represented by '2012-08-24';
 Schema_links: [customers.Currency,transactions_1k.Date,transactions_1k.Time,transactions_1k.CustomerID = customers.CustomerID,'2012-08-24','16:25:00']
 Result Contract:
 {
-  "population": "Payment events made by a customer at exactly 16:25:00 on the date 2012-08-24.",
-  "row_grain": "One payment event matching the specified date and time.",
-  "column_role": "The kind (type) of currency of the customer who made the matching payment.",
-  "derivation": "The currency is the customer-level currency associated with the customer of the matching payment event.",
-  "filter_policy": "none",
-  "meta_review": "Metadata shows customers.Currency is a customer-level attribute, while the matching date and time identify a payment event; therefore the output is the customer's currency for that event."
+  "population": "Payment transaction events recorded at exactly 16:25:00 on 2012-08-24 and associated with a customer.",
+  "row_grain": "Distinct currency values returned for the matching events, not one row per event.",
+  "column_role": "The kind of currency of the customer associated with the matching payment transactions.",
+  "derivation": "The currency is the stored customer-level currency value; no arithmetic or aggregation is applied, and repeated values are collapsed.",
+  "filter_policy": "Only distinct currency values are returned.",
+  "meta_review": "The date and time identify matching payment transaction events, but the result is the distinct customer currency value or values associated with those events rather than an event-level row."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

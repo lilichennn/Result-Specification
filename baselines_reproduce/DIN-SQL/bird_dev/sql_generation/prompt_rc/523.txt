@@ -297,12 +297,12 @@ Hint: AVG(id); releaseDate BETWEEN 1/1/2012 AND 12/31/2015; the common language 
 Schema_links: [sets.id,sets.releaseDate,set_translations.language,set_translations.setCode = sets.code,'2012-01-01','2015-12-31']
 Result Contract:
 {
-  "population": "Sets with a release date between January 1, 2012 and December 31, 2015 inclusive; for the common-language value, eligible records are card foreign-language occurrences, and the input does not determine whether they must be limited to cards associated with those qualifying sets.",
-  "row_grain": "One global summary.",
-  "column_role": "The annual average number of qualifying sets and the common card language.",
-  "derivation": "Compute yearly counts of qualifying sets over the calendar years covered by the interval and average those counts; compute counts of eligible card foreign-language occurrences by language.",
-  "filter_policy": "Choose the language with the maximum language-occurrence count; tie handling is unspecified.",
-  "meta_review": "Metadata identifies foreign_data.language as the foreign language of a card, distinguishing it from set_translations.language, so the common-language output is card language rather than set language."
+  "population": "Sets with a release date between January 1, 2012 and December 31, 2015 inclusive that have associated set-language occurrences, together with those occurrences.",
+  "row_grain": "One row for the selected qualifying release-date group.",
+  "column_role": "The computed annual-average set measure for the selected release date and the selected set language.",
+  "derivation": "For each qualifying release date, compute the sum of set identifiers over the associated set-language occurrences divided by the count of those occurrences, then divide by four; the language is a set-language occurrence taken from the selected release-date group.",
+  "filter_policy": "Choose the qualifying release-date group with the greatest number of associated set-language occurrences; tie handling and the language taken from that group are unspecified.",
+  "meta_review": "Metadata distinguishes card foreign language from set language, so the language output is set language rather than card foreign language."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

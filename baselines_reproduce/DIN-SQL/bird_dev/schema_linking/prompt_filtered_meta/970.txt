@@ -183,9 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,driverRef,number,code,forename,surname,dob,nationality]
-Table lapTimes, columns = [*,driverId,time,milliseconds]
-Table results, columns = [*,driverId,fastestLapTime]
-Foreign_keys = [lapTimes.driverId = drivers.driverId,results.driverId = drivers.driverId]
+Table pitStops, columns = [*,raceId,driverId,stop,lap,time,duration,milliseconds]
+Foreign_keys = [pitStops.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "driverRef", "number", "code", "forename", "surname", "dob", "nationality"]):
 [[1, "hamilton", 44, "HAM", "Lewis", "Hamilton", "1985-01-07", "British"], [2, "heidfeld", null, "HEI", "Nick", "Heidfeld", "1977-05-10", "German"], [3, "rosberg", 6, "ROS", "Nico", "Rosberg", "1985-06-27", "German"]]
 Column descriptions and value descriptions for drivers:
@@ -197,17 +196,16 @@ Column forename: column description -> , value description ->
 Column surname: column description -> , value description -> 
 Column dob: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["driverId", "time", "milliseconds"]):
-[[1, "1:49.088", 109088], [1, "1:33.740", 93740], [1, "1:31.600", 91600]]
-Column descriptions and value descriptions for lapTimes:
+Sample rows from pitStops (columns: ["raceId", "driverId", "stop", "lap", "time", "duration", "milliseconds"]):
+[[841, 1, 1, 16, "17:28:24", "23.227", 23227], [841, 1, 2, 36, "17:59:29", "23.199", 23199], [841, 2, 1, 15, "17:27:41", "22.994", 22994]]
+Column descriptions and value descriptions for pitStops:
+Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
+Column stop: column description -> , value description -> 
+Column lap: column description -> , value description -> 
 Column time: column description -> , value description -> 
+Column duration: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
-Sample rows from results (columns: ["driverId", "fastestLapTime"]):
-[[1, "1:27.452"], [2, "1:27.739"], [3, "1:28.090"]]
-Column descriptions and value descriptions for results:
-Column driverId: column description -> , value description -> 
-Column fastestLapTime: column description -> , value description -> 
 
 Q: List out top 3 German drivers who were born from 1980-1990 and have the earliest lap time.
 Hint: born from 1980-1990 refers to year(dob) between 1980 and 1990; earliest lap time refers to Min(time);

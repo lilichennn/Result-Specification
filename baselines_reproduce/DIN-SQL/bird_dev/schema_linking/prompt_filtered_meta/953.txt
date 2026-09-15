@@ -182,13 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table constructors, columns = [*,constructorId,nationality]
+Table constructors, columns = [*,constructorId,constructorRef,name,nationality]
 Table results, columns = [*,constructorId,laps]
 Foreign_keys = [results.constructorId = constructors.constructorId]
-Sample rows from constructors (columns: ["constructorId", "nationality"]):
-[[1, "British"], [2, "German"], [3, "British"]]
+Sample rows from constructors (columns: ["constructorId", "constructorRef", "name", "nationality"]):
+[[1, "mclaren", "McLaren", "British"], [2, "bmw_sauber", "BMW Sauber", "German"], [3, "williams", "Williams", "British"]]
 Column descriptions and value descriptions for constructors:
 Column constructorId: column description -> , value description -> 
+Column constructorRef: column description -> , value description -> 
+Column name: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
 Sample rows from results (columns: ["constructorId", "laps"]):
 [[1, 58], [2, 58], [3, 58]]

@@ -248,12 +248,12 @@ Hint:
 Schema_links: [loan.amount,loan.status,client.client_id,disp.client_id = client.client_id,disp.account_id = account.account_id,loan.account_id = account.account_id,992]
 Result Contract:
 {
-  "population": "The single client identified as client number 992.",
-  "row_grain": "One row representing client number 992.",
-  "column_role": "The client's amount of debt and the client's loan repayment status.",
+  "population": "The debt obligations associated with the client whose client number is 992.",
+  "row_grain": "One row for each debt obligation associated with that client.",
+  "column_role": "The amount of debt and the repayment status for each debt obligation.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata defines loan.status as repayment status, resolving the requested payment-progress output for the client's debt. No other Round-1 semantics were changed."
+  "meta_review": "Metadata defines the loan status as repayment status, resolving the requested payment-progress output for the client's debt."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

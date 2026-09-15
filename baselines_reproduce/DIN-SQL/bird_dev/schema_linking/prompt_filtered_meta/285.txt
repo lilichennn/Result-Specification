@@ -185,8 +185,7 @@ Schema of the current database with sample rows and column descriptions:
 Table atom, columns = [*,atom_id,molecule_id,element]
 Table bond, columns = [*,bond_id,molecule_id]
 Table connected, columns = [*,atom_id,atom_id2,bond_id]
-Table molecule, columns = [*,molecule_id]
-Foreign_keys = [atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,connected.bond_id = bond.bond_id,connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
+Foreign_keys = [connected.bond_id = bond.bond_id,connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
 Sample rows from atom (columns: ["atom_id", "molecule_id", "element"]):
 [["TR000_1", "TR000", "cl"], ["TR000_2", "TR000", "c"], ["TR000_3", "TR000", "cl"]]
 Column descriptions and value descriptions for atom:
@@ -221,11 +220,6 @@ Column descriptions and value descriptions for connected:
 Column atom_id: column description -> id of the first atom, value description -> 
 Column atom_id2: column description -> id of the second atom, value description -> 
 Column bond_id: column description -> bond id representing bond between two atoms, value description -> 
-Sample rows from molecule (columns: ["molecule_id"]):
-[["TR000"], ["TR001"], ["TR002"]]
-Column descriptions and value descriptions for molecule:
-Column molecule_id: column description -> unique id of molecule, value description -> "+" --> this molecule / compound is carcinogenic
-'-' this molecule is not / compound carcinogenic
 
 Q: Name chemical elements that form a bond TR001_10_11.
 Hint: element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' means Hydrogen; element = 'o' means Oxygen, element = 's' means Sulfur; element = 'n' means Nitrogen, element = 'p' means Phosphorus, element = 'na' means Sodium, element = 'br' means Bromine, element = 'f' means Fluorine; element = 'i' means Iodine; element = 'sn' means Tin; element = 'pb' means Lead; element = 'te' means Tellurium; element = 'ca' means Calcium; TR001_10_11 is the bond id; molecule id refers to SUBSTR(bond_id, 1, 5); atom 1 refers to SUBSTR(bond_id, 7, 2); atom 2 refers to SUBSTR(bond_id, 10, 2)

@@ -182,13 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table badges, columns = [*,UserId,Date]
+Table badges, columns = [*,Id,UserId,Name,Date]
 Table users, columns = [*,Id,Views]
 Foreign_keys = [badges.UserId = users.Id]
-Sample rows from badges (columns: ["UserId", "Date"]):
-[[5, "2010-07-19 19:39:07.0"], [6, "2010-07-19 19:39:07.0"], [8, "2010-07-19 19:39:07.0"]]
+Sample rows from badges (columns: ["Id", "UserId", "Name", "Date"]):
+[[1, 5, "Teacher", "2010-07-19 19:39:07.0"], [2, 6, "Teacher", "2010-07-19 19:39:07.0"], [3, 8, "Teacher", "2010-07-19 19:39:07.0"]]
 Column descriptions and value descriptions for badges:
+Column Id: column description -> the badge id, value description -> 
 Column UserId: column description -> the unique id of the user, value description -> 
+Column Name: column description -> the badge name the user obtained, value description -> 
 Column Date: column description -> the date that the user obtained the badge, value description -> 
 Sample rows from users (columns: ["Id", "Views"]):
 [[-1, 0], [2, 25], [3, 22]]

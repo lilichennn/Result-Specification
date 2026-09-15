@@ -421,12 +421,12 @@ Hint:
 Schema_links: [schools.Website,schools.AdmFName1,schools.AdmLName1,'Mike','Larson','Dante','Alvarez']
 Result Contract:
 {
-  "population": "Schools whose recorded administrator is Mike Larson or Dante Alvarez; a school qualifies if any recorded administrator name matches either person.",
+  "population": "Schools whose recorded administrator is Mike Larson or Dante Alvarez; a school qualifies when its listed administrator name matches either person.",
   "row_grain": "One row per qualifying school.",
   "column_role": "The website address of each qualifying school.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The schools metadata documents administrator names and a website property for schools, resolving that the administration condition is based on recorded administrator names. It confirms the requested output is the school website address."
+  "meta_review": "The schools metadata documents an administrator name and a website property for schools, resolving that the administration condition is based on the listed administrator name. It confirms the requested output is the school website address."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -352,12 +352,12 @@ Hint:
 Schema_links: [schools.District,schools.StatusType,satscores.AvgScrRead,satscores.cds = schools.CDSCode,Active]
 Result Contract:
 {
-  "population": "Districts whose district status is 'Active'.",
-  "row_grain": "One district, namely the single selected active district.",
-  "column_role": "The identity of the district (e.g., its name); no ranking measure is required as an output column.",
-  "derivation": "A district-level average Reading score metric over the documented average Reading score values associated with each district, used to compare districts; the exact aggregation over those values is not specified.",
-  "filter_policy": "Argmax: select the active district with the highest average Reading score.",
-  "meta_review": "Metadata identifies schools.StatusType as the district status field with 'Active' as the active value, and satscores.AvgScrRead as the average Reading score measure. The contract accepts these representations while preserving the unspecified district-level aggregation."
+  "population": "District-associated records with active status and an associated average Reading score; the district attached to a qualifying record is the candidate output.",
+  "row_grain": "One row: the district from the single qualifying record selected as highest.",
+  "column_role": "The district identity is returned; the average Reading score is used only for ranking and is not returned.",
+  "derivation": "The district is a stored identifying value. The ranking value is the recorded average Reading score of the selected record, not a computed district-level average across multiple records.",
+  "filter_policy": "Choose one qualifying record with the highest recorded average Reading score and return its district.",
+  "meta_review": "Metadata supports 'Active' as the qualifying status and the documented average Reading score as the ranking measure. The earlier assumption of district-level aggregation is corrected because the score is used directly for row selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -418,9 +418,9 @@ Result Contract:
   "population": "All rating records belonging to the player whose player_name is 'Pietro Marino'.",
   "row_grain": "One global summary row for the player Pietro Marino.",
   "column_role": "The average overall rating value for Pietro Marino.",
-  "derivation": "Arithmetic mean of the overall rating values across all eligible rating records of Pietro Marino.",
+  "derivation": "Total overall rating across the player's rating records divided by the number of those rating records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

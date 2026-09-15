@@ -230,12 +230,12 @@ Hint: total value refers to SUM(cost); 'October Meeting' is an event name;
 Schema_links: [expense.expense_description,expense.cost,expense.approved,event.event_name,expense.link_to_budget = budget.budget_id,budget.link_to_event = event.event_id,October Meeting,true]
 Result Contract:
 {
-  "population": "Expense records that are approved and are linked, through their budget record, to the event named 'October Meeting'.",
-  "row_grain": "One row per expense type, corresponding to the budget category.",
-  "column_role": "The expense type (budget category) and the total value of its approved expenses.",
-  "derivation": "For each expense type, total value is the sum of cost over the qualifying approved expense records linked to that budget category for the 'October Meeting' event.",
+  "population": "Expense records linked, through their budget record, to an event named 'October Meeting'.",
+  "row_grain": "A single aggregate row for the event named 'October Meeting', accompanied by the event type.",
+  "column_role": "The event type and the total value of the linked expenses.",
+  "derivation": "The total value is the sum of cost over all qualifying expense records linked to the event named 'October Meeting'.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows expense records are tied to an event and an expense category through the budget table, with budget.category describing the expense area. This resolved the requested expense type as budget category and event eligibility through the budget line."
+  "meta_review": "Metadata resolves the requested type as the type associated with the event, with expenses connected to the event through budget lines; no approval condition is applied."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

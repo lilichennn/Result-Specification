@@ -285,12 +285,12 @@ Hint: puncture status refers to status = Puncture;
 Schema_links: [drivers.driverId,drivers.nationality,status.status,results.driverId = drivers.driverId,results.statusId = status.statusId,American,Puncture]
 Result Contract:
 {
-  "population": "Drivers whose nationality is American and who have at least one race result whose status category is 'Puncture' (puncture status means status = Puncture); both conditions must hold for a driver to be counted.",
-  "row_grain": "One global summary row for the entire qualifying driver population.",
-  "column_role": "A single value representing the number of qualifying drivers.",
-  "derivation": "Count the distinct drivers belonging to the eligible population.",
+  "population": "Race-result occurrences of drivers whose nationality is American and whose result status is 'Puncture'.",
+  "row_grain": "One global summary row for the entire qualifying occurrence population.",
+  "column_role": "A single value representing the number of qualifying race-result occurrences.",
+  "derivation": "Count each qualifying race-result occurrence once, without reducing multiple occurrences by the same driver to a single driver.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that status is a race-result status category, so puncture status applies to a driver's race result rather than being an attribute stored on drivers. This refines the population to American drivers with at least one such result and supports counting distinct drivers."
+  "meta_review": "Metadata establishes that status is a race-result status category, so puncture status applies to a driver's race result rather than being an attribute stored on drivers. The result counts qualifying race-result occurrences for American drivers, not distinct drivers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

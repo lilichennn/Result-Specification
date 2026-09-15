@@ -491,12 +491,12 @@ Hint: Alexis Blin's refers to player_name = 'Alexis Blin'
 Schema_links: [Player.player_name,Player_Attributes.sprint_speed,Player_Attributes.agility,Player_Attributes.acceleration,Player_Attributes.player_api_id = Player.player_api_id,'Alexis Blin']
 Result Contract:
 {
-  "population": "The player whose player_name is 'Alexis Blin'.",
-  "row_grain": "One row representing the player Alexis Blin.",
+  "population": "Player attribute records associated with the player name 'Alexis Blin'.",
+  "row_grain": "One row per matching player attribute record.",
   "column_role": "The player's sprint speed score, agility score, and acceleration score.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

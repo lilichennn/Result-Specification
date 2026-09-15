@@ -187,12 +187,12 @@ Hint: chlorine refers to element = 'cl'
 Schema_links: [connected.bond_id,atom.element,connected.atom_id = atom.atom_id,'cl']
 Result Contract:
 {
-  "population": "All bonds in which at least one of the two bonding atoms is an atom whose element is chlorine (element = 'cl').",
-  "row_grain": "One global summary row for the entire set of qualifying bonds.",
-  "column_role": "A single value representing the number of bonds involving a chlorine atom.",
-  "derivation": "Count the distinct bonds that satisfy the chlorine-participation condition.",
+  "population": "All occurrences of a bond being associated with an atom whose element is chlorine (element = 'cl').",
+  "row_grain": "One global summary row for the entire set of qualifying occurrences.",
+  "column_role": "A single value representing the number of bond-atom association occurrences involving a chlorine atom.",
+  "derivation": "Count the qualifying chlorine-associated bond occurrences, without deduplicating by bond identity.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows bond.bond_id is a unique bond identity and connected records the two endpoint atoms for each bond, so the count is over distinct qualifying bonds rather than endpoint occurrences."
+  "meta_review": "Endpoint association metadata means a bond can appear once for each endpoint atom; because no deduplication is applied, the count reflects qualifying chlorine endpoint occurrences rather than unique bonds."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

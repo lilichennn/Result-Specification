@@ -416,7 +416,7 @@ Schema_links: [Player_Attributes.overall_rating,Player.player_name,Player_Attrib
 Result Contract:
 {
   "population": "Rating records for the football player named Gabriel Tamas whose date falls in the year 2011.",
-  "row_grain": "One rating record for the player Gabriel Tamas in 2011.",
+  "row_grain": "One row per matching rating record for the player Gabriel Tamas in 2011.",
   "column_role": "The overall rating value of the player.",
   "derivation": "none",
   "filter_policy": "none",

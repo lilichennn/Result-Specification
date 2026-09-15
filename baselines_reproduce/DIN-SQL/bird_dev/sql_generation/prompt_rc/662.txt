@@ -251,12 +251,12 @@ Hint: created in 2012 refers YEAR(CreationDate) = 2011; BountyAmount = 50;
 Schema_links: [posts.Id,votes.CreationDate,votes.BountyAmount,posts.Id = votes.PostId,2011,50]
 Result Contract:
 {
-  "population": "Posts that have at least one associated vote created in the year 2011 and with a bounty amount equal to 50; the creation-year and bounty conditions must apply to the same vote.",
+  "population": "Posts considered together with their associated votes, where the vote was created in the year 2011 and has a bounty amount equal to 50; the creation-year and bounty conditions must apply to the same vote.",
   "row_grain": "One global summary row.",
-  "column_role": "The count of qualifying posts.",
-  "derivation": "Count the distinct posts belonging to the eligible population.",
+  "column_role": "The count of posts, counted once for each associated vote that satisfies the 2011 creation and bounty conditions.",
+  "derivation": "Count all matching post-vote associations; do not deduplicate posts that have multiple qualifying votes.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that votes.CreationDate and votes.BountyAmount are vote-level attributes, resolving the 2011 creation and bounty conditions to votes associated with posts rather than post-level attributes. The contract therefore counts distinct qualifying posts."
+  "meta_review": "Metadata establishes that creation date and bounty amount are vote-level attributes, so the 2011 and bounty conditions apply to votes associated with posts. The result counts each qualifying vote-associated post occurrence rather than distinct posts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -228,9 +228,9 @@ Result Contract:
   "population": "All superheroes whose publisher is Marvel Comics (publisher_name = 'Marvel Comics').",
   "row_grain": "One global summary row for the entire eligible superhero population.",
   "column_role": "The average height of the eligible superheroes.",
-  "derivation": "Compute the average height using AVG(height_cm) across eligible superheroes, excluding height values marked missing by metadata (NULL or 0).",
+  "derivation": "Compute the average height using AVG(height_cm) across eligible superheroes; NULL height values are ignored, and 0 values are not separately excluded.",
   "filter_policy": "none",
-  "meta_review": "superhero.height_cm is documented as missing when NULL or 0, so the average height is computed only from non-missing height values. This refines the Round-1 derivation without changing the requested publisher filter or summary grain."
+  "meta_review": "The previous assumption that 0 marks missing height is not reflected in the result semantics; the average is computed over stored height values with NULLs ignored, while zeros remain included. This corrects the derivation without changing the requested publisher filter or summary grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

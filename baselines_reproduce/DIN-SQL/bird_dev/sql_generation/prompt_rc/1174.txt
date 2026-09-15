@@ -296,12 +296,12 @@ Hint: average age of patients as of year 1999 refers to AVG(SUBTRACT('1999', yea
 Schema_links: [Patient.Birthday,Laboratory.Date,Laboratory.ID = Patient.ID,1999,'1991-10-01','1991-10-30']
 Result Contract:
 {
-  "population": "Patients examined in the laboratory, identified by a laboratory test date between '1991-10-01' and '1991-10-30'.",
-  "row_grain": "One global summary row spanning all eligible patients.",
-  "column_role": "The average age of the eligible patients as of year 1999.",
-  "derivation": "Average of (1999 minus the patient's birth year) computed across the eligible population.",
+  "population": "Patient laboratory examination occurrences with an examination date between '1991-10-01' and '1991-10-30'.",
+  "row_grain": "One global summary row spanning all eligible laboratory examination occurrences.",
+  "column_role": "The average age of the examined patients as of year 1999.",
+  "derivation": "Average of (1999 minus the patient's birth year) computed over each eligible laboratory examination occurrence, without collapsing repeated examinations for the same patient.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies Laboratory.Date as the date of laboratory tests, resolving the October 1991 eligibility condition to laboratory test dates. No other Round-1 semantic commitment changes."
+  "meta_review": "The October 1991 condition applies to laboratory examination dates, and the aggregation is over qualifying laboratory examination occurrences rather than deduplicated patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

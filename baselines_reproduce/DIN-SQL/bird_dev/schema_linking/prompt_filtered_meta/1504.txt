@@ -182,17 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table transactions_1k, columns = [*,TransactionID,Date,Amount,Price]
+Table transactions_1k, columns = [*,Date,Amount]
 Foreign_keys = []
-Sample rows from transactions_1k (columns: ["TransactionID", "Date", "Amount", "Price"]):
-[[1, "2012-08-24", 28, 672.64], [2, "2012-08-24", 18, 430.72], [3, "2012-08-24", 1, 121.99]]
+Sample rows from transactions_1k (columns: ["Date", "Amount"]):
+[["2012-08-24", 28], ["2012-08-24", 18], ["2012-08-24", 1]]
 Column descriptions and value descriptions for transactions_1k:
-Column TransactionID: column description -> Transaction ID, value description -> 
 Column Date: column description -> Date, value description -> 
 Column Amount: column description -> Amount, value description -> 
-Column Price: column description -> Price, value description -> commonsense evidence:
-
-total price = Amount x Price
 
 Q: What is the average total price of the transactions taken place in January, 2012?
 Hint: In January, 2012 means Date contains '2012-01'

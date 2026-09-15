@@ -258,7 +258,7 @@ Result Contract:
 {
   "population": "The atom whose atom_id equals 'TR000_1'.",
   "row_grain": "One atom.",
-  "column_role": "The element of that atom, expressible via the element code and its corresponding element name as given in the evidence.",
+  "column_role": "The element of that atom, expressed as the element code.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."

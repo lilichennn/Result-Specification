@@ -251,12 +251,12 @@ Hint: Title = 'Group differences on a five point Likert item';
 Schema_links: [posts.Id,comments.Text,posts.Title,comments.PostId = posts.Id,'Group differences on a five point Likert item']
 Result Contract:
 {
-  "population": "Posts whose title equals 'Group differences on a five point Likert item', together with the comments made on those posts.",
-  "row_grain": "One comment belonging to the qualifying post.",
+  "population": "Comments made on posts whose title equals 'Group differences on a five point Likert item'.",
+  "row_grain": "One comment belonging to a qualifying post.",
   "column_role": "The identifier of the post and the text content of the comment.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms comments.Text is the detailed content of an individual comment linked to a post via comments.PostId. This validates the requested comment text and post identifier outputs."
+  "meta_review": "Metadata confirms the comment text is the detailed content of an individual comment linked to a post. This validates the requested comment text and post identifier outputs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

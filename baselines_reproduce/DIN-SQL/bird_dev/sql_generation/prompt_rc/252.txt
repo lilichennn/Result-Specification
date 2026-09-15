@@ -187,12 +187,12 @@ Hint: atom that has the element lead refers to atom_id where element = 'pb'
 Schema_links: [atom.atom_id,atom.element,connected.atom_id2,connected.atom_id = atom.atom_id,'pb']
 Result Contract:
 {
-  "population": "Atoms, identified by atom_id, that are connected by a bond to at least one atom whose element is lead (element = 'pb').",
-  "row_grain": "One row per distinct atom_id that can bond with a lead atom.",
-  "column_role": "The atom_id of each atom that can bond with a lead atom.",
+  "population": "Bond connections whose atom has element lead (element = 'pb'), represented by that lead atom and the atom connected to it.",
+  "row_grain": "One row per bond connection for a lead atom, not one row per distinct atom.",
+  "column_role": "The identifier of the lead atom and the identifier of the atom connected to it.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies atom_id as the unique identifier of atoms, resolving the requested atom identity to atom_id. No other Round-1 semantic was narrowed."
+  "meta_review": "Atom identifiers still identify atoms, but the result is a pair of connected atom identifiers per bond connection rather than a distinct list of atoms."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

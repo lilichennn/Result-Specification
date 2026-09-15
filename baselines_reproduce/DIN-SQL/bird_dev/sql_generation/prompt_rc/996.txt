@@ -357,9 +357,9 @@ Result Contract:
   "population": "All races held on a date between '2000-01-01' and '2010-12-31', the period the evidence defines as the first 10 years of the 21st century.",
   "row_grain": "One global summary row covering the entire period.",
   "column_role": "A single value: the annual average number of races held during the period.",
-  "derivation": "Count the eligible races per calendar year within the period and average those yearly counts across the years of the period.",
+  "derivation": "Count the eligible races over the entire period and divide that total by a fixed denominator of 10 years, producing a real-valued annual average.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

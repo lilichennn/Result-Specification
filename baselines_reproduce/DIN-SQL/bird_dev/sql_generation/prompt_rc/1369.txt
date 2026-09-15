@@ -230,12 +230,12 @@ Hint: event refers to event_name; highest budget amount refers to MAX(amount)
 Schema_links: [event.event_name,budget.amount,budget.link_to_event = event.event_id]
 Result Contract:
 {
-  "population": "All events are eligible; no membership conditions restrict the set of events considered.",
+  "population": "Events that have at least one recorded budget amount; only events linked to a budget record are eligible.",
   "row_grain": "One row representing the single event that has the highest budget amount.",
   "column_role": "The event's name (event_name), as the requested entity; the budget amount used for ranking is not required as an output column.",
   "derivation": "none",
-  "filter_policy": "Argmax: select the event associated with the maximum recorded budget amount across events; tie handling is unspecified.",
-  "meta_review": "Metadata shows the budget amount is recorded per budget category and event, so the ranking uses the budget amount linked to an event rather than an event-level stored total. Round-1 argmax semantics are preserved."
+  "filter_policy": "Argmax: select the event linked to the single largest recorded budget amount; tie handling is unspecified.",
+  "meta_review": "Metadata shows the budget amount is recorded per budget category and event, so the ranking uses the budget amount linked to an event rather than an event-level stored total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

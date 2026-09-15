@@ -327,12 +327,12 @@ Hint: vote type of 8 refers to VoteTypeId = 8; the highest bounty amount refers 
 Schema_links: [votes.VoteTypeId,votes.BountyAmount,users.DisplayName,users.WebsiteUrl,votes.UserId = users.Id,8]
 Result Contract:
 {
-  "population": "Users who are recorded as the voter on at least one vote with VoteTypeId = 8; only votes with VoteTypeId = 8 are eligible for consideration.",
-  "row_grain": "The user or users whose vote of type 8 has the highest BountyAmount.",
-  "column_role": "The user's display name and the user's website URL.",
+  "population": "Users who are recorded as the voter on at least one vote of type 8; only votes of type 8 are eligible for consideration.",
+  "row_grain": "A single user row corresponding to the type-8 vote selected as having the highest bounty amount.",
+  "column_role": "The user's display name and website URL.",
   "derivation": "none",
-  "filter_policy": "Retain only the user(s) whose vote of type 8 has the maximum BountyAmount (argmax over BountyAmount).",
-  "meta_review": "Metadata defines votes.UserId as the voter, resolving that the user linked to a BountyAmount vote is the casting user. The contract therefore anchors the requested user to the voter on the maximum type-8 bounty vote."
+  "filter_policy": "Retain only the single user associated with the type-8 vote ranked first by bounty amount; if multiple votes share the highest bounty amount, only one selected user is returned.",
+  "meta_review": "Metadata defines the user on a vote as the voter, resolving that the user linked to a bounty vote is the casting user. The contract therefore anchors the requested user to the voter on the selected highest type-8 bounty vote."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

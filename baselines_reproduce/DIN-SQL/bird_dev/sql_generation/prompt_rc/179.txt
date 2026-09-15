@@ -248,10 +248,10 @@ Hint:
 Schema_links: [client.client_id,trans.amount,trans.date,trans.type,disp.client_id = client.client_id,disp.account_id = account.account_id,trans.account_id = account.account_id,617,1998,'VYDAJ']
 Result Contract:
 {
-  "population": "All transactions made by client number 617 that occurred in 1998.",
+  "population": "All transactions associated with client number 617 that occurred in 1998.",
   "row_grain": "One global summary row covering all qualifying transactions.",
-  "column_role": "The total amount paid by client number 617 across those transactions.",
-  "derivation": "Sum the payment amounts over all transactions in the eligible population.",
+  "column_role": "The total transaction amount for client number 617 across those transactions.",
+  "derivation": "Sum the transaction amounts over all transactions in the eligible population.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

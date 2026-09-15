@@ -252,7 +252,7 @@ Schema_links: [users.DisplayName,users.Reputation,posts.Title,posts.OwnerUserId 
 Result Contract:
 {
   "population": "Posts whose title is exactly 'Understanding what Dassault iSight is doing?', together with the owner user who authored each such post.",
-  "row_grain": "One row per user who authored a qualifying post.",
+  "row_grain": "One row per qualifying post-owner pair, so the same user can appear more than once if they own multiple qualifying posts.",
   "column_role": "The authoring user's display name and that user's reputation value.",
   "derivation": "none",
   "filter_policy": "none",

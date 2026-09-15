@@ -258,8 +258,8 @@ Result Contract:
 {
   "population": "The single molecule whose identifier is TR000.",
   "row_grain": "One row representing the molecule TR000.",
-  "column_role": "The carcinogenicity status of the molecule, i.e., whether it is carcinogenic or non-carcinogenic.",
-  "derivation": "Determine carcinogenicity from the molecule's label, where label '+' means carcinogenic and label '-' means non-carcinogenic.",
+  "column_role": "The molecule's carcinogenicity label, indicating whether it is carcinogenic or non-carcinogenic.",
+  "derivation": "Return the stored carcinogenicity label for that molecule, with '+' interpreted as carcinogenic and '-' as non-carcinogenic.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that the molecule entity has a unique molecule identifier and a separate label recording carcinogenicity, validating that TR000 selects the molecule and the +/- evidence applies to label."
 }

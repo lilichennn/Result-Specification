@@ -371,7 +371,7 @@ Result Contract:
   "column_role": "The keyrune code (keyruneCode) of the set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The sets table documents set-level code and keyruneCode, confirming that the requested keyrune code is owned by the set entity. This validates the Round-1 contract without requiring refinement."
+  "meta_review": "The set entity directly owns its keyrune code, so the requested keyrune code is a direct attribute of the matching set."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

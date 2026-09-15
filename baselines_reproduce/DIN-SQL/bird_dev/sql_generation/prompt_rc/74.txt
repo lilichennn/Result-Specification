@@ -352,12 +352,12 @@ Hint: District Special Education Consortia School refers to EdOpsCode = 'SPECON'
 Schema_links: [frpm.Low Grade,schools.EdOpsCode,schools.NCESDist,frpm.CDSCode = schools.CDSCode,'SPECON','0613360']
 Result Contract:
 {
-  "population": "Schools that are District Special Education Consortia Schools (EdOpsCode = 'SPECON') and whose National Center for Educational Statistics school district identification number is '0613360'.",
-  "row_grain": "One row per qualifying school, with the question anticipating a single such school.",
-  "column_role": "The lowest grade offered by the school.",
-  "derivation": "none",
+  "population": "Schools that are District Special Education Consortia Schools and whose National Center for Educational Statistics school district identification number is '0613360'.",
+  "row_grain": "A single aggregate row giving the minimum lowest grade across the qualifying schools.",
+  "column_role": "The minimum lowest grade among the qualifying schools.",
+  "derivation": "Minimum aggregate of the lowest-grade values for the qualifying schools.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a single aggregate minimum value, not a row for each qualifying school."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

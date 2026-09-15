@@ -182,16 +182,9 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table driverStandings, columns = [*,driverId,position]
 Table drivers, columns = [*,driverId,forename,surname,dob]
-Table qualifying, columns = [*,driverId,position]
-Table results, columns = [*,resultId,driverId,position,rank]
-Foreign_keys = [driverStandings.driverId = drivers.driverId,qualifying.driverId = drivers.driverId,results.driverId = drivers.driverId]
-Sample rows from driverStandings (columns: ["driverId", "position"]):
-[[1, 1], [2, 2], [3, 3]]
-Column descriptions and value descriptions for driverStandings:
-Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
+Table results, columns = [*,resultId,driverId,rank]
+Foreign_keys = [results.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "forename", "surname", "dob"]):
 [[1, "Lewis", "Hamilton", "1985-01-07"], [2, "Nick", "Heidfeld", "1977-05-10"], [3, "Nico", "Rosberg", "1985-06-27"]]
 Column descriptions and value descriptions for drivers:
@@ -199,17 +192,11 @@ Column driverId: column description -> , value description ->
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
 Column dob: column description -> , value description -> 
-Sample rows from qualifying (columns: ["driverId", "position"]):
-[[1, 1], [9, 2], [5, 3]]
-Column descriptions and value descriptions for qualifying:
-Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "driverId", "position", "rank"]):
-[[1, 1, 1, 2], [2, 2, 2, 3], [3, 3, 3, 5]]
+Sample rows from results (columns: ["resultId", "driverId", "rank"]):
+[[1, 1, 2], [2, 2, 3], [3, 3, 5]]
 Column descriptions and value descriptions for results:
 Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
 Column rank: column description -> , value description -> 
 
 Q: Which drivers born after 1975 have been ranked 2? Please give their forenames and surnames.

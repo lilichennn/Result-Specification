@@ -285,12 +285,12 @@ Hint: introduction website refers to url; Italian is a nationality
 Schema_links: [constructors.name,constructors.url,constructors.nationality,constructorStandings.points,constructorStandings.constructorId = constructors.constructorId,Italian]
 Result Contract:
 {
-  "population": "Constructors whose nationality is Italian.",
-  "row_grain": "One constructor, namely the single Italian constructor selected as the answer.",
-  "column_role": "The constructor's identity (name) and its introduction website (url).",
-  "derivation": "Each eligible constructor's point total to date is the metric being compared; the catalog provides no constructor-level stored total, so the total must be obtained from race-related constructor point records.",
-  "filter_policy": "Select the constructor with the highest point total to date among the eligible population (argmax); tie handling is unspecified.",
-  "meta_review": "The complete catalog contains no point total on constructors; constructor points appear only in race-related records. This resolves that the compared point total is derived rather than read as a constructor attribute."
+  "population": "Italian constructors that have at least one recorded constructor-standing points entry.",
+  "row_grain": "One output row: the introduction website of the single selected constructor.",
+  "column_role": "Only the constructor's introduction website (URL) is returned; the constructor name or identity is not returned.",
+  "derivation": "The points used for comparison are the stored points value from a constructor-standing entry; no summation or other aggregation across entries is performed.",
+  "filter_policy": "Choose the constructor-standing entry with the highest points value among Italian constructors and return the associated constructor's website; tie handling is unspecified.",
+  "meta_review": "The compared points value is read directly from a constructor-standing record rather than derived as an aggregated constructor-level point total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

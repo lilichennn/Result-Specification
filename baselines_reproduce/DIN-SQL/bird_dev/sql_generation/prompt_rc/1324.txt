@@ -230,12 +230,12 @@ Hint: meetings in 2020 refers to type = 'Meeting' where YEAR(event_date) = 2020;
 Schema_links: [event.event_id,event.event_name,event.type,event.event_date,attendance.link_to_event = event.event_id,Meeting,2020]
 Result Contract:
 {
-  "population": "All events of type 'Meeting' whose event_date falls in the year 2020.",
-  "row_grain": "One global summary row spanning all qualifying 2020 meetings.",
+  "population": "Attendance occurrences linked to events of type 'Meeting' whose event date falls in 2020.",
+  "row_grain": "One global summary row spanning the qualifying 2020 meeting attendance occurrences.",
   "column_role": "A single value representing the average attendance of meetings in 2020.",
-  "derivation": "Average attendance equals the count of event identifiers recorded in attendance occurrences for the qualifying 2020 meetings divided by the count of distinct meeting event names.",
+  "derivation": "Average attendance equals the total number of recorded attendance occurrences for qualifying 2020 meetings divided by the number of distinct meeting event identifiers represented among those attendance occurrences.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that attendance.link_to_event and attendance.link_to_member represent individual attendances, resolving that the numerator counts attendance occurrences linked to qualifying meetings rather than event rows. The denominator remains the evidenced count of distinct event names."
+  "meta_review": "Metadata supports treating each attendance record as an individual attendance occurrence. The denominator is the count of distinct meeting event identifiers represented among those occurrences, not the count of distinct event names."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

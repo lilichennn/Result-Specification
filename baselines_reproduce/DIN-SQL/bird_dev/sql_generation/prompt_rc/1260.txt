@@ -296,9 +296,9 @@ Hint: RF is normal refers to RF < 20; older than 60 = SUBTRACT((YEAR(CURDATE()),
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.RF,Laboratory.ID = Patient.ID,20,60]
 Result Contract:
 {
-  "population": "Patients whose RF laboratory value is normal (RF < 20) AND who are older than 60, where age is defined as the current year minus the year of birth; both conditions must hold.",
-  "row_grain": "One row per qualifying patient.",
-  "column_role": "The ID of the patient, as explicitly requested.",
+  "population": "Patients who have at least one laboratory RF measurement below 20 and who are older than 60, where age is defined as the current year minus the year of birth; both conditions must hold.",
+  "row_grain": "One row for each qualifying laboratory measurement associated with a patient; patient IDs are not deduplicated.",
+  "column_role": "The ID of the patient.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata confirms Laboratory.RF is the RF measurement with normal range < 20 and Patient.Birthday supplies birth date for the age condition."

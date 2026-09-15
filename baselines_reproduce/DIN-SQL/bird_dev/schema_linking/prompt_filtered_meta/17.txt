@@ -182,27 +182,24 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,School Name,Charter School Number]
-Table satscores, columns = [*,cds,sname,AvgScrWrite]
-Table schools, columns = [*,CDSCode,School,CharterNum]
+Table frpm, columns = [*,CDSCode,Charter School Number]
+Table satscores, columns = [*,cds,AvgScrWrite]
+Table schools, columns = [*,CDSCode,CharterNum]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "School Name", "Charter School Number"]):
-[["01100170109835", "FAME Public Charter", "0728"], ["01100170112607", "Envision Academy for Arts & Technology", "0811"], ["01100170118489", "Aspire California College Preparatory Academy", "1049"]]
+Sample rows from frpm (columns: ["CDSCode", "Charter School Number"]):
+[["01100170109835", "0728"], ["01100170112607", "0811"], ["01100170118489", "1049"]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column Charter School Number: column description -> Charter School Number, value description -> 
-Sample rows from satscores (columns: ["cds", "sname", "AvgScrWrite"]):
-[["1100170000000", null, 417], ["1100170109835", "FAME Public Charter", 505], ["1100170112607", "Envision Academy for Arts & Technology", 395]]
+Sample rows from satscores (columns: ["cds", "AvgScrWrite"]):
+[["1100170000000", 417], ["1100170109835", 505], ["1100170112607", 395]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
 Column AvgScrWrite: column description -> average scores in writing, value description -> average scores in writing
-Sample rows from schools (columns: ["CDSCode", "School", "CharterNum"]):
-[["01100170000000", null, null], ["01100170109835", "FAME Public Charter", "0728"], ["01100170112607", "Envision Academy for Arts & Technology", "0811"]]
+Sample rows from schools (columns: ["CDSCode", "CharterNum"]):
+[["01100170000000", null], ["01100170109835", "0728"], ["01100170112607", "0811"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 Column CharterNum: column description -> The charter school number,, value description -> 4-digit number assigned to a charter school.
 
 Q: Rank schools by their average score in Writing where the score is greater than 499, showing their charter numbers.

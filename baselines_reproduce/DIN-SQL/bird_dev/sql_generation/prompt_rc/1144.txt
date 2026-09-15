@@ -491,12 +491,12 @@ Hint: finishing rate refer to finishing; curve score refer to curve; heaviest we
 Schema_links: [Player_Attributes.finishing,Player_Attributes.curve,Player.weight,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no Boolean membership condition restricts the set.",
-  "row_grain": "One row representing the single player selected as the heaviest.",
-  "column_role": "The selected player's finishing rate (finishing) and curve score (curve).",
+  "population": "Player attribute records associated with the player selected as the heaviest from all players.",
+  "row_grain": "One row, if present, representing one attribute record of the selected heaviest player.",
+  "column_role": "The selected attribute record's identifier, finishing rate (finishing), and curve score (curve).",
   "derivation": "none",
-  "filter_policy": "Select the player with the maximum weight (argmax over weight); tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select the player with the maximum weight (argmax over weight; tie handling unspecified), then return one matching attribute record if multiple exist (record choice unspecified).",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

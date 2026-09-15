@@ -248,12 +248,12 @@ Hint: Only the owner accounts have the right to issue permanent orders or apply 
 Schema_links: [client.client_id,client.district_id,disp.type,client.client_id = disp.client_id,"OWNER"]
 Result Contract:
 {
-  "population": "Clients linked to at least one account by a disposition record whose type is OWNER, because only owners have the right to issue permanent orders or apply for loans.",
-  "row_grain": "One row per eligible client.",
-  "column_role": "The client's ID and the client's district.",
+  "population": "Clients having an OWNER disposition linking them to an account, with each qualifying owner disposition considered together with the district of that account.",
+  "row_grain": "One row per qualifying OWNER disposition linking a client to an account; the same client may appear more than once.",
+  "column_role": "The client's ID, the district identifier, and the district name of the account associated with the OWNER disposition.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The disp table's type values include OWNER, which metadata ties to the right to issue permanent orders or apply for loans, resolving eligibility to clients with an OWNER disposition. No other Round-1 semantics were refined."
+  "meta_review": "The disposition type OWNER is the metadata marker for the right to issue permanent orders or apply for loans, resolving eligibility to OWNER dispositions."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

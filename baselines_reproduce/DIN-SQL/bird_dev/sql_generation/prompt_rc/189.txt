@@ -248,12 +248,12 @@ Hint: Female refers to 'F' in the gender; A11 contains information about average
 Schema_links: [account.account_id,client.gender,client.birth_date,district.A11,disp.client_id = client.client_id,disp.account_id = account.account_id,client.district_id = district.district_id,"F"]
 Result Contract:
 {
-  "population": "Account numbers associated with clients whose gender is 'F'.",
-  "row_grain": "One account number associated with a selected female client.",
+  "population": "Account numbers associated with female clients, limited to accounts connected to the same district as the client.",
+  "row_grain": "A single account number for the top-ranked eligible female client-account association.",
   "column_role": "The account number.",
   "derivation": "none",
-  "filter_policy": "Apply both requested superlative selections—oldest by earliest birth date and lowest average salary (A11) of the client's associated district—among the eligible female clients; the exact combination or priority of these criteria and tie handling are unspecified.",
-  "meta_review": "Metadata confirms client birth date is the representation for age and district.A11 is the average-salary attribute. The filter is therefore grounded in earliest birth date and the client's associated district average salary."
+  "filter_policy": "Among the eligible female client-account associations, choose exactly one by preferring the earliest client birth date first and then the lowest client-district average salary; tie handling after these ordered criteria is unspecified.",
+  "meta_review": "Metadata confirms client birth date is the representation for age and the district average-salary attribute. The filter is therefore grounded in earliest birth date and the client's associated district average salary."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

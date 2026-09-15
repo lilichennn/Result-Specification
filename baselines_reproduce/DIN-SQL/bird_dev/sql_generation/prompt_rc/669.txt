@@ -252,10 +252,10 @@ Schema_links: [votes.CreationDate,users.DisplayName,votes.UserId = users.Id,'chl
 Result Contract:
 {
   "population": "All votes cast by the user whose DisplayName is 'chl'.",
-  "row_grain": "One global summary representing the earliest voting moment across that user's votes.",
+  "row_grain": "A single row containing the earliest vote timestamp for that user.",
   "column_role": "The timestamp of the user's first vote.",
-  "derivation": "Take the minimum CreationDate over the eligible votes.",
-  "filter_policy": "none",
+  "derivation": "Return the stored CreationDate of the earliest eligible vote.",
+  "filter_policy": "Select only the earliest vote by CreationDate.",
   "meta_review": "Metadata confirms votes.UserId identifies the voter and users.DisplayName identifies the user, so eligible votes are those cast by user 'chl'. It also validates votes.CreationDate as the vote timestamp."
 }
 

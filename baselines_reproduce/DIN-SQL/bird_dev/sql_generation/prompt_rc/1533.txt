@@ -182,9 +182,9 @@ Hint: August of 2012 refers to the Date value = '201208' ; Price per unit of pro
 Schema_links: [transactions_1k.CustomerID,transactions_1k.Price,transactions_1k.Amount,transactions_1k.ProductID,yearmonth.Consumption,yearmonth.Date,transactions_1k.CustomerID = yearmonth.CustomerID,5,29.00,'201208']
 Result Contract:
 {
-  "population": "Customers who have at least one payment transaction for product id No.5 whose unit price, calculated as Price divided by Amount, is greater than 29.00 and who have a consumption record with Date value '201208'.",
-  "row_grain": "One eligible customer together with one consumption-status value dated '201208'.",
-  "column_role": "The customer identifier and their consumption status.",
+  "population": "Consumption-status values with Date value '201208' that are linked to a payment transaction for product id No.5 whose unit price, calculated as Price divided by Amount, is greater than 29.00.",
+  "row_grain": "One consumption-status value for each qualifying payment transaction matched to an August 2012 consumption record, without collapsing duplicates by customer.",
+  "column_role": "The consumption status only.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata identifies the requested people as customers and the consumption status as the recorded consumption value for Date '201208'. The transaction Price description conflicts with the evidence's Price / Amount formula, so the evidence formula is preserved."

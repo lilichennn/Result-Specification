@@ -183,8 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,circuitRef,name,location,country,lat,lng]
-Table races, columns = [*,raceId,circuitId]
-Foreign_keys = [races.circuitId = circuits.circuitId]
+Foreign_keys = []
 Sample rows from circuits (columns: ["circuitId", "circuitRef", "name", "location", "country", "lat", "lng"]):
 [[2, "sepang", "Sepang International Circuit", "Kuala Lumpur", "Malaysia", 2.76083, 101.738], [3, "bahrain", "Bahrain International Circuit", "Sakhir", "Bahrain", 26.0325, 50.5106], [4, "catalunya", "Circuit de Barcelona-Catalunya", "Montmeló", "Spain", 41.57, 2.26111]]
 Column descriptions and value descriptions for circuits:
@@ -195,11 +194,6 @@ Column location: column description -> , value description ->
 Column country: column description -> , value description -> 
 Column lat: column description -> , value description -> 
 Column lng: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "circuitId"]):
-[[1, 1], [2, 2], [3, 17]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
-Column circuitId: column description -> , value description -> 
 
 Q: How many times the circuits were held in Austria? Please give their location and coordinates.
 Hint: location coordinates refers to (lat,lng); Austria refers to country = 'Austria';

@@ -361,12 +361,12 @@ Hint: lap record means the fastest time recorded which refers to time
 Schema_links: [races.name,lapTimes.time,circuits.name,lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId,'Austrian Grand Prix Circuit']
 Result Contract:
 {
-  "population": "All Formula_1 races held at the Austrian Grand Prix Circuit that have a recorded lap time.",
-  "row_grain": "One race, namely the single Formula_1 race in which the circuit's lap record was set.",
-  "column_role": "The identity (name) of the race in which the lap record was set.",
+  "population": "Formula_1 races identified as the Austrian Grand Prix, considered through race results that have a recorded fastest lap time.",
+  "row_grain": "One or more rows containing the race name for the Austrian Grand Prix race(s) associated with the minimum fastest-lap time.",
+  "column_role": "The identity (name) of the race associated with the record fastest lap time.",
   "derivation": "none",
-  "filter_policy": "Select the race with the fastest (minimum) recorded lap time, i.e., argmin over the eligible races' times.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select the race name for any Austrian Grand Prix result whose fastest lap time equals the minimum fastest-lap duration among those results, including ties.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -251,12 +251,12 @@ Hint: '2012/8/25' can be represented by '2012-08-25'
 Schema_links: [transactions_1k.CustomerID,transactions_1k.Date,transactions_1k.Amount,transactions_1k.Price,'2012-08-25']
 Result Contract:
 {
-  "population": "Payments made on the date 2012-08-25, together with the customers who made them.",
-  "row_grain": "One customer, namely the single customer selected as paying the most on that date.",
+  "population": "Payments made on 2012-08-25, together with the customers who made them.",
+  "row_grain": "One customer, namely the single customer selected as having paid the most on that date.",
   "column_role": "The identity of the customer as the customer identifier; no payment amount is required as an output.",
-  "derivation": "The paid amount is computed as transaction amount multiplied by price.",
-  "filter_policy": "Choose the customer whose paid amount on 2012-08-25 is greatest, with paid amount computed as transaction amount multiplied by price; whether multiple payments by one customer are combined before comparison is not determined by the input.",
-  "meta_review": "Metadata showed that customers have only an identifier, not a stored name, so the customer output is the identifier. It also defined total price as Amount × Price in transactions_1k, resolving the paid amount metric."
+  "derivation": "The paid amount for each customer is the total of the recorded payment prices for that customer's payments on that date.",
+  "filter_policy": "Choose the single customer whose total payment price for 2012-08-25 is greatest, combining all of that customer's payments on that date before comparison.",
+  "meta_review": "Metadata supported returning the customer identifier rather than a customer name. The paid amount metric is the summed payment price for a customer, not amount multiplied by price."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

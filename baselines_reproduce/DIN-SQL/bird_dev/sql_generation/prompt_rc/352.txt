@@ -297,12 +297,12 @@ Hint: Chinese Simplified' is the language; percentage = Divide(Sum(id where lang
 Schema_links: [foreign_data.id,foreign_data.language,'Chinese Simplified']
 Result Contract:
 {
-  "population": "The reference population is all cards. The target subpopulation is cards that are available in Chinese Simplified, represented by associated foreign_data records whose language is 'Chinese Simplified'.",
-  "row_grain": "One global summary row over the entire card collection.",
-  "column_role": "The percentage of cards available in Chinese Simplified.",
-  "derivation": "Count all cards in the reference population. Count the cards in the target subpopulation, i.e., cards with at least one associated foreign_data record where language = 'Chinese Simplified'. Divide the target count by the total count and multiply by 100.",
+  "population": "The aggregated population is card language availability records associated with cards. The target subset is those availability records whose language is 'Chinese Simplified'.",
+  "row_grain": "One global summary row over all card-associated language availability records.",
+  "column_role": "The percentage of card-associated language availability records that are in Chinese Simplified.",
+  "derivation": "Count all card-associated language availability records in the reference population. Count the records in that population whose language is 'Chinese Simplified'. Divide the Chinese Simplified record count by the total associated-record count and multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that card language is stored in foreign_data.language, so the Chinese Simplified condition is evaluated on foreign-data associated with cards while the percentage remains over cards."
+  "meta_review": "Language information is taken from card language availability records; the percentage is computed over those associated records, not over distinct cards or all cards."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

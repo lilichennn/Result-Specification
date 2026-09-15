@@ -253,7 +253,7 @@ Result Contract:
   "column_role": "The client's birthday (birth date).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes loan.amount as approved amount in US dollars and loan.date as the loan approval date, so the date condition is the stored loan approval date rather than an unspecified application date."
+  "meta_review": "Metadata establishes the loan amount as approved amount in US dollars and the loan date as the loan approval date, so the date condition is the stored loan approval date rather than an unspecified application date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,12 +297,12 @@ Hint: annul refers to name = 'annul'; numbered 29 refers to number = '29';
 Schema_links: [foreign_data.language,cards.name,cards.number,foreign_data.uuid = cards.uuid,annul,29]
 Result Contract:
 {
-  "population": "The card whose name is 'annul' and whose number is '29'.",
-  "row_grain": "One row per alternative language available for that card.",
+  "population": "Alternative language entries associated with the card whose name is 'Annul' and whose number is 29.",
+  "row_grain": "One row per alternative language entry available for that card.",
   "column_role": "The alternative language available for the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that foreign_data.language is the foreign language of a card. This validates the card-level alternative-language output in Round-1."
+  "meta_review": "Metadata confirms that alternative languages are recorded for cards. This supports the card-level alternative-language output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

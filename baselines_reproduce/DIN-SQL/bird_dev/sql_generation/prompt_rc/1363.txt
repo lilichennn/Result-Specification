@@ -299,12 +299,12 @@ Hint:
 Schema_links: [major.department,major.college,'College of Humanities and Social Sciences']
 Result Contract:
 {
-  "population": "All departments that belong to the College of Humanities and Social Sciences.",
-  "row_grain": "One distinct department.",
-  "column_role": "The identity (name) of each qualifying department.",
-  "derivation": "Distinct department names associated with the College of Humanities and Social Sciences.",
-  "filter_policy": "Restrict to departments whose college name is 'College of Humanities and Social Sciences'; no ordering is specified.",
-  "meta_review": "The major table records department and college at the grain of one major, so departments must be returned as distinct department names rather than one row per major. This resolves the department representation as a name associated with a college."
+  "population": "Department values associated with majors in the College of Humanities and Social Sciences.",
+  "row_grain": "One row for each qualifying major, so the same department may appear more than once.",
+  "column_role": "The department name associated with each qualifying major.",
+  "derivation": "The direct department value for each qualifying major; no aggregation or deduplication is applied.",
+  "filter_policy": "Restrict to majors whose college is 'College of Humanities and Social Sciences'; no ordering is specified.",
+  "meta_review": "The major record carries department and college at the grain of one major, so the result returns the department value for each qualifying major rather than collapsing repeated department names. This resolves the department representation as a name associated with a college."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

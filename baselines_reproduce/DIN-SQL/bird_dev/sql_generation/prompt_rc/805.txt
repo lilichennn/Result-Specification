@@ -294,12 +294,12 @@ Hint: missing weight refers to weight_kg = 0 OR weight_kg = NULL;
 Schema_links: [superhero.full_name,superhero.weight_kg,0,NULL]
 Result Contract:
 {
-  "population": "All superheroes whose weight is missing, defined as weight_kg = 0 OR weight_kg IS NULL.",
-  "row_grain": "One superhero.",
+  "population": "Superheroes whose weight is missing, meaning zero or null, and whose full name is recorded.",
+  "row_grain": "One row per distinct full name among the qualifying superheroes.",
   "column_role": "The full name of the superhero.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -327,12 +327,12 @@ Hint: The higher reputation the user has the more influence; percentage = DIVIDE
 Schema_links: [posts.Id,posts.Score,users.Reputation,posts.OwnerUserId = users.Id,50]
 Result Contract:
 {
-  "population": "All posts authored by the most influential user, where the most influential user is the user with the highest reputation.",
+  "population": "All posts authored by the user or users with the highest reputation, treating reputation as influence.",
   "row_grain": "One global summary row representing a single percentage computed across all eligible posts.",
   "column_role": "The percentage of the eligible posts that have a score above 50.",
   "derivation": "Divide the count of eligible posts with Score greater than 50 by the total count of all eligible posts, expressed as a percentage.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms users.Reputation represents influence and posts.Score is the post-level score, validating the Round-1 user selection and score threshold."
+  "meta_review": "Metadata confirms users.Reputation represents influence and posts.Score is the post-level score, validating the maximum-reputation selection and score threshold."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

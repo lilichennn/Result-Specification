@@ -285,12 +285,12 @@ Hint: reference name refers to driverRef; Canadian Grand Prix refers to races.na
 Schema_links: [drivers.driverRef,results.position,races.name,races.year,results.driverId = drivers.driverId,results.raceId = races.raceId,'Canadian Grand Prix',2007,1]
 Result Contract:
 {
-  "population": "Driver race results for the race named 'Canadian Grand Prix' held in 2007 whose race finishing position is first.",
-  "row_grain": "One driver, the one who finished first in that race.",
-  "column_role": "The driver's reference name (driverRef).",
+  "population": "Drivers with a race result in the race named 'Canadian Grand Prix' held in 2007 whose result rank is first.",
+  "row_grain": "One driver, the one ranked first in that race.",
+  "column_role": "The driver's given name, family name, and reference name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata defines results.rank as fastest-lap-speed starting rank, while results.position is the finishing position, so 'first' is race finishing position rather than rank."
+  "meta_review": "The phrase 'ranked the first' refers to the result rank, not the finishing position."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

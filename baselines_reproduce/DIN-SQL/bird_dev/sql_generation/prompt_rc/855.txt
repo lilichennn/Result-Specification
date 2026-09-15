@@ -285,12 +285,12 @@ Hint: information about races refers to url;
 Schema_links: [races.url,circuits.name,races.circuitId = circuits.circuitId,Sepang International Circuit]
 Result Contract:
 {
-  "population": "Races held on the Sepang International Circuit.",
-  "row_grain": "One row per race held on the Sepang International Circuit.",
-  "column_role": "The race-level URL where information about the race can be found.",
+  "population": "The circuit named Sepang International Circuit; races held there are used only to qualify that the circuit has hosted races.",
+  "row_grain": "One row per distinct qualifying circuit URL.",
+  "column_role": "The circuit-level URL where information about races held at Sepang International Circuit can be found.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata describes races.url as the introduction URL for each race, distinguishing it from the circuit's own URL. This validates the race-level URL output while preserving the Round-1 race population and grain."
+  "filter_policy": "Only unique URLs are returned.",
+  "meta_review": "The URL is the information location for the qualifying circuit hosting the races, not a separate race-level URL."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

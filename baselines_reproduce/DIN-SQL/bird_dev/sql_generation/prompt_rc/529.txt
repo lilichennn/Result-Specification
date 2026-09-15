@@ -373,12 +373,12 @@ Hint: names of sets refers to name; doesn't have Japanese translation refers to 
 Schema_links: [sets.name,set_translations.language,set_translations.setCode = sets.code,Japanese,Korean]
 Result Contract:
 {
-  "population": "Sets that have at least one Korean translation (language = 'Korean') and have no Japanese translation (no translation whose language contains 'Japanese'); both conditions must hold.",
+  "population": "Sets that have at least one translation whose language is 'Korean' and whose language does not contain 'Japanese'.",
   "row_grain": "One row per qualifying set.",
   "column_role": "The name of the set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The Japanese exclusion applies within the qualifying translation condition rather than as a separate global absence requirement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

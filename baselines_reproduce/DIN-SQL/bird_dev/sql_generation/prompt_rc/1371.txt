@@ -230,12 +230,12 @@ Hint: 'Women's Soccer' is the event name;
 Schema_links: [attendance.link_to_member,event.event_name,attendance.link_to_event = event.event_id,Women's Soccer]
 Result Contract:
 {
-  "population": "Members who attended the event whose name is \"Women's Soccer\".",
+  "population": "Attendance entries linking members to the event whose name is \"Women's Soccer\".",
   "row_grain": "One global summary for the specified event.",
-  "column_role": "The number of members who attended the event.",
-  "derivation": "Count of the members in the eligible population.",
+  "column_role": "The number of member attendance entries for the event.",
+  "derivation": "Count of the eligible attendance entries.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

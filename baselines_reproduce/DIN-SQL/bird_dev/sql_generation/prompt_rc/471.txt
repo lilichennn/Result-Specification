@@ -302,7 +302,7 @@ Result Contract:
   "column_role": "The expansion type of the set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms set_translations.translation stores card-set translations and sets.type is described as the expansion type of the set, validating the set-level owner of the requested type. No other Round-1 semantics changed."
+  "meta_review": "Metadata confirms card-set translations identify the named set and the set's type is the expansion type of the set."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

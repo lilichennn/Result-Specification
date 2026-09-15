@@ -184,10 +184,10 @@ Result Contract:
 {
   "population": "All transactions that took place at gas stations located in the Czech Republic, i.e., where the gas station's Country = 'CZE'.",
   "row_grain": "One global summary row for the entire set of qualifying transactions.",
-  "column_role": "A single numeric value representing the average total price of the qualifying transactions, where total price is Amount x Price.",
-  "derivation": "Compute the average of Amount x Price over all transactions in the eligible population.",
+  "column_role": "A single numeric value representing the average total price of the qualifying transactions, using the transaction price as the total-price measure.",
+  "derivation": "Compute the average of the transaction price over all transactions in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "The value description for transactions_1k.Price states total price = Amount x Price. Therefore the average total price must be computed as the average of Amount multiplied by Price, not Price alone."
+  "meta_review": "The result uses the transaction price itself as the total price measure; therefore the average is not computed as Amount multiplied by Price."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

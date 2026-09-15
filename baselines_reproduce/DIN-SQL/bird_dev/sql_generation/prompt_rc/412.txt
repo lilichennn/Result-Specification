@@ -373,12 +373,12 @@ Hint: in French refers to language = 'French'; black border color refers to bord
 Schema_links: [foreign_data.name,foreign_data.language,cards.type,cards.layout,cards.borderColor,cards.artist,foreign_data.uuid = cards.uuid,French,Creature,normal,black,Matthew D. Wilson]
 Result Contract:
 {
-  "population": "Cards whose type is Creature, whose layout is normal, whose border color is black, and whose artist is Matthew D. Wilson, restricted to the French-language foreign name of each such card; all conditions apply conjunctively.",
-  "row_grain": "One qualifying card, represented by its French-language foreign name entry.",
+  "population": "French-language foreign names associated with cards whose type is Creature, whose layout is normal, whose border color is black, and whose artist is Matthew D. Wilson; all card conditions apply conjunctively.",
+  "row_grain": "One row per French-language foreign name entry for a qualifying card.",
   "column_role": "The French foreign name of the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

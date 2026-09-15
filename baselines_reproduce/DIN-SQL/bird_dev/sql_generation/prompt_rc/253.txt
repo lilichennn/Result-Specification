@@ -187,12 +187,12 @@ Hint: triple bond refers to bond_type = '#';
 Schema_links: [atom.element,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'#']
 Result Contract:
 {
-  "population": "All atoms that participate as either endpoint of a bond with bond_type = '#'.",
-  "row_grain": "One row per element participating in a triple bond.",
+  "population": "All chemical elements represented by atoms that participate as either endpoint of a bond whose bond type is '#'.",
+  "row_grain": "One row per distinct element value among atoms participating in triple bonds.",
   "column_role": "The element involved in a triple bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows bonds are linked to two atom endpoints through connected, and atom stores element, resolving how elements participating in triple bonds are represented. No other Round-1 semantics changed."
+  "meta_review": "Metadata shows bonds are linked to atom endpoints, and atom stores element, so the result is the distinct elements of atoms connected to triple bonds."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

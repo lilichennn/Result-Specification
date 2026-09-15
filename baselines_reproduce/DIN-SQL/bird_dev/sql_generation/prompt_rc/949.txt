@@ -285,12 +285,12 @@ Hint:
 Schema_links: [constructors.name,constructorStandings.points,constructorStandings.constructorId = constructors.constructorId]
 Result Contract:
 {
-  "population": "All constructors are eligible; no membership conditions are stated.",
+  "population": "Constructors that have a recorded constructor standing are eligible; no other membership conditions are stated.",
   "row_grain": "One result row represents the single constructor identified as having the highest point.",
   "column_role": "The identity of the constructor, represented by its full name; the point value itself is a ranking measure and is not required as an output column.",
   "derivation": "none",
-  "filter_policy": "Select the constructor with the maximum point value (argmax over constructors on their points); tie handling is not specified.",
-  "meta_review": "Metadata identifies constructors.name as the full name of the constructor, so the identity output is the constructor's full name rather than a reference or identifier."
+  "filter_policy": "Select the constructor associated with the maximum point value among recorded constructor standings; tie handling is not specified.",
+  "meta_review": "Metadata identifies the constructor's name as the full name of the constructor, so the identity output is the constructor's full name rather than a reference or identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

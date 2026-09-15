@@ -182,17 +182,9 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table atom, columns = [*,atom_id,molecule_id]
 Table bond, columns = [*,bond_id,molecule_id]
 Table connected, columns = [*,atom_id,bond_id]
-Table molecule, columns = [*,molecule_id]
-Foreign_keys = [atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,connected.bond_id = bond.bond_id,connected.atom_id = atom.atom_id]
-Sample rows from atom (columns: ["atom_id", "molecule_id"]):
-[["TR000_1", "TR000"], ["TR000_2", "TR000"], ["TR000_3", "TR000"]]
-Column descriptions and value descriptions for atom:
-Column atom_id: column description -> the unique id of atoms, value description -> 
-Column molecule_id: column description -> identifying the molecule to which the atom belongs, value description -> commonsense evidence:
-TRXXX_i represents ith atom of molecule TRXXX
+Foreign_keys = [connected.bond_id = bond.bond_id]
 Sample rows from bond (columns: ["bond_id", "molecule_id"]):
 [["TR000_1_2", "TR000"], ["TR000_2_3", "TR000"], ["TR000_2_4", "TR000"]]
 Column descriptions and value descriptions for bond:
@@ -205,11 +197,6 @@ Sample rows from connected (columns: ["atom_id", "bond_id"]):
 Column descriptions and value descriptions for connected:
 Column atom_id: column description -> id of the first atom, value description -> 
 Column bond_id: column description -> bond id representing bond between two atoms, value description -> 
-Sample rows from molecule (columns: ["molecule_id"]):
-[["TR000"], ["TR001"], ["TR002"]]
-Column descriptions and value descriptions for molecule:
-Column molecule_id: column description -> unique id of molecule, value description -> "+" --> this molecule / compound is carcinogenic
-'-' this molecule is not / compound carcinogenic
 
 Q: Indicate the molecule id is belonging to the TR000_1_2 bond that has the first atom named TR000_1.
 A: Let’s think step by step.

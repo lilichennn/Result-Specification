@@ -182,16 +182,10 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table colour, columns = [*,id,colour]
 Table gender, columns = [*,id,gender]
 Table publisher, columns = [*,id,publisher_name]
 Table superhero, columns = [*,id,gender_id,eye_colour_id,hair_colour_id,skin_colour_id,publisher_id]
-Foreign_keys = [superhero.skin_colour_id = colour.id,superhero.publisher_id = publisher.id,superhero.hair_colour_id = colour.id,superhero.gender_id = gender.id,superhero.eye_colour_id = colour.id]
-Sample rows from colour (columns: ["id", "colour"]):
-[[1, "No Colour"], [2, "Amber"], [3, "Auburn"]]
-Column descriptions and value descriptions for colour:
-Column id: column description -> the unique identifier of the color, value description -> 
-Column colour: column description -> the color of the superhero's skin/eye/hair/etc, value description -> 
+Foreign_keys = [superhero.publisher_id = publisher.id,superhero.gender_id = gender.id]
 Sample rows from gender (columns: ["id", "gender"]):
 [[1, "Male"], [2, "Female"], [3, "N/A"]]
 Column descriptions and value descriptions for gender:

@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,forename,surname]
 Table races, columns = [*,raceId,year,name]
-Table results, columns = [*,raceId,driverId,positionOrder]
+Table results, columns = [*,raceId,driverId,position,positionOrder]
 Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId", "forename", "surname"]):
 [[1, "Lewis", "Hamilton"], [2, "Nick", "Heidfeld"], [3, "Nico", "Rosberg"]]
@@ -198,11 +198,12 @@ Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "positionOrder"]):
-[[18, 1, 1], [18, 2, 2], [18, 3, 3]]
+Sample rows from results (columns: ["raceId", "driverId", "position", "positionOrder"]):
+[[18, 1, 1, 1], [18, 2, 2, 2], [18, 3, 3, 3]]
 Column descriptions and value descriptions for results:
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
+Column position: column description -> , value description -> 
 Column positionOrder: column description -> , value description -> 
 
 Q: What was Lewis Hamilton's final rank in the 2008 Chinese Grand Prix?

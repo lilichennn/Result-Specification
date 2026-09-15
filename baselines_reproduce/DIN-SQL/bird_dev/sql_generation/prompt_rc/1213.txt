@@ -296,12 +296,12 @@ Hint: alkaliphophatase (ALP) within normal range refers to ALP < 300
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.ALP,Laboratory.ID = Patient.ID,'1982-04-01',300]
 Result Contract:
 {
-  "population": "Patients born on April 1, 1982.",
-  "row_grain": "One patient, namely the patient born on April 1, 1982.",
-  "column_role": "The patient's ID and whether that patient's alkaliphophatase (ALP) is within normal range.",
-  "derivation": "Determine whether the patient's ALP value is within normal range, defined as ALP < 300.",
+  "population": "Patients born on April 1, 1982 who have at least one laboratory result.",
+  "row_grain": "One row per associated laboratory result, not necessarily one row per patient.",
+  "column_role": "The patient's ID and a value indicating whether the alkaliphophatase (ALP) result is normal or abnormal.",
+  "derivation": "The ALP status is normal if the ALP value is less than 300 and abnormal otherwise.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,29 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,setCode]
-Table set_translations, columns = [*,id,language,setCode,translation]
-Table sets, columns = [*,id,code,mcmName,mtgoCode,name]
-Foreign_keys = [set_translations.setCode = sets.code]
-Sample rows from cards (columns: ["setCode"]):
-[["10E"], ["10E"], ["10E"]]
-Column descriptions and value descriptions for cards:
-Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from set_translations (columns: ["id", "language", "setCode", "translation"]):
-[[1, "Chinese Simplified", "10E", "核心系列第十版"], [2, "Chinese Traditional", "10E", "核心系列第十版"], [3, "French", "10E", "Dixième édition"]]
-Column descriptions and value descriptions for set_translations:
-Column id: column description -> unique id identifying this set, value description -> 
-Column language: column description -> language of this card set, value description -> 
-Column setCode: column description -> the set code for this set, value description -> 
-Column translation: column description -> translation of this card set, value description -> 
-Sample rows from sets (columns: ["id", "code", "mcmName", "mtgoCode", "name"]):
-[[1, "10E", "Tenth Edition", "10E", "Tenth Edition"], [2, "2ED", null, null, "Unlimited Edition"], [3, "2XM", "Double Masters", "2XM", "Double Masters"]]
+Table sets, columns = [*,id,code,name]
+Foreign_keys = []
+Sample rows from sets (columns: ["id", "code", "name"]):
+[[1, "10E", "Tenth Edition"], [2, "2ED", "Unlimited Edition"], [3, "2XM", "Double Masters"]]
 Column descriptions and value descriptions for sets:
 Column id: column description -> unique id identifying this set, value description -> 
 Column code: column description -> The set code for the set., value description -> 
-Column mcmName: column description -> , value description -> 
-Column mtgoCode: column description -> The set code for the set as it appears on Magic: The Gathering Online, value description -> commonsense evidence:
-if the value is null or empty, then it doesn't appear on Magic: The Gathering Online
 Column name: column description -> The name of the set., value description -> 
 
 Q: List out the set name of the set code "ALL".

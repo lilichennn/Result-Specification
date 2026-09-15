@@ -421,12 +421,12 @@ Hint:
 Schema_links: [satscores.sname,satscores.cname,satscores.NumTstTakr,'Contra Costa']
 Result Contract:
 {
-  "population": "All schools located in Contra Costa.",
+  "population": "All schools located in Contra Costa that have a recorded school name.",
   "row_grain": "One school.",
   "column_role": "The identity (name) of the school; the test taker count is a ranking measure and is not required as an output column.",
   "derivation": "For each school, use its stored school-level number of test takers as the comparison metric.",
-  "filter_policy": "Select the single school with the highest number of test takers (argmax over the test taker count).",
-  "meta_review": "Metadata describes satscores.NumTstTakr as the number of test takers in each school, establishing the requested metric as a stored school-level count. This resolves the metric grain for the argmax without requiring derivation from other records."
+  "filter_policy": "Select exactly one school among those with the highest number of test takers.",
+  "meta_review": "Metadata describes the school-level test taker count as the number of test takers in each school, establishing the requested metric as a stored school-level count. This resolves the metric grain for the argmax without requiring derivation from other records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

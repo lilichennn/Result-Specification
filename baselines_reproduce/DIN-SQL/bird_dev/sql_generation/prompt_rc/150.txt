@@ -248,10 +248,10 @@ Hint: A3 contains the region names; North Bohemia is a region.
 Schema_links: [account.account_id,district.A3,trans.bank,account.district_id = district.district_id,trans.account_id = account.account_id,'North Bohemia','AB']
 Result Contract:
 {
-  "population": "Accounts whose branch district is in the North Bohemia region and that have made at least one transaction whose partner's bank code is AB.",
+  "population": "Account-transaction occurrences for accounts whose branch district is in the North Bohemia region and where the transaction's partner bank code is AB.",
   "row_grain": "One global summary row.",
-  "column_role": "The number of qualifying accounts.",
-  "derivation": "Count the accounts belonging to the eligible population.",
+  "column_role": "The number of qualifying account-transaction occurrences.",
+  "derivation": "Count the qualifying occurrences, allowing an account with multiple matching transactions to contribute once for each matching transaction.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that account location is the region of the account's branch district (A3) and that the transaction partner's bank is represented by a two-letter bank code. This refines the eligibility representation without changing the requested count."
 }

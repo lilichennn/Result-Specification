@@ -296,12 +296,12 @@ Hint: first came to the hospital after year 1992 refers to year(`First Date`) > 
 Schema_links: [Patient.ID,Patient.First Date,Laboratory.PT,Laboratory.ID = Patient.ID,1992,14]
 Result Contract:
 {
-  "population": "Patients whose first hospital arrival occurred in a year after 1992 (year of first date > 1992) and who have a prothrombin time (PT) level that is normal (PT < 14); both conditions must hold.",
-  "row_grain": "One patient.",
+  "population": "Patients whose first hospital arrival occurred in a year after 1992 and who have an associated prothrombin time (PT) measurement below 14.",
+  "row_grain": "One row for each qualifying patient-laboratory association, returning the patient identifier; the result is not explicitly de-duplicated by patient.",
   "column_role": "Values identifying each qualifying patient.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

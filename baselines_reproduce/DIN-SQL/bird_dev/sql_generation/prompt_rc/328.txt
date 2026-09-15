@@ -187,12 +187,12 @@ Hint: double bond refers to bond_type = '='; element = 'cl' means Chlorine; elem
 Schema_links: [atom.element,atom.molecule_id,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'=','TR024']
 Result Contract:
 {
-  "population": "Atoms belonging to molecule TR024 that are an endpoint of at least one bond in molecule TR024 whose bond_type is '='; both molecule membership and double-bond participation must hold together.",
-  "row_grain": "One qualifying atom (element occurrence) of molecule TR024 that is involved in a double bond.",
+  "population": "Atoms belonging to molecule TR024, returned in the context of double bonds of the same molecule; inclusion does not require the atom itself to be an endpoint of a double bond.",
+  "row_grain": "One row for each atom of molecule TR024 in the context of each double bond in that molecule, so the same element code can appear multiple times.",
   "column_role": "The chemical element of the qualifying atom, represented by the stored element code, with the provided mapping giving the element name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that atom.element stores chemical-element codes and that connected/bond identify the two atom endpoints of each bond, with bond_type '=' marking double bonds. This refined the qualifying participation and output representation without changing the requested entity."
+  "meta_review": "Metadata confirms chemical-element codes and that '=' marks double bonds, but the operational result is based on same-molecule co-occurrence with double bonds rather than endpoint participation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -428,12 +428,12 @@ Hint: Closure date and closed date are synonyms; 'Closed' was mentioned in schoo
 Schema_links: [schools.County,schools.School,schools.ClosedDate,schools.StatusType,'Closed']
 Result Contract:
 {
-  "population": "All schools whose status type is 'Closed' (i.e., schools.StatusType = 'Closed').",
-  "row_grain": "One row per closed school in the county that is selected as having the most closed schools.",
+  "population": "All schools whose status type is 'Closed' and whose school name is present.",
+  "row_grain": "One distinct row for each combination of county, school name, and closure date among closed schools in the selected county.",
   "column_role": "The county name, the name of each closed school, and that school's closure date (synonymous with closed date).",
-  "derivation": "For each county, the count of its closed schools, serving as the metric by which counties are compared.",
-  "filter_policy": "Argmax: retain only the county with the highest number of closed schools; tie handling is not specified.",
-  "meta_review": "Metadata confirms schools.ClosedDate is the date the school closed, validating the requested closure-date output. Although schools.StatusType is described as district status, the question and evidence own the closed-school condition to school records, so Round-1 is preserved."
+  "derivation": "For each county, the count of its closed schools with a school name, serving as the metric by which counties are compared.",
+  "filter_policy": "Argmax: retain only the county with the highest number of closed schools with a school name; tie handling is not specified.",
+  "meta_review": "Metadata confirms the closure date output is the date the school closed. Although the status field is described as district status, the question and evidence assign the closed-school condition to school records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

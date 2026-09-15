@@ -297,12 +297,12 @@ Hint: card set Coldsnap refers to name = 'Coldsnap'; Italian refers to language 
 Schema_links: [foreign_data.name,foreign_data.language,sets.name,cards.convertedManaCost,foreign_data.uuid = cards.uuid,cards.setCode = sets.code,'Coldsnap','Italian']
 Result Contract:
 {
-  "population": "All cards belonging to the set named 'Coldsnap'.",
+  "population": "Cards in the set named 'Coldsnap' that have an Italian-language foreign printing.",
   "row_grain": "One row per qualifying card.",
-  "column_role": "The card's foreign-language name in Italian (language = 'Italian').",
-  "derivation": "The maximum converted mana cost (MAX(convertedManaCost)) computed across all cards in the Coldsnap set, against which each card's own converted mana cost is compared.",
-  "filter_policy": "Retain only the Coldsnap cards whose converted mana cost equals that maximum (argmax; all tied cards are kept); no ordering or limit is specified.",
-  "meta_review": "Metadata distinguishes foreign_data.name as the foreign-language card name, validating that the Italian output is the localized name rather than the default card name."
+  "column_role": "The card's own name is returned; the Italian-language condition qualifies cards but the localized Italian name is not returned.",
+  "derivation": "The returned name is a stored value; no maximum converted mana cost is computed and no aggregate is applied.",
+  "filter_policy": "All qualifying cards are returned, ordered by converted mana cost from highest to lowest; no maximum-only, top-k, or limit selection is applied.",
+  "meta_review": "Italian foreign-language data is used to identify qualifying cards, but the result is the card's own name rather than the localized Italian name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

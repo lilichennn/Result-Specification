@@ -183,14 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,forename,surname]
+Table races, columns = [*,raceId]
 Table results, columns = [*,raceId,driverId,fastestLapSpeed]
-Foreign_keys = [results.driverId = drivers.driverId]
+Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId", "forename", "surname"]):
 [[1, "Lewis", "Hamilton"], [2, "Nick", "Heidfeld"], [3, "Nico", "Rosberg"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
+Sample rows from races (columns: ["raceId"]):
+[[837], [833], [838]]
+Column descriptions and value descriptions for races:
+Column raceId: column description -> , value description -> 
 Sample rows from results (columns: ["raceId", "driverId", "fastestLapSpeed"]):
 [[18, 1, "218.300"], [18, 2, "217.586"], [18, 3, "216.719"]]
 Column descriptions and value descriptions for results:

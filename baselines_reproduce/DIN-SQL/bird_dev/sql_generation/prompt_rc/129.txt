@@ -248,12 +248,12 @@ Hint: Non-credit card withdraws refers to type = 'VYDAJ'; January 1996 can be fo
 Schema_links: [district.A2,trans.type,trans.date,trans.trans_id,trans.account_id = account.account_id,account.district_id = district.district_id,VYDAJ,1996-01%]
 Result Contract:
 {
-  "population": "All non-credit-card withdrawal transactions (type = 'VYDAJ') whose transaction date falls within January 1996, excluding transactions whose operation is 'VYBER KARTOU' (credit-card withdrawal).",
-  "row_grain": "One result row per qualifying withdrawal transaction.",
-  "column_role": "The district name of the district associated with the account on which the withdrawal was made.",
+  "population": "District names linked to accounts with at least one non-credit-card withdrawal transaction classified as 'VYDAJ' dated within January 1996.",
+  "row_grain": "One result row per distinct district name.",
+  "column_role": "The district name.",
   "derivation": "none",
-  "filter_policy": "Retain only the ten withdrawals with the largest withdrawal amounts, ranked by amount in descending order.",
-  "meta_review": "Metadata establishes that trans.operation = 'VYBER KARTOU' denotes a credit-card withdrawal, so the non-credit-card population excludes that operation while retaining type = 'VYDAJ'."
+  "filter_policy": "Retain the first ten distinct district names when sorted alphabetically ascending.",
+  "meta_review": "The non-credit-card withdrawal population is defined by the 'VYDAJ' classification and January 1996 date, with no separate exclusion of credit-card operation values."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

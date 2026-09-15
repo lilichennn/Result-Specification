@@ -297,12 +297,12 @@ Hint:
 Schema_links: [sets.baseSetSize,sets.code,sets.block,"Masques","Mirage"]
 Result Contract:
 {
-  "population": "Sets that belong to a block named \"Masques\" and to a block named \"Mirage\".",
-  "row_grain": "One row per qualifying set.",
+  "population": "Sets that belong to a block named \"Masques\" or a block named \"Mirage\".",
+  "row_grain": "One distinct row per qualifying set.",
   "column_role": "The set's base set size and the set's set code.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms sets.baseSetSize and sets.code are set-level attributes and sets.block stores the block name, validating the Round-1 set-level population and outputs."
+  "meta_review": "Metadata confirms sets.baseSetSize and sets.code are set-level attributes and sets.block stores the block name, supporting the set-level population and outputs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

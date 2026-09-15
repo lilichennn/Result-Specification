@@ -320,12 +320,12 @@ Hint: bounty amount over 30 refers to BountyAmount > = 30;
 Schema_links: [posts.Id,votes.BountyAmount,votes.PostId = posts.Id,30]
 Result Contract:
 {
-  "population": "All posts that have at least one associated vote record with a bounty amount greater than or equal to 30 (BountyAmount >= 30, per the evidence clarifying 'over 30').",
-  "row_grain": "One global summary row for the entire qualifying post population.",
-  "column_role": "A single value representing the number of qualifying posts.",
-  "derivation": "Count the unique posts in the eligible population.",
+  "population": "All vote records with a bounty amount greater than or equal to 30.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "A single value representing the number of qualifying vote records.",
+  "derivation": "Count the qualifying vote records, without deduplicating by post.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows BountyAmount is stored in votes with PostId, not in posts, so qualifying posts must be identified through vote records. The contract therefore counts unique posts linked to votes with BountyAmount >= 30."
+  "meta_review": "The result is based on bounty amount recorded at the vote-record level and counts each qualifying vote record, rather than identifying unique posts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

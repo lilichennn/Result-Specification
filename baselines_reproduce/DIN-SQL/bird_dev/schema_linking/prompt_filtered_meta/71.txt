@@ -183,18 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table frpm, columns = [*,CDSCode,District Code]
-Table schools, columns = [*,CDSCode,NCESDist,City,Magnet]
+Table schools, columns = [*,CDSCode,NCESDist,District,City,Magnet]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
 Sample rows from frpm (columns: ["CDSCode", "District Code"]):
 [["01100170109835", 10017], ["01100170112607", 10017], ["01100170118489", 10017]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column District Code: column description -> District Code, value description -> 
-Sample rows from schools (columns: ["CDSCode", "NCESDist", "City", "Magnet"]):
-[["01100170000000", "0691051", "Hayward", null], ["01100170109835", "0691051", "Newark", 0], ["01100170112607", "0691051", "Oakland", 0]]
+Sample rows from schools (columns: ["CDSCode", "NCESDist", "District", "City", "Magnet"]):
+[["01100170000000", "0691051", "Alameda County Office of Education", "Hayward", null], ["01100170109835", "0691051", "Alameda County Office of Education", "Newark", 0], ["01100170112607", "0691051", "Alameda County Office of Education", "Oakland", 0]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column NCESDist: column description -> This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number. The first 2 digits identify the state and the last 5 digits identify the school district. Combined, they make a unique 7-digit ID for each school district., value description -> 
+Column District: column description -> District, value description -> 
 Column City: column description -> City, value description -> 
 Column Magnet: column description -> This field identifies whether a school is a magnet school and/or provides a magnet program. , value description -> The field is coded as follows:
 

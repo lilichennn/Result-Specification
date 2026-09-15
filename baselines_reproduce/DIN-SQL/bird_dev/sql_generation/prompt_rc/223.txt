@@ -256,12 +256,12 @@ Hint: TR000_2_5 is the bond id
 Schema_links: [connected.atom_id,connected.atom_id2,connected.bond_id,TR000_2_5]
 Result Contract:
 {
-  "population": "The bond whose bond id equals 'TR000_2_5', together with the atoms that participate in that bond.",
+  "population": "Atoms participating in the bond whose bond id equals 'TR000_2_5'.",
   "row_grain": "One row per atom participating in the bond TR000_2_5.",
   "column_role": "The atom ID of each atom that is part of the bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

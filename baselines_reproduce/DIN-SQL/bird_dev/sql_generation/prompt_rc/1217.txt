@@ -296,12 +296,12 @@ Hint: Year(Birthday) = '1982'; albumin is within normal range refers to ALB betw
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.ALB,Laboratory.ID = Patient.ID,1982,3.5,5.5]
 Result Contract:
 {
-  "population": "All patients whose birth year is 1982.",
-  "row_grain": "One row per patient born in 1982.",
-  "column_role": "The patient's identity and a per-patient indication of whether their albumin is within the normal range.",
-  "derivation": "For each patient, classify their albumin (ALB) value as within normal range when it is between 3.5 and 5.5.",
+  "population": "Laboratory albumin measurements for patients whose birth year is 1982.",
+  "row_grain": "One row per albumin measurement for those patients.",
+  "column_role": "A per-measurement indication of whether the albumin value is within the normal range.",
+  "derivation": "Classify the albumin value as normal when it is at least 3.5 and at most 5.5; otherwise classify it as abnormal.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

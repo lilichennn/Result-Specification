@@ -320,7 +320,7 @@ Hint: last accessed after 2014/9/1 refers to LastAccessDate > '2014-09-01'
 Schema_links: [users.Id,users.LastAccessDate,'2014-09-01']
 Result Contract:
 {
-  "population": "Users whose last access date is strictly after 2014-09-01 (LastAccessDate > '2014-09-01').",
+  "population": "Users whose last access calendar date is strictly after 2014-09-01.",
   "row_grain": "One global summary row for the entire eligible user population.",
   "column_role": "The count of qualifying users.",
   "derivation": "Count the users satisfying the last-access-date condition.",

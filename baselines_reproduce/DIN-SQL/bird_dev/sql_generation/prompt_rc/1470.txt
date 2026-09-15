@@ -251,12 +251,12 @@ Hint:
 Schema_links: [gasstations.GasStationID,gasstations.Country,gasstations.Segment,CZE,Premium]
 Result Contract:
 {
-  "population": "Gas stations located in CZE that have at least one recorded association with a product described as Premium gas; both the CZE location and the existence of a Premium gas product association are required membership conditions.",
+  "population": "Gas stations located in CZE that have a Premium segment classification.",
   "row_grain": "One global summary row for the entire qualifying population.",
   "column_role": "A single value representing the number of qualifying gas stations.",
-  "derivation": "Count the unique gas stations that satisfy the population conditions.",
+  "derivation": "Count the gas stations that satisfy the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows gasstations.Country stores station location and products.Description stores the product label, with station-product linkage only in transactions_1k. Therefore the population is refined to CZE stations having at least one recorded Premium-gas product association, counted uniquely because transaction rows can repeat."
+  "meta_review": "The qualifying population is determined by station-level country and Premium segment; product descriptions or transaction-based product associations are not part of the result semantics."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

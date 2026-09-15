@@ -253,7 +253,7 @@ Result Contract:
   "column_role": "The identity of each qualifying account.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies account.date as the account creation/opening date in YYMMDD form and trans.amount as the USD amount of money. This resolves the opening-date representation and ties the amount condition to account-related transaction amounts."
+  "meta_review": "Metadata identifies the account opening date as a date value and the transaction amount as a USD amount. The opening-date condition is based on the calendar year of the opening date, and the amount condition applies to account-related transaction amounts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

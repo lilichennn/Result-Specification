@@ -230,10 +230,10 @@ Hint: 'Posters' refers to expense description
 Schema_links: [budget.category,expense.expense_description,expense.link_to_budget = budget.budget_id,Posters]
 Result Contract:
 {
-  "population": "Expenses whose expense description is 'Posters'.",
-  "row_grain": "One row per expense with description 'Posters', representing the budget category it belongs to.",
-  "column_role": "The budget category associated with the matching expense.",
-  "derivation": "For each matching expense, return the category of the budget entry it references.",
+  "population": "Budget categories of budget entries linked to expenses whose expense description is 'Posters'.",
+  "row_grain": "One row per distinct budget category associated with those expenses.",
+  "column_role": "The budget category associated with the matching expenses.",
+  "derivation": "For matching expenses, take the category from the linked budget entry and return unique category values.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms expense records reference budget entries, and budget entries contain the category. This resolves that the requested budget category is taken from the linked budget entry."
 }

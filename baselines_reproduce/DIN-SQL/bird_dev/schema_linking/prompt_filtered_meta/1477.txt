@@ -183,8 +183,6 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Currency]
-Table products, columns = [*,ProductID,Description]
-Table transactions_1k, columns = [*,Date,CustomerID,ProductID,Amount,Price]
 Table yearmonth, columns = [*,CustomerID,Date,Consumption]
 Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
 Sample rows from customers (columns: ["CustomerID", "Currency"]):
@@ -192,21 +190,6 @@ Sample rows from customers (columns: ["CustomerID", "Currency"]):
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Currency: column description -> Currency, value description -> 
-Sample rows from products (columns: ["ProductID", "Description"]):
-[[1, "Rucní zadání"], [2, "Nafta"], [3, "Special"]]
-Column descriptions and value descriptions for products:
-Column ProductID: column description -> Product ID, value description -> 
-Column Description: column description -> Description, value description -> 
-Sample rows from transactions_1k (columns: ["Date", "CustomerID", "ProductID", "Amount", "Price"]):
-[["2012-08-24", 31543, 2, 28, 672.64], ["2012-08-24", 46707, 2, 18, 430.72], ["2012-08-24", 46707, 23, 1, 121.99]]
-Column descriptions and value descriptions for transactions_1k:
-Column Date: column description -> Date, value description -> 
-Column CustomerID: column description -> Customer ID, value description -> 
-Column ProductID: column description -> Product ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
-Column Price: column description -> Price, value description -> commonsense evidence:
-
-total price = Amount x Price
 Sample rows from yearmonth (columns: ["CustomerID", "Date", "Consumption"]):
 [[5, "201207", 528.3], [5, "201302", 1598.28], [5, "201303", 1931.36]]
 Column descriptions and value descriptions for yearmonth:

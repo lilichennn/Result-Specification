@@ -296,12 +296,12 @@ Hint: normal anti-SSB refers to SSB IN('-', '+-'); '-' is expressed as 'negative
 Schema_links: [Patient.ID,Laboratory.SSB,Examination.Diagnosis,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,negative,0,SLE]
 Result Contract:
 {
-  "population": "Patients for whom there is a normal anti-SSB laboratory result (SSB stored as 'negative' or '0') and an examination-record diagnosis of SLE (Diagnosis = 'SLE'); both conditions must hold for the same patient.",
+  "population": "Patients with at least one laboratory anti-SSB result recorded as 'negative'; SLE diagnosis does not restrict the counted population.",
   "row_grain": "One global summary row for the entire eligible patient population.",
   "column_role": "A single value representing the number of qualifying patients.",
   "derivation": "Count the eligible patients, with each patient counted once.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes an examination-specific Diagnosis field, so the SLE condition is the examination-record diagnosis. It also confirms anti-SSB is Laboratory.SSB; evidence-supplied normal-value literals are retained."
+  "meta_review": "Anti-SSB is a laboratory attribute, and only its 'negative' value determines membership. A diagnosis attribute is present, but it does not impose an effective SLE restriction on the counted patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

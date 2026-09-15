@@ -251,12 +251,12 @@ Hint: "Supporter" and "Teachers" are both Name of badge; 'New York' is the Locat
 Schema_links: [badges.UserId,users.Location,badges.Name,badges.UserId = users.Id,New York,Teacher,Supporter]
 Result Contract:
 {
-  "population": "Users whose Location is 'New York' and who hold both a badge named 'Teachers' and a badge named 'Supporter'.",
-  "row_grain": "One global summary row for the entire qualifying user population.",
-  "column_role": "The count of qualifying users.",
-  "derivation": "Count the distinct users (UserId) belonging to the eligible population.",
+  "population": "Badge awards whose name is either 'Supporter' or 'Teacher' and whose associated user is located in 'New York'.",
+  "row_grain": "One global summary row for the entire qualifying badge-award population.",
+  "column_role": "The count of qualifying badge awards.",
+  "derivation": "Count the distinct badge-award identifiers belonging to the eligible badge awards.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows badges rows are individual badge awards associated with UserId and Name, while Location is a user attribute; therefore the count is over distinct qualifying users rather than badge-award rows."
+  "meta_review": "Although badge awards are linked to users and Location is a user attribute, the result counts distinct qualifying badge awards rather than distinct users, and it does not require a user to hold both badge names."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

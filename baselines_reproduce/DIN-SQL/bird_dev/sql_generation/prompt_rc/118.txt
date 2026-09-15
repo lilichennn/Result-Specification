@@ -317,12 +317,12 @@ Hint: Status = 'C' stands for running contract, ok so far; Percentage of account
 Schema_links: [loan.amount,loan.account_id,loan.status,100000,'C']
 Result Contract:
 {
-  "population": "The base population is all accounts with an approved loan amount less than USD 100,000; within it, the qualifying subpopulation is those accounts whose loan repayment status is 'C' (running contract, ok so far).",
+  "population": "The base population is all loan account records with an approved loan amount less than USD 100,000; within it, the qualifying subpopulation is those records whose loan repayment status is 'C' (running contract, ok so far).",
   "row_grain": "One global summary row covering the entire eligible population.",
-  "column_role": "The percentage of eligible accounts that are still running with no issue (loan repayment status 'C').",
-  "derivation": "Compute (number of eligible accounts with loan repayment status 'C' / total number of eligible accounts) * 100, where both counts are taken over accounts with an approved loan amount less than USD 100,000.",
+  "column_role": "The percentage of eligible loan account records that are still running with no issue (loan repayment status 'C').",
+  "derivation": "Compute (number of eligible loan account records with loan repayment status 'C' / total number of eligible loan account records) * 100, where both counts are taken over loan account records with an approved loan amount less than USD 100,000.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms loan.amount is the approved loan amount in USD and loan.status is the repayment status containing 'C'. This validates the population condition and qualifying status used in the Round-1 contract."
+  "meta_review": "Metadata confirms the approved loan amount is measured in USD and the repayment status includes 'C', validating the population condition and qualifying status."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

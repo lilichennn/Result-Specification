@@ -285,12 +285,12 @@ Hint: the fastest lap speed refers to (MAX) fastestLapSpeed;
 Schema_links: [drivers.nationality,results.fastestLapSpeed,results.driverId = drivers.driverId]
 Result Contract:
 {
-  "population": "All drivers who have at least one race result with a recorded fastest lap speed.",
-  "row_grain": "One driver: the single driver who set the fastest lap speed.",
+  "population": "Drivers who have at least one race result with a recorded fastest lap speed.",
+  "row_grain": "A single row for the selected driver, returning that driver's nationality.",
   "column_role": "The driver's nationality.",
-  "derivation": "The fastest lap speed is the maximum numeric fastestLapSpeed value, interpreted as a speed in km/h, among recorded fastest lap speeds.",
-  "filter_policy": "Select the single driver associated with the greatest numeric fastestLapSpeed value (argmax).",
-  "meta_review": "Metadata shows results.fastestLapSpeed is a km/h speed recorded per race result, so the maximum is over numeric speed values. It also confirms drivers.nationality is the requested driver-owned nationality."
+  "derivation": "The returned nationality is a stored driver attribute of the selected driver; the fastest lap speed is only the selection criterion and is not returned or aggregated.",
+  "filter_policy": "Select one driver associated with the race result having the greatest recorded fastest lap speed.",
+  "meta_review": "Metadata confirms fastest lap speed is recorded per race result and nationality is a driver attribute, so the result is the selected driver's nationality rather than a speed value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

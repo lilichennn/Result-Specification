@@ -415,8 +415,8 @@ Hint: Italy Serie A from refers to League.name = 'Italy Serie A';
 Schema_links: [Country.name,League.name,League.country_id = Country.id,Italy Serie A]
 Result Contract:
 {
-  "population": "The league whose name is 'Italy Serie A'.",
-  "row_grain": "One league.",
+  "population": "The country associated with the league whose name is 'Italy Serie A'.",
+  "row_grain": "One country.",
   "column_role": "The name of the country the league is from.",
   "derivation": "none",
   "filter_policy": "none",

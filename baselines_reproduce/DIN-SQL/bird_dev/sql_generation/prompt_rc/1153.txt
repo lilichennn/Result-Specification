@@ -296,7 +296,7 @@ Hint: '30609' is the Patient ID; disease means Diagnosis
 Schema_links: [Patient.Diagnosis,Patient.ID,Laboratory.Date,Laboratory.ID = Patient.ID,30609]
 Result Contract:
 {
-  "population": "The patient whose Patient ID is '30609', and every laboratory test performed for that patient.",
+  "population": "Laboratory tests performed for the patient whose Patient ID is '30609'.",
   "row_grain": "One row per laboratory test done for patient '30609', each row also carrying that patient's diagnosis.",
   "column_role": "The patient's diagnosis (disease) and the date of each laboratory test.",
   "derivation": "none",

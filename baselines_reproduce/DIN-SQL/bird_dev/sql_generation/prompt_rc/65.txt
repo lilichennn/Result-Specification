@@ -421,12 +421,12 @@ Hint: Ratio in percentage = (count(locally funded schools in Santa Clara) / coun
 Schema_links: [schools.County,schools.FundingType,'Santa Clara','Locally funded']
 Result Contract:
 {
-  "population": "Santa Clara County schools, with a target subpopulation of those that are locally funded and a reference population of all Santa Clara County schools across every charter school funding type.",
+  "population": "Santa Clara County charter schools, with a target subpopulation of locally funded schools and a reference population of Santa Clara County charter schools whose funding type is not locally funded.",
   "row_grain": "One global summary row for Santa Clara County.",
   "column_role": "A single value: the requested ratio expressed as a percentage.",
-  "derivation": "Compute (count of locally funded Santa Clara County schools / count of Santa Clara County schools of all funding types) * 100 to obtain the percentage.",
+  "derivation": "Compute (count of locally funded Santa Clara County charter schools / count of Santa Clara County charter schools with all other funding types) * 100 to obtain the percentage.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The denominator is the count of non-locally funded charter schools, not the count of all charter schools across every funding type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

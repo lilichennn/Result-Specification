@@ -182,12 +182,12 @@ Hint: Pays in euro = Currency = 'EUR'.
 Schema_links: [customers.CustomerID,customers.Currency,yearmonth.Consumption,yearmonth.CustomerID = customers.CustomerID,'EUR',1000]
 Result Contract:
 {
-  "population": "Customers with Currency = 'EUR' who have a monthly consumption value greater than 1000.",
-  "row_grain": "One global summary row for the entire qualifying customer population.",
-  "column_role": "The count of qualifying customers.",
-  "derivation": "Count each qualifying customer once. Monthly consumption is the customer's recorded monthly consumption metric and is compared with 1000; it is not computed from transaction amounts.",
+  "population": "Monthly consumption entries associated with customers whose currency is EUR and whose recorded monthly consumption exceeds 1000.",
+  "row_grain": "One global summary row for the entire qualifying monthly consumption population.",
+  "column_role": "The count of qualifying monthly consumption entries.",
+  "derivation": "Count each qualifying monthly consumption entry once. The consumption value is the recorded monthly consumption metric and is compared directly with 1000; it is not computed from transaction amounts.",
   "filter_policy": "none",
-  "meta_review": "The yearmonth table establishes that monthly consumption is stored as Consumption associated with CustomerID, so the >1000 condition applies to that monthly consumption metric rather than to transaction-derived amounts. This refinement does not change the global customer-count result."
+  "meta_review": "The result uses the recorded monthly consumption metric for the >1000 condition and globally counts qualifying entries, not distinct customers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: player and driver are synonyms; the lap time of 0:0M:SS refers to lapTime.
 Schema_links: [drivers.forename,drivers.surname,drivers.url,lapTimes.time,lapTimes.raceId,lapTimes.driverId = drivers.driverId,161,'1:27%']
 Result Contract:
 {
-  "population": "Drivers (players) who recorded a lap time of 0:01:27 (a lap time beginning with '1:27') in race number 161, with both the lap-time condition and the race-number condition holding together.",
-  "row_grain": "One row per distinct driver who achieved the specified lap time in race No. 161; matching lap-time records are evidence, not separate result rows.",
-  "column_role": "The driver's full name (the player's identity) and that driver's introduction website URL.",
+  "population": "Drivers (players) who have a lap-time record in race number 161 whose time matches the 0:01:27 pattern, i.e. begins with '1:27', with the race and lap-time conditions holding together.",
+  "row_grain": "One row per distinct returned driver identity, represented by the driver's name and introduction website; matching lap-time records are evidence, not separate result rows.",
+  "column_role": "The driver's full name and the driver's introduction website URL.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows lapTimes rows are per-lap records associated with a race and driver, so the result row is one distinct driver rather than each matching lap-time row. It also confirms drivers.url is the driver introduction website and drivers.forename/surname provide the requested 'who' name."
+  "meta_review": "Lap-time records are per-lap, so repeated matching laps for the same returned driver identity are collapsed to one result row; the driver name identifies the player and the driver URL is the requested introduction website."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

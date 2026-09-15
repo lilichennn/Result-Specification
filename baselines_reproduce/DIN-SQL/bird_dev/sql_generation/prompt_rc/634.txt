@@ -251,11 +251,11 @@ Hint: Has higher popularity means the post has higher view count ; calculation =
 Schema_links: [users.DisplayName,posts.ViewCount,posts.OwnerUserId = users.Id,Harvey Motulsky,Noah Snyder]
 Result Contract:
 {
-  "population": "Posts authored by a user whose display name is 'Harvey Motulsky' or 'Noah Snyder'; these posts form the two per-user groups being compared.",
+  "population": "The users whose display name is 'Harvey Motulsky' or 'Noah Snyder'; the comparison is based on posts connected to each user through post-history activity.",
   "row_grain": "One summary row representing the single user, out of the two, who has the higher popularity.",
-  "column_role": "The display name identifying which of the two users has higher popularity; the corresponding total view count may optionally appear.",
-  "derivation": "For each of the two users, popularity is the sum of view counts across all posts by that user.",
-  "filter_policy": "Select the one user with the maximum total view count (argmax over the two users); tie handling is unspecified.",
+  "column_role": "The display name identifying the selected user; no popularity measure is returned.",
+  "derivation": "For each user, popularity is the sum of view counts accumulated over all post-history connections between that user and posts.",
+  "filter_policy": "Select the user with the maximum total view count; tie handling is unspecified.",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }
 

@@ -251,12 +251,12 @@ Hint: February 2012 refers to '201202' in yearmonth.date; The first 4 strings of
 Schema_links: [yearmonth.CustomerID,yearmonth.Date,yearmonth.Consumption,'201202',528.3]
 Result Contract:
 {
-  "population": "The reference population is all customers with a yearmonth consumption record for February 2012 (yearmonth.Date = '201202'); the target subpopulation is those customers whose yearmonth.Consumption is greater than 528.3.",
+  "population": "The reference population is all yearmonth customer consumption records for February 2012 (yearmonth.Date = '201202'); the target subpopulation is those records whose yearmonth.Consumption is greater than 528.3.",
   "row_grain": "One global summary row for February 2012.",
-  "column_role": "The percentage of February 2012 customers whose consumption exceeded 528.3.",
-  "derivation": "Divide the number of distinct customers whose February 2012 yearmonth.Consumption is greater than 528.3 by the total number of distinct customers with a February 2012 yearmonth consumption record, and express the result as a percentage.",
+  "column_role": "The percentage of February 2012 customer consumption records whose yearmonth.Consumption exceeded 528.3.",
+  "derivation": "Divide the number of February 2012 yearmonth records whose yearmonth.Consumption is greater than 528.3 by the total number of February 2012 yearmonth customer records, and express the result as a percentage.",
   "filter_policy": "none",
-  "meta_review": "The yearmonth table contains CustomerID, Date, and Consumption, validating that February 2012 consumption is represented by yearmonth.Consumption for customers. This supports computing the percentage over distinct customers with February 2012 yearmonth records."
+  "meta_review": "The yearmonth table contains CustomerID, Date, and Consumption, validating that February 2012 consumption is represented by yearmonth.Consumption for customer records. This supports computing the percentage over February 2012 customer consumption records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

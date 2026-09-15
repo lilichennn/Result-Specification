@@ -251,12 +251,12 @@ Hint: "Vienna, Austria" is the Location
 Schema_links: [users.Age,users.Location,badges.UserId = users.Id,"Vienna,Austria"]
 Result Contract:
 {
-  "population": "Users who are located in Vienna, Austria and who have obtained a badge.",
-  "row_grain": "One row per user located in Vienna, Austria who has obtained a badge.",
+  "population": "Users located in Vienna, Austria who have obtained a badge.",
+  "row_grain": "One row per badge obtained by a qualifying user.",
   "column_role": "The age of the qualifying user.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

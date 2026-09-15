@@ -251,12 +251,12 @@ Hint: highest amount of badges refers to MAX(COUNT(Name));
 Schema_links: [users.DisplayName,badges.Name,badges.UserId = users.Id]
 Result Contract:
 {
-  "population": "All users who have acquired badges.",
-  "row_grain": "One user.",
-  "column_role": "The display name of the user.",
-  "derivation": "For each user, the amount of badges acquired is the count of badge names associated with that user.",
-  "filter_policy": "Select the single user whose badge count is the maximum across all eligible users (argmax).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Display names of users who have acquired at least one badge.",
+  "row_grain": "One display name.",
+  "column_role": "The display name.",
+  "derivation": "For each display name, the amount of badges acquired is the count of badge acquisitions associated with that display name.",
+  "filter_policy": "Select one display name whose badge count is the maximum across all eligible display names.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

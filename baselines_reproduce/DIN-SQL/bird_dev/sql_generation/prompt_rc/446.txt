@@ -297,12 +297,12 @@ Hint: set of Abyssal Horror refers to name = 'Abyssal Horror'; percentage refers
 Schema_links: [cards.convertedManaCost,cards.name,cards.setCode,'Abyssal Horror',16]
 Result Contract:
 {
-  "population": "All cards belonging to the set named 'Abyssal Horror'; within this set, the numerator contribution requires converted mana cost equal to 10 and the denominator contribution requires the card to have a converted mana cost.",
-  "row_grain": "One global summary row for the set 'Abyssal Horror'.",
-  "column_role": "The requested percentage of cards.",
-  "derivation": "Compute 100 times the count of population cards whose converted mana cost equals 10 divided by the count of population cards that have a converted mana cost.",
+  "population": "All cards whose name is 'Abyssal Horror'; within this population, the numerator requires converted mana cost equal to 10 and the denominator includes every card in the population.",
+  "row_grain": "One global summary row for the cards named 'Abyssal Horror'.",
+  "column_role": "The card name and the requested percentage of cards with converted mana cost 10.",
+  "derivation": "Compute 100 times the count of population cards whose converted mana cost equals 10 divided by the count of population cards.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

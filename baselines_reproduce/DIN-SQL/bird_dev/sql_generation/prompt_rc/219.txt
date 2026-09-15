@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic; triple bond refers to bond_ty
 Schema_links: [bond.bond_id,bond.bond_type,molecule.label,bond.molecule_id = molecule.molecule_id,'+','#']
 Result Contract:
 {
-  "population": "All bond records belonging to molecules labeled carcinogenic (label = '+'); only bonds of these carcinogenic molecules are eligible to contribute to the result.",
-  "row_grain": "One global summary row representing the entire eligible set of bonds.",
-  "column_role": "A single output value: the percentage of triple-type bonds among the bonds of carcinogenic molecules.",
-  "derivation": "Compute (the number of eligible bonds with bond_type = '#' multiplied by 100) divided by the total count of all eligible bonds; the triple-bond condition defines the numerator of this metric, while the denominator spans all eligible bonds.",
+  "population": "All molecules that have at least one triple-type bond; only these molecules are eligible to contribute to the result.",
+  "row_grain": "One global summary row representing the entire eligible molecule population.",
+  "column_role": "A single output value: the percentage of carcinogenic molecules among the molecules that have triple-type bonds.",
+  "derivation": "Count the eligible molecules that are labeled carcinogenic, count all eligible molecules, multiply the first count by 100, and divide by the second count; counts are over distinct molecules, so each eligible molecule contributes once.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The metric is molecule-level rather than bond-record-level: triple-type bonds define the eligible molecules, and carcinogenic status defines the numerator subset."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table alignment, columns = [*,id,alignment]
-Table superhero, columns = [*,id,alignment_id,height_cm]
+Table superhero, columns = [*,alignment_id,height_cm]
 Foreign_keys = [superhero.alignment_id = alignment.id]
 Sample rows from alignment (columns: ["id", "alignment"]):
 [[1, "Good"], [2, "Bad"], [3, "Neutral"]]
@@ -194,10 +194,9 @@ Alignment refers to a character's moral and ethical stance and can be used to de
 Good: These superheroes are typically kind, selfless, and dedicated to protecting others and upholding justice. Examples of good alignments include Superman, Wonder Woman, and Spider-Man.
 Neutral: These superheroes may not always prioritize the greater good, but they are not necessarily evil either. They may act in their own self-interest or make decisions based on their own moral code. Examples of neutral alignments include the Hulk and Deadpool.
 	Bad: These superheroes are typically selfish, manipulative, and willing to harm others in pursuit of their own goals. Examples of evil alignments include Lex Luthor and the Joker.
-Sample rows from superhero (columns: ["id", "alignment_id", "height_cm"]):
-[[1, 1, 188], [2, 1, 203], [3, 1, 191]]
+Sample rows from superhero (columns: ["alignment_id", "height_cm"]):
+[[1, 188], [1, 203], [1, 191]]
 Column descriptions and value descriptions for superhero:
-Column id: column description -> the unique identifier of the superhero, value description -> 
 Column alignment_id: column description -> the id of the superhero's alignment, value description -> 
 Column height_cm: column description -> the height of the superhero, value description -> commonsense evidence:
 The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. 

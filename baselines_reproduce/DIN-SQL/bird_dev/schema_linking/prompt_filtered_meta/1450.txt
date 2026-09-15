@@ -183,22 +183,20 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table attendance, columns = [*,link_to_event,link_to_member]
-Table event, columns = [*,event_id,event_name,location]
+Table event, columns = [*,event_id]
 Table income, columns = [*,income_id,amount,link_to_member]
 Table member, columns = [*,member_id,zip]
-Table zip_code, columns = [*,zip_code,city,county,state,short_state]
+Table zip_code, columns = [*,zip_code,city,county]
 Foreign_keys = [attendance.link_to_member = member.member_id,attendance.link_to_event = event.event_id,income.link_to_member = member.member_id,member.zip = zip_code.zip_code]
 Sample rows from attendance (columns: ["link_to_event", "link_to_member"]):
 [["rec2N69DMcrqN9PJC", "recD078PnS3x2doBe"], ["rec2N69DMcrqN9PJC", "recP6DJPyi5donvXL"], ["rec2N69DMcrqN9PJC", "rec28ORZgcm1dtqBZ"]]
 Column descriptions and value descriptions for attendance:
 Column link_to_event: column description -> The unique identifier of the event which was attended, value description -> References the Event table
 Column link_to_member: column description -> The unique identifier of the member who attended the event, value description -> References the Member table
-Sample rows from event (columns: ["event_id", "event_name", "location"]):
-[["rec0Si5cQ4rJRVzd6", "March Meeting", "MU 215"], ["rec0akZnLLpGUloLH", "Officers meeting - January", null], ["rec0dZPcWXF0QjNnE", "Spring Elections", "MU 215"]]
+Sample rows from event (columns: ["event_id"]):
+[["rec0Si5cQ4rJRVzd6"], ["rec0akZnLLpGUloLH"], ["rec0dZPcWXF0QjNnE"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
-Column event_name: column description -> event name, value description -> 
-Column location: column description -> Address where the event was held or is to be held or the name of such a location, value description -> 
 Sample rows from income (columns: ["income_id", "amount", "link_to_member"]):
 [["rec0s9ZrO15zhzUeE", 50, "reccW7q1KkhSKZsea"], ["rec7f5XMQZexgtQJo", 50, "recTjHY5xXhvkCdVT"], ["rec8BUJa8GXUjiglg", 50, "recUdRhbhcEO1Hk5r"]]
 Column descriptions and value descriptions for income:
@@ -210,14 +208,12 @@ Sample rows from member (columns: ["member_id", "zip"]):
 Column descriptions and value descriptions for member:
 Column member_id: column description -> unique id of member, value description -> 
 Column zip: column description -> the zip code of the member's hometown, value description -> 
-Sample rows from zip_code (columns: ["zip_code", "city", "county", "state", "short_state"]):
-[[501, "Holtsville", "Suffolk County", "New York", "NY"], [544, "Holtsville", "Suffolk County", "New York", "NY"], [601, "Adjuntas", "Adjuntas Municipio", "Puerto Rico", "PR"]]
+Sample rows from zip_code (columns: ["zip_code", "city", "county"]):
+[[501, "Holtsville", "Suffolk County"], [544, "Holtsville", "Suffolk County"], [601, "Adjuntas", "Adjuntas Municipio"]]
 Column descriptions and value descriptions for zip_code:
 Column zip_code: column description -> The ZIP code itself. A five-digit number identifying a US post office., value description -> 
 Column city: column description -> The city to which the ZIP pertains, value description -> 
 Column county: column description -> The county to which the ZIP pertains, value description -> 
-Column state: column description -> The name of the state to which the ZIP pertains, value description -> 
-Column short_state: column description -> The abbreviation of the state to which the ZIP pertains, value description -> 
 
 Q: In the events with more than forty incomes, list the city and country in which the event is happening.
 Hint: more than fifty incomes refers to income > 40

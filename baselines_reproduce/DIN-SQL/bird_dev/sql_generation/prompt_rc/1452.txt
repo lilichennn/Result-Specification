@@ -230,12 +230,12 @@ Hint: position other than a member refers to position ! = 'Member'; average amou
 Schema_links: [expense.cost,member.position,event.event_id,expense.link_to_member = member.member_id,expense.link_to_budget = budget.budget_id,budget.link_to_event = event.event_id,Member]
 Result Contract:
 {
-  "population": "All expense records (each with a cost and an associated event_id) associated with students whose position is not 'Member'.",
+  "population": "All expense records associated with students whose position is not 'Member'.",
   "row_grain": "One global summary row representing the single average across all qualifying payments.",
   "column_role": "The average amount paid, as a single numeric value.",
-  "derivation": "The average amount paid equals the sum of cost divided by the count of event_id values, computed over the eligible expense records.",
+  "derivation": "The average amount paid is the arithmetic mean of the cost values over the eligible expense records.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that the paid amount is expense.cost and that the position condition applies to Member.position. This resolves the payment representation and eligibility owner while preserving the Round-1 formula."
+  "meta_review": "Metadata confirms that the paid amount is the expense cost and that the position condition applies to the member position. This resolves the payment representation and eligibility owner while using the mean of cost as the average."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

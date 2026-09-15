@@ -183,17 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table posts, columns = [*,Id]
-Table votes, columns = [*,PostId,VoteTypeId,BountyAmount]
+Table votes, columns = [*,Id,PostId,BountyAmount]
 Foreign_keys = [votes.PostId = posts.Id]
 Sample rows from posts (columns: ["Id"]):
 [[1], [2], [3]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
-Sample rows from votes (columns: ["PostId", "VoteTypeId", "BountyAmount"]):
-[[3, 2, null], [2, 2, null], [5, 2, null]]
+Sample rows from votes (columns: ["Id", "PostId", "BountyAmount"]):
+[[1, 3, null], [2, 2, null], [3, 5, null]]
 Column descriptions and value descriptions for votes:
+Column Id: column description -> the vote id, value description -> 
 Column PostId: column description -> the id of the post that is voted, value description -> 
-Column VoteTypeId: column description -> the id of the vote type, value description -> 
 Column BountyAmount: column description -> the amount of bounty, value description -> 
 
 Q: Identify the number of posts that offer a bounty amount over 30.

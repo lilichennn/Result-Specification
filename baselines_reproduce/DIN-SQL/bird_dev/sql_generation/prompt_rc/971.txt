@@ -358,7 +358,7 @@ Result Contract:
   "row_grain": "One driver, namely the single oldest German driver.",
   "column_role": "The driver's reference name (driverRef).",
   "derivation": "none",
-  "filter_policy": "Select the driver with the minimum year of birth (argmin on year of birth) among the eligible German drivers; tie handling is unspecified.",
+  "filter_policy": "Select the driver with the earliest date of birth (argmin on full date of birth) among the eligible German drivers; tie handling is unspecified.",
   "meta_review": "Metadata confirms that driver reference name, nationality, and date of birth are driver-level attributes in drivers (driverRef, nationality, dob). This validates the requested owner and output representation without changing the contract."
 }
 

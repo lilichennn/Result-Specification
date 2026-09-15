@@ -182,25 +182,21 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table circuits, columns = [*,circuitId,name]
-Table qualifying, columns = [*,raceId]
-Table races, columns = [*,raceId,circuitId,url]
-Foreign_keys = [qualifying.raceId = races.raceId,races.circuitId = circuits.circuitId]
-Sample rows from circuits (columns: ["circuitId", "name"]):
-[[2, "Sepang International Circuit"], [3, "Bahrain International Circuit"], [4, "Circuit de Barcelona-Catalunya"]]
+Table circuits, columns = [*,circuitId,circuitRef,name,url]
+Table races, columns = [*,raceId,circuitId]
+Foreign_keys = [races.circuitId = circuits.circuitId]
+Sample rows from circuits (columns: ["circuitId", "circuitRef", "name", "url"]):
+[[2, "sepang", "Sepang International Circuit", "http://en.wikipedia.org/wiki/Sepang_International_Circuit"], [3, "bahrain", "Bahrain International Circuit", "http://en.wikipedia.org/wiki/Bahrain_International_Circuit"], [4, "catalunya", "Circuit de Barcelona-Catalunya", "http://en.wikipedia.org/wiki/Circuit_de_Barcelona-Catalunya"]]
 Column descriptions and value descriptions for circuits:
 Column circuitId: column description -> unique identification number of the circuit , value description -> 
+Column circuitRef: column description -> circuit reference name , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from qualifying (columns: ["raceId"]):
-[[18], [18], [18]]
-Column descriptions and value descriptions for qualifying:
-Column raceId: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "circuitId", "url"]):
-[[1, 1, "http://en.wikipedia.org/wiki/2009_Australian_Grand_Prix"], [2, 2, "http://en.wikipedia.org/wiki/2009_Malaysian_Grand_Prix"], [3, 17, "http://en.wikipedia.org/wiki/2009_Chinese_Grand_Prix"]]
+Column url: column description -> , value description -> 
+Sample rows from races (columns: ["raceId", "circuitId"]):
+[[1, 1], [2, 2], [3, 17]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
-Column url: column description -> , value description -> 
 
 Q: Where can the introduction of the races held on Circuit de Barcelona-Catalunya be found?
 Hint: introduction of races refers to url; Circuit de Barcelona-Catalunya is a name of circuit;

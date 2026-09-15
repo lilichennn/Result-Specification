@@ -228,9 +228,9 @@ Result Contract:
   "population": "All superheroes whose race is not 'Human' and whose publisher is Dark Horse Comics.",
   "row_grain": "One global summary row for the entire eligible superhero population.",
   "column_role": "The average height of the eligible superheroes.",
-  "derivation": "Compute the average of height_cm across eligible superheroes, excluding height_cm values that are NULL or 0 because they represent missing height.",
-  "filter_policy": "No ranking, tie-breaking, or additional entity selection; omit missing height values (NULL or 0) from the average computation.",
-  "meta_review": "Metadata states that superhero.height_cm values of NULL or 0 mean missing height. This resolved that zero-height records must be treated as missing and excluded from the average rather than counted as height 0."
+  "derivation": "Compute the arithmetic mean of recorded height across eligible superheroes; null height values are ignored, and zero height values are included.",
+  "filter_policy": "No ranking, tie-breaking, or additional entity selection; do not exclude zero heights; only null height values are omitted from the average.",
+  "meta_review": "Although height metadata may treat zero as missing, the average includes recorded zero heights; only null heights are omitted."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

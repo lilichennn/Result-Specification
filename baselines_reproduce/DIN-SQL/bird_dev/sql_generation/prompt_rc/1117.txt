@@ -487,9 +487,9 @@ Result Contract:
   "population": "All players are eligible; no Boolean membership condition is stated.",
   "row_grain": "One row per selected player.",
   "column_role": "The player API id of each selected player; no weight or other measure is requested as output.",
-  "derivation": "Each player's heaviness metric is the maximum of that player's weight values, as clarified by the evidence.",
-  "filter_policy": "Retain the 10 players with the greatest heaviness metric (top-10 by MAX(weight), descending); tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "Heaviness is the player's stored weight value; no maximum or other aggregate is computed.",
+  "filter_policy": "Retain the 10 selected players with the greatest stored weight, ordered by weight descending; tie handling is unspecified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

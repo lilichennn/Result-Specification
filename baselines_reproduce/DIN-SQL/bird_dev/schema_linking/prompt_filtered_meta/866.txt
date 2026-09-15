@@ -182,30 +182,23 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table drivers, columns = [*,driverId,driverRef,code,forename,surname,url]
-Table lapTimes, columns = [*,raceId,driverId,time,milliseconds]
-Table races, columns = [*,raceId]
-Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId]
-Sample rows from drivers (columns: ["driverId", "driverRef", "code", "forename", "surname", "url"]):
-[[1, "hamilton", "HAM", "Lewis", "Hamilton", "http://en.wikipedia.org/wiki/Lewis_Hamilton"], [2, "heidfeld", "HEI", "Nick", "Heidfeld", "http://en.wikipedia.org/wiki/Nick_Heidfeld"], [3, "rosberg", "ROS", "Nico", "Rosberg", "http://en.wikipedia.org/wiki/Nico_Rosberg"]]
+Table drivers, columns = [*,driverId,driverRef,forename,surname,url]
+Table lapTimes, columns = [*,raceId,driverId,time]
+Foreign_keys = [lapTimes.driverId = drivers.driverId]
+Sample rows from drivers (columns: ["driverId", "driverRef", "forename", "surname", "url"]):
+[[1, "hamilton", "Lewis", "Hamilton", "http://en.wikipedia.org/wiki/Lewis_Hamilton"], [2, "heidfeld", "Nick", "Heidfeld", "http://en.wikipedia.org/wiki/Nick_Heidfeld"], [3, "rosberg", "Nico", "Rosberg", "http://en.wikipedia.org/wiki/Nico_Rosberg"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column driverRef: column description -> , value description -> 
-Column code: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
 Column url: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "time", "milliseconds"]):
-[[1, 1, "1:49.088", 109088], [1, 1, "1:33.740", 93740], [1, 1, "1:31.600", 91600]]
+Sample rows from lapTimes (columns: ["raceId", "driverId", "time"]):
+[[1, 1, "1:49.088"], [1, 1, "1:33.740"], [1, 1, "1:31.600"]]
 Column descriptions and value descriptions for lapTimes:
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
 Column time: column description -> , value description -> 
-Column milliseconds: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
 
 Q: Who was the player that got the lap time of 0:01:27 in the race No. 161? Show his introduction website.
 Hint: player and driver are synonyms; the lap time of 0:0M:SS refers to lapTime.time LIKE 'M:SS%';race number refers to raceId; introduction website of the drivers refers to url;

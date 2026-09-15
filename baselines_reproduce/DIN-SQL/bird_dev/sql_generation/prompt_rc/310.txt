@@ -187,12 +187,12 @@ Hint: double bond refers to bond_type = ' = '; label = '+' mean molecules are ca
 Schema_links: [molecule.molecule_id,bond.bond_type,molecule.label,bond.molecule_id = molecule.molecule_id,'=','+']
 Result Contract:
 {
-  "population": "Molecules that have at least one bond with bond_type '=' (a double bond); for the second requested number, the target subpopulation is those same molecules whose label is '+' (carcinogenic).",
-  "row_grain": "One global summary row covering the entire eligible molecule population.",
-  "column_role": "Two numeric values: the count of molecules having a double bond, and the count of those molecules that are labeled carcinogenic.",
-  "derivation": "Count the molecules possessing at least one double bond, and separately count the carcinogenic-labeled subset within those molecules.",
+  "population": "Double-bond occurrences in molecules; the first figure counts the distinct molecules represented by at least one such occurrence, and the second figure concerns the subset of those occurrences whose molecule is labeled carcinogenic.",
+  "row_grain": "One global summary row containing two aggregate values.",
+  "column_role": "Two numeric values: the count of distinct molecules having a double bond, and the count of double-bond occurrences associated with carcinogenic molecules.",
+  "derivation": "Count distinct molecules that appear with a double bond, and separately total the double-bond occurrences whose molecule has the carcinogenic label.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

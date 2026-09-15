@@ -182,13 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table income, columns = [*,income_id,date_received,source,link_to_member]
+Table income, columns = [*,date_received,source,link_to_member]
 Table member, columns = [*,member_id,first_name,last_name]
 Foreign_keys = [income.link_to_member = member.member_id]
-Sample rows from income (columns: ["income_id", "date_received", "source", "link_to_member"]):
-[["rec0s9ZrO15zhzUeE", "2019-10-17", "Dues", "reccW7q1KkhSKZsea"], ["rec7f5XMQZexgtQJo", "2019-09-04", "Dues", "recTjHY5xXhvkCdVT"], ["rec8BUJa8GXUjiglg", "2019-10-08", "Dues", "recUdRhbhcEO1Hk5r"]]
+Sample rows from income (columns: ["date_received", "source", "link_to_member"]):
+[["2019-10-17", "Dues", "reccW7q1KkhSKZsea"], ["2019-09-04", "Dues", "recTjHY5xXhvkCdVT"], ["2019-10-08", "Dues", "recUdRhbhcEO1Hk5r"]]
 Column descriptions and value descriptions for income:
-Column income_id: column description -> A unique identifier for each record of income, value description -> 
 Column date_received: column description -> the date that the fund received, value description -> 
 Column source: column description -> A value indicating where the funds come from such as dues, or the annual university allocation, value description -> 
 Column link_to_member: column description -> link to member, value description -> 

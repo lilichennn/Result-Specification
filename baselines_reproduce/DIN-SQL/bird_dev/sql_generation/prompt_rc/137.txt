@@ -248,12 +248,12 @@ Hint: Status = 'C' stands for running contract, OK so far; Status = 'D' stands f
 Schema_links: [account.account_id,account.district_id,loan.status,account.account_id = loan.account_id,1,'C','D']
 Result Contract:
 {
-  "population": "Accounts whose branch location is Branch location 1 and that have at least one loan contract with repayment Status 'C' (running contract, OK so far) or Status 'D' (running contract, client in debt).",
+  "population": "Account–loan contract associations where the account's branch location is Branch location 1 and the loan contract has repayment Status 'C' (running contract, OK so far) or Status 'D' (running contract, client in debt).",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The number of qualifying accounts.",
-  "derivation": "Count the accounts that have at least one loan contract with Status 'C' or 'D' and whose account branch location is Branch location 1.",
+  "column_role": "The number of qualifying account–loan contract associations.",
+  "derivation": "Count each qualifying account–loan contract association whose account branch location is Branch location 1 and whose loan contract Status is 'C' or 'D'.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms account.district_id is the account's branch location and loan.status stores the C/D running-contract statuses. This resolves the owner of branch location and contract status for the account count."
+  "meta_review": "Metadata confirms account.district_id is the account's branch location and loan.status stores the C/D running-contract statuses. This resolves the owner of branch location and contract status for the count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -184,8 +184,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID]
 Table products, columns = [*,ProductID,Description]
-Table transactions_1k, columns = [*,TransactionID,Date,CustomerID,ProductID]
-Table yearmonth, columns = [*,CustomerID,Date,Consumption]
+Table transactions_1k, columns = [*,TransactionID,CustomerID,ProductID]
+Table yearmonth, columns = [*,CustomerID,Date]
 Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
 Sample rows from customers (columns: ["CustomerID"]):
 [[3], [5], [6]]
@@ -196,19 +196,17 @@ Sample rows from products (columns: ["ProductID", "Description"]):
 Column descriptions and value descriptions for products:
 Column ProductID: column description -> Product ID, value description -> 
 Column Description: column description -> Description, value description -> 
-Sample rows from transactions_1k (columns: ["TransactionID", "Date", "CustomerID", "ProductID"]):
-[[1, "2012-08-24", 31543, 2], [2, "2012-08-24", 46707, 2], [3, "2012-08-24", 46707, 23]]
+Sample rows from transactions_1k (columns: ["TransactionID", "CustomerID", "ProductID"]):
+[[1, 31543, 2], [2, 46707, 2], [3, 46707, 23]]
 Column descriptions and value descriptions for transactions_1k:
 Column TransactionID: column description -> Transaction ID, value description -> 
-Column Date: column description -> Date, value description -> 
 Column CustomerID: column description -> Customer ID, value description -> 
 Column ProductID: column description -> Product ID, value description -> 
-Sample rows from yearmonth (columns: ["CustomerID", "Date", "Consumption"]):
-[[5, "201207", 528.3], [5, "201302", 1598.28], [5, "201303", 1931.36]]
+Sample rows from yearmonth (columns: ["CustomerID", "Date"]):
+[[39, "201112"], [63, "201112"], [172, "201112"]]
 Column descriptions and value descriptions for yearmonth:
 Column CustomerID: column description -> Customer ID, value description -> 
 Column Date: column description -> Date, value description -> 
-Column Consumption: column description -> consumption, value description -> 
 
 Q: Please list the product description of the products consumed in September, 2013.
 Hint: September 2013 refers to 201309; The first 4 strings of the Date values in the yearmonth table can represent year; The 5th and 6th string of the date can refer to month.

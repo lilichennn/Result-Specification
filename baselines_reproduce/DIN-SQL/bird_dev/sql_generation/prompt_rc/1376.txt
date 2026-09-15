@@ -230,12 +230,12 @@ Hint: closed events refers to event_name where status = 'Closed'; highest spend-
 Schema_links: [event.event_name,event.status,budget.spent,budget.amount,budget.link_to_event = event.event_id,Closed]
 Result Contract:
 {
-  "population": "All events whose status is 'Closed'.",
-  "row_grain": "One event, namely the single closed event selected as the answer.",
+  "population": "Closed events that have associated budget records, with the comparison made over the individual budget records linked to those events.",
+  "row_grain": "One row containing the event name associated with the single budget record selected as the answer.",
   "column_role": "The identity of the event (its event name).",
-  "derivation": "For each closed event, compute the spend-to-budget ratio as the total spent divided by the total budgeted amount across all budget records linked to that event.",
-  "filter_policy": "Select the event with the highest event-level spend-to-budget ratio (argmax over the ratio).",
-  "meta_review": "Metadata shows budget.spent and budget.amount are recorded per budget category and event via link_to_event, so the event ratio must aggregate all budget records for each closed event. Event closure is represented by event.status = 'Closed'."
+  "derivation": "The spend-to-budget ratio is computed for each individual budget record as its spent amount divided by its budgeted amount; the returned event name is the event linked to the selected budget record.",
+  "filter_policy": "Select the event linked to the budget record with the highest spend-to-budget ratio among budget records for closed events.",
+  "meta_review": "Budget spent and budget amount are recorded per budget category and event, but the result is determined by the highest individual budget-record ratio rather than by aggregating all budget records for an event. Event closure is represented by status 'Closed'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

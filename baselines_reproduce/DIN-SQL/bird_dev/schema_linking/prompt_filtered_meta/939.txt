@@ -183,20 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,country]
-Table drivers, columns = [*,driverId,driverRef,nationality]
+Table drivers, columns = [*,driverId,nationality]
 Table races, columns = [*,raceId,year,circuitId,name]
-Table results, columns = [*,raceId,driverId]
+Table results, columns = [*,resultId,raceId,driverId]
 Foreign_keys = [races.circuitId = circuits.circuitId,results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from circuits (columns: ["circuitId", "country"]):
 [[2, "Malaysia"], [3, "Bahrain"], [4, "Spain"]]
 Column descriptions and value descriptions for circuits:
 Column circuitId: column description -> unique identification number of the circuit , value description -> 
 Column country: column description -> , value description -> 
-Sample rows from drivers (columns: ["driverId", "driverRef", "nationality"]):
-[[1, "hamilton", "British"], [2, "heidfeld", "German"], [3, "rosberg", "German"]]
+Sample rows from drivers (columns: ["driverId", "nationality"]):
+[[1, "British"], [2, "German"], [3, "German"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
-Column driverRef: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "year", "circuitId", "name"]):
 [[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 17, "Chinese Grand Prix"]]
@@ -205,9 +204,10 @@ Column raceId: column description -> , value description ->
 Column year: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId"]):
-[[18, 1], [18, 2], [18, 3]]
+Sample rows from results (columns: ["resultId", "raceId", "driverId"]):
+[[1, 18, 1], [2, 18, 2], [3, 18, 3]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 

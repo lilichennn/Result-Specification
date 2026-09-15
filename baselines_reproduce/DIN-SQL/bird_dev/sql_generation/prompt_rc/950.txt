@@ -285,12 +285,12 @@ Hint: race at 291 refers to raceID = 291;
 Schema_links: [constructors.name,constructorResults.points,constructorResults.raceId,constructorResults.constructorId = constructors.constructorId,291,0]
 Result Contract:
 {
-  "population": "Constructors whose constructor race result at raceID = 291 has points equal to 0.",
-  "row_grain": "One constructor with 0 points at race 291.",
+  "population": "Constructors whose constructor standing entry for race 291 has points equal to 0.",
+  "row_grain": "One row per constructor whose standing entry at race 291 has 0 points.",
   "column_role": "The constructor's full name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies constructorResults as the constructor-level race result holding points, resolving the owner of the requested race points. It also identifies constructors.name as the full constructor name, resolving the requested name output."
+  "meta_review": "Metadata identifies the constructor standing for the race as the holder of the relevant points, not a constructor race result. It also identifies the constructor name as the requested output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

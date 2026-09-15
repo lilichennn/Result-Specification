@@ -297,7 +297,7 @@ Hint: Italian translation refers to language = 'Italian'; have a translation mea
 Schema_links: [set_translations.language,set_translations.translation,sets.baseSetSize,set_translations.setCode = sets.code,Italian,100]
 Result Contract:
 {
-  "population": "Card sets that have a set translation with language = 'Italian' and a non-null translation, and whose base set size satisfies baseSetSize < 10 (the evidence mapping of 'base set number of under 100').",
+  "population": "Card sets that have a set translation with language = 'Italian' and a non-null translation, and whose base set size is under 100.",
   "row_grain": "One global summary row over all qualifying card sets.",
   "column_role": "The count of qualifying card sets.",
   "derivation": "Count the card sets in the eligible population.",

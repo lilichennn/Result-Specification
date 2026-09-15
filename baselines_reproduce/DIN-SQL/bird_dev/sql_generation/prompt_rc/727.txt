@@ -225,7 +225,7 @@ Hint: the publisher refers to publisher_name; Sauron refers to superhero_name = 
 Schema_links: [publisher.publisher_name,superhero.superhero_name,superhero.publisher_id = publisher.id,Sauron]
 Result Contract:
 {
-  "population": "All superhero records whose superhero_name equals 'Sauron'.",
+  "population": "All superhero records whose superhero_name equals 'Sauron' and that have an associated publisher.",
   "row_grain": "One row per superhero matching the name 'Sauron'.",
   "column_role": "The publisher name (publisher_name) associated with the superhero.",
   "derivation": "none",

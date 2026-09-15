@@ -285,12 +285,12 @@ Hint:
 Schema_links: [races.raceId,races.year,circuits.country,races.circuitId = circuits.circuitId,2010,Asia,Europe]
 Result Contract:
 {
-  "population": "Races held in the year 2010 whose grand prix is located outside both Asia and Europe (continent is neither Asia nor Europe).",
+  "population": "Races in the year 2010 held at circuits whose country is not Bahrain, China, Singapore, Japan, Korea, Turkey, UAE, Malaysia, Spain, Monaco, Azerbaijan, Austria, Belgium, France, Germany, Hungary, Italy, or the UK.",
   "row_grain": "One global summary row for all qualifying races.",
   "column_role": "The number of qualifying races.",
   "derivation": "Count the races in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The geographic exclusion is a specified country-list condition rather than a general continent attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

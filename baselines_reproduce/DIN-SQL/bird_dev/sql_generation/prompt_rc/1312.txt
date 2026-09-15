@@ -235,7 +235,7 @@ Result Contract:
   "column_role": "The major name of that person.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms the person is represented in Member by first_name and last_name, and the requested major is major.major_name linked via member.link_to_major. Round-1 contract preserved."
+  "meta_review": "The person is identified by first and last name, and the requested major is the major name associated with that person."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

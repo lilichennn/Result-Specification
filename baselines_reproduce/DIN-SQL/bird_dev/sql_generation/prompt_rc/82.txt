@@ -424,9 +424,9 @@ Result Contract:
   "population": "All schools are eligible; no membership restriction is stated.",
   "row_grain": "One row representing a single school.",
   "column_role": "The offered grade span of the selected school, not the grade span served.",
-  "derivation": "The absolute value of each school's longitude is the comparison metric.",
+  "derivation": "The returned grade span is the stored offered grade span of the selected school; absolute longitude is used only to choose that school.",
   "filter_policy": "Select the single school with the maximum absolute longitude value (argmax).",
-  "meta_review": "Metadata confirms schools.GSoffered, not schools.GSserved, represents the offered grade span, and schools.Longitude is the coordinate used for the absolute comparison."
+  "meta_review": "Metadata confirms the offered grade span, not the served grade span, is the output, and longitude is the coordinate used for the absolute comparison."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

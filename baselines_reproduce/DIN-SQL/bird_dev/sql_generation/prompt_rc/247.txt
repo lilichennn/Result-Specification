@@ -263,12 +263,12 @@ Hint:  atoms cannot bond with other atoms means atom_id NOT in connected table;
 Schema_links: [atom.element,atom.atom_id,connected.atom_id,connected.atom_id = atom.atom_id]
 Result Contract:
 {
-  "population": "Atoms that cannot bond with any other atoms, meaning atoms whose atom_id does not appear as either atom_id or atom_id2 in the connected table.",
-  "row_grain": "One row per atom that cannot bond with any other atom.",
-  "column_role": "The element of each qualifying atom.",
+  "population": "Chemical elements that are not represented among the elements of atoms appearing as the primary atom in any connection record.",
+  "row_grain": "One row per distinct qualifying element.",
+  "column_role": "The chemical element value for each qualifying element.",
   "derivation": "none",
-  "filter_policy": "Exclude atoms whose atom_id appears as connected.atom_id or connected.atom_id2; no ordering specified.",
-  "meta_review": "Metadata shows connected records contain two atom identifier columns, atom_id and atom_id2. The unbonded-atom eligibility was refined to require absence from both columns."
+  "filter_policy": "Exclude any element represented among the elements of atoms appearing as the primary atom in a connection record; no ordering specified.",
+  "meta_review": "Connection records may include two atom references, but the result considers only the primary reference and evaluates eligibility at the element level rather than per individual atom."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

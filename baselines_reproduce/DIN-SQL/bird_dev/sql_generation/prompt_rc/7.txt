@@ -352,12 +352,12 @@ Hint:
 Schema_links: [schools.Phone,satscores.NumGE1500,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible candidates; for each school, only its test takers with a total SAT score strictly over 1500 qualify to be counted.",
+  "population": "Schools with recorded SAT score statistics are eligible; the relevant test-taker count is the recorded number of test takers with a total SAT score of at least 1500.",
   "row_grain": "One row representing the single selected school.",
   "column_role": "The phone number of the selected school.",
-  "derivation": "For each school, the count of its test takers with a total SAT score strictly over 1500.",
-  "filter_policy": "Select the school with the highest qualifying test-taker count (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata provides satscores.NumGE1500 as a count of test takers with total SAT scores greater than or equal to 1500, and no strict-over-1500 equivalent appears in the complete catalog. The contract therefore preserves the requested strict total-score count rather than substituting that aggregate."
+  "derivation": "For each school, the recorded count of test takers with a total SAT score of at least 1500.",
+  "filter_policy": "Select one school with the highest recorded count of test takers with a total SAT score of at least 1500; tie handling is unspecified.",
+  "meta_review": "The available recorded count is defined for total SAT scores greater than or equal to 1500, so the result uses that at-least-1500 count rather than a strict over-1500 count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

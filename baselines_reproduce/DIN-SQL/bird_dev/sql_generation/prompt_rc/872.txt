@@ -286,7 +286,7 @@ Schema_links: [qualifying.raceId,qualifying.q3,drivers.code,qualifying.driverId 
 Result Contract:
 {
   "population": "Drivers with a qualifying record in race No. 45 (raceId = 45) whose Q3 time is 0:01:33 (q3 LIKE '1:33%').",
-  "row_grain": "One driver, namely the driver in race No. 45 whose Q3 time is 0:01:33.",
+  "row_grain": "One row per qualifying driver in race No. 45 whose Q3 time matches 0:01:33.",
   "column_role": "The abbreviated code of the qualifying driver.",
   "derivation": "none",
   "filter_policy": "none",

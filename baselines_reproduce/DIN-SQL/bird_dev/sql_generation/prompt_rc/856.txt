@@ -285,12 +285,12 @@ Hint:
 Schema_links: [races.time,circuits.name,races.circuitId = circuits.circuitId,Sepang International Circuit]
 Result Contract:
 {
-  "population": "All races held at Sepang International Circuit.",
-  "row_grain": "One race held at Sepang International Circuit.",
-  "column_role": "The race-level time of each race (the scheduled/local time of the race, not lap or driver finishing time).",
+  "population": "Race times associated with races held at Sepang International Circuit.",
+  "row_grain": "One row for each distinct race time among races held at Sepang International Circuit.",
+  "column_role": "The race-level time value (the scheduled/local time of the race, not lap or driver finishing time).",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata identifies races.time as the time of the race location at race grain, resolving the requested race time against lap times or driver finishing times."
+  "filter_policy": "Duplicate race times are collapsed so each time appears only once.",
+  "meta_review": "Metadata identifies the race-level time field as the time of the race location at race grain, resolving the requested race time against lap times or driver finishing times."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

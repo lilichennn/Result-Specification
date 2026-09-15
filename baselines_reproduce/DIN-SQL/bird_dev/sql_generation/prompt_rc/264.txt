@@ -258,10 +258,10 @@ Result Contract:
 {
   "population": "The molecules whose molecule id is TR000, TR001, or TR002.",
   "row_grain": "One row per requested molecule.",
-  "column_role": "The label of each molecule, where '+' means carcinogenic and '-' means non-carcinogenic.",
+  "column_role": "The molecule id and the label of each molecule, where '+' means carcinogenic and '-' means non-carcinogenic.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms molecule.molecule_id is the molecule identifier and molecule.label is the molecule-level carcinogenic label. This validates the Round-1 population and output without refinement."
+  "meta_review": "Metadata confirms molecule id is the molecule identifier and label is the molecule-level carcinogenic label, supporting the requested identifiers and labels as outputs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

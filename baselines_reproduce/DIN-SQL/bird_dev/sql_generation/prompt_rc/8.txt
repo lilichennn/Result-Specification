@@ -432,8 +432,8 @@ Result Contract:
   "row_grain": "One row per school.",
   "column_role": "The number of SAT test takers at that school.",
   "derivation": "none",
-  "filter_policy": "Retain the school(s) whose FRPM count for K-12 students equals the maximum K-12 FRPM count across all schools (argmax); no tie-breaking or further ordering is specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Retain exactly one school with the greatest FRPM count for K-12 students; if multiple schools tie for the greatest count, retain only one unspecified tied school. No result ordering is specified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

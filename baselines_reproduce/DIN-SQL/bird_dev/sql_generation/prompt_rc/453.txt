@@ -366,12 +366,12 @@ Hint: card "Ancestor's Chosen" refers to name = 'Ancestor`s Chosen'
 Schema_links: [cards.manaCost,cards.name,Ancestor's Chosen]
 Result Contract:
 {
-  "population": "The card whose name equals 'Ancestor`s Chosen'.",
-  "row_grain": "One row representing the single named card.",
-  "column_role": "The unconverted mana cost of that card, as the mana cost string rather than a converted mana value.",
+  "population": "Cards whose name equals Ancestor's Chosen.",
+  "row_grain": "One row for each distinct unconverted mana cost value among the named cards.",
+  "column_role": "The unconverted mana cost, as the mana cost string rather than a converted mana value.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "The cards.manaCost column is documented as the unconverted mana cost, distinguishing it from convertedManaCost. This validates returning the card's mana cost string rather than a converted numeric mana value."
+  "filter_policy": "Duplicate mana cost values are eliminated, returning only distinct values.",
+  "meta_review": "The metadata distinction between unconverted mana cost and converted mana value supports returning the card's mana cost string rather than a numeric converted value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

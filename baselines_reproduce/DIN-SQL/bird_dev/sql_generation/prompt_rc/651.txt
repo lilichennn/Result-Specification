@@ -252,7 +252,7 @@ Schema_links: [posts.Title,postLinks.PostId = posts.Id,postLinks.RelatedPostId =
 Result Contract:
 {
   "population": "All posts linked as the related post of the post whose title is \"How to tell if something happened in a data set which monitors a value over time\".",
-  "row_grain": "One related post.",
+  "row_grain": "One row per related post.",
   "column_role": "The title of the related post.",
   "derivation": "none",
   "filter_policy": "none",

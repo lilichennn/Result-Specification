@@ -187,12 +187,12 @@ Hint: iodine refers to element = 'i'
 Schema_links: [connected.bond_id,atom.element,connected.atom_id = atom.atom_id,'i']
 Result Contract:
 {
-  "population": "All bond identifiers that are connected to at least one atom whose element is 'i' (iodine).",
+  "population": "Occurrences of bond identifiers for bonds belonging to molecules that contain at least one atom whose element is 'i' (iodine).",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "A single numeric value representing how many qualifying bond identifiers exist.",
-  "derivation": "Count the qualifying bond identifiers.",
+  "column_role": "A single numeric value representing how many qualifying bond identifier occurrences exist.",
+  "derivation": "Count the qualifying bond identifier occurrences, without collapsing repeated bond identifiers.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows element is an atom attribute and bond identifiers are linked to atoms through connected, so the element condition applies to associated atoms rather than bond records. This refines the eligible population without changing the requested count."
+  "meta_review": "Element is an atom attribute, and bonds are associated with molecules, so the iodine condition applies to atoms in the same molecule as the bond rather than to bond records or directly connected atoms. The count reflects the resulting bond occurrences."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

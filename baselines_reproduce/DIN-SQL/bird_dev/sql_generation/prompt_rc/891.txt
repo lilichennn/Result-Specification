@@ -285,12 +285,12 @@ Hint:
 Schema_links: [drivers.forename,drivers.surname,races.year,races.name,results.position,results.driverId = drivers.driverId,results.raceId = races.raceId,2010,'Singapore Grand Prix']
 Result Contract:
 {
-  "population": "All drivers who participated in the race that is the 2010 Singapore Grand Prix (year 2010, race name 'Singapore Grand Prix').",
-  "row_grain": "One row per driver who participated in that race.",
-  "column_role": "The name of each participating driver.",
+  "population": "Drivers who appear in the driver standings for the race named Singapore Grand Prix in 2010.",
+  "row_grain": "One row per such driver.",
+  "column_role": "The name of each driver.",
   "derivation": "none",
-  "filter_policy": "Order the returned drivers by their standing position in that race, ascending (position 1 first); no row limit.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Order the returned drivers by their standing position in that race, ascending; no row limit.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

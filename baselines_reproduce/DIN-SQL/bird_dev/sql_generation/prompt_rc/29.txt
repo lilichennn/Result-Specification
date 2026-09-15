@@ -352,12 +352,12 @@ Hint: K-12 means First-through-twelfth-grade
 Schema_links: [schools.OpenDate,frpm."Enrollment (K-12)",schools.GSserved,frpm.CDSCode = schools.CDSCode,K-12]
 Result Contract:
 {
-  "population": "All schools that serve first through twelfth grade (K-12).",
+  "population": "Schools with first-through-twelfth-grade (K-12) enrollment information.",
   "row_grain": "One row representing the single selected school.",
   "column_role": "The opening date of the selected school.",
   "derivation": "none",
-  "filter_policy": "Select the one school with the largest K-12 enrollment (argmax by K-12 enrollment) among the eligible schools.",
-  "meta_review": "Metadata documents frpm.Enrollment (K-12) as enrollment for grades 1 through 12, resolving the ranking measure as K-12 enrollment."
+  "filter_policy": "Select the one school with the largest first-through-twelfth-grade (K-12) enrollment among the eligible schools.",
+  "meta_review": "Metadata documents K-12 enrollment as enrollment for first through twelfth grade, resolving the ranking measure as K-12 enrollment."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

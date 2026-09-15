@@ -251,12 +251,12 @@ Hint: tagged as  'humor' refers to tag = '<humor>'; comment of the post refers t
 Schema_links: [posts.ViewCount,posts.Title,comments.Text,posts.Tags,comments.PostId = posts.Id,'<humor>']
 Result Contract:
 {
-  "population": "All posts tagged as 'humor', i.e., posts whose tag equals '<humor>'.",
-  "row_grain": "One row per post tagged as 'humor'.",
-  "column_role": "The post's title, the post's comment text (the comment content associated with the post), and the post's average view count.",
-  "derivation": "For each post, compute the average view count as AVG(ViewCount) over the post's own ViewCount values.",
+  "population": "Comments on posts whose tag equals '<humor>'.",
+  "row_grain": "One row for each distinct combination of post title and comment text among those comments.",
+  "column_role": "The post title, the comment text, and the average view count for that title/comment combination.",
+  "derivation": "The average view count is computed as the average of the post view counts over the matching comment-post associations in each title/comment group.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies comments.Text as comment content linked to a post, distinguishing it from post body/history text. It also confirms posts.ViewCount is a post-level metric, so average view count is evaluated at post grain."
+  "meta_review": "Metadata identifies comment text as content linked to a post, distinguishing it from post body/history text. View count is a post metric, but the result is aggregated for each distinct title and comment text combination rather than for each post."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

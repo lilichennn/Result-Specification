@@ -428,12 +428,12 @@ Hint: Difference between K-12 enrollment and 15-17 enrollment can be computed by
 Schema_links: [frpm.`Enrollment (K-12)`,frpm.`Enrollment (Ages 5-17)`,schools.School,schools.DOCType,schools.FundingType,frpm.CDSCode = schools.CDSCode,'Locally funded']
 Result Contract:
 {
-  "population": "The target population is all schools, and the reference population is schools whose funding type is locally funded; a target school qualifies only if its own difference between Enrollment (K-12) and Enrollment (Ages 5-17) is above the average of that difference computed across the locally funded reference schools.",
+  "population": "The target population is schools whose funding type is locally funded; the reference population is also schools whose funding type is locally funded. A target school qualifies only if its own difference between Enrollment (K-12) and Enrollment (Ages 5-17) is above the average of that difference computed across the locally funded reference schools.",
   "row_grain": "One row per qualifying school.",
-  "column_role": "The school's name and the school's DOC type as the text description of the District Ownership Code category.",
-  "derivation": "For each school, the difference is Enrollment (K-12) minus Enrollment (Ages 5-17), and the comparison threshold is the average of this difference over reference schools whose funding type is locally funded.",
+  "column_role": "The school's name and the school's District Ownership Code (DOC) value.",
+  "derivation": "For each locally funded school, the difference is Enrollment (K-12) minus Enrollment (Ages 5-17), and the comparison threshold is the average of this difference over locally funded schools.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that locally funded is a funding-type value and that DOCType is the text description of the District Ownership Code, so the reference condition is funding type 'Locally funded' and the requested DOC type is the text DOCType rather than the numeric DOC code."
+  "meta_review": "The funding condition is the locally funded funding type. The requested DOC type is represented by the District Ownership Code value itself, not by a separate textual description."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

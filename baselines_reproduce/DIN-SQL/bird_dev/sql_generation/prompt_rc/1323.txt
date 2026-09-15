@@ -306,12 +306,12 @@ Hint: name of events refers to event_name; attendance of over 20 students COUNT(
 Schema_links: [event.event_name,event.event_id,event.type,attendance.link_to_event = event.event_id,20,Fundraiser]
 Result Contract:
 {
-  "population": "Events whose type is not a fundraiser and whose attendance is greater than 20 students.",
-  "row_grain": "One row per qualifying event.",
-  "column_role": "The name of the event (event_name).",
-  "derivation": "Each event's attendance is measured as the count of attendance records linked to the event (COUNT(event_id) per event).",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms event.type records the kind of event, so the non-fundraiser condition is an event-type restriction. It also shows attendance rows reference events, supporting counting attendance records per event."
+  "population": "Event names associated with events that have more than 20 linked attendance records.",
+  "row_grain": "One row per distinct qualifying event name.",
+  "column_role": "The name of the event.",
+  "derivation": "Attendance is measured per event as the number of linked attendance records.",
+  "filter_policy": "Exclude any event name that appears among fundraiser events; no ordering, ranking, or top-k.",
+  "meta_review": "Metadata supports event type as the fundraiser classification and attendance records as the basis for counting attendance per event; the output is event names after fundraiser-name exclusion."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: finish time refers to time; Chinese Grand Prix refers to races.name = 'Chi
 Schema_links: [results.time,results.position,races.year,races.name,results.raceId = races.raceId,2008,2,'Chinese Grand Prix']
 Result Contract:
 {
-  "population": "Race results from the 2008 Chinese Grand Prix where the driver's finishing position is second (position = 2).",
-  "row_grain": "One race result, namely the single second-place finisher in that race.",
-  "column_role": "The recorded finish time (time) of that race result, not a recomputed elapsed time.",
+  "population": "Race results from the 2008 Chinese Grand Prix where the driver's result rank is 2.",
+  "row_grain": "The race result with rank 2 in that race.",
+  "column_role": "The recorded finish time of that race result, not a recomputed elapsed time.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms results.position is the finishing position and results.time is the recorded finish time for a race result, distinguishing them from fastest-lap rank. This supports selecting the second-place finisher and returning its stored finish time."
+  "meta_review": "Metadata confirms the result's rank is the ranking used to identify the second-ranked result, and the stored time is the recorded finish time for that race result."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

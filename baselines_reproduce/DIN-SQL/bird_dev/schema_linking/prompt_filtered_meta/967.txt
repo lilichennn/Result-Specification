@@ -182,14 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table drivers, columns = [*,driverId,number,code,dob,nationality]
+Table drivers, columns = [*,driverId,dob,nationality]
 Foreign_keys = []
-Sample rows from drivers (columns: ["driverId", "number", "code", "dob", "nationality"]):
-[[1, 44, "HAM", "1985-01-07", "British"], [2, null, "HEI", "1977-05-10", "German"], [3, 6, "ROS", "1985-06-27", "German"]]
+Sample rows from drivers (columns: ["driverId", "dob", "nationality"]):
+[[1, "1985-01-07", "British"], [2, "1977-05-10", "German"], [3, "1985-06-27", "German"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
-Column number: column description -> , value description -> 
-Column code: column description -> , value description -> 
 Column dob: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
 

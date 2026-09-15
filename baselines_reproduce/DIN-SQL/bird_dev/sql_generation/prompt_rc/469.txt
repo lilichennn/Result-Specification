@@ -297,12 +297,12 @@ Hint: card set "Angel of Mercy" refers to name = 'Angel of Mercy'; appear on Mag
 Schema_links: [cards.name,sets.mtgoCode,cards.setCode = sets.code,'Angel of Mercy']
 Result Contract:
 {
-  "population": "Card sets that contain at least one card named 'Angel of Mercy' and that appeared on Magic: The Gathering Online, meaning the set has a non-null and non-empty MTGO code.",
-  "row_grain": "One global summary row answering the yes/no question.",
-  "column_role": "A single yes/no indicator of whether any such set appeared on Magic: The Gathering Online.",
-  "derivation": "Existence determination over the eligible sets: the answer is yes if at least one qualifying set exists and no otherwise.",
+  "population": "Cards named 'Angel of Mercy', each considered together with the card set that contains it.",
+  "row_grain": "One yes/no row for each card named 'Angel of Mercy' found with its containing set.",
+  "column_role": "A yes/no indicator of whether the containing set of that card has a non-null MTGO code.",
+  "derivation": "A per-row conditional classification: 'YES' when the associated set's MTGO code is non-null, otherwise 'NO'.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms sets.mtgoCode is the set-level Magic Online appearance code and that null or empty values mean the set does not appear, refining the appearance condition to exclude empty values. cards.name confirms that 'Angel of Mercy' is a card name, not a set name."
+  "meta_review": "Metadata confirms the set-level MTGO code is the indicator of Magic: The Gathering Online appearance, with a null code meaning the set does not appear, and confirms that 'Angel of Mercy' is a card name rather than a set name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

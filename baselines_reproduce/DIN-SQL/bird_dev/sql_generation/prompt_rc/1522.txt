@@ -182,7 +182,7 @@ Hint: June of 2013 means Date contains '201306' in the yearmonth.date of the dat
 Schema_links: [customers.Currency,yearmonth.Consumption,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID,214582.17,'201306']
 Result Contract:
 {
-  "population": "The customer whose yearmonth consumption for June 2013 equals exactly 214582.17, where June 2013 means the yearmonth Date contains '201306'.",
+  "population": "The customer whose yearmonth consumption for June 2013 equals exactly 214582.17, where June 2013 is represented by the yearmonth Date value '201306'.",
   "row_grain": "One customer, namely the single customer matching that June 2013 consumption condition.",
   "column_role": "The currency associated with that customer.",
   "derivation": "none",

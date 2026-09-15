@@ -286,11 +286,11 @@ Schema_links: [drivers.forename,drivers.surname,lapTimes.raceId,lapTimes.time,la
 Result Contract:
 {
   "population": "All lap time records recorded in the race with raceId 348, together with the drivers who set them.",
-  "row_grain": "One driver, namely the driver who achieved the best lap time in that race.",
+  "row_grain": "One driver, selected from the lap time records of that race.",
   "column_role": "The driver's full name (given name and family name).",
-  "derivation": "The best lap time is defined as the minimum lap time value, MIN(time), over the lap records in race 348.",
-  "filter_policy": "Argmin selection: retain the driver whose lap time equals the minimum lap time in race 348.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The returned name is the stored driver name associated with the selected lap time record; the earliest lap time identifies the selection but is not returned.",
+  "filter_policy": "Top-1 selection: choose the lap time record with the earliest time in race 348 and return its driver; if several records tie for earliest time, exactly one is returned.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

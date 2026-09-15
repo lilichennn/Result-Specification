@@ -306,12 +306,12 @@ Hint: name of events refers to event_name; less than average parking cost refers
 Schema_links: [event.event_name,expense.cost,budget.category,event.event_id,budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id,Parking]
 Result Contract:
 {
-  "population": "Events whose Parking-category event-level cost is strictly less than the average Parking cost; the target set is events and the reference set for the average is Parking-category event-level cost values.",
-  "row_grain": "One row per event whose parking cost satisfies the below-average condition.",
-  "column_role": "The name of the event (event_name).",
-  "derivation": "Average parking cost is computed as DIVIDE(SUM(cost), COUNT(event_id)) restricted to category = 'Parking', with cost understood as the event's Parking-category cost (the total parking cost associated with the event); select events whose event-level parking cost is strictly below that threshold.",
+  "population": "Event names associated with Parking-category expenses whose individual expense cost is strictly less than the average expense cost across all expenses.",
+  "row_grain": "One row for each qualifying Parking expense, so an event name may appear more than once when the event has multiple qualifying expenses.",
+  "column_role": "The name of the event.",
+  "derivation": "The threshold is the simple average of individual expense costs over all expenses; the condition compares each Parking-category expense cost with that average, without aggregating costs by event or restricting the average to Parking.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies budget.spent as the total amount spent for a budgeted category and event, so parking cost is resolved as an event-category total rather than an isolated expense record. This resolves the population and row grain as events, not raw cost records."
+  "meta_review": "Parking cost is treated as individual expense amounts rather than event-category totals, and the average is taken over all expense amounts; consequently the result follows qualifying expense occurrences rather than distinct events."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

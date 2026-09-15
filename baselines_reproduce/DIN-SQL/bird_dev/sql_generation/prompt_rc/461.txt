@@ -366,12 +366,12 @@ Hint: name of cards refers to name; 2003 card frame style refers to frameVersion
 Schema_links: [cards.name,cards.convertedManaCost,cards.frameVersion,'2003']
 Result Contract:
 {
-  "population": "All cards that have a 2003 card frame style (frameVersion = '2003').",
+  "population": "All cards that have a 2003 card frame style.",
   "row_grain": "One card per result row.",
   "column_role": "The name of the card.",
   "derivation": "none",
-  "filter_policy": "Keep the top 3 cards ranked by highest card-level converted mana cost; tie handling is not specified.",
-  "meta_review": "Metadata confirms cards.name is the card's name and cards.convertedManaCost is the card-level converted mana cost whose higher values indicate higher cost. This validates the requested output and ranking metric."
+  "filter_policy": "Keep the top 3 cards ranked by highest converted mana cost; tie handling is not specified.",
+  "meta_review": "Metadata confirms the card name and card-level converted mana cost are available, with higher converted mana cost indicating higher cost. This validates the requested output and ranking metric."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

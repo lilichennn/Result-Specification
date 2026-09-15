@@ -296,12 +296,12 @@ Hint: diagnosed with SLE refers to Diagnosis = 'SLE'; normal white blood cell le
 Schema_links: [Patient.ID,Patient.Diagnosis,Laboratory.WBC,Laboratory.ID = Patient.ID,SLE,3.5,9.0]
 Result Contract:
 {
-  "population": "Patients whose patient-level diagnosis is 'SLE' and who have at least one recorded white blood cell (WBC) value between 3.5 and 9.0 inclusive.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The count of distinct qualifying patients.",
-  "derivation": "Count unique patient identifiers for patients with a patient-level diagnosis of 'SLE' and at least one laboratory WBC measurement between 3.5 and 9.0 inclusive.",
-  "filter_policy": "No ranking, ordering, or temporal snapshot; all qualifying patients are counted once.",
-  "meta_review": "Laboratory.WBC is a dated laboratory measurement, so WBC is event-level and the result counts distinct patients with at least one qualifying measurement. Patient.Diagnosis establishes the patient-level diagnosis owner."
+  "population": "Patient-laboratory occurrences where the associated patient has a patient-level diagnosis of 'SLE' and the white blood cell (WBC) value is between 3.5 and 9.0 inclusive.",
+  "row_grain": "One global summary row for the entire qualifying occurrence population.",
+  "column_role": "The count of qualifying patient-laboratory occurrences.",
+  "derivation": "Count each qualifying occurrence; a patient with multiple qualifying WBC measurements contributes once per qualifying measurement.",
+  "filter_policy": "No ranking, ordering, temporal snapshot, or patient-level de-duplication; all qualifying occurrences are counted.",
+  "meta_review": "Laboratory.WBC is a dated laboratory measurement, so WBC is event-level and the result counts qualifying event occurrences associated with SLE patients rather than distinct patients. Patient.Diagnosis establishes the patient-level diagnosis owner."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

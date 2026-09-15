@@ -230,12 +230,12 @@ Hint: event 'Community Theater' in 2019 refers to event_name = 'Community Theate
 Schema_links: [attendance.link_to_member,event.event_name,event.event_date,attendance.link_to_event = event.event_id,'Community Theater',2019]
 Result Contract:
 {
-  "population": "Attendance by members at the event with event_name = 'Community Theater' whose event_date falls in year 2019.",
+  "population": "Attendance records linking members to the event named 'Community Theater' whose event date falls in year 2019.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The number of members who attended the specified event.",
-  "derivation": "Count the members whose attendance falls within the eligible population.",
+  "column_role": "The number of member attendance records for the specified event.",
+  "derivation": "Count the eligible attendance records, without deduplicating by member.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -261,7 +261,7 @@ Result Contract:
   "column_role": "The number of carbon atoms in molecule TR008.",
   "derivation": "Count the qualifying carbon atoms within molecule TR008.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that individual atoms are recorded with a molecule identifier and that element value 'c' means carbon. This validates the Round-1 count of carbon atoms in TR008."
+  "meta_review": "Metadata confirms that individual atoms are recorded with a molecule identifier and that element value 'c' means carbon. This supports counting carbon atoms in TR008."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

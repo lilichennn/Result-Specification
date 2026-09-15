@@ -183,25 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,forename,surname]
-Table races, columns = [*,raceId]
-Table results, columns = [*,raceId,driverId,rank,fastestLapSpeed]
-Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Table results, columns = [*,driverId,fastestLapTime,fastestLapSpeed]
+Foreign_keys = [results.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "forename", "surname"]):
 [[1, "Lewis", "Hamilton"], [2, "Nick", "Heidfeld"], [3, "Nico", "Rosberg"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "rank", "fastestLapSpeed"]):
-[[18, 1, 2, "218.300"], [18, 2, 3, "217.586"], [18, 3, 5, "216.719"]]
+Sample rows from results (columns: ["driverId", "fastestLapTime", "fastestLapSpeed"]):
+[[1, "1:27.452", "218.300"], [2, "1:27.739", "217.586"], [3, "1:28.090", "216.719"]]
 Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
-Column rank: column description -> , value description -> 
+Column fastestLapTime: column description -> , value description -> 
 Column fastestLapSpeed: column description -> , value description -> 
 
 Q: Which driver created the fastest lap speed in a Formula_1 race? Please give both his forename and surname.

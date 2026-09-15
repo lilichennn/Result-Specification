@@ -183,10 +183,10 @@ Schema_links: [customers.CustomerID,customers.Currency,yearmonth.Date,yearmonth.
 Result Contract:
 {
   "population": "Customers whose customers.Currency is CZK and who have gas consumption recorded in yearmonth for 2011 (yearmonth.Date between 201101 and 201112); only those 2011 monthly consumption records contribute to each customer's measured amount.",
-  "row_grain": "One row per customer who qualifies as a top consumer.",
+  "row_grain": "A single row for the customer selected as the top consumer.",
   "column_role": "The customer identifier (customers.CustomerID), since the catalog provides no customer name; the consumption amount serves only as the ranking measure and is not a required output.",
   "derivation": "For each eligible customer, sum the customer's yearmonth.Consumption values whose yearmonth.Date is between 201101 and 201112.",
-  "filter_policy": "Retain the customer(s) with the highest total 2011 gas consumption (argmax); tie handling is unspecified.",
+  "filter_policy": "Select exactly one customer with the highest total 2011 gas consumption; if there is a tie, only one of the tied customers is returned and the choice is unspecified.",
   "meta_review": "The yearmonth table establishes customer-level monthly Consumption with Date in the 201101-201112 form, so 2011 gas consumption is the sum of those monthly values. customers.Currency identifies CZK-paying customers, and CustomerID is the available customer identifier."
 }
 

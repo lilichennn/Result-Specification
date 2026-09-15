@@ -415,12 +415,12 @@ Hint: overall strength refers to overall_rating; strongest overall strength refe
 Schema_links: [Player.player_name,Player_Attributes.overall_rating,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no membership conditions restrict the set.",
-  "row_grain": "One result row represents a single player.",
-  "column_role": "The returned value must identify the player.",
+  "population": "Players with a recorded overall_rating are eligible.",
+  "row_grain": "One result row represents the selected player.",
+  "column_role": "The returned value identifies the player.",
   "derivation": "none",
-  "filter_policy": "Select the player whose overall strength, given by overall_rating, is maximal (argmax over overall_rating).",
-  "meta_review": "Metadata confirms Player_Attributes.overall_rating is the FIFA-calculated overall rating and that higher values indicate stronger overall strength, validating the maximal overall_rating selection."
+  "filter_policy": "Select exactly one player associated with the highest recorded overall_rating; ties are not distinguished.",
+  "meta_review": "Metadata confirms overall_rating is the FIFA-calculated overall rating and that higher values indicate stronger overall strength, validating the maximal overall_rating selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -258,12 +258,12 @@ Hint: '2012/8/24' can be represented by '2012-08-24'; Consumption decrease rate 
 Schema_links: [transactions_1k.CustomerID,transactions_1k.Date,transactions_1k.Amount,transactions_1k.Price,yearmonth.CustomerID,yearmonth.Date,yearmonth.Consumption,transactions_1k.CustomerID = yearmonth.CustomerID,634.8,'2012-08-25','2012','2013']
 Result Contract:
 {
-  "population": "Customers with a transaction on 2012-08-25 whose transaction total price (Amount * Price) is 634.8.",
-  "row_grain": "One row per customer satisfying that payment condition.",
+  "population": "The customer with a transaction on 2012-08-25 whose recorded transaction price is 634.8.",
+  "row_grain": "One row for the customer identified by that payment condition.",
   "column_role": "The customer's consumption decrease rate from year 2012 to year 2013.",
-  "derivation": "For each qualifying customer, compute (consumption_2012 - consumption_2013) / consumption_2012, where consumption_2012 and consumption_2013 are that customer's consumption for year 2012 and year 2013 respectively.",
+  "derivation": "For the identified customer, compute (total consumption in 2012 - total consumption in 2013) / total consumption in 2012, using that customer's yearly consumption totals.",
   "filter_policy": "none",
-  "meta_review": "Metadata for transactions_1k states that total price equals Amount * Price, resolving that the paid amount 634.8 is the transaction total price rather than the standalone Price column."
+  "meta_review": "The paid amount 634.8 is treated as the transaction's recorded price, not as a computed total from amount multiplied by unit price."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -299,12 +299,12 @@ Hint: zip codes that have post office boxes refers to type = 'PO Box'
 Schema_links: [zip_code.zip_code,zip_code.type,zip_code.county,zip_code.state,"PO Box","San Juan Municipio","Puerto Rico"]
 Result Contract:
 {
-  "population": "Zip code entries whose type is 'PO Box' and that are located in the county San Juan Municipio, which is in the state Puerto Rico; all conditions apply conjunctively.",
-  "row_grain": "One qualifying zip code.",
+  "population": "Zip code entries whose type is 'PO Box', whose county is San Juan Municipio, and whose state is Puerto Rico; all conditions apply conjunctively.",
+  "row_grain": "One row per qualifying zip code entry.",
   "column_role": "The zip code value of each qualifying entry.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms zip_code.type includes 'PO Box' and that zip_code.county and zip_code.state carry the requested San Juan Municipio and Puerto Rico location semantics. This validates the Round-1 eligibility conditions without changing them."
+  "meta_review": "Metadata confirms that 'PO Box' is a valid postal-box type and that county and state carry the requested San Juan Municipio and Puerto Rico location semantics."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -296,8 +296,8 @@ Hint: normal proteinuria level refers to 0 < `U-PRO` < 30; diagnosed with SLE re
 Schema_links: [Patient.ID,Laboratory.U-PRO,Patient.Diagnosis,Laboratory.ID = Patient.ID,0,30,'SLE']
 Result Contract:
 {
-  "population": "Patients whose proteinuria level (Laboratory.U-PRO) is normal, i.e., greater than 0 and less than 30, and whose patient-level diagnosis (Patient.Diagnosis) equals 'SLE'; both conditions must hold.",
-  "row_grain": "One qualifying patient.",
+  "population": "Patients whose patient-level diagnosis (Patient.Diagnosis) equals 'SLE' and who have at least one proteinuria measurement (Laboratory.U-PRO) greater than 0 and less than 30.",
+  "row_grain": "One row per distinct qualifying patient ID, with a patient appearing only once even if multiple laboratory measurements qualify.",
   "column_role": "The patient ID of each qualifying patient.",
   "derivation": "none",
   "filter_policy": "none",

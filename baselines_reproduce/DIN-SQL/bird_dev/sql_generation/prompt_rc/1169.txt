@@ -296,12 +296,12 @@ Hint: male refers to SEX = 'M'; female refers to SEX = 'F'; abnormal uric acid r
 Schema_links: [Patient.SEX,Laboratory.UA,Laboratory.ID = Patient.ID,M,F,8.0,6.5]
 Result Contract:
 {
-  "population": "All patients with abnormal uric acid counts, where abnormal means UA <= 8.0 for male patients (SEX = 'M') and UA <= 6.5 for female patients (SEX = 'F').",
-  "row_grain": "One global summary row over the entire eligible patient population.",
-  "column_role": "A single numeric value representing the ratio of male to female patients.",
-  "derivation": "Divide the count of male patients with UA <= 8.0 by the count of female patients with UA <= 6.5.",
+  "population": "All patient-linked uric acid laboratory test records, with a record qualifying as abnormal when the uric acid value is at most 8.0 for a male patient or at most 6.5 for a female patient.",
+  "row_grain": "One global summary row over the qualifying laboratory test records.",
+  "column_role": "A single numeric value representing the ratio of male qualifying records to female qualifying records.",
+  "derivation": "Divide the number of male laboratory test records with uric acid value at most 8.0 by the number of female laboratory test records with uric acid value at most 6.5.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a record-level ratio, not a count of distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

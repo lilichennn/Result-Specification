@@ -297,10 +297,10 @@ Hint: Benalish Knight' is the name of card;
 Schema_links: [cards.type,cards.name,Benalish Knight]
 Result Contract:
 {
-  "population": "The card whose name is \"Benalish Knight\".",
-  "row_grain": "One card.",
+  "population": "Cards named \"Benalish Knight\" that have associated foreign-language data.",
+  "row_grain": "One row for each unique card type among those cards.",
   "column_role": "The type of the card as visible, including any supertypes and subtypes.",
-  "derivation": "none",
+  "derivation": "The stored card type is returned as unique values, with duplicate type values collapsed.",
   "filter_policy": "none",
   "meta_review": "Metadata identifies cards.type as the visible card type, while originalType and foreign_data.type represent originally printed and foreign-language types. This resolves the requested output as the visible card type."
 }

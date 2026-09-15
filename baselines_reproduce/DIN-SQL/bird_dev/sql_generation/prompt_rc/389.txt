@@ -297,12 +297,12 @@ Hint: Creature - Elf is the originalType;
 Schema_links: [cards.name,cards.originalType,rulings.date,cards.uuid = rulings.uuid,"Creature - Elf"]
 Result Contract:
 {
-  "population": "Cards whose originalType is \"Creature - Elf\", together with the rulings that belong to those cards.",
-  "row_grain": "One row per ruling of a qualifying card, pairing the card's name with that ruling's date.",
-  "column_role": "The card name and the date of the ruling.",
+  "population": "Rulings linked to cards whose original type is \"Creature - Elf\".",
+  "row_grain": "One row per ruling of a qualifying card, pairing the card identifier with that ruling's date.",
+  "column_role": "The card identifier and the date of the ruling.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

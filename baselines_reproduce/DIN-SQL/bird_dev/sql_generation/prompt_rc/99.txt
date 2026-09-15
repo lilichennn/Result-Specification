@@ -249,10 +249,10 @@ Schema_links: [account.account_id,loan.duration,loan.amount,account.date,loan.ac
 Result Contract:
 {
   "population": "Accounts that have a loan with duration > 12 months (loan validity more than 12 months) and whose account creation date falls in calendar year 1993.",
-  "row_grain": "One row per qualifying account.",
-  "column_role": "The identity of the account, since the question asks to list the accounts.",
+  "row_grain": "One row for the single selected account, not one row per qualifying account.",
+  "column_role": "The identity of the selected account, since the question asks to list the account.",
   "derivation": "none",
-  "filter_policy": "Retain only the eligible account(s) whose approved loan amount is the highest among the eligible population (argmax on approved amount); tie handling and output ordering are not specified.",
+  "filter_policy": "Among the qualifying accounts, select only the single account associated with the highest approved loan amount; if there is a tie for the highest amount, only one account is returned and the tie-break is unspecified. No separate output ordering is specified.",
   "meta_review": "Metadata confirms that the account opening date is the account creation date and that the approved amount is the loan amount. This resolves the date eligibility source and the metric used for highest-amount selection."
 }
 

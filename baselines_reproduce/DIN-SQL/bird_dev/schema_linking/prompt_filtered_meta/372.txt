@@ -182,13 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,name,toughness]
+Table cards, columns = [*,id,toughness]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "name", "toughness"]):
-[[1, "Ancestor's Chosen", "4"], [2, "Angel of Mercy", "3"], [3, "Aven Cloudchaser", "2"]]
+Sample rows from cards (columns: ["id", "toughness"]):
+[[1, "4"], [2, "3"], [3, "2"]]
 Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
-Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
 Column toughness: column description -> The toughness of the card., value description -> 
 
 Q: How many cards are there with toughness of 99?

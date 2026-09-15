@@ -225,12 +225,12 @@ Hint: created by George Lucas refers to publisher_name = 'George Lucas'; percent
 Schema_links: [superhero.id,publisher.publisher_name,gender.gender,superhero.publisher_id = publisher.id,superhero.gender_id = gender.id,'George Lucas','Female']
 Result Contract:
 {
-  "population": "All superheroes created by George Lucas (publisher_name = 'George Lucas').",
-  "row_grain": "One global summary row for the entire population of George Lucas superheroes.",
+  "population": "All superheroes created by George Lucas who have a recorded gender.",
+  "row_grain": "One global summary row for the entire population.",
   "column_role": "A single numeric value representing the percentage of female superheroes.",
-  "derivation": "Compute the percentage as the count of superheroes with gender = 'Female' divided by the total count of superheroes in the population, multiplied by 100.",
+  "derivation": "Compute the percentage as the count of superheroes whose gender is Female divided by the total count of superheroes in the population, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

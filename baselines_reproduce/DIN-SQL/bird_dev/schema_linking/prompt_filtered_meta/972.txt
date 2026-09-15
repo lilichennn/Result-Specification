@@ -183,24 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,code,dob]
-Table races, columns = [*,raceId]
-Table results, columns = [*,resultId,raceId,driverId,fastestLapTime]
-Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Table results, columns = [*,resultId,driverId,fastestLapTime]
+Foreign_keys = [results.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "code", "dob"]):
 [[1, "HAM", "1985-01-07"], [2, "HEI", "1977-05-10"], [3, "ROS", "1985-06-27"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column code: column description -> , value description -> 
 Column dob: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId", "fastestLapTime"]):
-[[1, 18, 1, "1:27.452"], [2, 18, 2, "1:27.739"], [3, 18, 3, "1:28.090"]]
+Sample rows from results (columns: ["resultId", "driverId", "fastestLapTime"]):
+[[1, 1, "1:27.452"], [2, 2, "1:27.739"], [3, 3, "1:28.090"]]
 Column descriptions and value descriptions for results:
 Column resultId: column description -> the unique identification number identifying race result , value description -> 
-Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 Column fastestLapTime: column description -> , value description -> 
 

@@ -188,9 +188,9 @@ Schema_links: [bond.bond_id,bond.bond_type,molecule.label,bond.molecule_id = mol
 Result Contract:
 {
   "population": "All bonds whose bond type is triple (bond_type = '#'), together with the molecules that contain them; no restriction is placed on the molecules themselves.",
-  "row_grain": "One row per triple bond (one row per qualifying bond ID).",
-  "column_role": "The bond ID of the triple bond, and the carcinogenicity status (carcinogenic or non-carcinogenic) of the molecule containing that bond.",
-  "derivation": "Carcinogenicity of each molecule is determined from its label: label '+' means carcinogenic and label '-' means non-carcinogenic.",
+  "row_grain": "One distinct row per qualifying bond ID with its associated molecule label.",
+  "column_role": "The bond ID of the triple bond, and the molecule's carcinogenicity label for the molecule containing that bond.",
+  "derivation": "The carcinogenicity information is returned as the molecule's stored label, interpreted as '+' for carcinogenic and '-' for non-carcinogenic.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

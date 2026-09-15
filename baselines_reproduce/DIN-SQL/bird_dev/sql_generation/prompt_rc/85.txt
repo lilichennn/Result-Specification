@@ -353,9 +353,9 @@ Schema_links: [frpm.`Free Meal Count (K-12)`,frpm.`Enrollment (K-12)`,frpm.`Dist
 Result Contract:
 {
   "population": "Schools administered by an administrator whose first name is Alusine.",
-  "row_grain": "One school administered by an administrator with first name Alusine.",
+  "row_grain": "One row per school administered by an administrator whose first name is Alusine.",
   "column_role": "The school's Percent (%) Eligible Free (K-12) value and the school's district code.",
-  "derivation": "For each school, Percent (%) Eligible Free (K-12) equals Free Meal Count (K-12) divided by Enrollment (K-12), multiplied by 100.",
+  "derivation": "For each school, Percent (%) Eligible Free (K-12) is Free Meal Count (K-12) multiplied by 100 and divided by Enrollment (K-12).",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

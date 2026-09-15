@@ -251,12 +251,12 @@ Hint: bounty amount of 50 refers to BountyAmount = 50; user refers to DisplayNam
 Schema_links: [users.DisplayName,votes.BountyAmount,posts.Title,votes.UserId = users.Id,votes.PostId = posts.Id,50,variance]
 Result Contract:
 {
-  "population": "Bounty additions with BountyAmount = 50 placed on a post whose Title includes 'variance'; both conditions must hold for a bounty event and its placing user to be eligible.",
+  "population": "Bounty additions of amount 50 placed on a post whose title includes 'variance'; both conditions must hold for a bounty event and its placing user to be eligible.",
   "row_grain": "One row per qualifying bounty addition, representing the user who placed it.",
-  "column_role": "The display name of the user who added the qualifying bounty.",
+  "column_role": "The display name of the user who added the qualifying bounty and the title of the post receiving the bounty.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms votes.BountyAmount and votes.UserId identify the bounty amount and the voter, validating that the requested DisplayName belongs to the bounty-adding user rather than the post owner."
+  "meta_review": "Metadata confirms the vote's bounty amount and user identify the bounty amount and the bounty-adding user, validating that the requested display name belongs to the bounty-adding user rather than the post owner."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

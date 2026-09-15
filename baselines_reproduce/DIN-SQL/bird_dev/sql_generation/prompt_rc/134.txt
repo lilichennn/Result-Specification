@@ -248,12 +248,12 @@ Hint: A16 stands for no. of committed crimes 1996
 Schema_links: [district.A16,account.account_id,account.district_id = district.district_id]
 Result Contract:
 {
-  "population": "All branch locations (districts) are candidates, each characterized by its number of committed crimes in 1996 (A16); the accounts eligible for counting are those opened at the branch location that is ultimately selected.",
-  "row_grain": "One global summary row for the single selected branch location.",
-  "column_role": "The number of accounts opened in the selected branch location.",
-  "derivation": "Count the account records opened at the selected branch location.",
-  "filter_policy": "Select the single branch location with the largest number of committed crimes in 1996 (A16), i.e., argmax over branch locations by 1996 committed-crime count.",
-  "meta_review": "Metadata confirms that A16 is stored for branch locations (districts) and accounts are linked to a branch location, resolving the selected branch entity and the accounts to count."
+  "population": "Accounts opened in branch locations whose 1996 committed-crime count (A16) is the maximum among branch locations that have opened accounts; branch locations without accounts are not selected.",
+  "row_grain": "One global summary row for the branch-location group with the largest 1996 committed-crime count.",
+  "column_role": "The number of accounts opened in that maximum-crime branch-location group.",
+  "derivation": "Count the account records associated with the selected maximum-crime branch-location group.",
+  "filter_policy": "Select the largest 1996 committed-crime count (A16) among account-bearing branch locations and aggregate accounts for all branch locations sharing that count, without choosing a single branch when counts tie.",
+  "meta_review": "Metadata confirms A16 is the branch-location 1996 crime count and accounts are linked to branch locations, so the result counts accounts tied to the maximum A16 branch-location group rather than necessarily one uniquely identified branch."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

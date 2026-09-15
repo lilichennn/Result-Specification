@@ -296,8 +296,8 @@ Hint: total protein is lower than normal refers to TP < 6.0;
 Schema_links: [Patient.Diagnosis,Laboratory.TP,Laboratory.ID = Patient.ID,6.0]
 Result Contract:
 {
-  "population": "Patients whose total protein is lower than normal, defined as TP < 6.0.",
-  "row_grain": "One row per qualifying patient, carrying that patient's diagnosis.",
+  "population": "Patients with a linked laboratory measurement of total protein lower than normal, defined as TP < 6.0.",
+  "row_grain": "One row per qualifying low-total-protein laboratory measurement, carrying the associated patient's diagnosis.",
   "column_role": "The patient-level diagnosis of the qualifying patient.",
   "derivation": "none",
   "filter_policy": "none",

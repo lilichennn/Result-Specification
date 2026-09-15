@@ -228,9 +228,9 @@ Result Contract:
   "population": "All superheroes whose gender is 'Female'.",
   "row_grain": "One global summary row covering the entire eligible population.",
   "column_role": "The average weight, in kilograms, of the eligible superheroes.",
-  "derivation": "Compute the average of valid weight_kg values for the eligible superheroes; NULL and 0 are missing weights and do not contribute to the average.",
-  "filter_policy": "No filtering or ordering of the eligible population other than treating NULL or 0 weight values as missing for the aggregation.",
-  "meta_review": "Metadata confirms superhero.weight_kg is measured in kilograms and that NULL or 0 means the weight is missing. The average is therefore computed only over non-missing weight values."
+  "derivation": "Compute the average of the stored weight_kg values for the eligible superheroes; NULL weights are not included in the average, while zero weights are included if present.",
+  "filter_policy": "No filtering or ordering of the eligible population beyond the female-gender condition.",
+  "meta_review": "Metadata confirms superhero.weight_kg is measured in kilograms. The result uses the standard average over stored weight values, without excluding zero weights."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

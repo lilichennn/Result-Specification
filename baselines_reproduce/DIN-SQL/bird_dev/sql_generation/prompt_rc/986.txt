@@ -286,11 +286,11 @@ Schema_links: [races.name,lapTimes.time,lapTimes.milliseconds,lapTimes.lap,lapTi
 Result Contract:
 {
   "population": "All lap-time records for the first lap (lap 1) of any race.",
-  "row_grain": "One single result row identifying the race in which the overall fastest first-lap time was recorded.",
-  "column_role": "The name of the race and the fastest first-lap time expressed in milliseconds.",
-  "derivation": "The minimum first-lap time among eligible lap-time records, evaluated using its millisecond representation, and reported in milliseconds.",
-  "filter_policy": "Argmin: retain only the race whose first-lap time has the smallest millisecond value across the eligible population.",
-  "meta_review": "Metadata shows lapTimes.milliseconds stores lap time as integer milliseconds, resolving that the fastest first-lap time is ordered and reported by millisecond value. races.name provides the race name for the requested race identity."
+  "row_grain": "One single result row containing the fastest first-lap time expressed in milliseconds.",
+  "column_role": "The fastest first-lap time expressed in milliseconds; no race name or race identifier is returned.",
+  "derivation": "The stored millisecond value from the selected first-lap record, selected as the fastest according to the recorded lap time.",
+  "filter_policy": "Top-1 selection: retain only the first-lap record with the earliest recorded lap time.",
+  "meta_review": "Metadata supports expressing the selected lap time in milliseconds, but the result is selected by recorded lap time and returns only the millisecond value, not the race name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

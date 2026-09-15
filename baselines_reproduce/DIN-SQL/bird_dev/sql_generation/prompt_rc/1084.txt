@@ -415,12 +415,12 @@ Hint: players born before the year 1986 refers to strftime('%Y', birthday)<'1986
 Schema_links: [Player.birthday,Player.player_api_id,Player_Attributes.defensive_work_rate,Player_Attributes.player_api_id = Player.player_api_id,1986,high]
 Result Contract:
 {
-  "population": "Players born before the year 1986 who would remain in their position and defend while the team attacked (i.e., high defensive work rate); both conditions must hold.",
-  "row_grain": "One global summary row over the entire eligible player population.",
-  "column_role": "A single value representing the number of qualifying players.",
-  "derivation": "Count the eligible players, counting each individual player only once.",
+  "population": "Players born before the year 1986 who have a recorded high defensive work rate, meaning they would remain in their position and defend while the team attacked; both conditions must hold.",
+  "row_grain": "One global summary row over the entire eligible population.",
+  "column_role": "A single value representing the number of qualifying distinct player names.",
+  "derivation": "Count distinct player names among eligible players, eliminating duplicates from repeated records.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms defensive_work_rate is a player attribute and that 'high' means remaining in position and defense while the team attacks. This validates the Round-1 eligibility condition and distinct-player count."
+  "meta_review": "Metadata confirms defensive_work_rate is a player attribute and that 'high' means remaining in position and defense while the team attacks. The result is a distinct count of player names."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

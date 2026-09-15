@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table cards, columns = [*,id,convertedManaCost,setCode]
-Table sets, columns = [*,baseSetSize,code,name,totalSetSize]
+Table sets, columns = [*,code,name]
 Foreign_keys = []
 Sample rows from cards (columns: ["id", "convertedManaCost", "setCode"]):
 [[1, 7.0, "10E"], [2, 5.0, "10E"], [3, 4.0, "10E"]]
@@ -191,13 +191,11 @@ Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
 Column convertedManaCost: column description -> The converted mana cost of the card. Use the manaValue property., value description -> if value is higher, it means that this card cost more converted mana 
 Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from sets (columns: ["baseSetSize", "code", "name", "totalSetSize"]):
-[[383, "10E", "Tenth Edition", 508], [302, "2ED", "Unlimited Edition", 302], [332, "2XM", "Double Masters", 384]]
+Sample rows from sets (columns: ["code", "name"]):
+[["10E", "Tenth Edition"], ["2ED", "Unlimited Edition"], ["2XM", "Double Masters"]]
 Column descriptions and value descriptions for sets:
-Column baseSetSize: column description -> The number of cards in the set., value description -> 
 Column code: column description -> The set code for the set., value description -> 
 Column name: column description -> The name of the set., value description -> 
-Column totalSetSize: column description -> The total number of cards in the set, including promotional and related supplemental products but excluding Alchemy modifications - however those cards are included in the set itself., value description -> 
 
 Q: What is the percentage of the cards with a converted mana cost of 7 in the set Coldsnap?
 Hint: converted mana cost of 7 refers to convertedManaCost = 7; card set Coldsnap refers to name = 'Coldsnap'; percentage = DIVIDE(SUM(convertedManaCost = 7), SUM(convertedManaCost))*100

@@ -361,12 +361,12 @@ Hint: Ranked 1st in the 3rd qualifying race refer to MIN(q3); 2008 is the year o
 Schema_links: [drivers.forename,drivers.surname,qualifying.q3,races.year,circuits.name,qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId,races.circuitId = circuits.circuitId,'Marina Bay Street Circuit',2008]
 Result Contract:
 {
-  "population": "Racers who participated in qualifying for the race held at the Marina Bay Street Circuit in the year 2008.",
+  "population": "Racers with a recorded third qualifying session time for the race held at the Marina Bay Street Circuit in 2008.",
   "row_grain": "One racer.",
   "column_role": "The racer's full name, given as forename and surname.",
   "derivation": "none",
-  "filter_policy": "Select the single racer with the minimum q3 (third qualifying session) time, i.e., the one ranked 1st in Q3, among the eligible population.",
-  "meta_review": "Metadata confirms qualifying.q3 is the third qualifying session time and drivers.forename/surname provide the racer's full name. This validates the minimum-q3 ranking and name output without changing the Round-1 contract."
+  "filter_policy": "Select the single racer ranked first in the third qualifying session, i.e., the one with the shortest recorded session time interpreted as a numeric duration.",
+  "meta_review": "The third qualifying session time is the ranking measure, and the racer's forename and surname constitute the full name; the ranking uses a recorded time interpreted as a duration."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

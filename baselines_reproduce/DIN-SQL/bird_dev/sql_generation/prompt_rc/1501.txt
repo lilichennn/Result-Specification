@@ -182,12 +182,12 @@ Hint: June 2013 refers to '201306'; The first 4 strings of the Date values in th
 Schema_links: [gasstations.Country,transactions_1k.Date,gasstations.GasStationID = transactions_1k.GasStationID,'201306']
 Result Contract:
 {
-  "population": "Gas stations that have at least one transaction whose transaction date falls in June 2013, i.e., year-month '201306'.",
-  "row_grain": "One row per country of a gas station that has a transaction in June 2013.",
+  "population": "Gas stations that have at least one transaction whose associated customer has a year-month record for June 2013, i.e., year-month '201306'.",
+  "row_grain": "One row per distinct country represented by the qualifying gas stations.",
   "column_role": "The country of the qualifying gas station.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows transactions_1k owns Date and GasStationID for transaction events, whereas yearmonth is customer-level (CustomerID, Consumption). The contract therefore keeps June 2013 eligibility tied to transaction dates rather than customer year-month records."
+  "meta_review": "The June 2013 eligibility is tied to the customer-level year-month record associated with the transaction, not to a transaction-level date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

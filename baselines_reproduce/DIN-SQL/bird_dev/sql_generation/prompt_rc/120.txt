@@ -248,12 +248,12 @@ Hint: Accounts holder refers to the person who own this account.
 Schema_links: [client.client_id,account.account_id,account.frequency,account.date,district.A3,disp.type,disp.client_id = client.client_id,disp.account_id = account.account_id,client.district_id = district.district_id,'east Bohemia','OWNER',1995,2000]
 Result Contract:
 {
-  "population": "Persons who own an account as its owner, are from the 'east Bohemia' region, and whose account was created in a year from 1995 through 2000.",
-  "row_grain": "One row per qualifying account holder for each owned account.",
-  "column_role": "The account holder's client identity, the account ID, and the account's frequency of statement issuance.",
+  "population": "Accounts from the 'east Bohemia' region whose account creation date falls in a year from 1995 through 2000.",
+  "row_grain": "One row per qualifying account.",
+  "column_role": "The account ID and the account's frequency of statement issuance.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that account holders are clients linked to accounts by an OWNER disposition, and that account.date is the account creation date. This resolved holder eligibility and the 1995-2000 account-year condition."
+  "meta_review": "Metadata establishes that the account date is the account creation date, resolving the 1995-2000 account-year condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

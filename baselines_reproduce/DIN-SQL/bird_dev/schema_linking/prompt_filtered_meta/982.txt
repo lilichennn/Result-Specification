@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,nationality]
-Table results, columns = [*,driverId,statusId]
+Table results, columns = [*,resultId,driverId,statusId]
 Table status, columns = [*,statusId,status]
 Foreign_keys = [results.statusId = status.statusId,results.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "nationality"]):
@@ -191,9 +191,10 @@ Sample rows from drivers (columns: ["driverId", "nationality"]):
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
-Sample rows from results (columns: ["driverId", "statusId"]):
-[[1, 1], [2, 1], [3, 1]]
+Sample rows from results (columns: ["resultId", "driverId", "statusId"]):
+[[1, 1, 1], [2, 2, 1], [3, 3, 1]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column driverId: column description -> , value description -> 
 Column statusId: column description -> , value description -> 
 Sample rows from status (columns: ["statusId", "status"]):

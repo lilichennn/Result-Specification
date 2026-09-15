@@ -324,12 +324,12 @@ Hint: Operation = 'VYBER KARTOU' refers to credit card withdrawal
 Schema_links: [disp.client_id,disp.type,trans.operation,trans.amount,trans.date,disp.account_id = account.account_id,trans.account_id = account.account_id,'VYBER KARTOU','OWNER','1998']
 Result Contract:
 {
-  "population": "Account holders (clients identified as owners of accounts) whose account has at least one credit card withdrawal transaction (operation 'VYBER KARTOU') dated in 1998 with an amount less than the average amount of credit card withdrawal transactions in 1998.",
-  "row_grain": "One row per qualifying account holder identification number.",
-  "column_role": "The account holder identification number, i.e., the client identifier, of each qualifying account holder.",
-  "derivation": "The comparison threshold is the average transaction amount computed over all credit card withdrawal transactions (operation 'VYBER KARTOU') dated in 1998.",
+  "population": "Credit card withdrawal transactions (operation 'VYBER KARTOU') dated in 1998 that are linked to an account and whose amount is less than the average amount of all transactions dated in 1998.",
+  "row_grain": "One row per qualifying transaction, so the same account identification number may appear multiple times.",
+  "column_role": "The account identification number associated with each qualifying transaction.",
+  "derivation": "The returned account identification number is a stored per-transaction identifier; the comparison threshold is the average amount over all transactions dated in 1998.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies disp.type = 'OWNER' as the account-holder relationship, so the requested holder identification is the client identifier rather than the account identifier."
+  "meta_review": "Although phrased as account-holder identification, the result semantics identify the output as the account identification number associated with qualifying transactions, not a client identifier based on an owner relationship."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

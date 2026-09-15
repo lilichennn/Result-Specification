@@ -256,7 +256,7 @@ Result Contract:
   "column_role": "The text of each comment.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that comments.Text is the detailed content of a comment, validating the Round-1 selection of comment text as the output."
+  "meta_review": "Metadata confirms that comment text is the detailed content of a comment, validating comment text as the output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,12 +230,12 @@ Hint: name of event refers to event_name; date of event refers to event_date; ex
 Schema_links: [event.event_name,event.event_date,expense.expense_description,expense.cost,budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id,'Pizza',50,100]
 Result Contract:
 {
-  "population": "Events that have at least one associated expense with description 'Pizza' whose cost is greater than 50 dollars and less than 100 dollars.",
-  "row_grain": "One row per qualifying event.",
+  "population": "Event occurrences linked to an expense with description 'Pizza' whose cost is greater than 50 dollars and less than 100 dollars.",
+  "row_grain": "One row for each qualifying pizza expense associated with an event, so the same event may appear more than once if it has multiple qualifying expenses.",
   "column_role": "The event's name and the event's date.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that expense records are attached to event budget lines, so a qualifying Pizza expense must be one recorded for the event. This validates the event-level eligibility distinction without changing the requested outputs."
+  "meta_review": "Metadata establishes that expense records are attached to event budget lines, so a qualifying Pizza expense must be one recorded for the event. This validates the event association without imposing a distinct event-level output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

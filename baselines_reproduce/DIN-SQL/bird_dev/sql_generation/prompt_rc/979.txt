@@ -354,12 +354,12 @@ Hint: finisher refers to time is not null;
 Schema_links: [results.raceId,results.time]
 Result Contract:
 {
-  "population": "All race-result records that qualify as finishers, meaning their finish time is not null; each such record contributes to the finisher count of its race number.",
+  "population": "All race-result records, regardless of whether a finish time is present; each such record contributes to the count of its race number.",
   "row_grain": "One race number.",
-  "column_role": "The race number, meaning the race identifier, that has the most finishers.",
-  "derivation": "For each race number, compute the count of finisher race-result records whose finish time is not null.",
-  "filter_policy": "Select the single race number with the highest finisher count (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata identifies results.time as the finish time and states that a non-null value means the driver finished the race, so finishers are race-result records rather than race records. It also identifies the race number as the race identifier, so the count is grouped by race identity."
+  "column_role": "The race number, meaning the race identifier, selected as having the highest computed count.",
+  "derivation": "For each race number, compute the aggregate count of its race-result records; the finish-time presence criterion does not restrict the count to non-null finish times.",
+  "filter_policy": "Select the single race number with the highest total race-result record count; tie handling is unspecified.",
+  "meta_review": "Metadata identifies the race number as the race identifier and race-result records as the counted units. The finish-time presence concept does not act as a population filter in the operational result, so the selected race number is based on total race-result records rather than strictly finishers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

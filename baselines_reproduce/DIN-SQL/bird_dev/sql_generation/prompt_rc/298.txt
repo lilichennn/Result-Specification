@@ -187,12 +187,12 @@ Hint: hydrogen refers to element = 'h'; label = '+' mean molecules are carcinoge
 Schema_links: [molecule.molecule_id,molecule.label,atom.element,atom.molecule_id = molecule.molecule_id,'+','h']
 Result Contract:
 {
-  "population": "All molecules in the dataset are eligible; the percentage is computed over the entire molecule set with no eligibility restriction. A molecule satisfies the hydrogen condition only if it has at least one atom whose element is 'h'.",
-  "row_grain": "One global summary row representing the whole molecule population.",
-  "column_role": "A single value: the percentage of molecules that are carcinogenic (label = '+') and contain at least one atom with element = 'h'.",
-  "derivation": "Percentage = (count of distinct molecules where label = '+' and the molecule has at least one atom with element = 'h') divided by (total count of distinct molecules), multiplied by 100.0.",
+  "population": "All atom records associated with a molecule; each atom record is eligible, with the molecule-level carcinogenic label attached to the atom record through its molecule.",
+  "row_grain": "One global summary row representing the entire linked atom population.",
+  "column_role": "A single value: the percentage of atom records whose element is 'h' and whose associated molecule is carcinogenic (label = '+').",
+  "derivation": "Percentage = count of atom records with element = 'h' and associated molecule label = '+' divided by total count of atom records associated with molecules, multiplied by 100.0; no distinct-molecule counting is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows atom.element is atom-level while molecule.label is molecule-level, with atoms linked to molecules by molecule_id. Therefore the numerator must count distinct molecules containing at least one hydrogen atom, not atom rows."
+  "meta_review": "The unit of analysis is the atom record, not the distinct molecule; molecule carcinogenicity is evaluated as a property attached to each associated atom record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

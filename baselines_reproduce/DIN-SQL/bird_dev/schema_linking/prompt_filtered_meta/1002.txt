@@ -182,10 +182,16 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
+Table driverStandings, columns = [*,driverStandingsId,raceId,driverId]
 Table drivers, columns = [*,driverId,forename,surname,dob,nationality]
-Table races, columns = [*,raceId,year,round,name,date]
-Table results, columns = [*,raceId,driverId]
-Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Table races, columns = [*,raceId,name]
+Foreign_keys = [driverStandings.driverId = drivers.driverId,driverStandings.raceId = races.raceId]
+Sample rows from driverStandings (columns: ["driverStandingsId", "raceId", "driverId"]):
+[[1, 18, 1], [2, 18, 2], [3, 18, 3]]
+Column descriptions and value descriptions for driverStandings:
+Column driverStandingsId: column description -> , value description -> 
+Column raceId: column description -> , value description -> 
+Column driverId: column description -> , value description -> 
 Sample rows from drivers (columns: ["driverId", "forename", "surname", "dob", "nationality"]):
 [[1, "Lewis", "Hamilton", "1985-01-07", "British"], [2, "Nick", "Heidfeld", "1977-05-10", "German"], [3, "Nico", "Rosberg", "1985-06-27", "German"]]
 Column descriptions and value descriptions for drivers:
@@ -194,19 +200,11 @@ Column forename: column description -> , value description ->
 Column surname: column description -> , value description -> 
 Column dob: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "round", "name", "date"]):
-[[1, 2009, 1, "Australian Grand Prix", "2009-03-29"], [2, 2009, 2, "Malaysian Grand Prix", "2009-04-05"], [3, 2009, 3, "Chinese Grand Prix", "2009-04-19"]]
+Sample rows from races (columns: ["raceId", "name"]):
+[[1, "Australian Grand Prix"], [2, "Malaysian Grand Prix"], [3, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Column year: column description -> , value description -> 
-Column round: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Column date: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId"]):
-[[18, 1], [18, 2], [18, 3]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column driverId: column description -> , value description -> 
 
 Q: As of the present, what is the full name of the youngest racer? Indicate her nationality and the name of the race to which he/she first joined.
 Hint: full name refers to forename+surname; Youngest racer = MAX(dob)

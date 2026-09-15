@@ -366,12 +366,12 @@ Hint: poweful refers to cardKingdomFoilId is not null AND cardKingdomId is not n
 Schema_links: [cards.cardKingdomFoilId,cards.cardKingdomId]
 Result Contract:
 {
-  "population": "All card records representing a Kingdom Foil–Kingdom Card pair that qualify as powerful, meaning cardKingdomFoilId is not null AND cardKingdomId is not null.",
-  "row_grain": "One row per powerful Kingdom Foil–Kingdom Card pair.",
-  "column_role": "The Kingdom Foil id and the Kingdom Card id that identify each pair.",
+  "population": "All card records representing a Kingdom Foil-Kingdom Card pair that qualify as powerful, meaning both the Kingdom Foil id and the Kingdom Card id are not null.",
+  "row_grain": "One row for each qualifying card record; the same Kingdom Foil-Kingdom Card id pair may appear more than once if present.",
+  "column_role": "The Kingdom Foil id and the Kingdom Card id identifying the powerful association for each returned record.",
   "derivation": "none",
-  "filter_policy": "Limit the output to three pairs, taking the first three under ascending alphabetical order of Kingdom Foil id, and present the results in that order.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Limit the output to the first three qualifying records under ascending alphabetical order of Kingdom Foil id, and present them in that order.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

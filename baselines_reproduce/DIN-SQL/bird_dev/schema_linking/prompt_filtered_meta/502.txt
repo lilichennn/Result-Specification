@@ -182,22 +182,18 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table set_translations, columns = [*,id,language,setCode,translation]
-Table sets, columns = [*,id,code,name,releaseDate]
+Table set_translations, columns = [*,setCode,translation]
+Table sets, columns = [*,code,releaseDate]
 Foreign_keys = [set_translations.setCode = sets.code]
-Sample rows from set_translations (columns: ["id", "language", "setCode", "translation"]):
-[[1, "Chinese Simplified", "10E", "核心系列第十版"], [2, "Chinese Traditional", "10E", "核心系列第十版"], [3, "French", "10E", "Dixième édition"]]
+Sample rows from set_translations (columns: ["setCode", "translation"]):
+[["10E", "核心系列第十版"], ["10E", "核心系列第十版"], ["10E", "Dixième édition"]]
 Column descriptions and value descriptions for set_translations:
-Column id: column description -> unique id identifying this set, value description -> 
-Column language: column description -> language of this card set, value description -> 
 Column setCode: column description -> the set code for this set, value description -> 
 Column translation: column description -> translation of this card set, value description -> 
-Sample rows from sets (columns: ["id", "code", "name", "releaseDate"]):
-[[1, "10E", "Tenth Edition", "2007-07-13"], [2, "2ED", "Unlimited Edition", "1993-12-01"], [3, "2XM", "Double Masters", "2020-08-07"]]
+Sample rows from sets (columns: ["code", "releaseDate"]):
+[["10E", "2007-07-13"], ["2ED", "1993-12-01"], ["2XM", "2020-08-07"]]
 Column descriptions and value descriptions for sets:
-Column id: column description -> unique id identifying this set, value description -> 
 Column code: column description -> The set code for the set., value description -> 
-Column name: column description -> The name of the set., value description -> 
 Column releaseDate: column description -> The release date in ISO 8601 format for the set., value description -> 
 
 Q: What is the release date for the set "Ola de frío"?

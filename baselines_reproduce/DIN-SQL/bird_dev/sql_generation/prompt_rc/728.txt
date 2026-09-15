@@ -225,12 +225,12 @@ Hint: the superheroes from Marvel Comics refers to publisher_name = 'Marvel Comi
 Schema_links: [superhero.id,colour.colour,publisher.publisher_name,superhero.eye_colour_id = colour.id,superhero.publisher_id = publisher.id,Marvel Comics]
 Result Contract:
 {
-  "population": "All superheroes whose publisher is 'Marvel Comics'.",
+  "population": "Eye color labels associated with superheroes whose publisher is 'Marvel Comics'.",
   "row_grain": "One row per eye color label found among Marvel Comics superheroes.",
-  "column_role": "The eye color label and its popularity expressed as the number of Marvel Comics superheroes having that eye color.",
-  "derivation": "For each eye color label, count the superheroes from the Marvel Comics population who have that eye color.",
-  "filter_policy": "Order the eye-color rows by their superhero count in descending order so the most common color comes first, with no limit on the number of rows returned.",
-  "meta_review": "Metadata distinguishes colour.id from colour.colour, establishing that the requested eye color output is the human-readable color label rather than a color identifier. No other Round-1 semantic ambiguity is resolved."
+  "column_role": "The eye color label, the number of Marvel Comics superheroes having that eye color, and the popularity rank of that eye color.",
+  "derivation": "For each eye color label, count the Marvel Comics superheroes having that eye color, then assign a popularity rank based on that count in descending order, with equal counts sharing the same rank.",
+  "filter_policy": "Return all eye-color groups and rank them by descending superhero count, with no limit or additional filtering; the rank identifies the most common color first.",
+  "meta_review": "Metadata distinguishes a color identifier from a human-readable color label, establishing that the requested eye color output is the label rather than the identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

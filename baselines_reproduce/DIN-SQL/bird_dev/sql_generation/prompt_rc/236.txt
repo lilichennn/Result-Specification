@@ -187,12 +187,12 @@ Hint: atoms refer to atom_id or atom_id2
 Schema_links: [bond.bond_type,connected.atom_id,connected.atom_id2,connected.bond_id = bond.bond_id,bond.bond_id,TR001_6_9]
 Result Contract:
 {
-  "population": "Bonds whose bond ID equals 'TR001_6_9'.",
-  "row_grain": "One row per bond with the given bond ID.",
-  "column_role": "The bond's bond type and its two atom identifiers (atom_id and atom_id2).",
+  "population": "The connected atom pair or pairs associated with the bond whose bond ID is 'TR001_6_9'.",
+  "row_grain": "One row per connected atom pair for that bond.",
+  "column_role": "The bond type and the two atom identifiers (atom_id and atom_id2).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:
