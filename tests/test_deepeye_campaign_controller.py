@@ -2,6 +2,7 @@
 import contextlib
 import importlib
 import io
+from itertools import product
 import json
 import os
 from pathlib import Path
@@ -740,12 +741,14 @@ class FaultHandlingTests(unittest.TestCase):
                 'error': error if error is not None else {
                     'type': {'module': 'openai', 'qualname': 'AuthenticationError'}, 'status_code': 401}})
 
-    def test_output_inspection_errors_are_recorded_without_blocking_campaign(self):
+    def test_data_inspection_errors_are_recorded_without_blocking_campaign(self):
         from scripts.rc_evaluation.deepeye.campaign import controller
-        for nested in (False, True):
-            with self.subTest(nested=nested), self.fixture() as (ledger, job, attempt):
+        messages = ('Output data may contain inappropriate content.',
+                    'Input text data may contain inappropriate content.')
+        for message, nested in product(messages, (False, True)):
+            with self.subTest(message=message, nested=nested), self.fixture() as (ledger, job, attempt):
                 body = {'code': 'data_inspection_failed', 'type': 'data_inspection_failed',
-                        'message': 'Output data may contain inappropriate content.', 'param': None}
+                        'message': message, 'param': None}
                 error = {'type': {'module': 'openai', 'qualname': 'BadRequestError'},
                          'status_code': 400, 'body': {'error': body} if nested else body}
                 for number in range(4):
@@ -753,7 +756,7 @@ class FaultHandlingTests(unittest.TestCase):
                 try:
                     controller.check_run_faults(ledger, job)
                 except RuntimeError:
-                    self.fail('Output inspection is a sample failure, not a campaign infrastructure fault')
+                    self.fail('Recognized data inspection must remain a sample failure')
                 self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'configured')
                 with RunStore.open(Path(job['run_dir']), read_only=True) as store:
                     self.assertEqual(len(list(store.iter_events(attempt, kinds='api_error'))), 4)
@@ -764,34 +767,55 @@ class FaultHandlingTests(unittest.TestCase):
                     controller.check_run_faults(ledger, job)
                 self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
 
-    def test_input_unknown_and_malformed_400_bodies_still_block(self):
+    def test_unknown_and_malformed_400_bodies_still_block(self):
         from scripts.rc_evaluation.deepeye.campaign import controller
         bodies = [None, 'data_inspection_failed', [],
                   {'code': 'data_inspection_failed', 'message': 'Input data may contain inappropriate content.'},
+                  {'code': 'data_inspection_failed', 'message': 'Input text data may contain inappropriate content'},
+                  {'code': 'data_inspection_failed', 'message': 'Input text data may contain inappropriate content. Details'},
                   {'code': 'data_inspection_failed'},
-                  {'code': 'invalid_parameter', 'message': 'Output data may contain inappropriate content.'}]
-        for body in bodies:
-            with self.subTest(body=body), self.fixture() as (ledger, job, attempt):
+                  {'message': 'Input text data may contain inappropriate content.'},
+                  {'code': 'invalid_parameter', 'message': 'Output data may contain inappropriate content.'},
+                  {'code': 'invalid_parameter', 'message': 'Input text data may contain inappropriate content.'}]
+        for body, nested in product(bodies, (False, True)):
+            with self.subTest(body=body, nested=nested), self.fixture() as (ledger, job, attempt):
                 self.append_api_error(job, attempt, error={
-                    'type': {'module': 'openai', 'qualname': 'BadRequestError'}, 'status_code': 400, 'body': body})
+                    'type': {'module': 'openai', 'qualname': 'BadRequestError'}, 'status_code': 400,
+                    'body': {'error': body} if nested else body})
                 with self.assertRaises(RuntimeError):
                     controller.check_run_faults(ledger, job)
                 self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
 
-    def test_allowed_output_error_does_not_automatically_unblock_existing_hold(self):
+    def test_inspection_body_cannot_exempt_other_infrastructure_status_codes(self):
         from scripts.rc_evaluation.deepeye.campaign import controller
-        with self.fixture() as (ledger, job, attempt):
-            controller.set_control(ledger, 'blocked', 'operator_hold')
-            self.append_api_error(job, attempt, error={
-                'type': {'module': 'openai', 'qualname': 'BadRequestError'}, 'status_code': 400,
-                'body': {'code': 'data_inspection_failed',
-                         'message': 'Output data may contain inappropriate content.'}})
-            try:
-                controller.check_run_faults(ledger, job)
-            except RuntimeError:
-                self.fail('Recognized output inspection must not be reclassified as a new system fault')
-            state = controller.control(ledger.campaign_dir)
-            self.assertEqual((state['mode'], state['reason']), ('blocked', 'operator_hold'))
+        for status_code, nested in product((401, 403, 404, 422), (False, True)):
+            with self.subTest(status_code=status_code, nested=nested), self.fixture() as (ledger, job, attempt):
+                body = {'code': 'data_inspection_failed',
+                        'message': 'Input text data may contain inappropriate content.'}
+                self.append_api_error(job, attempt, error={
+                    'type': {'module': 'openai', 'qualname': 'APIStatusError'},
+                    'status_code': status_code, 'body': {'error': body} if nested else body})
+                with self.assertRaises(RuntimeError):
+                    controller.check_run_faults(ledger, job)
+                self.assertEqual(controller.control(ledger.campaign_dir)['mode'], 'blocked')
+
+    def test_allowed_data_error_does_not_automatically_unblock_existing_hold(self):
+        from scripts.rc_evaluation.deepeye.campaign import controller
+        messages = ('Output data may contain inappropriate content.',
+                    'Input text data may contain inappropriate content.')
+        for message, nested in product(messages, (False, True)):
+            with self.subTest(message=message, nested=nested), self.fixture() as (ledger, job, attempt):
+                controller.set_control(ledger, 'blocked', 'operator_hold')
+                body = {'code': 'data_inspection_failed', 'message': message}
+                self.append_api_error(job, attempt, error={
+                    'type': {'module': 'openai', 'qualname': 'BadRequestError'}, 'status_code': 400,
+                    'body': {'error': body} if nested else body})
+                try:
+                    controller.check_run_faults(ledger, job)
+                except RuntimeError:
+                    self.fail('Recognized data inspection must not be reclassified as a new system fault')
+                state = controller.control(ledger.campaign_dir)
+                self.assertEqual((state['mode'], state['reason']), ('blocked', 'operator_hold'))
 
     def record_postgres_error(self, job, attempt, error, *, connecting):
         from types import SimpleNamespace

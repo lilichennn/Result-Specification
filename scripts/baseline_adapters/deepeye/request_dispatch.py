@@ -190,7 +190,7 @@ class RequestDispatcher:
                 pass
 
     async def _execute(self, work, ready):
-        from app.llm.sampling import SamplingPaused, is_retryable_output_inspection_error
+        from app.llm.sampling import SamplingPaused, is_retryable_data_inspection_error
         from openai import APITimeoutError
         import httpx2
         error = None
@@ -228,7 +228,7 @@ class RequestDispatcher:
         except BaseException as exc:
             error = exc
             if ((AdaptiveAdmission._status_code(exc) in (400, 401, 403, 404, 422)
-                    and not is_retryable_output_inspection_error(exc))
+                    and not is_retryable_data_inspection_error(exc))
                     or isinstance(exc, (TypeError, ValueError))):
                 self._fatal = exc
                 self.stop_event.set()

@@ -62,7 +62,7 @@ def postgres_fault(result):
 
 def check_run_faults(ledger, job):
     """Inspect only new error events, including errors hidden by native fallback."""
-    from app.llm.sampling import is_retryable_output_inspection_error
+    from app.llm.sampling import is_retryable_data_inspection_error
     from scripts.baseline_adapters.deepeye.run_store import RunStore
     path = ledger.campaign_dir / 'fault-cursors.json'
     cursors = read_json(path) or {}
@@ -82,7 +82,7 @@ def check_run_faults(ledger, job):
                 faults.append({'job_id': job['job_id'], 'event_id': event['event_id'], 'error_type': name})
             continue
         error = event['payload'].get('error', {})
-        if is_retryable_output_inspection_error(error):
+        if is_retryable_data_inspection_error(error):
             continue  # Sample retry/exhaustion is not a run-wide infrastructure fault.
         name = error.get('type', {}).get('qualname')
         code = error.get('status_code')
