@@ -132,6 +132,24 @@ def _get(value, key, default=None):
     return value.get(key, default) if isinstance(value, dict) else getattr(value, key, default)
 
 
+def is_retryable_output_inspection_error(error):
+    """Recognize the tested output-only rejection in SDK errors or trace records.
+
+    This is a narrow exception to fatal HTTP 400 handling, not a general
+    moderation retry policy. Unknown/input rejections stay fatal. Callers must
+    reuse the existing sample budget and leave the request unchanged.
+    """
+    if _get(error, 'status_code') != 400:
+        return False
+    body = _get(error, 'body')
+    if not isinstance(body, dict):
+        return False
+    body = body.get('error', body)
+    return (isinstance(body, dict)
+            and body.get('code') == 'data_inspection_failed'
+            and body.get('message') == 'Output data may contain inappropriate content.')
+
+
 def response_usage(response):
     usage = _get(response, 'usage')
     if usage is None:
@@ -242,8 +260,9 @@ def execute_sample(request: Callable, parser: Callable, *, group_id: str,
             except Exception as error:
                 usage = error_usage(error)
                 status, error_text = 'api_error', f'{type(error).__name__}: {error}'
-                outcome.fatal = not isinstance(error, (RateLimitError, APITimeoutError,
-                                                      APIConnectionError, InternalServerError))
+                outcome.fatal = not (isinstance(error, (RateLimitError, APITimeoutError,
+                                                       APIConnectionError, InternalServerError))
+                                     or is_retryable_output_inspection_error(error))
             else:
                 usage = response_usage(response)
                 choices = _get(response, 'choices') or []

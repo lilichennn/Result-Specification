@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import patch
 
 import httpx
-from openai import APIConnectionError, AuthenticationError, BadRequestError
+from openai import APIConnectionError, APITimeoutError, AuthenticationError, BadRequestError
 from openai.types.chat import ChatCompletion
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'baselines/DeepEye-SQL'))
@@ -45,7 +45,54 @@ def parse(content):
     return content if content.startswith('SELECT') else None
 
 
+def inspection_error(*, message='Output data may contain inappropriate content.',
+                     code='data_inspection_failed', status=400, nested=False):
+    body = {'code': code, 'type': code, 'message': message, 'param': None}
+    return BadRequestError(f'Error code: {status} - {body}', response=httpx.Response(status,
+        request=httpx.Request('POST', 'https://invalid.test')),
+        body={'error': body} if nested else body)
+
+
 class SamplingTests(unittest.TestCase):
+    def test_output_inspection_timeout_and_parser_share_four_attempts(self):
+        timeout = APITimeoutError(request=httpx.Request('POST', 'https://invalid.test'))
+        for nested in (False, True):
+            with self.subTest(nested=nested):
+                result, usage, calls, events = self.collect(
+                    [timeout, inspection_error(nested=nested), response('bad'), response()], n=1)
+                self.assertEqual((len(result), len(calls), usage['total_tokens']), (1, 4, 30))
+                attempts = [p for k, p in events if k == 'sample_attempt']
+                self.assertEqual([p['sample_attempt'] for p in attempts], [1, 2, 3, 4])
+                self.assertEqual([p['status'] for p in attempts],
+                                 ['api_error', 'api_error', 'parse_rejected', 'succeeded'])
+                self.assertIn('APITimeoutError', attempts[0]['error'])
+                self.assertIn('data_inspection_failed', attempts[1]['error'])
+                self.assertIsNone(attempts[1]['usage'])
+                self.assertTrue(all(call == calls[0] for call in calls))
+
+    def test_exhausted_output_inspection_keeps_other_samples_without_extra_budget(self):
+        result, usage, calls, events = self.collect(
+            [response('SELECT kept')] + [inspection_error()] * 4 + [response('SELECT later')], n=3)
+        self.assertEqual(result, ['SELECT kept', 'SELECT later'])
+        self.assertEqual((len(calls), usage['total_tokens']), (6, 60))
+        samples = [p for k, p in events if k == 'sample_result']
+        self.assertEqual([p['attempt_count'] for p in samples], [1, 4, 1])
+        self.assertFalse(samples[1]['succeeded'])
+        self.assertFalse(samples[1]['fatal'])
+        self.assertFalse(next(p for k, p in events if k == 'sampling_group_result')['complete'])
+
+    def test_input_unknown_and_non400_inspection_errors_are_not_retried(self):
+        errors = [inspection_error(message='Input data may contain inappropriate content.'),
+                  inspection_error(message='Data may contain inappropriate content.'),
+                  inspection_error(code='invalid_parameter'),
+                  inspection_error(status=401), inspection_error(status=403),
+                  inspection_error(status=422)]
+        for error in errors:
+            with self.subTest(body=error.body, status=error.status_code):
+                result, usage, calls, events = self.collect([error, response()], n=1)
+                self.assertEqual((result, len(calls), usage['total_tokens']), ([], 1, 0))
+                self.assertTrue(next(p for k, p in events if k == 'sample_result')['fatal'])
+
     def test_callable_instance_and_partial_over_instance_are_rejected_before_transport(self):
         from functools import partial
         from app.llm.sampling import SamplingIdentityError

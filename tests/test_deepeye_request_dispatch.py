@@ -288,6 +288,13 @@ class LoopbackServer:
                         b'401 Unauthorized' if mode == 'auth' else b'200 OK')
                     payload = (json.dumps({'error': {'message': mode, 'type': 'fixture'}}).encode()
                                if mode in ('error', 'auth') else response().model_dump_json().encode())
+                    if mode in ('output_inspection', 'input_inspection', 'invalid_parameter'):
+                        status = b'400 Bad Request'
+                        payload = json.dumps({'error': {
+                            'code': 'invalid_parameter' if mode == 'invalid_parameter' else 'data_inspection_failed',
+                            'type': 'data_inspection_failed', 'param': None,
+                            'message': ('Input' if mode == 'input_inspection' else 'Output')
+                                       + ' data may contain inappropriate content.'}}).encode()
                     writer.write(b'HTTP/1.1 ' + status + b'\r\nContent-Type: application/json\r\nContent-Length: '
                                  + str(len(payload)).encode() + b'\r\n\r\n' + payload)
                     await writer.drain()
@@ -318,6 +325,66 @@ class LoopbackServer:
 
 
 class LoopbackHTTPTests(RuntimeTestCase):
+    def test_output_inspection_retries_without_stopping_runwide_admission(self):
+        from app.llm.sampling import SamplingPaused
+        server = LoopbackServer(['output_inspection', 'ok'])
+        self.addCleanup(server.close)
+        runtime = self.runtime(request_limit=1, request_workers=1, start_rate=10000)
+        client = runtime.make_client(api_key='offline', base_url=server.url)
+        params = dict(model='fixture', messages=[{'role': 'user', 'content': 'SELECT task'}],
+                      temperature=.6, max_tokens=16384, n=1)
+        try:
+            with runtime.context():
+                group = execute_group(lambda: client.chat.completions.create(**params), parse_message, n=1)
+        except SamplingPaused:
+            self.fail('Output inspection must not stop the shared dispatcher')
+        self.assertTrue(group.complete)
+        self.assertEqual(len(server.requests), 2)
+        self.assertEqual(server.requests, [params, params])
+        self.assertEqual(len(group.samples[0].attempts), 2)
+        self.assertIsNone(runtime.dispatch.fatal_error)
+        self.assertFalse(runtime.stop_event.is_set())
+        self.assertEqual(runtime.dispatch.snapshot()['in_flight'], 0)
+
+    def test_four_output_rejections_exhaust_sample_but_allow_other_requests(self):
+        from app.llm.sampling import SamplingPaused
+        server = LoopbackServer(['output_inspection'] * 4 + ['ok'])
+        self.addCleanup(server.close)
+        runtime = self.runtime(request_limit=1, request_workers=1, start_rate=10000)
+        client = runtime.make_client(api_key='offline', base_url=server.url)
+        try:
+            with runtime.context():
+                group = execute_group(lambda: client.chat.completions.create(model='fixture', messages=[]),
+                                      parse_message, n=1)
+        except SamplingPaused:
+            self.fail('Exhaustion of output-inspection retries must stay local to the sample')
+        self.assertFalse(group.complete)
+        self.assertEqual(len(server.requests), 4)
+        self.assertEqual(len(group.samples[0].attempts), 4)
+        self.assertFalse(group.samples[0].fatal)
+        self.assertEqual(client.chat.completions.create(model='fixture', messages=[]).id, 'fixture')
+        self.assertEqual(len(server.requests), 5)
+        self.assertFalse(runtime.stop_event.is_set())
+
+    def test_input_inspection_and_other_bad_requests_still_stop_admission(self):
+        from app.llm.sampling import SamplingPaused
+        for mode in ('input_inspection', 'invalid_parameter'):
+            with self.subTest(mode=mode):
+                server = LoopbackServer([mode, 'ok'])
+                self.addCleanup(server.close)
+                runtime = self.runtime(request_limit=1, request_workers=1, start_rate=10000)
+                client = runtime.make_client(api_key='offline', base_url=server.url)
+                with runtime.context():
+                    group = execute_group(lambda: client.chat.completions.create(model='fixture', messages=[]),
+                                          parse_message, n=1)
+                self.assertFalse(group.complete)
+                self.assertTrue(group.samples[0].fatal)
+                self.assertEqual(len(server.requests), 1)
+                self.assertTrue(runtime.stop_event.is_set())
+                self.assertEqual(runtime.dispatch.fatal_error.status_code, 400)
+                with self.assertRaises(SamplingPaused):
+                    client.chat.completions.create(model='fixture', messages=[])
+
     def test_stalled_connect_does_not_block_other_ready_requests(self):
         server = LoopbackServer([])
         self.addCleanup(server.close)
