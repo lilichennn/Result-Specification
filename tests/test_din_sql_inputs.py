@@ -1,13 +1,67 @@
 import tempfile
 import unittest
+import json
+import sqlite3
+from dataclasses import asdict
+from unittest.mock import patch
 from pathlib import Path
 from scripts.baseline_adapters.din_sql.inputs import (
     TaskKey, DinSettings, classify_gold, physical_tables, public_pg_context,
-    validate_settings, load_templates, sub_questions_bound,
+    validate_settings, load_templates, sub_questions_bound, legacy_identity_bound, prepare_inputs,
 )
 
 
 class InputTests(unittest.TestCase):
+    def test_preparation_binds_ids_rc3_gold_and_loads_same_database_once(self):
+        from scripts.rc_evaluation.dail_sql.contracts import RC_FIELDS
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            source=root/'scripts/bird_dev'
+            (source/'preprocessed_data/meta/scores').mkdir(parents=True)
+            db=root/'db/scores'
+            db.mkdir(parents=True)
+            connection=sqlite3.connect(db/'scores.sqlite')
+            connection.execute('create table scores(value integer)')
+            connection.close()
+            rows=[{'index':i,'db_id':'scores','question':f'Question {i}','evidence':''} for i in range(2)]
+            rc=[{**r,'round3_status':'succeeded','rc_round3':dict.fromkeys(RC_FIELDS,'none')} for r in rows]
+            gold=[{**r,'gold_sql':'SELECT value FROM scores','schemalinking':[{'table':'scores','columns':['value']}]} for r in rows]
+            for path,value in [(source/'preprocessed_data/bird_dev.json',rows),(source/'rc.json',rc),
+                               (source/'gold_sql_schema_linking.json',gold),(root/'gold.json',gold)]:
+                path.write_text(json.dumps(value))
+            config={'reuse_legacy':False,'groups':[{'name':'bird_dev','dialect':'sqlite','gold':'gold.json','database_root':'db'}]}
+            calls=[]
+            def context(*args):
+                calls.append(args)
+                return 'Table scores, columns = [*,value]'
+            with patch('scripts.baseline_adapters.din_sql.inputs.load_templates',return_value={}),\
+                 patch('scripts.baseline_adapters.din_sql.inputs.legacy_pure_functions',return_value={'database_context':context}):
+                prepared=prepare_inputs(config,root)
+                self.assertEqual(len(prepared.tasks),2)
+                self.assertEqual(len(calls),1)
+                self.assertNotIn('gold_sql',asdict(next(iter(prepared.tasks.values()))))
+                config['groups'][0]['ids']=['1']
+                small=prepare_inputs(config,root)
+                self.assertEqual(list(small.tasks),[TaskKey('bird_dev','1')])
+                del config['groups'][0]['ids']
+                rc[0]['round3_status']='failed'
+                (source/'rc.json').write_text(json.dumps(rc))
+                with self.assertRaises(ValueError):
+                    prepare_inputs(config,root)
+                rc[0]['round3_status']='succeeded'
+                (source/'rc.json').write_text(json.dumps(rc))
+                gold[0]['question']='Wrong question'
+                (root/'gold.json').write_text(json.dumps(gold))
+                with self.assertRaises(ValueError):
+                    prepare_inputs(config,root)
+
+    def test_legacy_question_alone_does_not_prove_database_identity(self):
+        from din_sql_fixtures import make_task
+        task=make_task()
+        schema={'context':'Table scores, columns = [*,value]'}
+        wrong='Table salaries, columns = [*,value]\nQ: '+task.question
+        self.assertFalse(legacy_identity_bound(task,'linking',wrong,schema))
+        self.assertTrue(legacy_identity_bound(task,'linking',schema['context']+'\nQ: '+task.question,schema))
     def test_legacy_parent_json_escaping_is_not_a_mismatch(self):
         self.assertTrue(sub_questions_bound(['What is "Mirrodin"?'], 'sub-questions = ["What is \\"Mirrodin\\"?"]'))
         self.assertFalse(sub_questions_bound(['different question'], 'sub-questions = ["What is \\"Mirrodin\\"?"]'))
@@ -21,6 +75,9 @@ class InputTests(unittest.TestCase):
         self.assertEqual(classify_gold('SELECT * FROM a JOIN b USING(id)', ['a', 'b']), 'NON-NESTED')
         self.assertEqual(classify_gold('SELECT * FROM a UNION SELECT * FROM a', ['a']), 'NESTED')
         self.assertEqual(physical_tables('WITH c AS (SELECT * FROM real_table) SELECT * FROM c', 'postgres'), ['real_table'])
+        self.assertEqual(physical_tables('SELECT * FROM t; /* explanation */', 'postgres'), ['t'])
+        with self.assertRaises(ValueError):
+            physical_tables('SELECT * FROM t; DELETE FROM t', 'postgres')
 
     def test_rejects_unsupported_request_settings(self):
         with self.assertRaises(ValueError):

@@ -40,6 +40,8 @@ class DinRecords:
         self.latest, self.pending = {}, {}
         self._lock, self._mutex = None, threading.RLock()
         try:
+            if read_only and read_json(self.root/'manifest.json') != manifest:
+                raise ValueError('Read-only manifest differs')
             if not read_only:
                 self.root.mkdir(parents=True, exist_ok=True)
                 self._lock = (self.root/'.writer.lock').open('a+')
@@ -54,6 +56,8 @@ class DinRecords:
                     write_json(path, manifest)
             for group in manifest['groups']:
                 directory = self.root/f'group-{group}'
+                if read_only and not directory.exists():
+                    raise FileNotFoundError(directory)
                 identity = {'format':'din-sql-v1','group':group,'batch_fingerprint':digest(manifest)}
                 store = (RunStore.open(directory, expected_manifest=identity, read_only=read_only)
                          if directory.exists() else RunStore.create(directory,identity))
@@ -107,29 +111,50 @@ class DinRecords:
         version = store.begin_attempt(key.question_id,'din_question',digest(self.manifest))
         self.rows[version] = {**store.attempt(version),'group':key.group}
         self.pending[key] = version
-        self.views[version] = {'nodes':{},'inputs':{},'attempts':{},'outcomes':{}}
+        self.views[version] = {'nodes':{},'inputs':{},'attempts':{},'outcomes':{},'history_loaded':True}
         self.append(version,'question_start',{'parent_version':parent_version})
         return version
 
     def view(self, version):
         with self._mutex:
             if version not in self.views:
-                view = {'nodes':{},'inputs':{},'attempts':{},'outcomes':{}}
+                view = {'nodes':{},'inputs':{},'attempts':{},'outcomes':{},'history_loaded':False}
                 self.views[version] = view
                 row = self.rows[version]
+                if row['status'] in ('succeeded','failed'):
+                    for node,summary in row['payload']['nodes'].items():
+                        ref = summary['ref']
+                        view['nodes'][node] = {**self.read_ref(ref),'ref':ref}
+                    return view
                 for event in self.stores[row['group']].iter_events(version,
-                        kinds=('node_result','node_input','request_attempt','request_outcome')):
+                        kinds=('question_start','node_result')):
                     ref = {'group':row['group'],'attempt_id':version,'event_no':event['event_no']}
                     self._index(view,event['kind'],event['payload'],ref)
             return self.views[version]
 
+    def request_history(self, version):
+        """Only request resumption needs prompts/budget history; read it once."""
+        with self._mutex:
+            view = self.view(version)
+            if not view['history_loaded']:
+                row = self.rows[version]
+                view.update(inputs={},attempts={},outcomes={})
+                for event in self.stores[row['group']].iter_events(version,
+                        kinds=('node_input','request_attempt','request_outcome')):
+                    ref = {'group':row['group'],'attempt_id':version,'event_no':event['event_no']}
+                    self._index(view,event['kind'],event['payload'],ref)
+                view['history_loaded'] = True
+            return view
+
     @staticmethod
     def _index(view, kind, payload, ref):
         node = payload.get('node')
-        if kind == 'node_result':
+        if kind == 'question_start':
+            view['parent_version'] = payload.get('parent_version')
+        elif kind == 'node_result':
             view['nodes'][node] = {**payload,'ref':ref}
         elif kind == 'node_input':
-            view['inputs'][node] = {**payload,'ref':ref}
+            view['inputs'][node] = {'input_fingerprint':payload['input_fingerprint'],'ref':ref}
         elif kind == 'request_attempt':
             view['attempts'].setdefault(node,[]).append({**payload,'ref':ref})
         elif kind == 'request_outcome':

@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from dotenv import load_dotenv
-from scripts.baseline_adapters.din_sql.inputs import prepare_inputs, load_config, DinSettings, digest
+from scripts.baseline_adapters.din_sql.inputs import prepare_inputs, load_config, DinSettings, TaskKey, digest
 from scripts.baseline_adapters.din_sql.records import DinRecords, hydrate_batch, read_json
 
 CODE_ROOT = Path(__file__).resolve().parents[3]
@@ -48,16 +48,34 @@ def main(argv=None):
     ev.add_argument('--batch',type=Path,required=True)
     ev.add_argument('--groups',nargs='+',default=['all'])
     ev.add_argument('--env-file',type=Path,default=CODE_ROOT/'config/.env')
+    for command in ('run','resume','rerun','status'):
+        p = sub.add_parser(command)
+        p.add_argument('--batch',type=Path,required=True)
+        p.add_argument('--env-file',type=Path,default=CODE_ROOT/'config/.env')
+        if command=='rerun':
+            p.add_argument('--group',required=True)
+            p.add_argument('--ids',nargs='+',required=True)
+        if command=='resume':
+            p.add_argument('--all-pending',action='store_true',
+                           help='Explicitly resume every unfinished question after a scoped rerun')
     args = parser.parse_args(argv)
     load_dotenv(args.env_file,override=True)
     if args.command=='prepare':
         result = prepare(args.config,args.batch_id,groups=args.groups)
-    else:
+    elif args.command=='evaluate':
         from .evaluation import evaluate
         manifest = read_json(args.batch/'manifest.json')
         groups = list(manifest['groups']) if args.groups==['all'] else args.groups
         with DinRecords(args.batch,manifest,read_only=True) as records:
             result = evaluate(args.batch,groups=groups,records=records)
+    elif args.command=='status':
+        from .campaign import status
+        result = status(args.batch)
+    else:
+        from .campaign import run_batch
+        targets = [TaskKey(args.group,q) for q in args.ids] if args.command=='rerun' else None
+        result = run_batch(args.batch,args.env_file,operation=args.command,targets=targets,
+                           all_pending=getattr(args,'all_pending',False))
     print(json.dumps(result,ensure_ascii=False,indent=2))
 
 

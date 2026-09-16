@@ -46,6 +46,12 @@ class RecordTests(unittest.TestCase):
         with DinRecords(self.root,self.manifest,read_only=True) as reader:
             self.assertEqual(reader.current_rows(),[])
 
+    def test_readonly_never_creates_missing_group_store(self):
+        altered = {**self.manifest,'groups':{'missing':{'ids':['0']}}}
+        with self.assertRaises((ValueError,FileNotFoundError)):
+            DinRecords(self.root,altered,read_only=True)
+        self.assertFalse((self.root/'group-missing').exists())
+
     def test_resume_does_not_read_response_bodies_and_seal_does_not_scan(self):
         version = self.records.begin(TaskKey('bird_dev','0'))
         self.records.append(version,'request_result',{'node':'linking','body':{'huge':'x'*10000}})
@@ -67,3 +73,15 @@ class RecordTests(unittest.TestCase):
             self.records.seal(v)
         with self.assertRaises(ValueError):
             self.records.save_node(v,'generation_base',terminal('generation_base','failed'))
+
+    def test_completed_view_never_reads_prompt_history(self):
+        v=self.records.begin(TaskKey('bird_dev','0'))
+        self.records.append(v,'node_input',{'node':'generation_base','input_fingerprint':'f',
+                                          'kwargs':{'messages':['large prompt']}})
+        for node in OUTPUT_NODES:
+            self.records.save_node(v,node,terminal(node))
+        self.records.seal(v)
+        self.records.close()
+        self.records=DinRecords(self.root,self.manifest)
+        with patch.object(self.records.stores['bird_dev'],'iter_events',side_effect=AssertionError('prompt scan')):
+            self.assertEqual(self.records.node(v,'generation_base')['result'],'SELECT 1')

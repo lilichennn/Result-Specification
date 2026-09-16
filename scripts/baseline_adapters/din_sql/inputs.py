@@ -151,6 +151,11 @@ def legacy_pure_functions(code_root, filename, names, extra=None):
 
 def physical_tables(sql, dialect):
     tree = sqlglot.parse_one(sql, read=dialect)
+    if isinstance(tree,sqlglot.exp.Block):
+        queries = [e for e in tree.expressions if not isinstance(e,sqlglot.exp.Semicolon)]
+        if len(queries)!=1:
+            raise ValueError('Gold must contain exactly one query')
+        tree = queries[0]
     if not isinstance(tree, sqlglot.exp.Query):
         raise ValueError('Gold must be a read-only query')
     return sorted({source.name for scope in traverse_scope(tree)
@@ -233,6 +238,11 @@ def prepare_inputs(config, code_root):
         name = group['name']
         base = Path('scripts')/name
         rows = read(str(base/'preprocessed_data'/f'{name}.json'))
+        if 'ids' in group:
+            selected = {str(i) for i in group['ids']}
+            if not selected or selected-{str(r['index']) for r in rows}:
+                raise ValueError(f'Invalid selected IDs: {name}')
+            rows = [r for r in rows if str(r['index']) in selected]
         rc_rows = read(str(base/'rc.json'))
         rc = {str(r['index']): select_rc3(r) for r in rc_rows}
         if len(rc) != len(rc_rows):
@@ -287,6 +297,19 @@ def sub_questions_bound(questions, prompt):
     return all(q in prompt or json.dumps(q,ensure_ascii=False) in prompt for q in questions)
 
 
+def legacy_identity_bound(task, node, prompt, schema):
+    if not prompt or task.question not in prompt:
+        return False
+    context = schema.get('spider') if task.key.group.startswith('spider') and node!='linking' else schema['context']
+    # Saved prompts omit literal db_id; bind the expected dataset ID AND its
+    # complete table/column declarations, not question text alone. Identical
+    # physical schemas cannot prove a response model/DB name: mark that limit.
+    declarations = [line for line in context.splitlines() if line.startswith('Table ')]
+    current_prompt = prompt.rsplit('[USER]\n',1)[-1]
+    return bool(declarations) and all(line in current_prompt for line in declarations) and (
+        not task.evidence or task.evidence in current_prompt)
+
+
 def read_legacy(source, prepared):
     accepted, rejected, hashes = {}, [], {}
     stage_paths = {'linking':('schema_linking','prompts','qwen38_result.json'),
@@ -316,8 +339,8 @@ def read_legacy(source, prepared):
                 parents = accepted.get(key, {})
                 if row.get('status',{}).get('success') is not True:
                     reason = 'legacy_failure_observation'
-                elif not deterministic and (not prompt or task.question not in prompt):
-                    reason = 'missing_question_binding'
+                elif not deterministic and not legacy_identity_bound(task,node,prompt,prepared.schemas[task.schema_ref]):
+                    reason = 'question_schema_or_evidence_binding_unconfirmed'
                 elif node == 'linking' and not isinstance(row.get('result'), list):
                     reason = 'invalid_linking'
                 elif node == 'decomposition' and (not isinstance(row.get('result'), dict) or row['result'].get('label') != task.label):
@@ -359,6 +382,7 @@ def read_legacy(source, prepared):
                     'source_refs':{'path':str(path),'sha256':hashes[str(path)],'commit':LEGACY_COMMIT,
                                    'record_id':task.key.question_id,'prompt_path':str(prompt_path) if prompt else None,
                                    'model_evidence':'legacy_alias_unverified', 'response_model':None,
+                                   'database_evidence':'dataset_id_and_schema_declarations' if not deterministic else 'dataset_id_and_gold_label',
                                    'attempt_count':None,'elapsed_seconds':resource[1]}}
     for path, expected in hashes.items():
         if file_hash(path) != expected:
