@@ -57,7 +57,7 @@ def _manifest(tasks, model="fixture-model"):
 
 
 def _response_for(prompt: str) -> str:
-    inputs = json.loads(prompt.split("\n\nINPUTS:\n", 1)[1])
+    inputs = json.loads(prompt.split("\n\nINPUTS:\n", 1)[1])["tasks"]
     return json.dumps([
         {
             "task_key": item["task_key"],

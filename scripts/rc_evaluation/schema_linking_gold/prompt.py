@@ -31,6 +31,8 @@ def render_batch_prompt(tasks: list[AnnotationTask]) -> str:
         raise ValueError("tasks must be a non-empty list")
     inputs = []
     seen = set()
+    shared_dialect = getattr(tasks[0], "dialect", None)
+    shared_catalog = _catalog_for_prompt(tasks[0])
     for task in tasks:
         task_key = getattr(task, "task_key", None)
         dialect = getattr(task, "dialect", None)
@@ -39,9 +41,10 @@ def render_batch_prompt(tasks: list[AnnotationTask]) -> str:
             raise ValueError("tasks must have unique non-empty task keys")
         if not isinstance(dialect, str) or not dialect or not isinstance(gold_sql, str) or not gold_sql:
             raise ValueError(f"task {task_key!r} has incomplete blind inputs")
+        if dialect != shared_dialect or _catalog_for_prompt(task) != shared_catalog:
+            raise ValueError("one model batch may contain only one dialect and schema catalog")
         seen.add(task_key)
-        inputs.append({"task_key": task_key, "dialect": dialect,
-                       "schema_catalog": _catalog_for_prompt(task), "gold_sql": gold_sql})
+        inputs.append({"task_key": task_key, "gold_sql": gold_sql})
 
     instructions = """You annotate physical database dependencies of saved gold SQL. Return JSON only: one JSON array with exactly one object per input task. Do not use Markdown or prose.
 
@@ -52,4 +55,9 @@ For every SQL statement, trace CTEs, subqueries, set operations, correlated refe
 If a reference cannot be resolved from the catalog or is schema-inconsistent, use needs_review or invalid_sql instead of inventing coverage. A resolved entry has no review reasons; needs_review and invalid_sql entries have at least one review reason.
 
 Each response object has exactly these fields: task_key (string), status (resolved, needs_review, or invalid_sql), required_table_ids (unique array of T* IDs), required_column_ids (unique array of C* IDs), evidence (array of non-empty strings), json_paths (array of {\"column_id\": C* ID, \"path\": non-empty string}; each carrier must be listed in required_column_ids), and review_reasons (array of non-empty strings)."""
-    return instructions + "\n\nINPUTS:\n" + json.dumps(inputs, ensure_ascii=False, separators=(",", ":"))
+    payload = {
+        "dialect": shared_dialect,
+        "schema_catalog": shared_catalog,
+        "tasks": inputs,
+    }
+    return instructions + "\n\nINPUTS:\n" + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))

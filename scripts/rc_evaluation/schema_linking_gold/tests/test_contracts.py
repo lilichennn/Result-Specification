@@ -172,6 +172,23 @@ class GoldAnnotationContractTests(unittest.TestCase):
         ):
             self.assertIn(required_rule, prompt)
 
+    def test_same_schema_batch_serializes_the_catalog_only_once(self):
+        """Catches multiplying an identical schema catalog by every SQL in the batch."""
+        first, second = _task("spider/dev/i:0"), _task("spider/dev/i:1")
+
+        prompt = render_batch_prompt([first, second])
+        payload = json.loads(prompt.split("\n\nINPUTS:\n", 1)[1])
+
+        self.assertEqual(payload["dialect"], "postgresql")
+        self.assertEqual(len(payload["schema_catalog"]["tables"]), 2)
+        self.assertEqual(
+            payload["tasks"],
+            [
+                {"task_key": first.task_key, "gold_sql": first.gold_sql},
+                {"task_key": second.task_key, "gold_sql": second.gold_sql},
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
