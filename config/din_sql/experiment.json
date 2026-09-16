@@ -1,0 +1,11 @@
+{
+  "settings": {},
+  "reuse_legacy": true,
+  "groups": [
+    {"name":"spider_dev","dialect":"sqlite","gold":"../Spider/data/dev.json","database_root":"../Spider/data/database"},
+    {"name":"bird_dev","dialect":"sqlite","gold":"../BIRD/data/dev/dev.json","database_root":"../BIRD/data/dev/dev_databases"},
+    {"name":"bird_interact_full","dialect":"postgresql","gold":"scripts/bird_interact_full/gold_sql.json"},
+    {"name":"bird_interact_lite","dialect":"postgresql","gold":"scripts/bird_interact_lite/gold_sql.json"},
+    {"name":"spider_test","dialect":"sqlite","gold":"../Spider/data/test.json","database_root":"../Spider/data/test_database"}
+  ]
+}

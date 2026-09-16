@@ -1,0 +1,3 @@
+[submodule "baselines/DIN-SQL"]
+	path = baselines/DIN-SQL
+	url = https://github.com/MohammadrezaPourreza/Few-shot-NL2SQL-with-prompting.git
