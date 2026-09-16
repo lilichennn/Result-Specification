@@ -155,7 +155,7 @@ class ReportingTests(unittest.TestCase):
             failed = store.start_attempt(keys)
             store.finish_attempt(
                 failed["attempt_id"], "failed", raw_response="not json",
-                usage={"prompt_tokens": 2, "completion_tokens": 1, "total_tokens": 3},
+                usage={"available": False},
                 latency_seconds=1.5, endpoint_hash=_ENDPOINT_HASH,
                 error={"kind": "parse_failure", "type": "ValueError"},
             )
@@ -263,8 +263,8 @@ class ReportingTests(unittest.TestCase):
             "failed": 1, "retries": 1,
             "latency_seconds": {"total": 4.0, "mean": 2.0, "maximum": 2.5},
             "tokens": {
-                "prompt": 12, "completion": 6, "total": 18,
-                "known_total_attempts": 2, "unknown_total_attempts": 0,
+                "prompt": 10, "completion": 5, "total": 15,
+                "known_total_attempts": 1, "unknown_total_attempts": 1,
             },
         })
         self.assertEqual(len(first_report["rejected_outputs"]), 1)
@@ -272,6 +272,7 @@ class ReportingTests(unittest.TestCase):
         markdown = (first / "pilot_report.md").read_text(encoding="utf-8")
         self.assertIn("g1/t2", markdown)
         self.assertIn("not json", markdown)
+        self.assertIn("unknown-token attempts: 1", markdown)
 
         with self.assertRaises(FileExistsError):
             export_annotations(self.store_path, first, tasks=self.tasks)

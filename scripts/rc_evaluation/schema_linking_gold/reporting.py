@@ -456,7 +456,9 @@ def _markdown(report: Mapping[str, Any]) -> str:
     lines += ["", "## Request accounting", "",
               f"Attempts: {requests['attempts']}; succeeded: {requests['succeeded']}; failed: "
               f"{requests['failed']}; retries: {requests['retries']}; latency: "
-              f"{requests['latency_seconds']['total']:.4f}s; total tokens: {requests['tokens']['total']}.",
+              f"{requests['latency_seconds']['total']:.4f}s; known total tokens: "
+              f"{requests['tokens']['total']}; unknown-token attempts: "
+              f"{requests['tokens']['unknown_total_attempts']}.",
               "", "### Rejected model outputs", ""]
     if not report["rejected_outputs"]:
         lines.append("None.")
