@@ -439,6 +439,28 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(requested, [[tasks[1].task_key], [tasks[3].task_key],
                                      [tasks[0].task_key], [tasks[2].task_key]])
 
+    def test_all_phase_releases_pilot_and_rest_batches_in_one_run(self):
+        """Catches forcing the remaining phase to wait for every pilot batch to finish."""
+        tasks = [_task(f"group/item/{number}", schema_hash=f"{number + 1:064x}") for number in range(4)]
+        manifest = _manifest(tasks, pilot_keys={tasks[1].task_key, tasks[3].task_key})
+        path = self.root / "all-phase.sqlite3"
+
+        async def handler(kwargs):
+            return _response_for(kwargs["messages"][0]["content"])
+
+        def factory(dispatcher, settings):
+            return _LocalClient(dispatcher, handler)
+
+        with AnnotationStore.create(path, manifest) as store:
+            result = run_annotations(
+                store, tasks, self.settings, phase="all", client_factory=factory,
+                limits=replace(PILOT_LIMITS, start_rate=10_000.0, request_timeout=2.0),
+            )
+            status = store.status()
+
+        self.assertEqual(result["status"], "success")
+        self.assertEqual(status["accepted_inputs"], 4)
+
     def test_bounded_failure_and_full_resume_share_one_frozen_batch_retry_budget(self):
         """Catches rebuilding a new batch key that gives the same inputs eight attempts."""
         calls = 0
@@ -481,6 +503,9 @@ class RunnerTests(unittest.TestCase):
         parser = build_parser()
         actions = [action for action in parser._actions if action.dest == "command"]
         self.assertEqual(set(actions[0].choices), {"prepare-pilot", "run", "status", "verify", "export"})
+
+        full_export = parser.parse_args(["export", "--output", str(self.root / "export"), "--scope", "full"])
+        self.assertEqual(full_export.scope, "full")
 
     def test_verify_cli_has_distinct_command_status_and_store_progress(self):
         """Catches store verification progress overwriting the CLI success/failure status."""

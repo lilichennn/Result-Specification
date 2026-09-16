@@ -27,10 +27,10 @@ PILOT_SEED = 20260916
 MODEL_BATCH_SIZE = 12
 MAX_ATTEMPTS = 4
 PILOT_LIMITS = RequestLimits(
-    request_limit=20,
-    request_workers=20,
-    coordinator_workers=20,
-    http_connections=20,
+    request_limit=446,
+    request_workers=446,
+    coordinator_workers=446,
+    http_connections=446,
     start_rate=20.0,
     request_timeout=910.0,
 )
@@ -184,8 +184,8 @@ def run_annotations(
         raise ValueError("store uses an unsupported frozen prompt version")
     _positive_optional_limit(task_limit, "task_limit")
     _positive_optional_limit(batch_limit, "batch_limit")
-    if phase not in {"pilot", "rest"}:
-        raise ValueError("phase must be pilot or rest")
+    if phase not in {"pilot", "rest", "all"}:
+        raise ValueError("phase must be pilot, rest, or all")
 
     task_by_key = _validated_task_map(tasks, manifest)
     pending = store.pending_tasks()
@@ -397,7 +397,7 @@ def _frozen_pending_batches(
         raise ValueError("pending cache representative is outside the frozen batch plan")
     selected = []
     for item_phase, batch in validated:
-        if item_phase != phase:
+        if phase != "all" and item_phase != phase:
             continue
         keys = {task.task_key for task in batch}
         overlap = keys & pending_keys

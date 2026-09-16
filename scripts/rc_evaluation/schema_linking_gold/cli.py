@@ -37,8 +37,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="Process only the first N pending unique inputs",
     )
     run.add_argument("--batch-limit", type=int, help="Process only the first N pending batches")
-    run.add_argument("--phase", choices=("pilot", "rest"), default="pilot",
-                     help="Run the frozen pilot first; run rest only after pilot review")
+    run.add_argument("--phase", choices=("pilot", "rest", "all"), default="pilot",
+                     help="Run pilot, rest, or both frozen phases in one paced run")
 
     for name in ("status", "verify"):
         command = commands.add_parser(name, help=f"{name.title()} the append-only annotation store")
@@ -47,6 +47,7 @@ def build_parser() -> argparse.ArgumentParser:
     export = commands.add_parser("export", help="Export accepted labels and reports")
     export.add_argument("--store", type=Path, default=DEFAULT_STORE)
     export.add_argument("--output", type=Path, required=True)
+    export.add_argument("--scope", choices=("pilot", "full"), default="pilot")
     return parser
 
 
@@ -88,7 +89,7 @@ def main(argv: list[str] | None = None) -> int:
             # Reporting is a later task; keep it out of every other CLI path.
             from .reporting import export_annotations
 
-            result = export_annotations(args.store, args.output)
+            result = export_annotations(args.store, args.output, scope=args.scope)
     except Exception as error:
         # Upstream exceptions and URLs can contain credentials. Never print
         # their messages from this model-facing command.
