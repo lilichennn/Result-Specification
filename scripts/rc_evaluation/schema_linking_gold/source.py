@@ -1,0 +1,283 @@
+"""Read-only, deterministic inputs for gold-SQL schema-linking annotation."""
+from __future__ import annotations
+
+from dataclasses import dataclass
+import hashlib
+import json
+from pathlib import Path
+import random
+import re
+from typing import Any
+
+
+GROUPS = (
+    "bird_dev",
+    "bird_interact_full",
+    "bird_interact_lite",
+    "spider_dev",
+    "spider_test",
+)
+FEATURES = (
+    "cte_or_subquery",
+    "set_operation",
+    "wildcard",
+    "json",
+    "lateral_or_table_function",
+    "using_or_natural_join",
+    "schema_qualified",
+    "sqlite_double_quote_ambiguity",
+    "ordinary",
+)
+
+
+def _digest(value: Any) -> str:
+    payload = json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+@dataclass(frozen=True)
+class AnnotationTask:
+    """One frozen question and its blind-annotation inputs and comparison data."""
+
+    task_key: str
+    group: str
+    partition: str
+    external_id: str | int
+    database_id: str
+    dialect: str
+    gold_sql: str
+    sql_sha256: str
+    schema: dict[str, Any]
+    schema_sha256: str
+    source_schema_sha256: str
+    source_hash: str
+    reuse_key: tuple[str, str, str]
+    features: tuple[str, ...]
+    native_linked_schema: dict[str, tuple[str, ...]]
+    rc_linked_schema: dict[str, tuple[str, ...]]
+    conservative_reference: dict[str, Any] | None
+    source_binding: dict[str, Any]
+    source_reference: dict[str, Any]
+
+    @property
+    def canonical_schema(self) -> dict[str, Any]:
+        """Alias that makes the model-facing catalog explicit to consumers."""
+        return self.schema
+
+
+def canonical_schema(schema: dict[str, Any]) -> dict[str, Any]:
+    """Assign stable closed IDs to a frozen physical table/column catalog."""
+    tables = schema.get("tables", schema)
+    if not isinstance(tables, dict):
+        raise ValueError("Schema tables must be an object")
+
+    output_tables = []
+    table_by_id, table_id_by_name = {}, {}
+    column_by_id, column_id_by_name = {}, {}
+    column_number = 1
+    for table_number, (table_key, table) in enumerate(
+            sorted(tables.items(), key=lambda item: (str(item[0]).casefold(), str(item[0]))), start=1):
+        if not isinstance(table, dict):
+            raise ValueError(f"Schema table {table_key!r} is not an object")
+        table_name = str(table.get("table_name", table_key))
+        columns = table.get("columns", {})
+        if not isinstance(columns, dict):
+            raise ValueError(f"Schema columns for {table_name!r} must be an object")
+        table_id = f"T{table_number}"
+        canonical_columns = []
+        column_id_by_name[table_name] = {}
+        for column_key, column in sorted(columns.items(), key=lambda item: (str(item[0]).casefold(), str(item[0]))):
+            if not isinstance(column, dict):
+                raise ValueError(f"Schema column {table_name}.{column_key} is not an object")
+            column_name = str(column.get("column_name", column_key))
+            column_id = f"C{column_number}"
+            column_number += 1
+            canonical_columns.append({"id": column_id, "name": column_name,
+                                      "type": str(column.get("column_type", ""))})
+            column_by_id[column_id] = {"table": table_name, "column": column_name}
+            column_id_by_name[table_name][column_name] = column_id
+        output_tables.append({"id": table_id, "name": table_name, "columns": tuple(canonical_columns)})
+        table_by_id[table_id] = table_name
+        table_id_by_name[table_name] = table_id
+    return {
+        "tables": tuple(output_tables),
+        "table_by_id": table_by_id,
+        "table_id_by_name": table_id_by_name,
+        "column_by_id": column_by_id,
+        "column_id_by_name": column_id_by_name,
+    }
+
+
+def feature_tags(sql: str, dialect: str) -> tuple[str, ...]:
+    """Return stable, intentionally conservative SQL-feature strata."""
+    if not isinstance(sql, str) or not isinstance(dialect, str):
+        raise ValueError("SQL and dialect must be strings")
+    lowered = sql.casefold()
+    tags = []
+    if re.search(r"\bwith\b|\(\s*select\b", lowered):
+        tags.append("cte_or_subquery")
+    if re.search(r"\b(?:union(?:\s+all)?|intersect|except)\b", lowered):
+        tags.append("set_operation")
+    if re.search(r"\b(?:select|,)\s*(?:distinct\s+)?(?:[\w`\"]+\s*\.\s*)?\*", lowered):
+        tags.append("wildcard")
+    if "->" in sql or re.search(r"\b(?:jsonb?_(?:each|array_elements|extract)|json_extract)\b", lowered):
+        tags.append("json")
+    if re.search(r"\blateral\b|\b(?:jsonb?_each|unnest|generate_series)\s*\(", lowered):
+        tags.append("lateral_or_table_function")
+    if re.search(r"\b(?:using\s*\(|natural\s+(?:left\s+|right\s+|full\s+|inner\s+|cross\s+)?join)\b", lowered):
+        tags.append("using_or_natural_join")
+    if re.search(r"\b(?:from|join|update|into)\s+[\w`\"]+\s*\.\s*[\w`\"]+", lowered):
+        tags.append("schema_qualified")
+    if dialect.casefold() == "sqlite" and '"' in sql:
+        tags.append("sqlite_double_quote_ambiguity")
+    return tuple(tags or ["ordinary"])
+
+
+def _root_with_groups(root: Path) -> Path:
+    root = Path(root)
+    if (root / "bird_dev" / "offline.json").is_file():
+        return root
+    nested = root / "docs" / "analysis_rc3_five_groups_20260915"
+    if (nested / "bird_dev" / "offline.json").is_file():
+        return nested
+    raise ValueError(f"Offline group root not found below {root}")
+
+
+def _linked_schemas(records: list[dict[str, Any]], key: str) -> dict[str, dict[str, tuple[str, ...]]]:
+    linked = {}
+    for record in records:
+        if (record.get("item_key") == key and record.get("stage") == "schema_linking"
+                and record.get("condition") in ("native", "rc")):
+            condition = record["condition"]
+            if condition in linked or record.get("status") != "succeeded" or not isinstance(record.get("linked"), dict):
+                raise ValueError(f"Invalid schema-linking record for {key}/{condition}")
+            linked[condition] = {
+                str(table): tuple(sorted(map(str, columns)))
+                for table, columns in sorted(record["linked"].items())
+                if isinstance(columns, list)
+            }
+    if set(linked) != {"native", "rc"}:
+        raise ValueError(f"Missing native/RC schema-linking record for {key}")
+    return linked
+
+
+def _conservative_references(root: Path) -> dict[str, dict[str, dict[str, Any]]]:
+    path = root / "schema_linking_metrics.json"
+    if not path.is_file():
+        return {}
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    references = {}
+    groups = raw.get("groups", {})
+    for group in groups.values() if isinstance(groups, dict) else groups:
+        group_name = group.get("group")
+        if not isinstance(group_name, str):
+            continue
+        for item in group.get("items", []):
+            key = item.get("item_key")
+            if not isinstance(key, str):
+                continue
+            levels = {}
+            for level in ("table", "column"):
+                value = item.get(level)
+                if not isinstance(value, dict):
+                    continue
+                levels[level] = {
+                    "status": value.get("status"),
+                    "reason": value.get("reason"),
+                    "reference": tuple(tuple(v) if isinstance(v, list) else v
+                                       for v in value.get("reference", ())),
+                }
+            references[key] = levels
+    return references
+
+
+def load_offline_groups(root: str | Path) -> list[AnnotationTask]:
+    """Load exactly the five verified offline snapshots without reopening source datasets."""
+    root = _root_with_groups(Path(root))
+    parser_references = _conservative_references(root)
+    catalog_cache: dict[str, dict[str, Any]] = {}
+    tasks = []
+    for group in GROUPS:
+        raw_bytes = (root / group / "offline.json").read_bytes()
+        data = json.loads(raw_bytes)
+        bindings = data.get("bindings")
+        references = data.get("references")
+        inputs = data.get("inputs")
+        if not isinstance(bindings, list) or not isinstance(references, dict) or not isinstance(inputs, dict):
+            raise ValueError(f"Malformed offline group: {group}")
+        bindings_by_key = {row.get("task_key"): row for row in bindings if isinstance(row, dict)}
+        if len(bindings_by_key) != len(bindings) or set(bindings_by_key) != set(references) or set(inputs) != set(references):
+            raise ValueError(f"Offline bindings do not agree for {group}")
+        source_hash = hashlib.sha256(raw_bytes).hexdigest()
+        for key in sorted(references):
+            binding, reference, input_row = bindings_by_key[key], references[key], inputs[key]
+            if (not isinstance(reference, dict) or reference.get("status") != "available"
+                    or not isinstance(input_row, dict) or not isinstance(reference.get("sql"), str)):
+                raise ValueError(f"Invalid reference/input for {key}")
+            sql = reference["sql"]
+            sql_hash = _digest(sql)
+            if reference.get("sql_sha256") != sql_hash:
+                raise ValueError(f"Reference SQL hash mismatch for {key}")
+            schema = canonical_schema(input_row.get("database_schema", {}))
+            schema_hash = _digest(schema["tables"])
+            schema = catalog_cache.setdefault(schema_hash, schema)
+            linked = _linked_schemas(data.get("records", []), key)
+            dialect = binding.get("db_type")
+            if not isinstance(dialect, str) or input_row.get("database_id") != binding.get("database_id"):
+                raise ValueError(f"Invalid database binding for {key}")
+            tasks.append(AnnotationTask(
+                task_key=key, group=group, partition=str(binding.get("partition", "")),
+                external_id=binding.get("external_id"), database_id=binding["database_id"], dialect=dialect,
+                gold_sql=sql, sql_sha256=sql_hash, schema=schema, schema_sha256=schema_hash,
+                source_schema_sha256=str(binding.get("schema_sha256", "")), source_hash=source_hash,
+                reuse_key=(dialect, schema_hash, sql_hash), features=feature_tags(sql, dialect),
+                native_linked_schema=linked["native"], rc_linked_schema=linked["rc"],
+                conservative_reference=parser_references.get(key), source_binding=dict(binding),
+                source_reference=dict(reference),
+            ))
+    if len({task.task_key for task in tasks}) != len(tasks):
+        raise ValueError("Duplicate task keys across offline groups")
+    return tasks
+
+
+def select_pilot(tasks: list[AnnotationTask], size: int, seed: int) -> list[AnnotationTask]:
+    """Choose a reproducible, group-balanced pilot while retaining every available stratum."""
+    tasks = sorted(tasks, key=lambda task: task.task_key)
+    if not isinstance(size, int) or size < 1 or size > len(tasks):
+        raise ValueError("Pilot size must be between one and the task count")
+    if not isinstance(seed, int):
+        raise ValueError("Pilot seed must be an integer")
+    rng = random.Random(seed)
+    groups = sorted({task.group for task in tasks})
+    pools = {group: [task for task in tasks if task.group == group] for group in groups}
+    for pool in pools.values():
+        rng.shuffle(pool)
+    quotas = {group: size // len(groups) + (index < size % len(groups))
+              for index, group in enumerate(groups)}
+    selected: list[AnnotationTask] = []
+    selected_keys: set[str] = set()
+
+    def add(task: AnnotationTask) -> bool:
+        if task.task_key in selected_keys or len(selected) >= size or sum(
+                chosen.group == task.group for chosen in selected) >= quotas[task.group]:
+            return False
+        selected.append(task)
+        selected_keys.add(task.task_key)
+        return True
+
+    for group in groups:
+        if quotas[group]:
+            add(pools[group][0])
+    for feature in FEATURES:
+        candidates = [task for task in tasks if feature in task.features]
+        if candidates:
+            rng.shuffle(candidates)
+            next((task for task in candidates if add(task)), None)
+    for group in groups:
+        for task in pools[group]:
+            if sum(chosen.group == group for chosen in selected) >= quotas[group]:
+                break
+            add(task)
+    if len(selected) != size:
+        raise ValueError("Could not satisfy pilot quotas")
+    return selected
