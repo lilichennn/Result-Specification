@@ -17,6 +17,14 @@ GROUPS = (
     "spider_dev",
     "spider_test",
 )
+GROUP_SIZES = {
+    "bird_dev": 1534,
+    "bird_interact_full": 410,
+    "bird_interact_lite": 195,
+    "spider_dev": 1034,
+    "spider_test": 2147,
+}
+TOTAL_TASKS = 5320
 FEATURES = (
     "cte_or_subquery",
     "set_operation",
@@ -55,8 +63,6 @@ class AnnotationTask:
     features: tuple[str, ...]
     native_linked_schema: dict[str, tuple[str, ...]]
     rc_linked_schema: dict[str, tuple[str, ...]]
-    conservative_reference: dict[str, Any] | None
-    source_binding: dict[str, Any]
     source_reference: dict[str, Any]
 
     @property
@@ -151,50 +157,20 @@ def _linked_schemas(records: list[dict[str, Any]], key: str) -> dict[str, dict[s
             condition = record["condition"]
             if condition in linked or record.get("status") != "succeeded" or not isinstance(record.get("linked"), dict):
                 raise ValueError(f"Invalid schema-linking record for {key}/{condition}")
+            if any(not isinstance(columns, list) for columns in record["linked"].values()):
+                raise ValueError(f"Invalid linked columns for {key}/{condition}")
             linked[condition] = {
                 str(table): tuple(sorted(map(str, columns)))
                 for table, columns in sorted(record["linked"].items())
-                if isinstance(columns, list)
             }
     if set(linked) != {"native", "rc"}:
         raise ValueError(f"Missing native/RC schema-linking record for {key}")
     return linked
 
 
-def _conservative_references(root: Path) -> dict[str, dict[str, dict[str, Any]]]:
-    path = root / "schema_linking_metrics.json"
-    if not path.is_file():
-        return {}
-    raw = json.loads(path.read_text(encoding="utf-8"))
-    references = {}
-    groups = raw.get("groups", {})
-    for group in groups.values() if isinstance(groups, dict) else groups:
-        group_name = group.get("group")
-        if not isinstance(group_name, str):
-            continue
-        for item in group.get("items", []):
-            key = item.get("item_key")
-            if not isinstance(key, str):
-                continue
-            levels = {}
-            for level in ("table", "column"):
-                value = item.get(level)
-                if not isinstance(value, dict):
-                    continue
-                levels[level] = {
-                    "status": value.get("status"),
-                    "reason": value.get("reason"),
-                    "reference": tuple(tuple(v) if isinstance(v, list) else v
-                                       for v in value.get("reference", ())),
-                }
-            references[key] = levels
-    return references
-
-
 def load_offline_groups(root: str | Path) -> list[AnnotationTask]:
     """Load exactly the five verified offline snapshots without reopening source datasets."""
     root = _root_with_groups(Path(root))
-    parser_references = _conservative_references(root)
     catalog_cache: dict[str, dict[str, Any]] = {}
     tasks = []
     for group in GROUPS:
@@ -208,6 +184,8 @@ def load_offline_groups(root: str | Path) -> list[AnnotationTask]:
         bindings_by_key = {row.get("task_key"): row for row in bindings if isinstance(row, dict)}
         if len(bindings_by_key) != len(bindings) or set(bindings_by_key) != set(references) or set(inputs) != set(references):
             raise ValueError(f"Offline bindings do not agree for {group}")
+        if len(bindings) != GROUP_SIZES[group]:
+            raise ValueError(f"Frozen group count mismatch for {group}")
         source_hash = hashlib.sha256(raw_bytes).hexdigest()
         for key in sorted(references):
             binding, reference, input_row = bindings_by_key[key], references[key], inputs[key]
@@ -232,11 +210,10 @@ def load_offline_groups(root: str | Path) -> list[AnnotationTask]:
                 source_schema_sha256=str(binding.get("schema_sha256", "")), source_hash=source_hash,
                 reuse_key=(dialect, schema_hash, sql_hash), features=feature_tags(sql, dialect),
                 native_linked_schema=linked["native"], rc_linked_schema=linked["rc"],
-                conservative_reference=parser_references.get(key), source_binding=dict(binding),
                 source_reference=dict(reference),
             ))
-    if len({task.task_key for task in tasks}) != len(tasks):
-        raise ValueError("Duplicate task keys across offline groups")
+    if len(tasks) != TOTAL_TASKS or len({task.task_key for task in tasks}) != TOTAL_TASKS:
+        raise ValueError("Frozen total task count mismatch")
     return tasks
 
 

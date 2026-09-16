@@ -2,10 +2,14 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+from dataclasses import fields
+import json
 from pathlib import Path
+import tempfile
 import unittest
 
 from scripts.rc_evaluation.schema_linking_gold.source import (
+    _linked_schemas,
     canonical_schema,
     feature_tags,
     load_offline_groups,
@@ -36,14 +40,58 @@ class SourceTests(unittest.TestCase):
         for task in self.tasks:
             self.assertTrue(task.gold_sql.strip(), task.task_key)
             self.assertTrue(task.task_key.startswith(task.partition + "/"), task.task_key)
-            self.assertEqual(task.dialect, task.source_binding["db_type"])
-            self.assertEqual(task.source_binding["task_key"], task.task_key)
+            self.assertIn(task.dialect, {"sqlite", "postgresql"})
 
         # BIRD-Interact uses a string identity: the reference is keyed by that
         # identity and must not be recovered from a source-row integer.
         bird = next(task for task in self.tasks if task.task_key == "bird_interact/lite/s:credit_11")
         self.assertEqual(bird.external_id, "credit_11")
         self.assertEqual(bird.gold_sql, bird.source_reference["sql"])
+
+    def test_loader_uses_only_the_five_offline_json_artifacts(self):
+        """Catches a loader that consults a sibling metrics artifact."""
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_root = self._offline_root(Path(directory))
+            (fixture_root / "schema_linking_metrics.json").write_text("not JSON", encoding="utf-8")
+            tasks = load_offline_groups(fixture_root)
+        self.assertEqual(len(tasks), 5320)
+        self.assertFalse(any(field.name == "conservative_reference" for field in fields(tasks[0])))
+
+    def test_bird_interact_tasks_do_not_expose_full_binding_or_source_row(self):
+        """Catches prohibited BIRD-Interact source-row provenance escaping the loader."""
+        bird = next(task for task in self.tasks if task.task_key == "bird_interact/lite/s:credit_11")
+        names = {field.name for field in fields(bird)}
+        self.assertNotIn("source_binding", names)
+        self.assertNotIn("source_row", names)
+        self.assertNotIn("source_row", bird.source_reference)
+
+    def test_loader_rejects_a_truncated_frozen_group(self):
+        """Catches acceptance of internally consistent inputs with a wrong frozen count."""
+        with tempfile.TemporaryDirectory() as directory:
+            fixture_root = self._offline_root(Path(directory))
+            group = "bird_interact_lite"
+            payload = json.loads((ROOT / group / "offline.json").read_text(encoding="utf-8"))
+            key = payload["bindings"].pop()["task_key"]
+            payload["references"].pop(key)
+            payload["inputs"].pop(key)
+            payload["contracts"].pop(key)
+            payload["records"] = [record for record in payload["records"] if record["item_key"] != key]
+            (fixture_root / group).unlink()
+            (fixture_root / group).mkdir()
+            (fixture_root / group / "offline.json").write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Frozen group count"):
+                load_offline_groups(fixture_root)
+
+    def test_linked_schema_rejects_non_list_table_columns(self):
+        """Catches malformed linked tables being silently discarded from a task."""
+        records = [
+            {"item_key": "demo", "stage": "schema_linking", "condition": "native",
+             "status": "succeeded", "linked": {"orders": "id"}},
+            {"item_key": "demo", "stage": "schema_linking", "condition": "rc",
+             "status": "succeeded", "linked": {"orders": ["id"]}},
+        ]
+        with self.assertRaisesRegex(ValueError, "linked columns"):
+            _linked_schemas(records, "demo")
 
     def test_freezes_stable_hashes_reuse_keys_and_linking_references(self):
         """Catches unstable hashing or an annotation cache shared across schemas."""
@@ -62,7 +110,6 @@ class SourceTests(unittest.TestCase):
         task = by_key["spider/dev/i:169"]
         self.assertEqual(task.native_linked_schema, {"cars_data": ("Cylinders", "Id", "MPG", "Year")})
         self.assertEqual(task.rc_linked_schema, task.native_linked_schema)
-        self.assertEqual(task.conservative_reference["table"]["reference"], ("cars_data",))
 
         reuse = defaultdict(list)
         for task in self.tasks:
@@ -126,6 +173,12 @@ class SourceTests(unittest.TestCase):
         all_features = {feature for task in self.tasks for feature in task.features}
         pilot_features = {feature for task in pilot for feature in task.features}
         self.assertTrue(all_features <= pilot_features)
+
+    @staticmethod
+    def _offline_root(destination: Path) -> Path:
+        for group in EXPECTED_GROUP_SIZES:
+            (destination / group).symlink_to(ROOT / group, target_is_directory=True)
+        return destination
 
 
 if __name__ == "__main__":
