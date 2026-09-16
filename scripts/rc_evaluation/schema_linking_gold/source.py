@@ -63,6 +63,7 @@ class AnnotationTask:
     features: tuple[str, ...]
     native_linked_schema: dict[str, tuple[str, ...]]
     rc_linked_schema: dict[str, tuple[str, ...]]
+    conservative_reference: dict[str, Any]
     source_reference: dict[str, Any]
 
     @property
@@ -112,6 +113,44 @@ def canonical_schema(schema: dict[str, Any]) -> dict[str, Any]:
         "column_by_id": column_by_id,
         "column_id_by_name": column_id_by_name,
     }
+
+
+def conservative_reference(sql: str, dialect: str, schema: dict[str, Any]) -> dict[str, Any]:
+    """Derive a parser-only reference from frozen SQL and its physical catalog."""
+    tables = schema.get("tables")
+    if not isinstance(tables, (list, tuple)):
+        raise ValueError("Canonical schema has no tables")
+    physical = {
+        table["name"]: [column["name"] for column in table["columns"]]
+        for table in tables
+        if isinstance(table, dict) and isinstance(table.get("name"), str)
+        and isinstance(table.get("columns"), (list, tuple))
+    }
+    normalized_sql, parser_dialect = sql, "sqlite" if dialect.casefold() == "sqlite" else "postgres"
+    if parser_dialect == "sqlite":
+        physical = {table.lower(): [column.lower() for column in columns]
+                    for table, columns in physical.items()}
+        try:
+            import sqlglot
+            from sqlglot import exp
+            tree = sqlglot.parse_one(sql, read="sqlite")
+            for identifier in tree.find_all(exp.Identifier):
+                identifier.set("this", identifier.name.lower())
+            normalized_sql = tree.sql(dialect="sqlite")
+        except Exception:
+            pass
+    from scripts.rc_evaluation.deepeye.evaluation import schema_coverage
+    coverage = schema_coverage(normalized_sql, physical, dialect=parser_dialect)
+    if coverage.get("status") != "available":
+        return {"status": "unavailable", "reason": coverage.get("reason"), "tables": (), "columns": ()}
+    referenced_tables = tuple(coverage.get("reference_tables", ()))
+    referenced_columns = tuple(tuple(column) for column in coverage.get("reference_columns", ()))
+    physical_columns = {(table, column) for table, columns in physical.items() for column in columns}
+    if not set(referenced_tables) <= set(physical) or not set(referenced_columns) <= physical_columns:
+        return {"status": "unavailable", "reason": "reference_elements_not_in_frozen_schema",
+                "tables": (), "columns": ()}
+    return {"status": "available", "reason": None,
+            "tables": referenced_tables, "columns": referenced_columns}
 
 
 def feature_tags(sql: str, dialect: str) -> tuple[str, ...]:
@@ -210,6 +249,7 @@ def load_offline_groups(root: str | Path) -> list[AnnotationTask]:
                 source_schema_sha256=str(binding.get("schema_sha256", "")), source_hash=source_hash,
                 reuse_key=(dialect, schema_hash, sql_hash), features=feature_tags(sql, dialect),
                 native_linked_schema=linked["native"], rc_linked_schema=linked["rc"],
+                conservative_reference=conservative_reference(sql, dialect, schema),
                 source_reference=dict(reference),
             ))
     if len(tasks) != TOTAL_TASKS or len({task.task_key for task in tasks}) != TOTAL_TASKS:

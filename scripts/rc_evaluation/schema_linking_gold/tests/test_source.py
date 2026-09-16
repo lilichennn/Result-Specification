@@ -11,6 +11,7 @@ import unittest
 from scripts.rc_evaluation.schema_linking_gold.source import (
     _linked_schemas,
     canonical_schema,
+    conservative_reference,
     feature_tags,
     load_offline_groups,
     select_pilot,
@@ -55,7 +56,23 @@ class SourceTests(unittest.TestCase):
             (fixture_root / "schema_linking_metrics.json").write_text("not JSON", encoding="utf-8")
             tasks = load_offline_groups(fixture_root)
         self.assertEqual(len(tasks), 5320)
-        self.assertFalse(any(field.name == "conservative_reference" for field in fields(tasks[0])))
+        self.assertTrue(any(field.name == "conservative_reference" for field in fields(tasks[0])))
+
+    def test_conservative_reference_uses_frozen_schema_and_reports_unavailable_queries(self):
+        """Catches missing parser calibration or invented elements for ambiguous SQL."""
+        simple = next(task for task in self.tasks if task.task_key == "spider/dev/i:866")
+        self.assertEqual(simple.conservative_reference, {
+            "status": "available", "reason": None,
+            "tables": ("highschooler",), "columns": (("highschooler", "grade"),),
+        })
+        ambiguous = conservative_reference(
+            "SELECT * FROM singer", "sqlite",
+            canonical_schema({"tables": {"singer": {"columns": {"Name": {"column_type": "TEXT"}}}}}),
+        )
+        self.assertEqual(ambiguous, {
+            "status": "unavailable", "reason": "unresolved_or_wildcard_column",
+            "tables": (), "columns": (),
+        })
 
     def test_bird_interact_tasks_do_not_expose_full_binding_or_source_row(self):
         """Catches prohibited BIRD-Interact source-row provenance escaping the loader."""
