@@ -1,0 +1,162 @@
+[
+  {
+    "question_id": "alien_1",
+    "sql": "WITH signal_quality AS (\n    SELECT\n        o.weathprofile AS weather_condition,\n        s.snrratio - 0.1 * ABS(s.noisefloordbm) AS snqi\n    FROM signals AS s\n    INNER JOIN telescopes AS t\n        ON s.telescref = t.telescregistry\n    INNER JOIN observatories AS o\n        ON t.observstation = o.observstation\n)\nSELECT\n    weather_condition,\n    AVG(snqi) AS avg_snqi,\n    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY snqi) AS median_snqi,\n    COUNT(CASE WHEN snqi > 0 THEN 1 END) AS analyzable_signal_count\nFROM signal_quality\nGROUP BY weather_condition\nORDER BY avg_snqi DESC;",
+    "schema": {
+      "table_names_original": [
+        "signals",
+        "telescopes",
+        "observatories",
+        "signalprobabilities"
+      ],
+      "column_names_original": [
+        [
+          -1,
+          "*"
+        ],
+        [
+          0,
+          "signalregistry"
+        ],
+        [
+          0,
+          "snrratio"
+        ],
+        [
+          0,
+          "noisefloordbm"
+        ],
+        [
+          0,
+          "telescref"
+        ],
+        [
+          0,
+          "bwhz"
+        ],
+        [
+          0,
+          "centerfreqmhz"
+        ],
+        [
+          1,
+          "telescregistry"
+        ],
+        [
+          1,
+          "observstation"
+        ],
+        [
+          2,
+          "observstation"
+        ],
+        [
+          2,
+          "weathprofile"
+        ],
+        [
+          3,
+          "signalref"
+        ],
+        [
+          3,
+          "anomscore"
+        ],
+        [
+          3,
+          "techsigprob"
+        ],
+        [
+          3,
+          "natsrcprob"
+        ],
+        [
+          3,
+          "sigunique"
+        ]
+      ]
+    },
+    "prefix": "with signal_quality as (",
+    "structure": "percentile_cont"
+  },
+  {
+    "question_id": "alien_2",
+    "sql": "WITH signal_metrics AS (\n    SELECT\n        s.signalregistry,\n        p.anomscore,\n        p.techsigprob * (1 - p.natsrcprob) * p.sigunique * (0.5 + p.anomscore / 10.0) AS tols,\n        s.bwhz / NULLIF(s.centerfreqmhz * 1000000, 0) AS bfr\n    FROM signals AS s\n    INNER JOIN signalprobabilities AS p\n        ON s.signalregistry = p.signalref\n),\ncategorized_signals AS (\n    SELECT\n        CASE\n            WHEN tols < 0.25 THEN 'Low'\n            WHEN tols < 0.75 THEN 'Medium'\n            ELSE 'High'\n        END AS tols_category,\n        bfr,\n        anomscore\n    FROM signal_metrics\n)\nSELECT\n    tols_category,\n    COUNT(*) AS signal_count,\n    AVG(bfr) AS avg_bfr,\n    STDDEV(anomscore) AS stddev_anomaly_score\nFROM categorized_signals\nGROUP BY tols_category\nORDER BY\n    CASE tols_category\n        WHEN 'Low' THEN 1\n        WHEN 'Medium' THEN 2\n        ELSE 3\n    END;",
+    "schema": {
+      "table_names_original": [
+        "signals",
+        "telescopes",
+        "observatories",
+        "signalprobabilities"
+      ],
+      "column_names_original": [
+        [
+          -1,
+          "*"
+        ],
+        [
+          0,
+          "signalregistry"
+        ],
+        [
+          0,
+          "snrratio"
+        ],
+        [
+          0,
+          "noisefloordbm"
+        ],
+        [
+          0,
+          "telescref"
+        ],
+        [
+          0,
+          "bwhz"
+        ],
+        [
+          0,
+          "centerfreqmhz"
+        ],
+        [
+          1,
+          "telescregistry"
+        ],
+        [
+          1,
+          "observstation"
+        ],
+        [
+          2,
+          "observstation"
+        ],
+        [
+          2,
+          "weathprofile"
+        ],
+        [
+          3,
+          "signalref"
+        ],
+        [
+          3,
+          "anomscore"
+        ],
+        [
+          3,
+          "techsigprob"
+        ],
+        [
+          3,
+          "natsrcprob"
+        ],
+        [
+          3,
+          "sigunique"
+        ]
+      ]
+    },
+    "prefix": "with signal_metrics as (",
+    "structure": "stddev"
+  }
+]

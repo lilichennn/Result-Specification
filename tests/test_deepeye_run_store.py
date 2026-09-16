@@ -48,6 +48,33 @@ class ExampleModel(BaseModel):
 
 
 class RunStoreTests(unittest.TestCase):
+    def test_timedelta_interval_exact_roundtrip(self):
+        values = [dt.timedelta(days=-999999999, seconds=1, microseconds=9),
+                  dt.timedelta(days=999999999, seconds=86399, microseconds=999999), dt.timedelta(0)]
+        with tempfile.TemporaryDirectory() as temp:
+            with RunStore.create(Path(temp) / "run", {}) as store:
+                attempt = store.begin_attempt("q", "sql", "f")
+                number = store.append_event(attempt, "execution", {"intervals": values})
+                self.assertEqual(store.event(attempt, number)["payload"]["intervals"], values)
+        self.assertEqual(to_jsonable(dt.timedelta(days=-1, seconds=2, microseconds=3)),
+                         {"__run_store_type__": "timedelta", "days": -1, "seconds": 2, "microseconds": 3})
+
+    def test_point_event_read_is_attempt_scoped_verified_and_lossless(self):
+        with tempfile.TemporaryDirectory() as temp:
+            with RunStore.create(Path(temp) / "run", {}) as store:
+                first = store.begin_attempt("q1", "generation", "f")
+                second = store.begin_attempt("q2", "generation", "f")
+                number = store.append_event(first, "response", {"value": Decimal("1.20")})
+                with patch.object(store, "iter_events", side_effect=AssertionError("history scan")):
+                    self.assertEqual(store.event(first, number)["payload"], {"value": Decimal("1.20")})
+                    with self.assertRaises(ValueError):
+                        store.event(second, number)
+                with sqlite3.connect(store.run_dir / "run.sqlite3") as connection:
+                    connection.execute("DROP TRIGGER events_no_update")
+                    connection.execute("UPDATE events SET payload_json='{}' WHERE attempt_id=?", (first,))
+                with self.assertRaisesRegex(ValueError, "checksum"):
+                    store.event(first, number)
+
     def test_manifest_is_decoded_once_and_returned_as_defensive_copies(self):
         with tempfile.TemporaryDirectory() as temp:
             run_dir = Path(temp) / "run"

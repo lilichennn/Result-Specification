@@ -18,6 +18,7 @@ import errno
 import fcntl
 import hashlib
 import importlib
+import ipaddress
 import json
 import math
 import os
@@ -32,6 +33,11 @@ _DATABASE_NAME = "run.sqlite3"
 _LOCK_NAME = ".writer.lock"
 _SCHEMA_VERSION = 1
 _TYPE_TAG = "__run_store_type__"
+_IP_TYPES = {cls.__name__: cls for cls in (
+    ipaddress.IPv4Address, ipaddress.IPv6Address,
+    ipaddress.IPv4Interface, ipaddress.IPv6Interface,
+    ipaddress.IPv4Network, ipaddress.IPv6Network,
+)}
 _CORE_EXPORT_NAMES = frozenset({
     "manifest.json",
     "summary.json",
@@ -100,6 +106,9 @@ def to_jsonable(value: Any) -> Any:
         return {_TYPE_TAG: "date", "value": value.isoformat()}
     if isinstance(value, dt.time):
         return {_TYPE_TAG: "time", "value": value.isoformat()}
+    if isinstance(value, dt.timedelta):
+        return {_TYPE_TAG: "timedelta", "days": value.days, "seconds": value.seconds,
+                "microseconds": value.microseconds}
     if isinstance(value, Path):
         return {_TYPE_TAG: "path", "value": str(value)}
     if isinstance(value, bytes):
@@ -107,6 +116,8 @@ def to_jsonable(value: Any) -> Any:
         return {_TYPE_TAG: "bytes", "value": encoded}
     if isinstance(value, uuid.UUID):
         return {_TYPE_TAG: "uuid", "value": str(value)}
+    if type(value) in _IP_TYPES.values():
+        return {_TYPE_TAG: "ipaddress", "kind": type(value).__name__, "value": str(value)}
     if dataclasses.is_dataclass(value) and not isinstance(value, type):
         fields = {field.name: to_jsonable(getattr(value, field.name)) for field in dataclasses.fields(value)}
         return {_TYPE_TAG: "dataclass", **_type_reference(value), "fields": fields}
@@ -177,12 +188,18 @@ def restore_jsonable(value: Any) -> Any:
         return dt.date.fromisoformat(value["value"])
     if tag == "time":
         return dt.time.fromisoformat(value["value"])
+    if tag == "timedelta":
+        return dt.timedelta(days=value["days"], seconds=value["seconds"], microseconds=value["microseconds"])
     if tag == "path":
         return Path(value["value"])
     if tag == "bytes":
         return base64.b64decode(value["value"], validate=True)
     if tag == "uuid":
         return uuid.UUID(value["value"])
+    if tag == "ipaddress":
+        if value.get("kind") not in _IP_TYPES:
+            raise ValueError("unsupported stored IP address type")
+        return _IP_TYPES[value["kind"]](value["value"])
     if tag == "tuple":
         return tuple(restore_jsonable(item) for item in value["items"])
     if tag == "set":
@@ -750,6 +767,20 @@ class RunStore:
             "payload": payload,
             "created_at": row["created_at"],
         }
+
+    def event(self, attempt_id: str, event_no: int) -> dict[str, Any]:
+        """Point-read one verified event using its owning attempt and sequence."""
+        self._assert_open()
+        if not isinstance(attempt_id, str) or not attempt_id or type(event_no) is not int or event_no < 1:
+            raise ValueError("valid attempt_id and positive event_no are required")
+        with self._mutex:
+            row = self._connection.execute(
+                "SELECT * FROM events WHERE attempt_id = ? AND event_no = ?",
+                (attempt_id, event_no),
+            ).fetchone()
+        if row is None:
+            raise ValueError("unknown event for attempt")
+        return self._event_dict(row)
 
     def iter_events(
         self,

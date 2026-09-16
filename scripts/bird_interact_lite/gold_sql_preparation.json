@@ -1,0 +1,2176 @@
+{
+  "version": 1,
+  "dataset_split": "bird_interact_lite",
+  "input": {
+    "path": "code/scripts/bird_interact_lite/preprocessed_data/bird_interact_lite.json",
+    "sha256": "95f6fd6f7d22d2c1947c58ce8607ba98162434c658fdcebd8dd3c1c5a83b679b"
+  },
+  "source_roots": {
+    "dataset_root": "BIRD-Interact/BIRD-Interact-ADK"
+  },
+  "sources": [
+    {
+      "role": "bird_interact",
+      "root": "dataset_root",
+      "path": "bird-interact-lite/bird_interact_data.jsonl",
+      "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+    }
+  ],
+  "counts": {
+    "total": 195,
+    "ready": 195,
+    "missing_gold_sql": 0,
+    "excluded": 0
+  },
+  "records": [
+    {
+      "index": "alien_1",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_2",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_3",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_4",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_5",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_6",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_7",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_8",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_9",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_10",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_1",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_2",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_3",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_4",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_5",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_6",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_7",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_8",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_9",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_10",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_1",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_2",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_3",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_4",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_5",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_6",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_7",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_8",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_9",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_10",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_1",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_2",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_3",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_4",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_5",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_6",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_7",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_8",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_9",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_10",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_1",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_2",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_3",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_4",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_5",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_6",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_7",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_8",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_9",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_10",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_1",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_2",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_3",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_4",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_5",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_6",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_7",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_8",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_9",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_10",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_1",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_2",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_3",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_4",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_5",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_6",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_7",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_8",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_9",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_10",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_1",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_2",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_3",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_4",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_5",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_6",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_7",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_8",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_9",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_10",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_1",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_2",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_3",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_4",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_5",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_6",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_7",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_8",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_9",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_10",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_1",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_2",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_3",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_4",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_5",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_6",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_7",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_8",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_9",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_10",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_1",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_2",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_3",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_4",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_5",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_6",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_7",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_8",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_9",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_10",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_1",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_2",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_3",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_4",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_5",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_6",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_7",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_8",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_9",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_10",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_1",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_2",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_3",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_4",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_5",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_6",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_7",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_8",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_9",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_10",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_1",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_2",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_3",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_4",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_5",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_6",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_7",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_8",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_9",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "vaccine_10",
+      "db_id": "vaccine",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_1",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_2",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_3",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_4",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_5",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_6",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_7",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_8",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_9",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "robot_10",
+      "db_id": "robot",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_1",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_2",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_3",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_4",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_5",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_6",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_7",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_8",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_9",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_10",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_1",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_2",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_3",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_4",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_5",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_6",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_7",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_8",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_9",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_10",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_1",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_2",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_3",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_4",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_5",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_6",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_7",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_8",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_9",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "virtual_10",
+      "db_id": "virtual",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "alien_11",
+      "db_id": "alien",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "archeology_11",
+      "db_id": "archeology",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "credit_11",
+      "db_id": "credit",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cross_db_11",
+      "db_id": "cross_db",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "crypto_11",
+      "db_id": "crypto",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "cybermarket_11",
+      "db_id": "cybermarket",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "disaster_11",
+      "db_id": "disaster",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "fake_11",
+      "db_id": "fake",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "gaming_11",
+      "db_id": "gaming",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "insider_11",
+      "db_id": "insider",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "mental_11",
+      "db_id": "mental",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "museum_11",
+      "db_id": "museum",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "news_11",
+      "db_id": "news",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "polar_11",
+      "db_id": "polar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    },
+    {
+      "index": "solar_11",
+      "db_id": "solar",
+      "status": "ready",
+      "reason": "Matched reference SQL",
+      "reference": {
+        "root": "dataset_root",
+        "path": "bird-interact-lite/bird_interact_data.jsonl",
+        "sha256": "c648a43a4964e2c0c8d15ee55f380fca2866a890dd501d91b9e4bcbf8450bf38"
+      }
+    }
+  ],
+  "gold_sql": {
+    "path": "gold_sql.json",
+    "sha256": "eb7a605e29ee737affc8a5790af7f2abf3eb5a1c4602da414a0355db2de266fc"
+  }
+}
