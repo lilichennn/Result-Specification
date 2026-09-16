@@ -1,5 +1,5 @@
 import unittest
-from scripts.rc_evaluation.din_sql.evaluation import evaluate_pair, summarize_stage, normalize_usage
+from scripts.rc_evaluation.din_sql.evaluation import evaluate_pair, summarize_stage, normalize_usage, summary_markdown
 
 
 class EvaluationTests(unittest.TestCase):
@@ -33,3 +33,10 @@ class EvaluationTests(unittest.TestCase):
         self.assertEqual(normalize_usage({'prompt_tokens':2,'completion_tokens':3})['total'],5)
         self.assertIsNone(normalize_usage({'prompt_tokens':2,'completion_tokens':3})['reasoning'])
         self.assertEqual(normalize_usage({'prompt_tokens':0,'completion_tokens':0,'total_tokens':0})['total'],0)
+
+    def test_table_keeps_coverage_and_token_denominator_explicit(self):
+        row={'base_correct':False,'rc_correct':True,'base_total':10,'rc_total':8}
+        summary={'bird_dev':{'generation':{'total_questions':2,**summarize_stage([row])}}}
+        text=summary_markdown(summary)
+        self.assertIn('bird_dev | Generation | 2 | 1 | 1 | 0.00 | 100.00',text)
+        self.assertIn('20.00',text)

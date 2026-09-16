@@ -51,6 +51,7 @@ def normalize_usage(usage):
 def summarize_stage(rows):
     valid = [r for r in rows if r.get('base_correct') is not None and r.get('rc_correct') is not None]
     count = len(valid)
+    valid_ids = {id(r) for r in valid}
     base = sum(r['base_correct'] for r in valid)
     rc = sum(r['rc_correct'] for r in valid)
     summary = {'finished_questions':len(rows),'quality_pairs':count,'base_correct':base,'rc_correct':rc,
@@ -59,7 +60,7 @@ def summarize_stage(rows):
                'wrong_to_right':sum(not r['base_correct'] and r['rc_correct'] for r in valid),
                'right_to_wrong':sum(r['base_correct'] and not r['rc_correct'] for r in valid),
                'excluded':dict(Counter(r.get('base_reason') or r.get('rc_reason') or 'missing_result'
-                                      for r in rows if r not in valid))}
+                                      for r in rows if id(r) not in valid_ids))}
     for field in ('input','output','total'):
         pairs = [r for r in rows if r.get('base_'+field) is not None and r.get('rc_'+field) is not None]
         b = sum(r['base_'+field] for r in pairs)
@@ -69,6 +70,27 @@ def summarize_stage(rows):
     summary['token_pairs'] = summary['total_tokens']['pairs']
     summary['token_saving_pct'] = summary['total_tokens']['saving_pct']
     return summary
+
+
+def summary_markdown(summary):
+    number = lambda v: '未知' if v is None else f'{v:.2f}'
+    lines = ['# DIN-SQL 原生与 RC3 对照','',
+             '严格比较列数和列位置，忽略行顺序、保留重复行。质量和 Token 分别使用成对有效题；未结束题不进入主表。', '',
+             '| 测试组 | 阶段 | 总题数 | 已有完整记录 | 质量有效题 | 原生正确率 % | RC3 正确率 % | 变化（百分点） |',
+             '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |']
+    for group,stages in summary.items():
+        for stage,row in stages.items():
+            lines.append(f'| {group} | {stage.title()} | {row["total_questions"]} | {row["finished_questions"]} | '
+                         f'{row["quality_pairs"]} | {number(row["base_pct"])} | {number(row["rc_pct"])} | {number(row["delta_pp"])} |')
+    lines += ['', '| 测试组 | 阶段 | Token 类别 | 成对有效题 | 原生总量 | RC3 总量 | 节省比例 % |',
+              '| --- | --- | --- | ---: | ---: | ---: | ---: |']
+    for group,stages in summary.items():
+        for stage,row in stages.items():
+            for field in ('input','output','total'):
+                value=row[field+'_tokens']
+                lines.append(f'| {group} | {stage.title()} | {field} | {value["pairs"]} | {value["base"]} | '
+                             f'{value["rc"]} | {number(value["saving_pct"])} |')
+    return '\n'.join(lines)+'\n'
 
 
 def evaluate(batch, *, groups, records):
@@ -124,4 +146,5 @@ def evaluate(batch, *, groups, records):
                           for stage in ('generation','revision')}
     write_json(directory/'details.json',details)
     write_json(directory/'summary.json',summary)
+    (directory/'tables.md').write_text(summary_markdown(summary),encoding='utf-8')
     return {'report':str(directory),'summary':summary}
