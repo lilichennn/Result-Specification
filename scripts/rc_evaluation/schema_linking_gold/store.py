@@ -11,7 +11,9 @@ from copy import deepcopy
 import datetime as dt
 import hashlib
 import json
+import math
 from pathlib import Path
+import re
 import sqlite3
 from typing import Any, Iterable, Mapping
 import uuid
@@ -19,6 +21,7 @@ import uuid
 
 _SCHEMA_VERSION = 1
 _TASK_FIELDS = frozenset({"task_key", "group", "dialect", "schema_sha256", "sql_sha256"})
+_SHA256_PATTERN = re.compile(r"[0-9a-f]{64}")
 
 
 def _canonical_json(value: Any) -> str:
@@ -46,6 +49,51 @@ def _decode(text: str, checksum: str, label: str) -> Any:
         return json.loads(text)
     except json.JSONDecodeError as exc:
         raise ValueError(f"invalid JSON for {label}") from exc
+
+
+def _normalize_latency(value: Any) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise TypeError("latency_seconds must be a finite non-negative number")
+    normalized = float(value)
+    if not math.isfinite(normalized) or normalized < 0:
+        raise ValueError("latency_seconds must be a finite non-negative number")
+    return normalized
+
+
+def _validate_provenance(status: str, usage: Any, latency_seconds: Any, endpoint_hash: Any) -> float:
+    if not isinstance(usage, Mapping):
+        raise TypeError("usage must be an object")
+    if status == "succeeded" and not usage:
+        raise ValueError("a successful attempt requires non-empty usage")
+    normalized_latency = _normalize_latency(latency_seconds)
+    if not isinstance(endpoint_hash, str) or _SHA256_PATTERN.fullmatch(endpoint_hash) is None:
+        raise ValueError("endpoint_hash must be 64 lowercase SHA-256 hex characters")
+    return normalized_latency
+
+
+def _normalized_sql(sql: str | None) -> str | None:
+    return None if sql is None else " ".join(sql.split())
+
+
+def _schema_objects(connection: sqlite3.Connection) -> dict[str, tuple[str, str, str | None]]:
+    rows = connection.execute(
+        "SELECT type, name, tbl_name, sql FROM sqlite_schema "
+        "WHERE name NOT LIKE 'sqlite_%' ORDER BY type, name"
+    ).fetchall()
+    return {
+        row["name"]: (row["type"], row["tbl_name"], _normalized_sql(row["sql"]))
+        for row in rows
+    }
+
+
+def _expected_schema_objects() -> dict[str, tuple[str, str, str | None]]:
+    connection = sqlite3.connect(":memory:")
+    connection.row_factory = sqlite3.Row
+    try:
+        connection.executescript(_SCHEMA)
+        return _schema_objects(connection)
+    finally:
+        connection.close()
 
 
 _SCHEMA = """
@@ -135,10 +183,15 @@ class AnnotationStore:
         database.parent.mkdir(parents=True, exist_ok=True)
         connection = cls._connect(database)
         try:
-            connection.executescript(_SCHEMA)
+            # executescript otherwise commits any pending transaction first.  Put
+            # BEGIN in the script itself so DDL and frozen rows share one commit.
+            connection.executescript("BEGIN IMMEDIATE;\n" + _SCHEMA)
             manifest_json = _canonical_json(frozen_manifest)
-            with connection:
-                connection.execute("INSERT INTO schema_info(singleton, version) VALUES (1, ?)", (_SCHEMA_VERSION,))
+            try:
+                connection.execute(
+                    "INSERT INTO schema_info(singleton, version) VALUES (1, ?)",
+                    (_SCHEMA_VERSION,),
+                )
                 connection.execute(
                     "INSERT INTO manifest(singleton, payload_json, payload_checksum) VALUES (1, ?, ?)",
                     (manifest_json, _digest(frozen_manifest)),
@@ -154,6 +207,10 @@ class AnnotationStore:
                         "VALUES (?, ?, ?, ?, ?)",
                         (*record.values(), _digest(record)),
                     )
+                connection.commit()
+            except BaseException:
+                connection.rollback()
+                raise
             return cls(database, connection, frozen_manifest)
         except BaseException:
             connection.close()
@@ -176,7 +233,7 @@ class AnnotationStore:
             stored_manifest = _decode(row["payload_json"], row["payload_checksum"], "manifest")
             if not isinstance(stored_manifest, dict):
                 raise ValueError("manifest must be an object")
-            cls._validated_manifest(stored_manifest)
+            cls._verify_frozen_tasks(connection, stored_manifest)
             if manifest is not None:
                 expected, _ = cls._validated_manifest(manifest)
                 if _canonical_json(expected) != row["payload_json"]:
@@ -185,6 +242,33 @@ class AnnotationStore:
         except BaseException:
             connection.close()
             raise
+
+    @classmethod
+    def _verify_frozen_tasks(cls, connection: sqlite3.Connection, manifest: Mapping[str, Any]) -> None:
+        _, expected_tasks = cls._validated_manifest(manifest)
+        stored_tasks = connection.execute(
+            "SELECT task_key, cache_key, payload_json, payload_checksum, record_checksum "
+            "FROM tasks ORDER BY task_key"
+        ).fetchall()
+        expected_by_key = {task["task_key"]: task for task in expected_tasks}
+        if set(expected_by_key) != {row["task_key"] for row in stored_tasks}:
+            raise ValueError("stored task membership differs from manifest")
+        for stored in stored_tasks:
+            expected = expected_by_key[stored["task_key"]]
+            expected_json = _canonical_json(expected["payload"])
+            expected_checksum = _digest(expected["payload"])
+            record = {
+                "task_key": stored["task_key"],
+                "cache_key": stored["cache_key"],
+                "payload_json": stored["payload_json"],
+                "payload_checksum": stored["payload_checksum"],
+            }
+            if stored["cache_key"] != expected["cache_key"]:
+                raise ValueError(f"cache key mismatch for task {stored['task_key']}")
+            if stored["payload_json"] != expected_json or stored["payload_checksum"] != expected_checksum:
+                raise ValueError(f"stored task payload differs from manifest for {stored['task_key']}")
+            if stored["record_checksum"] != _digest(record):
+                raise ValueError(f"checksum mismatch for task {stored['task_key']}")
 
     @staticmethod
     def _database_path(path: str | Path) -> Path:
@@ -337,11 +421,8 @@ class AnnotationStore:
             raise TypeError("raw_response must be text")
         if status == "succeeded" and raw_response is None:
             raise ValueError("a successful attempt requires its raw_response")
-        if latency_seconds is not None and (not isinstance(latency_seconds, (int, float)) or latency_seconds < 0):
-            raise ValueError("latency_seconds must be non-negative")
-        if endpoint_hash is not None and (not isinstance(endpoint_hash, str) or not endpoint_hash):
-            raise ValueError("endpoint_hash must be non-empty text")
-        usage_json = _canonical_json(usage) if usage is not None else None
+        latency_seconds = _validate_provenance(status, usage, latency_seconds, endpoint_hash)
+        usage_json = _canonical_json(usage)
         error_json = _canonical_json(error) if error is not None else None
         connection = self._transaction()
         try:
@@ -352,7 +433,7 @@ class AnnotationStore:
             finished_at = _now()
             record = {
                 "attempt_id": attempt_id, "status": status, "raw_response": raw_response,
-                "usage_json": usage_json, "usage_checksum": _digest(usage) if usage is not None else None,
+                "usage_json": usage_json, "usage_checksum": _digest(usage),
                 "latency_seconds": latency_seconds, "endpoint_hash": endpoint_hash,
                 "error_json": error_json, "error_checksum": _digest(error) if error is not None else None,
                 "finished_at": finished_at,
@@ -456,7 +537,7 @@ class AnnotationStore:
         return {key: int(value) for key, value in result.items()}
 
     def verify(self) -> dict[str, Any]:
-        """Recompute payload and record checksums for every immutable row."""
+        """Audit schema enforcement, relationships, and every immutable checksum."""
         self._assert_open()
         errors: list[str] = []
 
@@ -466,24 +547,45 @@ class AnnotationStore:
             except (TypeError, ValueError, sqlite3.DatabaseError) as exc:
                 errors.append(f"{label}: {exc}")
 
+        def verify_database_integrity() -> None:
+            results = [row[0] for row in self._connection.execute("PRAGMA integrity_check")]
+            if results != ["ok"]:
+                raise ValueError("; ".join(str(result) for result in results))
+
+        checked("integrity check", verify_database_integrity)
+        try:
+            for violation in self._connection.execute("PRAGMA foreign_key_check"):
+                errors.append(
+                    "foreign key violation: "
+                    f"{violation['table']} row {violation['rowid']} references {violation['parent']}"
+                )
+        except sqlite3.DatabaseError as exc:
+            errors.append(f"foreign key check: {exc}")
+
+        def verify_schema() -> None:
+            expected = _expected_schema_objects()
+            actual = _schema_objects(self._connection)
+            for name, definition in expected.items():
+                if name not in actual:
+                    errors.append(f"schema: missing required {definition[0]} {name}")
+                elif actual[name] != definition:
+                    errors.append(f"schema: altered required {definition[0]} {name}")
+            for name in sorted(set(actual) - set(expected)):
+                errors.append(f"schema: unexpected {actual[name][0]} {name}")
+
+        checked("schema", verify_schema)
+
         def verify_manifest() -> None:
+            version = self._connection.execute(
+                "SELECT version FROM schema_info WHERE singleton = 1"
+            ).fetchone()
+            if version is None or version["version"] != _SCHEMA_VERSION:
+                raise ValueError("unsupported AnnotationStore schema")
             row = self._connection.execute("SELECT payload_json, payload_checksum FROM manifest WHERE singleton = 1").fetchone()
             if row is None:
                 raise ValueError("manifest is missing")
             manifest = _decode(row["payload_json"], row["payload_checksum"], "manifest")
-            _, expected_tasks = self._validated_manifest(manifest)
-            stored_tasks = self._connection.execute(
-                "SELECT task_key, cache_key, payload_json, payload_checksum FROM tasks ORDER BY task_key"
-            ).fetchall()
-            expected_by_key = {task["task_key"]: task for task in expected_tasks}
-            if set(expected_by_key) != {row["task_key"] for row in stored_tasks}:
-                raise ValueError("stored task membership differs from manifest")
-            for stored in stored_tasks:
-                expected = expected_by_key[stored["task_key"]]
-                if stored["cache_key"] != expected["cache_key"]:
-                    raise ValueError(f"cache key mismatch for task {stored['task_key']}")
-                if stored["payload_json"] != _canonical_json(expected["payload"]):
-                    raise ValueError(f"stored task payload differs from manifest for {stored['task_key']}")
+            self._verify_frozen_tasks(self._connection, manifest)
 
         checked("manifest", verify_manifest)
         for row in self._connection.execute("SELECT * FROM tasks ORDER BY task_key"):
@@ -515,10 +617,16 @@ class AnnotationStore:
             checked(f"attempt {row['attempt_id']}", verify_attempt)
         for row in self._connection.execute("SELECT * FROM outcomes ORDER BY rowid"):
             def verify_outcome(row: sqlite3.Row = row) -> None:
+                usage = None
                 if row["usage_json"] is not None:
-                    _decode(row["usage_json"], row["usage_checksum"], f"outcome usage {row['attempt_id']}")
+                    usage = _decode(row["usage_json"], row["usage_checksum"], f"outcome usage {row['attempt_id']}")
                 if row["error_json"] is not None:
                     _decode(row["error_json"], row["error_checksum"], f"outcome error {row['attempt_id']}")
+                _validate_provenance(
+                    row["status"], usage, row["latency_seconds"], row["endpoint_hash"]
+                )
+                if row["status"] == "succeeded" and row["raw_response"] is None:
+                    raise ValueError(f"successful outcome {row['attempt_id']} has no raw response")
                 record = {key: row[key] for key in (
                     "attempt_id", "status", "raw_response", "usage_json", "usage_checksum", "latency_seconds",
                     "endpoint_hash", "error_json", "error_checksum", "finished_at",
@@ -527,12 +635,21 @@ class AnnotationStore:
                     raise ValueError(f"checksum mismatch for outcome {row['attempt_id']}")
             checked(f"outcome {row['attempt_id']}", verify_outcome)
         for row in self._connection.execute(
-            "SELECT a.*, o.status AS outcome_status, t.cache_key AS task_cache_key, at.batch_json, at.batch_checksum "
-            "FROM annotations a JOIN outcomes o ON o.attempt_id = a.attempt_id "
-            "JOIN tasks t ON t.task_key = a.source_task_key JOIN attempts at ON at.attempt_id = a.attempt_id ORDER BY a.rowid"
+            "SELECT a.*, o.attempt_id AS outcome_attempt_id, o.status AS outcome_status, "
+            "t.task_key AS parent_task_key, t.cache_key AS task_cache_key, "
+            "at.attempt_id AS parent_attempt_id, at.batch_json, at.batch_checksum "
+            "FROM annotations a LEFT JOIN outcomes o ON o.attempt_id = a.attempt_id "
+            "LEFT JOIN tasks t ON t.task_key = a.source_task_key "
+            "LEFT JOIN attempts at ON at.attempt_id = a.attempt_id ORDER BY a.rowid"
         ):
             def verify_annotation(row: sqlite3.Row = row) -> None:
                 _decode(row["payload_json"], row["payload_checksum"], f"annotation {row['annotation_id']}")
+                if row["parent_attempt_id"] is None:
+                    raise ValueError(f"annotation {row['annotation_id']} has a missing parent attempt")
+                if row["parent_task_key"] is None:
+                    raise ValueError(f"annotation {row['annotation_id']} has a missing source task")
+                if row["outcome_attempt_id"] is None:
+                    raise ValueError(f"annotation {row['annotation_id']} has a missing terminal outcome")
                 if row["outcome_status"] != "succeeded":
                     raise ValueError(f"annotation {row['annotation_id']} has no successful outcome")
                 if row["cache_key"] != row["task_cache_key"]:

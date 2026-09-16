@@ -1,12 +1,18 @@
 """Behavioral tests for the durable gold-SQL annotation store."""
 from __future__ import annotations
 
+import hashlib
+import json
 from pathlib import Path
 import sqlite3
 import tempfile
 import unittest
+from unittest import mock
 
 from scripts.rc_evaluation.schema_linking_gold.store import AnnotationStore
+
+
+_ENDPOINT_HASH = "f" * 64
 
 
 def _manifest(*, second_schema: bool = False) -> dict:
@@ -86,7 +92,7 @@ class AnnotationStoreTests(unittest.TestCase):
                 store.accept_annotations(started["attempt_id"], {"spider/dev/i:0": _annotation("spider/dev/i:0")})
             store.finish_attempt(started["attempt_id"], "succeeded", raw_response="[]",
                                  usage={"total_tokens": 9}, latency_seconds=0.4,
-                                 endpoint_hash="endpoint-digest")
+                                 endpoint_hash=_ENDPOINT_HASH)
             store.accept_annotations(started["attempt_id"], {"spider/dev/i:0": _annotation("spider/dev/i:0")})
             self.assertEqual(store.status()["accepted_tasks"], 2)
 
@@ -104,7 +110,9 @@ class AnnotationStoreTests(unittest.TestCase):
         """Catches a later model call overwriting the frozen accepted annotation."""
         with self.open() as store:
             first = store.start_attempt(["spider/dev/i:0"])
-            store.finish_attempt(first["attempt_id"], "succeeded", raw_response="[]")
+            store.finish_attempt(first["attempt_id"], "succeeded", raw_response="[]",
+                                 usage={"total_tokens": 9}, latency_seconds=0.4,
+                                 endpoint_hash=_ENDPOINT_HASH)
             store.accept_annotations(first["attempt_id"], {"spider/dev/i:0": _annotation("spider/dev/i:0")})
             self.assertEqual(store.pending_tasks()[0]["task_key"], "bird/dev/i:2")
             with self.assertRaisesRegex(ValueError, "accepted"):
@@ -115,7 +123,9 @@ class AnnotationStoreTests(unittest.TestCase):
         """Catches reusing a label across schemas or re-requesting an exact duplicate."""
         with self.open() as store:
             first = store.start_attempt(["spider/dev/i:0"])
-            store.finish_attempt(first["attempt_id"], "succeeded", raw_response="[]")
+            store.finish_attempt(first["attempt_id"], "succeeded", raw_response="[]",
+                                 usage={"total_tokens": 9}, latency_seconds=0.4,
+                                 endpoint_hash=_ENDPOINT_HASH)
             store.accept_annotations(first["attempt_id"], {"spider/dev/i:0": _annotation("spider/dev/i:0")})
             self.assertEqual(store.annotation_for_task("spider/test/i:1")["task_key"], "spider/test/i:1")
             self.assertEqual([task["task_key"] for task in store.pending_tasks()], ["bird/dev/i:2"])
@@ -131,7 +141,8 @@ class AnnotationStoreTests(unittest.TestCase):
         """Catches a verifier that trusts a tampered immutable history row."""
         with self.open() as store:
             started = store.start_attempt(["bird/dev/i:2"])
-            store.finish_attempt(started["attempt_id"], "failed", error={"kind": "timeout"})
+            store.finish_attempt(started["attempt_id"], "failed", usage={}, latency_seconds=1.0,
+                                 endpoint_hash=_ENDPOINT_HASH, error={"kind": "timeout"})
             self.assertTrue(store.verify()["ok"])
         connection = sqlite3.connect(self.path)
         connection.execute("DROP TRIGGER outcomes_no_update")
@@ -142,6 +153,171 @@ class AnnotationStoreTests(unittest.TestCase):
             report = reopened.verify()
         self.assertFalse(report["ok"])
         self.assertIn("checksum mismatch", "\n".join(report["errors"]))
+
+    def test_initialization_rolls_back_every_row_when_task_insertion_is_interrupted(self):
+        """Catches bootstrap autocommit leaving a resumable manifest with only some tasks."""
+        original_connect = sqlite3.connect
+
+        class InterruptedConnection(sqlite3.Connection):
+            task_inserts = 0
+
+            def execute(self, sql, parameters=()):
+                if sql.startswith("INSERT INTO tasks"):
+                    type(self).task_inserts += 1
+                    if type(self).task_inserts == 2:
+                        raise RuntimeError("injected initialization interruption")
+                return super().execute(sql, parameters)
+
+        def interrupted_connect(*args, **kwargs):
+            return original_connect(*args, **kwargs, factory=InterruptedConnection)
+
+        with mock.patch(
+            "scripts.rc_evaluation.schema_linking_gold.store.sqlite3.connect",
+            side_effect=interrupted_connect,
+        ):
+            with self.assertRaisesRegex(RuntimeError, "injected initialization interruption"):
+                AnnotationStore.create(self.path, self.manifest)
+
+        connection = original_connect(self.path)
+        objects = connection.execute(
+            "SELECT name FROM sqlite_schema WHERE name NOT LIKE 'sqlite_%'"
+        ).fetchall()
+        connection.close()
+        self.assertEqual(objects, [])
+        with self.assertRaises((ValueError, sqlite3.DatabaseError)):
+            AnnotationStore.open(self.path, self.manifest)
+
+    def test_verify_reports_orphaned_annotation_and_foreign_key_violation(self):
+        """Catches an inner-join audit that silently omits an annotation with no parent attempt."""
+        with self.open() as store:
+            started = store.start_attempt(["bird/dev/i:2"])
+            store.finish_attempt(started["attempt_id"], "succeeded", raw_response="[]",
+                                 usage={"total_tokens": 9}, latency_seconds=0.4,
+                                 endpoint_hash=_ENDPOINT_HASH)
+            store.accept_annotations(started["attempt_id"], {"bird/dev/i:2": _annotation("bird/dev/i:2")})
+        connection = sqlite3.connect(self.path)
+        connection.execute("PRAGMA foreign_keys=OFF")
+        connection.execute("DROP TRIGGER annotations_no_update")
+        connection.execute("UPDATE annotations SET attempt_id = 'missing-attempt'")
+        connection.commit()
+        connection.close()
+
+        with AnnotationStore.open(self.path, self.manifest) as reopened:
+            report = reopened.verify()
+        errors = "\n".join(report["errors"])
+        self.assertFalse(report["ok"])
+        self.assertIn("foreign key violation", errors)
+        self.assertIn("missing parent attempt", errors)
+
+    def test_verify_reports_annotation_without_a_terminal_outcome(self):
+        """Catches a relational audit that assumes every accepted annotation still has an outcome."""
+        with self.open() as store:
+            started = store.start_attempt(["bird/dev/i:2"])
+            store.finish_attempt(started["attempt_id"], "succeeded", raw_response="[]",
+                                 usage={"total_tokens": 9}, latency_seconds=0.4,
+                                 endpoint_hash=_ENDPOINT_HASH)
+            store.accept_annotations(started["attempt_id"], {"bird/dev/i:2": _annotation("bird/dev/i:2")})
+        connection = sqlite3.connect(self.path)
+        connection.execute("DROP TRIGGER outcomes_no_delete")
+        connection.execute("DELETE FROM outcomes WHERE attempt_id = ?", (started["attempt_id"],))
+        connection.commit()
+        connection.close()
+
+        with AnnotationStore.open(self.path, self.manifest) as reopened:
+            report = reopened.verify()
+        self.assertFalse(report["ok"])
+        self.assertIn("missing terminal outcome", "\n".join(report["errors"]))
+
+    def test_verify_reports_missing_and_altered_immutable_triggers(self):
+        """Catches verification that trusts absent or no-op append-only enforcement."""
+        with self.open():
+            pass
+        connection = sqlite3.connect(self.path)
+        connection.execute("DROP TRIGGER manifest_no_update")
+        connection.execute("DROP TRIGGER tasks_no_delete")
+        connection.execute(
+            "CREATE TRIGGER tasks_no_delete BEFORE DELETE ON tasks BEGIN SELECT 1; END"
+        )
+        connection.commit()
+        connection.close()
+
+        with AnnotationStore.open(self.path, self.manifest) as reopened:
+            report = reopened.verify()
+        errors = "\n".join(report["errors"])
+        self.assertFalse(report["ok"])
+        self.assertIn("manifest_no_update", errors)
+        self.assertIn("tasks_no_delete", errors)
+
+    def test_integer_and_zero_latency_round_trip_without_checksum_drift(self):
+        """Catches checksumming an integer before SQLite normalizes its REAL storage value."""
+        with self.open() as store:
+            first = store.start_attempt(["bird/dev/i:2"])
+            store.finish_attempt(first["attempt_id"], "failed", usage={}, latency_seconds=1,
+                                 endpoint_hash=_ENDPOINT_HASH, error={"kind": "timeout"})
+            second = store.start_attempt(["spider/dev/i:0"])
+            store.finish_attempt(second["attempt_id"], "failed", usage={}, latency_seconds=0,
+                                 endpoint_hash=_ENDPOINT_HASH, error={"kind": "timeout"})
+            report = store.verify()
+        self.assertTrue(report["ok"], report["errors"])
+
+    def test_terminal_outcome_requires_valid_latency_usage_and_endpoint_provenance(self):
+        """Catches terminal request records that cannot support audit and cost totals."""
+        with self.open() as store:
+            invalid_values = (
+                ({"usage": None, "latency_seconds": 0.1, "endpoint_hash": _ENDPOINT_HASH}, "usage"),
+                ({"usage": [], "latency_seconds": 0.1, "endpoint_hash": _ENDPOINT_HASH}, "usage"),
+                ({"usage": {}, "latency_seconds": 0.1, "endpoint_hash": _ENDPOINT_HASH}, "usage"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": None, "endpoint_hash": _ENDPOINT_HASH}, "latency"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": True, "endpoint_hash": _ENDPOINT_HASH}, "latency"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": -0.1, "endpoint_hash": _ENDPOINT_HASH}, "latency"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": float("nan"), "endpoint_hash": _ENDPOINT_HASH}, "latency"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": float("inf"), "endpoint_hash": _ENDPOINT_HASH}, "latency"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": 0.1, "endpoint_hash": None}, "endpoint"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": 0.1, "endpoint_hash": "https://api.example/v1"}, "endpoint"),
+                ({"usage": {"total_tokens": 1}, "latency_seconds": 0.1, "endpoint_hash": "A" * 64}, "endpoint"),
+            )
+            for kwargs, message in invalid_values:
+                with self.subTest(kwargs=kwargs):
+                    started = store.start_attempt(["bird/dev/i:2"])
+                    with self.assertRaisesRegex((TypeError, ValueError), message):
+                        store.finish_attempt(started["attempt_id"], "succeeded", raw_response="[]", **kwargs)
+
+            # A failed request may explicitly record an empty usage object when the provider
+            # returned no usage; latency and redacted endpoint provenance remain mandatory.
+            started = store.start_attempt(["bird/dev/i:2"])
+            store.finish_attempt(started["attempt_id"], "failed", usage={}, latency_seconds=0,
+                                 endpoint_hash=_ENDPOINT_HASH, error={"kind": "transport"})
+            self.assertTrue(store.verify()["ok"])
+
+    def test_verify_rejects_coherently_rechecksummed_invalid_provenance(self):
+        """Catches verification that checks only checksums, not terminal provenance semantics."""
+        with self.open() as store:
+            started = store.start_attempt(["bird/dev/i:2"])
+            store.finish_attempt(started["attempt_id"], "failed", usage={}, latency_seconds=0.2,
+                                 endpoint_hash=_ENDPOINT_HASH, error={"kind": "transport"})
+        connection = sqlite3.connect(self.path)
+        connection.row_factory = sqlite3.Row
+        connection.execute("DROP TRIGGER outcomes_no_update")
+        row = connection.execute("SELECT * FROM outcomes WHERE attempt_id = ?", (started["attempt_id"],)).fetchone()
+        record = {key: row[key] for key in (
+            "attempt_id", "status", "raw_response", "usage_json", "usage_checksum", "latency_seconds",
+            "endpoint_hash", "error_json", "error_checksum", "finished_at",
+        )}
+        record["endpoint_hash"] = "https://api.example/v1"
+        checksum = hashlib.sha256(
+            json.dumps(record, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+        ).hexdigest()
+        connection.execute(
+            "UPDATE outcomes SET endpoint_hash = ?, record_checksum = ? WHERE attempt_id = ?",
+            (record["endpoint_hash"], checksum, started["attempt_id"]),
+        )
+        connection.commit()
+        connection.close()
+
+        with AnnotationStore.open(self.path, self.manifest) as reopened:
+            report = reopened.verify()
+        self.assertFalse(report["ok"])
+        self.assertIn("endpoint_hash", "\n".join(report["errors"]))
 
 
 if __name__ == "__main__":
