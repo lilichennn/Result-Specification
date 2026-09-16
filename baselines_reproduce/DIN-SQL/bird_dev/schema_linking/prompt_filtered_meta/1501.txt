@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID]
 Table gasstations, columns = [*,GasStationID,Country]
-Table transactions_1k, columns = [*,TransactionID,Date,CustomerID,GasStationID]
+Table transactions_1k, columns = [*,TransactionID,CustomerID,GasStationID]
 Table yearmonth, columns = [*,CustomerID,Date]
 Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
 Sample rows from customers (columns: ["CustomerID"]):
@@ -196,11 +196,10 @@ Sample rows from gasstations (columns: ["GasStationID", "Country"]):
 Column descriptions and value descriptions for gasstations:
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column Country: column description -> , value description -> 
-Sample rows from transactions_1k (columns: ["TransactionID", "Date", "CustomerID", "GasStationID"]):
-[[1, "2012-08-24", 31543, 3704], [2, "2012-08-24", 46707, 3704], [3, "2012-08-24", 46707, 3704]]
+Sample rows from transactions_1k (columns: ["TransactionID", "CustomerID", "GasStationID"]):
+[[1, 31543, 3704], [2, 46707, 3704], [3, 46707, 3704]]
 Column descriptions and value descriptions for transactions_1k:
 Column TransactionID: column description -> Transaction ID, value description -> 
-Column Date: column description -> Date, value description -> 
 Column CustomerID: column description -> Customer ID, value description -> 
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Sample rows from yearmonth (columns: ["CustomerID", "Date"]):

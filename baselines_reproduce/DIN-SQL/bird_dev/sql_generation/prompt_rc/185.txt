@@ -248,12 +248,12 @@ Hint: Female refers to gender = 'F'; Percentage of female clients in Prague bran
 Schema_links: [client.gender,client.client_id,district.A3,disp.client_id = client.client_id,disp.account_id = account.account_id,account.district_id = district.district_id,'F','Prague']
 Result Contract:
 {
-  "population": "The reference population is distinct customers linked to at least one account whose branch location is in Prague, identified by the branch district's A3 region corresponding to Prague; the target subpopulation is those customers whose gender is 'F'.",
-  "row_grain": "One global summary row over the Prague-branch customer population.",
-  "column_role": "A single value representing the proportion (percentage) of female customers among customers with accounts at the Prague branch.",
-  "derivation": "Count the distinct female customers linked to accounts at the Prague branch, count the distinct customers linked to accounts at the Prague branch, divide the first count by the second, and multiply by 100.",
-  "filter_policy": "Include only customers linked to accounts whose branch district A3 corresponds to Prague; no ranking or ordering is specified.",
-  "meta_review": "Metadata establishes that account.district_id is the branch location and district.A3 identifies the region, resolving Prague-branch eligibility through the account's district rather than the client's district. The disp table represents client-account relationships, so customer counts are over distinct clients linked to qualifying accounts."
+  "population": "The reference population is customers whose district region is Prague; the target subpopulation is those customers whose gender is 'F'.",
+  "row_grain": "One global summary row over the Prague-district customer population.",
+  "column_role": "A single value representing the proportion (percentage) of female customers among customers in the Prague district.",
+  "derivation": "Count the female customers in the Prague district, count all customers in the Prague district, divide the first count by the second, and multiply by 100.",
+  "filter_policy": "Include only customers whose district region is Prague; no ranking or ordering is specified.",
+  "meta_review": "Prague eligibility is based on the customer's district region rather than the branch location of an account, and the percentage is computed over customers in that district without requiring a client-account relationship."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

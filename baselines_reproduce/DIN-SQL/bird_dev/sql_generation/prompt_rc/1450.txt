@@ -230,12 +230,12 @@ Hint: more than fifty incomes refers to income > 40
 Schema_links: [event.event_id,income.amount,zip_code.city,zip_code.county,attendance.link_to_event = event.event_id,attendance.link_to_member = member.member_id,income.link_to_member = member.member_id,member.zip = zip_code.zip_code,40]
 Result Contract:
 {
-  "population": "Events that have more than forty incomes, meaning the event's number of incomes is strictly greater than 40 (income > 40) as clarified by the evidence.",
-  "row_grain": "One row per qualifying event.",
-  "column_role": "The city in which the event is happening and the country in which the event is happening.",
+  "population": "City-county locations linked to income entries whose income amount is strictly greater than 40.",
+  "row_grain": "One row per distinct city-county combination.",
+  "column_role": "The city and the county associated with the qualifying incomes.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

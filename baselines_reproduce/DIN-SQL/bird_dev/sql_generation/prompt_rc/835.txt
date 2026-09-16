@@ -225,12 +225,12 @@ Hint: Marvel Comics refers to publisher_name = 'Marvel Comics'; percentage = MUL
 Schema_links: [superhero.id,publisher.publisher_name,alignment.alignment,superhero.publisher_id = publisher.id,superhero.alignment_id = alignment.id,Marvel Comics,Good]
 Result Contract:
 {
-  "population": "All superheroes whose publisher is Marvel Comics (publisher_name = 'Marvel Comics').",
-  "row_grain": "One global summary row spanning the entire Marvel Comics superhero population.",
-  "column_role": "The percentage of superheroes with alignment 'Good' among Marvel Comics superheroes.",
-  "derivation": "Compute the count of Marvel Comics superheroes whose alignment is 'Good', divide by the total count of Marvel Comics superheroes, and multiply by 100.0 to obtain a percentage.",
+  "population": "All superheroes whose publisher is Marvel Comics (publisher_name = 'Marvel Comics') and for which an alignment is recorded.",
+  "row_grain": "One global summary row spanning the entire population of Marvel Comics superheroes with a recorded alignment.",
+  "column_role": "The percentage of superheroes with alignment 'Good' among the Marvel Comics superheroes with a recorded alignment.",
+  "derivation": "Compute the count of Marvel Comics superheroes whose alignment is 'Good', divide by the total count of Marvel Comics superheroes with a recorded alignment, and multiply by 100.0 to obtain a percentage.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -491,12 +491,12 @@ Hint: Kevin Constant refers to player_name = 'Kevin Constant'; highest crossing 
 Schema_links: [Player_Attributes.date,Player_Attributes.crossing,Player.player_name,Player_Attributes.player_api_id = Player.player_api_id,'Kevin Constant']
 Result Contract:
 {
-  "population": "All dated player attribute records for the player Kevin Constant (player_name = 'Kevin Constant') whose crossing score equals his highest crossing score.",
-  "row_grain": "One global summary row representing a single date.",
-  "column_role": "The date on which Kevin Constant first recorded his highest crossing score.",
-  "derivation": "The highest crossing score is the maximum crossing value across all of Kevin Constant's dated player attribute records (MAX(crossing)).",
-  "filter_policy": "Select the earliest date among the qualifying player attribute records (first occurrence).",
-  "meta_review": "Player_Attributes.date and Player_Attributes.crossing establish that crossing scores are dated player-level attribute records, so the maximum and first occurrence are evaluated over Kevin Constant's attribute dates."
+  "population": "All dated player attribute records associated with the player Kevin Constant.",
+  "row_grain": "One global row containing the selected date.",
+  "column_role": "The date of Kevin Constant's most recent player attribute record.",
+  "derivation": "The returned value is the stored date from the selected record, chosen as the latest date among his player attribute records.",
+  "filter_policy": "Select the single record with the most recent date among Kevin Constant's player attribute records.",
+  "meta_review": "The date field in player attribute records provides the temporal dimension; the result is determined by the latest dated record for Kevin Constant rather than by a maximum crossing score or first occurrence."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

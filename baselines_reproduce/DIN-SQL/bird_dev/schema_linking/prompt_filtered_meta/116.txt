@@ -183,28 +183,13 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id]
-Table client, columns = [*,client_id]
-Table disp, columns = [*,disp_id,client_id,account_id,type]
 Table loan, columns = [*,loan_id,account_id,date]
 Table trans, columns = [*,trans_id,account_id,date,balance]
-Foreign_keys = [disp.client_id = client.client_id,disp.account_id = account.account_id,loan.account_id = account.account_id,trans.account_id = account.account_id]
+Foreign_keys = [loan.account_id = account.account_id,trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id"]):
 [[1], [2], [3]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
-Sample rows from client (columns: ["client_id"]):
-[[1], [2], [3]]
-Column descriptions and value descriptions for client:
-Column client_id: column description -> the unique number, value description -> 
-Sample rows from disp (columns: ["disp_id", "client_id", "account_id", "type"]):
-[[1, 1, 1, "OWNER"], [2, 2, 2, "OWNER"], [3, 3, 2, "DISPONENT"]]
-Column descriptions and value descriptions for disp:
-Column disp_id: column description -> unique number of identifying this row of record, value description -> 
-Column client_id: column description -> id number of client, value description -> 
-Column account_id: column description -> id number of account, value description -> 
-Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
-commonsense evidence:
-the account can only have the right to issue permanent orders or apply for loans
 Sample rows from loan (columns: ["loan_id", "account_id", "date"]):
 [[4959, 2, "1994-01-05"], [4961, 19, "1996-04-29"], [4962, 25, "1997-12-08"]]
 Column descriptions and value descriptions for loan:

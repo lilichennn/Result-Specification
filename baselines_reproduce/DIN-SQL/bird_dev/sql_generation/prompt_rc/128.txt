@@ -248,7 +248,7 @@ Hint: A2 refers to districts; Female refers to gender = 'F'
 Schema_links: [district.A2,client.client_id,client.gender,client.district_id = district.district_id,'F']
 Result Contract:
 {
-  "population": "All districts with their associated account holders, where only account holders whose gender is 'F' (female) are eligible to contribute to each district's count.",
+  "population": "Districts that have at least one associated female account holder, with only account holders whose gender is 'F' (female) eligible to contribute to each district's count.",
   "row_grain": "One row per district.",
   "column_role": "The district name (A2) and the number of female account holders in that district.",
   "derivation": "For each district, count the associated account holders whose gender is 'F'.",

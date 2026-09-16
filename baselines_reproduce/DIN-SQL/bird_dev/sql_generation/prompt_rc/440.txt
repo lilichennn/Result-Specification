@@ -366,8 +366,8 @@ Hint: "A Pedra Fellwar" refers to name = 'A Pedra Fellwar'
 Schema_links: [foreign_data.language,foreign_data.name,'A Pedra Fellwar']
 Result Contract:
 {
-  "population": "Foreign card data entries whose foreign name equals 'A Pedra Fellwar'.",
-  "row_grain": "One row per foreign language used by the foreign card name 'A Pedra Fellwar'.",
+  "population": "Foreign language values recorded for foreign card data entries whose foreign name equals 'A Pedra Fellwar'.",
+  "row_grain": "One row per distinct foreign language used by the foreign card name 'A Pedra Fellwar'.",
   "column_role": "The foreign language used by the foreign card name 'A Pedra Fellwar'.",
   "derivation": "none",
   "filter_policy": "none",

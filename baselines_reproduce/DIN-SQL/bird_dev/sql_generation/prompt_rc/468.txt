@@ -297,8 +297,8 @@ Hint: Eighth Edition is the name of card set which refers to name = 'Eighth Edit
 Schema_links: [sets.name,set_translations.language,set_translations.translation,set_translations.setCode = sets.code,'Eighth Edition','Chinese Simplified']
 Result Contract:
 {
-  "population": "The card set whose name is 'Eighth Edition', together with its set-name translation in the language 'Chinese Simplified'.",
-  "row_grain": "One translation of the set's name.",
+  "population": "The set-name translation in the language 'Chinese Simplified' for the card set whose name is 'Eighth Edition'.",
+  "row_grain": "The qualifying set-name translation of the set's name.",
   "column_role": "The translated name text of the set in Simplified Chinese.",
   "derivation": "none",
   "filter_policy": "Restrict to the set named 'Eighth Edition' and to the set-name translation whose language is 'Chinese Simplified'.",

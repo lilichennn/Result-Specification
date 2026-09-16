@@ -415,8 +415,8 @@ Hint: "Hull City" refers to team_long_name = 'Hull City'; on 2010/2/22 refers to
 Schema_links: [Team_Attributes.chanceCreationCrossingClass,Team.team_long_name,Team_Attributes.date,Team_Attributes.team_api_id = Team.team_api_id,'Hull City','2010-02-22 00:00:00']
 Result Contract:
 {
-  "population": "Team attribute records for the team whose team_long_name = 'Hull City' and whose attribute date = '2010-02-22 00:00:00'.",
-  "row_grain": "One row per matching team attribute record for Hull City on 2010-02-22 00:00:00.",
+  "population": "Team attribute records for the team whose team_long_name = 'Hull City' and whose attribute date falls on 2010-02-22.",
+  "row_grain": "One row per matching team attribute record for Hull City on 2010-02-22.",
   "column_role": "The chance creation crossing class value for that team attribute record.",
   "derivation": "none",
   "filter_policy": "none",

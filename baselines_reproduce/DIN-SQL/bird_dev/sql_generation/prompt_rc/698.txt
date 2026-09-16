@@ -320,12 +320,12 @@ Hint:
 Schema_links: [posts.CommentCount,posts.AnswerCount,posts.Title,'Clustering 1D data']
 Result Contract:
 {
-  "population": "All comments and all answers left on the post whose title is 'Clustering 1D data'.",
-  "row_grain": "One global summary row for the specified post.",
-  "column_role": "The number of comments on the post and the number of answers on the post.",
-  "derivation": "For the target post, take its total number of comments and total number of answers.",
+  "population": "The post whose title is 'Clustering 1D data'.",
+  "row_grain": "One row for the target post.",
+  "column_role": "The number of comments and the number of answers recorded for the post.",
+  "derivation": "Return the post's recorded comment total and answer total.",
   "filter_policy": "none",
-  "meta_review": "The posts table documents CommentCount and AnswerCount as the total number of comments and answers of a post, establishing these as post-level metrics. This supports deriving the requested counts from the target post's stored totals."
+  "meta_review": "The requested quantities are post-level totals, so they are taken from the post's recorded counts rather than by enumerating individual comments or answers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

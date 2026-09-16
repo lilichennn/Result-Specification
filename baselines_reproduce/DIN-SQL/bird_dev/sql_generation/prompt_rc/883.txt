@@ -356,10 +356,10 @@ Result Contract:
 {
   "population": "All races held in the year 2005.",
   "row_grain": "One row per race held in 2005.",
-  "column_role": "The total number of races held in 2005, and the name of each race.",
-  "derivation": "The count value is the total number of races in 2005 aggregated across the entire eligible population.",
-  "filter_policy": "The output is requested in descending order, but the question does not specify the ordering criterion.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "column_role": "The name of each race held in 2005.",
+  "derivation": "Each returned value is the race name taken directly from the eligible races; no aggregate count is returned.",
+  "filter_policy": "The output rows are ordered by race name in descending order.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

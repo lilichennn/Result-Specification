@@ -251,12 +251,12 @@ Hint: about linear regression refers to Title contains 'linear regression'
 Schema_links: [comments.Text,posts.Title,comments.PostId = posts.Id,"linear regression"]
 Result Contract:
 {
-  "population": "All comments made on the post whose title contains 'linear regression'.",
+  "population": "All comments made on a post whose title contains 'linear regression'.",
   "row_grain": "One comment.",
   "column_role": "The text of the comment.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms comments.Text is the detailed content of a comment, while postHistory.Comment is a post-history field, validating that the requested texts are comment records. No Round-1 field required change."
+  "meta_review": "Metadata confirms comments.Text is the detailed content of a comment, while postHistory.Comment is a post-history field, validating that the requested texts are comment records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

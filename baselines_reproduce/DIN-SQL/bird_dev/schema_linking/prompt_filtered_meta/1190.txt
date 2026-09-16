@@ -182,25 +182,18 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Laboratory, columns = [*,ID,Date,UA,U-PRO]
-Table Patient, columns = [*,ID,SEX]
-Foreign_keys = [Laboratory.ID = Patient.ID]
-Sample rows from Laboratory (columns: ["ID", "Date", "UA", "U-PRO"]):
-[[27654, "1991-09-11", 3.8, null], [27654, "1991-09-17", 4.2, null], [27654, "1991-09-19", 4.9, null]]
+Table Laboratory, columns = [*,ID,UA,U-PRO]
+Foreign_keys = []
+Sample rows from Laboratory (columns: ["ID", "UA", "U-PRO"]):
+[[27654, 3.8, null], [27654, 4.2, null], [27654, 4.9, null]]
 Column descriptions and value descriptions for Laboratory:
 Column ID: column description -> identification of the patient, value description -> 
-Column Date: column description -> Date of the laboratory tests (YYMMDD), value description -> 
 Column UA: column description -> uric acid, value description -> Commonsense evidence:
 
 Normal range: N > 8.0 (Male)N > 6.5 (Female)
 Column U-PRO: column description -> proteinuria, value description -> Commonsense evidence:
 
 Normal range: 0 < N < 30
-Sample rows from Patient (columns: ["ID", "SEX"]):
-[[2110, "F"], [11408, "F"], [12052, "F"]]
-Column descriptions and value descriptions for Patient:
-Column ID: column description -> identification of the patient, value description -> 
-Column SEX: column description -> Sex, value description -> F: female; M: male
 
 Q: What percentage of patients with a proteinuria level within the normal range have a uric acid level below the normal range?
 Hint: proteinuria level within the normal range refers to `U-PRO` > 0 AND `U-PRO` < 30; uric acid level below the normal range refers to UA < = 6.5; calculation = MULTIPLY(DIVIDE(UA < = 6.5, `U-PRO` > 0 AND `U-PRO` < 30)，100)

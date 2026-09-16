@@ -286,11 +286,11 @@ Schema_links: [lapTimes.milliseconds,drivers.forename,drivers.surname,races.name
 Result Contract:
 {
   "population": "All recorded lap-time records, each associated with the driver who set it and the race in which it was recorded; no eligibility restrictions apply.",
-  "row_grain": "One row per lap-time record that attains the best lap time, reported through its associated driver and race.",
-  "column_role": "The best lap time value, the driver's forename and surname, and the race name.",
-  "derivation": "The best lap time is the minimum of the lap-time milliseconds values across all recorded lap-time records.",
-  "filter_policy": "Argmin: retain only the lap-time record(s) whose milliseconds equal the overall minimum, keeping all tied records.",
-  "meta_review": "Metadata identifies lapTimes.milliseconds as the milliseconds measure attached to lap-time records, while results.milliseconds is finishing time and pitStops.milliseconds is pit-stop duration. This resolves the metric source for min(milliseconds) without changing the requested driver and race outputs."
+  "row_grain": "One row for the single fastest lap-time record, reported through its associated driver and race.",
+  "column_role": "The selected lap-time milliseconds value, the driver's forename and surname, and the race name.",
+  "derivation": "The returned lap time is the stored milliseconds value of the selected lap-time record, chosen as the lowest milliseconds value among all recorded lap-time records.",
+  "filter_policy": "Top-1 extremum: retain only the first lap-time record when records are arranged from lowest to highest milliseconds; if multiple records tie for the lowest value, only one tied record is returned.",
+  "meta_review": "Metadata identifies lapTimes.milliseconds as the milliseconds measure attached to lap-time records, while results.milliseconds is finishing time and pitStops.milliseconds is pit-stop duration. This resolves the metric source for the best lap time without changing the requested driver and race outputs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

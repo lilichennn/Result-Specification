@@ -256,12 +256,12 @@ Hint: double bond refers to bond_type = ' = ';
 Schema_links: [bond.molecule_id,bond.bond_type,'=']
 Result Contract:
 {
-  "population": "All bond records whose bond type is a double bond (bond_type = '=').",
-  "row_grain": "One row per double-bond record.",
-  "column_role": "The identifier of the molecule associated with each double bond.",
+  "population": "Molecules that have at least one bond whose bond type is a double bond ('=').",
+  "row_grain": "One row per distinct qualifying molecule.",
+  "column_role": "The identifier of each qualifying molecule.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms bond.bond_type uses '=' to represent a double bond and bond.molecule_id identifies the molecule in which the bond appears. This validates the Round-1 population and output role without refinement."
+  "filter_policy": "Duplicate molecule identifiers are collapsed so each qualifying molecule appears once.",
+  "meta_review": "Metadata confirms that '=' represents a double bond and that bonds carry molecule identifiers, so the result is molecule identifiers for molecules with double bonds, returned distinctly."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

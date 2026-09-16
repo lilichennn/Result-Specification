@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,nationality]
 Table qualifying, columns = [*,raceId,driverId,q2]
-Table races, columns = [*,raceId]
-Foreign_keys = [qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId]
+Foreign_keys = [qualifying.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "nationality"]):
 [[1, "British"], [2, "German"], [3, "German"]]
 Column descriptions and value descriptions for drivers:
@@ -197,10 +196,6 @@ Column descriptions and value descriptions for qualifying:
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
 Column q2: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
 
 Q: For the driver who had the Q2 time as 0:01:40 in the qualifying race No. 355, what is his nationality?
 Hint: race number refers to raceId;

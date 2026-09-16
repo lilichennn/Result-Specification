@@ -415,12 +415,12 @@ Hint: preferred foot when attacking refers to preferred_foot; youngest football 
 Schema_links: [Player_Attributes.preferred_foot,Player.birthday,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All football players are eligible candidates.",
-  "row_grain": "One football player, specifically the youngest one.",
+  "population": "Football players that have an associated preferred-foot attribute are eligible candidates.",
+  "row_grain": "A single selected preferred-foot value for the youngest eligible player.",
   "column_role": "The preferred foot when attacking of that player.",
   "derivation": "none",
-  "filter_policy": "Select the single player with the latest birthday (the youngest); tie handling is unspecified.",
-  "meta_review": "Metadata confirms Player.birthday provides age order, with a later birthday meaning a younger player, and Player_Attributes.preferred_foot is the player's preferred foot when attacking. This validates the Round-1 youngest-player and requested-foot semantics."
+  "filter_policy": "Select one value by ordering candidates by latest birthday and taking the first; if multiple players tie or the selected player has multiple attribute records, the chosen value is unspecified.",
+  "meta_review": "Metadata confirms that birthday provides age order, with a later birthday meaning a younger player, and that the recorded preferred foot represents the preferred foot when attacking."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

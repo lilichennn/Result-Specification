@@ -230,12 +230,12 @@ Hint: expense refers to expense_description; 'Vice President' is a position of t
 Schema_links: [expense.expense_description,member.position,expense.link_to_member = member.member_id,Vice President]
 Result Contract:
 {
-  "population": "All expenses incurred by the person holding the 'Vice President' position in the Student Club.",
-  "row_grain": "One expense incurred by the vice president.",
-  "column_role": "The expense description of each qualifying expense.",
+  "population": "All expenses incurred by a member holding the 'Vice President' position in the Student Club.",
+  "row_grain": "One expense incurred by a member holding the 'Vice President' position.",
+  "column_role": "The expense identifier and expense description of each qualifying expense.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

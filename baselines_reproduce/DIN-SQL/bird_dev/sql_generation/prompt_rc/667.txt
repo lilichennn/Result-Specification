@@ -255,8 +255,8 @@ Result Contract:
   "row_grain": "One single post.",
   "column_role": "The title of the selected post.",
   "derivation": "none",
-  "filter_policy": "Select the post connected to the post-link record with the earliest post-link creation date (minimum CreationDate among post-link records).",
-  "meta_review": "Metadata establishes postLinks.CreationDate as the creation date of a post link and postLinks.PostId as the post owning that link, so the minimum-date condition applies to post-link records rather than posts.CreaionDate. This refines the eligible population and filter owner while preserving the requested post title."
+  "filter_policy": "Select a single eligible post having the earliest post creation date.",
+  "meta_review": "The creation-date condition applies to the post itself, while the post-link condition only establishes eligibility; it does not apply to a separate post-link creation date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -294,12 +294,12 @@ Hint: average = DIVIDE(SUM(height_cm), COUNT(all heros));
 Schema_links: [superhero.height_cm,superhero.id]
 Result Contract:
 {
-  "population": "All superheroes are eligible; no membership conditions restrict which superheroes appear.",
-  "row_grain": "One row per superhero.",
-  "column_role": "The superhero's identity and that superhero's average height value in centimeters.",
-  "derivation": "For each superhero, average height is SUM(height_cm) divided by COUNT of that superhero's valid height observations. The catalog establishes height_cm as a single entity-level value per superhero, so the average equals the stored height when present; NULL or 0 represents missing height and is not a valid zero measurement.",
+  "population": "All superheroes form the aggregate population; no membership conditions restrict which superheroes are included.",
+  "row_grain": "One global row containing a single aggregate result.",
+  "column_role": "The overall average height of superheroes, in centimeters; no superhero identity is returned.",
+  "derivation": "The result is an aggregate over all superheroes: total height in centimeters divided by the number of superheroes.",
   "filter_policy": "none",
-  "meta_review": "The superhero table stores one entity-level height_cm in centimeters, so a per-superhero average reduces to that stored value rather than repeated measurements. NULL or 0 denotes missing height, not zero height."
+  "meta_review": "The result is a single overall average across all superheroes, not one average per superhero, and no entity identifier is part of the output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

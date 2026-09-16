@@ -250,10 +250,10 @@ Result Contract:
 {
   "population": "Transactions that are withdrawals in cash (operation = 'VYBER') and that are made by the client with id 3356, interpreted as transactions on accounts linked to that client; both conditions must hold together.",
   "row_grain": "One cash-withdrawal transaction.",
-  "column_role": "The transaction details of each qualifying cash withdrawal, as requested by listing the transactions.",
+  "column_role": "The identifier of each qualifying cash-withdrawal transaction.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows trans records are account-scoped and client-account linkage is recorded in disp, so the client condition is interpreted as transactions on accounts linked to client 3356. This refines only the representation of client-made transactions, not the requested entity or output."
+  "meta_review": "Metadata shows trans records are account-scoped and client-account linkage is recorded in disp, so the client condition is interpreted as transactions on accounts linked to client 3356."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

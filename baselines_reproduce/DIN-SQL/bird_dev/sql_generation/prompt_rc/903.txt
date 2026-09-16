@@ -285,12 +285,12 @@ Hint: win from races refers to max(points)
 Schema_links: [results.raceId,drivers.forename,drivers.surname,circuits.name,results.points,results.driverId = drivers.driverId,results.raceId = races.raceId,races.circuitId = circuits.circuitId,'Michael','Schumacher','Sepang International Circuit']
 Result Contract:
 {
-  "population": "Race results for driver Michael Schumacher in races hosted at the circuit whose full name is Sepang International Circuit where his race-result points equal the maximum race-result points obtained by any driver in that race (a win).",
-  "row_grain": "One global summary row representing the total across all qualifying races.",
-  "column_role": "The count of Michael Schumacher's wins at Sepang International Circuit.",
-  "derivation": "Count the qualifying race results, where a win means the driver's race-result points are the maximum points within that race.",
+  "population": "Driver standing entries for Michael Schumacher that are associated with races hosted at the circuit named Sepang International Circuit.",
+  "row_grain": "One global summary row representing the total across all matching driver standing entries.",
+  "column_role": "The total number of wins credited to Michael Schumacher for those matching driver standing entries.",
+  "derivation": "Sum the recorded wins measure from the matching driver standing entries.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms results.points is recorded per driver race result and circuits.name is the full circuit name. This validates using per-race maximum result points for the win and matching Sepang International Circuit as the host circuit's full name."
+  "meta_review": "Metadata supports using the wins measure recorded in driver standings, with the driver identified by forename and surname and the host circuit identified by its full name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

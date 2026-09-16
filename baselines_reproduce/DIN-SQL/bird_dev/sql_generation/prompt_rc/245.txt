@@ -187,12 +187,12 @@ Hint: atoms with the element iodine refers to element = 'i'; average = DIVIDE(CO
 Schema_links: [connected.bond_id,atom.atom_id,atom.element,connected.atom_id = atom.atom_id,'i']
 Result Contract:
 {
-  "population": "Iodine atoms (element = 'i') and the bond endpoint associations in which those iodine atoms participate; atom eligibility is element = 'i', and counted bonds are restricted to associations involving those iodine atoms.",
-  "row_grain": "One global summary row across all iodine atoms.",
-  "column_role": "The average number of bonds per iodine atom.",
-  "derivation": "The average is DIVIDE(COUNT(bond_id), COUNT(atom_id)) within element = 'i', where the bond count is taken over bond endpoint associations for iodine atoms (each bond is counted once for each iodine atom it connects) and the atom count is the number of iodine atoms.",
+  "population": "Iodine atoms (element = 'i') and the bond endpoint association records matched to those atoms as the referenced endpoint atom; counted associations are restricted to those matched records.",
+  "row_grain": "One global summary row across the matched iodine-atom association records.",
+  "column_role": "The average number of bonds per matched iodine atom occurrence.",
+  "derivation": "The average is DIVIDE(COUNT(bond_id), COUNT(atom_id)) within element = 'i', where both counts are taken over the matched iodine atom–association records: COUNT(bond_id) counts the bond endpoint association records, and COUNT(atom_id) counts the iodine atom occurrences in those records rather than distinct iodine atoms.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows connected records a bond's two endpoint atoms (atom_id and atom_id2), so the numerator counts endpoint incidences in either column. atom.atom_id uniquely identifies atoms, so the denominator counts each iodine atom once."
+  "meta_review": "Only endpoint associations matched through the atom endpoint are included; associations where iodine appears only as the other endpoint are not counted. The denominator is a row-level count of matched atom occurrences, not a distinct count of iodine atoms."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

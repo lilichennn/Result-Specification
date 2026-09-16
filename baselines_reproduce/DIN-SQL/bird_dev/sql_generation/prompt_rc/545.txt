@@ -256,7 +256,7 @@ Result Contract:
   "column_role": "The count of qualifying root posts.",
   "derivation": "Count the posts satisfying the ownership and root-post conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.ParentId NULL identifies a root post, validating the root-post condition; Round-1 contract preserved."
+  "meta_review": "Metadata confirms posts.ParentId NULL identifies a root post, validating the root-post condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

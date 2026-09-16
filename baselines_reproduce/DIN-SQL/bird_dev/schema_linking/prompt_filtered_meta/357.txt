@@ -182,13 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,asciiName,name,promoTypes]
+Table cards, columns = [*,id,name,promoTypes]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "asciiName", "name", "promoTypes"]):
-[[1, null, "Ancestor's Chosen", null], [2, null, "Angel of Mercy", null], [3, null, "Aven Cloudchaser", null]]
+Sample rows from cards (columns: ["id", "name", "promoTypes"]):
+[[1, "Ancestor's Chosen", null], [2, "Angel of Mercy", null], [3, "Aven Cloudchaser", null]]
 Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
-Column asciiName: column description -> The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters., value description -> 
 Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
 Column promoTypes: column description -> A list of promotional types for a card., value description -> "arenaleague", "boosterfun", "boxtopper", "brawldeck", "bundle", "buyabox", "convention", "datestamped", "draculaseries", "draftweekend", "duels", "event", "fnm", "gameday", "gateway", "giftbox", "gilded", "godzillaseries", "instore", "intropack", "jpwalker", "judgegift", "league", "mediainsert", "neonink", "openhouse", "planeswalkerstamped", "playerrewards", "playpromo", "premiereshop", "prerelease", "promopack", "release", "setpromo", "stamped", "textured", "themepack", "thick", "tourney", "wizardsplaynetwork"
 

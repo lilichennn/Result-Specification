@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Examination Date]
-Table Laboratory, columns = [*,ID,SC170]
+Table Laboratory, columns = [*,ID,Date,SC170]
 Table Patient, columns = [*,ID]
 Foreign_keys = [Examination.ID = Patient.ID,Laboratory.ID = Patient.ID]
 Sample rows from Examination (columns: ["ID", "Examination Date"]):
@@ -191,10 +191,11 @@ Sample rows from Examination (columns: ["ID", "Examination Date"]):
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
 Column Examination Date: column description -> Examination Date, value description -> 
-Sample rows from Laboratory (columns: ["ID", "SC170"]):
-[[27654, null], [27654, null], [27654, null]]
+Sample rows from Laboratory (columns: ["ID", "Date", "SC170"]):
+[[27654, "1991-09-11", null], [27654, "1991-09-17", null], [27654, "1991-09-19", null]]
 Column descriptions and value descriptions for Laboratory:
 Column ID: column description -> identification of the patient, value description -> 
+Column Date: column description -> Date of the laboratory tests (YYMMDD), value description -> 
 Column SC170: column description -> anti-scl70, value description -> Commonsense evidence:
 
 Normal range: N= -, +-

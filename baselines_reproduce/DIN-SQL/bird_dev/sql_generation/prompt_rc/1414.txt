@@ -230,12 +230,12 @@ Hint: name of major refers to major_name
 Schema_links: [major.major_name,member.first_name,member.last_name,member.link_to_major = major.major_id,Phillip,Cullen]
 Result Contract:
 {
-  "population": "The member named Phillip Cullen and the major he has joined.",
+  "population": "The major joined by the member named Phillip Cullen.",
   "row_grain": "One major that Phillip Cullen has joined.",
-  "column_role": "The name of the major (major_name).",
+  "column_role": "The name of the major.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies Phillip Cullen as a member and shows that a member has a single linked major, resolving the Round-1 'major or majors' ambiguity."
+  "meta_review": "Metadata identifies Phillip Cullen as a member and shows that a member has a single linked major."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

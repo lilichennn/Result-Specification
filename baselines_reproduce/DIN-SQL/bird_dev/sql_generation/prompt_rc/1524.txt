@@ -182,12 +182,12 @@ Hint: '2012/8/24' can be represented by '2012-08-24'
 Schema_links: [gasstations.Country,transactions_1k.Price,transactions_1k.Date,transactions_1k.GasStationID = gasstations.GasStationID,548.4,'2012-08-24']
 Result Contract:
 {
-  "population": "Customers whose total spending on 2012-08-24 equals 548.4, where spending is computed from transaction total price (Amount × Price).",
-  "row_grain": "One customer who meets the spending condition.",
-  "column_role": "The nationality of the qualifying customer.",
-  "derivation": "Compute each customer's spending on 2012-08-24 as the sum of transaction total prices (Amount × Price) for that date, and compare the result to 548.4.",
+  "population": "Transactions on 2012-08-24 whose transaction price is exactly 548.4, with the returned country taken from the associated gas station.",
+  "row_grain": "One row for each qualifying transaction, so the same country may appear more than once if multiple transactions qualify.",
+  "column_role": "The country of the gas station associated with the qualifying transaction.",
+  "derivation": "The price condition uses the stored transaction price directly, and the returned country is the stored country attribute of the associated gas station; no arithmetic or aggregation is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that spending is transaction total price (Amount × Price) in transactions_1k, so the amount condition is evaluated for transactions dated 2012-08-24. The complete catalog contains no customer nationality attribute, so the requested nationality output remains unsupported."
+  "meta_review": "The amount condition is a direct transaction-price equality on 2012-08-24, not a computed total spending using amount and price. The returned output is the associated gas-station country, not an unavailable customer nationality attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

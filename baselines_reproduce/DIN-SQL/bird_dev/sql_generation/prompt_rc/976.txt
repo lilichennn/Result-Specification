@@ -354,12 +354,12 @@ Hint: fastest time refers to Min(time);
 Schema_links: [lapTimes.driverId,lapTimes.time,lapTimes.lap,1]
 Result Contract:
 {
-  "population": "Drivers who have a recorded time for lap number 1 of a race.",
-  "row_grain": "One row per selected driver.",
+  "population": "First-lap time entries, represented by the associated driver's ID.",
+  "row_grain": "One row for each selected first-lap time entry, limited to five rows; drivers are not deduplicated.",
   "column_role": "The driver's ID.",
-  "derivation": "For each driver, the fastest time is the minimum of their recorded lap-1 time durations.",
-  "filter_policy": "Keep the top five drivers, ranked by descending fastest (minimum) lap-1 time duration.",
-  "meta_review": "The lapTimes metadata confirms that lap number identifies the lap and time is a lap-time duration. The contract therefore uses lap number 1 to identify the first lap and treats the ranking metric as the minimum lap-time duration."
+  "derivation": "The driver ID is taken directly from each selected first-lap time entry; no per-driver minimum time is computed or returned.",
+  "filter_policy": "Keep the five first-lap time entries with the shortest recorded times, ordered from shortest to longest time.",
+  "meta_review": "The metadata confirms that lap number identifies the lap and time is a lap-time duration. The contract therefore uses lap number 1 to identify the first lap and treats the ordering metric as the recorded lap-time duration for each first-lap entry."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

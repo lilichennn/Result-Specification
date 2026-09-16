@@ -228,9 +228,9 @@ Result Contract:
   "population": "All superheroes whose alignment is Neutral.",
   "row_grain": "One global summary row for the entire eligible population.",
   "column_role": "A single value representing the average height of the eligible superheroes.",
-  "derivation": "Compute the arithmetic mean of height_cm for neutral superheroes, excluding heights that are missing (height_cm is NULL or 0).",
-  "filter_policy": "Among neutral superheroes, include only records with a recorded height (height_cm not NULL and not 0); no ordering.",
-  "meta_review": "Metadata establishes that superhero.height_cm is measured in centimeters and that NULL or 0 indicates missing height, so the mean uses only recorded non-zero heights. It also identifies alignment.alignment value 'Neutral' as the eligibility condition."
+  "derivation": "Compute the arithmetic mean of height_cm for neutral superheroes, ignoring missing height values but not excluding zero heights.",
+  "filter_policy": "Among neutral superheroes, apply no height-based record filter; missing heights are simply not averaged, while zero heights remain eligible. No ordering.",
+  "meta_review": "The eligibility condition is the alignment value 'Neutral'. height_cm is the measured height used for the average; missing values are ignored, but zero is not treated as a reason to exclude a superhero's height."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

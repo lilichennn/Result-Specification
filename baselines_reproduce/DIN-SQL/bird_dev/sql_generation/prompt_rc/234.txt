@@ -187,12 +187,12 @@ Hint: TR009 is the molecule id;  involved atom 12 refers to atom_id = 'TR009_12'
 Schema_links: [bond.bond_id,bond.molecule_id,connected.atom_id,connected.atom_id2,connected.bond_id = bond.bond_id,TR009,TR009_12]
 Result Contract:
 {
-  "population": "Bonds belonging to molecule TR009 in which atom 12 participates, i.e., bonds where atom_id = 'TR009_12' OR atom_id2 = 'TR009_12'.",
-  "row_grain": "One global summary for molecule TR009.",
-  "column_role": "The number of qualifying bonds.",
-  "derivation": "Count the bonds in the eligible population.",
+  "population": "Bond connections belonging to molecule TR009 whose first atom endpoint is atom 1 of TR009 and whose second atom endpoint is atom 2 of TR009.",
+  "row_grain": "One global count.",
+  "column_role": "The number of qualifying bond connections.",
+  "derivation": "Count the qualifying bond connections.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,8 +297,8 @@ Hint: code of sets refers to setCode
 Schema_links: [set_translations.setCode,sets.type,set_translations.setCode = sets.code,'commander']
 Result Contract:
 {
-  "population": "Sets whose expansion type is 'commander'.",
-  "row_grain": "One row per qualifying set.",
+  "population": "Set translation entries associated with sets whose expansion type is 'commander'.",
+  "row_grain": "One row per matching set translation entry, so the same set code may repeat.",
   "column_role": "The code of the set (setCode).",
   "derivation": "none",
   "filter_policy": "none",

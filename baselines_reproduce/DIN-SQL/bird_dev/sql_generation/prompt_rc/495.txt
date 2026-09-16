@@ -297,12 +297,12 @@ Hint: "Evacuation" refers to name = 'Evacuation'; release date refers to release
 Schema_links: [sets.releaseDate,cards.name,cards.setCode = sets.code,Evacuation]
 Result Contract:
 {
-  "population": "Sets that contain at least one card whose name is 'Evacuation'.",
-  "row_grain": "One set containing the card named 'Evacuation'.",
-  "column_role": "The release date of the set.",
+  "population": "Cards named 'Evacuation', along with their containing sets.",
+  "row_grain": "One row for each card named 'Evacuation', returning the release date of its containing set.",
+  "column_role": "The release date of the containing set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies sets.releaseDate as the release date of a set, validating the Round-1 column role."
+  "meta_review": "Metadata identifies the set release date as the requested release date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

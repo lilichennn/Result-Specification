@@ -230,12 +230,12 @@ Hint: events attended in 2019 refers to YEAR(event_date) = 2019
 Schema_links: [event.event_id,event.event_name,event.event_date,member.first_name,member.last_name,attendance.link_to_event = event.event_id,attendance.link_to_member = member.member_id,Sacha,Harrison,Student_Club,2019]
 Result Contract:
 {
-  "population": "Event attendance records where the attendee is the member whose full name, composed of the recorded first and last name, is Sacha Harrison, the event belongs to the Student_Club, and the event date falls in year 2019.",
+  "population": "Event attendance records where the attendee is the member whose recorded first and last name are Sacha Harrison and the event date falls in year 2019.",
   "row_grain": "One global summary row for the qualifying attendance set.",
   "column_role": "The count of qualifying attended events.",
   "derivation": "Count the attendance records in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata states that a member's full name is formed from the recorded first and last names, resolving how to identify Sacha Harrison. No other Round-1 semantics were changed."
+  "meta_review": "Metadata states that a member's full name is formed from the recorded first and last names, resolving how to identify Sacha Harrison."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -354,12 +354,12 @@ Hint: date of birth refers to drivers.dob; The larger the birthday value, the yo
 Schema_links: [drivers.nationality,drivers.dob]
 Result Contract:
 {
-  "population": "All drivers.",
-  "row_grain": "One driver, specifically the oldest one.",
+  "population": "Drivers with a recorded date of birth.",
+  "row_grain": "One driver, specifically the oldest among those with a recorded date of birth.",
   "column_role": "The country the driver is from (driver's nationality).",
   "derivation": "none",
-  "filter_policy": "Select the single driver with the smallest date-of-birth value (argmin on drivers.dob, since smaller dob means older); tie handling is unspecified.",
-  "meta_review": "Metadata confirms drivers.dob is the driver's date of birth and drivers.nationality is the driver's nationality, validating the Round-1 oldest-driver country semantics."
+  "filter_policy": "Select the single driver with the smallest date-of-birth value, since an earlier date of birth means an older driver; tie handling is unspecified.",
+  "meta_review": "Metadata confirms date of birth as the driver's birth date and nationality as the driver's country, supporting the oldest-driver country semantics."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

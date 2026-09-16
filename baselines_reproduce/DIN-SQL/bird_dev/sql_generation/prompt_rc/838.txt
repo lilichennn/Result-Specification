@@ -295,7 +295,7 @@ Schema_links: [superhero.full_name,superhero.superhero_name,Alien]
 Result Contract:
 {
   "population": "Superheroes whose superhero name is \"Alien\".",
-  "row_grain": "One superhero matching the requested name.",
+  "row_grain": "One row per superhero matching the requested name.",
   "column_role": "The full name of the superhero.",
   "derivation": "none",
   "filter_policy": "none",

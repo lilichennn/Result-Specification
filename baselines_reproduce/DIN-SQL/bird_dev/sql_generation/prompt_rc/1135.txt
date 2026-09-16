@@ -484,12 +484,12 @@ Hint: lowest potential players refers to MIN(potential); prefer to use the right
 Schema_links: [Player.id,Player_Attributes.potential,Player_Attributes.preferred_foot,Player_Attributes.player_api_id = Player.player_api_id,'right']
 Result Contract:
 {
-  "population": "Football players who prefer the right foot (preferred_foot = 'right') and whose potential equals the minimum potential across players.",
-  "row_grain": "One row per qualifying football player.",
+  "population": "Football players who prefer to use the right foot.",
+  "row_grain": "One row per selected football player.",
   "column_role": "The player's ID.",
   "derivation": "none",
-  "filter_policy": "Return only five players (top five); the criterion for ranking or choosing among the equally qualifying lowest-potential players is not specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Return the five right-foot players with the greatest potential; no tie-breaking criterion is specified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: tin refers to element ! = 'sn'; label = '+' mean molecules are carcinogeni
 Schema_links: [molecule.label,atom.element,atom.molecule_id = molecule.molecule_id,'sn','+','-']
 Result Contract:
 {
-  "population": "Reference population: molecules that have at least one atom whose element value is 'sn' (Tin); target label types are '+' (carcinogenic) and '-' (non-carcinogenic).",
-  "row_grain": "One label type, i.e., a single global summary identifying the absent label.",
-  "column_role": "The molecule label value that does not appear on the qualifying molecules, interpretable as carcinogenic for '+' and non-carcinogenic for '-'.",
-  "derivation": "Absence test: compare the label domain '+' and '-' against the labels actually attached to the eligible molecules and identify the label value that never occurs among them.",
+  "population": "Molecule-level label values from molecules that have at least one associated atom whose element is not 'sn'.",
+  "row_grain": "One row for each distinct label value found among those molecules; multiple label types may be returned.",
+  "column_role": "The molecule label value, with '+' interpretable as carcinogenic and '-' as non-carcinogenic.",
+  "derivation": "Direct retrieval of the molecule label values for qualifying molecules, with duplicate label values collapsed.",
   "filter_policy": "none",
-  "meta_review": "Metadata documents atom.element value 'sn' as Tin and molecule.label as the molecule-level carcinogenic/non-carcinogenic label. This validates the tin-based population and label-value output without changing the Round-1 semantics."
+  "meta_review": "Metadata supports interpreting '+' as carcinogenic and '-' as non-carcinogenic. The operative population is based on atoms whose element is not 'sn', and the result returns distinct occurring label values rather than identifying a missing label."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

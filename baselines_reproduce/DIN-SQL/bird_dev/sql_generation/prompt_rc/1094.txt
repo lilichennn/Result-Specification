@@ -415,12 +415,12 @@ Hint: how much higher in percentage = MULTIPLY(DIVIDE(SUBTRACT(overall_rating WH
 Schema_links: [Player.player_name,Player_Attributes.overall_rating,Player_Attributes.player_api_id = Player.player_api_id,Ariel Borysiuk,Paulin Puel]
 Result Contract:
 {
-  "population": "The two players identified by name: Ariel Borysiuk and Paulin Puel, each contributing their overall rating.",
+  "population": "The two players identified by name, Ariel Borysiuk and Paulin Puel, with each player's available overall rating entries contributing to the comparison.",
   "row_grain": "One global summary row representing the single requested comparison between the two players.",
-  "column_role": "The percentage by which Ariel Borysiuk's overall rating exceeds Paulin Puel's overall rating.",
-  "derivation": "Compute (Ariel Borysiuk's overall rating minus Paulin Puel's overall rating) divided by Paulin Puel's overall rating, multiplied by 100.",
+  "column_role": "The percentage by which Ariel Borysiuk's summed overall rating exceeds Paulin Puel's summed overall rating.",
+  "derivation": "Sum the available overall ratings for Ariel Borysiuk and separately for Paulin Puel, then compute (Ariel Borysiuk's sum minus Paulin Puel's sum) multiplied by 100 and divided by Paulin Puel's sum.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

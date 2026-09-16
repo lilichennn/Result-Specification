@@ -354,12 +354,12 @@ Hint: the most number of races refers to max(round);
 Schema_links: [races.year,races.round]
 Result Contract:
 {
-  "population": "All years for which race round data exists; no further eligibility conditions are stated.",
+  "population": "All years for which races are recorded; no further eligibility conditions are stated.",
   "row_grain": "One year.",
   "column_role": "The year value; the race count is a ranking measure and is not required as an output column.",
-  "derivation": "For each year, the number of races is defined as the maximum round value recorded in that year, as clarified by the evidence.",
-  "filter_policy": "Select the single year whose number of races (maximum round) is highest; tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "For each year, the number of races is the aggregate count of races recorded in that year.",
+  "filter_policy": "Select the single year with the highest race count; tie handling is unspecified.",
+  "meta_review": "The phrase 'most number of races' is interpreted as the count of races per year, not the maximum round number."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

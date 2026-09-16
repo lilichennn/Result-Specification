@@ -357,7 +357,7 @@ Result Contract:
   "column_role": "A single value representing the number of qualifying schools.",
   "derivation": "Count the schools in the eligible population, where each school's average Math SAT score is the school-level metric compared against 400.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

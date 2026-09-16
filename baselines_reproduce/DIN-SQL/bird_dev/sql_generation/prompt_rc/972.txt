@@ -285,12 +285,12 @@ Hint: born in 1971 refers to year(dob) = 1971; has the fastest lap time refers t
 Schema_links: [drivers.driverId,drivers.code,drivers.dob,results.fastestLapTime,results.driverId = drivers.driverId,1971]
 Result Contract:
 {
-  "population": "Drivers whose birth year is 1971 (year(dob) = 1971) and who have at least one race result with a recorded fastest lap time, i.e., fastestLapTime has a value.",
-  "row_grain": "One row per driver, even if the driver has multiple race results with a recorded fastest lap time.",
+  "population": "Driver occurrences in race results where the driver's birth year is 1971 and the result has a recorded fastest lap time.",
+  "row_grain": "One row per qualifying race-result occurrence, so the same driver may appear more than once.",
   "column_role": "The driver's unique id and the driver's code.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows fastestLapTime is a race-result attribute in results, not a driver-level attribute. This supports applying the condition through race results while keeping the output grain at one row per driver."
+  "meta_review": "Fastest lap time is a race-result-level attribute, so the condition applies per qualifying result occurrence and the output is not deduplicated to one row per driver."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,17 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Examination Date]
-Table Patient, columns = [*,ID,First Date]
+Table Patient, columns = [*,ID,SEX,First Date]
 Foreign_keys = [Examination.ID = Patient.ID]
 Sample rows from Examination (columns: ["ID", "Examination Date"]):
 [[14872, "1997-05-27"], [48473, "1992-12-21"], [102490, "1995-04-20"]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
 Column Examination Date: column description -> Examination Date, value description -> 
-Sample rows from Patient (columns: ["ID", "First Date"]):
-[[2110, "1993-02-10"], [11408, "1973-01-01"], [12052, null]]
+Sample rows from Patient (columns: ["ID", "SEX", "First Date"]):
+[[2110, "F", "1993-02-10"], [11408, "F", "1973-01-01"], [12052, "F", null]]
 Column descriptions and value descriptions for Patient:
 Column ID: column description -> identification of the patient, value description -> 
+Column SEX: column description -> Sex, value description -> F: female; M: male
 Column First Date: column description -> the date when a patient came to the hospital, value description -> 
 
 Q: How long did it take after patient number 821298 arrived at the hospital for the first time before her evaluation began?

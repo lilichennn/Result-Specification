@@ -248,12 +248,12 @@ Hint: Female refers to gender = 'F'
 Schema_links: [client.client_id,client.gender,disp.type,card.disp_id = disp.disp_id,disp.client_id = client.client_id,disp.account_id = account.account_id,loan.account_id = account.account_id,'F','OWNER']
 Result Contract:
 {
-  "population": "Female account holders (gender = 'F'), where account-holder status is an owner-type disposition to an account (OWNER), and whose qualifying account-holder relationship is associated with at least one credit card and with an account that has at least one loan; all three conditions must hold together.",
-  "row_grain": "One qualifying client account holder.",
-  "column_role": "The client identity (client identifier) of the qualifying account holder, sufficient to answer who they are.",
+  "population": "Female clients (gender = 'F') who have an account-holder relationship to an account, where that relationship is associated with at least one credit card and the associated account has at least one loan; all conditions must hold together.",
+  "row_grain": "One row for each qualifying combination of a female client, an account-holder relationship, a credit card, and a loan on the related account; the result is not guaranteed to be distinct by client.",
+  "column_role": "The client identity of the qualifying female account holder.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that account-holder ownership is represented by disp.type = 'OWNER' and that gender/person identity live in client. This refines the qualifying entity to owner-type client account holders and the output to client identity."
+  "meta_review": "Metadata supports female client identity and client-account relationships linking credit cards to accounts with loans; it does not support an owner-type restriction for this result."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

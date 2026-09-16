@@ -251,12 +251,12 @@ Hint: user no. 3025 refers to UserId = '3025'; comment at 20:29:39 on 2014/4/23 
 Schema_links: [comments.UserId,comments.CreationDate,posts.FavoriteCount,comments.PostId = posts.Id,3025,'2014-04-23 20:29:39.0']
 Result Contract:
 {
-  "population": "The eligible comment is one with UserId = '3025' and CreationDate = '2014/4/23 20:29:39.0', and the eligible post is the post to which that comment was made.",
-  "row_grain": "One row representing the post that received the qualifying comment.",
-  "column_role": "The favorite count of that post.",
-  "derivation": "Follow the association from the qualifying comment to its target post and obtain that post's favorite count.",
+  "population": "Qualifying comments are those made by user number 3025 at 2014-04-23 20:29:39.0, and the relevant post for each qualifying comment is the post to which that comment was made.",
+  "row_grain": "One row for each qualifying comment, returning the favorite count of its target post.",
+  "column_role": "The favorite count of the target post.",
+  "derivation": "Follow the association from each qualifying comment to its target post and obtain that post's stored favorite count.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that a comment carries its target-post reference and that favorite count is a stored post-level total, validating the Round-1 target-post favorite-count semantics."
+  "meta_review": "Metadata confirms that a comment carries its target-post reference and that favorite count is a stored post-level total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

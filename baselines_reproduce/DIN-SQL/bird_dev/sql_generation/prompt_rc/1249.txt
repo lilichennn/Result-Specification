@@ -296,8 +296,8 @@ Hint: disease names refers to Diagnosis; proteinuria level higher than normal re
 Schema_links: [Patient.Diagnosis,Laboratory.U-PRO,Laboratory.ID = Patient.ID,30]
 Result Contract:
 {
-  "population": "Patients whose proteinuria level is higher than normal, defined as U-PRO >= 30.",
-  "row_grain": "One patient-level disease name (diagnosis) of a qualifying patient.",
+  "population": "Patients who have at least one proteinuria laboratory result higher than normal, defined as U-PRO >= 30.",
+  "row_grain": "One disease-name row for each qualifying proteinuria laboratory result, without deduplication by patient.",
   "column_role": "The patient-level disease name (Diagnosis).",
   "derivation": "none",
   "filter_policy": "none",

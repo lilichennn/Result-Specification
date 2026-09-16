@@ -321,7 +321,7 @@ Schema_links: [users.DisplayName,users.WebsiteUrl,http://stackoverflow.com]
 Result Contract:
 {
   "population": "All users whose website URL equals 'http://stackoverflow.com'.",
-  "row_grain": "One user matching the website URL condition.",
+  "row_grain": "One row per user matching the website URL condition.",
   "column_role": "The user's display name.",
   "derivation": "none",
   "filter_policy": "none",

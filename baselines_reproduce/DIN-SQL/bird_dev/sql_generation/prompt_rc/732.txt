@@ -225,12 +225,12 @@ Hint: the slowest superhero refers to attribute_name = 'Speed' where MIN(attribu
 Schema_links: [publisher.publisher_name,attribute.attribute_name,hero_attribute.attribute_value,hero_attribute.hero_id = superhero.id,hero_attribute.attribute_id = attribute.id,superhero.publisher_id = publisher.id,'Speed']
 Result Contract:
 {
-  "population": "All superheroes are eligible candidates; no superhero is excluded by any stated condition.",
-  "row_grain": "One row representing the publisher of the single slowest superhero.",
+  "population": "Superheroes for whom a Speed attribute value is recorded (attribute_name = 'Speed') are eligible candidates.",
+  "row_grain": "One row representing the publisher of the superhero selected as the slowest.",
   "column_role": "The publisher name (publisher_name) of the publisher that published the slowest superhero.",
   "derivation": "Each superhero's speed is defined as the attribute_value recorded for that superhero under attribute_name = 'Speed'.",
-  "filter_policy": "Select the superhero with the minimum speed value (argmin) and return that superhero's publisher; tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select one superhero with the minimum speed value and return that superhero's publisher; if multiple superheroes tie for the minimum, the choice is unspecified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

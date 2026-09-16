@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
-Table disp, columns = [*,account_id,type]
+Table disp, columns = [*,disp_id,account_id,type]
 Table district, columns = [*,district_id,A2]
 Foreign_keys = [account.district_id = district.district_id,disp.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
@@ -191,9 +191,10 @@ Sample rows from account (columns: ["account_id", "district_id"]):
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from disp (columns: ["account_id", "type"]):
-[[1, "OWNER"], [2, "OWNER"], [2, "DISPONENT"]]
+Sample rows from disp (columns: ["disp_id", "account_id", "type"]):
+[[1, 1, "OWNER"], [2, 2, "OWNER"], [3, 2, "DISPONENT"]]
 Column descriptions and value descriptions for disp:
+Column disp_id: column description -> unique number of identifying this row of record, value description -> 
 Column account_id: column description -> id number of account, value description -> 
 Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
 commonsense evidence:

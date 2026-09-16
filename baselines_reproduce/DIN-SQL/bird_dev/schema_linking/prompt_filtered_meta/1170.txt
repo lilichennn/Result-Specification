@@ -183,18 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Examination Date]
-Table Patient, columns = [*,ID,First Date]
+Table Patient, columns = [*,ID,First Date,Admission]
 Foreign_keys = [Examination.ID = Patient.ID]
 Sample rows from Examination (columns: ["ID", "Examination Date"]):
 [[14872, "1997-05-27"], [48473, "1992-12-21"], [102490, "1995-04-20"]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
 Column Examination Date: column description -> Examination Date, value description -> 
-Sample rows from Patient (columns: ["ID", "First Date"]):
-[[2110, "1993-02-10"], [11408, "1973-01-01"], [12052, null]]
+Sample rows from Patient (columns: ["ID", "First Date", "Admission"]):
+[[2110, "1993-02-10", "+"], [11408, "1973-01-01", "+"], [12052, null, "+"]]
 Column descriptions and value descriptions for Patient:
 Column ID: column description -> identification of the patient, value description -> 
 Column First Date: column description -> the date when a patient came to the hospital, value description -> 
+Column Admission: column description -> patient was admitted to the hospital (+) or followed at the outpatient clinic (-), value description -> patient was admitted to the hospital (+) or followed at the outpatient clinic (-)
 
 Q: How many patients hadn't undergone a medical examination until at least a year following their initial hospital visit?
 Hint: hadn't undergone a medical examination until at least a year refers to SUBTRACT(year(`Examination Date`), year(`First Date`)) > = 1

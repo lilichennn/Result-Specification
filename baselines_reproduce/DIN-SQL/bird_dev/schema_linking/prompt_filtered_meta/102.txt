@@ -183,40 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,date]
-Table disp, columns = [*,account_id,type]
-Table loan, columns = [*,account_id,amount]
-Table order, columns = [*,account_id,amount]
-Table trans, columns = [*,trans_id,account_id,amount,balance]
-Foreign_keys = [disp.account_id = account.account_id,loan.account_id = account.account_id,order.account_id = account.account_id,trans.account_id = account.account_id]
+Table trans, columns = [*,account_id,amount]
+Foreign_keys = [trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "date"]):
 [[1, "1995-03-24"], [2, "1993-02-26"], [3, "1997-07-07"]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column date: column description -> the creation date of the account, value description -> in the form YYMMDD
-Sample rows from disp (columns: ["account_id", "type"]):
-[[1, "OWNER"], [2, "OWNER"], [2, "DISPONENT"]]
-Column descriptions and value descriptions for disp:
-Column account_id: column description -> id number of account, value description -> 
-Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
-commonsense evidence:
-the account can only have the right to issue permanent orders or apply for loans
-Sample rows from loan (columns: ["account_id", "amount"]):
-[[2, 80952], [19, 30276], [25, 30276]]
-Column descriptions and value descriptions for loan:
-Column account_id: column description -> the id number identifying the account, value description -> 
-Column amount: column description -> approved amount, value description -> unit：US dollar
-Sample rows from order (columns: ["account_id", "amount"]):
-[[1, 2452.0], [2, 3372.7], [2, 7266.0]]
-Column descriptions and value descriptions for order:
-Column account_id: column description -> id number of account, value description -> 
-Column amount: column description -> debited amount, value description -> 
-Sample rows from trans (columns: ["trans_id", "account_id", "amount", "balance"]):
-[[1, 1, 1000, 1000], [5, 1, 3679, 4679], [6, 1, 3679, 20977]]
+Sample rows from trans (columns: ["account_id", "amount"]):
+[[1, 1000], [1, 3679], [1, 3679]]
 Column descriptions and value descriptions for trans:
-Column trans_id: column description -> transaction id, value description -> 
 Column account_id: column description -> , value description -> 
 Column amount: column description -> amount of money, value description -> Unit：USD
-Column balance: column description -> balance after transaction, value description -> Unit：USD
 
 Q: State different accounts who have account opening date before 1997 and own an amount of money greater than 3000USD
 A: Let’s think step by step.

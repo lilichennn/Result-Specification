@@ -285,12 +285,12 @@ Hint: time spent at pit stop refers to duration
 Schema_links: [pitStops.duration,races.year,races.name,pitStops.raceId = races.raceId,2011,Australian Grand Prix]
 Result Contract:
 {
-  "population": "Drivers who made one or more pit stops during the 2011 Australian Grand Prix; eligible rows are the pit-stop occurrences associated with that specific race.",
+  "population": "Pit-stop occurrences associated with the 2011 Australian Grand Prix.",
   "row_grain": "One row per pit-stop occurrence.",
-  "column_role": "The driver's identity and the duration of that pit-stop occurrence.",
-  "derivation": "The requested time is the pit-stop duration for each eligible occurrence; the duration is available directly and need not be computed from lap times, and no aggregation across multiple stops is implied.",
+  "column_role": "The duration of each pit-stop occurrence.",
+  "derivation": "The requested time is the stored pit-stop duration for each eligible occurrence; no computation from lap times or aggregation across multiple stops is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata for pitStops includes a stop number and a duration, establishing that pit-stop time is recorded per individual stop and that duration, not time-of-day, is the requested measure. The contract therefore reports each pit-stop occurrence separately with driver identity and duration."
+  "meta_review": "Metadata for pit stops includes a stop number and a duration, establishing that pit-stop time is recorded per individual stop and that duration, not time-of-day, is the requested measure. The contract therefore reports each pit-stop occurrence separately with duration only."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

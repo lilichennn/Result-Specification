@@ -317,12 +317,12 @@ Hint: A12 refers to unemploymant rate 1995; A13 refers to unemploymant rate 1996
 Schema_links: [district.A12,district.A13]
 Result Contract:
 {
-  "population": "All districts for which the 1995 unemployment rate (A12) and the 1996 unemployment rate (A13) are measured; no additional eligibility restrictions are stated, and both yearly averages are computed over the same population.",
-  "row_grain": "One summary result identifying which of the two years, 1995 or 1996, has the higher average unemployment rate.",
-  "column_role": "The designation of the year (1995 or 1996) whose average unemployment rate is higher.",
-  "derivation": "Compute the average of the 1995 unemployment rate and the average of the 1996 unemployment rate across the eligible districts, then compare the two averages.",
-  "filter_policy": "Argmax over the two yearly averages: retain the year with the higher average unemployment rate.",
-  "meta_review": "Metadata confirms district.A12 and district.A13 are district-level unemployment rates for 1995 and 1996. This resolves the population entity as districts while preserving the single-year comparison output."
+  "population": "All districts in the district population; each yearly average is computed from the districts having an available unemployment rate for that year, with no additional eligibility restrictions.",
+  "row_grain": "One summary result identifying which of the two years, 1995 or 1996, is selected by the average unemployment-rate comparison.",
+  "column_role": "The designation of the selected year, 1995 or 1996, returned as the comparison output.",
+  "derivation": "Compute the average 1995 unemployment rate and the average 1996 unemployment rate across districts, then compare the two averages.",
+  "filter_policy": "Retain 1996 only when the 1996 average is strictly greater than the 1995 average; otherwise retain 1995.",
+  "meta_review": "Metadata confirms the district-level 1995 and 1996 unemployment rates, supporting a single year-label comparison output rather than district-level results."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

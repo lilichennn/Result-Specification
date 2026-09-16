@@ -251,12 +251,12 @@ Hint: favorite amount of 4 or more refers to FavoriteCount > = 4; Location = 'Un
 Schema_links: [users.Location,users.Id,posts.FavoriteCount,posts.OwnerUserId = users.Id,'United Kingdom',4]
 Result Contract:
 {
-  "population": "Users with Location = 'United Kingdom' who have at least one post whose favorite amount satisfies FavoriteCount >= 4.",
-  "row_grain": "One global summary row over the entire qualifying user population.",
-  "column_role": "The count of qualifying users.",
-  "derivation": "Count the users belonging to the eligible population.",
+  "population": "Occurrences of users located in the United Kingdom as the owner of a post whose favorite amount is at least 4.",
+  "row_grain": "One global summary row over all eligible user-post occurrences.",
+  "column_role": "The count of eligible user-post occurrences.",
+  "derivation": "Count the eligible user-post occurrences; a user with multiple qualifying posts contributes once for each qualifying post association.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.FavoriteCount is the post's total favorite count and users.Location is the user's location, validating the Round-1 eligibility semantics."
+  "meta_review": "Metadata confirms FavoriteCount is the post's favorite amount and Location is the user's location; the count is occurrence-based over qualifying posts rather than distinct-user-based."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

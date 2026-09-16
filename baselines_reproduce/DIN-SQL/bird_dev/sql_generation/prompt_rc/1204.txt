@@ -296,12 +296,12 @@ Hint: DATEDIFF(`Examination Date`, `First Date`)
 Schema_links: [Examination.Examination Date,Patient.First Date,Patient.ID,Examination.ID = Patient.ID,821298]
 Result Contract:
 {
-  "population": "The single patient identified by patient number 821298, specifically her first hospital arrival and the evaluation that followed it.",
-  "row_grain": "One summary row for patient 821298 representing the single requested elapsed-time value.",
-  "column_role": "The elapsed time between the patient's first arrival at the hospital and the beginning of her evaluation.",
-  "derivation": "Compute the time difference between the evaluation start (examination date) and the first arrival date, as clarified by DATEDIFF(`Examination Date`, `First Date`).",
+  "population": "Patient number 821298 and each evaluation event linked to that patient, using the patient's first arrival date as the arrival reference.",
+  "row_grain": "One output row for each linked evaluation event for patient 821298.",
+  "column_role": "A single measure giving the difference between the day-of-month of the evaluation date and the day-of-month of the first arrival date.",
+  "derivation": "For each linked evaluation event, subtract the day-of-month component of the first arrival date from the day-of-month component of the evaluation date.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

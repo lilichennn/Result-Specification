@@ -182,12 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table expense, columns = [*,expense_description,link_to_member]
+Table expense, columns = [*,expense_id,expense_description,link_to_member]
 Table member, columns = [*,member_id,t_shirt_size]
 Foreign_keys = [expense.link_to_member = member.member_id]
-Sample rows from expense (columns: ["expense_description", "link_to_member"]):
-[["Post Cards, Posters", "rec4BLdZHS2Blfp4v"], ["Water, Cookies", "recro8T1MPMwRadVH"], ["Pizza", "recD078PnS3x2doBe"]]
+Sample rows from expense (columns: ["expense_id", "expense_description", "link_to_member"]):
+[["rec017x6R3hQqkLAo", "Post Cards, Posters", "rec4BLdZHS2Blfp4v"], ["rec1nIjoZKTYayqZ6", "Water, Cookies", "recro8T1MPMwRadVH"], ["rec1oMgNFt7Y0G40x", "Pizza", "recD078PnS3x2doBe"]]
 Column descriptions and value descriptions for expense:
+Column expense_id: column description -> unique id of income, value description -> 
 Column expense_description: column description -> A textual description of what the money was spend for, value description -> 
 Column link_to_member: column description -> The member who incurred the expense, value description -> 
 Sample rows from member (columns: ["member_id", "t_shirt_size"]):

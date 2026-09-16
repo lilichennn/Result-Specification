@@ -296,12 +296,12 @@ Hint: male refers to SEX = 'M'; underwent testing between 1995 and 1997 refers t
 Schema_links: [Patient.ID,Patient.SEX,Examination.`Examination Date`,Patient.Diagnosis,Patient.Admission,Examination.ID = Patient.ID,'M','Behcet','-','1995','1997']
 Result Contract:
 {
-  "population": "Patients who are male (SEX = 'M'), underwent testing with Examination Date between '1995' and '1997', were subsequently diagnosed with Behcet disease (patient-level Diagnosis indicates Behcet), and did not stay in the hospital for treatment (Admission = '-').",
-  "row_grain": "One global summary row representing the entire qualifying patient population.",
-  "column_role": "A single value giving the number of qualifying patients.",
-  "derivation": "Count unique patients satisfying all population conditions.",
+  "population": "Patients who are male (SEX = 'M'), have a testing/examination record whose Examination Date falls in 1995, 1996, or 1997 and whose diagnosis for that testing record is Behcet disease, and did not stay in the hospital for treatment (Admission = '-').",
+  "row_grain": "One global summary row representing the total count of qualifying patient-testing records.",
+  "column_role": "A single value giving the count of qualifying patient-testing records.",
+  "derivation": "Count the qualifying patient-testing records satisfying all population conditions, without requiring distinct patients.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows Patient.Admission uses '-' for outpatient follow-up, validating the non-admission condition. It also distinguishes Patient.Diagnosis as the patient-level disease representation, so Behcet disease is evaluated on the patient entity while Examination Date identifies the testing period."
+  "meta_review": "Metadata supports Admission = '-' as the non-admission/outpatient condition. It also indicates that the Behcet diagnosis relevant to the question is evaluated on the testing/examination record associated with the patient and testing period, while Examination Date identifies the testing years."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

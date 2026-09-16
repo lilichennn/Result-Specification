@@ -182,14 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table circuits, columns = [*,circuitId,circuitRef,name]
+Table circuits, columns = [*,circuitId,name]
 Table races, columns = [*,raceId,year,circuitId,date]
 Foreign_keys = [races.circuitId = circuits.circuitId]
-Sample rows from circuits (columns: ["circuitId", "circuitRef", "name"]):
-[[2, "sepang", "Sepang International Circuit"], [3, "bahrain", "Bahrain International Circuit"], [4, "catalunya", "Circuit de Barcelona-Catalunya"]]
+Sample rows from circuits (columns: ["circuitId", "name"]):
+[[2, "Sepang International Circuit"], [3, "Bahrain International Circuit"], [4, "Circuit de Barcelona-Catalunya"]]
 Column descriptions and value descriptions for circuits:
 Column circuitId: column description -> unique identification number of the circuit , value description -> 
-Column circuitRef: column description -> circuit reference name , value description -> 
 Column name: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "year", "circuitId", "date"]):
 [[1, 2009, 1, "2009-03-29"], [2, 2009, 2, "2009-04-05"], [3, 2009, 17, "2009-04-19"]]

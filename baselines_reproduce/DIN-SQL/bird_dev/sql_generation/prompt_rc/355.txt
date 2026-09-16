@@ -367,11 +367,11 @@ Schema_links: [cards.keywords,cards.name,'Angel of Mercy']
 Result Contract:
 {
   "population": "Cards whose card name is 'Angel of Mercy'.",
-  "row_grain": "One card named 'Angel of Mercy'.",
-  "column_role": "The keyword or keywords found on the card, as the card's keyword value.",
+  "row_grain": "One row for each distinct keyword value found on those cards.",
+  "column_role": "The keyword or keywords found on the qualifying cards, as the card-level keyword value.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies cards.name as the card's own name and cards.keywords as a card-level list of keywords, so the filter applies to the card name and the output is that card's keyword value without expanding the list."
+  "meta_review": "Metadata identifies cards.name as the card's own name and cards.keywords as a card-level list of keywords, so the filter applies to the card name and the output is the qualifying cards' keyword value without expanding the list."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

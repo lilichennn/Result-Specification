@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Team, columns = [*,team_api_id,team_fifa_api_id,team_short_name]
-Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,date,buildUpPlayPassingClass]
+Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,buildUpPlayPassingClass]
 Foreign_keys = [Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]
 Sample rows from Team (columns: ["team_api_id", "team_fifa_api_id", "team_short_name"]):
 [[9987, 673, "GEN"], [9993, 675, "BAC"], [10000, 15005, "ZUL"]]
@@ -191,12 +191,11 @@ Column descriptions and value descriptions for Team:
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_short_name: column description -> the team's short name, value description -> 
-Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "date", "buildUpPlayPassingClass"]):
-[[434, 9930, "2010-02-22 00:00:00", "Mixed"], [434, 9930, "2014-09-19 00:00:00", "Mixed"], [434, 9930, "2015-09-10 00:00:00", "Mixed"]]
+Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "buildUpPlayPassingClass"]):
+[[434, 9930, "Mixed"], [434, 9930, "Mixed"], [434, 9930, "Mixed"]]
 Column descriptions and value descriptions for Team_Attributes:
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
-Column date: column description -> Date, value description -> e.g. 2010-02-22 00:00:00
 Column buildUpPlayPassingClass: column description -> the passing class, value description -> commonsense reasoning: 
  Short: 1-33
  Mixed: 34-66

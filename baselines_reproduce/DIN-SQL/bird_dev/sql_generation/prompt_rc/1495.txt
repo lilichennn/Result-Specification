@@ -185,9 +185,9 @@ Result Contract:
   "population": "All clients with consumption recorded in yearmonth for September 2013 (Date = '201309').",
   "row_grain": "One client, namely the single top-consuming client for the period.",
   "column_role": "The client identifier (CustomerID) of the top-consuming client.",
-  "derivation": "Each client's consumption amount is measured from yearmonth.Consumption for records with Date = '201309', providing the per-client consumption metric to be compared.",
-  "filter_policy": "Select the client with the highest September 2013 consumption amount derived from yearmonth.Consumption (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata shows yearmonth stores CustomerID, Date, and Consumption, establishing a stored customer-month consumption metric. The contract therefore compares yearmonth.Consumption for Date = '201309' and returns CustomerID."
+  "derivation": "Each client's consumption amount is measured as the sum of its yearmonth.Consumption values for records with Date = '201309', providing the per-client total consumption metric to be compared.",
+  "filter_policy": "Select the client with the highest total September 2013 consumption amount (argmax of the summed consumption); tie handling is unspecified.",
+  "meta_review": "Metadata shows yearmonth stores CustomerID, Date, and Consumption, establishing client-period consumption values. The contract therefore sums Consumption for Date = '201309' per client and returns CustomerID."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

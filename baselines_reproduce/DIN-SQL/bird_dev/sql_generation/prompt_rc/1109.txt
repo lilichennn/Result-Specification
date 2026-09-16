@@ -415,12 +415,12 @@ Hint: "LEI" refers to team_short_name = 'LEI'; on 2015/9/10 refers to  date = '
 Schema_links: [Team_Attributes.buildUpPlayDribblingClass,Team.team_short_name,Team_Attributes.date,Team_Attributes.team_api_id = Team.team_api_id,LEI,2015-09-10 00:00:00]
 Result Contract:
 {
-  "population": "The team attribute record(s) for the team whose short name is 'LEI' dated '2015-09-10 00:00:00'.",
-  "row_grain": "One team-on-that-date attribute record for LEI.",
-  "column_role": "The build up play dribbling class value for that team and date.",
+  "population": "The team attribute record(s) for the team whose short name is 'LEI' dated 2015-09-10.",
+  "row_grain": "One output row per matching team attribute record for LEI on that calendar date.",
+  "column_role": "The build up play dribbling class value for each matching record.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "Date matching is at calendar-date precision, and the result is not constrained to a single attribute record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

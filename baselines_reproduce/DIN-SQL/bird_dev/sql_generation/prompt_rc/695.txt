@@ -320,12 +320,12 @@ Hint: Citizen Patrol' is the name of the badge;
 Schema_links: [badges.UserId,badges.Name,'Citizen Patrol']
 Result Contract:
 {
-  "population": "Users who were awarded the badge whose name is 'Citizen Patrol'.",
+  "population": "Badge award records for the badge whose name is 'Citizen Patrol'.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The number of qualifying users.",
-  "derivation": "Count distinct users who received the badge named 'Citizen Patrol'.",
+  "column_role": "The number of qualifying badge award records.",
+  "derivation": "Count the qualifying badge award records for the badge named 'Citizen Patrol'.",
   "filter_policy": "none",
-  "meta_review": "The badges table records badge awards with UserId identifying the user and Name identifying the badge, so the result counts distinct users rather than award rows."
+  "meta_review": "Badge award records identify the badge by name, so the result counts qualifying award records rather than distinct users."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

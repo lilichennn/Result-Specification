@@ -296,12 +296,12 @@ Hint: normal Ig A level refers to IGA > 80 AND IGA < 500; came to the hospital a
 Schema_links: [Patient.ID,Laboratory.IGA,Patient.`First Date`,Laboratory.ID = Patient.ID,80,500,1990]
 Result Contract:
 {
-  "population": "Patients whose Ig A level is normal, i.e., IGA > 80 AND IGA < 500, and who came to the hospital with the year of their First Date greater than or equal to 1990.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the patients satisfying all population conditions.",
+  "population": "Patient records with an Ig A level from 80 through 500 inclusive and a first hospital date in a year later than 1990.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "A single value representing the number of qualifying patient records.",
+  "derivation": "Count the qualifying patient records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,25 +183,24 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table gasstations, columns = [*,GasStationID,Country]
-Table products, columns = [*,ProductID,Description]
-Table transactions_1k, columns = [*,GasStationID,ProductID,Amount,Price]
+Table products, columns = [*,ProductID]
+Table transactions_1k, columns = [*,TransactionID,GasStationID,ProductID,Price]
 Foreign_keys = []
 Sample rows from gasstations (columns: ["GasStationID", "Country"]):
 [[44, "CZE"], [45, "CZE"], [46, "CZE"]]
 Column descriptions and value descriptions for gasstations:
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column Country: column description -> , value description -> 
-Sample rows from products (columns: ["ProductID", "Description"]):
-[[1, "Rucní zadání"], [2, "Nafta"], [3, "Special"]]
+Sample rows from products (columns: ["ProductID"]):
+[[1], [2], [3]]
 Column descriptions and value descriptions for products:
 Column ProductID: column description -> Product ID, value description -> 
-Column Description: column description -> Description, value description -> 
-Sample rows from transactions_1k (columns: ["GasStationID", "ProductID", "Amount", "Price"]):
-[[3704, 2, 28, 672.64], [3704, 2, 18, 430.72], [3704, 23, 1, 121.99]]
+Sample rows from transactions_1k (columns: ["TransactionID", "GasStationID", "ProductID", "Price"]):
+[[1, 3704, 2, 672.64], [2, 3704, 2, 430.72], [3, 3704, 23, 121.99]]
 Column descriptions and value descriptions for transactions_1k:
+Column TransactionID: column description -> Transaction ID, value description -> 
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column ProductID: column description -> Product ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
 Column Price: column description -> Price, value description -> commonsense evidence:
 
 total price = Amount x Price

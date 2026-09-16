@@ -183,7 +183,7 @@ Schema_links: [gasstations.ChainID,transactions_1k.GasStationID = gasstations.Ga
 Result Contract:
 {
   "population": "Gas stations that have at least one transaction conducted in euro, where the transaction currency is represented by the currency recorded for the transacting customer; the requested entities are the chains of those qualifying gas stations.",
-  "row_grain": "One row per chain of a qualifying gas station.",
+  "row_grain": "One row per distinct chain identifier among the qualifying gas stations.",
   "column_role": "The chain identifier of the gas station.",
   "derivation": "none",
   "filter_policy": "none",

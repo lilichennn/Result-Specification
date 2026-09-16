@@ -182,11 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,asciiName,faceConvertedManaCost,faceName,name]
+Table cards, columns = [*,id,asciiName,faceConvertedManaCost,faceName,name]
 Foreign_keys = []
-Sample rows from cards (columns: ["asciiName", "faceConvertedManaCost", "faceName", "name"]):
-[[null, null, null, "Ancestor's Chosen"], [null, null, null, "Angel of Mercy"], [null, null, null, "Aven Cloudchaser"]]
+Sample rows from cards (columns: ["id", "asciiName", "faceConvertedManaCost", "faceName", "name"]):
+[[1, null, null, null, "Ancestor's Chosen"], [2, null, null, null, "Angel of Mercy"], [3, null, null, null, "Aven Cloudchaser"]]
 Column descriptions and value descriptions for cards:
+Column id: column description -> , value description -> 
 Column asciiName: column description -> The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters., value description -> 
 Column faceConvertedManaCost: column description -> The converted mana cost or mana value for the face for either half or part of the card. , value description -> if value is higher, it means that this card cost more converted mana for the face
 Column faceName: column description -> The name on the face of the card., value description -> 

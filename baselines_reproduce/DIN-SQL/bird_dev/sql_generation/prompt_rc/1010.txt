@@ -286,11 +286,11 @@ Schema_links: [lapTimes.time,drivers.forename,drivers.surname,lapTimes.driverId 
 Result Contract:
 {
   "population": "Lap times recorded by Lewis Hamilton in a Formula 1 race.",
-  "row_grain": "One global summary representing the single requested lap record value.",
-  "column_role": "The lap record, expressed as a time value.",
-  "derivation": "The lap record is the fastest (minimum) recorded lap time among the eligible lap times.",
+  "row_grain": "One row for each recorded lap time associated with Lewis Hamilton.",
+  "column_role": "The recorded lap time value.",
+  "derivation": "The returned value is the stored lap time from each lap-time observation, without aggregation or reduction to a fastest value.",
   "filter_policy": "none",
-  "meta_review": "The complete catalog provides race lap-time observations rather than a single stored driver-level lap record, so the requested value is derived as the minimum eligible lap time. The output remains the lap time value rather than a raw milliseconds measure."
+  "meta_review": "The result provides recorded lap time values for Lewis Hamilton rather than a single derived fastest lap record; the output is a time value rather than a raw milliseconds measure."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

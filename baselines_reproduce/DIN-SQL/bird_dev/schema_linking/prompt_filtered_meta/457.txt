@@ -182,12 +182,11 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,promoTypes,purchaseUrls]
+Table cards, columns = [*,promoTypes,purchaseUrls]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "promoTypes", "purchaseUrls"]):
-[[1, null, "{'cardKingdom': 'https://mtgjson.com/links/9fb51af0ad6f0736', 'cardmarket': 'https://mtgjson.com/links/ace8861194ee0b6a', 'tcgplayer': 'https://mtgjson.com/links/4843cea124a0d515'}"], [2, null, "{'cardKingdom': 'https://mtgjson.com/links/027095d094e58f5b', 'cardmarket': 'https://mtgjson.com/links/f6fb5098e1cd1b1e', 'tcgplayer': 'https://mtgjson.com/links/56c4b57293f350ef'}"], [3, null, "{'cardKingdom': 'https://mtgjson.com/links/9246105d88032a9f', 'cardmarket': 'https://mtgjson.com/links/dcdfe48e6a8f9e1e', 'tcgplayer': 'https://mtgjson.com/links/3ce595aabe276f80'}"]]
+Sample rows from cards (columns: ["promoTypes", "purchaseUrls"]):
+[[null, "{'cardKingdom': 'https://mtgjson.com/links/9fb51af0ad6f0736', 'cardmarket': 'https://mtgjson.com/links/ace8861194ee0b6a', 'tcgplayer': 'https://mtgjson.com/links/4843cea124a0d515'}"], [null, "{'cardKingdom': 'https://mtgjson.com/links/027095d094e58f5b', 'cardmarket': 'https://mtgjson.com/links/f6fb5098e1cd1b1e', 'tcgplayer': 'https://mtgjson.com/links/56c4b57293f350ef'}"], [null, "{'cardKingdom': 'https://mtgjson.com/links/9246105d88032a9f', 'cardmarket': 'https://mtgjson.com/links/dcdfe48e6a8f9e1e', 'tcgplayer': 'https://mtgjson.com/links/3ce595aabe276f80'}"]]
 Column descriptions and value descriptions for cards:
-Column id: column description -> , value description -> 
 Column promoTypes: column description -> A list of promotional types for a card., value description -> "arenaleague", "boosterfun", "boxtopper", "brawldeck", "bundle", "buyabox", "convention", "datestamped", "draculaseries", "draftweekend", "duels", "event", "fnm", "gameday", "gateway", "giftbox", "gilded", "godzillaseries", "instore", "intropack", "jpwalker", "judgegift", "league", "mediainsert", "neonink", "openhouse", "planeswalkerstamped", "playerrewards", "playpromo", "premiereshop", "prerelease", "promopack", "release", "setpromo", "stamped", "textured", "themepack", "thick", "tourney", "wizardsplaynetwork"
 Column purchaseUrls: column description -> Links that navigate to websites where the card can be purchased., value description -> 
 

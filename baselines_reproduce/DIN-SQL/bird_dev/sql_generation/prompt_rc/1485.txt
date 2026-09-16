@@ -251,12 +251,12 @@ Hint: April 2013 refers to 201304 in the yearmonth.date
 Schema_links: [yearmonth.CustomerID,yearmonth.Date,yearmonth.Consumption,7,5,201304]
 Result Contract:
 {
-  "population": "Customer-month consumption records for customer 7 and customer 5, restricted to April 2013 (yearmonth.Date = 201304).",
+  "population": "Customer-month consumption records for April 2013 (yearmonth.Date = 201304), with the records for customer 7 and customer 5 identified for the comparison.",
   "row_grain": "One global summary row representing the comparison between the two customers for that month.",
   "column_role": "The amount by which customer 7's April 2013 consumption exceeded customer 5's April 2013 consumption.",
-  "derivation": "Compute customer 7's April 2013 Consumption minus customer 5's April 2013 Consumption, using the customer-month consumption values identified by CustomerID and yearmonth.Date = 201304.",
+  "derivation": "Compute customer 7's total April 2013 consumption minus customer 5's total April 2013 consumption, aggregating the customer-month consumption values identified by CustomerID and yearmonth.Date = 201304.",
   "filter_policy": "none",
-  "meta_review": "yearmonth.Consumption is the customer-month consumption metric, with CustomerID and Date identifying the customer and month. This resolves the requested consumption comparison to stored monthly consumption for Date = 201304."
+  "meta_review": "yearmonth.Consumption is the customer-month consumption metric, with CustomerID and Date identifying the customer and month. This resolves the requested consumption comparison to total monthly consumption for Date = 201304."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -352,12 +352,12 @@ Hint:
 Schema_links: [satscores.AvgScrRead,frpm."FRPM Count (Ages 5-17)",satscores.cds = schools.CDSCode,frpm.CDSCode = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools that have an average Reading score in the SAT test.",
-  "row_grain": "One school, namely the school selected as having the highest average Reading SAT score.",
+  "population": "Schools that have an average Reading SAT score and associated FRPM data for students aged 5-17.",
+  "row_grain": "One selected school, returned as a single row containing its FRPM count for students aged 5-17.",
   "column_role": "The FRPM count for students aged 5-17 at the selected school.",
-  "derivation": "A school-level average score in Reading in the SAT test, defined for each school and used to compare schools.",
-  "filter_policy": "Select the single school with the highest average Reading SAT score (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata confirms satscores.AvgScrRead is a school-level average Reading SAT score and frpm contains a distinct FRPM Count (Ages 5-17). This validates the Round-1 metric and output distinction without changing scope."
+  "derivation": "The FRPM count is a stored value for the selected school; the comparison uses the stored school-level average Reading SAT score, not a recomputed aggregate.",
+  "filter_policy": "Select the single school with the highest average Reading SAT score; tie handling is unspecified.",
+  "meta_review": "Metadata supports treating the Reading score as a school-level average and the FRPM count for ages 5-17 as the returned measure, with selection limited to schools having both pieces of information."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

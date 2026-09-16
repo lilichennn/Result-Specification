@@ -301,12 +301,12 @@ Hint: super hero names refers to superhero_name;male superheros refers to gender
 Schema_links: [superhero.superhero_name,superhero.weight_kg,gender.gender,superhero.gender_id = gender.id,'Male',0.79]
 Result Contract:
 {
-  "population": "Male superheroes (gender = 'Male') with a recorded weight (weight_kg not NULL and not 0) whose weight is greater than 0.79 times the average recorded weight of all superheroes, excluding missing weights.",
+  "population": "Male superheroes whose weight is greater than 0.79 times the average of available weight values across all superheroes.",
   "row_grain": "One row per qualifying male superhero.",
-  "column_role": "The superhero's name (superhero_name).",
-  "derivation": "Compute the average of recorded weight_kg values across all superheroes, excluding NULL and 0 because metadata defines them as missing weight; multiply that average by 0.79 to form the threshold and compare each male superhero's recorded weight_kg to it.",
+  "column_role": "The superhero's name.",
+  "derivation": "Compute the average of available weight values across all superheroes, multiply that average by 0.79 to form the threshold, and compare each male superhero's weight to that threshold.",
   "filter_policy": "none",
-  "meta_review": "Metadata states superhero.weight_kg is missing when NULL or 0. The contract therefore excludes missing weights from the average and requires a recorded weight for qualification."
+  "meta_review": "Zero is treated as a weight value rather than excluded; a superhero with no weight cannot qualify, but zero can be included in the average and comparison."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

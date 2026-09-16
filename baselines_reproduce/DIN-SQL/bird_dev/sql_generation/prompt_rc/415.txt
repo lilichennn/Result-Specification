@@ -297,12 +297,12 @@ Hint: do not have a content warning refers to hasContentWarning = 0; percentage 
 Schema_links: [cards.hasContentWarning,cards.id,legalities.format,legalities.status,legalities.uuid = cards.uuid,0,commander,legal]
 Result Contract:
 {
-  "population": "All cards whose associated legality has format = 'commander' and status = 'legal'; the counted subset consists of those eligible cards with hasContentWarning = 0 (no content warning).",
+  "population": "All cards whose associated legality has format = 'commander' and status = 'Legal'; the counted subset consists of those eligible cards with hasContentWarning = 0 (no content warning).",
   "row_grain": "One global summary row over the entire eligible card population.",
   "column_role": "A single value: the percentage of eligible cards that do not have a content warning.",
   "derivation": "Compute the percentage as the count of eligible cards with hasContentWarning = 0 divided by the total count of eligible cards, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata places format and status in legalities and hasContentWarning/card ID in cards, so eligibility is a card having a commander/legal legality and the percentage counts cards rather than legality rows."
+  "meta_review": "Metadata places format and status in legalities and hasContentWarning/card ID in cards, so eligibility is a card having a commander/Legal legality and the percentage counts cards rather than legality rows."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

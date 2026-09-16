@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,link_to_event]
 Table event, columns = [*,event_id,event_name,event_date]
-Table expense, columns = [*,expense_id,expense_description,approved,link_to_budget]
+Table expense, columns = [*,expense_id,approved,link_to_budget]
 Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id]
 Sample rows from budget (columns: ["budget_id", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "recJ4Witp9tpjaugn"]]
@@ -197,11 +197,10 @@ Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
 Column event_date: column description -> The date the event took place or is scheduled to take place, value description -> e.g. 2020-03-10T12:00:00
-Sample rows from expense (columns: ["expense_id", "expense_description", "approved", "link_to_budget"]):
-[["rec017x6R3hQqkLAo", "Post Cards, Posters", "true", "recvKTAWAFKkVNnXQ"], ["rec1nIjoZKTYayqZ6", "Water, Cookies", "true", "recy8KY5bUdzF81vv"], ["rec1oMgNFt7Y0G40x", "Pizza", "true", "recwXIiKoBMjXJsGZ"]]
+Sample rows from expense (columns: ["expense_id", "approved", "link_to_budget"]):
+[["rec017x6R3hQqkLAo", "true", "recvKTAWAFKkVNnXQ"], ["rec1nIjoZKTYayqZ6", "true", "recy8KY5bUdzF81vv"], ["rec1oMgNFt7Y0G40x", "true", "recwXIiKoBMjXJsGZ"]]
 Column descriptions and value descriptions for expense:
 Column expense_id: column description -> unique id of income, value description -> 
-Column expense_description: column description -> A textual description of what the money was spend for, value description -> 
 Column approved: column description -> A true or false value indicating if the expense was approved, value description -> true/ false
 Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table
 

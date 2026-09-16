@@ -189,10 +189,10 @@ Result Contract:
 {
   "population": "Atoms that participate as endpoints of the bond identified as TR000_2_3.",
   "row_grain": "One row per atom forming bond TR000_2_3.",
-  "column_role": "The element of each such atom, expressed as the element name corresponding to its code (e.g., 'cl' = Chlorine, 'c' = Carbon).",
+  "column_role": "The element code of each such atom.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

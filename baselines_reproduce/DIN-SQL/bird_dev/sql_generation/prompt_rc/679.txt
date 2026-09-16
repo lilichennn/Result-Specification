@@ -251,12 +251,12 @@ Hint: the highest score refers to MAX(Score); owner's name refers to DisplayName
 Schema_links: [posts.Id,posts.Title,posts.Score]
 Result Contract:
 {
-  "population": "All posts are eligible candidates for the comparison.",
-  "row_grain": "One row representing the single post that has the highest score.",
-  "column_role": "The post's id and the post's title.",
+  "population": "Posts that have an associated owner user.",
+  "row_grain": "One row representing the selected highest-scoring post and its owner.",
+  "column_role": "The owner's user identifier and the post's title.",
   "derivation": "none",
-  "filter_policy": "Select the post whose score is maximal among all posts (argmax on score); tie handling is unspecified.",
-  "meta_review": "Metadata confirms posts.Title is the title of a post and posts.Score is the post score. This validates returning post Id and Title without involving owner DisplayName."
+  "filter_policy": "Select the post with the maximal score among posts with an associated owner (argmax on score); tie handling is unspecified.",
+  "meta_review": "Metadata supports using post score to select the top post and returning the post owner's user identifier with the post title; owner display name is not returned."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

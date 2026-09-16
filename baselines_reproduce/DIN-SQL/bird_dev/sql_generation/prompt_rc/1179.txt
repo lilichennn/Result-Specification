@@ -372,12 +372,12 @@ Hint: diagnosed with SLE refers to Diagnosis = 'SLE'; 1994/2/19 refers to Descri
 Schema_links: [Patient.Diagnosis,Patient.Description,Examination.aCL IgM,Examination.Examination Date,Examination.ID = Patient.ID,SLE,1994-02-19,1993-11-12]
 Result Contract:
 {
-  "population": "The patient whose patient-level diagnosis is SLE (Diagnosis = 'SLE') with Description = '1994-02-19', and that patient's examination event with Examination Date = '1993/11/12'.",
-  "row_grain": "One examination result: the identified patient's anti-Cardiolipin IgM measurement on 1993/11/12.",
-  "column_role": "The anti-Cardiolipin antibody IgM (aCL IgM) concentration value for that examination.",
+  "population": "The patient whose patient-level diagnosis is SLE with Description = '1994-02-19', and that patient's examination event with Examination Date = '1993-11-12'.",
+  "row_grain": "One examination record: the identified patient's examination on 1993-11-12, returning its anti-Cardiolipin antibody concentration panel.",
+  "column_role": "The anti-Cardiolipin antibody concentration values for IgA, IgG, and IgM from that examination.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that Diagnosis and Description are patient-level attributes, while Examination.aCL IgM is the stored anti-Cardiolipin IgM concentration. This fixes the diagnosis owner and the requested output as a direct concentration value."
+  "meta_review": "Metadata confirms that Diagnosis and Description are patient-level attributes, while the examination stores anti-Cardiolipin antibody concentrations as IgA, IgG, and IgM values. The requested output is the direct concentration values from the matching examination."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

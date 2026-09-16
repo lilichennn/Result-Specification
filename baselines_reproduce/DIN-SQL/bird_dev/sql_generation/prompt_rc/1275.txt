@@ -296,12 +296,12 @@ Hint: normal level of anti-centromere refers to CENTROMEA IN('-', '+-'); normal 
 Schema_links: [Patient.ID,Patient.SEX,Laboratory.CENTROMEA,Laboratory.SSB,Laboratory.ID = Patient.ID,'-','+-','M']
 Result Contract:
 {
-  "population": "Patients who have a normal anti-centromere level (CENTROMEA IN ('-', '+-')), a normal anti-SSB level (SSB IN ('-', '+-')), and who are male (Sex = 'M').",
+  "population": "Patients with a laboratory record in which both anti-centromere and anti-SSB levels are normal, where normal is represented by the values 'negative' or '0', and whose sex is male ('M').",
   "row_grain": "One global summary row for the entire eligible patient population.",
   "column_role": "A single value: the number of qualifying male patients.",
-  "derivation": "Count the eligible patients, with each patient counted once.",
+  "derivation": "Count the eligible patients distinctly, so each patient is counted once.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirmed that Laboratory.CENTROMEA and Laboratory.SSB use '-' and '+-' as normal categorical values, and Patient.SEX uses 'M' for male. This directly validates the eligibility literals without changing the Round-1 contract."
+  "meta_review": "Metadata should treat 'negative' and '0' as the normal anti-centromere and anti-SSB categories, and 'M' as male. The result is a distinct patient count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

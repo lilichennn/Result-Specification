@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table attendance, columns = [*,link_to_event,link_to_member]
-Table event, columns = [*,event_id,type]
+Table event, columns = [*,event_id,event_name,type]
 Table member, columns = [*,member_id]
 Foreign_keys = [attendance.link_to_member = member.member_id,attendance.link_to_event = event.event_id]
 Sample rows from attendance (columns: ["link_to_event", "link_to_member"]):
@@ -191,10 +191,11 @@ Sample rows from attendance (columns: ["link_to_event", "link_to_member"]):
 Column descriptions and value descriptions for attendance:
 Column link_to_event: column description -> The unique identifier of the event which was attended, value description -> References the Event table
 Column link_to_member: column description -> The unique identifier of the member who attended the event, value description -> References the Member table
-Sample rows from event (columns: ["event_id", "type"]):
-[["rec0Si5cQ4rJRVzd6", "Meeting"], ["rec0akZnLLpGUloLH", "Meeting"], ["rec0dZPcWXF0QjNnE", "Election"]]
+Sample rows from event (columns: ["event_id", "event_name", "type"]):
+[["rec0Si5cQ4rJRVzd6", "March Meeting", "Meeting"], ["rec0akZnLLpGUloLH", "Officers meeting - January", "Meeting"], ["rec0dZPcWXF0QjNnE", "Spring Elections", "Election"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
+Column event_name: column description -> event name, value description -> 
 Column type: column description -> The kind of event, such as game, social, election, value description -> 
 Sample rows from member (columns: ["member_id"]):
 [["rec1x5zBFIqoOuPW8"], ["rec280Sk7o31iG0Tx"], ["rec28ORZgcm1dtqBZ"]]

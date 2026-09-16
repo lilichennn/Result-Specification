@@ -187,12 +187,12 @@ Hint: calcium refers to element = 'ca'; label = '+' mean molecules are carcinoge
 Schema_links: [atom.element,molecule.label,atom.molecule_id = molecule.molecule_id,ca,+,-]
 Result Contract:
 {
-  "population": "All distinct molecules that contain at least one atom with element = 'ca'.",
-  "row_grain": "One global summary row covering the entire eligible molecule population.",
-  "column_role": "The majority carcinogenicity classification of the population, expressed as carcinogenic (label '+') or non-carcinogenic (label '-').",
-  "derivation": "Compare the number of distinct eligible molecules whose molecule-level label is '+' with the number whose molecule-level label is '-', and return the classification held by the greater number.",
-  "filter_policy": "none",
-  "meta_review": "Metadata shows element is recorded per atom in atom.element, while carcinogenicity is recorded per molecule in molecule.label, so molecule counts must be distinct by molecule_id to avoid multiple calcium atoms inflating the population."
+  "population": "Calcium atom occurrences linked to molecules, categorized by the molecule's carcinogenicity label ('+' or '-').",
+  "row_grain": "One row for the carcinogenicity label group with the largest number of calcium atom occurrences.",
+  "column_role": "The carcinogenicity label identifying the largest-count category: '+' for carcinogenic or '-' for non-carcinogenic.",
+  "derivation": "Count the calcium atom occurrences for each carcinogenicity label and return the label with the greatest count.",
+  "filter_policy": "Top-one selection by largest count per label; no explicit tie-break is specified.",
+  "meta_review": "Element information is recorded at the atom level and carcinogenicity at the molecule level; multiple calcium atoms in a molecule are counted as separate occurrences when determining the largest-count label."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

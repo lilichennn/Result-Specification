@@ -187,7 +187,7 @@ Result Contract:
   "column_role": "The transaction time.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows gasstations.ChainID represents chain number and transactions_1k.Time is the transaction time, separate from Date. This validates the Round-1 chain-11 population and distinct time output."
+  "meta_review": "Metadata identifies the gas-station chain number and the transaction time as separate from the date, supporting the chain-11 population and distinct time output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,16 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,frequency]
-Table trans, columns = [*,account_id,type,operation,balance]
+Table trans, columns = [*,trans_id,account_id,type,operation,balance]
 Foreign_keys = [trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "frequency"]):
 [[1, "POPLATEK MESICNE"], [2, "POPLATEK MESICNE"], [3, "POPLATEK MESICNE"]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column frequency: column description -> frequency of the acount, value description -> 
-Sample rows from trans (columns: ["account_id", "type", "operation", "balance"]):
-[[1, "PRIJEM", "VKLAD", 1000], [1, "PRIJEM", "PREVOD Z UCTU", 4679], [1, "PRIJEM", "PREVOD Z UCTU", 20977]]
+Sample rows from trans (columns: ["trans_id", "account_id", "type", "operation", "balance"]):
+[[1, 1, "PRIJEM", "VKLAD", 1000], [5, 1, "PRIJEM", "PREVOD Z UCTU", 4679], [6, 1, "PRIJEM", "PREVOD Z UCTU", 20977]]
 Column descriptions and value descriptions for trans:
+Column trans_id: column description -> transaction id, value description -> 
 Column account_id: column description -> , value description -> 
 Column type: column description -> +/- transaction, value description -> "PRIJEM" stands for credit
 "VYDAJ" stands for withdrawal

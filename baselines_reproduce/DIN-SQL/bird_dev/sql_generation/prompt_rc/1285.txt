@@ -297,11 +297,11 @@ Schema_links: [Patient.Description,Patient.First Date,Patient.ID,Laboratory.LDH,
 Result Contract:
 {
   "population": "Patients who have at least one recorded laboratory measurement with LDH >= 500.",
-  "row_grain": "One single result row representing the latest qualifying patient.",
-  "column_role": "The date on which the latest qualifying patient's medical data was recorded, i.e., the patient-data recording date, not the hospital-visit date used to identify the latest patient.",
-  "derivation": "none",
-  "filter_policy": "Select the eligible patient whose 'First Date' is the maximum (latest) among the eligible population; 'First Date' is only the latest-patient selector, not the requested output.",
-  "meta_review": "Metadata establishes Laboratory.LDH as the abnormal-measurement condition and Patient.Description as the date when patient data was recorded, while Patient.First Date is the hospital-visit date. Therefore LDH defines eligibility, First Date selects the latest patient, and Description is the requested recorded date."
+  "row_grain": "One single result row containing the latest qualifying patient's First Date.",
+  "column_role": "The returned value is the patient's First Date, serving as the date of the latest qualifying patient's recorded medical data.",
+  "derivation": "A stored date value taken from the selected latest qualifying patient record, with no arithmetic or aggregation.",
+  "filter_policy": "Among patients with an abnormal LDH measurement, select the single patient with the maximum/latest First Date and return that First Date.",
+  "meta_review": "LDH >= 500 defines eligibility, and First Date is both the latest-patient selector and the returned recorded date; a separate patient-description date is not returned."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

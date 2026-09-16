@@ -183,11 +183,11 @@ Schema_links: [yearmonth.Consumption,customers.Currency,yearmonth.CustomerID = c
 Result Contract:
 {
   "population": "All customers who use euro as their currency; only these customers' consumption contributes to the result.",
-  "row_grain": "One global summary row across the entire eligible customer population.",
+  "row_grain": "One row selected from the per-customer monthly consumption results for eligible customers.",
   "column_role": "The biggest monthly consumption value.",
-  "derivation": "Each eligible customer's monthly consumption is the sum of that customer's consumption divided by 12, and the output is the maximum of these per-customer monthly consumption values.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "Each eligible customer's monthly consumption is the sum of that customer's consumption divided by 12, and the output is the highest of these per-customer monthly consumption values.",
+  "filter_policy": "Return only the top-ranked eligible customer by monthly consumption in descending order.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

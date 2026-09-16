@@ -297,12 +297,12 @@ Hint: version of frame style is 1997 refers to frameVersion = '1997'; illustrate
 Schema_links: [cards.frameVersion,cards.artist,cards.hasContentWarning,legalities.format,legalities.status,legalities.uuid = cards.uuid,1997,D. Alexander Gregory,1,legacy]
 Result Contract:
 {
-  "population": "Cards with frameVersion = '1997', artist = 'D. Alexander Gregory', a legacy play-format legality, and hasContentWarning = 1, where the flag represents sensitive content or Wizards of the Coast.",
-  "row_grain": "One row per qualifying card.",
+  "population": "Legacy play-format statuses of cards whose frame style version is 1997, whose artist is D. Alexander Gregory, and whose sensitive-content warning flag is 1, where that flag represents sensitive content or Wizards of the Coast.",
+  "row_grain": "One row per distinct status value.",
   "column_role": "The status of the card.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata for cards.hasContentWarning states that value 1 means the card has sensitive content or is marked by Wizards of the Coast, resolving the Round-1 unresolved alternative to the same hasContentWarning = 1 condition. No other Round-1 semantic was changed."
+  "filter_policy": "Duplicate status values are eliminated.",
+  "meta_review": "Metadata for the sensitive-content warning flag states that value 1 means the card has sensitive content or is marked by Wizards of the Coast."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -359,7 +359,7 @@ Result Contract:
   "column_role": "The count of qualifying drivers.",
   "derivation": "Count the drivers whose code is null.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms drivers.code is the driver-level code attribute and that a null value indicates no code, validating the Round-1 eligibility condition."
+  "meta_review": "Metadata confirms the driver-level code attribute is the relevant code and that a null value indicates no code."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

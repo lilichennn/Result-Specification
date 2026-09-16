@@ -183,18 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Currency]
-Table yearmonth, columns = [*,CustomerID,Date,Consumption]
+Table yearmonth, columns = [*,CustomerID,Consumption]
 Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
 Sample rows from customers (columns: ["CustomerID", "Currency"]):
 [[3, "EUR"], [5, "EUR"], [6, "EUR"]]
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Currency: column description -> Currency, value description -> 
-Sample rows from yearmonth (columns: ["CustomerID", "Date", "Consumption"]):
-[[5, "201207", 528.3], [5, "201302", 1598.28], [5, "201303", 1931.36]]
+Sample rows from yearmonth (columns: ["CustomerID", "Consumption"]):
+[[5, 528.3], [5, 1598.28], [5, 1931.36]]
 Column descriptions and value descriptions for yearmonth:
 Column CustomerID: column description -> Customer ID, value description -> 
-Column Date: column description -> Date, value description -> 
 Column Consumption: column description -> consumption, value description -> 
 
 Q: What is the biggest monthly consumption of the customers who use euro as their currency?

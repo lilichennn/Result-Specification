@@ -230,12 +230,12 @@ Hint:
 Schema_links: [event.event_name,member.first_name,member.last_name,attendance.link_to_event = event.event_id,attendance.link_to_member = member.member_id,'Maya','Mclean']
 Result Contract:
 {
-  "population": "All events attended by the member whose first name is 'Maya' and last name is 'Mclean', i.e., the person named Maya Mclean.",
-  "row_grain": "One row per event attended by Maya Mclean.",
+  "population": "All events attended by a member whose first name is 'Maya' and last name is 'Mclean', i.e., a person named Maya Mclean.",
+  "row_grain": "One row per qualifying event attendance by Maya Mclean, without deduplicating repeated events or event names.",
   "column_role": "The name of the event.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that member full names are represented by first_name and last_name, so Maya Mclean is identified by first_name='Maya' and last_name='Mclean'. This refines the person-matching condition without changing the event-level result."
+  "meta_review": "Metadata establishes that member full names are represented by separate first and last name components, so Maya Mclean is identified by matching first name 'Maya' and last name 'Mclean'. This refines the person-matching condition without changing the returned event-name result."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,8 +230,8 @@ Hint: 'Post Cards, Posters' is an expense description; on 2019/8/20 refers to ex
 Schema_links: [budget.event_status,expense.expense_description,expense.expense_date,expense.link_to_budget = budget.budget_id,'Post Cards,Posters','2019-08-20']
 Result Contract:
 {
-  "population": "Events linked to an expense whose description is 'Post Cards, Posters' and whose expense_date is '2019-8-20'.",
-  "row_grain": "One event associated with the qualifying expense.",
+  "population": "Events linked to an expense whose description is 'Post Cards, Posters' and whose expense date is 2019-08-20.",
+  "row_grain": "One row for each qualifying expense’s linked event status.",
   "column_role": "The status of the event (event_status).",
   "derivation": "none",
   "filter_policy": "none",

@@ -231,11 +231,11 @@ Schema_links: [zip_code.city,member.first_name,member.last_name,member.zip = zip
 Result Contract:
 {
   "population": "The person named Garrett Gerke.",
-  "row_grain": "One row representing the person Garrett Gerke.",
+  "row_grain": "One row containing the hometown city for the person named Garrett Gerke.",
   "column_role": "The city that is Garrett Gerke's hometown.",
   "derivation": "Resolve Garrett Gerke's hometown ZIP code to the city associated with that ZIP code.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows member.zip is the member's hometown ZIP and zip_code.city gives the city for a ZIP. This resolves hometown city as a ZIP-code lookup rather than a directly stored city."
+  "meta_review": "Metadata indicates the member's hometown is represented by a ZIP code, and the city for that ZIP code is available from ZIP-code metadata."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

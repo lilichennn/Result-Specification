@@ -297,12 +297,12 @@ Hint: format of the cards refers to format; illustrator refers to artist; the le
 Schema_links: [cards.artist,cards.id,legalities.format,cards.uuid = legalities.uuid]
 Result Contract:
 {
-  "population": "All illustrators (artists) with at least one illustrated card, all cards attributed to them, and all recorded formats of play for those cards; no additional eligibility condition applies.",
-  "row_grain": "One row per recorded format of play for a card illustrated by the retained illustrator.",
-  "column_role": "The identity of the illustrator (artist) and the format of play for each recorded format associated with a card illustrated by that illustrator.",
-  "derivation": "For each illustrator, count the cards attributed to that illustrator; the retained illustrator is the one with the minimum count, and the listed formats are the recorded formats associated with that illustrator’s cards.",
-  "filter_policy": "Argmin: retain only the illustrator with the smallest count of illustrated cards among all illustrators.",
-  "meta_review": "Metadata documents legalities.format as the format of play and each legalities row as a separate format association for a card. This refines the result grain to one row per card-format association rather than one row per card."
+  "population": "Illustrators who have at least one card with a recorded format of play, together with the recorded card-format associations for those cards; cards without a recorded format do not contribute.",
+  "row_grain": "One row total: the single retained illustrator with one associated format of play.",
+  "column_role": "The returned outputs are the illustrator identity and a format of play associated with that illustrator.",
+  "derivation": "For each illustrator, count the recorded card-format associations, not distinct cards, for cards attributed to that illustrator; retain the illustrator with the smallest count, and return a format associated with that illustrator's cards.",
+  "filter_policy": "Top-1 selection by smallest count; exactly one illustrator row is returned, even if several illustrators share the minimum count.",
+  "meta_review": "Format of play is a recorded legality/format association for a card, but the result does not enumerate every association for the selected illustrator; it returns one associated format in a single row."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,43 +182,27 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table drivers, columns = [*,driverId,driverRef,number,code,forename,surname]
-Table qualifying, columns = [*,qualifyId,raceId,driverId]
-Table races, columns = [*,raceId,year,date]
-Table results, columns = [*,resultId,raceId,driverId]
-Table seasons, columns = [*,year]
-Foreign_keys = [qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId,races.year = seasons.year,results.driverId = drivers.driverId,results.raceId = races.raceId]
-Sample rows from drivers (columns: ["driverId", "driverRef", "number", "code", "forename", "surname"]):
-[[1, "hamilton", 44, "HAM", "Lewis", "Hamilton"], [2, "heidfeld", null, "HEI", "Nick", "Heidfeld"], [3, "rosberg", 6, "ROS", "Nico", "Rosberg"]]
+Table drivers, columns = [*,driverId,driverRef,forename,surname]
+Table races, columns = [*,raceId,year]
+Table results, columns = [*,raceId,driverId]
+Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Sample rows from drivers (columns: ["driverId", "driverRef", "forename", "surname"]):
+[[1, "hamilton", "Lewis", "Hamilton"], [2, "heidfeld", "Nick", "Heidfeld"], [3, "rosberg", "Nico", "Rosberg"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column driverRef: column description -> , value description -> 
-Column number: column description -> , value description -> 
-Column code: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from qualifying (columns: ["qualifyId", "raceId", "driverId"]):
-[[1, 18, 1], [2, 18, 9], [3, 18, 5]]
-Column descriptions and value descriptions for qualifying:
-Column qualifyId: column description -> , value description -> 
-Column raceId: column description -> , value description -> 
-Column driverId: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "date"]):
-[[1, 2009, "2009-03-29"], [2, 2009, "2009-04-05"], [3, 2009, "2009-04-19"]]
+Sample rows from races (columns: ["raceId", "year"]):
+[[1, 2009], [2, 2009], [3, 2009]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
-Column date: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId"]):
-[[1, 18, 1], [2, 18, 2], [3, 18, 3]]
+Sample rows from results (columns: ["raceId", "driverId"]):
+[[18, 1], [18, 2], [18, 3]]
 Column descriptions and value descriptions for results:
-Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
-Sample rows from seasons (columns: ["year"]):
-[[1950], [1951], [1952]]
-Column descriptions and value descriptions for seasons:
-Column year: column description -> , value description -> 
 
 Q: In which years did Lewis Hamilton participate in a Formula_1 race?
 A: Let’s think step by step.

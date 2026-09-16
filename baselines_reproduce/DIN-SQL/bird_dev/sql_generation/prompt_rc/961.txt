@@ -285,12 +285,12 @@ Hint: shortest actual finishing time refers to Min(milliseconds) except millisec
 Schema_links: [races.name,races.year,results.milliseconds,results.raceId = races.raceId]
 Result Contract:
 {
-  "population": "All races that have at least one race result with a recorded actual finishing time, i.e., at least one associated non-null milliseconds value.",
-  "row_grain": "One race.",
+  "population": "Races that are associated with at least one race result having a recorded non-null actual finishing time.",
+  "row_grain": "One race, selected through an individual race-result occurrence.",
   "column_role": "The race's name and the race's year.",
-  "derivation": "A race's shortest actual finishing time is the minimum non-null milliseconds among its race results; results.milliseconds represents actual finishing time in milliseconds.",
-  "filter_policy": "Select the single race with the smallest such minimum milliseconds; tie handling is unspecified.",
-  "meta_review": "Metadata describes results.milliseconds as the actual finishing time of drivers, establishing that the metric is stored at driver-race result grain rather than on races. The contract therefore derives a race's candidate time from the minimum non-null associated result milliseconds."
+  "derivation": "The returned name and year are stored race attributes; the selection criterion is the stored non-null actual finishing time in milliseconds of an associated race result, not a per-race aggregate.",
+  "filter_policy": "Select the single race associated with the smallest non-null actual finishing time among qualifying race results; tie handling is unspecified.",
+  "meta_review": "Metadata places the actual finishing time at the race-result grain, so the answer is determined by the smallest stored non-null result time and the race of that result, rather than by aggregating times within each race."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

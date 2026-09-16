@@ -352,12 +352,12 @@ Hint: K-12 refers to students in grades 1 through 12.
 Schema_links: [schools.City,frpm.Enrollment (K-12),frpm.CDSCode = schools.CDSCode,5]
 Result Contract:
 {
-  "population": "All cities are eligible; the restriction to students in grades 1 through 12 qualifies the enrollment metric, not city membership.",
-  "row_grain": "One row per city.",
-  "column_role": "The identity (name) of each qualifying city, using the physical location city rather than a mailing city; the enrollment number serves as the ranking measure and is not required as an output column.",
-  "derivation": "For each city, the enrollment number of students in grades 1 through 12 (K-12 enrollment) must be determined as a city-level metric, whether stored directly or computed.",
-  "filter_policy": "Select the 5 cities with the lowest K-12 enrollment numbers (bottom 5 by enrollment); tie handling is not specified.",
-  "meta_review": "The schools metadata distinguishes City from MailCity, resolving the city identity to the physical location city rather than the mailing city."
+  "population": "Cities that have associated K-12 enrollment records; the grade 1 through 12 restriction defines the enrollment measure used for ranking, not an additional returned population.",
+  "row_grain": "One row per distinct physical city.",
+  "column_role": "Only the physical city identity is returned; the K-12 enrollment total is used solely to rank cities and is not required as an output column.",
+  "derivation": "For each city, the ranking measure is the total K-12 enrollment obtained by summing the K-12 enrollment amounts across the city's relevant records.",
+  "filter_policy": "Select the 5 cities with the lowest total K-12 enrollment numbers; tie handling is not specified.",
+  "meta_review": "The city identity is the physical location city rather than the mailing city."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

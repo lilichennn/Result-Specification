@@ -484,12 +484,12 @@ Hint: preferred foot when attacking refers to preferred_foot; lowest potential r
 Schema_links: [Player_Attributes.preferred_foot,Player_Attributes.potential]
 Result Contract:
 {
-  "population": "All players.",
-  "row_grain": "One row representing the player with the lowest potential.",
+  "population": "All players with a known potential.",
+  "row_grain": "One row representing a player with the lowest known potential.",
   "column_role": "The preferred foot when attacking of that player.",
   "derivation": "none",
-  "filter_policy": "Select the player whose potential is the minimum across all players (argmin on potential).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Among players with known potential, select one player whose potential is the minimum.",
+  "meta_review": "Potential must be known for a player to be eligible for the minimum selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

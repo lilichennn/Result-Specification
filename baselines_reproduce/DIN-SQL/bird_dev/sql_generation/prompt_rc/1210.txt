@@ -365,12 +365,12 @@ Hint: average index of the lactate dehydrogenase (LDH) refers to AVG(LDH); (LDH)
 Schema_links: [Laboratory.LDH,500]
 Result Contract:
 {
-  "population": "All patients whose lactate dehydrogenase (LDH) is within the normal range, defined as LDH < 500.",
-  "row_grain": "One global summary row across all eligible patients.",
-  "column_role": "The average LDH value for the eligible patients.",
-  "derivation": "Compute the average (AVG) of LDH over the eligible patient population.",
+  "population": "All patient lactate dehydrogenase (LDH) measurements whose value is within the normal range, defined as LDH < 500.",
+  "row_grain": "One global summary row across all eligible LDH measurements.",
+  "column_role": "The average LDH value for the eligible measurements.",
+  "derivation": "Compute the average (AVG) of LDH values over the eligible measurements.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

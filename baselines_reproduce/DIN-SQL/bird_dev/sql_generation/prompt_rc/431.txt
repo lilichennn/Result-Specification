@@ -297,12 +297,12 @@ Hint: available outside of the United States refers to isForeignOnly = 1; has fo
 Schema_links: [sets.name,sets.id,sets.isForeignOnly,sets.isFoilOnly,set_translations.language,set_translations.setCode = sets.code,1,'Japanese']
 Result Contract:
 {
-  "population": "Sets that are not available outside of the United States (not isForeignOnly = 1), that have foil cards (isFoilOnly = 1), and that have at least one card with Japanese writing (foreign card language = 'Japanese'), with all three conditions holding together.",
+  "population": "Sets that are not available outside the United States (isForeignOnly = 0), have foil cards (isFoilOnly = 1), and have Japanese writing associated with the set (language = 'Japanese'), with all three conditions holding together.",
   "row_grain": "One row per qualifying set.",
-  "column_role": "The identity of the set and its set ID, the latter explicitly requested for inclusion.",
+  "column_role": "The set name and its set ID, with the ID explicitly requested for inclusion.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies foreign_data.language as the foreign language of a card, so the Japanese-writing condition is a card-level existence condition associated with the qualifying set. Sets.isForeignOnly and sets.isFoilOnly confirm the availability and foil conditions are set-level."
+  "meta_review": "The Japanese-writing condition is a set-level language condition rather than a card-level foreign-language condition. The availability and foil conditions remain set-level."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

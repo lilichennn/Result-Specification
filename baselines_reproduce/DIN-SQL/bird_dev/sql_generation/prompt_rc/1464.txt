@@ -230,12 +230,12 @@ Hint: full name refers to first_name, last_name, amount of funds received refers
 Schema_links: [member.first_name,member.last_name,income.amount,income.date_received,income.link_to_member = member.member_id,'2019-09-09']
 Result Contract:
 {
-  "population": "Students who received funds with a received date of 9/9/2019.",
-  "row_grain": "One row per student who received funds on 9/9/2019.",
+  "population": "Students who attended at least one event and received funds with a received date of 9/9/2019.",
+  "row_grain": "One row per distinct combination of a student's full name and amount received on 9/9/2019.",
   "column_role": "The student's full name (first name and last name) and the amount of funds received.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms that income.amount and income.date_received represent the funds received and their receipt date, while member first_name and last_name compose the full name. This validates the Round-1 semantics without changing them."
+  "filter_policy": "Only distinct full-name and amount combinations are returned.",
+  "meta_review": "Metadata confirms that the amount and date received represent the funds received and their receipt date, while first and last name compose the full name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -225,12 +225,12 @@ Hint: eye colour refers to colour.colour where eye_colour_id = colour.id; Blackw
 Schema_links: [colour.colour,superhero.superhero_name,superhero.eye_colour_id = colour.id,Blackwulf]
 Result Contract:
 {
-  "population": "The superhero whose superhero_name is 'Blackwulf'.",
-  "row_grain": "One superhero, namely Blackwulf.",
+  "population": "The eye colour associated with the superhero named 'Blackwulf'.",
+  "row_grain": "One eye colour for Blackwulf.",
   "column_role": "The eye colour of the superhero.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

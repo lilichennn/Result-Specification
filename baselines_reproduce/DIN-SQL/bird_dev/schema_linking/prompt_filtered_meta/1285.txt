@@ -182,22 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Laboratory, columns = [*,ID,Date,LDH]
-Table Patient, columns = [*,ID,Description,First Date]
+Table Laboratory, columns = [*,ID,LDH]
+Table Patient, columns = [*,ID,First Date]
 Foreign_keys = [Laboratory.ID = Patient.ID]
-Sample rows from Laboratory (columns: ["ID", "Date", "LDH"]):
-[[27654, "1991-09-11", 567], [27654, "1991-09-17", 579], [27654, "1991-09-19", 684]]
+Sample rows from Laboratory (columns: ["ID", "LDH"]):
+[[27654, 567], [27654, 579], [27654, 684]]
 Column descriptions and value descriptions for Laboratory:
 Column ID: column description -> identification of the patient, value description -> 
-Column Date: column description -> Date of the laboratory tests (YYMMDD), value description -> 
 Column LDH: column description -> lactate dehydrogenase, value description -> Commonsense evidence:
 
 Normal range: N < 500
-Sample rows from Patient (columns: ["ID", "Description", "First Date"]):
-[[2110, "1994-02-14", "1993-02-10"], [11408, "1996-12-01", "1973-01-01"], [12052, "1991-08-13", null]]
+Sample rows from Patient (columns: ["ID", "First Date"]):
+[[2110, "1993-02-10"], [11408, "1973-01-01"], [12052, null]]
 Column descriptions and value descriptions for Patient:
 Column ID: column description -> identification of the patient, value description -> 
-Column Description: column description -> the first date when a patient data was recorded, value description -> null or empty: not recorded
 Column First Date: column description -> the date when a patient came to the hospital, value description -> 
 
 Q: When is the latest patient's medical data recorded? This patient should have an abnormal level of lactate dehydrogenase.

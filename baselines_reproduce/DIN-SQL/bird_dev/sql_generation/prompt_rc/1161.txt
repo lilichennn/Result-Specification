@@ -296,12 +296,12 @@ Hint: in-patient refers to Admission = '+'; age 50 and above refers to SUBTRACT(
 Schema_links: [Patient.Admission,Patient.Birthday,Examination.aCL IgG,Examination.ID = Patient.ID,'+',50]
 Result Contract:
 {
-  "population": "Patients who are in-patients (Admission = '+') and whose age, computed as the current year minus their birth year, is 50 or greater.",
-  "row_grain": "One global summary row spanning all eligible patients.",
-  "column_role": "The average anti-cardiolipin antibody (IgG) concentration of the eligible patients.",
-  "derivation": "Compute the arithmetic mean of anti-cardiolipin antibody (IgG) concentration across the eligible patient population.",
+  "population": "Anti-cardiolipin antibody (IgG) concentration measurements recorded for patients who are in-patients (Admission = '+') and whose age, computed as the current year minus their birth year, is 50 or greater.",
+  "row_grain": "One global summary row spanning all eligible measurements.",
+  "column_role": "The average anti-cardiolipin antibody (IgG) concentration across the eligible measurements.",
+  "derivation": "Compute the arithmetic mean of the anti-cardiolipin antibody (IgG) concentration values across the eligible measurements.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Examination.aCL IgG is the requested anti-cardiolipin antibody (IgG) concentration; Round-1 contract preserved."
+  "meta_review": "Metadata confirms aCL IgG is the requested anti-cardiolipin antibody (IgG) concentration measure."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

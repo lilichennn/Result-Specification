@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table major, columns = [*,major_id,major_name,department,college]
-Table member, columns = [*,member_id,last_name,link_to_major]
+Table member, columns = [*,member_id,last_name,position,link_to_major]
 Foreign_keys = [member.link_to_major = major.major_id]
 Sample rows from major (columns: ["major_id", "major_name", "department", "college"]):
 [["rec06DF6vZ1CyPKpc", "Outdoor Product Design and Development", "School of Applied Sciences, Technology and Education", "College of Agriculture and Applied Sciences"], ["rec09LedkREyskCNv", "Agricultural Communication", "School of Applied Sciences, Technology and Education", "College of Agriculture and Applied Sciences"], ["rec0Eanv576RhQllI", "Fisheries and Aquatic Sciences", "Watershed Sciences Department", "College of Natural Resources"]]
@@ -192,12 +192,13 @@ Column major_id: column description -> A unique identifier for each major, value
 Column major_name: column description -> major name, value description -> 
 Column department: column description -> The name of the department that offers the major, value description -> 
 Column college: column description -> The name college that houses the department that offers the major, value description -> 
-Sample rows from member (columns: ["member_id", "last_name", "link_to_major"]):
-[["rec1x5zBFIqoOuPW8", "Sanders", "recxK3MHQFbR9J5uO"], ["rec280Sk7o31iG0Tx", "Gilmour", "rec7BxKpjJ7bNph3O"], ["rec28ORZgcm1dtqBZ", "Guidi", "recdIBgeU38UbV2sy"]]
+Sample rows from member (columns: ["member_id", "last_name", "position", "link_to_major"]):
+[["rec1x5zBFIqoOuPW8", "Sanders", "Member", "recxK3MHQFbR9J5uO"], ["rec280Sk7o31iG0Tx", "Gilmour", "Member", "rec7BxKpjJ7bNph3O"], ["rec28ORZgcm1dtqBZ", "Guidi", "Member", "recdIBgeU38UbV2sy"]]
 Column descriptions and value descriptions for member:
 Column member_id: column description -> unique id of member, value description -> 
 Column last_name: column description -> member's last name, value description -> commonsense evidence: 
 full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.
+Column position: column description -> The position the member holds in the club, value description -> 
 Column link_to_major: column description -> The unique identifier of the major of the member. References the Major table, value description -> 
 
 Q: List the last name of members with a major in environmental engineering and include its department and college name.

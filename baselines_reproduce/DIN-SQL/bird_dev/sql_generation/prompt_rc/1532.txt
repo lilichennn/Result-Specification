@@ -182,11 +182,11 @@ Hint:
 Schema_links: [gasstations.Country,transactions_1k.Price,transactions_1k.ProductID,transactions_1k.Amount,gasstations.GasStationID = transactions_1k.GasStationID,2,1]
 Result Contract:
 {
-  "population": "Gas stations that sold product id No. 2; only sales of product id No. 2 qualify.",
-  "row_grain": "One country, namely the country where the single selected gas station is located.",
-  "column_role": "The identity (name) of the country containing the selected gas station.",
-  "derivation": "For each gas station, the price of one unit of product id No. 2 (the per-unit selling price), whether stored directly or computed.",
-  "filter_policy": "Select the gas station with the highest per-unit price of product id No. 2 (argmax) and return its country; tie handling is unspecified.",
+  "population": "Sales of product id No. 2 that are linked to a gas station; each qualifying sale carries the country of that gas station.",
+  "row_grain": "One row: the country of the gas station associated with the single selected product id No. 2 sale.",
+  "column_role": "The identity of the country containing the gas station associated with the selected sale.",
+  "derivation": "The returned country is a stored attribute of the gas station; the ranking value is the recorded price of the qualifying sale, interpreted as the one-unit price, with no aggregation or amount-based recomputation.",
+  "filter_policy": "Select the qualifying sale with the highest recorded price and return the country of its gas station; tie handling is unspecified.",
   "meta_review": "Metadata for transactions_1k.Price states total price = Amount × Price, validating that the requested one-unit price is the per-unit Price rather than total transaction amount."
 }
 

@@ -373,12 +373,12 @@ Hint: the set Hour of Devastation refers to set.name = 'Hour of Devastation'; na
 Schema_links: [cards.name,legalities.format,sets.name,legalities.status,legalities.uuid = cards.uuid,cards.setCode = sets.code,'Hour of Devastation','Legal']
 Result Contract:
 {
-  "population": "All cards belonging to the set named 'Hour of Devastation', considered together with their format legality records, keeping only those card–format pairings whose legality status is 'Legal'.",
-  "row_grain": "One row per card from the set paired with one format in which that card is legal.",
-  "column_role": "The card's name and the format in which that card is legal.",
-  "derivation": "none",
+  "population": "Cards in the set named 'Hour of Devastation' that have at least one format-legality record, considered with all such records; a record contributes its format only when the legality status is 'Legal', otherwise it contributes no format value.",
+  "row_grain": "Distinct combinations of card name and reported format, with one empty-format combination for a card that has any non-legal legality record.",
+  "column_role": "The card's name and, when applicable, the format in which the card is legal; non-legal legality records yield an empty format value.",
+  "derivation": "The format value is conditionally taken from the legality record only when its status is 'Legal'; no aggregation is applied.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

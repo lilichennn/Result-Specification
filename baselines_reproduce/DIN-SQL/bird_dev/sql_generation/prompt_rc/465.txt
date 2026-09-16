@@ -297,12 +297,12 @@ Hint: set of cards with "Ancestor''s Chosen" in it refers to name = 'Ancestor''s
 Schema_links: [cards.name,foreign_data.language,foreign_data.uuid = cards.uuid,"Ancestor's Chosen","Korean"]
 Result Contract:
 {
-  "population": "Cards whose card name is 'Ancestor's Chosen' and for which at least one foreign-language record has language = 'Korean'.",
-  "row_grain": "One global summary row answering the existence question for the whole set of matching cards.",
-  "column_role": "A yes/no indicator of whether a Korean-language version of the named card exists.",
-  "derivation": "Existence check: the answer is yes if at least one card named 'Ancestor's Chosen' has an associated foreign-language record with language = 'Korean', otherwise no.",
+  "population": "Set translations linked to a card set containing a card named 'Ancestor's Chosen', where the translation language is Korean and the translation text is present.",
+  "row_grain": "One global summary row answering the existence question for the whole matching population.",
+  "column_role": "A yes/no indicator of whether a Korean set translation with present translation text exists for the set containing the named card.",
+  "derivation": "Existence check: the answer is yes if at least one qualifying Korean set translation with present translation text is linked to the set of a card named 'Ancestor's Chosen', otherwise no.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows cards.name stores the card name while foreign_data.language stores the foreign language of a card, resolving that the Korean version is a foreign-data record for the named card rather than a card-level language or set translation."
+  "meta_review": "Metadata resolves that the Korean version is a set-level translation associated with the card's set and must have present translation text, rather than a card-level foreign-language record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,19 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table gasstations, columns = [*,GasStationID,Country]
-Table transactions_1k, columns = [*,TransactionID,GasStationID,Amount,Price]
+Table transactions_1k, columns = [*,TransactionID,GasStationID,Price]
 Foreign_keys = []
 Sample rows from gasstations (columns: ["GasStationID", "Country"]):
 [[44, "CZE"], [45, "CZE"], [46, "CZE"]]
 Column descriptions and value descriptions for gasstations:
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column Country: column description -> , value description -> 
-Sample rows from transactions_1k (columns: ["TransactionID", "GasStationID", "Amount", "Price"]):
-[[1, 3704, 28, 672.64], [2, 3704, 18, 430.72], [3, 3704, 1, 121.99]]
+Sample rows from transactions_1k (columns: ["TransactionID", "GasStationID", "Price"]):
+[[1, 3704, 672.64], [2, 3704, 430.72], [3, 3704, 121.99]]
 Column descriptions and value descriptions for transactions_1k:
 Column TransactionID: column description -> Transaction ID, value description -> 
 Column GasStationID: column description -> Gas Station ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
 Column Price: column description -> Price, value description -> commonsense evidence:
 
 total price = Amount x Price

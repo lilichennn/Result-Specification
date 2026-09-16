@@ -296,12 +296,12 @@ Hint: anti-SSB are normal refers to SSB IN ('negative', '0'); have other symptom
 Schema_links: [Laboratory.SSB,Examination.Symptoms,Patient.ID,Laboratory.ID = Patient.ID,Examination.ID = Patient.ID,'negative','0']
 Result Contract:
 {
-  "population": "Patients whose anti-SSB result is normal (SSB IN ('negative', '0')) and who have other symptoms observed in their examination (Symptoms IS NOT NULL); both conditions must hold for a patient to be counted.",
+  "population": "Patients with an examination record and a negative anti-SSB laboratory result; the presence of other symptoms is not required for inclusion.",
   "row_grain": "One global summary row for the entire qualifying patient population.",
   "column_role": "A single value: the number of qualifying patients.",
   "derivation": "Count the distinct patients belonging to the eligible population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

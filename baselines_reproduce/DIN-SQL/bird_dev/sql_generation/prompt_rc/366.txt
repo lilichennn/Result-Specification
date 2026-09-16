@@ -297,12 +297,12 @@ Hint: Benalish Knight' is the name of card; rule of playing card refers to forma
 Schema_links: [legalities.format,cards.name,legalities.uuid = cards.uuid,Benalish Knight]
 Result Contract:
 {
-  "population": "All records for the playing card whose name is 'Benalish Knight'.",
-  "row_grain": "One row per playing format applicable to the card.",
+  "population": "All playing-format records associated with the playing card whose name is 'Benalish Knight'.",
+  "row_grain": "One row per associated playing-format record.",
   "column_role": "The format (the playing rule) associated with the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms legalities.format is the format of play and each value refers to different rules to play, validating the evidence mapping of 'rule' to format. No other Round-1 field required refinement."
+  "meta_review": "Metadata confirms that each returned format is a rule of play, validating the evidence mapping of 'rule' to format."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -352,7 +352,7 @@ Hint:
 Schema_links: [schools.Phone,satscores.AvgScrMath,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible; no membership conditions are stated.",
+  "population": "Schools are eligible only if they have a corresponding average Math score record; schools without such a record are excluded.",
   "row_grain": "One row representing the single selected school.",
   "column_role": "The phone number of the selected school.",
   "derivation": "The comparison metric is a stored school-level average Math score; no computation from raw scores is required.",

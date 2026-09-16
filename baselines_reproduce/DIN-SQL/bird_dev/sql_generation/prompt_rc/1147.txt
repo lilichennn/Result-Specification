@@ -491,12 +491,12 @@ Hint: overall strength is the greatest refers to MAX(overall_rating)
 Schema_links: [Player.player_name,Player_Attributes.overall_rating,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no membership conditions restrict the set.",
-  "row_grain": "One single player.",
-  "column_role": "The name of the selected player.",
+  "population": "Players with at least one recorded overall strength equal to the greatest recorded overall strength.",
+  "row_grain": "One row for each distinct player name among the qualifying players.",
+  "column_role": "The name of the qualifying player.",
   "derivation": "none",
-  "filter_policy": "Select one player whose overall strength, given by overall_rating, equals the maximum overall_rating across all players (argmax; any one player may be returned if several tie).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Include every qualifying maximum-overall-strength player name once; do not choose only one among ties.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

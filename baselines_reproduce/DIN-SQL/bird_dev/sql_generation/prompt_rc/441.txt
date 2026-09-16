@@ -297,12 +297,12 @@ Hint:
 Schema_links: [sets.code,sets.releaseDate,2007-07-13]
 Result Contract:
 {
-  "population": "All sets whose release date is 2007-07-13 (the ISO 8601 representation of 07/13/2007).",
-  "row_grain": "One set with the qualifying release date.",
-  "column_role": "The set code of the set.",
+  "population": "Set-code entries associated with sets whose release date is 2007-07-13 (the ISO 8601 representation of 07/13/2007).",
+  "row_grain": "One row per qualifying set-code entry; repeated set codes are not eliminated.",
+  "column_role": "The set code.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that sets.code is the set-level set code and sets.releaseDate is stored in ISO 8601 format, so the requested date literal corresponds to 2007-07-13. This resolves the output owner and date comparison representation."
+  "meta_review": "The returned set code is the identifier carried by the qualifying set-code entries, and release dates are stored in ISO 8601 format, so 07/13/2007 corresponds to 2007-07-13."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

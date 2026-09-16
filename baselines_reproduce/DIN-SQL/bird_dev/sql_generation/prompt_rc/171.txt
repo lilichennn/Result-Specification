@@ -317,12 +317,12 @@ Hint: Difference in no. of committed crimes between 2 regions = Total no. of com
 Schema_links: [district.A3,district.A16,north Bohemia,east Bohemia]
 Result Contract:
 {
-  "population": "District-level records for the two target regions, North Bohemia and East Bohemia, whose stored 1996 committed-crime counts are eligible for the regional totals.",
+  "population": "District-level records for the two target regions, East Bohemia and North Bohemia, whose stored 1996 committed-crime counts are eligible for the regional totals.",
   "row_grain": "One global summary row representing the single requested comparison between the two regions.",
-  "column_role": "The numeric difference in the number of committed crimes between North Bohemia and East Bohemia in 1996.",
-  "derivation": "Sum the stored 1996 committed-crime counts for districts in North Bohemia and for districts in East Bohemia, then subtract the East Bohemia total from the North Bohemia total.",
+  "column_role": "The numeric difference in the 1996 committed-crime totals of East Bohemia and North Bohemia, measured as East Bohemia minus North Bohemia.",
+  "derivation": "Sum the stored 1996 committed-crime counts for districts in East Bohemia and for districts in North Bohemia, then subtract the North Bohemia total from the East Bohemia total.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that district.A16 is the stored 1996 committed-crime count and district.A3 identifies the region, so regional totals are computed from district-level counts. This resolves the metric grain and replaces the Round-1 notion of individual crime records."
+  "meta_review": "Metadata establishes the stored 1996 committed-crime count and the region identifier at district level, so regional totals are computed from district-level counts rather than individual crime records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

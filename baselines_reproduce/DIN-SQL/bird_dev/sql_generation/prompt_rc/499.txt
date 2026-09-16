@@ -297,12 +297,12 @@ Hint: translations of the name refers to translation; translation is not NULL; s
 Schema_links: [set_translations.translation,sets.name,set_translations.setCode = sets.code,'Tenth Edition']
 Result Contract:
 {
-  "population": "All translation entries associated with the set whose name is 'Tenth Edition', including only entries where the translation value is not NULL.",
+  "population": "All non-null translation values associated with the set whose name is 'Tenth Edition'.",
   "row_grain": "One global summary row for the qualifying translations.",
-  "column_role": "The count of qualifying translations.",
-  "derivation": "Count the translation entries in the eligible population.",
+  "column_role": "The count of distinct qualifying translation values.",
+  "derivation": "Count the distinct translation values in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that set_translations.translation is the set-owned translation property, validating the population of non-null set translations."
+  "meta_review": "Metadata confirms that the translation property is the set-owned translation value, validating the population of non-null set translations."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

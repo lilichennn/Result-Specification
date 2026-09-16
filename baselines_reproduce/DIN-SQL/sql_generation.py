@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import queue
+import random
 import re
 import sys
 import time
@@ -15,12 +16,14 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from difficulty_decomposition import literal_assignment, spider_schema
-from schema_linking import MODEL_ALIASES, database_context, model_config
+from schema_linking import MODEL_ALIASES, database_context, model_config, stream_events
 
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-TIMEOUT = 300
+TIMEOUT = 900
+INITIAL_CONCURRENCY = 50
+MAX_CONCURRENCY = 1500
 LABELS = ("EASY", "NON-NESTED", "NESTED")
 RC_INSTRUCTION = """
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:
@@ -42,9 +45,9 @@ def schema_links_text(schema_links: list[str]) -> str:
 
 
 def result_contract_text(record: dict) -> str:
-    contract = record.get("rc_round2")
+    contract = record.get("rc_round3")
     if not isinstance(contract, dict):
-        raise ValueError("rc_round2 must be an object")
+        raise ValueError("rc_round3 must be an object")
     return (
         "\nResult Contract:\n"
         + json.dumps(contract, ensure_ascii=False, indent=2)
@@ -220,12 +223,12 @@ def call_model(messages: list[dict[str, str]], config: dict, dataset: str) -> di
             "model": config["model"],
             "messages": messages,
             "temperature": 0,
-            "max_tokens": 600 if dataset == "spider" else 2000,
+            "stream": True,
+            "stream_options": {"include_usage": True},
         }
         if dataset == "spider":
             payload.update(
                 n=1,
-                stream=False,
                 top_p=1.0,
                 frequency_penalty=0.0,
                 presence_penalty=0.0,
@@ -237,12 +240,37 @@ def call_model(messages: list[dict[str, str]], config: dict, dataset: str) -> di
             headers={
                 "Authorization": "Bearer " + config["api_key"],
                 "Content-Type": "application/json",
+                "Accept": "text/event-stream",
             },
         )
         with urlopen(request, timeout=TIMEOUT) as response:
-            body = json.load(response)
-        usage = body.get("usage")
-        raw = body["choices"][0]["message"]["content"]
+            content_parts = []
+            finished = False
+            for data in stream_events(response):
+                if data.strip() == "[DONE]":
+                    finished = True
+                    break
+                chunk = json.loads(data)
+                if not isinstance(chunk, dict):
+                    raise ValueError("Model stream event must be a JSON object")
+                if chunk.get("error") is not None:
+                    raise RuntimeError(f"Model stream error: {chunk['error']}")
+                if chunk.get("usage") is not None:
+                    usage = chunk["usage"]
+                choices = chunk.get("choices") or []
+                if choices:
+                    choice = choices[0]
+                    piece = (choice.get("delta") or {}).get("content")
+                    if isinstance(piece, str):
+                        content_parts.append(piece)
+                    finish_reason = choice.get("finish_reason")
+                    if finish_reason is not None:
+                        if finish_reason != "stop":
+                            raise ValueError(f"Model stream finished with {finish_reason!r}")
+                        finished = True
+            if not finished:
+                raise ValueError("Model stream ended before a completion marker")
+        raw = "".join(content_parts)
         if not isinstance(raw, str) or not raw.strip():
             raise ValueError("Model returned empty content")
         result = extract_initial_sql(raw)
@@ -302,7 +330,8 @@ class Progress:
         if self.tty:
             label = ("\033[32m" if success else "\033[31m") + label + "\033[0m"
         suffix = "｜" + " ".join(reason.splitlines()) if reason else ""
-        self.message(
+        if stage == 'result':
+            self.message(
             f"{datetime.now():%Y-%m-%d %H:%M:%S}｜{index}｜【{stage}】｜{label}{suffix}"
         )
 
@@ -314,23 +343,14 @@ class Progress:
 
 class Concurrency:
     def __init__(self):
-        self.limit = 10
-        self.successes = 0
-        self.failures = 0
+        self.limit = INITIAL_CONCURRENCY
+        self.last_increase = time.monotonic()
 
-    def observe(self, success: bool) -> None:
-        if success:
-            self.failures = 0
-            self.successes += 1
-            if self.successes == 5:
-                self.limit = min(100, self.limit + 5)
-                self.successes = 0
-        else:
-            self.successes = 0
-            self.failures += 1
-            if self.failures == 3:
-                self.limit = max(5, self.limit - 5)
-                self.failures = 0
+    def tick(self) -> None:
+        now = time.monotonic()
+        while self.limit < MAX_CONCURRENCY and now - self.last_increase >= 1:
+            self.limit = min(MAX_CONCURRENCY, self.limit + random.randint(40, 60))
+            self.last_increase += 1
 
 
 def save_results(path: Path, results: dict) -> None:
@@ -356,9 +376,10 @@ def run_results(
     exhausted = False
     concurrency = Concurrency()
     last_report = time.monotonic()
-    progress.message(f"{datetime.now():%Y-%m-%d %H:%M:%S}｜当前并发：10")
-    with ThreadPoolExecutor(max_workers=100) as executor:
+    progress.message(f"{datetime.now():%Y-%m-%d %H:%M:%S}｜当前并发：{concurrency.limit}")
+    with ThreadPoolExecutor(max_workers=MAX_CONCURRENCY) as executor:
         while active or not exhausted:
+            concurrency.tick()
             while not exhausted and len(active) < concurrency.limit:
                 index = next(pending, None)
                 if index is None:
@@ -370,7 +391,9 @@ def run_results(
             if not active:
                 break
             try:
-                future = completed.get(timeout=1)
+                wait = (max(0.001, concurrency.last_increase + 1 - time.monotonic())
+                        if concurrency.limit < MAX_CONCURRENCY else 1)
+                future = completed.get(timeout=wait)
             except queue.Empty:
                 pass
             else:
@@ -379,7 +402,6 @@ def run_results(
                 results[index] = record
                 save_results(output_path, results)
                 success = record["status"]["success"]
-                concurrency.observe(success)
                 progress.results += int(success)
                 progress.log(index, "result", success, record["status"]["reason"])
             progress.tick()

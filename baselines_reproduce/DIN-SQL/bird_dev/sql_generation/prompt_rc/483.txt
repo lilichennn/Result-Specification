@@ -298,7 +298,7 @@ Schema_links: [foreign_data.text,foreign_data.language,sets.name,foreign_data.uu
 Result Contract:
 {
   "population": "All Italian-language foreign text rulings of cards that belong to the card set named 'Coldsnap'.",
-  "row_grain": "One Italian-language foreign text ruling of a card in the Coldsnap set.",
+  "row_grain": "One row for each distinct Italian-language foreign text ruling value among cards in the Coldsnap set.",
   "column_role": "The Italian text of the ruling.",
   "derivation": "none",
   "filter_policy": "none",

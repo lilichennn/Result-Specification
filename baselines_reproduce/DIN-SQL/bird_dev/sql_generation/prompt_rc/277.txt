@@ -187,12 +187,12 @@ Hint: TR000_1_2 is the bond id;
 Schema_links: [atom.element,connected.bond_id,connected.atom_id = atom.atom_id,TR000_1_2]
 Result Contract:
 {
-  "population": "All toxicology elements associated with the bond whose bond ID is TR000_1_2, with association defined by the atoms connected by that bond.",
-  "row_grain": "One row per toxicology element associated with bond TR000_1_2.",
-  "column_role": "The toxicology element value for each associated element.",
+  "population": "Element values of atoms connected to the bond whose bond ID is TR000_1_2.",
+  "row_grain": "One row for each atom connected to bond TR000_1_2, providing that atom's element value.",
+  "column_role": "The toxicology element value for each connected atom.",
   "derivation": "none",
   "filter_policy": "Restrict to bond ID TR000_1_2.",
-  "meta_review": "Metadata identifies toxicology elements as atom-level element values and shows a bond is associated with atoms through connected atom pairs. This resolves that the requested elements are those of the atoms connected by bond TR000_1_2."
+  "meta_review": "Metadata identifies toxicology elements as atom-level element values and shows a bond is associated with atoms through connected atom records. This resolves that the requested elements are those of the atoms connected by bond TR000_1_2."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

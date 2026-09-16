@@ -182,22 +182,18 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table bond, columns = [*,molecule_id,bond_type]
-Table molecule, columns = [*,molecule_id]
-Foreign_keys = [bond.molecule_id = molecule.molecule_id]
-Sample rows from bond (columns: ["molecule_id", "bond_type"]):
-[["TR000", "-"], ["TR000", "-"], ["TR000", "-"]]
+Table bond, columns = [*,bond_id,bond_type]
+Foreign_keys = []
+Sample rows from bond (columns: ["bond_id", "bond_type"]):
+[["TR000_1_2", "-"], ["TR000_2_3", "-"], ["TR000_2_4", "-"]]
 Column descriptions and value descriptions for bond:
-Column molecule_id: column description -> identifying the molecule in which the bond appears, value description -> 
+Column bond_id: column description -> unique id representing bonds, value description -> TRxxx_A1_A2:
+TRXXX refers to which molecule
+A1 and A2 refers to which atom
 Column bond_type: column description -> type of the bond, value description -> commonsense evidence:
 -: single bond
 '=': double bond
 '#': triple bond
-Sample rows from molecule (columns: ["molecule_id"]):
-[["TR000"], ["TR001"], ["TR002"]]
-Column descriptions and value descriptions for molecule:
-Column molecule_id: column description -> unique id of molecule, value description -> "+" --> this molecule / compound is carcinogenic
-'-' this molecule is not / compound carcinogenic
 
 Q: Among all chemical compounds identified in the database, what percent of compounds form a triple-bond.
 Hint: triple bond refers to bond_type = '#';

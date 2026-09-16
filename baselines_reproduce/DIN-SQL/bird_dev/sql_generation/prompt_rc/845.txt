@@ -301,12 +301,12 @@ Hint: power of superheroes refers to power_name; height greater than 80% of the 
 Schema_links: [superpower.power_name,superhero.height_cm,hero_power.hero_id = superhero.id,hero_power.power_id = superpower.id,0.8]
 Result Contract:
 {
-  "population": "Target population: superheroes whose recorded height_cm is greater than 80% of the average height; reference population: all superheroes, with the average computed only over recorded height_cm values (NULL or 0 treated as missing).",
-  "row_grain": "One row per power of a qualifying superhero.",
+  "population": "Target population: powers held by superheroes whose height_cm is greater than 80% of the average height of all superheroes; reference population: all superheroes, with the average computed over stored height values, including zero-valued heights and ignoring absent heights.",
+  "row_grain": "One row per power held by a qualifying superhero.",
   "column_role": "The power name of each qualifying superhero.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata states superhero.height_cm is missing when NULL or 0, so the average height is computed from recorded height values rather than treating 0 as an actual height."
+  "meta_review": "Zero-valued heights are not excluded from the average height; the average is computed from stored height values, with only absent heights ignored."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

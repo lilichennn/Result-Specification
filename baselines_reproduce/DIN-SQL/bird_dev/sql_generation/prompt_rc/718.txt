@@ -225,12 +225,12 @@ Hint: super power of "Super Strength" refers to power_name = 'Super Strength'
 Schema_links: [superhero.id,superpower.power_name,hero_power.hero_id = superhero.id,hero_power.power_id = superpower.id,"Super Strength"]
 Result Contract:
 {
-  "population": "Superheroes who have the super power with power_name = 'Super Strength'.",
+  "population": "Superhero-power associations for the superpower whose power_name is 'Super Strength'.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The count of qualifying superheroes.",
-  "derivation": "Count the distinct superheroes in the eligible population.",
+  "column_role": "The count of qualifying superhero-power associations.",
+  "derivation": "Count the hero identifiers in the eligible superhero-power associations, without applying distinctness.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows hero_power is a relationship linking superhero records to superpower records, so the result counts distinct superheroes rather than relationship rows. It also confirms power_name is the superpower name for the 'Super Strength' condition."
+  "meta_review": "Metadata shows the superhero-power relationship links superhero records to superpower records, so the result counts matching hero associations for the 'Super Strength' power rather than distinct superheroes. It also confirms power_name is the superpower name for the condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

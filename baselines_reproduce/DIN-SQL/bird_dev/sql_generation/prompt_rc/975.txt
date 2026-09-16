@@ -285,12 +285,12 @@ Hint: lowest speed of lap time refers to Max(time);
 Schema_links: [races.year,lapTimes.time,lapTimes.raceId = races.raceId]
 Result Contract:
 {
-  "population": "All race years associated with recorded lap times are eligible; no Boolean eligibility conditions are stated.",
-  "row_grain": "A single year, namely the one identified as having the lowest-speed lap time.",
-  "column_role": "The year only; the lap-time duration serves as the ranking measure and is not requested as an output column.",
+  "population": "All recorded lap-time occurrences linked to a race, each providing an associated race year; no Boolean eligibility conditions are stated.",
+  "row_grain": "A single year, taken from the individual lap-time occurrence selected as having the greatest lap-time value.",
+  "column_role": "The year only; the lap-time value serves as the ranking measure and is not requested as an output column.",
   "derivation": "none",
-  "filter_policy": "Argmax selection: return the year associated with the greatest lap-time duration, because 'lowest speed of lap time' is defined as Max(time); the comparison is by elapsed duration, not by lexical ordering of formatted text. The input does not determine whether the maximum is taken over individual lap records or over per-year aggregates.",
-  "meta_review": "Metadata confirms lapTimes.time is a formatted lap-time duration and lapTimes.milliseconds stores that duration numerically, so ranking is by elapsed time rather than text collation. It does not resolve whether the maximum is over individual laps or per-year aggregates."
+  "filter_policy": "Argmax selection over individual lap-time occurrences: return the race year of the occurrence with the greatest recorded lap time, because 'lowest speed of lap time' is defined as the maximum time. The selection is not based on per-year aggregates.",
+  "meta_review": "The maximum is applied to individual recorded lap times, not to per-year aggregates; the output is the race year of the selected lap occurrence."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

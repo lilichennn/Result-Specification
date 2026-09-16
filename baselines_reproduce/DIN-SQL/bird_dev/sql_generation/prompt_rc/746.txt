@@ -294,12 +294,12 @@ Hint: average attribute value of all superheroes refers to AVG(attribute_value)
 Schema_links: [hero_attribute.attribute_value]
 Result Contract:
 {
-  "population": "All superheroes, with no additional membership conditions.",
-  "row_grain": "One global summary row covering the entire superhero population.",
-  "column_role": "The average attribute value across all superheroes.",
-  "derivation": "Compute the arithmetic mean of the attribute value over all superheroes.",
+  "population": "All superhero attribute values, with no additional membership conditions.",
+  "row_grain": "One global summary row covering the entire superhero attribute-value population.",
+  "column_role": "The average attribute value.",
+  "derivation": "Compute the arithmetic mean of the attribute values.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

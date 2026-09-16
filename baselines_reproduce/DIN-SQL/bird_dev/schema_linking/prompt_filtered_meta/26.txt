@@ -182,22 +182,24 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,County Name,School Name,School Type,Educational Option Type,Low Grade,High Grade,FRPM Count (Ages 5-17)]
-Table schools, columns = [*,CDSCode,County,School,Street,StreetAbr,City,Zip,State,MailStreet,MailStrAbr,MailCity,MailZip,MailState,SOC,SOCType,EdOpsCode,EdOpsName,EILCode,EILName,GSoffered,GSserved]
+Table frpm, columns = [*,CDSCode,County Name,School Name,School Type,Low Grade,High Grade,Free Meal Count (Ages 5-17),FRPM Count (Ages 5-17)]
+Table schools, columns = [*,CDSCode,County,School,Street,StreetAbr,City,Zip,State,MailStreet,MailStrAbr,MailCity,MailZip,MailState,SOC,SOCType,EILCode,EILName,GSoffered,GSserved]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "County Name", "School Name", "School Type", "Educational Option Type", "Low Grade", "High Grade", "FRPM Count (Ages 5-17)"]):
-[["01100170109835", "Alameda", "FAME Public Charter", "K-12 Schools (Public)", "Traditional", "K", "12", 702.0], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "High Schools (Public)", "Traditional", "9", "12", 182.0], ["01100170118489", "Alameda", "Aspire California College Preparatory Academy", "High Schools (Public)", "Traditional", "9", "12", 168.0]]
+Sample rows from frpm (columns: ["CDSCode", "County Name", "School Name", "School Type", "Low Grade", "High Grade", "Free Meal Count (Ages 5-17)", "FRPM Count (Ages 5-17)"]):
+[["01100170109835", "Alameda", "FAME Public Charter", "K-12 Schools (Public)", "K", "12", 553.0, 702.0], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "High Schools (Public)", "9", "12", 182.0, 182.0], ["01100170118489", "Alameda", "Aspire California College Preparatory Academy", "High Schools (Public)", "9", "12", 128.0, 168.0]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County Name: column description -> County Code , value description -> 
 Column School Name: column description -> School Name , value description -> 
 Column School Type: column description -> , value description -> 
-Column Educational Option Type: column description -> Educational Option Type, value description -> 
 Column Low Grade: column description -> Low Grade, value description -> 
 Column High Grade: column description -> High Grade, value description -> 
+Column Free Meal Count (Ages 5-17): column description -> Free Meal Count (Ages 5-17), value description -> commonsense evidence:
+
+eligible free rate = Free Meal Count / Enrollment
 Column FRPM Count (Ages 5-17): column description -> , value description -> 
-Sample rows from schools (columns: ["CDSCode", "County", "School", "Street", "StreetAbr", "City", "Zip", "State", "MailStreet", "MailStrAbr", "MailCity", "MailZip", "MailState", "SOC", "SOCType", "EdOpsCode", "EdOpsName", "EILCode", "EILName", "GSoffered", "GSserved"]):
-[["01100170000000", "Alameda", null, "313 West Winton Avenue", "313 West Winton Ave.", "Hayward", "94544-1136", "CA", "313 West Winton Avenue", "313 West Winton Ave.", "Hayward", "94544-1136", "CA", null, null, null, null, null, null, null, null], ["01100170109835", "Alameda", "FAME Public Charter", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "Newark", "94560-5359", "CA", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "Newark", "94560-5359", "CA", "65", "K-12 Schools (Public)", "TRAD", "Traditional", "ELEMHIGH", "Elementary-High Combination", "K-12", "K-12"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "1515 Webster Street", "1515 Webster St.", "Oakland", "94612-3355", "CA", "1515 Webster Street", "1515 Webster St.", "Oakland", "94612", "CA", "66", "High Schools (Public)", "TRAD", "Traditional", "HS", "High School", "9-12", "9-12"]]
+Sample rows from schools (columns: ["CDSCode", "County", "School", "Street", "StreetAbr", "City", "Zip", "State", "MailStreet", "MailStrAbr", "MailCity", "MailZip", "MailState", "SOC", "SOCType", "EILCode", "EILName", "GSoffered", "GSserved"]):
+[["01100170000000", "Alameda", null, "313 West Winton Avenue", "313 West Winton Ave.", "Hayward", "94544-1136", "CA", "313 West Winton Avenue", "313 West Winton Ave.", "Hayward", "94544-1136", "CA", null, null, null, null, null, null], ["01100170109835", "Alameda", "FAME Public Charter", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "Newark", "94560-5359", "CA", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "Newark", "94560-5359", "CA", "65", "K-12 Schools (Public)", "ELEMHIGH", "Elementary-High Combination", "K-12", "K-12"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "1515 Webster Street", "1515 Webster St.", "Oakland", "94612-3355", "CA", "1515 Webster Street", "1515 Webster St.", "Oakland", "94612", "CA", "66", "High Schools (Public)", "HS", "High School", "9-12", "9-12"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
@@ -232,21 +234,6 @@ Column SOC: column description -> The School Ownership Code is a numeric code us
 •       70 – Adult Education Centers
 •       98 – Regional Occupational Center/Program (ROC/P)
 Column SOCType: column description -> The School Ownership Code Type is the text description of the type of school., value description -> The School Ownership Code Type is the text description of the type of school.
-Column EdOpsCode: column description -> The Education Option Code is a short text description of the type of education offered., value description -> 
-•      ALTSOC – Alternative School of Choice
-•      COMM – County Community School
-•       COMMDAY – Community Day School
-•       CON – Continuation School
-•       JUV – Juvenile Court School
-•       OPP – Opportunity School
-•       YTH – Youth Authority School
-•       SSS – State Special School
-•       SPEC – Special Education School
-•       TRAD – Traditional
-•       ROP – Regional Occupational Program
-•       HOMHOS – Home and Hospital
-•       SPECON – District Consortia Special Education School
-Column EdOpsName: column description -> Educational Option Name, value description -> The Educational Option Name is the long text description of the type of education being offered.
 Column EILCode: column description -> The Educational Instruction Level Code is a short text description of the institution's type relative to the grade range served., value description -> •       A – Adult
 •       ELEM – Elementary
 •       ELEMHIGH – Elementary-High Combination

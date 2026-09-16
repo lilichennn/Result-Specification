@@ -230,12 +230,12 @@ Hint: held at MU 215 refers to location = 'MU 215'
 Schema_links: [budget.category,event.location,budget.link_to_event = event.event_id,'MU 215']
 Result Contract:
 {
-  "population": "Events whose location is 'MU 215'.",
-  "row_grain": "One event category represented among the qualifying events.",
-  "column_role": "The category of the event, represented by the event type.",
+  "population": "Categories associated with events whose location is 'MU 215'.",
+  "row_grain": "One row for each qualifying event's associated category.",
+  "column_role": "The category associated with the qualifying events.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies event.type as the kind of event, resolving the requested event category as the event's type. No other Round-1 semantic was changed."
+  "meta_review": "The requested category is the category associated with the event, not the event's type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

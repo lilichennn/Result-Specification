@@ -182,18 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,Academic Year,School Code,School Name,School Type,Enrollment (K-12),Free Meal Count (K-12),Percent (%) Eligible Free (K-12)]
-Table satscores, columns = [*,cds,sname,enroll12]
-Table schools, columns = [*,CDSCode,School]
-Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "Academic Year", "School Code", "School Name", "School Type", "Enrollment (K-12)", "Free Meal Count (K-12)", "Percent (%) Eligible Free (K-12)"]):
-[["01100170109835", "2014-2015", "0109835", "FAME Public Charter", "K-12 Schools (Public)", 1087.0, 565.0, 0.519779208831647], ["01100170112607", "2014-2015", "0112607", "Envision Academy for Arts & Technology", "High Schools (Public)", 395.0, 186.0, 0.470886075949367], ["01100170118489", "2014-2015", "0118489", "Aspire California College Preparatory Academy", "High Schools (Public)", 244.0, 134.0, 0.549180327868853]]
+Table frpm, columns = [*,CDSCode,Academic Year,School Name,Enrollment (K-12),Free Meal Count (K-12),Percent (%) Eligible Free (K-12)]
+Foreign_keys = []
+Sample rows from frpm (columns: ["CDSCode", "Academic Year", "School Name", "Enrollment (K-12)", "Free Meal Count (K-12)", "Percent (%) Eligible Free (K-12)"]):
+[["01100170109835", "2014-2015", "FAME Public Charter", 1087.0, 565.0, 0.519779208831647], ["01100170112607", "2014-2015", "Envision Academy for Arts & Technology", 395.0, 186.0, 0.470886075949367], ["01100170118489", "2014-2015", "Aspire California College Preparatory Academy", 244.0, 134.0, 0.549180327868853]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column Academic Year: column description -> Academic Year, value description -> 
-Column School Code: column description -> , value description -> 
 Column School Name: column description -> School Name , value description -> 
-Column School Type: column description -> , value description -> 
 Column Enrollment (K-12): column description -> Enrollment (K-12), value description -> commonsense evidence:
 
 K-12: 1st grade - 12nd grade 
@@ -201,17 +197,6 @@ Column Free Meal Count (K-12): column description -> Free Meal Count (K-12), val
 
 eligible free rate = Free Meal Count / Enrollment
 Column Percent (%) Eligible Free (K-12): column description -> , value description -> 
-Sample rows from satscores (columns: ["cds", "sname", "enroll12"]):
-[["1100170000000", null, 398], ["1100170109835", "FAME Public Charter", 62], ["1100170112607", "Envision Academy for Arts & Technology", 75]]
-Column descriptions and value descriptions for satscores:
-Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
-Column enroll12: column description -> enrollment (1st-12nd grade), value description -> 
-Sample rows from schools (columns: ["CDSCode", "School"]):
-[["01100170000000", null], ["01100170109835", "FAME Public Charter"], ["01100170112607", "Envision Academy for Arts & Technology"]]
-Column descriptions and value descriptions for schools:
-Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 
 Q: What is the eligible free rate of the 10th and 11th schools with the highest enrolment for students in grades 1 through 12?
 Hint: K-12 refers to students in grades 1 through 12; Eligible free rate for K-12 = `Free Meal Count (K-12)` / `Enrollment (K-12)`

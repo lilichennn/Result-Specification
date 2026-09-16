@@ -256,12 +256,12 @@ Hint: connections refers to bond_id; atom 19 refers to atom_id like 'TR%_19';
 Schema_links: [connected.bond_id,connected.atom_id,'TR%_19']
 Result Contract:
 {
-  "population": "All connections (bond_id records) associated with the atom whose atom_id matches the pattern 'TR%_19' (atom 19).",
+  "population": "All connections (bond_id records) associated with atom identifiers whose atom_id ends with '19' (atom 19).",
   "row_grain": "One global summary row for atom 19.",
   "column_role": "The number of connections the atom has.",
-  "derivation": "Count the bond_id values (connections) linked to the atom identified by atom_id like 'TR%_19'.",
+  "derivation": "Count the bond_id values among the connections associated with atom identifiers whose atom_id ends with '19'.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "Atom 19 is identified by the trailing two characters of the atom identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -324,12 +324,12 @@ Hint: Female means gender = 'F'; A11 refers to average salary; Gap = highest ave
 Schema_links: [account.account_id,client.gender,client.birth_date,district.A11,client.district_id = district.district_id,disp.client_id = client.client_id,disp.account_id = account.account_id,'F']
 Result Contract:
 {
-  "population": "Target population: clients with gender = 'F' who are associated with an account number; each client's average salary is the district-level average salary (A11) of the client's affiliated district. The population used to determine the highest average salary for the gap is unspecified.",
-  "row_grain": "One listed account number of a qualifying female client, with the salary gap reported as a result-level measure.",
+  "population": "Accounts associated with a client and belonging to the district of the oldest female client. Female clients are used only as the reference population to identify that district; the returned account is not required to belong to a female client. The salary gap is computed over all districts.",
+  "row_grain": "A single selected account row, with the salary gap included as a result-level scalar measure.",
   "column_role": "The account number and the salary gap.",
-  "derivation": "Compute the salary gap as the highest average salary minus the lowest average salary of the selected female-client result set, using district-level average salary (A11) values associated with the relevant clients; the comparison domain for the highest average salary is not specified.",
-  "filter_policy": "Retain accounts of female clients that are both oldest by earliest birth date and have the lowest district-level average salary (A11) within the target population; ties and any conflict between the two extremum conditions are unspecified.",
-  "meta_review": "Metadata establishes that average salary is district.A11, so salary extrema are district-level values associated with the client rather than direct client or account salary attributes. The comparison domain for the highest average salary remains unspecified."
+  "derivation": "The account number is a stored identifier for the selected account. The salary gap is the maximum district-level average salary minus the minimum district-level average salary across all districts, independent of the selected account population.",
+  "filter_policy": "Identify the oldest female client, with ties unspecified; restrict accounts to that client's district and return one account from that district; selection among qualifying accounts is unspecified.",
+  "meta_review": "Average salary is a district-level attribute. The oldest-female condition identifies a district rather than defining the returned client population. The salary gap uses global district salary extrema, not extrema among the returned accounts or among female clients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

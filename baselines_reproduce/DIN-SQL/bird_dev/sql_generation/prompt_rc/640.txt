@@ -251,12 +251,12 @@ Hint: calculation = SUBTRACT(SUM(ViewCount where DisplayName = 'Mornington'), SU
 Schema_links: [posts.ViewCount,users.DisplayName,posts.OwnerUserId = users.Id,Mornington,Amos]
 Result Contract:
 {
-  "population": "Posts authored by the user with display name 'Mornington' and posts authored by the user with display name 'Amos'; the Mornington posts contribute to the first total and the Amos posts contribute to the second total.",
-  "row_grain": "One global summary row covering both author groups.",
-  "column_role": "The difference between the total view count of Mornington's posts and the total view count of Amos's posts.",
-  "derivation": "Sum the view counts of posts by 'Mornington', sum the view counts of posts by 'Amos', and subtract the Amos total from the Mornington total.",
+  "population": "Post-history associations between users and posts, restricted to associations for users whose display name is 'Mornington' for the first total and users whose display name is 'Amos' for the second total.",
+  "row_grain": "One global summary row covering both display-name groups.",
+  "column_role": "The difference between the total view count associated with Mornington and the total view count associated with Amos.",
+  "derivation": "Sum the view counts of the posts linked to qualifying Mornington associations, sum the view counts of the posts linked to qualifying Amos associations, and subtract the Amos total from the Mornington total.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

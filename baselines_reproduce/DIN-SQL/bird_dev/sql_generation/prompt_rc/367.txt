@@ -297,8 +297,8 @@ Hint: Phyrexian' is the language; name of artists refers to artist;
 Schema_links: [cards.artist,foreign_data.language,foreign_data.uuid = cards.uuid,Phyrexian]
 Result Contract:
 {
-  "population": "Card art illustrations for cards whose foreign language is Phyrexian, together with the artists who illustrated them.",
-  "row_grain": "One artist who illustrated at least one Phyrexian-language card art.",
+  "population": "Artists who illustrated card art for cards whose foreign language is Phyrexian.",
+  "row_grain": "One artist name for each qualifying Phyrexian-language card art occurrence, without grouping or deduplicating artists.",
   "column_role": "The name of the artist.",
   "derivation": "none",
   "filter_policy": "none",

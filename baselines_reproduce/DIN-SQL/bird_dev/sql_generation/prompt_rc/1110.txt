@@ -415,12 +415,12 @@ Hint: "FC Lorient" refers to team_long_name = 'FC Lorient'; on 2010/2/22 refers 
 Schema_links: [Team.team_long_name,Team_Attributes.buildUpPlayPassingClass,Team_Attributes.date,Team.team_api_id = Team_Attributes.team_api_id,'FC Lorient','2010-02-22%']
 Result Contract:
 {
-  "population": "Dated team attribute records for the team with team_long_name = 'FC Lorient' whose date falls on 2010-02-22 (date LIKE '2010-02-22%').",
-  "row_grain": "One dated team attribute record for FC Lorient on 2010-02-22.",
+  "population": "Dated team attribute records for the team named 'FC Lorient' whose date falls on 2010-02-22.",
+  "row_grain": "One row per matching dated team attribute record for FC Lorient on 2010-02-22.",
   "column_role": "The build up play passing class value for FC Lorient.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Team_Attributes.date and buildUpPlayPassingClass confirm that the requested build up play passing class is a dated team attribute, not a match or player property. This validates returning that class for the FC Lorient team attribute record dated 2010-02-22."
+  "meta_review": "The requested build up play passing class is a dated team attribute, not a match or player property, so the result returns that class for each matching FC Lorient team attribute record dated 2010-02-22."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

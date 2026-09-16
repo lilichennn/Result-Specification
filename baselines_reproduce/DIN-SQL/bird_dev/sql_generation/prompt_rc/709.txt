@@ -251,12 +251,12 @@ Hint: view count lower than 5 refers to ViewCount < 5;
 Schema_links: [comments.Score,posts.ViewCount,posts.Id,comments.PostId = posts.Id,0,5]
 Result Contract:
 {
-  "population": "Posts that have at least one comment with a score of 0 and whose own view count is lower than 5 (ViewCount < 5).",
-  "row_grain": "One global summary row covering all qualifying posts.",
-  "column_role": "A single value representing the number of qualifying posts.",
-  "derivation": "Count the posts belonging to the eligible population.",
+  "population": "Comments whose parent post has a score of 0 and a view count lower than 5 (ViewCount < 5).",
+  "row_grain": "One global summary row covering all qualifying comments.",
+  "column_role": "A single value representing the number of qualifying comments.",
+  "derivation": "Count the comments belonging to the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that comment score is a comment-level attribute and view count is a post-level attribute, validating the distinction between comment Score and post ViewCount."
+  "meta_review": "Metadata confirms that the score and view count conditions apply to posts, while the counted entities are comments associated with those posts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

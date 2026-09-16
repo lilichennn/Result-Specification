@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table constructorResults, columns = [*,constructorId,points]
 Table constructorStandings, columns = [*,constructorId,points]
-Table constructors, columns = [*,constructorId,name,nationality]
+Table constructors, columns = [*,constructorId,nationality]
 Table results, columns = [*,constructorId,points]
 Foreign_keys = [constructorResults.constructorId = constructors.constructorId,constructorStandings.constructorId = constructors.constructorId,results.constructorId = constructors.constructorId]
 Sample rows from constructorResults (columns: ["constructorId", "points"]):
@@ -197,11 +197,10 @@ Sample rows from constructorStandings (columns: ["constructorId", "points"]):
 Column descriptions and value descriptions for constructorStandings:
 Column constructorId: column description -> , value description -> 
 Column points: column description -> how many points acquired in each race , value description -> 
-Sample rows from constructors (columns: ["constructorId", "name", "nationality"]):
-[[1, "McLaren", "British"], [2, "BMW Sauber", "German"], [3, "Williams", "British"]]
+Sample rows from constructors (columns: ["constructorId", "nationality"]):
+[[1, "British"], [2, "German"], [3, "British"]]
 Column descriptions and value descriptions for constructors:
 Column constructorId: column description -> , value description -> 
-Column name: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
 Sample rows from results (columns: ["constructorId", "points"]):
 [[1, 10.0], [2, 8.0], [3, 6.0]]

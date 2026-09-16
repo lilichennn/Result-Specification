@@ -251,12 +251,12 @@ Hint: total views refer to ViewCount; Name the user refers to DisplayName; post 
 Schema_links: [posts.ViewCount,users.DisplayName,postHistory.Text,postHistory.CreationDate,postHistory.PostId = posts.Id,postHistory.UserId = users.Id,'Computer Game Datasets']
 Result Contract:
 {
-  "population": "Posts with a post-history record whose Text equals 'Computer Game Datasets'.",
-  "row_grain": "One row representing the single post selected from the matching posts.",
-  "column_role": "The post's total views (ViewCount) and the display name (DisplayName) of the user who posted the latest matching post-history record.",
+  "population": "Post-history records whose Text equals 'Computer Game Datasets', linked to a post that has a last editor.",
+  "row_grain": "One row for each matching post-history record, carrying the linked post's view count and last editor's display name.",
+  "column_role": "The post's total views (ViewCount) and the display name (DisplayName) of the post's last editor.",
   "derivation": "none",
-  "filter_policy": "Retain the post associated with the latest matching post-history record by CreationDate.",
-  "meta_review": "Metadata shows Text, posting user, and creation date are stored in postHistory, while ViewCount is a post-level attribute. This resolves the matching and latest-posting semantics to postHistory records rather than a Text column on posts."
+  "filter_policy": "No latest-history ranking or top-one selection; retain all matching post-history records with their linked post and last editor.",
+  "meta_review": "Matching is based on post-history text, ViewCount is a post-level attribute, and the returned user is the post's last editor rather than the author of a latest post-history record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -318,10 +318,10 @@ Schema_links: [district.district_id,district.A2,district.A13]
 Result Contract:
 {
   "population": "All districts.",
-  "row_grain": "One district per result row.",
-  "column_role": "The district name and the branch-location identifier of each selected district.",
+  "row_grain": "One district per result row, with exactly one selected district.",
+  "column_role": "The district name and the branch-location identifier of the selected district.",
   "derivation": "none",
-  "filter_policy": "Select the district(s) whose 1996 unemployment rate is the highest among all districts (argmax on the 1996 unemployment rate, retaining all districts tied at the maximum).",
+  "filter_policy": "Select the single district with the highest 1996 unemployment rate, using a top-1 descending ranking on that rate and not retaining ties.",
   "meta_review": "The district metadata identifies district.district_id as the branch-location identifier and district.A13 as the 1996 unemployment rate. This resolves the branch-location output as an identifier while preserving the district-level maximum unemployment selection."
 }
 

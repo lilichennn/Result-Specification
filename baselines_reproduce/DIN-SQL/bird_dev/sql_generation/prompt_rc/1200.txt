@@ -365,12 +365,12 @@ Hint: thrombocytopenia' refers to symptoms; 'SLE' refers to diagnosis; calculati
 Schema_links: [Patient.ID,Examination.Symptoms,Patient.Diagnosis,Examination.ID = Patient.ID,ITP,SLE]
 Result Contract:
 {
-  "population": "Two patient groups are referenced: a target group of patients whose patient-level diagnosis contains 'ITP' (signs of thrombocytopenia) and a reference group of patients whose patient-level diagnosis contains 'SLE'.",
-  "row_grain": "One global summary row across all eligible patients.",
-  "column_role": "A single numeric value: the proportion, expressed as a percentage, of ITP-diagnosed patients relative to SLE-diagnosed patients.",
-  "derivation": "Divide the count of patients whose patient-level diagnosis contains 'ITP' by the count of patients whose patient-level diagnosis contains 'SLE', then multiply by 100.",
+  "population": "Patient cases with a recorded symptom of thrombocytopenia; within this population, cases whose diagnosis is SLE form the measured subset.",
+  "row_grain": "One global summary row across all eligible thrombocytopenia cases.",
+  "column_role": "A single numeric value: the percentage of thrombocytopenia cases that have an SLE diagnosis.",
+  "derivation": "Divide the number of thrombocytopenia cases with an SLE diagnosis by the total number of thrombocytopenia cases, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Patient.Diagnosis is the patient-owned diagnosis representation, resolving the counts to patient-level diagnosis matches."
+  "meta_review": "Symptoms and diagnosis are interpreted as attributes of the thrombocytopenia clinical cases, so SLE is evaluated only within those cases rather than against a separate ITP-diagnosed group."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -484,12 +484,12 @@ Hint: born after 1990 refers to strftime('%Y', birthday) = '1990';
 Schema_links: [Player.id,Player.birthday,1990]
 Result Contract:
 {
-  "population": "All players whose birth date satisfies the condition the question calls \"born after 1990\", which the evidence defines as the birth year extracted from the player's birthday being equal to 1990.",
+  "population": "All players whose birth year is later than 1990.",
   "row_grain": "One global summary row for the entire qualifying player population.",
   "column_role": "A single value representing the number of qualifying players.",
   "derivation": "Count the players in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "Born after 1990 is understood as a birth year later than 1990, not equal to 1990."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

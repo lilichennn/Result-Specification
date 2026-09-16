@@ -182,22 +182,17 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table comments, columns = [*,Id,PostId,Score]
-Table postHistory, columns = [*,PostId,CreationDate]
+Table comments, columns = [*,Id,PostId,Score,CreationDate]
 Table posts, columns = [*,Id,CreaionDate]
-Foreign_keys = [comments.PostId = posts.Id,postHistory.PostId = posts.Id]
-Sample rows from comments (columns: ["Id", "PostId", "Score"]):
-[[1, 3, 5], [2, 5, 0], [3, 9, 0]]
+Foreign_keys = [comments.PostId = posts.Id]
+Sample rows from comments (columns: ["Id", "PostId", "Score", "CreationDate"]):
+[[1, 3, 5, "2010-07-19 19:15:52.0"], [2, 5, 0, "2010-07-19 19:16:14.0"], [3, 9, 0, "2010-07-19 19:18:54.0"]]
 Column descriptions and value descriptions for comments:
 Column Id: column description -> the comment Id, value description -> 
 Column PostId: column description -> the unique id of the post, value description -> 
 Column Score: column description -> rating score, value description -> commonsense evidence:
 The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. 
-Sample rows from postHistory (columns: ["PostId", "CreationDate"]):
-[[1, "2010-07-19 19:12:12.0"], [1, "2010-07-19 19:12:12.0"], [1, "2010-07-19 19:12:12.0"]]
-Column descriptions and value descriptions for postHistory:
-Column PostId: column description -> the unique id of the post, value description -> 
-Column CreationDate: column description -> the creation date of the post, value description -> 
+Column CreationDate: column description -> the creation date of the comment, value description -> 
 Sample rows from posts (columns: ["Id", "CreaionDate"]):
 [[1, "2010-07-19 19:12:12.0"], [2, "2010-07-19 19:12:57.0"], [3, "2010-07-19 19:13:28.0"]]
 Column descriptions and value descriptions for posts:

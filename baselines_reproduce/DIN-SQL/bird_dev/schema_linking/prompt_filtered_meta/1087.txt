@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id,height]
-Table Player_Attributes, columns = [*,player_fifa_api_id,player_api_id,date,volleys]
+Table Player_Attributes, columns = [*,player_fifa_api_id,player_api_id,volleys]
 Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id]
 Sample rows from Player (columns: ["id", "player_api_id", "player_name", "player_fifa_api_id", "height"]):
 [[1, 505942, "Aaron Appindangoye", 218353, 182.88], [2, 155782, "Aaron Cresswell", 189615, 170.18], [3, 162549, "Aaron Doran", 186170, 170.18]]
@@ -193,12 +193,11 @@ Column player_api_id: column description -> the id of the player api, value desc
 Column player_name: column description -> player name, value description -> 
 Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column height: column description -> the player's height, value description -> 
-Sample rows from Player_Attributes (columns: ["player_fifa_api_id", "player_api_id", "date", "volleys"]):
-[[218353, 505942, "2016-02-18 00:00:00", 44], [218353, 505942, "2015-11-19 00:00:00", 44], [218353, 505942, "2015-09-21 00:00:00", 44]]
+Sample rows from Player_Attributes (columns: ["player_fifa_api_id", "player_api_id", "volleys"]):
+[[218353, 505942, 44], [218353, 505942, 44], [218353, 505942, 44]]
 Column descriptions and value descriptions for Player_Attributes:
 Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column player_api_id: column description -> the id of the player api, value description -> 
-Column date: column description -> date, value description -> e.g. 2016-02-18 00:00:00
 Column volleys: column description -> the player's volley score, value description -> 0-100 which is calculated by FIFA
 
 Q: Among the players whose height is over 180, how many of them have a volley score of over 70?

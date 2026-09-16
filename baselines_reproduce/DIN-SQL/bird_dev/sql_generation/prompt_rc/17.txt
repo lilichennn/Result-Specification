@@ -352,12 +352,12 @@ Hint: Valid charter number means the number is not null
 Schema_links: [satscores.AvgScrWrite,schools.CharterNum,satscores.cds = schools.CDSCode,499]
 Result Contract:
 {
-  "population": "Schools with a non-null school charter number and a school-level average Writing score greater than 499.",
-  "row_grain": "One eligible school.",
-  "column_role": "The school's charter number.",
-  "derivation": "Use each school's recorded average Writing score as the ranking metric; the value is already a school-level average, so no additional averaging is performed.",
-  "filter_policy": "Order the eligible schools by the average Writing score from highest to lowest, with no output limit.",
-  "meta_review": "Metadata establishes that satscores.AvgScrWrite is a school-level average Writing score, so the >499 condition and ranking apply to that stored average rather than to individual Writing score records. It also identifies schools.CharterNum as the school-owned charter number used for output."
+  "population": "Schools with a non-null charter number and a recorded school-level average Writing score greater than 499.",
+  "row_grain": "One ranked row for each eligible school.",
+  "column_role": "The school's charter number, the average Writing score used for ranking, and the assigned rank.",
+  "derivation": "The average Writing score is a stored school-level value and is used directly as the ranking metric; no additional averaging is performed. The rank is derived from the descending ordering of that score among eligible schools.",
+  "filter_policy": "Eligible schools are assigned competition-style ranks by descending average Writing score, with tied scores sharing the same rank and the next rank skipped; no output limit is applied.",
+  "meta_review": "Metadata establishes that the Writing score measure is a school-level average, so the >499 condition and ranking apply to that stored average rather than to individual Writing score records. It also identifies the charter number as the school-owned identifier used for output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

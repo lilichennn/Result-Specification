@@ -285,11 +285,11 @@ Hint:
 Schema_links: [drivers.forename,drivers.surname,results.fastestLapSpeed,results.driverId = drivers.driverId]
 Result Contract:
 {
-  "population": "All drivers with at least one Formula 1 race result that records a fastest lap speed.",
+  "population": "All drivers with at least one Formula 1 race result that has a recorded fastest lap time.",
   "row_grain": "One driver, representing the single selected individual.",
   "column_role": "The driver's forename and the driver's surname.",
   "derivation": "none",
-  "filter_policy": "Select the driver associated with the maximum recorded fastest lap speed among all eligible race results, comparing speeds as numeric values in km/h (argmax over fastest lap speed).",
+  "filter_policy": "Select the driver associated with the maximum fastest lap speed among race results that have a recorded fastest lap time, comparing speeds as numeric values in km/h (argmax over fastest lap speed).",
   "meta_review": "Metadata shows results.fastestLapSpeed stores fastest lap speed in km/h for each driver race result, resolving the requested lap-speed metric. Drivers.forename and drivers.surname provide the requested driver name."
 }
 

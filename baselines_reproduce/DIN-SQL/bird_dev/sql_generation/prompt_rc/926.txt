@@ -285,12 +285,12 @@ Hint: fastest lap time ever refers to min(fastestLapTime)
 Schema_links: [results.fastestLapTime,drivers.forename,drivers.surname,results.driverId = drivers.driverId,Lewis,Hamilton]
 Result Contract:
 {
-  "population": "All race result records belonging to driver Lewis Hamilton.",
-  "row_grain": "One global summary across all of Lewis Hamilton's race records.",
-  "column_role": "The fastest (minimum) lap time value achieved by Lewis Hamilton.",
-  "derivation": "Take the minimum of the fastest lap time metric over Lewis Hamilton's race records.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms results.fastestLapTime is a race-result-level fastest lap time, validating minimization over Lewis Hamilton's race result records."
+  "population": "Race result records for driver Lewis Hamilton that have a recorded fastest lap time.",
+  "row_grain": "One selected row containing the fastest recorded lap time across those race results.",
+  "column_role": "The fastest recorded lap time value achieved by Lewis Hamilton.",
+  "derivation": "Return the stored fastest lap time value from the race result selected as the fastest among the population.",
+  "filter_policy": "Restrict the result to the single fastest lap time among the population.",
+  "meta_review": "Metadata confirms fastest lap time is recorded at the race-result level, supporting return of the fastest recorded lap time for the driver."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

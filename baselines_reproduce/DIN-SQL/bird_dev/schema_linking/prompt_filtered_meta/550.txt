@@ -183,18 +183,16 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table posts, columns = [*,Id,Body]
-Table tags, columns = [*,Id,TagName,Count,ExcerptPostId]
+Table tags, columns = [*,Count,ExcerptPostId]
 Foreign_keys = [tags.ExcerptPostId = posts.Id]
 Sample rows from posts (columns: ["Id", "Body"]):
 [[1, "<p>How should I elicit prior distributions from experts when fitting a Bayesian model?</p>\n"], [2, "<p>In many different statistical methods there is an \"assumption of normality\".  What is \"normality\" and how do I know if there is normality?</p>\n"], [3, "<p>What are some valuable Statistical Analysis open source projects available right now?</p>\n\n<p>Edit: as pointed out by Sharpie, valuable could mean helping you get things done faster or more cheaply.</p>\n"]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column Body: column description -> the body of the post, value description -> 
-Sample rows from tags (columns: ["Id", "TagName", "Count", "ExcerptPostId"]):
-[[1, "bayesian", 1342, 20258], [2, "prior", 168, 62158], [3, "elicitation", 6, null]]
+Sample rows from tags (columns: ["Count", "ExcerptPostId"]):
+[[1342, 20258], [168, 62158], [6, null]]
 Column descriptions and value descriptions for tags:
-Column Id: column description -> the tag id, value description -> 
-Column TagName: column description -> the name of the tag, value description -> 
 Column Count: column description -> the count of posts that contain this tag, value description -> more counts --> this tag is more popular
 Column ExcerptPostId: column description -> the excerpt post id of the tag, value description -> 
 

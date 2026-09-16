@@ -415,12 +415,12 @@ Hint: average heights refers to Avg(height); Italy is name of country
 Schema_links: [Player.height,Country.name,Match.country_id = Country.id,Match.home_player_1 = Player.player_api_id,Italy]
 Result Contract:
 {
-  "population": "All players whose country name is Italy.",
-  "row_grain": "One global summary row for the eligible Italy players.",
-  "column_role": "The average height value of the eligible players.",
-  "derivation": "Compute the arithmetic mean of player height over all eligible Italy players.",
+  "population": "Players associated with matches whose country name is Italy.",
+  "row_grain": "One global summary row for the eligible Italy-associated player entries.",
+  "column_role": "The average height value of the eligible Italy-associated players.",
+  "derivation": "Compute the arithmetic mean of player height across the eligible Italy-associated player entries.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The Italy condition is an eligibility condition on the associated country context, not a returned attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

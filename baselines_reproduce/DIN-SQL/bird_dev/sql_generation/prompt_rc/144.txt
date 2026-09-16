@@ -248,12 +248,12 @@ Hint: Operation = 'VYBER KARTOU' refers to credit card withdrawn
 Schema_links: [trans.amount,trans.date,trans.operation,disp.type,trans.account_id = account.account_id,disp.account_id = account.account_id,'VYBER KARTOU','OWNER','2021']
 Result Contract:
 {
-  "population": "All credit card withdrawal transactions—those with operation 'VYBER KARTOU'—made by account holders with transaction dates in year 2021.",
-  "row_grain": "One global summary row representing the 2021 monthly average.",
-  "column_role": "A single numeric value: the average monthly credit card withdrawal amount.",
-  "derivation": "Compute the average amount of the qualifying credit card withdrawals on a per-month basis over year 2021 (the average amount in a month).",
+  "population": "Credit card withdrawal transactions—those with operation 'VYBER KARTOU'—made by account holders with transaction dates in 1998.",
+  "row_grain": "One global summary row representing the overall average amount for those transactions.",
+  "column_role": "A single numeric value: the average credit card withdrawal amount.",
+  "derivation": "Average the transaction amount across all qualifying credit card withdrawal transactions in 1998.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The temporal scope is 1998, and the result is a simple overall average rather than a monthly average."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

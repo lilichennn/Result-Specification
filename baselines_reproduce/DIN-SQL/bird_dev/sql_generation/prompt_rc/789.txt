@@ -227,10 +227,10 @@ Result Contract:
 {
   "population": "All heroes whose race is 'Alien'.",
   "row_grain": "One global summary row across all eligible heroes.",
-  "column_role": "The average non-missing weight of the eligible heroes.",
-  "derivation": "Compute the average of weight_kg over the eligible heroes, treating NULL and 0 as missing and therefore not contributing to the average.",
+  "column_role": "The average weight of the eligible heroes.",
+  "derivation": "Compute the average as total weight_kg divided by the number of eligible heroes, including zero weights; heroes with missing weight remain in the count but add no weight.",
   "filter_policy": "none",
-  "meta_review": "Metadata states superhero.weight_kg is in kilograms and that NULL or 0 means missing weight, so the average is computed from non-missing weights rather than treating 0 as a valid weight."
+  "meta_review": "Metadata states superhero.weight_kg is in kilograms; the average is a global per-hero average, with zero values valid and missing weights not removing heroes from the denominator."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

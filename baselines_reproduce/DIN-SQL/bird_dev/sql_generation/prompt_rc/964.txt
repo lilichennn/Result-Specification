@@ -354,7 +354,7 @@ Hint: nationality = 'America'
 Schema_links: [drivers.code,drivers.nationality,America]
 Result Contract:
 {
-  "population": "Drivers whose nationality is 'America'.",
+  "population": "Drivers whose nationality is 'American'.",
   "row_grain": "One row per qualifying driver.",
   "column_role": "The driver's abbreviated code.",
   "derivation": "none",

@@ -286,7 +286,7 @@ Schema_links: [races.name,circuits.country,races.circuitId = circuits.circuitId,
 Result Contract:
 {
   "population": "Races that are held on circuits located in the country Germany.",
-  "row_grain": "One race held on a circuit in Germany.",
+  "row_grain": "One row for each distinct name of a race held on a circuit in Germany.",
   "column_role": "The name of the race.",
   "derivation": "none",
   "filter_policy": "none",

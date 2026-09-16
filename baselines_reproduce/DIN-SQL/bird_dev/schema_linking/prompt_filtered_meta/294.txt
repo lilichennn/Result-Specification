@@ -183,9 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table bond, columns = [*,bond_id,molecule_id,bond_type]
-Table connected, columns = [*,bond_id]
 Table molecule, columns = [*,molecule_id,label]
-Foreign_keys = [bond.molecule_id = molecule.molecule_id,connected.bond_id = bond.bond_id]
+Foreign_keys = [bond.molecule_id = molecule.molecule_id]
 Sample rows from bond (columns: ["bond_id", "molecule_id", "bond_type"]):
 [["TR000_1_2", "TR000", "-"], ["TR000_2_3", "TR000", "-"], ["TR000_2_4", "TR000", "-"]]
 Column descriptions and value descriptions for bond:
@@ -197,10 +196,6 @@ Column bond_type: column description -> type of the bond, value description -> c
 -: single bond
 '=': double bond
 '#': triple bond
-Sample rows from connected (columns: ["bond_id"]):
-[["TR000_1_2"], ["TR000_1_2"], ["TR000_2_3"]]
-Column descriptions and value descriptions for connected:
-Column bond_id: column description -> bond id representing bond between two atoms, value description -> 
 Sample rows from molecule (columns: ["molecule_id", "label"]):
 [["TR000", "+"], ["TR001", "+"], ["TR002", "-"]]
 Column descriptions and value descriptions for molecule:

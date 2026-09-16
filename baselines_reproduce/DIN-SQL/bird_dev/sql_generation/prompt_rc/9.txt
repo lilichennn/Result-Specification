@@ -357,7 +357,7 @@ Result Contract:
   "column_role": "The count of qualifying schools.",
   "derivation": "Count the schools satisfying the population conditions, where each school's average Math SAT score is the school-level metric compared against 560.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows schools.FundingType is the charter school funding type with value 'Directly funded', resolving the direct charter-funding condition. It also confirms satscores.AvgScrMath is a school-level average Math SAT score, validating the metric grain."
+  "meta_review": "Metadata shows the charter funding type attribute has the value 'Directly funded', resolving the direct charter-funding condition. It also confirms the Math SAT score is a school-level average, validating the metric grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

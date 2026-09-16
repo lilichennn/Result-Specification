@@ -182,36 +182,42 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,Educational Option Type,FRPM Count (Ages 5-17)]
-Table schools, columns = [*,CDSCode,MailStreet,MailStrAbr,EdOpsCode,EdOpsName]
+Table frpm, columns = [*,CDSCode,Academic Year,School Type,FRPM Count (Ages 5-17)]
+Table schools, columns = [*,CDSCode,MailStreet,MailStrAbr,SOC,SOCType]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "Educational Option Type", "FRPM Count (Ages 5-17)"]):
-[["01100170109835", "Traditional", 702.0], ["01100170112607", "Traditional", 182.0], ["01100170118489", "Traditional", 168.0]]
+Sample rows from frpm (columns: ["CDSCode", "Academic Year", "School Type", "FRPM Count (Ages 5-17)"]):
+[["01100170109835", "2014-2015", "K-12 Schools (Public)", 702.0], ["01100170112607", "2014-2015", "High Schools (Public)", 182.0], ["01100170118489", "2014-2015", "High Schools (Public)", 168.0]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column Educational Option Type: column description -> Educational Option Type, value description -> 
+Column Academic Year: column description -> Academic Year, value description -> 
+Column School Type: column description -> , value description -> 
 Column FRPM Count (Ages 5-17): column description -> , value description -> 
-Sample rows from schools (columns: ["CDSCode", "MailStreet", "MailStrAbr", "EdOpsCode", "EdOpsName"]):
-[["01100170000000", "313 West Winton Avenue", "313 West Winton Ave.", null, null], ["01100170109835", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "TRAD", "Traditional"], ["01100170112607", "1515 Webster Street", "1515 Webster St.", "TRAD", "Traditional"]]
+Sample rows from schools (columns: ["CDSCode", "MailStreet", "MailStrAbr", "SOC", "SOCType"]):
+[["01100170000000", "313 West Winton Avenue", "313 West Winton Ave.", null, null], ["01100170109835", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "65", "K-12 Schools (Public)"], ["01100170112607", "1515 Webster Street", "1515 Webster St.", "66", "High Schools (Public)"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column MailStreet: column description -> MailStreet, value description -> The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.
 Column MailStrAbr: column description -> , value description -> the abbreviated mailing street address of the school, district, or administrative authority.Note: Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStrAbr cells with StreetAbr data.
-Column EdOpsCode: column description -> The Education Option Code is a short text description of the type of education offered., value description -> 
-•      ALTSOC – Alternative School of Choice
-•      COMM – County Community School
-•       COMMDAY – Community Day School
-•       CON – Continuation School
-•       JUV – Juvenile Court School
-•       OPP – Opportunity School
-•       YTH – Youth Authority School
-•       SSS – State Special School
-•       SPEC – Special Education School
-•       TRAD – Traditional
-•       ROP – Regional Occupational Program
-•       HOMHOS – Home and Hospital
-•       SPECON – District Consortia Special Education School
-Column EdOpsName: column description -> Educational Option Name, value description -> The Educational Option Name is the long text description of the type of education being offered.
+Column SOC: column description -> The School Ownership Code is a numeric code used to identify the type of school., value description -> •      08 - Preschool      
+•       09 – Special Education Schools (Public)
+•      11 – Youth Authority Facilities (CEA)
+•       13 – Opportunity Schools
+•       14 – Juvenile Court Schools
+•       15 – Other County or District Programs
+•       31 – State Special Schools
+•       60 – Elementary School (Public)
+•       61 – Elementary School in 1 School District (Public)
+•       62 – Intermediate/Middle Schools (Public)
+•       63 – Alternative Schools of Choice
+•       64 – Junior High Schools (Public)
+•       65 – K-12 Schools (Public)
+•       66 – High Schools (Public)
+•       67 – High Schools in 1 School District (Public)
+•       68 – Continuation High Schools
+•       69 – District Community Day Schools
+•       70 – Adult Education Centers
+•       98 – Regional Occupational Center/Program (ROC/P)
+Column SOCType: column description -> The School Ownership Code Type is the text description of the type of school., value description -> The School Ownership Code Type is the text description of the type of school.
 
 Q: What is the free or reduced price meal count for ages 5 to 17 in the Youth Authority School with a mailing street address of PO Box 1040?
 A: Let’s think step by step.

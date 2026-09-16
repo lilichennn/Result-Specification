@@ -248,12 +248,12 @@ Hint: status = 'A' refers to loan contracts finished with no problems
 Schema_links: [district.A2,account.account_id,loan.status,account.district_id = district.district_id,loan.account_id = account.account_id,'A']
 Result Contract:
 {
-  "population": "Accounts that have a loan contract finished with no problems (status = 'A'), together with the district of the account's branch location.",
+  "population": "Districts of accounts having loan contracts finished with no problems (status = 'A'), where each qualifying account-loan association belongs to the account's branch-location district.",
   "row_grain": "One district.",
-  "column_role": "The identity of the district; the qualifying account count is a ranking measure and is not required as an output value.",
-  "derivation": "For each district, compute the number of accounts associated with that district through the account's branch location and having a loan contract finished with no problems (status = 'A').",
-  "filter_policy": "Select the district with the greatest count of qualifying accounts (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata confirms loan.status = 'A' and account.district_id as the account's branch-location district, resolving that grouping uses the account's district rather than a client district."
+  "column_role": "The identity of the district; the qualifying count is a ranking measure and is not required as an output value.",
+  "derivation": "For each district, compute the number of qualifying account-loan associations linked to accounts in that district.",
+  "filter_policy": "Select the district with the greatest computed count; tie handling is unspecified.",
+  "meta_review": "Metadata confirms status = 'A' and the account's district as the branch-location district, resolving that grouping uses the account's district rather than a client district."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

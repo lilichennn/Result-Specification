@@ -249,7 +249,7 @@ Schema_links: [card.type,disp.client_id,card.disp_id = disp.disp_id,9]
 Result Contract:
 {
   "population": "Credit cards possessed by the client whose client number is 9.",
-  "row_grain": "One credit card possessed by client number 9.",
+  "row_grain": "One row per credit card possessed by client number 9.",
   "column_role": "The kind (type) of the credit card.",
   "derivation": "none",
   "filter_policy": "none",

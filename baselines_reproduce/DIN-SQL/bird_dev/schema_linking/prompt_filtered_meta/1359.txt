@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,category,amount,link_to_event]
-Table event, columns = [*,event_id,event_name]
+Table event, columns = [*,event_id,event_name,type]
 Foreign_keys = [budget.link_to_event = event.event_id]
 Sample rows from budget (columns: ["budget_id", "category", "amount", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", "Advertisement", 75, "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "Food", 150, "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "Food", 20, "recJ4Witp9tpjaugn"]]
@@ -194,11 +194,12 @@ Column amount: column description -> The amount budgeted for the specified categ
 commonsense evidence:
 some computation like: amount = spent + remaining 
 Column link_to_event: column description -> The unique identifier of the event to which the budget line applies., value description -> References the Event table
-Sample rows from event (columns: ["event_id", "event_name"]):
-[["rec0Si5cQ4rJRVzd6", "March Meeting"], ["rec0akZnLLpGUloLH", "Officers meeting - January"], ["rec0dZPcWXF0QjNnE", "Spring Elections"]]
+Sample rows from event (columns: ["event_id", "event_name", "type"]):
+[["rec0Si5cQ4rJRVzd6", "March Meeting", "Meeting"], ["rec0akZnLLpGUloLH", "Officers meeting - January", "Meeting"], ["rec0dZPcWXF0QjNnE", "Spring Elections", "Election"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
+Column type: column description -> The kind of event, such as game, social, election, value description -> 
 
 Q: How many times was the budget in Advertisement for "Yearly Kickoff" meeting more than "October Meeting"?
 Hint: budget in Advertisement refer to category = 'Advertisement' in the budget table; DIVIDE(SUM(amount when event_name = 'Yearly Kickoff'), SUM(amount when event_name = 'October Meeting'))

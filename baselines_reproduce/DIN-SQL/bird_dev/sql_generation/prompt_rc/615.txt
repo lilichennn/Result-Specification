@@ -251,10 +251,10 @@ Hint: "Organizer" is the Name of badge; teenager refers to Age BETWEEN 13 AND 18
 Schema_links: [badges.Name,badges.UserId,users.Age,badges.UserId = users.Id,Organizer,13,18]
 Result Contract:
 {
-  "population": "The reference population is all users who obtained the badge named \"Organizer\"; the target population is the subset of those users whose Age is between 13 and 18 inclusive (teenagers).",
-  "row_grain": "One global summary row over all Organizer badge holders.",
-  "column_role": "A single value: the percentage of teenage users among users who obtained the \"Organizer\" badge.",
-  "derivation": "Compute the count of teenage Organizer-badge users divided by the count of all Organizer-badge users, multiplied by 100.",
+  "population": "The reference population is all award instances of the badge named \"Organizer\", each linked to the user who received it; the target subset is those award instances whose associated user is aged 13 to 18 inclusive.",
+  "row_grain": "One global summary row over all Organizer badge award instances.",
+  "column_role": "A single value: the percentage of Organizer badge award instances associated with teenage users.",
+  "derivation": "Count the Organizer badge award instances whose associated user is a teenager, divide by the count of all Organizer badge award instances, and multiply by 100.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms users.Age defines teenager as 13-18, validating the teenage eligibility condition."
 }

@@ -415,12 +415,12 @@ Hint: header's finishing rate refers to heading_accuracy; on 18/09/2014 refers t
 Schema_links: [Player.player_name,Player_Attributes.heading_accuracy,Player_Attributes.date,Player_Attributes.player_api_id = Player.player_api_id,'Francois Affolter','2014-09-18 00:00:00']
 Result Contract:
 {
-  "population": "Records for the football player Francois Affolter whose date equals '2014-09-18 00:00:00'.",
-  "row_grain": "One row representing Francois Affolter's record on 2014-09-18.",
+  "population": "Attribute records for the football player Francois Affolter whose recorded date has calendar date 2014-09-18.",
+  "row_grain": "One row per matching attribute record for Francois Affolter on 2014-09-18.",
   "column_role": "The header's finishing rate, i.e., the heading accuracy value.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

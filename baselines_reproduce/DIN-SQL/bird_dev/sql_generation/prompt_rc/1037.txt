@@ -415,12 +415,12 @@ Hint: players who prefer left foot refers to preferred_foot = 'left'; percentage
 Schema_links: [Player_Attributes.preferred_foot,Player.birthday,Player_Attributes.player_fifa_api_id,Player_Attributes.player_api_id = Player.player_api_id,'left','1987','1992']
 Result Contract:
 {
-  "population": "All players whose birth year is between 1987 and 1992 inclusive; the left-foot preference qualifies the counted numerator of the percentage, not membership in the population.",
-  "row_grain": "One global summary row for the entire eligible player population.",
-  "column_role": "The percentage of left-footed players among players born between 1987 and 1992.",
-  "derivation": "Multiply the count of population players whose preferred foot is 'left' by 100, then divide by the total count of players in the population.",
+  "population": "All player attribute records for players whose birth year is between 1987 and 1992 inclusive, without deduplicating by player; left-foot preference qualifies the counted numerator of the percentage, not membership in the population.",
+  "row_grain": "One global summary row for the eligible player attribute records.",
+  "column_role": "The percentage of eligible player attribute records that indicate left-foot preference.",
+  "derivation": "Multiply the count of eligible player attribute records whose preferred foot is left by 100, then divide by the total count of eligible player attribute records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

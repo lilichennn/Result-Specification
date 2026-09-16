@@ -285,12 +285,12 @@ Hint:
 Schema_links: [drivers.forename,drivers.surname,results.points,races.year,races.name,results.driverId = drivers.driverId,results.raceId = races.raceId,2017,Chinese Grand Prix]
 Result Contract:
 {
-  "population": "All driver race results belonging to the race named 'Chinese Grand Prix' in year 2017.",
-  "row_grain": "One row per driver result in that race.",
-  "column_role": "The driver's full name and the points that driver scored in that race result.",
-  "derivation": "Points are taken directly from the driver race result for that race; no aggregation.",
-  "filter_policy": "Keep only the three driver race results with the best finishing position in that race, ordered by finishing position from best to worst.",
-  "meta_review": "Metadata identifies races by name and year, and drivers by forename/surname rather than reference or code. It also establishes results.positionOrder as finishing order and results.points as race-result points, resolving the top-3 ranking representation and requested metric."
+  "population": "All driver standing entries associated with the race named 'Chinese Grand Prix' in year 2017.",
+  "row_grain": "One row per driver standing entry for that race.",
+  "column_role": "The driver's full name and the points recorded in that driver's standing entry for that race.",
+  "derivation": "Points are taken directly from the driver standing entry for that race; no aggregation.",
+  "filter_policy": "Keep only the three driver standing entries with the highest points, ordered by points from highest to lowest.",
+  "meta_review": "Metadata identifies races by name and year and drivers by given and family name. It establishes driver-standing points, rather than finishing position or race-result points, as the requested metric and top-3 ranking basis."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

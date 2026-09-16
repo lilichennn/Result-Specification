@@ -301,12 +301,12 @@ Hint: published by Marvel Comics refers to publisher_name = 'Marvel Comics'; sup
 Schema_links: [superhero.id,alignment.alignment,publisher.publisher_name,superhero.alignment_id = alignment.id,superhero.publisher_id = publisher.id,'Bad','Marvel Comics']
 Result Contract:
 {
-  "population": "All superheroes form the base population; the percentage numerator includes only superheroes whose alignment is 'Bad' (those who act in their own self-interest or make decisions based on their own moral code), and the Marvel count includes only those 'Bad'-aligned superheroes whose publisher is Marvel Comics.",
+  "population": "All superheroes form the denominator population; the percentage numerator and the Marvel count are computed over Bad-aligned superheroes that have a publisher, with the Marvel count further restricted to those whose publisher is Marvel Comics.",
   "row_grain": "One global summary row covering the entire superhero population.",
-  "column_role": "The percentage of all superheroes who are 'Bad'-aligned, and the count of those 'Bad'-aligned superheroes published by Marvel Comics.",
-  "derivation": "Percentage = (number of superheroes with alignment 'Bad' divided by the total number of superheroes) multiplied by 100; the Marvel value is a count of the 'Bad'-aligned superheroes whose publisher is Marvel Comics.",
+  "column_role": "A percentage measuring Bad-aligned superheroes with a publisher relative to all superheroes, and a count of the Bad-aligned superheroes with a publisher whose publisher is Marvel Comics.",
+  "derivation": "Percentage = (number of Bad-aligned superheroes with a publisher divided by the total number of superheroes) multiplied by 100; the Marvel value is a count of the Bad-aligned superheroes with a publisher whose publisher is Marvel Comics.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

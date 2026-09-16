@@ -415,12 +415,12 @@ Hint: name of players refers to player_name; Belgium is name of country
 Schema_links: [Player.player_name,Country.name,Match.country_id = Country.id,Match.home_player_1 = Player.player_api_id,Match.home_player_2 = Player.player_api_id,Match.home_player_3 = Player.player_api_id,Match.home_player_4 = Player.player_api_id,Match.home_player_5 = Player.player_api_id,Match.home_player_6 = Player.player_api_id,Match.home_player_7 = Player.player_api_id,Match.home_player_8 = Player.player_api_id,Match.home_player_9 = Player.player_api_id,Match.home_player_10 = Player.player_api_id,Match.home_player_11 = Player.player_api_id,Match.away_player_1 = Player.player_api_id,Match.away_player_2 = Player.player_api_id,Match.away_player_3 = Player.player_api_id,Match.away_player_4 = Player.player_api_id,Match.away_player_5 = Player.player_api_id,Match.away_player_6 = Player.player_api_id,Match.away_player_7 = Player.player_api_id,Match.away_player_8 = Player.player_api_id,Match.away_player_9 = Player.player_api_id,Match.away_player_10 = Player.player_api_id,Match.away_player_11 = Player.player_api_id,Belgium]
 Result Contract:
 {
-  "population": "Players whose country is Belgium.",
-  "row_grain": "One row per player from Belgium.",
+  "population": "Players who were listed as the first home player in matches whose country is Belgium.",
+  "row_grain": "One row per qualifying player appearance in a Belgium match; the same player name may repeat.",
   "column_role": "The player's name (player_name).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The complete catalog contains no player-owned country or nationality attribute, so the requested Belgium eligibility cannot be resolved to a represented player property. Round-1 semantic ownership is preserved."
+  "meta_review": "Belgium is resolved as the country of matches, and players are included through the first home-player slot in those matches rather than through a player-owned country attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

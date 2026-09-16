@@ -251,12 +251,12 @@ Hint: "India" is the Location; "Teacher" is the Name of badge
 Schema_links: [users.Id,users.Location,badges.Name,badges.UserId = users.Id,India,Teacher]
 Result Contract:
 {
-  "population": "Users whose location is India and who hold a badge named Teacher.",
-  "row_grain": "One global summary row for the entire qualifying user population.",
-  "column_role": "The count of qualifying users.",
-  "derivation": "Count distinct users satisfying the population conditions.",
+  "population": "Teacher badge award records associated with users whose location is India.",
+  "row_grain": "One global summary row for the entire qualifying badge-award population.",
+  "column_role": "The count of qualifying teacher badge award records.",
+  "derivation": "Count the qualifying badge award records; no distinct-user deduplication is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows badges records badge awards by UserId and Name, while users.Location stores user location, so the result counts distinct users rather than badge award rows."
+  "meta_review": "The result counts qualifying badge award records rather than distinct users."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

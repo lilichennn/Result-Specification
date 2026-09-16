@@ -297,12 +297,12 @@ Hint:
 Schema_links: [sets.name,sets.id,set_translations.language,sets.block,set_translations.setCode = sets.code,Italian,Shadowmoor]
 Result Contract:
 {
-  "population": "Card sets that are located in the Shadowmoor block and that have at least one Italian-language card.",
+  "population": "Card sets that are located in the Shadowmoor block and have an Italian-language set translation.",
   "row_grain": "One card set.",
   "column_role": "The card set's name and its ID.",
   "derivation": "none",
-  "filter_policy": "Keep only the first two eligible sets when ordered alphabetically by set name.",
-  "meta_review": "Metadata confirms foreign_data.language describes the language of a card, validating that the Italian-language condition applies to cards rather than to set translations."
+  "filter_policy": "Keep only the first two eligible sets when ordered by set ID.",
+  "meta_review": "Metadata supports treating the Italian-language condition as applying to set translations associated with sets, rather than to individual card printings."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

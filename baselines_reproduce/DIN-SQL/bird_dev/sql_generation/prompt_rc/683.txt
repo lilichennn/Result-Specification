@@ -251,12 +251,12 @@ Hint: percentage = DIVIDE(COUNT(Id where YEAR(CreationDate) = 2011 and Reputatio
 Schema_links: [posts.Id,posts.CreaionDate,users.Reputation,posts.OwnerUserId = users.Id,1000,2011]
 Result Contract:
 {
-  "population": "The reference population is all posts; the target population is posts created in 2011 whose owner's reputation is greater than 1000.",
+  "population": "The reference population is posts with an associated owner; the target population is those posts created in 2011 whose owner's reputation is greater than 1000.",
   "row_grain": "One global summary row over the entire reference population.",
-  "column_role": "A single value: the percentage of all posts that belong to the target population.",
-  "derivation": "Divide the count of target posts by the count of all posts and multiply by 100.",
+  "column_role": "A single value: the percentage of reference posts that belong to the target population.",
+  "derivation": "Divide the count of target posts by the count of reference posts and multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

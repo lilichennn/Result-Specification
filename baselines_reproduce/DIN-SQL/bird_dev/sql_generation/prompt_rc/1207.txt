@@ -296,12 +296,12 @@ Hint: AST glutamic oxaloacetic transaminase (GOT) index is within normal range r
 Schema_links: [Patient.ID,Patient.SEX,Patient.Birthday,Laboratory.GOT,Laboratory.Date,Laboratory.ID = Patient.ID,60,1994]
 Result Contract:
 {
-  "population": "Patients who have a laboratory examination with year(Date) = 1994 whose AST glutamic oxaloacetic transaminase (GOT) index is below 60; both conditions must hold on the qualifying examination.",
-  "row_grain": "One row per qualifying patient.",
-  "column_role": "The patient's identity, the patient's sex, and the patient's date of birth.",
+  "population": "Patients who have a laboratory examination in 1994 with an AST glutamic oxaloacetic transaminase (GOT) index below 60; both conditions must hold on the qualifying examination.",
+  "row_grain": "One row for each distinct sex and date of birth combination among qualifying patients.",
+  "column_role": "The patient's sex and date of birth.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Laboratory.GOT is the AST/GOT index with normal range < 60 and Laboratory.Date is the laboratory test date, validating the qualifying examination conditions."
+  "meta_review": "Metadata confirms the AST/GOT index normal range is below 60 and the laboratory test date identifies the examination year, validating the qualifying examination conditions."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -327,12 +327,12 @@ Hint: "Teacher" is the Name of badge;  percentage = Divide (Count(UserId where i
 Schema_links: [badges.UserId,badges.Name,"Teacher"]
 Result Contract:
 {
-  "population": "Target population: distinct users who obtained a badge named \"Teacher\"; reference population: all users.",
+  "population": "Target population: instances of users being awarded a badge named \"Teacher\"; reference population: all users.",
   "row_grain": "One global summary row.",
-  "column_role": "The percentage of users who obtained the \"Teacher\" badge among all users.",
-  "derivation": "Compute the percentage as the count of distinct users who obtained the \"Teacher\" badge divided by the count of all users, multiplied by 100.",
+  "column_role": "The percentage of Teacher badge award instances relative to all users.",
+  "derivation": "Compute the percentage as the count of Teacher badge award instances linked to users divided by the count of all users, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that badges rows are award events associated with UserId, so the requested user percentage must count distinct user identities rather than badge rows. The reference population remains all users."
+  "meta_review": "Badge records are award events associated with users, and the requested percentage counts Teacher award instances rather than deduplicating users. The reference population remains all users."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -248,12 +248,12 @@ Hint: A3 stands for region names
 Schema_links: [account.account_id,account.date,district.A3,account.district_id = district.district_id,Prague]
 Result Contract:
 {
-  "population": "Clients whose account was opened in the Prague region, i.e., the account's branch district has region name A3 = 'Prague'.",
-  "row_grain": "One client, namely the earliest account opener among the eligible clients.",
-  "column_role": "The account ID of that client.",
+  "population": "Accounts whose associated district has region name 'Prague'.",
+  "row_grain": "One account, namely the earliest account among the eligible accounts.",
+  "column_role": "The account ID of that account.",
   "derivation": "none",
-  "filter_policy": "Select the client whose eligible account has the earliest account creation date; tie-breaking is unspecified.",
-  "meta_review": "Metadata confirms that the account has a creation date and that the account's branch district region is recorded by A3, so Prague constrains the account's region rather than the client's district."
+  "filter_policy": "Select the eligible account with the earliest account opening date; tie-breaking is unspecified.",
+  "meta_review": "Metadata confirms that the account has an opening date and that the account's district region is recorded by A3, so Prague constrains the account's region rather than the client's district."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

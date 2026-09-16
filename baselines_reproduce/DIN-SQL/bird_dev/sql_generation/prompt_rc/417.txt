@@ -297,12 +297,12 @@ Hint: Japanese translated refers to language = 'Japanese'; expansion sets refers
 Schema_links: [set_translations.language,sets.type,set_translations.setCode = sets.code,Japanese,expansion]
 Result Contract:
 {
-  "population": "The reference population is sets with a Japanese set translation (set translation language = 'Japanese'), and the target population within it is those sets whose set expansion type = 'expansion'.",
-  "row_grain": "One global summary row representing a single percentage computed over the Japanese-set population.",
-  "column_role": "The percentage of Japanese translated sets that are expansion sets.",
-  "derivation": "percentage = DIVIDE(COUNT(sets with a Japanese set translation and set expansion type = 'expansion'), COUNT(sets with a Japanese set translation)) * 100.",
+  "population": "The reference population is set translations for sets whose expansion type is 'expansion', and the target population within it is those set translations whose language is 'Japanese'.",
+  "row_grain": "One global summary row representing a single percentage computed over the expansion-set translation population.",
+  "column_role": "The percentage of expansion-set translations that are Japanese.",
+  "derivation": "percentage = DIVIDE(COUNT(set translations with language = 'Japanese' for sets whose expansion type = 'expansion'), COUNT(set translations for sets whose expansion type = 'expansion')) * 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows set_translations.language describes the language of a card set and sets.type describes the expansion type of the set. This resolves the owners of the Japanese and expansion conditions in the percentage."
+  "meta_review": "Metadata identifies language as the translation language and type as the expansion type; the expansion condition defines the base population, and the Japanese condition defines the counted subset."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

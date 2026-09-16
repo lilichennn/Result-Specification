@@ -285,12 +285,12 @@ Hint: race number refers to raceId; second qualifying period refers to q2; best 
 Schema_links: [drivers.surname,qualifying.raceId,qualifying.q2,drivers.driverId = qualifying.driverId,19]
 Result Contract:
 {
-  "population": "Drivers with a qualifying record in race number 19 (raceId = 19) and a recorded q2 time.",
+  "population": "Drivers with a qualifying record in race number 19.",
   "row_grain": "One driver, namely the single driver selected from the eligible population.",
   "column_role": "The surname of the selected driver.",
   "derivation": "none",
-  "filter_policy": "Select the driver with the best lap time in the second qualifying period, i.e., argmin over q2, among the eligible drivers.",
-  "meta_review": "Metadata for qualifying.q2 states that only drivers reaching the second qualifying period have a q2 record, so eligibility is narrowed to race 19 drivers with a q2 time. This resolves that drivers without a Q2 time are not candidates for the best Q2 lap time."
+  "filter_policy": "Select the driver whose qualifying record for race number 19 has the smallest q2 value, taking the first record in ascending q2 order.",
+  "meta_review": "q2 represents the second qualifying period and is used to identify the best lap time, but the result is not separately restricted to drivers with a recorded q2; it selects the first race 19 qualifying record ordered by q2."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

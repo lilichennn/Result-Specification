@@ -285,12 +285,12 @@ Hint: race number refers to raceId; constructor which got the highest point refe
 Schema_links: [constructorResults.points,constructors.url,constructorResults.raceId,constructorResults.constructorId = constructors.constructorId,9]
 Result Contract:
 {
-  "population": "Constructors with a constructor result in the race whose raceId equals 9 (race No. 9).",
-  "row_grain": "One constructor, namely the single constructor that achieved the highest points in race No. 9.",
-  "column_role": "The constructor's introduction website (url).",
-  "derivation": "Each eligible constructor's points in race No. 9 (constructorResults.points), used as the comparison metric.",
-  "filter_policy": "Argmax: retain the constructor with the highest points (MAX(constructorResults.points)) among the eligible constructors in race No. 9.",
-  "meta_review": "Metadata confirms constructors.url is the introduction website of the constructor, validating the requested output owner. constructorResults.points is the race-level constructor points metric used for the argmax."
+  "population": "Constructors with a constructor result in race No. 9.",
+  "row_grain": "Exactly one constructor, selected as the highest-scoring constructor in race No. 9.",
+  "column_role": "The selected constructor's introduction website.",
+  "derivation": "The returned value is the stored introduction website of the selected constructor; constructor points in race No. 9 are used only as the ranking measure and are not returned.",
+  "filter_policy": "Top-1 selection: rank the eligible constructors by their points in race No. 9 from highest to lowest and retain only the top-ranked constructor; if multiple constructors share the highest points, only one row is returned.",
+  "meta_review": "Metadata confirms that the constructor's introduction website is the requested output and that race-level constructor points identify the top constructor for race No. 9."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

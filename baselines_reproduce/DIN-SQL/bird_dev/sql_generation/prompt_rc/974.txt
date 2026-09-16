@@ -285,12 +285,12 @@ Hint: 'has the fastest lap time?' refers to fastestLapTime has values
 Schema_links: [races.year,results.fastestLapTime,results.raceId = races.raceId]
 Result Contract:
 {
-  "population": "All race-result records that have a fastestLapTime value, as the evidence maps \"has the fastest lap time\" to fastestLapTime having values.",
-  "row_grain": "One racing year, namely the single year associated with the fastest lap time.",
+  "population": "Race-result records that have a fastest lap time value, represented by their associated racing year.",
+  "row_grain": "One row per qualifying race-result record, giving its racing year; multiple rows and repeated years may be returned.",
   "column_role": "The racing year.",
   "derivation": "none",
-  "filter_policy": "Select the racing year whose fastestLapTime is the fastest (minimum) among all records with a fastestLapTime value.",
-  "meta_review": "Metadata confirms results.fastestLapTime is the stored fastest lap time and that smaller values are faster, validating the minimum-value selection among present values. The associated racing year is races.year."
+  "filter_policy": "No minimum, ordering, or single-best selection is applied; all qualifying race-result records are included.",
+  "meta_review": "The relevant condition is that a fastest lap time is present, not that it is the smallest value; therefore the result is not reduced to a single fastest-time year."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -184,10 +184,9 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,name,country]
 Table drivers, columns = [*,driverId,driverRef,code,forename,surname]
-Table lapTimes, columns = [*,raceId,driverId,lap,time,milliseconds]
 Table races, columns = [*,raceId,year,circuitId,name]
-Table results, columns = [*,raceId,driverId,fastestLap,fastestLapTime]
-Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId,results.driverId = drivers.driverId,results.raceId = races.raceId]
+Table results, columns = [*,resultId,raceId,driverId,fastestLap]
+Foreign_keys = [races.circuitId = circuits.circuitId,results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from circuits (columns: ["circuitId", "name", "country"]):
 [[2, "Sepang International Circuit", "Malaysia"], [3, "Bahrain International Circuit", "Bahrain"], [4, "Circuit de Barcelona-Catalunya", "Spain"]]
 Column descriptions and value descriptions for circuits:
@@ -202,14 +201,6 @@ Column driverRef: column description -> , value description ->
 Column code: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "lap", "time", "milliseconds"]):
-[[1, 1, 1, "1:49.088", 109088], [1, 1, 2, "1:33.740", 93740], [1, 1, 3, "1:31.600", 91600]]
-Column descriptions and value descriptions for lapTimes:
-Column raceId: column description -> , value description -> 
-Column driverId: column description -> , value description -> 
-Column lap: column description -> , value description -> 
-Column time: column description -> , value description -> 
-Column milliseconds: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "year", "circuitId", "name"]):
 [[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 17, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:
@@ -217,13 +208,13 @@ Column raceId: column description -> , value description ->
 Column year: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "fastestLap", "fastestLapTime"]):
-[[18, 1, 39, "1:27.452"], [18, 2, 41, "1:27.739"], [18, 3, 41, "1:28.090"]]
+Sample rows from results (columns: ["resultId", "raceId", "driverId", "fastestLap"]):
+[[1, 18, 1, 39], [2, 18, 2, 41], [3, 18, 3, 41]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 Column fastestLap: column description -> , value description -> 
-Column fastestLapTime: column description -> , value description -> 
 
 Q: Which was the fastest lap for Lewis Hamilton in the 2008 Australian Grand Prix?
 A: Let’s think step by step.

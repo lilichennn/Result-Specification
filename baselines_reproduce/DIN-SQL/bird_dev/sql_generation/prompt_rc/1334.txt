@@ -232,10 +232,10 @@ Result Contract:
 {
   "population": "All Student_Club members whose hometown ZIP code has state name 'Illinois'.",
   "row_grain": "One row per qualifying Student_Club member.",
-  "column_role": "The member's full name, composed of first name and last name.",
-  "derivation": "The full name output value is formed from the member's first name and last name.",
+  "column_role": "The member's full name, represented by first name and last name as separate output components.",
+  "derivation": "The returned first and last name values are stored member attributes; they are not aggregated or combined into a computed value.",
   "filter_policy": "none",
-  "meta_review": "Metadata resolves 'grew up in Illinois' through member.zip as the member's hometown ZIP and zip_code.state as the full state name. It also confirms that the member's full name is composed from member.first_name and member.last_name."
+  "meta_review": "Metadata resolves 'grew up in Illinois' through the member's hometown ZIP and the ZIP's state value. It also treats the member's full name as represented by the member's first name and last name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

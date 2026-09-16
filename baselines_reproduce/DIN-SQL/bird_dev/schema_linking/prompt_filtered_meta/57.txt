@@ -182,20 +182,18 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table satscores, columns = [*,cds,sname,AvgScrWrite]
-Table schools, columns = [*,CDSCode,School,Phone,Ext]
+Table satscores, columns = [*,cds,AvgScrWrite]
+Table schools, columns = [*,CDSCode,Phone,Ext]
 Foreign_keys = [satscores.cds = schools.CDSCode]
-Sample rows from satscores (columns: ["cds", "sname", "AvgScrWrite"]):
-[["1100170000000", null, 417], ["1100170109835", "FAME Public Charter", 505], ["1100170112607", "Envision Academy for Arts & Technology", 395]]
+Sample rows from satscores (columns: ["cds", "AvgScrWrite"]):
+[["1100170000000", 417], ["1100170109835", 505], ["1100170112607", 395]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
 Column AvgScrWrite: column description -> average scores in writing, value description -> average scores in writing
-Sample rows from schools (columns: ["CDSCode", "School", "Phone", "Ext"]):
-[["01100170000000", null, "(510) 887-0152", null], ["01100170109835", "FAME Public Charter", null, null], ["01100170112607", "Envision Academy for Arts & Technology", "(510) 596-8901", null]]
+Sample rows from schools (columns: ["CDSCode", "Phone", "Ext"]):
+[["01100170000000", "(510) 887-0152", null], ["01100170109835", null, null], ["01100170112607", "(510) 596-8901", null]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 Column Phone: column description -> Phone, value description -> 
 Column Ext: column description -> The phone number extension of the school, district, or administrative authority., value description -> The phone number extension of the school, district, or administrative authority.
 

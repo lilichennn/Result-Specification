@@ -298,7 +298,7 @@ Result Contract:
 {
   "population": "All patients who are male (SEX = 'M') and have a laboratory albumin (ALB) value not within range, i.e., ALB <= 3.5 OR ALB >= 5.5.",
   "row_grain": "One row per qualifying patient.",
-  "column_role": "Patient identification and the patient's birthday; the albumin value is a filter and is not required as an output.",
+  "column_role": "Patient identification is returned; the patient's birthday is used only to order the result, and the albumin value is a filter and not required as an output.",
   "derivation": "none",
   "filter_policy": "Order the qualifying patients by birthday in descending order; no limit on the number returned.",
   "meta_review": "Laboratory.ALB is documented as albumin with normal range 3.5 < N < 5.5, validating the not-within-range condition. Albumin is a laboratory-test value, so patient eligibility is based on having such a value while the result remains one row per patient."

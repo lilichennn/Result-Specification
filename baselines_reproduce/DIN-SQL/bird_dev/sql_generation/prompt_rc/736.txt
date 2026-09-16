@@ -225,12 +225,12 @@ Hint: the dumbest superhero refers to MIN(attribute_value) where attribute_name 
 Schema_links: [superhero.superhero_name,hero_attribute.attribute_value,attribute.attribute_name,hero_attribute.hero_id = superhero.id,hero_attribute.attribute_id = attribute.id,Intelligence]
 Result Contract:
 {
-  "population": "All superheroes.",
-  "row_grain": "One superhero, namely the single superhero identified as the dumbest.",
+  "population": "Superheroes that have a recorded attribute value for the attribute named 'Intelligence'.",
+  "row_grain": "One selected superhero, returned as the dumbest superhero.",
   "column_role": "The identity (name) of the selected superhero; the intelligence value itself is a ranking measure, not a requested output.",
   "derivation": "none",
-  "filter_policy": "Argmin: select the superhero whose intelligence measure (the attribute value for attribute_name 'Intelligence') is the minimum across the population.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select one superhero with the lowest intelligence attribute value among superheroes with that attribute.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

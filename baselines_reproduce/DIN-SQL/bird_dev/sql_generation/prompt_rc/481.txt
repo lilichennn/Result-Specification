@@ -298,11 +298,11 @@ Schema_links: [foreign_data.language,foreign_data.flavorText,cards.name,foreign_
 Result Contract:
 {
   "population": "Foreign-language entries associated with the card whose own name is 'Ancestor's Chosen', where the foreign flavor text is not null.",
-  "row_grain": "One foreign language of the card 'Ancestor's Chosen'.",
+  "row_grain": "One row per qualifying foreign-language entry, returning its language; repeated language values are not eliminated.",
   "column_role": "The foreign language in which the card has a flavor text.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes cards.name as the card's own name from foreign_data.name as a foreign-language name, and identifies foreign_data.flavorText and foreign_data.language as the foreign flavor text and language. The contract therefore filters by the card's own name and uses non-null foreign flavor text to determine languages."
+  "meta_review": "Metadata distinguishes the card's own name from a foreign-language name, and identifies the foreign flavor text and language. The contract therefore filters by the card's own name and uses non-null foreign flavor text to determine languages."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

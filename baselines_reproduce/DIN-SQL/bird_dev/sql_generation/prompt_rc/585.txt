@@ -251,10 +251,10 @@ Hint: About data means the title contains 'data'; total bounty Amount refers to 
 Schema_links: [votes.BountyAmount,posts.Title,votes.PostId = posts.Id,data]
 Result Contract:
 {
-  "population": "All posts whose title contains the substring 'data'.",
-  "row_grain": "One global summary row across all qualifying posts.",
-  "column_role": "The total bounty amount of the qualifying posts.",
-  "derivation": "Sum of the BountyAmount values from votes associated with posts in the eligible population.",
+  "population": "Vote records associated with posts whose title contains the substring 'data'.",
+  "row_grain": "One global summary row across all qualifying vote records.",
+  "column_role": "The total bounty amount associated with the qualifying posts.",
+  "derivation": "Sum of the bounty amount values from the qualifying vote records.",
   "filter_policy": "none",
   "meta_review": "Metadata shows BountyAmount is stored in votes and linked to posts via PostId, while Title is in posts. This refines the metric realization to sum vote-level bounty amounts associated with qualifying posts."
 }

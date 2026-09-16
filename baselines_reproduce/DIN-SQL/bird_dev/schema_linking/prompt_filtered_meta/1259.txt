@@ -182,19 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Examination, columns = [*,ID,Diagnosis]
-Table Laboratory, columns = [*,ID,RA]
+Table Laboratory, columns = [*,ID,Date,RA]
 Table Patient, columns = [*,ID,Birthday,Diagnosis]
-Foreign_keys = [Examination.ID = Patient.ID,Laboratory.ID = Patient.ID]
-Sample rows from Examination (columns: ["ID", "Diagnosis"]):
-[[14872, "MCTD, AMI"], [48473, "SLE"], [102490, "PSS"]]
-Column descriptions and value descriptions for Examination:
-Column ID: column description -> identification of the patient, value description -> 
-Column Diagnosis: column description -> disease names, value description -> 
-Sample rows from Laboratory (columns: ["ID", "RA"]):
-[[27654, null], [27654, null], [27654, null]]
+Foreign_keys = [Laboratory.ID = Patient.ID]
+Sample rows from Laboratory (columns: ["ID", "Date", "RA"]):
+[[27654, "1991-09-11", null], [27654, "1991-09-17", null], [27654, "1991-09-19", null]]
 Column descriptions and value descriptions for Laboratory:
 Column ID: column description -> identification of the patient, value description -> 
+Column Date: column description -> Date of the laboratory tests (YYMMDD), value description -> 
 Column RA: column description -> Rhuematoid Factor, value description -> Commonsense evidence:
 
 Normal range: N= -, +-

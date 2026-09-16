@@ -251,12 +251,12 @@ Hint: highest reputation refers to Max(Reputation); user refers to UserId
 Schema_links: [badges.Name,users.Reputation,badges.UserId = users.Id]
 Result Contract:
 {
-  "population": "Badges obtained by users whose reputation equals the maximum reputation across all users; the target set is badges and the qualifying user set is defined by the equality comparison to Max(Reputation).",
-  "row_grain": "One badge obtained by a highest-reputation user.",
+  "population": "Badge awards associated with users.",
+  "row_grain": "A single badge name selected from the badges of a user whose reputation ranks highest.",
   "column_role": "The name of the badge.",
-  "derivation": "Compute the maximum reputation across all users (Max(Reputation)) to determine which users qualify.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The returned value is the stored badge name of the selected badge record.",
+  "filter_policy": "Rank candidate badge awards by the associated user's reputation from highest to lowest and return only the first award; if several awards share the highest associated reputation, only one is returned.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

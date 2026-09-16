@@ -352,7 +352,7 @@ Hint:
 Schema_links: [schools.CDSCode,schools.StatusType,schools.County,satscores.NumTstTakr,schools.CDSCode = satscores.cds,'Merged','Alameda',100]
 Result Contract:
 {
-  "population": "Schools in Alameda whose status is Merged and whose school-level number of test takers is less than 100.",
+  "population": "Schools in Lake whose status is Merged and whose recorded number of test takers is less than 100.",
   "row_grain": "One global summary row for the qualifying school population.",
   "column_role": "The count of qualifying schools.",
   "derivation": "Count the schools satisfying the population conditions.",

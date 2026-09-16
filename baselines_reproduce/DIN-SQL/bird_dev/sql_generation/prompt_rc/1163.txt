@@ -366,10 +366,10 @@ Schema_links: [Patient.Birthday,Patient.`First Date`]
 Result Contract:
 {
   "population": "All patients who initially arrived at the hospital.",
-  "row_grain": "One global summary row representing the single youngest patient.",
+  "row_grain": "One global summary row containing the minimum initial-arrival age.",
   "column_role": "The age of the youngest patient at their initial hospital arrival.",
-  "derivation": "Age is computed as the year of the patient's first arrival date minus the year of the patient's birth date.",
-  "filter_policy": "Select the patient with the minimum age (argmin over the age metric).",
+  "derivation": "Age is computed as the year of the patient's first arrival date minus the year of the patient's birth date, and the returned value is the minimum of that computed age across patients.",
+  "filter_policy": "Select the minimum computed age value; no patient identity is returned.",
   "meta_review": "Metadata confirms Patient.`First Date` is the date a patient came to the hospital and Patient.Birthday is the birth date, validating the initial-arrival age computation."
 }
 

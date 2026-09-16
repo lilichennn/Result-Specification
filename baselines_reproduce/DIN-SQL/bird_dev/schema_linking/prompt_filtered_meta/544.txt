@@ -182,16 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,Title,LastEditorUserId,LastEditDate,LastEditorDisplayName]
+Table posts, columns = [*,Id,Title,LastEditorUserId,LastEditorDisplayName]
 Table users, columns = [*,Id,DisplayName]
 Foreign_keys = [posts.LastEditorUserId = users.Id]
-Sample rows from posts (columns: ["Id", "Title", "LastEditorUserId", "LastEditDate", "LastEditorDisplayName"]):
-[[1, "Eliciting priors from experts", null, null, null], [2, "What is normality?", 88, "2010-08-07 17:56:44.0", null], [3, "What are some valuable Statistical Analysis open source projects?", 183, "2011-02-12 05:50:03.0", null]]
+Sample rows from posts (columns: ["Id", "Title", "LastEditorUserId", "LastEditorDisplayName"]):
+[[1, "Eliciting priors from experts", null, null], [2, "What is normality?", 88, null], [3, "What are some valuable Statistical Analysis open source projects?", 183, null]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column Title: column description -> the title of the post, value description -> 
 Column LastEditorUserId: column description -> the id of the last editor, value description -> 
-Column LastEditDate: column description -> the last edit date, value description -> 
 Column LastEditorDisplayName: column description -> the display name of the last editor, value description -> 
 Sample rows from users (columns: ["Id", "DisplayName"]):
 [[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]

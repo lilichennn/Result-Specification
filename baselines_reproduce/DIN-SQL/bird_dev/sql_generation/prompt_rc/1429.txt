@@ -230,12 +230,12 @@ Hint: name of social event refers to event_name where type = 'Social'; 'Vice Pre
 Schema_links: [event.event_name,event.type,event.location,member.position,attendance.link_to_event = event.event_id,attendance.link_to_member = member.member_id,'Social','Vice President','900 E. Washington St.']
 Result Contract:
 {
-  "population": "Events of type 'Social' that were attended by the person holding the position 'Vice President' in the student club located at '900 E. Washington St.'",
-  "row_grain": "One row per qualifying social event.",
+  "population": "Social events located at '900 E. Washington St.' that were attended by a person holding the position 'Vice President'.",
+  "row_grain": "One row per qualifying attendance of such a social event, returning the event name.",
   "column_role": "The name of the social event (event_name).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "The complete catalog provides location only on event, not on a Student_Club entity, so the address condition remains owned by the club as stated in the question."
+  "meta_review": "The address condition applies to the event's location rather than to a separate Student_Club entity."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

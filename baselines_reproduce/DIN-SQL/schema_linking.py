@@ -20,6 +20,7 @@ import csv
 import io
 import json
 import queue
+import random
 import re
 import sqlite3
 import sys
@@ -34,7 +35,9 @@ from urllib.request import Request, urlopen
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 MODEL_ALIASES = ("qwen38", "kimik3", "gpt56", "opus48")
-TIMEOUT = 300
+TIMEOUT = 900
+INITIAL_CONCURRENCY = 50
+MAX_CONCURRENCY = 1500
 INSTRUCTION = (
     "Find the schema_links for generating SQL queries for each question based on "
     "the database schema and Foreign keys.\n"
@@ -183,6 +186,21 @@ def model_config(alias: str) -> dict:
     }
 
 
+def stream_events(response):
+    """Decode SSE events, including comments and multi-line data fields."""
+    data_lines = []
+    for raw_line in response:
+        line = raw_line.decode("utf-8").rstrip("\r\n")
+        if not line:
+            if data_lines:
+                yield "\n".join(data_lines)
+                data_lines = []
+        elif line.startswith("data:"):
+            data_lines.append(line[5:].removeprefix(" "))
+    if data_lines:
+        yield "\n".join(data_lines)
+
+
 def call_model(prompt: str, config: dict, dataset: str) -> dict:
     started = time.monotonic()
     usage = None
@@ -191,19 +209,46 @@ def call_model(prompt: str, config: dict, dataset: str) -> dict:
             "model": config["model"],
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0,
-            "max_tokens": 600 if dataset == "spider" else 2000,
+            "max_tokens": 5000 if dataset == "spider" else 5000,
+            "stream": True,
+            "stream_options": {"include_usage": True},
         }
         if dataset == "spider":
-            payload.update(n=1, stream=False, top_p=1.0, frequency_penalty=0.0,
+            payload.update(n=1, top_p=1.0, frequency_penalty=0.0,
                            presence_penalty=0.0, stop=["Q:"])
         request = Request(
             config["url"], data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
-            headers={"Authorization": "Bearer " + config["api_key"], "Content-Type": "application/json"},
+            headers={"Authorization": "Bearer " + config["api_key"],
+                     "Content-Type": "application/json", "Accept": "text/event-stream"},
         )
         with urlopen(request, timeout=TIMEOUT) as response:
-            body = json.load(response)
-        usage = body.get("usage")
-        content = body["choices"][0]["message"]["content"]
+            content_parts = []
+            finished = False
+            for data in stream_events(response):
+                if data.strip() == "[DONE]":
+                    finished = True
+                    break
+                chunk = json.loads(data)
+                if not isinstance(chunk, dict):
+                    raise ValueError("Model stream event must be a JSON object")
+                if chunk.get("error") is not None:
+                    raise RuntimeError(f"Model stream error: {chunk['error']}")
+                if chunk.get("usage") is not None:
+                    usage = chunk["usage"]
+                choices = chunk.get("choices") or []
+                if choices:
+                    choice = choices[0]
+                    piece = (choice.get("delta") or {}).get("content")
+                    if isinstance(piece, str):
+                        content_parts.append(piece)
+                    finish_reason = choice.get("finish_reason")
+                    if finish_reason is not None:
+                        if finish_reason != "stop":
+                            raise ValueError(f"Model stream finished with {finish_reason!r}")
+                        finished = True
+            if not finished:
+                raise ValueError("Model stream ended before a completion marker")
+        content = "".join(content_parts)
         if not isinstance(content, str) or not content.strip():
             raise ValueError("Model returned empty content")
         result = extract_schema_links(content)
@@ -265,22 +310,14 @@ class Progress:
 
 class Concurrency:
     def __init__(self):
-        self.limit = 10
-        self.successes = self.failures = 0
+        self.limit = INITIAL_CONCURRENCY
+        self.last_increase = time.monotonic()
 
-    def observe(self, success: bool) -> None:
-        if success:
-            self.failures = 0
-            self.successes += 1
-            if self.successes == 5:
-                self.limit = min(100, self.limit + 5)
-                self.successes = 0
-        else:
-            self.successes = 0
-            self.failures += 1
-            if self.failures == 3:
-                self.limit = max(5, self.limit - 5)
-                self.failures = 0
+    def tick(self) -> None:
+        now = time.monotonic()
+        while self.limit < MAX_CONCURRENCY and now - self.last_increase >= 1:
+            self.limit = min(MAX_CONCURRENCY, self.limit + random.randint(40, 60))
+            self.last_increase += 1
 
 
 def save_results(path: Path, results: dict) -> None:
@@ -297,9 +334,10 @@ def run_results(ids: list[str], prompt_dir: Path, result_path: Path, results: di
     exhausted = False
     concurrency = Concurrency()
     last_report = time.monotonic()
-    progress.message(f"{datetime.now():%Y-%m-%d %H:%M:%S}｜concurrency limit：10")
-    with ThreadPoolExecutor(max_workers=100) as executor:
+    progress.message(f"{datetime.now():%Y-%m-%d %H:%M:%S}｜concurrency limit：{concurrency.limit}")
+    with ThreadPoolExecutor(max_workers=MAX_CONCURRENCY) as executor:
         while active or not exhausted:
+            concurrency.tick()
             while not exhausted and len(active) < concurrency.limit:
                 index = next(pending, None)
                 if index is None:
@@ -312,7 +350,9 @@ def run_results(ids: list[str], prompt_dir: Path, result_path: Path, results: di
             if not active:
                 break
             try:
-                future = completed.get(timeout=1)
+                wait = (max(0.001, concurrency.last_increase + 1 - time.monotonic())
+                        if concurrency.limit < MAX_CONCURRENCY else 1)
+                future = completed.get(timeout=wait)
             except queue.Empty:
                 pass
             else:
@@ -321,7 +361,6 @@ def run_results(ids: list[str], prompt_dir: Path, result_path: Path, results: di
                 results[index] = record
                 save_results(result_path, results)
                 success = record["status"]["success"]
-                concurrency.observe(success)
                 progress.results += int(success)
                 progress.log(index, "result", success, record["status"]["reason"])
             progress.tick()

@@ -182,13 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,County Code,School Code,County Name,School Name,Free Meal Count (K-12),FRPM Count (K-12)]
+Table frpm, columns = [*,CDSCode,Academic Year,County Code,School Code,County Name,School Name,Free Meal Count (K-12),FRPM Count (K-12)]
 Table schools, columns = [*,CDSCode,County,School,City]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "County Code", "School Code", "County Name", "School Name", "Free Meal Count (K-12)", "FRPM Count (K-12)"]):
-[["01100170109835", "01", "0109835", "Alameda", "FAME Public Charter", 565.0, 715.0], ["01100170112607", "01", "0112607", "Alameda", "Envision Academy for Arts & Technology", 186.0, 186.0], ["01100170118489", "01", "0118489", "Alameda", "Aspire California College Preparatory Academy", 134.0, 175.0]]
+Sample rows from frpm (columns: ["CDSCode", "Academic Year", "County Code", "School Code", "County Name", "School Name", "Free Meal Count (K-12)", "FRPM Count (K-12)"]):
+[["01100170109835", "2014-2015", "01", "0109835", "Alameda", "FAME Public Charter", 565.0, 715.0], ["01100170112607", "2014-2015", "01", "0112607", "Alameda", "Envision Academy for Arts & Technology", 186.0, 186.0], ["01100170118489", "2014-2015", "01", "0118489", "Alameda", "Aspire California College Preparatory Academy", 134.0, 175.0]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
+Column Academic Year: column description -> Academic Year, value description -> 
 Column County Code: column description -> County Code, value description -> 
 Column School Code: column description -> , value description -> 
 Column County Name: column description -> County Code , value description -> 

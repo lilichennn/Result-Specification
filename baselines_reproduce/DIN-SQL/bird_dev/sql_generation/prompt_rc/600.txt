@@ -251,12 +251,12 @@ Hint: post related refers to RelatedPostId; popularity refers to ViewCount
 Schema_links: [postLinks.PostId,posts.ViewCount,postLinks.RelatedPostId,postLinks.PostId = posts.Id,61217]
 Result Contract:
 {
-  "population": "All posts related to post ID 61217, identified by postLinks records whose PostId is 61217 and whose RelatedPostId identifies the related post; post ID 61217 is the reference post whose popularity is requested.",
-  "row_grain": "One row per post related to post ID 61217.",
-  "column_role": "The identity of each related post as the RelatedPostId, and the popularity of post ID 61217 expressed as its ViewCount.",
+  "population": "Post-link records linked from post ID 61217; each row reports the popularity of the reference post 61217 rather than identifying the related posts.",
+  "row_grain": "One row for each post-link record linked from post ID 61217, so the same popularity value may appear once for each such record.",
+  "column_role": "Only the popularity of post ID 61217, expressed as its view count; no related-post identifier is returned.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "postLinks distinguishes PostId as the post being linked from and RelatedPostId as the related post, resolving that related posts for post 61217 are the RelatedPostId values linked from PostId 61217. posts.ViewCount confirms the popularity representation for the reference post."
+  "meta_review": "The linkage from post ID 61217 provides row context, but the returned semantic object is only the view-count popularity of that reference post. Related-post identifiers are not part of the output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

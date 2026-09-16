@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,frequency]
 Table client, columns = [*,client_id,gender]
-Table disp, columns = [*,disp_id,client_id,account_id,type]
+Table disp, columns = [*,disp_id,client_id,account_id]
 Foreign_keys = [disp.client_id = client.client_id,disp.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "frequency"]):
 [[1, "POPLATEK MESICNE"], [2, "POPLATEK MESICNE"], [3, "POPLATEK MESICNE"]]
@@ -197,15 +197,12 @@ Column descriptions and value descriptions for client:
 Column client_id: column description -> the unique number, value description -> 
 Column gender: column description -> , value description -> F：female 
 M：male 
-Sample rows from disp (columns: ["disp_id", "client_id", "account_id", "type"]):
-[[1, 1, 1, "OWNER"], [2, 2, 2, "OWNER"], [3, 3, 2, "DISPONENT"]]
+Sample rows from disp (columns: ["disp_id", "client_id", "account_id"]):
+[[1, 1, 1], [2, 2, 2], [3, 3, 2]]
 Column descriptions and value descriptions for disp:
 Column disp_id: column description -> unique number of identifying this row of record, value description -> 
 Column client_id: column description -> id number of client, value description -> 
 Column account_id: column description -> id number of account, value description -> 
-Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
-commonsense evidence:
-the account can only have the right to issue permanent orders or apply for loans
 
 Q: What percentage of male clients request for weekly statements to be issued?
 Hint: Percentage of male clients = [count(male clients who requested weekly statements / count(clients who requested weekly statements)] * 100%; Male means gender = 'M'; 'POPLATEK TYDNE' stands for weekly issuance

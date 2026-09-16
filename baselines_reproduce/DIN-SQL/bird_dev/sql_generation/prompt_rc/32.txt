@@ -354,7 +354,7 @@ Result Contract:
 {
   "population": "Schools whose School Ownership Code (SOC) is 66, evaluated using the K-12 (grades 1-12) meal and enrollment figures.",
   "row_grain": "One row per selected school.",
-  "column_role": "The school's identity and its eligible free or reduced price meal rate for K-12.",
+  "column_role": "The eligible free or reduced price meal rate for K-12 for each selected school.",
   "derivation": "For each school, the eligible free or reduced price meal rate for K-12 equals FRPM Count (K-12) divided by Enrollment (K-12).",
   "filter_policy": "Keep the 5 schools with the highest free or reduced price meal count for K-12 (top-5 by that count, descending).",
   "meta_review": "Metadata identifies ownership code 66 as the school-level School Ownership Code (SOC), resolving the ownership condition to schools. The K-12 FRPM count and enrollment fields establish that grades 1-12 is the metric grade scope, not a separate school grade-span eligibility filter."

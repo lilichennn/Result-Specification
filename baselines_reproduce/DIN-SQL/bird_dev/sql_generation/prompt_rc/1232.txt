@@ -296,12 +296,12 @@ Hint: age = SUBTRACT(year(current_timestamp), year(Birthday)); blood glucose (GL
 Schema_links: [Patient.ID,Patient.SEX,Patient.Birthday,Laboratory.GLU,Laboratory.`T-CHO`,Laboratory.ID = Patient.ID,180,250]
 Result Contract:
 {
-  "population": "Patients who have a blood glucose (GLU) measurement >= 180 (not within normal range) AND a total cholesterol (T-CHO) measurement < 250 (within normal range).",
+  "population": "Patients who have a single laboratory record with blood glucose (GLU) >= 180 (not within normal range) AND total cholesterol (T-CHO) < 250 (within normal range).",
   "row_grain": "One row per qualifying patient.",
   "column_role": "Patient identifier, patient sex, and patient age.",
   "derivation": "Patient age is computed as the current year minus the patient's birth year.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

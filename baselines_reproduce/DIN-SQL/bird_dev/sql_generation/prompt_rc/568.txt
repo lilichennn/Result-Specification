@@ -251,12 +251,12 @@ Hint: vote no. 6347 refers to Id = '6347'
 Schema_links: [users.DisplayName,votes.Id,votes.UserId = users.Id,6347]
 Result Contract:
 {
-  "population": "The vote whose Id equals '6347'.",
+  "population": "The user who made the vote whose Id equals 6347.",
   "row_grain": "One user, namely the user who made that vote.",
   "column_role": "The display name of the user who made the vote.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

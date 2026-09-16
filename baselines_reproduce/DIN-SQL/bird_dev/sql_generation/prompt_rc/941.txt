@@ -285,12 +285,12 @@ Hint:
 Schema_links: [results.points,drivers.forename,drivers.surname,results.driverId = drivers.driverId,Lewis,Hamilton]
 Result Contract:
 {
-  "population": "All Formula_1 race result records in which the driver is Lewis Hamilton.",
-  "row_grain": "One global summary row covering all of Lewis Hamilton's race participations.",
-  "column_role": "The total points Lewis Hamilton accumulated across those races.",
-  "derivation": "Sum the points recorded in each race result for Lewis Hamilton over the entire set of his race participations.",
+  "population": "All race result records in which the driver is Lewis Hamilton.",
+  "row_grain": "One global summary row covering all of Lewis Hamilton's race result records.",
+  "column_role": "The total points accumulated by Lewis Hamilton across those race result records.",
+  "derivation": "Sum the points recorded in each race result for Lewis Hamilton over the entire set of his race result records.",
   "filter_policy": "none",
-  "meta_review": "The results table records points per individual driver race result, establishing the correct race-participation grain for the sum. Round-1 contract otherwise preserved."
+  "meta_review": "Points are recorded per individual driver race result, so the requested total is a global sum over those records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

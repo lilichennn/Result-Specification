@@ -251,10 +251,10 @@ Hint: user no. 23853 refers to UserId = '23853'; at 9:08:18 on 2013/7/12 refers 
 Schema_links: [comments.UserId,comments.CreationDate,posts.ClosedDate,comments.PostId = posts.Id,23853,'2013-07-12 09:08:18.0']
 Result Contract:
 {
-  "population": "The eligible record is the comment authored by UserId '23853' with CreationDate '2013-07-12 09:08:18.0', and the target entity is the post to which that comment was given.",
-  "row_grain": "One row representing the single post that received the identified comment.",
-  "column_role": "The well-finished status of that post, i.e., whether the post was finished.",
-  "derivation": "Classify the post as not well-finished if it has no closing date (ClosedDate IS NULL) and as well-finished if it has a closing date.",
+  "population": "The eligible records are comments authored by user 23853 with creation timestamp 2013-07-12 09:08:18.0, and the target entities are the posts to which those comments were given.",
+  "row_grain": "One row for each qualifying comment-post association, returning the well-finished status of the associated post.",
+  "column_role": "The well-finished status of the associated post, i.e., whether the post was finished.",
+  "derivation": "Classify the associated post as not well-finished if it has no closing date and as well-finished if it has a closing date.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

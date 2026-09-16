@@ -296,12 +296,12 @@ Hint: examination done after 1997/1/1 refers to `Examination Date` >  1997-01-01
 Schema_links: [Patient.ID,Examination.`Examination Date`,Laboratory.SC170,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,'1997-01-01','negative','0']
 Result Contract:
 {
-  "population": "Patients who have an Examination record with Examination Date after 1997-01-01 and a Laboratory SC170 result that is normal, where normal means SC170 is 'negative' or '0'.",
-  "row_grain": "One row per qualifying patient.",
+  "population": "Patients who have a laboratory examination record dated after 1997-01-01 with a normal anti-scl70 result, where normal means 'negative' or '0'.",
+  "row_grain": "One row for each qualifying laboratory examination record, so the same patient ID may appear more than once.",
   "column_role": "The patient ID.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that SC170 is stored in Laboratory while Examination Date is stored in Examination, so the conditions are applied to the patient across those owners rather than requiring SC170 on an Examination row."
+  "meta_review": "The date condition and the normal anti-scl70 condition are evaluated on the same laboratory examination record, not as separate examination-date and laboratory-result conditions."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

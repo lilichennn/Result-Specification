@@ -297,12 +297,12 @@ Hint: German refers to language = 'German'; "Ancestor's Chosen" refers to name =
 Schema_links: [foreign_data.type,foreign_data.language,cards.name,foreign_data.uuid = cards.uuid,'German','Ancestor''s Chosen']
 Result Contract:
 {
-  "population": "German-language foreign card entries associated with the card whose name is 'Ancestor''s Chosen'.",
-  "row_grain": "One German-language foreign card entry for the named card.",
-  "column_role": "The foreign type of the card in German.",
+  "population": "Cards named Ancestor's Chosen that have a German-language foreign card entry.",
+  "row_grain": "One row for each distinct card type of the named card.",
+  "column_role": "The card type of the named card, selected in the context of its German-language foreign entry.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows foreign_data.language and foreign_data.type store foreign-language card data, while cards.name identifies the card name. This resolves that the requested German type is the foreign type for the German-language entry associated with the named card."
+  "meta_review": "Metadata indicates that card name identifies the card and foreign-language data supplies the German-language condition; the requested German type is the card's own type associated with that German-language entry, not a separately stored foreign type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

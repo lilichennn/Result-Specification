@@ -297,7 +297,7 @@ Hint: Beacon of Immortality' is the name of card;
 Schema_links: [cards.name,rulings.text,cards.uuid = rulings.uuid,"Beacon of Immortality"]
 Result Contract:
 {
-  "population": "Cards whose name is \"Beacon of Immortality\".",
+  "population": "Rulings associated with the card named \"Beacon of Immortality\".",
   "row_grain": "One row per ruling record associated with the card named \"Beacon of Immortality\".",
   "column_role": "The ruling text associated with the card.",
   "derivation": "none",

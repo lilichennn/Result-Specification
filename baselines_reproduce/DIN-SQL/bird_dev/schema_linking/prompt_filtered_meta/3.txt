@@ -182,23 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,Academic Year,School Name,FRPM Count (K-12)]
-Table schools, columns = [*,CDSCode,School,MailStreet]
+Table frpm, columns = [*,CDSCode,FRPM Count (K-12)]
+Table schools, columns = [*,CDSCode,MailStreet]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "Academic Year", "School Name", "FRPM Count (K-12)"]):
-[["01100170109835", "2014-2015", "FAME Public Charter", 715.0], ["01100170112607", "2014-2015", "Envision Academy for Arts & Technology", 186.0], ["01100170118489", "2014-2015", "Aspire California College Preparatory Academy", 175.0]]
+Sample rows from frpm (columns: ["CDSCode", "FRPM Count (K-12)"]):
+[["01100170109835", 715.0], ["01100170112607", 186.0], ["01100170118489", 175.0]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column Academic Year: column description -> Academic Year, value description -> 
-Column School Name: column description -> School Name , value description -> 
 Column FRPM Count (K-12): column description -> Free or Reduced Price Meal Count (K-12), value description -> commonsense evidence:
 
 eligible FRPM rate = FRPM / Enrollment
-Sample rows from schools (columns: ["CDSCode", "School", "MailStreet"]):
-[["01100170000000", null, "313 West Winton Avenue"], ["01100170109835", "FAME Public Charter", "39899 Balentine Drive, Suite 335"], ["01100170112607", "Envision Academy for Arts & Technology", "1515 Webster Street"]]
+Sample rows from schools (columns: ["CDSCode", "MailStreet"]):
+[["01100170000000", "313 West Winton Avenue"], ["01100170109835", "39899 Balentine Drive, Suite 335"], ["01100170112607", "1515 Webster Street"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 Column MailStreet: column description -> MailStreet, value description -> The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.
 
 Q: What is the unabbreviated mailing street address of the school with the highest FRPM count for K-12 students?

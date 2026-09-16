@@ -352,12 +352,12 @@ Hint: between 1/1/1980 and 12/31/1980 means the year = 1980
 Schema_links: [satscores.NumTstTakr,schools.County,schools.OpenDate,satscores.cds = schools.CDSCode,Fresno,1980]
 Result Contract:
 {
-  "population": "Schools located in Fresno whose opening date falls in the year 1980 (i.e., opened between 1/1/1980 and 12/31/1980).",
-  "row_grain": "One global summary row for the entire eligible school population.",
+  "population": "Reported test-taker counts associated with schools in Fresno County that opened in 1980 (i.e., between 1/1/1980 and 12/31/1980).",
+  "row_grain": "One global summary row for the eligible population.",
   "column_role": "A single value representing the average number of test takers.",
-  "derivation": "Compute the arithmetic mean of the per-school number of test takers across all eligible schools.",
+  "derivation": "Compute the arithmetic mean of the reported test-taker counts associated with the eligible schools.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms schools.OpenDate is the school opening date and satscores.NumTstTakr is a school-level number of test takers, validating the 1980 eligibility and per-school average."
+  "meta_review": "Metadata confirms the opening date and test-taker count attributes, validating the 1980 eligibility and the average of reported test-taker counts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

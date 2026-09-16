@@ -285,12 +285,12 @@ Hint: only champion's finished time is represented by 'HH:MM:SS.mmm'; where can 
 Schema_links: [drivers.forename,drivers.surname,drivers.url,races.year,races.name,results.time,results.driverId = drivers.driverId,results.raceId = races.raceId,2008,"Australian Grand Prix"]
 Result Contract:
 {
-  "population": "Race results of the 2008 Australian Grand Prix, restricted to the result whose finished time is recorded in 'HH:MM:SS.mmm' format, which identifies the champion.",
+  "population": "Drivers with a race result in the 2008 Australian Grand Prix, restricted to the driver whose result's finished time is recorded in 'HH:MM:SS.mmm' format, which identifies the champion.",
   "row_grain": "One row representing the champion driver of the 2008 Australian Grand Prix.",
-  "column_role": "The champion driver's identity (who he was) and the driver's introduction website URL where more information about him can be found.",
+  "column_role": "The champion driver's name and the driver's introduction website URL where more information about him can be found.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that results.time uses the champion-only full finished-time format and that drivers.url is the driver's introduction website, fixing the requested URL to the champion driver's URL."
+  "meta_review": "Metadata confirms that the full finished-time format identifies the champion and that the driver's introduction website is the requested URL for the champion driver."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

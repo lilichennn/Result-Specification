@@ -297,12 +297,12 @@ Hint: uncommon refers to rarity = 'uncommon';
 Schema_links: [cards.name,cards.rarity,rulings.date,cards.uuid = rulings.uuid,uncommon]
 Result Contract:
 {
-  "population": "All cards whose rarity is 'uncommon'.",
-  "row_grain": "One card.",
+  "population": "Uncommon cards that have at least one associated ruling.",
+  "row_grain": "One distinct card name per row, with the selection limited to three rows.",
   "column_role": "The name of the card.",
-  "derivation": "Use the earliest ruling date associated with each card for ordering.",
-  "filter_policy": "Select the 3 cards with the earliest ruling dates and present them in ascending order of ruling date.",
-  "meta_review": "Metadata shows rulings.date is a ruling-level date linked to cards, so a card is ordered by its earliest associated ruling date. This distinguishes ruling date from set or card release dates."
+  "derivation": "The card name is returned as stored; ordering is by associated ruling date in ascending order.",
+  "filter_policy": "Select the first 3 distinct card names in ascending order of associated ruling date.",
+  "meta_review": "Metadata shows rulings.date is a ruling-level date linked to cards, so ordering is based on associated ruling dates rather than set or card release dates."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

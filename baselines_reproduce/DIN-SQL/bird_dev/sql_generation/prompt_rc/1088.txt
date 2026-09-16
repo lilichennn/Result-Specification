@@ -415,12 +415,12 @@ Hint: volley score are over 70 refers to volleys > 70; dribbling score refers to
 Schema_links: [Player.player_name,Player_Attributes.volleys,Player_Attributes.dribbling,Player_Attributes.player_api_id = Player.player_api_id,70]
 Result Contract:
 {
-  "population": "Players whose volleys score is greater than 70 and whose dribbling score is greater than 70; both conditions must hold for the same player.",
-  "row_grain": "One row per qualifying player.",
+  "population": "Players with a recorded player attribute entry in which the volley score is greater than 70 and the dribbling score is greater than 70.",
+  "row_grain": "One row per distinct qualifying player name.",
   "column_role": "The name of each qualifying player.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

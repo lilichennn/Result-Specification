@@ -296,12 +296,12 @@ Hint: male refers to Sex = 'M'; normal level of both albumin and total protein r
 Schema_links: [Patient.SEX,Laboratory.ALB,Laboratory.TP,Laboratory.ID = Patient.ID,'M',3.5,5.5,6.0,8.5]
 Result Contract:
 {
-  "population": "Patients who are male (Sex = 'M') and whose albumin level satisfies ALB > 3.5 and ALB < 5.5 and whose total protein level satisfies TP between 6.0 and 8.5; all conditions must hold together.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The count of qualifying male patients.",
-  "derivation": "Count the patients in the eligible population.",
+  "population": "Laboratory records for male patients (Sex = 'M') whose albumin level satisfies ALB > 3.5 and ALB < 5.5 and whose total protein level satisfies TP between 6.0 and 8.5; all conditions must hold together.",
+  "row_grain": "One global summary row for the qualifying laboratory records.",
+  "column_role": "The count of qualifying laboratory records for male patients.",
+  "derivation": "Count the qualifying laboratory records; the count is not limited to unique patients.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No additional metadata refinement; the result is a record-based count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

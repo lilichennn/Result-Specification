@@ -285,8 +285,8 @@ Hint: coordinate position/location refers to lat, lng; Abu Dhabi Grand Prix refe
 Schema_links: [circuits.lat,circuits.lng,races.name,races.circuitId = circuits.circuitId,Abu Dhabi Grand Prix]
 Result Contract:
 {
-  "population": "All races whose name is 'Abu Dhabi Grand Prix'.",
-  "row_grain": "One Abu Dhabi Grand Prix race.",
+  "population": "Coordinate positions of circuits associated with races whose name is 'Abu Dhabi Grand Prix'.",
+  "row_grain": "One row for each distinct latitude-longitude coordinate position among the qualifying circuits.",
   "column_role": "The race's coordinate position, expressed as the latitude and longitude of the circuit associated with the race.",
   "derivation": "none",
   "filter_policy": "none",

@@ -296,11 +296,11 @@ Hint: first patient refers to ID with MIN(`First Date`); abnormal anti-SSA refer
 Schema_links: [Patient.ID,Patient.`First Date`,Laboratory.SSA,Laboratory.ID = Patient.ID,'negative','0']
 Result Contract:
 {
-  "population": "Patients who have at least one anti-SSA laboratory result whose SSA value is not in ('negative', '0').",
+  "population": "Patients with a known first hospital date who have at least one anti-SSA laboratory result whose SSA value is not in ('negative', '0').",
   "row_grain": "One patient, namely the single patient selected from the eligible population.",
   "column_role": "The patient's ID.",
   "derivation": "none",
-  "filter_policy": "Select the patient whose First Date is the minimum (earliest) among the eligible patients.",
+  "filter_policy": "Select one patient with the earliest First Date among the eligible patients.",
   "meta_review": "Metadata identifies Laboratory.SSA as anti-SSA and Patient.`First Date` as the date the patient came to the hospital, distinguishing it from Patient.Description. This supports eligibility from anti-SSA results and ordering by earliest hospital arrival."
 }
 

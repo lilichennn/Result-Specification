@@ -251,12 +251,12 @@ Hint: the latest comment refers to MAX(CreationDate);
 Schema_links: [comments.Text,comments.CreationDate,posts.Title,users.DisplayName,comments.PostId = posts.Id,comments.UserId = users.Id,'Analysing wind data with R',10]
 Result Contract:
 {
-  "population": "All comments that belong to the post whose title is 'Analysing wind data with R'.",
-  "row_grain": "One row per comment on that post.",
-  "column_role": "The comment's text, and the display name of the user who left the comment.",
+  "population": "All comments that belong to a post titled 'Analysing wind data with R' and whose post has an owner.",
+  "row_grain": "One row per selected comment.",
+  "column_role": "The comment text, and the display name of the user who owns the post.",
   "derivation": "none",
-  "filter_policy": "Keep the 10 comments with the latest CreationDate, where latest means the maximum CreationDate (most recent first).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Keep the first 10 comments after ordering by the post owner's user-account creation date from newest to oldest.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

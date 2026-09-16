@@ -225,12 +225,12 @@ Hint: ratio = DIVIDE(SUM(gender_id = 1) / SUM(gender_id = 2)); male superheroes 
 Schema_links: [superhero.gender_id,1,2]
 Result Contract:
 {
-  "population": "All superheroes, with two target subpopulations: male superheroes are those with gender = 'Female' and female superheroes are those with gender = 'Male' (per evidence).",
+  "population": "All superheroes, with two target subpopulations: male superheroes are those with gender = 'Male' and female superheroes are those with gender = 'Female'.",
   "row_grain": "One global summary row over the whole superhero population.",
   "column_role": "A single value: the ratio of the number of male superheroes to the number of female superheroes.",
-  "derivation": "Divide the count of superheroes with gender = 'Female' (male superheroes) by the count of superheroes with gender = 'Male' (female superheroes).",
+  "derivation": "Divide the count of superheroes with gender = 'Male' by the count of superheroes with gender = 'Female'.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The gender mapping for the ratio is male = 'Male' and female = 'Female'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

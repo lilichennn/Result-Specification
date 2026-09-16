@@ -421,12 +421,12 @@ Hint: Eligible free rate for K-12 = `Free Meal Count (K-12)` / `Enrollment (K-12
 Schema_links: [frpm.`Free Meal Count (K-12)`,frpm.`Enrollment (K-12)`,frpm.`County Name`,'Alameda']
 Result Contract:
 {
-  "population": "All schools located in Alameda County.",
-  "row_grain": "One global summary row representing the single highest rate across the eligible schools.",
-  "column_role": "The highest eligible free rate for K-12 students among the eligible schools.",
-  "derivation": "For each school, the eligible free rate for K-12 is Free Meal Count (K-12) divided by Enrollment (K-12).",
-  "filter_policy": "Select the maximum value of the per-school eligible free rate for K-12 across the eligible schools.",
-  "meta_review": "The frpm metadata confirms that the K-12 eligible free rate is Free Meal Count (K-12) divided by Enrollment (K-12), validating the Round-1 derivation."
+  "population": "Schools located in Alameda County.",
+  "row_grain": "One row containing the single highest K-12 eligible free rate among those schools.",
+  "column_role": "The highest K-12 eligible free rate among schools in Alameda County.",
+  "derivation": "For each school, the K-12 eligible free rate is Free Meal Count (K-12) divided by Enrollment (K-12).",
+  "filter_policy": "Return only the top-ranked rate, keeping the single highest K-12 eligible free rate across the schools.",
+  "meta_review": "The K-12 eligible free rate is defined as Free Meal Count (K-12) divided by Enrollment (K-12)."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

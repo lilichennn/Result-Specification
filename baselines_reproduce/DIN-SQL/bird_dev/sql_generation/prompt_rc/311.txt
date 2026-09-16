@@ -187,12 +187,12 @@ Hint: double bond refers to bond_type = ' = '; bond_type ! = ' = '; sulphur refe
 Schema_links: [molecule.molecule_id,atom.element,bond.bond_type,atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,'s','=']
 Result Contract:
 {
-  "population": "Molecules that contain no sulphur element (no atom with element = 's') and that have no double bond (no bond with bond_type = '='); both absence conditions must hold.",
+  "population": "Molecules that contain at least one atom whose element is not sulphur and at least one bond whose bond type is not a double bond; both presence conditions must hold.",
   "row_grain": "One global summary row over the entire qualifying molecule set.",
   "column_role": "The count of qualifying molecules.",
-  "derivation": "Count the molecules that satisfy both the no-sulphur and no-double-bond conditions.",
+  "derivation": "Count the distinct molecules that have at least one non-sulphur atom and at least one non-double bond.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms atom.element uses 's' for sulfur and bond.bond_type uses '=' for double bonds within molecules, validating the molecule-level absence conditions."
+  "meta_review": "Metadata confirms 's' identifies sulphur and '=' identifies double bonds; the result relies on the presence of non-sulphur atoms and non-double bonds rather than molecule-wide absence of sulphur or double bonds."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

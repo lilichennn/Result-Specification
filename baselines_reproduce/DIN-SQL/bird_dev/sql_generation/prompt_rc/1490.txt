@@ -182,12 +182,12 @@ Hint: Percentage of LAM customer consumed more than 46.73 = (Total no. of LAM cu
 Schema_links: [customers.Segment,customers.CustomerID,yearmonth.Consumption,yearmonth.CustomerID = customers.CustomerID,LAM,46.73]
 Result Contract:
 {
-  "population": "The reference population is all customers whose client segment is LAM; the target population is the subset of those customers who consumed more than 46.73.",
-  "row_grain": "One global summary row for the entire LAM customer population.",
-  "column_role": "The percentage of LAM customers who consumed more than 46.73.",
-  "derivation": "Divide the count of LAM customers who consumed more than 46.73 by the count of all LAM customers, then multiply by 100.",
+  "population": "The reference population is consumption records associated with customers whose client segment is LAM; the target population is the subset of those records where consumption is greater than 46.73.",
+  "row_grain": "One global summary row for the filtered LAM consumption records.",
+  "column_role": "The percentage of LAM customer consumption records with consumption greater than 46.73.",
+  "derivation": "Divide the number of LAM customer consumption records with consumption greater than 46.73 by the total number of LAM customer consumption records, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms customers.Segment is the client segment, so LAM customers are customers with client segment LAM. This resolves the population representation."
+  "meta_review": "Metadata confirms client segment identifies LAM customers; the percentage is computed over consumption records associated with those customers rather than over distinct customers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

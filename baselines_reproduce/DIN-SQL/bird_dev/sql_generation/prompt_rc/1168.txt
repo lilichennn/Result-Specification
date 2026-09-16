@@ -296,12 +296,12 @@ Hint: The larger the birthday value, the younger the person is, and vice versa; 
 Schema_links: [Patient.Birthday,Patient.`First Date`,Patient.Diagnosis,Laboratory.Date,Laboratory.ID = Patient.ID,SJS]
 Result Contract:
 {
-  "population": "Patients whose patient-level diagnosis is SJS.",
-  "row_grain": "One row representing the single selected patient.",
-  "column_role": "The date of the selected patient's medical laboratory tests, and the patient's age when they initially arrived at the hospital.",
-  "derivation": "Age at initial hospital arrival is the year of the first arrival date minus the year of the patient's birthday.",
-  "filter_policy": "Retain the oldest patient, defined as the one with the smallest birthday value because larger birthday values indicate younger patients; tie-breaking is unspecified.",
-  "meta_review": "Metadata confirms Patient.Diagnosis is the patient-level diagnosis and Laboratory.Date is the laboratory-test date, distinguishing the requested outputs from examination data. No other Round-1 semantics changed."
+  "population": "Medical laboratory records associated with patients whose patient-level diagnosis is SJS and whose birth date is known.",
+  "row_grain": "One row representing the single selected laboratory record for the oldest SJS patient.",
+  "column_role": "The laboratory-work completion date, the patient's age at initial hospital arrival, and the patient's birth date.",
+  "derivation": "The laboratory-work completion date and birth date are direct attribute values; age at initial hospital arrival is the year of the first arrival date minus the year of the birth date.",
+  "filter_policy": "Retain the oldest patient, defined as the one with the smallest birth-date value because larger birth-date values indicate younger patients; if several candidates share the oldest birth date, one row is selected without further tie-breaking.",
+  "meta_review": "Metadata confirms the patient-level diagnosis and the laboratory-test date, distinguishing them from examination data, and confirms the patient birth date as a patient attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

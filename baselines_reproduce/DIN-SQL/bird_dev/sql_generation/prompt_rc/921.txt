@@ -285,12 +285,12 @@ Hint: more information refers to url
 Schema_links: [races.url,circuits.name,races.circuitId = circuits.circuitId,Silverstone Circuit]
 Result Contract:
 {
-  "population": "All Formula_1 races whose circuit is the circuit named 'Silverstone Circuit'.",
-  "row_grain": "One row per qualifying Formula_1 race.",
-  "column_role": "The URL of the race, which is the requested 'more information'.",
+  "population": "Circuits named 'Silverstone Circuit' that have been used in Formula_1 races.",
+  "row_grain": "One row per distinct circuit URL, not one row per race.",
+  "column_role": "The circuit's URL, which is the requested 'more information'.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms races.url is the race introduction link and circuits.name is the full circuit name, resolving the requested URL as the race URL and Silverstone as a circuit-name condition."
+  "filter_policy": "Duplicate circuit URLs are eliminated, so only distinct URLs are returned.",
+  "meta_review": "The requested URL is resolved to the circuit's information link rather than a race URL, with race association only establishing that the named circuit was used."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

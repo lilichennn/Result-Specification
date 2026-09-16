@@ -366,9 +366,9 @@ Hint: promotional type of "bundle" refers to promoTypes = 'bundle'; websites ref
 Schema_links: [cards.purchaseUrls,cards.promoTypes,'bundle']
 Result Contract:
 {
-  "population": "Cards whose promotional type is \"bundle\" (promoTypes = 'bundle'); the eligible websites are the purchase URLs (purchaseUrls) associated with those cards.",
-  "row_grain": "One purchase website (purchaseUrl) of a card with promotional type \"bundle\".",
-  "column_role": "The purchase website URL (purchaseUrls) where the bundle-promotional card can be bought.",
+  "population": "Purchase websites associated with cards whose promotional type is \"bundle\" (promoTypes = 'bundle').",
+  "row_grain": "One distinct purchase website (purchaseUrl) for the bundle-promotional cards.",
+  "column_role": "The purchase website URL (purchaseUrls) where the bundle-promotional cards can be bought.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."

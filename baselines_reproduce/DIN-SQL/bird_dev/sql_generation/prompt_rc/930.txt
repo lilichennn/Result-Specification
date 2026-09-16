@@ -361,12 +361,12 @@ Hint: rank the highest refers to min(rank); Lewis Hamilton refers to the full na
 Schema_links: [races.name,results.rank,drivers.forename,drivers.surname,results.driverId = drivers.driverId,results.raceId = races.raceId,Lewis,Hamilton]
 Result Contract:
 {
-  "population": "All Formula 1 race results belonging to the driver whose forename is 'Lewis' and surname is 'Hamilton'.",
-  "row_grain": "One race.",
+  "population": "Formula 1 races in which Lewis Hamilton has a race result with rank 1.",
+  "row_grain": "One row per qualifying race.",
   "column_role": "The name of the race.",
   "derivation": "none",
-  "filter_policy": "Argmin: select the race where Hamilton's race-result rank value is the smallest among all his race results.",
-  "meta_review": "Metadata confirms results.rank is the race-result rank field and races.name is the race name. This resolves the rank metric to race results and the output to the race name rather than a race identifier."
+  "filter_policy": "Include only races where Hamilton's race-result rank is exactly 1; no ordering, top-k, or minimum-rank selection is applied.",
+  "meta_review": "Metadata confirms results.rank is the race-result rank field and races.name is the race name, with rank 1 representing the highest rank for the returned races."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

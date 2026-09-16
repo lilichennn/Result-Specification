@@ -182,12 +182,11 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table superhero, columns = [*,id,full_name,weight_kg]
+Table superhero, columns = [*,full_name,weight_kg]
 Foreign_keys = []
-Sample rows from superhero (columns: ["id", "full_name", "weight_kg"]):
-[[1, "Charles Chandler", 90], [2, "Richard Milhouse Jones", 441], [3, "Abraham Sapien", 65]]
+Sample rows from superhero (columns: ["full_name", "weight_kg"]):
+[["Charles Chandler", 90], ["Richard Milhouse Jones", 441], ["Abraham Sapien", 65]]
 Column descriptions and value descriptions for superhero:
-Column id: column description -> the unique identifier of the superhero, value description -> 
 Column full_name: column description -> the full name of the superhero, value description -> commonsense evidence:
 The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is "John" and their surname is "Smith," their full name would be "John Smith."
 Column weight_kg: column description -> the weight of the superhero, value description -> commonsense evidence:

@@ -183,19 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID,Currency]
-Table transactions_1k, columns = [*,TransactionID,CustomerID,Amount,Price]
+Table transactions_1k, columns = [*,TransactionID,CustomerID,Price]
 Foreign_keys = []
 Sample rows from customers (columns: ["CustomerID", "Currency"]):
 [[3, "EUR"], [5, "EUR"], [6, "EUR"]]
 Column descriptions and value descriptions for customers:
 Column CustomerID: column description -> identification of the customer, value description -> 
 Column Currency: column description -> Currency, value description -> 
-Sample rows from transactions_1k (columns: ["TransactionID", "CustomerID", "Amount", "Price"]):
-[[1, 31543, 28, 672.64], [2, 46707, 18, 430.72], [3, 46707, 1, 121.99]]
+Sample rows from transactions_1k (columns: ["TransactionID", "CustomerID", "Price"]):
+[[1, 31543, 672.64], [2, 46707, 430.72], [3, 46707, 121.99]]
 Column descriptions and value descriptions for transactions_1k:
 Column TransactionID: column description -> Transaction ID, value description -> 
 Column CustomerID: column description -> Customer ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
 Column Price: column description -> Price, value description -> commonsense evidence:
 
 total price = Amount x Price

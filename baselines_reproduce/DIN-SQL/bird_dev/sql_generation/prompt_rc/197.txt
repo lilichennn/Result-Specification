@@ -263,12 +263,12 @@ Hint: single-bonded molecules refers to bond_type = '-' ; average number of oxyg
 Schema_links: [atom.atom_id,atom.element,atom.molecule_id,bond.bond_type,bond.molecule_id,molecule.molecule_id,atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,'o','-']
 Result Contract:
 {
-  "population": "All molecules that are single-bonded, i.e., bond_type = '-', identified through their associated bond records; each eligible molecule is included once.",
-  "row_grain": "One global summary row over the entire eligible molecule population.",
-  "column_role": "The average number of oxygen atoms per single-bonded molecule.",
-  "derivation": "Average, computed across all distinct eligible molecules, of the per-molecule count of atoms where element = 'o'.",
+  "population": "Molecules that have at least one single bond and at least one oxygen atom; molecules with single bonds but no oxygen atoms are excluded, and each qualifying molecule is included once.",
+  "row_grain": "One global summary row over the entire qualifying molecule population.",
+  "column_role": "The average oxygen-atom count, evaluated in the single-bond association context, for qualifying single-bonded molecules.",
+  "derivation": "Average, computed across qualifying molecules, of the number of oxygen atoms counted as paired with the molecule’s single bonds, so each oxygen atom contributes once for each single bond in that molecule.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms bond_type is a bond-level attribute, so molecule eligibility is resolved from associated bond records and molecules must not be duplicated by multiple bond rows. No other Round-1 semantic choice was changed."
+  "meta_review": "Bond type is a bond-level attribute; eligibility requires both single-bond presence and oxygen presence, and the oxygen measure reflects oxygen-single-bond pairings rather than a deduplicated atom count per molecule."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,23 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table circuits, columns = [*,circuitId,circuitRef,name,location,country]
-Table races, columns = [*,raceId,circuitId,name,date]
+Table circuits, columns = [*,circuitId,circuitRef,name]
+Table races, columns = [*,raceId,circuitId,date]
 Foreign_keys = [races.circuitId = circuits.circuitId]
-Sample rows from circuits (columns: ["circuitId", "circuitRef", "name", "location", "country"]):
-[[2, "sepang", "Sepang International Circuit", "Kuala Lumpur", "Malaysia"], [3, "bahrain", "Bahrain International Circuit", "Sakhir", "Bahrain"], [4, "catalunya", "Circuit de Barcelona-Catalunya", "Montmeló", "Spain"]]
+Sample rows from circuits (columns: ["circuitId", "circuitRef", "name"]):
+[[2, "sepang", "Sepang International Circuit"], [3, "bahrain", "Bahrain International Circuit"], [4, "catalunya", "Circuit de Barcelona-Catalunya"]]
 Column descriptions and value descriptions for circuits:
 Column circuitId: column description -> unique identification number of the circuit , value description -> 
 Column circuitRef: column description -> circuit reference name , value description -> 
 Column name: column description -> , value description -> 
-Column location: column description -> , value description -> 
-Column country: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "circuitId", "name", "date"]):
-[[1, 1, "Australian Grand Prix", "2009-03-29"], [2, 2, "Malaysian Grand Prix", "2009-04-05"], [3, 17, "Chinese Grand Prix", "2009-04-19"]]
+Sample rows from races (columns: ["raceId", "circuitId", "date"]):
+[[1, 1, "2009-03-29"], [2, 2, "2009-04-05"], [3, 17, "2009-04-19"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
-Column name: column description -> , value description -> 
 Column date: column description -> , value description -> 
 
 Q: Please list the exact dates on which a Formula_1 race took place on the Barcelona-Catalunya circuit.

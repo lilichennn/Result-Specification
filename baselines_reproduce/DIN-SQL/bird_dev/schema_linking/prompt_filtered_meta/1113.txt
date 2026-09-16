@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Team, columns = [*,team_api_id,team_fifa_api_id,team_long_name]
-Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,date,defenceAggressionClass]
+Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,date,chanceCreationShootingClass,defenceAggressionClass]
 Foreign_keys = [Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]
 Sample rows from Team (columns: ["team_api_id", "team_fifa_api_id", "team_long_name"]):
 [[9987, 673, "KRC Genk"], [9993, 675, "Beerschot AC"], [10000, 15005, "SV Zulte-Waregem"]]
@@ -191,12 +191,16 @@ Column descriptions and value descriptions for Team:
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_long_name: column description -> the team's long name, value description -> 
-Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "date", "defenceAggressionClass"]):
-[[434, 9930, "2010-02-22 00:00:00", "Press"], [434, 9930, "2014-09-19 00:00:00", "Press"], [434, 9930, "2015-09-10 00:00:00", "Press"]]
+Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "date", "chanceCreationShootingClass", "defenceAggressionClass"]):
+[[434, 9930, "2010-02-22 00:00:00", "Normal", "Press"], [434, 9930, "2014-09-19 00:00:00", "Normal", "Press"], [434, 9930, "2015-09-10 00:00:00", "Normal", "Press"]]
 Column descriptions and value descriptions for Team_Attributes:
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column date: column description -> Date, value description -> e.g. 2010-02-22 00:00:00
+Column chanceCreationShootingClass: column description -> the chance creation shooting class, value description -> commonsense reasoning: 
+ Little: 1-33
+ Normal: 34-66
+ Lots: 66-100
 Column defenceAggressionClass: column description -> the defence aggression class, value description -> commonsense reasoning: 
  Contain: 1-33
  Press: 34-66

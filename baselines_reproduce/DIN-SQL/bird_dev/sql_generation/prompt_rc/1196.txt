@@ -365,12 +365,12 @@ Hint: the most common sign refers to MAX(symptoms); 'SLE' refers to diagnosis
 Schema_links: [Examination.Symptoms,Patient.Diagnosis,Examination.ID = Patient.ID,SLE]
 Result Contract:
 {
-  "population": "Signs/symptoms recorded for patients whose patient-level diagnosis is SLE.",
-  "row_grain": "One single sign, namely the most common one among SLE patients.",
+  "population": "Signs/symptoms recorded for patient cases with a diagnosis of SLE.",
+  "row_grain": "One single sign, namely the most common one among the SLE-diagnosed records.",
   "column_role": "The sign/symptom value.",
-  "derivation": "For each sign, compute its frequency of occurrence among patients whose patient-level diagnosis is SLE.",
-  "filter_policy": "Argmax: retain the sign with the highest occurrence frequency among SLE patients.",
-  "meta_review": "Patient.Diagnosis is described as disease names, establishing SLE eligibility as a patient-level diagnosis. This refines the population condition scope without changing the requested sign output."
+  "derivation": "For each sign, compute its frequency of occurrence among the SLE-diagnosed sign records.",
+  "filter_policy": "Retain only one sign with the highest occurrence frequency among those records.",
+  "meta_review": "SLE eligibility is the diagnosis associated with the recorded sign, and the requested output remains a single most frequent sign."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

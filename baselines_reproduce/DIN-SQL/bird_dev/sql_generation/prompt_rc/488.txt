@@ -367,11 +367,11 @@ Schema_links: [sets.code,sets.releaseDate,'2017-07-14']
 Result Contract:
 {
   "population": "Sets whose release date is 2017-07-14.",
-  "row_grain": "One set released on 2017-07-14.",
+  "row_grain": "One row per distinct set code released on 2017-07-14.",
   "column_role": "The code identifying the set.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that sets.code is the set-level code and sets.releaseDate is the ISO release date, validating the Round-1 set-level interpretation rather than card or translation code fields."
+  "meta_review": "Metadata confirms the set-level code and ISO release date, supporting a set-level interpretation rather than card or translation code fields."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

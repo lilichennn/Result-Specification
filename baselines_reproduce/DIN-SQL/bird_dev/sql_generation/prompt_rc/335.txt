@@ -187,12 +187,12 @@ Hint: oxygen refers to element = 'o'; double bond refers to bond_type = ' = ';
 Schema_links: [molecule.molecule_id,atom.element,bond.bond_type,atom.molecule_id = molecule.molecule_id,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,o,=]
 Result Contract:
 {
-  "population": "Molecules that contain at least one double bond (bond_type ' = ') where one of the atoms connected by that bond has element 'o'.",
+  "population": "Molecules that contain at least one atom with element 'o' and at least one double bond with bond type '='.",
   "row_grain": "One global summary row for the entire set of qualifying molecules.",
   "column_role": "The total number of qualifying molecules.",
-  "derivation": "Count distinct molecules satisfying the existence condition of having a double bond connected to an oxygen atom.",
+  "derivation": "Count distinct molecules satisfying the co-occurrence of an oxygen atom and a double bond within the same molecule.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that bond participation of an oxygen atom is represented by bonds connected to atoms with element 'o', so the existence condition is a double bond linked to such an atom. No other Round-1 semantics were changed."
+  "meta_review": "The result semantics count molecules where an oxygen atom and a double bond co-occur, rather than requiring the double bond to be directly connected to the oxygen atom."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

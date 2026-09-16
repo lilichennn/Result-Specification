@@ -361,12 +361,12 @@ Hint: lap record means the fastest time recorded which refers to time, how long 
 Schema_links: [lapTimes.time,pitStops.duration,races.name,lapTimes.raceId = races.raceId,pitStops.raceId = races.raceId,lapTimes.driverId = drivers.driverId,pitStops.driverId = drivers.driverId,'Austrian Grand Prix']
 Result Contract:
 {
-  "population": "Target population is pit-stop events in races at the Austrian Grand Prix Circuit, with recorded times for that circuit as the reference population for identifying the lap record.",
-  "row_grain": "One result row represents one qualifying pit-stop event for the selected driver in the selected race.",
+  "population": "Target population is pit-stop events for the driver-race combination(s) identified by the lap record in Austrian Grand Prix races; the reference population is race results with recorded fastest lap times in those races.",
+  "row_grain": "One result row represents one qualifying pit-stop event for a selected driver in a selected race.",
   "column_role": "The duration spent at the pit stop.",
   "derivation": "none",
-  "filter_policy": "Select the driver and race whose recorded time is the fastest for the Austrian Grand Prix Circuit, and retain that driver's pit-stop event in that race; if multiple qualifying pit stops exist, the choice among them is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select the driver-race combination(s) whose fastest lap time is the minimum among Austrian Grand Prix races, and retain all pit-stop events for those driver-race combination(s).",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

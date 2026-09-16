@@ -248,12 +248,12 @@ Hint:
 Schema_links: [card.type,client.client_id,card.disp_id = disp.disp_id,disp.client_id = client.client_id,13539]
 Result Contract:
 {
-  "population": "Credit cards owned by the client whose id is 13539.",
-  "row_grain": "One credit card owned by the client with id 13539.",
+  "population": "Credit cards associated with the client whose id is 13539.",
+  "row_grain": "One row per credit card associated with the client with id 13539.",
   "column_role": "The type of the credit card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms card.type represents the type of credit card, validating the requested output."
+  "meta_review": "Metadata confirms the returned attribute represents the type of credit card, validating the requested output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

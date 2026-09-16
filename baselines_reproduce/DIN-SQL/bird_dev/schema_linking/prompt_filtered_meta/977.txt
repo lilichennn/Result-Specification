@@ -183,19 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table races, columns = [*,raceId]
-Table results, columns = [*,resultId,raceId,driverId,time,statusId]
+Table results, columns = [*,resultId,raceId,time,statusId]
 Table status, columns = [*,statusId,status]
 Foreign_keys = [results.statusId = status.statusId,results.raceId = races.raceId]
 Sample rows from races (columns: ["raceId"]):
 [[837], [833], [838]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "raceId", "driverId", "time", "statusId"]):
-[[1, 18, 1, "1:34:50.616", 1], [2, 18, 2, "+5.478", 1], [3, 18, 3, "+8.163", 1]]
+Sample rows from results (columns: ["resultId", "raceId", "time", "statusId"]):
+[[1, 18, "1:34:50.616", 1], [2, 18, "+5.478", 1], [3, 18, "+8.163", 1]]
 Column descriptions and value descriptions for results:
 Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
-Column driverId: column description -> , value description -> 
 Column time: column description -> , value description -> 
 Column statusId: column description -> , value description -> 
 Sample rows from status (columns: ["statusId", "status"]):

@@ -182,12 +182,12 @@ Hint: '2012/8/24' can be represented by '2012-08-24'; expense and the consumptio
 Schema_links: [transactions_1k.Price,transactions_1k.Date,yearmonth.Consumption,yearmonth.Date,transactions_1k.CustomerID = yearmonth.CustomerID,124.05,'2012-08-24','201201']
 Result Contract:
 {
-  "population": "Transaction-level expense records dated within January 2012 that belong to the customer whose transaction total price was 124.05 on 2012-08-24.",
-  "row_grain": "One row per qualifying transaction-level expense record of that customer in January 2012.",
-  "column_role": "The date of each expense and the corresponding expense amount (transaction total price).",
-  "derivation": "The payment/expense amount is the transaction total price, computed as Amount * Price.",
+  "population": "Monthly expense records for January 2012 belonging to the customer identified by a payment of 124.05 on 2012-08-24.",
+  "row_grain": "One row per qualifying monthly expense record for that customer.",
+  "column_role": "The customer identifier, the monthly expense date, and the corresponding expense/consumption amount.",
+  "derivation": "The returned expense amount is the stored monthly consumption value; the 124.05 payment condition uses the recorded payment amount rather than a computed total.",
   "filter_policy": "none",
-  "meta_review": "Metadata for transactions_1k defines total price as Amount * Price and provides dated transaction records, resolving the monetary amount and exact-date event grain for the payment and January expenses."
+  "meta_review": "Metadata should be understood as supporting a recorded payment amount on the exact payment date and a stored monthly consumption amount for January 2012, not a transaction total computed as amount times price."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: single bond refers to bond_type = '-';
 Schema_links: [bond.bond_id,bond.bond_type,connected.atom_id,connected.atom_id2,connected.bond_id = bond.bond_id,'-']
 Result Contract:
 {
-  "population": "All bonds whose bond type is single (bond_type = '-'), with no additional restriction on the atoms or molecules involved.",
-  "row_grain": "One row per single-type bond, carrying the first and second atoms connected by that bond.",
+  "population": "All bonds whose bond type is single ('-') and for which connected atom identities are available.",
+  "row_grain": "One row per single-type bond connection, carrying the first and second atoms connected by that bond.",
   "column_role": "The bond identifier serving as its name, and the identities of the first and second atoms connected by that bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that connected.atom_id and connected.atom_id2 are the first and second atoms linked by a bond, so the contract returns both connected atom identities per single bond rather than one atom per row. It also supports using bond.bond_id as the bond identifier because no separate bond name exists."
+  "meta_review": "Metadata establishes that a bond's connection information provides the first and second atoms linked by the bond, so the contract returns both connected atom identities per single bond rather than one atom per row. It also supports using the bond identifier as the bond name because no separate bond name exists."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

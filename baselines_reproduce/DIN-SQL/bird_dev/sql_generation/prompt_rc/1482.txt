@@ -182,12 +182,12 @@ Hint: Increase or Decrease = consumption for 2013 - consumption for 2012; Percen
 Schema_links: [customers.Segment,customers.Currency,yearmonth.Consumption,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID,'SME','LAM','KAM','EUR','2012','2013']
 Result Contract:
 {
-  "population": "The eligible entities are exactly the three client segments SME, LAM, and KAM, and the consumption considered for each segment is consumption paid in EUR in the years 2012 and 2013; EUR-paid consumption is the consumption associated with customers whose currency is EUR.",
-  "row_grain": "One row per requested extremum—one for the biggest percentage increase and one for the lowest—each row representing the segment that attains that extremum.",
-  "column_role": "The segment (SME, LAM, or KAM) and an indication of whether it represents the biggest or the lowest percentage increase; the numeric percentage increase is the ranking measure and is not explicitly requested as an output.",
-  "derivation": "For each client segment, compute EUR-paid consumption for 2012 and 2013 by aggregating recorded customer consumption values for customers whose currency is EUR, using the first four characters of the consumption date as the year. Then percentage increase = ((2013 EUR-paid consumption - 2012 EUR-paid consumption) / 2013 EUR-paid consumption) * 100.",
-  "filter_policy": "Argmax and argmin: among the three segments, retain the segment with the biggest percentage increase and the segment with the lowest percentage increase.",
-  "meta_review": "Metadata identifies customers.Segment as the client segment linked to yearmonth consumption and customers.Currency as the EUR currency filter. It also shows yearmonth.Consumption is recorded per customer and date, so segment-year EUR consumption must be aggregated before computing the percentage increase."
+  "population": "The result covers exactly the three client segments SME, LAM, and KAM. For each segment, the consumption considered is the recorded customer consumption linked to that segment in 2012 and 2013, identified by the first four characters of the consumption date; no separate customer-currency restriction is applied.",
+  "row_grain": "One global result row containing three segment-specific percentage-increase values, one for SME, one for LAM, and one for KAM.",
+  "column_role": "The returned outputs are the percentage-increase measures for SME, LAM, and KAM. Segment identity is implicit in which segment-specific measure is returned; no separate segment identifier or biggest/lowest label is returned.",
+  "derivation": "For each segment, sum the recorded consumption values for dates whose first four characters indicate 2013 and 2012. Compute the percentage increase as ((2013 total - 2012 total) / 2012 total) * 100.",
+  "filter_policy": "No biggest/lowest selection, ranking, or top-k filtering is applied; the computed percentage increase for each of the three segments is retained.",
+  "meta_review": "Metadata identifies customers.Segment as the client segment linked to yearmonth consumption and shows yearmonth.Consumption is recorded per customer and date, so segment-year consumption must be aggregated before computing the percentage increase."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

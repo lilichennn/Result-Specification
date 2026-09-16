@@ -415,12 +415,12 @@ Hint: long passing score refers to long_passing; oldest player refers to oldest 
 Schema_links: [Player_Attributes.long_passing,Player.birthday,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players.",
-  "row_grain": "One player, specifically the oldest player.",
-  "column_role": "The long passing score (long_passing) of that player.",
+  "population": "Players who have recorded player attributes.",
+  "row_grain": "One selected long passing score for the oldest player.",
+  "column_role": "The long passing score of that player.",
   "derivation": "none",
-  "filter_policy": "Select the single player with the earliest birthday (oldest); tie handling is unspecified.",
-  "meta_review": "Player.birthday metadata confirms that an older player has an earlier birthday, validating the earliest-birthday selection. Player_Attributes.long_passing confirms the requested score is the player's long passing score."
+  "filter_policy": "Select one score associated with the earliest birthday; tie handling is unspecified.",
+  "meta_review": "Player birthday metadata confirms that an older player has an earlier birthday, validating the earliest-birthday selection. Player attribute metadata confirms the requested score is the player's long passing score."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

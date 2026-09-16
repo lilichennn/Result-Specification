@@ -251,12 +251,12 @@ Hint: "bayesian" is the TagName; excerpt from refers to ExcerptPostId
 Schema_links: [tags.TagName,tags.ExcerptPostId,posts.Body,tags.ExcerptPostId = posts.Id,bayesian]
 Result Contract:
 {
-  "population": "The tag whose TagName is \"bayesian\", and the post designated as that tag's excerpt source (the post its ExcerptPostId refers to).",
+  "population": "The post designated as the excerpt source for the tag named \"bayesian\".",
   "row_grain": "One post, namely the excerpt source post of the \"bayesian\" tag.",
   "column_role": "The body of the post.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms tags.ExcerptPostId identifies the excerpt post and posts.Body stores the requested post body."
+  "meta_review": "Metadata confirms the tag's excerpt-source reference identifies the excerpt post and the post body stores the requested post body."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

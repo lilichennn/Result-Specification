@@ -296,8 +296,8 @@ Hint: diseases refers to Diagnosis; born after 1985/1/1 refers to YEAR(Birthday)
 Schema_links: [Patient.Diagnosis,Patient.Birthday,Laboratory.RA,Patient.ID = Laboratory.ID,1985,'-','+-']
 Result Contract:
 {
-  "population": "Patients whose birth year is greater than or equal to 1985 (born after 1985-1-1 per evidence) AND who have a normal Rheumatoid Factor result, i.e., RA is '-' or '+-'.",
-  "row_grain": "One row per patient-owned disease (Diagnosis) value recorded for an eligible patient.",
+  "population": "Patient diagnosis values associated with a qualifying laboratory record whose Rheumatoid Factor result is normal ('-' or '+-') and with a patient whose birth date is strictly after 1985-01-01.",
+  "row_grain": "One row per qualifying laboratory record, each returning the associated patient's diagnosis; duplicate diagnosis values are not eliminated.",
   "column_role": "The patient-owned disease (Diagnosis) value of each eligible patient.",
   "derivation": "none",
   "filter_policy": "none",

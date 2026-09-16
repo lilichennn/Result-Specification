@@ -367,7 +367,7 @@ Schema_links: [cards.name,cards.isPromo,cards.side,1]
 Result Contract:
 {
   "population": "Cards that are a promotional painting (isPromo = 1) AND have multiple faces on the same card (side is not Null); both conditions must hold for a card to be eligible.",
-  "row_grain": "One row per qualifying card.",
+  "row_grain": "One row per distinct qualifying card name.",
   "column_role": "The name of each qualifying card.",
   "derivation": "none",
   "filter_policy": "none",

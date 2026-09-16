@@ -491,11 +491,11 @@ Hint:  league with highest matches of all time refers to MAX(COUNT(league_id));
 Schema_links: [League.name,Match.league_id,League.id = Match.league_id]
 Result Contract:
 {
-  "population": "All leagues are eligible, and every match belonging to a league contributes to that league's match count; no other membership condition applies.",
+  "population": "Leagues with matches are eligible, and every match belonging to a league contributes to that league's match count; no other membership condition applies.",
   "row_grain": "One result row representing the single selected league.",
   "column_role": "The league's name and the total number of matches played in that league.",
-  "derivation": "For each league, compute the count of matches associated with that league.",
-  "filter_policy": "Select the league whose match count is the maximum across all leagues (argmax); tie handling is unspecified.",
+  "derivation": "For each eligible league, compute the count of matches associated with that league.",
+  "filter_policy": "Select the eligible league whose match count is the maximum across all eligible leagues; tie handling is unspecified.",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }
 

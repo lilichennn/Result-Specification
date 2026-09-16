@@ -366,12 +366,12 @@ Hint: available in both "arena" and "mtgo" refers to availability like '%arena,m
 Schema_links: [cards.artist,cards.borderColor,cards.availability,black,"arena,mtgo"]
 Result Contract:
 {
-  "population": "Artists who have designed at least one card that has a black border color and whose availability includes both \"arena\" and \"mtgo\" (availability like '%arena,mtgo%').",
-  "row_grain": "One global summary row representing the whole qualifying artist population.",
-  "column_role": "The count of qualifying artists.",
-  "derivation": "Count the artists who satisfy the population conditions, with each qualifying artist contributing once to the total.",
+  "population": "Cards that have a black border color and whose availability includes both \"arena\" and \"mtgo\" (availability containing \"arena,mtgo\").",
+  "row_grain": "One global summary row representing the total count of qualifying cards.",
+  "column_role": "The count of qualifying cards.",
+  "derivation": "Count each qualifying card entry once, without deduplicating by artist.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result counts qualifying card entries rather than unique artists."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

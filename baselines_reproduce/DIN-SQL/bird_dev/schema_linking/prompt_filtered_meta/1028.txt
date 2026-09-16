@@ -182,36 +182,27 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Country, columns = [*,id,name]
-Table League, columns = [*,id,country_id,name]
-Table Match, columns = [*,id,country_id,league_id,season,away_team_api_id,home_team_goal,away_team_goal]
-Table Team, columns = [*,id,team_api_id,team_long_name]
-Foreign_keys = [League.country_id = country.id,Match.away_team_api_id = Team.team_api_id,Match.league_id = League.id,Match.country_id = Country.id]
-Sample rows from Country (columns: ["id", "name"]):
-[[1, "Belgium"], [1729, "England"], [4769, "France"]]
-Column descriptions and value descriptions for Country:
-Column id: column description -> the unique id for countries, value description -> 
-Column name: column description -> country name, value description -> 
-Sample rows from League (columns: ["id", "country_id", "name"]):
-[[1, 1, "Belgium Jupiler League"], [1729, 1729, "England Premier League"], [4769, 4769, "France Ligue 1"]]
+Table League, columns = [*,id,name]
+Table Match, columns = [*,id,league_id,season,away_team_api_id,home_team_goal,away_team_goal]
+Table Team, columns = [*,team_api_id,team_long_name]
+Foreign_keys = [Match.away_team_api_id = Team.team_api_id,Match.league_id = League.id]
+Sample rows from League (columns: ["id", "name"]):
+[[1, "Belgium Jupiler League"], [1729, "England Premier League"], [4769, "France Ligue 1"]]
 Column descriptions and value descriptions for League:
 Column id: column description -> the unique id for leagues, value description -> 
-Column country_id: column description -> the unique id for countries, value description -> 
 Column name: column description -> league name, value description -> 
-Sample rows from Match (columns: ["id", "country_id", "league_id", "season", "away_team_api_id", "home_team_goal", "away_team_goal"]):
-[[1, 1, 1, "2008/2009", 9993, 1, 1], [2, 1, 1, "2008/2009", 9994, 0, 0], [3, 1, 1, "2008/2009", 8635, 0, 3]]
+Sample rows from Match (columns: ["id", "league_id", "season", "away_team_api_id", "home_team_goal", "away_team_goal"]):
+[[1, 1, "2008/2009", 9993, 1, 1], [2, 1, "2008/2009", 9994, 0, 0], [3, 1, "2008/2009", 8635, 0, 3]]
 Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
-Column country_id: column description -> country id, value description -> 
 Column league_id: column description -> league id, value description -> 
 Column season: column description -> the season of the match, value description -> 
 Column away_team_api_id: column description -> the id of the away team api, value description -> 
 Column home_team_goal: column description -> the goal of the home team, value description -> 
 Column away_team_goal: column description -> the goal of the away team, value description -> 
-Sample rows from Team (columns: ["id", "team_api_id", "team_long_name"]):
-[[1, 9987, "KRC Genk"], [2, 9993, "Beerschot AC"], [3, 10000, "SV Zulte-Waregem"]]
+Sample rows from Team (columns: ["team_api_id", "team_long_name"]):
+[[9987, "KRC Genk"], [9993, "Beerschot AC"], [10000, "SV Zulte-Waregem"]]
 Column descriptions and value descriptions for Team:
-Column id: column description -> the unique id for teams, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_long_name: column description -> the team's long name, value description -> 
 

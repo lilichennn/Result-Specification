@@ -286,11 +286,11 @@ Schema_links: [drivers.forename,drivers.surname,races.name,races.year,results.ti
 Result Contract:
 {
   "population": "Drivers who competed in the 2008 Canadian Grand Prix, restricted to the champion, identified as the one whose recorded finish time appears in the full \"hour:minutes:seconds.millisecond\" format.",
-  "row_grain": "One row representing the champion driver of the 2008 Canadian Grand Prix.",
-  "column_role": "The champion driver's identity (name) and his finish time.",
+  "row_grain": "One row containing the finish time for the champion driver of the 2008 Canadian Grand Prix.",
+  "column_role": "The champion's finish time only.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms results.time is the finish-time field and directly validates using the champion's full time format to identify the winner. The evidence's hour-inclusive format is retained despite the metadata's shorter format example."
+  "meta_review": "Metadata confirms the recorded finish-time field and supports using the champion's full time format to select the relevant finish time. The evidence's hour-inclusive format is retained despite the metadata's shorter format example."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

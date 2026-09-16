@@ -296,12 +296,12 @@ Hint: PLT > 100 and PLT < 400 means platelet level is within the normal range; P
 Schema_links: [Laboratory.PLT,Patient.Diagnosis,Laboratory.ID = Patient.ID,'MCTD',100,400]
 Result Contract:
 {
-  "population": "Patients whose patient-level diagnosis is MCTD (Diagnosis = 'MCTD') and whose platelet level is within the normal range, defined as PLT > 100 and PLT < 400.",
-  "row_grain": "One row per qualifying patient, representing that patient's platelet level.",
-  "column_role": "The patient's platelet level (PLT value).",
+  "population": "Platelet measurements for patients diagnosed with MCTD where the measured platelet level is within the normal range, defined inclusively as 100 to 400.",
+  "row_grain": "One row per qualifying platelet measurement; a patient can contribute more than one row if multiple measurements qualify.",
+  "column_role": "The measured platelet level.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes patient-level Patient.Diagnosis from examination-level Diagnosis, so the MCTD condition is kept as a patient diagnosis. It also confirms PLT is the platelet measurement with the normal range 100 < PLT < 400."
+  "meta_review": "Metadata distinguishes patient-level diagnosis from examination-level diagnosis, so the MCTD condition is kept as a patient diagnosis. The normal platelet range is inclusive from 100 to 400."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

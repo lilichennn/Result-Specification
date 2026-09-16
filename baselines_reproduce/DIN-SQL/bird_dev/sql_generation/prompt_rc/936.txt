@@ -285,12 +285,12 @@ Hint:
 Schema_links: [results.fastestLap,drivers.forename,drivers.surname,races.year,races.name,results.driverId = drivers.driverId,results.raceId = races.raceId,'Lewis','Hamilton',2008,'Australian Grand Prix']
 Result Contract:
 {
-  "population": "All laps driven by Lewis Hamilton in the 2008 Australian Grand Prix.",
-  "row_grain": "One lap.",
+  "population": "The race result record for Lewis Hamilton in the 2008 Australian Grand Prix.",
+  "row_grain": "One driver-race result providing a single fastest-lap value.",
   "column_role": "The lap number of the fastest lap.",
-  "derivation": "none",
-  "filter_policy": "Select the single lap with the minimum lap time (argmin on lap time) among the eligible laps.",
-  "meta_review": "Metadata confirms that the fastest-lap answer is a lap number (results.fastestLap is described as fastest lap number), resolving the output form."
+  "derivation": "Stored per-row value.",
+  "filter_policy": "Restrict to Lewis Hamilton and the 2008 Australian Grand Prix, then return the recorded fastest lap; no ranking or minimum-time selection over individual laps.",
+  "meta_review": "Metadata confirms that the fastest-lap answer is a lap number, resolving the output form."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -231,11 +231,11 @@ Schema_links: [member.first_name,member.last_name,event.event_name,expense.link_
 Result Contract:
 {
   "population": "Students who have been entrusted to manage the budget for the event named 'Yearly Kickoff'.",
-  "row_grain": "One student.",
+  "row_grain": "The matching students, with no guarantee of a single row or distinct student names.",
   "column_role": "The student's full name, consisting of first name and last name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

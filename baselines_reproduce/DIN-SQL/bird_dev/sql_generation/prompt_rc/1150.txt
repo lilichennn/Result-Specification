@@ -368,7 +368,7 @@ Result Contract:
   "population": "The reference population is all female patients (Sex = 'F'); the target population is the subset of those female patients born after 1930 (birth year > 1930).",
   "row_grain": "One global summary row over the entire female patient population.",
   "column_role": "A single value: the percentage of female patients who were born after 1930.",
-  "derivation": "Compute the percentage as the count of female patients born after 1930 divided by the count of all female patients.",
+  "derivation": "Compute the percentage as the count of female patients born after 1930 divided by the count of all female patients, multiplied by 100.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

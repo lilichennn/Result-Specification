@@ -230,12 +230,12 @@ Hint: Maya Mclean is the full name; full name refers to first_name, last_name; '
 Schema_links: [member.first_name,member.last_name,event.event_name,attendance.link_to_member = member.member_id,attendance.link_to_event = event.event_id,"Maya","Mclean","Women's Soccer"]
 Result Contract:
 {
-  "population": "Attendance links between members and events where the linked member's first_name and last_name are \"Maya Mclean\" and the linked event's event_name is \"Women's Soccer\".",
-  "row_grain": "One global summary row answering the yes/no question.",
-  "column_role": "A single Boolean or yes/no value indicating whether Maya Mclean attended the 'Women's Soccer' event.",
-  "derivation": "Existence check over the eligible attendance links: the answer is affirmative if at least one link connects a member named \"Maya Mclean\" to an event named \"Women's Soccer\", and negative otherwise.",
+  "population": "Attendance links associated with the member whose full name is 'Maya Mclean', each considered together with its linked event.",
+  "row_grain": "One row for each attendance link associated with Maya Mclean; if there are no such links, the result is empty.",
+  "column_role": "A single indicator that is affirmative (YES) when the linked event is 'Women's Soccer' and provides no affirmative value otherwise.",
+  "derivation": "For each attendance link, evaluate the linked event's name: produce YES for 'Women's Soccer' and otherwise leave the indicator without an affirmative value.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that attendance records are links between members and events, with attendee names in Member and event_name in Event. The contract therefore treats eligibility as attendance links matching both the member's full name and the event's event_name."
+  "meta_review": "Metadata confirms that attendance records link members and events. The member full name identifies the attendance links considered, and the event name is used to mark the target event rather than to restrict the links themselves."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

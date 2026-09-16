@@ -182,12 +182,12 @@ Hint: Year 2012 can be presented as Between 201201 And 201212; The first 4 strin
 Schema_links: [customers.Currency,yearmonth.Consumption,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID,CZK,EUR,201201,201212]
 Result Contract:
 {
-  "population": "Monthly gas consumption records for months from 201201 through 201212, belonging to two subpopulations: consumption by customers whose customer currency is CZK and consumption by customers whose customer currency is EUR.",
+  "population": "Monthly gas consumption records for the year 2012, associated with customers, separated by customer currency into CZK-paying and EUR-paying consumption.",
   "row_grain": "One global summary row representing the single comparison between the two currency groups for 2012.",
   "column_role": "A single value: the difference in 2012 gas consumption between CZK-paying customers and EUR-paying customers.",
   "derivation": "Using customer currency to assign each 2012 consumption record to CZK or EUR, sum the 2012 consumption for CZK customers and the 2012 consumption for EUR customers, then subtract the EUR total from the CZK total.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows customers.Currency owns the paying-currency attribute and yearmonth.Consumption provides monthly customer consumption, so currency-group eligibility comes from the customer's currency and the summed metric is monthly consumption. This validates the Round-1 global comparison without changing its summary grain."
+  "meta_review": "Metadata shows customers.Currency owns the paying-currency attribute and yearmonth.Consumption provides monthly customer consumption, so currency-group eligibility comes from the customer's currency and the summed metric is monthly consumption. This validates the global comparison without changing its summary grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

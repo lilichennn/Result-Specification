@@ -296,12 +296,12 @@ Hint: normal level of triglyceride refers to TG < 200; have other symptoms refer
 Schema_links: [Patient.ID,Laboratory.TG,Examination.Symptoms,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,200]
 Result Contract:
 {
-  "population": "Patients whose triglyceride level is normal (TG < 200) and who have other symptoms observed (Symptoms is not null); both conditions must hold for a patient to be counted.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count distinct patient identities satisfying the population conditions.",
+  "population": "Patient records associated with a normal triglyceride level (TG < 200) and with other symptoms observed (Symptoms is not null); both conditions must hold for a record to be counted.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "A single value representing the number of qualifying patient records.",
+  "derivation": "Count the qualifying patient identifiers as they appear in those records, without de-duplicating repeated patients.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies ID as the patient identifier in Laboratory and Examination, so the count is over distinct qualifying patients rather than individual measurement or examination rows."
+  "meta_review": "The patient identifier links examination and laboratory information, but the result counts qualifying linked records rather than distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

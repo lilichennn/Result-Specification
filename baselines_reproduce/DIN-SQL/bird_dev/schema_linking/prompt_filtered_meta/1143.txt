@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table Country, columns = [*,id,name]
 Table League, columns = [*,id,country_id,name]
-Table Match, columns = [*,id,country_id,league_id,home_team_goal]
+Table Match, columns = [*,country_id,league_id,home_team_goal]
 Foreign_keys = [League.country_id = country.id,Match.league_id = League.id,Match.country_id = Country.id]
 Sample rows from Country (columns: ["id", "name"]):
 [[1, "Belgium"], [1729, "England"], [4769, "France"]]
@@ -197,10 +197,9 @@ Column descriptions and value descriptions for League:
 Column id: column description -> the unique id for leagues, value description -> 
 Column country_id: column description -> the unique id for countries, value description -> 
 Column name: column description -> league name, value description -> 
-Sample rows from Match (columns: ["id", "country_id", "league_id", "home_team_goal"]):
-[[1, 1, 1, 1], [2, 1, 1, 0], [3, 1, 1, 0]]
+Sample rows from Match (columns: ["country_id", "league_id", "home_team_goal"]):
+[[1, 1, 1], [1, 1, 0], [1, 1, 0]]
 Column descriptions and value descriptions for Match:
-Column id: column description -> the unique id for matches, value description -> 
 Column country_id: column description -> country id, value description -> 
 Column league_id: column description -> league id, value description -> 
 Column home_team_goal: column description -> the goal of the home team, value description -> 

@@ -366,12 +366,12 @@ Hint: borderless' refers to borderColor; poweful foils refers to cardKingdomFoil
 Schema_links: [cards.name,cards.borderColor,cards.cardKingdomFoilId,cards.cardKingdomId,'borderless']
 Result Contract:
 {
-  "population": "Cards whose borderColor is 'borderless' and that lack a powerful foil, meaning they do not have a cardKingdomFoilId paired with a non-null cardKingdomId.",
+  "population": "Cards with a borderless border and no Card Kingdom identifier.",
   "row_grain": "One row per qualifying card.",
-  "column_role": "The name of each qualifying card.",
+  "column_role": "The identifier of each qualifying card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.borderColor includes the literal 'borderless' and cards.name is the card name, resolving the filter value and output form. It also validates the powerful-foil condition as cardKingdomFoilId paired with a non-null cardKingdomId."
+  "meta_review": "Metadata confirms the borderless border condition and that the returned object is the card identifier rather than the card name. It also aligns the no-powerful-foil condition with an absent Card Kingdom identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

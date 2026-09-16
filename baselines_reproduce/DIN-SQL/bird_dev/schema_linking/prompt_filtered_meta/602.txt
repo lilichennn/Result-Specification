@@ -182,15 +182,21 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,Score,OwnerUserId]
+Table postHistory, columns = [*,Id,PostId,UserId]
+Table posts, columns = [*,Id,Score]
 Table users, columns = [*,Id]
-Foreign_keys = [posts.OwnerUserId = users.Id]
-Sample rows from posts (columns: ["Id", "Score", "OwnerUserId"]):
-[[1, 23, 8], [2, 22, 24], [3, 54, 18]]
+Foreign_keys = [postHistory.UserId = users.Id,postHistory.PostId = posts.Id]
+Sample rows from postHistory (columns: ["Id", "PostId", "UserId"]):
+[[1, 1, 8], [2, 1, 8], [3, 1, 8]]
+Column descriptions and value descriptions for postHistory:
+Column Id: column description -> the post history id, value description -> 
+Column PostId: column description -> the unique id of the post, value description -> 
+Column UserId: column description -> the user who post the post, value description -> 
+Sample rows from posts (columns: ["Id", "Score"]):
+[[1, 23], [2, 22], [3, 54]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column Score: column description -> the score of the post, value description -> 
-Column OwnerUserId: column description -> the id of the owner user, value description -> 
 Sample rows from users (columns: ["Id"]):
 [[-1], [2], [3]]
 Column descriptions and value descriptions for users:

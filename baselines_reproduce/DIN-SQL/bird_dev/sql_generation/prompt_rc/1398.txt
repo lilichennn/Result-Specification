@@ -230,12 +230,12 @@ Hint: Name of event refers to event_name; highest amount spent on advertisement 
 Schema_links: [event.event_name,budget.spent,budget.category,budget.link_to_event = event.event_id,Advertisement]
 Result Contract:
 {
-  "population": "All events are candidates; the category = 'Advertisement' condition scopes the spending measurement, not event membership.",
+  "population": "Events associated with at least one spending record categorized as Advertisement; events without such a record are not candidates.",
   "row_grain": "One row representing the single selected event.",
-  "column_role": "The name of the event (event_name).",
-  "derivation": "For each event, determine the amount spent on advertisement as the spent amount recorded for that event under budget category = 'Advertisement'.",
-  "filter_policy": "Argmax: return the event with the highest advertisement spending amount.",
-  "meta_review": "Metadata confirms budget.spent is the stored total amount spent for a budgeted category linked to an event, validating the use of spent where category = 'Advertisement' as the advertisement spending metric."
+  "column_role": "The event name.",
+  "derivation": "The event name is taken from the event linked to the spending record; the ranking uses the stored spent amount on that advertisement spending record, not an aggregated amount across records.",
+  "filter_policy": "Return the event linked to the advertisement spending record with the highest spent amount.",
+  "meta_review": "Metadata confirms that the stored spent amount for an advertisement-category spending record linked to an event is the appropriate advertisement spending measure."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

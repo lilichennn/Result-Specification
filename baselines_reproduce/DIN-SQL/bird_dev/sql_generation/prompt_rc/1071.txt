@@ -415,12 +415,12 @@ Hint: build up play speed refers to buildUpPlaySpeed; buildUpPlaySpeed = 31; bui
 Schema_links: [Team.team_short_name,Team_Attributes.buildUpPlaySpeed,Team_Attributes.buildUpPlayDribbling,Team_Attributes.buildUpPlayPassing,Team_Attributes.team_api_id = Team.team_api_id,31,53,32]
 Result Contract:
 {
-  "population": "Football teams whose build-up play speed equals 31 AND whose build-up play dribbling equals 53 AND whose build-up play passing equals 32.",
-  "row_grain": "One qualifying football team per row.",
+  "population": "Football teams with team attributes showing build-up play speed 31, build-up play dribbling 53, and build-up play passing 32.",
+  "row_grain": "One row per distinct short name of a qualifying football team.",
   "column_role": "Only the short name of the team.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

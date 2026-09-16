@@ -182,23 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table set_translations, columns = [*,id,language,setCode]
-Table sets, columns = [*,id,baseSetSize,block,code,name]
+Table set_translations, columns = [*,language,setCode]
+Table sets, columns = [*,baseSetSize,block,code]
 Foreign_keys = [set_translations.setCode = sets.code]
-Sample rows from set_translations (columns: ["id", "language", "setCode"]):
-[[1, "Chinese Simplified", "10E"], [2, "Chinese Traditional", "10E"], [3, "French", "10E"]]
+Sample rows from set_translations (columns: ["language", "setCode"]):
+[["Chinese Simplified", "10E"], ["Chinese Traditional", "10E"], ["French", "10E"]]
 Column descriptions and value descriptions for set_translations:
-Column id: column description -> unique id identifying this set, value description -> 
 Column language: column description -> language of this card set, value description -> 
 Column setCode: column description -> the set code for this set, value description -> 
-Sample rows from sets (columns: ["id", "baseSetSize", "block", "code", "name"]):
-[[1, 383, "Core Set", "10E", "Tenth Edition"], [2, 302, "Core Set", "2ED", "Unlimited Edition"], [3, 332, null, "2XM", "Double Masters"]]
+Sample rows from sets (columns: ["baseSetSize", "block", "code"]):
+[[383, "Core Set", "10E"], [302, "Core Set", "2ED"], [332, null, "2XM"]]
 Column descriptions and value descriptions for sets:
-Column id: column description -> unique id identifying this set, value description -> 
 Column baseSetSize: column description -> The number of cards in the set., value description -> 
 Column block: column description -> The block name the set was in., value description -> 
 Column code: column description -> The set code for the set., value description -> 
-Column name: column description -> The name of the set., value description -> 
 
 Q: What language is the set of 180 cards that belongs to the Ravnica block translated into?
 Hint: set of 180 cards refers to baseSetSize = 180

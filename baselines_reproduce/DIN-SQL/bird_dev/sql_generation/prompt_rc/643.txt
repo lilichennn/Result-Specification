@@ -331,7 +331,7 @@ Result Contract:
   "row_grain": "One result row represents one user who has the highest views.",
   "column_role": "The user's display name and the user's age.",
   "derivation": "none",
-  "filter_policy": "Select the user(s) whose views equal the maximum views across all users (argmax on Views); tie handling is unspecified.",
+  "filter_policy": "Select the user(s) whose views equal the maximum views across all users; all tied users are returned.",
   "meta_review": "The catalog confirms users.Views is a stored user-level view count and users.DisplayName and users.Age provide the requested outputs. This validates computing the maximum Views at the user level rather than using post-level view counts."
 }
 

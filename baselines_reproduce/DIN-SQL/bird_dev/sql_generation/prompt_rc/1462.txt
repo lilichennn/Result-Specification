@@ -231,11 +231,11 @@ Schema_links: [budget.category,budget.amount,event.event_name,budget.link_to_eve
 Result Contract:
 {
   "population": "Budget entries associated with the event named 'January Speaker'.",
-  "row_grain": "One budgeted category for the 'January Speaker' event.",
+  "row_grain": "One row per budgeted category entry associated with the 'January Speaker' event.",
   "column_role": "The budgeted category and the amount budgeted for that category.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms budget.amount is the amount budgeted for a specified category and event, distinguishing it from spent or remaining. Round-1 contract preserved."
+  "meta_review": "Metadata confirms the amount budgeted is the budgeted amount for a specified category and event, distinguishing it from spent or remaining."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

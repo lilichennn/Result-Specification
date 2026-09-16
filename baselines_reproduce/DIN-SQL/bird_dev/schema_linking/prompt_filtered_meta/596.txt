@@ -182,27 +182,25 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table badges, columns = [*,Id,UserId,Name]
-Table comments, columns = [*,Id,UserId,UserDisplayName]
-Table users, columns = [*,Id,DisplayName]
+Table badges, columns = [*,UserId,Name,Date]
+Table comments, columns = [*,Id,UserId]
+Table users, columns = [*,Id]
 Foreign_keys = [badges.UserId = users.Id,comments.UserId = users.Id]
-Sample rows from badges (columns: ["Id", "UserId", "Name"]):
-[[1, 5, "Teacher"], [2, 6, "Teacher"], [3, 8, "Teacher"]]
+Sample rows from badges (columns: ["UserId", "Name", "Date"]):
+[[5, "Teacher", "2010-07-19 19:39:07.0"], [6, "Teacher", "2010-07-19 19:39:07.0"], [8, "Teacher", "2010-07-19 19:39:07.0"]]
 Column descriptions and value descriptions for badges:
-Column Id: column description -> the badge id, value description -> 
 Column UserId: column description -> the unique id of the user, value description -> 
 Column Name: column description -> the badge name the user obtained, value description -> 
-Sample rows from comments (columns: ["Id", "UserId", "UserDisplayName"]):
-[[1, 13, null], [2, 13, null], [3, 13, null]]
+Column Date: column description -> the date that the user obtained the badge, value description -> 
+Sample rows from comments (columns: ["Id", "UserId"]):
+[[1, 13], [2, 13], [3, 13]]
 Column descriptions and value descriptions for comments:
 Column Id: column description -> the comment Id, value description -> 
 Column UserId: column description -> the id of the user who post the comment, value description -> 
-Column UserDisplayName: column description -> user's display name, value description -> 
-Sample rows from users (columns: ["Id", "DisplayName"]):
-[[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
+Sample rows from users (columns: ["Id"]):
+[[-1], [2], [3]]
 Column descriptions and value descriptions for users:
 Column Id: column description -> the user id, value description -> 
-Column DisplayName: column description -> the user's display name, value description -> 
 
 Q: Which users have posted the most comments. List out the user's badge?
 Hint: user with the most comments refers to UserId where Max(Count(Id)

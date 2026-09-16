@@ -251,10 +251,10 @@ Hint: user with over 200 views refers to Views > 200; average number of badges =
 Schema_links: [badges.Id,users.DisplayName,users.Views,badges.UserId = users.Id,200]
 Result Contract:
 {
-  "population": "Users with Views > 200, and the badges obtained by those users; only badges belonging to qualifying users contribute to the computation.",
-  "row_grain": "One global summary row covering the entire eligible user population.",
-  "column_role": "A single numeric value representing the average number of badges per qualifying user.",
-  "derivation": "Divide the count of badges (Count(Id)) obtained by eligible users by the count of eligible users (Count(DisplayName)).",
+  "population": "Users with Views > 200 who have obtained badges, and the badges obtained by those users; only badge-linked qualifying users and their badges participate in the computation.",
+  "row_grain": "One global summary row covering the entire qualifying badge-linked user population.",
+  "column_role": "A single numeric value representing the average number of badges per distinct qualifying user display name.",
+  "derivation": "Divide the total number of badges obtained by qualifying users by the number of distinct user display names represented among those qualifying users.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

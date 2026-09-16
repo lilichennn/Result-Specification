@@ -182,12 +182,11 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table sets, columns = [*,id,code,releaseDate]
+Table sets, columns = [*,code,releaseDate]
 Foreign_keys = []
-Sample rows from sets (columns: ["id", "code", "releaseDate"]):
-[[1, "10E", "2007-07-13"], [2, "2ED", "1993-12-01"], [3, "2XM", "2020-08-07"]]
+Sample rows from sets (columns: ["code", "releaseDate"]):
+[["10E", "2007-07-13"], ["2ED", "1993-12-01"], ["2XM", "2020-08-07"]]
 Column descriptions and value descriptions for sets:
-Column id: column description -> unique id identifying this set, value description -> 
 Column code: column description -> The set code for the set., value description -> 
 Column releaseDate: column description -> The release date in ISO 8601 format for the set., value description -> 
 

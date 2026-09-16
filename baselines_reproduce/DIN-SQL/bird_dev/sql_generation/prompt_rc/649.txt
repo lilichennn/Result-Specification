@@ -251,12 +251,12 @@ Hint:
 Schema_links: [postHistory.Id,posts.LastEditDate,posts.Title,postHistory.PostId = posts.Id,"What is the best introductory Bayesian statistics textbook?"]
 Result Contract:
 {
-  "population": "The post whose title equals \"What is the best introductory Bayesian statistics textbook?\", with only that post's history entries eligible to contribute to the count.",
-  "row_grain": "One summary row for the post with the specified title.",
-  "column_role": "The count of the post's history entries and the post's last edit date.",
-  "derivation": "The history count is the number of post history entries belonging to the post, and the last edit date is the post's recorded last edit date.",
+  "population": "The post history entries associated with the post whose title equals \"What is the best introductory Bayesian statistics textbook?\".",
+  "row_grain": "One row for each qualifying post history entry.",
+  "column_role": "The identifier of each qualifying post history entry and the last edit date of the associated post.",
+  "derivation": "The history entry identifier is a stored per-history-entry value, and the last edit date is the stored post-level date; no aggregate count is derived.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms postHistory rows are per-post history entries and posts.LastEditDate is the post-level last edit date, so the count uses history entries and the date uses the post's stored last edit date."
+  "meta_review": "Metadata supports one row per post history event for the matching post, with the post's stored last edit date accompanying each event; the result is not an aggregated count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -191,8 +191,8 @@ Result Contract:
   "row_grain": "One row per eligible molecule.",
   "column_role": "The molecule identifier.",
   "derivation": "none",
-  "filter_policy": "Limit the output to two molecules; the criterion for choosing which two among the eligible molecules is not specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "No ranking, extrema, or row-count limitation is applied; all eligible molecule identifiers are returned.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

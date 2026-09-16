@@ -187,12 +187,12 @@ Hint: type of bond refers to bond_type; double bond refers to bond_type = ' = ';
 Schema_links: [bond.bond_type,connected.atom_id,connected.atom_id2,connected.bond_id = bond.bond_id,TR000_1,TR000_2]
 Result Contract:
 {
-  "population": "The bond(s) that form a connection between the two atoms identified as TR000_1 and TR000_2.",
-  "row_grain": "One bond connecting atoms TR000_1 and TR000_2.",
-  "column_role": "The type of the bond, expressed as the bond_type value (e.g., single '-', double '=', triple '#').",
+  "population": "The bond(s) that form a connection from atom TR000_1 to atom TR000_2.",
+  "row_grain": "One row for each bond that forms the specified connection from TR000_1 to TR000_2.",
+  "column_role": "The type of the bond, expressed as the bond-type value (e.g., single '-', double '=', triple '#').",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that atom-to-atom connections are represented by connected records referencing a bond, and bond_type is the bond-level type. Round-1 contract preserved."
+  "meta_review": "Metadata confirms that bond type is the bond-level type associated with the specified atom-to-atom connection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

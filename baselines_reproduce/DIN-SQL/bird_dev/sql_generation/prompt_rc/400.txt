@@ -366,12 +366,12 @@ Hint: Spanish refer to language; set code refers to setCode
 Schema_links: [cards.setCode,foreign_data.language,foreign_data.uuid = cards.uuid,Spanish]
 Result Contract:
 {
-  "population": "All cards that have a Spanish-language foreign translation, i.e., cards translated into Spanish.",
-  "row_grain": "One card translated into Spanish.",
-  "column_role": "The card's set printing code, setCode.",
+  "population": "All Spanish-language set translation records.",
+  "row_grain": "One Spanish-language set translation record.",
+  "column_role": "The set code associated with that Spanish translation.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that foreign_data.language records a card's foreign language and cards.setCode records the card's set printing code. This resolves the representation of 'translated into Spanish' and keeps the output owned by the card."
+  "meta_review": "The result semantics are based on a translation record's language and its associated set code, not on card-level foreign-language data."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

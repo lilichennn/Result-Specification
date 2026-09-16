@@ -297,12 +297,12 @@ Hint: German' is the language; reprinted refers to isReprint = 1;
 Schema_links: [cards.id,foreign_data.language,cards.isReprint,foreign_data.uuid = cards.uuid,German,1]
 Result Contract:
 {
-  "population": "Cards that have at least one foreign-language record in German and have isReprint = 1; both conditions must hold for a card to be eligible.",
-  "row_grain": "One global summary row covering all qualifying cards.",
-  "column_role": "The count of qualifying cards.",
-  "derivation": "Count the unique cards in the eligible population.",
+  "population": "Reprinted cards that have a German foreign-language record, considered as card occurrences associated with such German foreign-language records.",
+  "row_grain": "One global summary row covering all qualifying occurrences.",
+  "column_role": "The count of qualifying card occurrences.",
+  "derivation": "Count the matching card occurrences; do not deduplicate cards that have more than one German foreign-language record.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies foreign_data.language as the foreign language of a card, while isReprint is a card-level flag. The contract therefore treats eligibility as cards having a German foreign-language record and counts each qualifying card once."
+  "meta_review": "Metadata identifies foreign language through foreign-language card data and reprint status as a card-level flag. The result counts matching card occurrences with German foreign-language data and reprint status, not necessarily one count per distinct card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

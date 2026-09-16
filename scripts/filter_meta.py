@@ -4,13 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import queue
+import random
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from datetime import datetime
 from pathlib import Path
-from urllib.request import Request, urlopen
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 if str(SCRIPT_DIR.parent) not in sys.path:
@@ -21,12 +20,20 @@ from result_contract.rc.filter import (
     build_filter_messages,
     parse_filter_response,
 )
+from result_contract.rc import MODEL_ALIASES, call_model
 from scripts.generate_rc import _load_instances, _load_metadata
 
 
+INITIAL_CONCURRENCY = 50
+MAX_CONCURRENCY = 2000
+CONCURRENCY_GROWTH_MIN = 40
+CONCURRENCY_GROWTH_MAX = 60
+MAX_ATTEMPTS = 3
+
+
 class Progress:
-    def __init__(self, total: int, results: int):
-        self.total, self.results = total, results
+    def __init__(self, ids: list[str], results: dict):
+        self.ids, self.results = ids, results
         self.prompts = 0
         self.tty = sys.stdout.isatty()
         self.bar = ""
@@ -35,11 +42,20 @@ class Progress:
 
     def tick(self, force: bool = False) -> None:
         now = time.monotonic()
-        if force or now - self.last_update >= 10:
+        if force or now - self.last_update >= 5:
             self.last_update = now
+            success = sum(
+                self.results.get(index, {}).get("status", {}).get("success") is True
+                for index in self.ids
+            )
+            failed = sum(
+                self.results.get(index, {}).get("status", {}).get("success") is False
+                for index in self.ids
+            )
             self.bar = (
-                f"共 {self.total} instance，已完成 {self.prompts} prompt，"
-                f"{self.results} result（含已有成功结果）"
+                f"instances={len(self.ids)} | prompts={self.prompts} | "
+                f"success={success} | fail={failed} | "
+                f"empty={len(self.ids) - success - failed}"
             )
             if self.tty:
                 print("\r\033[2K" + self.bar, end="", flush=True)
@@ -54,37 +70,20 @@ class Progress:
             print(text, flush=True)
 
     def log(self, index: str, stage: str, success: bool, reason: str = "") -> None:
-        label = "success" if success else "failed"
+        label = "success" if success else "fail"
         if self.tty:
             label = ("\033[32m" if success else "\033[31m") + label + "\033[0m"
         suffix = "｜" + " ".join(reason.splitlines()) if reason else ""
         if stage == 'result':
-            self.message(f"{datetime.now():%Y-%m-%d %H:%M:%S}｜{index}｜【{stage}】｜{label}{suffix}")
+            self.message(
+                f"{datetime.now():%Y-%m-%d %H:%M:%S} | INFO | "
+                f"{index:>5} | filter | {label}{suffix}"
+            )
 
     def close(self) -> None:
         self.tick(force=True)
         if self.tty:
             print()
-
-
-class Concurrency:
-    def __init__(self):
-        self.limit = 10
-        self.successes = self.failures = 0
-
-    def observe(self, success: bool) -> None:
-        if success:
-            self.failures = 0
-            self.successes += 1
-            if self.successes == 5:
-                self.limit = min(100, self.limit + 5)
-                self.successes = 0
-        else:
-            self.successes = 0
-            self.failures += 1
-            if self.failures == 3:
-                self.limit = max(5, self.limit - 5)
-                self.failures = 0
 
 
 def save_results(path: Path, results: dict) -> None:
@@ -97,50 +96,22 @@ def failed_record(exc: Exception) -> dict:
     return {"result": None, "status": {"success": False, "reason": f"{type(exc).__name__}: {exc}"}}
 
 
-def model_config(alias: str) -> dict:
-    config = {}
-    path = SCRIPT_DIR.parent / "config" / ".env"
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            key, value = line.split("=", 1)
-            config[key.strip()] = value.strip().strip("\"'")
-    prefix = config.get(alias)
-    if not prefix:
-        raise ValueError(f"Missing model alias in .env: {alias}")
-    for key in (prefix, prefix + "_API_KEY", prefix + "_BASE_URL"):
-        if not config.get(key):
-            raise ValueError(f"Missing model configuration key: {key}")
-    return {
-        "model": config[prefix],
-        "api_key": config[prefix + "_API_KEY"],
-        "url": config[prefix + "_BASE_URL"].rstrip("/") + "/chat/completions",
-    }
-
-
-def call_model(messages: list, config: dict) -> str:
-    request = Request(
-        config["url"],
-        data=json.dumps({"model": config["model"], "messages": messages, "temperature": 0},
-                        ensure_ascii=False).encode("utf-8"),
-        headers={"Authorization": "Bearer " + config["api_key"], "Content-Type": "application/json"},
-    )
-    with urlopen(request, timeout=300) as response:
-        body = json.load(response)
-    return body["choices"][0]["message"]["content"]
-
-
-def request_filter(messages: list, metadata: list, config: dict) -> dict:
-    try:
-        raw = call_model(messages, config)
-        result = apply_filter(metadata, parse_filter_response(raw))
-        return {"result": result, "status": {"success": True, "reason": ""}}
-    except Exception as exc:
-        return failed_record(exc)
+def request_filter(messages: list, metadata: list, llm: str) -> dict:
+    last_error: Exception | None = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            raw = call_model(messages, llm=llm)
+            result = apply_filter(metadata, parse_filter_response(raw))
+            return {"result": result, "status": {"success": True, "reason": ""}}
+        except Exception as exc:
+            last_error = exc
+            if attempt < MAX_ATTEMPTS:
+                time.sleep(attempt)
+    assert last_error is not None
+    return failed_record(last_error)
 
 
 def run(dataset: str, split: str, mode: str | None, llm: str) -> None:
-    config = model_config(llm)
     root = SCRIPT_DIR / f"{dataset}_{split}"
     preprocessed = root / "preprocessed_data"
     instances = _load_instances(preprocessed / f"{dataset}_{split}.json")
@@ -163,7 +134,7 @@ def run(dataset: str, split: str, mode: str | None, llm: str) -> None:
         raise ValueError(f"Expected an instance-indexed JSON object: {output}")
     results = {index: results[index] for index in ids if index in results}
     succeeded = lambda index: results.get(index, {}).get("status", {}).get("success") is True
-    progress = Progress(len(ids), sum(succeeded(index) for index in ids))
+    progress = Progress(ids, results)
     try:
         # Build all prompts before issuing any model requests.
         prompts = {}
@@ -173,9 +144,9 @@ def run(dataset: str, split: str, mode: str | None, llm: str) -> None:
                     record = rc_by_index[index]
                     if record["db_id"] != instance["db_id"]:
                         raise ValueError("RC database does not match instance")
-                    if record.get("round2_status") != "succeeded":
-                        raise ValueError("Round-2 RC is unavailable")
-                    guidance = {"rc": record["rc_round2"]}
+                    if record.get("round3_status") != "succeeded":
+                        raise ValueError("Round-3 RC is unavailable")
+                    guidance = {"rc": record["rc_round3"]}
                     if mode is None:
                         guidance.update(
                             question=instance["question"], evidence=instance["evidence"]
@@ -195,42 +166,57 @@ def run(dataset: str, split: str, mode: str | None, llm: str) -> None:
             progress.tick()
 
         pending = iter(prompts)
-        completed = queue.Queue()
         active = {}
         exhausted = False
-        concurrency = Concurrency()
+        concurrency = INITIAL_CONCURRENCY
+        last_growth = time.monotonic()
         last_report = time.monotonic()
-        progress.message(f"{datetime.now():%Y-%m-%d %H:%M:%S}｜当前并发：10")
-        with ThreadPoolExecutor(max_workers=100) as executor:
+        progress.message(
+            f"{datetime.now():%Y-%m-%d %H:%M:%S} | INFO | "
+            f"current concurrency={concurrency}"
+        )
+        with ThreadPoolExecutor(
+            max_workers=max(1, min(MAX_CONCURRENCY, len(prompts)))
+        ) as executor:
             while active or not exhausted:
-                while not exhausted and len(active) < concurrency.limit:
+                now = time.monotonic()
+                growth_steps = int(now - last_growth)
+                for _ in range(growth_steps):
+                    concurrency = min(
+                        MAX_CONCURRENCY,
+                        concurrency
+                        + random.randint(
+                            CONCURRENCY_GROWTH_MIN,
+                            CONCURRENCY_GROWTH_MAX,
+                        ),
+                    )
+                if growth_steps:
+                    last_growth += growth_steps
+
+                while not exhausted and len(active) < concurrency:
                     index = next(pending, None)
                     if index is None:
                         exhausted = True
                         break
-                    future = executor.submit(request_filter, *prompts[index], config)
+                    future = executor.submit(request_filter, *prompts[index], llm)
                     active[future] = index
-                    future.add_done_callback(completed.put)
                 if not active:
                     break
-                try:
-                    future = completed.get(timeout=1)
-                except queue.Empty:
-                    pass
-                else:
+
+                done, _ = wait(active, timeout=1, return_when=FIRST_COMPLETED)
+                for future in done:
                     index = active.pop(future)
                     record = future.result()
                     results[index] = record
                     save_results(output, results)
                     success = record["status"]["success"]
-                    concurrency.observe(success)
-                    progress.results += int(success)
                     progress.log(index, "result", success, record["status"]["reason"])
                 progress.tick()
-                if time.monotonic() - last_report >= 30:
+                if time.monotonic() - last_report >= 10:
                     last_report = time.monotonic()
                     progress.message(
-                        f"{datetime.now():%Y-%m-%d %H:%M:%S}｜当前并发：{concurrency.limit}，运行中：{len(active)}"
+                        f"{datetime.now():%Y-%m-%d %H:%M:%S} | INFO | "
+                        f"current concurrency={concurrency} | active={len(active)}"
                     )
         save_results(output, results)
     finally:
@@ -246,7 +232,7 @@ def main() -> None:
         choices=("rc", "qh"),
         help="Omit to filter with question, hint, and RC together",
     )
-    parser.add_argument("--llm", required=True, choices=("qwen38", "kimik3", "gpt56", "opus48"))
+    parser.add_argument("--llm", required=True, choices=MODEL_ALIASES)
     args = parser.parse_args()
     for value in (args.dataset, args.split):
         if not value or value in (".", "..") or "/" in value or "\\" in value:

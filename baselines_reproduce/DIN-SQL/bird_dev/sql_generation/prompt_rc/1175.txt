@@ -298,10 +298,10 @@ Result Contract:
 {
   "population": "All patient examinations that have a recorded hemoglobin (HGB) count.",
   "row_grain": "One row representing a single patient examination.",
-  "column_role": "The patient's age at the time of the examination and the doctor's diagnosis recorded for that examination.",
+  "column_role": "The patient's age at the time of the examination and the patient's diagnosis.",
   "derivation": "Patient age is computed as the year of the examination date minus the year of the patient's birth date.",
   "filter_policy": "Select the examination with the highest hemoglobin (HGB) laboratory value (argmax over hemoglobin count); tie handling is unspecified.",
-  "meta_review": "Metadata establishes Laboratory.HGB as the hemoglobin measurement and Examination.Diagnosis as the diagnosis owned by the examination, distinct from Patient.Diagnosis. This refines the metric and diagnosis owners while preserving the examination-level result grain and age formula."
+  "meta_review": "Metadata establishes Laboratory.HGB as the hemoglobin measurement and Patient.Diagnosis as the diagnosis returned for the patient, not Examination.Diagnosis. This corrects the diagnosis owner while preserving the examination-level result grain and age formula."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,24 +183,18 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table frpm, columns = [*,CDSCode,Charter School Number]
-Table schools, columns = [*,CDSCode,School,MailCity,Charter,CharterNum]
+Table schools, columns = [*,CDSCode,MailCity,CharterNum]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
 Sample rows from frpm (columns: ["CDSCode", "Charter School Number"]):
 [["01100170109835", "0728"], ["01100170112607", "0811"], ["01100170118489", "1049"]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column Charter School Number: column description -> Charter School Number, value description -> 
-Sample rows from schools (columns: ["CDSCode", "School", "MailCity", "Charter", "CharterNum"]):
-[["01100170000000", null, "Hayward", null, null], ["01100170109835", "FAME Public Charter", "Newark", 1, "0728"], ["01100170112607", "Envision Academy for Arts & Technology", "Oakland", 1, "0811"]]
+Sample rows from schools (columns: ["CDSCode", "MailCity", "CharterNum"]):
+[["01100170000000", "Hayward", null], ["01100170109835", "Newark", "0728"], ["01100170112607", "Oakland", "0811"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 Column MailCity: column description -> , value description -> The city associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address city. For your convenience we have filled the unpopulated MailCity cells with City data.
-Column Charter: column description -> This field identifies a charter school. , value description -> The field is coded as follows:
-
-·       1 = The school is a charter
-
-·       0 = The school is not a charter
 Column CharterNum: column description -> The charter school number,, value description -> 4-digit number assigned to a charter school.
 
 Q: What is the total number of schools with a mailing city in Hickman belonging to the charter number 00D4?

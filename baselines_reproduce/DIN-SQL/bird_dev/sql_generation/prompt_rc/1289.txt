@@ -296,12 +296,12 @@ Hint: diagnosed with SJS refers to Diagnosis = 'SJS'; normal level of total prot
 Schema_links: [Patient.ID,Patient.Diagnosis,Laboratory.TP,Laboratory.ID = Patient.ID,'SJS',6.0,8.5]
 Result Contract:
 {
-  "population": "Patients with a patient-level diagnosis of SJS (Diagnosis = 'SJS') who have a normal laboratory total protein measurement (TP > 6.0 and TP < 8.5).",
-  "row_grain": "One global summary row for the qualifying patient population.",
-  "column_role": "The number of distinct qualifying patients.",
-  "derivation": "Count distinct patient identities satisfying all population conditions.",
+  "population": "Patient laboratory records for patients with a patient-level diagnosis of SJS (Diagnosis = 'SJS') where the total protein measurement is normal (TP > 6.0 and TP < 8.5).",
+  "row_grain": "One global summary row for the qualifying record population.",
+  "column_role": "The number of qualifying patient laboratory records.",
+  "derivation": "Count the qualifying patient laboratory records satisfying all population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Laboratory.TP is total protein with the normal range used in the evidence, and Patient.Diagnosis is the patient-owned diagnosis attribute. The contract therefore counts distinct patients with patient-level SJS diagnosis and a normal TP measurement."
+  "meta_review": "Metadata confirms TP is total protein with the normal range used in the evidence, and Diagnosis is the patient-level diagnosis attribute. The contract therefore counts matching patient laboratory records rather than distinct patients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

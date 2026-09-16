@@ -299,12 +299,12 @@ Hint: 'President' is a position of Student Club
 Schema_links: [member.member_id,member.position,President]
 Result Contract:
 {
-  "population": "Students represented as member records whose position is 'President' in the student club.",
+  "population": "Member records representing students whose club position is 'President'.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The count of qualifying students.",
-  "derivation": "Count the students in the eligible population.",
+  "column_role": "The count of qualifying member records.",
+  "derivation": "Count the qualifying member records.",
   "filter_policy": "none",
-  "meta_review": "The member.position column is documented as the position the member holds in the club, so 'President' is evaluated as a member attribute. This confirms the eligible population is member records representing students holding that position."
+  "meta_review": "The position is treated as an attribute of club membership, so 'President' is evaluated on member records and the result counts those records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

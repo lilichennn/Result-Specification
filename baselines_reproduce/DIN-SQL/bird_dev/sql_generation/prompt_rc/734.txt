@@ -225,8 +225,8 @@ Hint: Blue Beetle II refers to superhero_name = 'Blue Beetle II'
 Schema_links: [publisher.publisher_name,superhero.superhero_name,superhero.publisher_id = publisher.id,Blue Beetle II]
 Result Contract:
 {
-  "population": "The superhero whose superhero_name is 'Blue Beetle II'.",
-  "row_grain": "One superhero, namely Blue Beetle II.",
+  "population": "The publisher associated with the superhero whose superhero_name is 'Blue Beetle II'.",
+  "row_grain": "One publisher associated with that superhero.",
   "column_role": "The name of the publisher associated with that superhero.",
   "derivation": "none",
   "filter_policy": "none",

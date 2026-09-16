@@ -227,10 +227,10 @@ Result Contract:
 {
   "population": "Superhero records in two separately named target subpopulations: those whose publisher is DC Comics and those whose publisher is Marvel Comics.",
   "row_grain": "One global summary row comparing the two publishers.",
-  "column_role": "The identity of the publisher that created more superheroes, and the numeric difference between the two publishers' superhero counts.",
+  "column_role": "The numeric difference between the DC Comics superhero count and the Marvel Comics superhero count.",
   "derivation": "Count the superhero records published by DC Comics and the superhero records published by Marvel Comics; the difference equals the DC Comics count minus the Marvel Comics count.",
-  "filter_policy": "Argmax over the two publishers: the reported publisher is whichever of DC Comics or Marvel Comics has the larger superhero count.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "No ranking or selection is applied; the signed difference itself reflects which publisher has the larger count.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

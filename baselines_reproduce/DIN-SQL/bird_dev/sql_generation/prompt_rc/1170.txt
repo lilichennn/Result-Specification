@@ -296,12 +296,12 @@ Hint: hadn't undergone a medical examination until at least a year refers to SUB
 Schema_links: [Patient.ID,Examination.Examination Date,Patient.First Date,Examination.ID = Patient.ID,1]
 Result Contract:
 {
-  "population": "Patients whose medical examination occurred at least one year after their initial hospital visit, i.e., year(Examination Date) minus year(First Date) is greater than or equal to 1.",
+  "population": "Patients with a positive admission status who have a medical examination occurring at least one year after their initial hospital visit, i.e., year(Examination Date) minus year(First Date) is greater than or equal to 1.",
   "row_grain": "One global summary row for the entire qualifying patient population.",
   "column_role": "The number of qualifying patients.",
-  "derivation": "Count the patients satisfying the eligibility condition.",
+  "derivation": "Count distinct patients satisfying the eligibility condition.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The qualifying population is restricted to patients with a positive admission status."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

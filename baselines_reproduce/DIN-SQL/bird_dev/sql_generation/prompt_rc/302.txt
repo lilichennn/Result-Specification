@@ -187,12 +187,12 @@ Hint: element = 'cl' means Chlorine; element = 'c' means Carbon; element = 'h' m
 Schema_links: [atom.element,connected.bond_id,connected.atom_id = atom.atom_id,connected.atom_id2 = atom.atom_id,'TR001_2_4']
 Result Contract:
 {
-  "population": "The two endpoint atoms linked by bond TR001_2_4.",
-  "row_grain": "One element name for each endpoint atom of bond TR001_2_4.",
-  "column_role": "The full name of the element of each such atom.",
-  "derivation": "Identify the endpoint atoms of bond TR001_2_4, then translate each atom's element symbol to its full element name using the provided mapping.",
+  "population": "The distinct chemical elements of the atoms connected to bond TR001_2_4.",
+  "row_grain": "One row for each distinct element among the atoms connected to bond TR001_2_4.",
+  "column_role": "The stored element symbol identifying each distinct element.",
+  "derivation": "Find the atoms connected to bond TR001_2_4, take their stored element designations, and return each element only once.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that a bond is represented as a relation between two endpoint atoms, validating the endpoint-atom population and per-atom row grain."
+  "meta_review": "A bond's connected atoms provide the reference, but the result is expressed at the distinct element level rather than reported per endpoint atom."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

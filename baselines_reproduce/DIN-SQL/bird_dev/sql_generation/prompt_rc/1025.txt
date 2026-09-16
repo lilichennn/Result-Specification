@@ -415,12 +415,12 @@ Hint: league that had the most goals refers to MAX(SUM(home_team_goal, away_team
 Schema_links: [League.name,Match.home_team_goal,Match.away_team_goal,Match.season,League.id = Match.league_id,'2015/2016']
 Result Contract:
 {
-  "population": "All leagues, where only matches with season = '2015/2016' contribute goals to each league's total.",
-  "row_grain": "One league, the single league identified as having the most goals.",
+  "population": "Leagues that had matches in the 2015/2016 season, with only those matches contributing goals to each league's total.",
+  "row_grain": "One league, selected as the league with the most total goals.",
   "column_role": "The name of the league.",
-  "derivation": "For each league, total goals are the sum of home_team_goal plus away_team_goal over that league's contributing matches.",
-  "filter_policy": "Select the league whose total goals are maximal (argmax).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "For each league, total goals are the sum of home goals plus away goals over its matches in the 2015/2016 season.",
+  "filter_policy": "Select one league whose total goals are maximal.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

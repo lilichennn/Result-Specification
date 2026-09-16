@@ -248,12 +248,12 @@ Hint: Increase rate of his/her account balance = [(balance of date A - balance o
 Schema_links: [loan.date,trans.date,trans.balance,loan.account_id = account.account_id,trans.account_id = account.account_id,'1993-07-05','1993-03-22','1998-12-27']
 Result Contract:
 {
-  "population": "Clients who own the account for which a loan was approved on 1993/7/5.",
-  "row_grain": "One row for the single selected client.",
-  "column_role": "The increase rate of the selected client's account balance, expressed as a percentage.",
-  "derivation": "Increase rate = (account balance on 1998/12/27 - account balance on 1993/3/22) / account balance on 1993/3/22 * 100%; each date's account balance is the balance recorded after transactions for the selected account on that date, with selection among multiple same-date transaction balances not resolved.",
-  "filter_policy": "Select the client whose loan approval on 1993/7/5 was first; loan approval is recorded only as a date, so if multiple loans are approved on that date, the criterion for choosing the first is not resolved; no further ordering or limit.",
-  "meta_review": "Metadata establishes that loans are account-level, the borrowing client is the account-owner disposition, and account balance is recorded as balance after transaction. It also shows loan approval is a date-only attribute, so no metadata-supported ordering exists among multiple approvals on 1993/7/5."
+  "population": "Account-balance records for accounts associated with a loan approved on 1993/7/5; the result is computed over all such qualifying accounts rather than over a uniquely selected client.",
+  "row_grain": "One global row containing a single increase-rate value.",
+  "column_role": "Only the increase rate of the qualifying account balance from 1993/3/22 to 1998/12/27 is returned; no client, account, loan, or individual balance is returned as a separate output.",
+  "derivation": "The balance amount for each date is the sum of the balance values of all qualifying account-balance records on that date. The increase rate is (summed balance on 1998/12/27 - summed balance on 1993/3/22) divided by summed balance on 1993/3/22, multiplied by 100%.",
+  "filter_policy": "No first-loan, earliest-loan, ranking, or limit is applied. All accounts linked to loans approved on 1993/7/5 qualify, and if there are multiple qualifying loans or accounts, their associated balance records are combined rather than one being selected.",
+  "meta_review": "Loans are account-level and balances are available through account transaction records, but the result does not use account-owner disposition or a first-approval tie-break. It treats all loan approvals on the specified date as jointly qualifying and aggregates the corresponding date balances."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

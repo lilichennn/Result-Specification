@@ -187,8 +187,8 @@ Hint: TR002 is the molecule id
 Schema_links: [atom.element,bond.bond_type,molecule.molecule_id,atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,TR002]
 Result Contract:
 {
-  "population": "Only the molecule whose molecule ID is TR002, and only the elements and bond types included in that molecule.",
-  "row_grain": "One row per element and bond type combination included in molecule TR002.",
+  "population": "Only element and bond type combinations included in the molecule whose molecule ID is TR002.",
+  "row_grain": "One row per distinct element and bond type combination included in molecule TR002.",
   "column_role": "The element and the bond type, both as they occur within molecule TR002.",
   "derivation": "none",
   "filter_policy": "none",

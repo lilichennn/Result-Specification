@@ -248,12 +248,12 @@ Hint: Negative balance means balance < 0; Operation = 'VYBER KARTOU' stands for 
 Schema_links: [account.account_id,account.frequency,trans.operation,trans.balance,trans.account_id = account.account_id,'VYBER KARTOU','POPLATEK MESICNE',0]
 Result Contract:
 {
-  "population": "Accounts with monthly issuance (frequency = 'POPLATEK MESICNE') for which there exists at least one credit card withdrawal (operation = 'VYBER KARTOU') after which the balance is negative (balance < 0).",
-  "row_grain": "One global summary row representing the total over all qualifying accounts.",
-  "column_role": "A single value: the number of qualifying accounts.",
-  "derivation": "Count the accounts in the eligible population, where eligibility requires a credit card withdrawal whose resulting balance is below zero.",
+  "population": "Credit card withdrawal transactions with a negative balance that are associated with accounts having monthly issuance.",
+  "row_grain": "One global summary row representing the total over all qualifying withdrawal transactions.",
+  "column_role": "A single value: the number of qualifying credit card withdrawal transactions.",
+  "derivation": "Count each qualifying withdrawal transaction separately; an account with multiple qualifying withdrawals contributes multiple times.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a non-deduplicated count of qualifying withdrawal transactions, not a distinct account count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -1,0 +1,195 @@
+[SYSTEM]
+
+For the given question, use the provided tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+Hint helps you to write the correct sqlite SQL query.
+Use the following instructions for fixing the sqlite SQL query:
+1) Avoid redundant columns in SELECT clause, all of the columns should be mentioned in the question.
+2) Pay attention to the columns that are used for the JOIN by checking the Foreign keys.
+3) Pay attention to the columns that are used for the WHERE statement.
+4) Pay attention to the columns that are used for the GROUP BY statement.
+5) Pay attention to the columns that are used for the ORDER BY statement.
+6) check that all of the columns exist in the table and there are no typos.
+7) Use CAST when is needed.
+8) USE CASE WHEN is needed.
+###
+Few examples of this task are:
+###
+Schema of the database with sample rows and column descriptions:
+#
+CREATE TABLE movies (
+        movie_id INTEGER NOT NULL, 
+        movie_title TEXT, 
+        movie_release_year INTEGER, 
+        movie_url TEXT, 
+        movie_title_language TEXT, 
+        movie_popularity INTEGER, 
+        movie_image_url TEXT, 
+        director_id TEXT, 
+        director_name TEXT, 
+        director_url TEXT, 
+        PRIMARY KEY (movie_id)
+)
+
+/*
+3 rows from movies table:
+movie_id        movie_title     movie_release_year      movie_url       movie_title_language    movie_popularity        movie_image_url director_id     director_namedirector_url
+1       La Antena       2007    http://mubi.com/films/la-antena en      105     https://images.mubicdn.net/images/film/1/cache-7927-1581389497/image-w1280.jpg  131  Esteban Sapir    http://mubi.com/cast/esteban-sapir
+2       Elementary Particles    2006    http://mubi.com/films/elementary-particles      en      23      https://images.mubicdn.net/images/film/2/cache-512179-1581389841/image-w1280.jpg      73      Oskar Roehler   http://mubi.com/cast/oskar-roehler
+3       It's Winter     2006    http://mubi.com/films/its-winter        en      21      https://images.mubicdn.net/images/film/3/cache-7929-1481539519/image-w1280.jpg82      Rafi Pitts      http://mubi.com/cast/rafi-pitts
+*/
+
+Table: movies
+Column movie_id: column description -> ID related to the movie on Mubi
+Column movie_title: column description -> Name of the movie
+Column movie_release_year: column description -> Release year of the movie
+Column movie_url: column description -> URL to the movie page on Mubi
+Column movie_title_language: column description -> By default, the title is in English., value description -> Only contains one value which is 'en'
+Column movie_popularity: column description -> Number of Mubi users who love this movie
+Column movie_image_url: column description -> Image URL to the movie on Mubi
+Column director_id: column description -> ID related to the movie director on Mubi
+Column director_name: column description -> Full Name of the movie director
+Column director_url : column description -> URL to the movie director page on Mubi
+#
+Q: Name movie titles released in year 1945. Sort the listing by the descending order of movie popularity.
+Hint: released in the year 1945 refers to movie_release_year = 1945;
+SQL: SELECT movie_title, movie_popularity FROM movies WHERE movie_release_year = 1945/01/01 ORDER BY movie_popularity DESC LIMIT 1
+A: Let's think step by step to find the correct answer.
+1) The column movie_popularity is not mentioned in the question so it's redundant.
+2) JOIN is not required as there is no need to join any tables.
+3) The condition movie_release_year = 1945/01/01 is not correct. The correct condition is movie_release_year = 1945.
+4) GROUP BY is not required as there is no need to group any columns.
+5) The ORDER BY clause is correct.
+6) all columns are correct and there are no typo errors.
+7) CAST is not required as there is no need to cast any columns.
+8) CASE is not required as there is no need to use CASE.
+So, the final sqlite SQL query answer to the question the given question is =
+Revised_SQL: SELECT movie_title FROM movies WHERE movie_release_year = 1945 ORDER BY movie_popularity DESC LIMIT 1
+
+
+[USER]
+
+Evaluate the correctness of this query for the given question.
+Hint helps you to write the correct SQL query.
+Correct it if there are any issues. If there are no issues, return the SQLite SQL QUERY as is.
+Schema of the database with sample rows and column descriptions:
+#
+Table badges, columns = [*,Id,UserId,Name,Date]
+Table comments, columns = [*,Id,PostId,Score,Text,CreationDate,UserId,UserDisplayName]
+Table postHistory, columns = [*,Id,PostHistoryTypeId,PostId,RevisionGUID,CreationDate,UserId,Text,Comment,UserDisplayName]
+Table postLinks, columns = [*,Id,CreationDate,PostId,RelatedPostId,LinkTypeId]
+Table posts, columns = [*,Id,PostTypeId,AcceptedAnswerId,CreaionDate,Score,ViewCount,Body,OwnerUserId,LasActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,LastEditorUserId,LastEditDate,CommunityOwnedDate,ParentId,ClosedDate,OwnerDisplayName,LastEditorDisplayName]
+Table tags, columns = [*,Id,TagName,Count,ExcerptPostId,WikiPostId]
+Table users, columns = [*,Id,Reputation,CreationDate,DisplayName,LastAccessDate,WebsiteUrl,Location,AboutMe,Views,UpVotes,DownVotes,AccountId,Age,ProfileImageUrl]
+Table votes, columns = [*,Id,PostId,VoteTypeId,CreationDate,UserId,BountyAmount]
+Foreign_keys = [badges.UserId = users.Id,comments.UserId = users.Id,comments.PostId = posts.Id,postHistory.UserId = users.Id,postHistory.PostId = posts.Id,postLinks.RelatedPostId = posts.Id,postLinks.PostId = posts.Id,posts.ParentId = posts.Id,posts.OwnerUserId = users.Id,posts.LastEditorUserId = users.Id,tags.ExcerptPostId = posts.Id,votes.UserId = users.Id,votes.PostId = posts.Id]
+Sample rows from badges (columns: ["Id", "UserId", "Name", "Date"]):
+[[1, 5, "Teacher", "2010-07-19 19:39:07.0"], [2, 6, "Teacher", "2010-07-19 19:39:07.0"], [3, 8, "Teacher", "2010-07-19 19:39:07.0"]]
+Column descriptions and value descriptions for badges:
+Column Id: column description -> the badge id, value description -> 
+Column UserId: column description -> the unique id of the user, value description -> 
+Column Name: column description -> the badge name the user obtained, value description -> 
+Column Date: column description -> the date that the user obtained the badge, value description -> 
+Sample rows from comments (columns: ["Id", "PostId", "Score", "Text", "CreationDate", "UserId", "UserDisplayName"]):
+[[1, 3, 5, "Could be a poster child fo argumentative and subjective.  At the least, need to define 'valuable'.", "2010-07-19 19:15:52.0", 13, null], [2, 5, 0, "Yes, R is nice- but WHY is it 'valuable'.", "2010-07-19 19:16:14.0", 13, null], [3, 9, 0, "Again- why?  How would I convince my boss to use this over, say, Excel.", "2010-07-19 19:18:54.0", 13, null]]
+Column descriptions and value descriptions for comments:
+Column Id: column description -> the comment Id, value description -> 
+Column PostId: column description -> the unique id of the post, value description -> 
+Column Score: column description -> rating score, value description -> commonsense evidence:
+The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. 
+Column Text: column description -> the detailed content of the comment, value description -> 
+Column CreationDate: column description -> the creation date of the comment, value description -> 
+Column UserId: column description -> the id of the user who post the comment, value description -> 
+Column UserDisplayName: column description -> user's display name, value description -> 
+Sample rows from postHistory (columns: ["Id", "PostHistoryTypeId", "PostId", "RevisionGUID", "CreationDate", "UserId", "Text", "Comment", "UserDisplayName"]):
+[[1, 2, 1, "e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69", "2010-07-19 19:12:12.0", 8, "How should I elicit prior distributions from experts when fitting a Bayesian model?", "", ""], [2, 1, 1, "e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69", "2010-07-19 19:12:12.0", 8, "Eliciting priors from experts", "", ""], [3, 3, 1, "e58bf7fd-e60f-4c58-a6e4-dfc91cf98a69", "2010-07-19 19:12:12.0", 8, "<bayesian><prior><elicitation>", "", ""]]
+Column descriptions and value descriptions for postHistory:
+Column Id: column description -> the post history id, value description -> 
+Column PostHistoryTypeId: column description -> the id of the post history type, value description -> 
+Column PostId: column description -> the unique id of the post, value description -> 
+Column RevisionGUID: column description -> the revision globally unique id of the post, value description -> 
+Column CreationDate: column description -> the creation date of the post, value description -> 
+Column UserId: column description -> the user who post the post, value description -> 
+Column Text: column description -> the detailed content of the post, value description -> 
+Column Comment: column description -> comments of the post, value description -> 
+Column UserDisplayName: column description -> user's display name, value description -> 
+Sample rows from postLinks (columns: ["Id", "CreationDate", "PostId", "RelatedPostId", "LinkTypeId"]):
+[[108, "2010-07-21 14:47:33.0", 395, 173, 1], [145, "2010-07-23 16:30:41.0", 548, 539, 1], [217, "2010-07-26 20:12:15.0", 375, 30, 1]]
+Column descriptions and value descriptions for postLinks:
+Column Id: column description -> the post link id, value description -> 
+Column CreationDate: column description -> the creation date of the post link, value description -> 
+Column PostId: column description -> the post id, value description -> 
+Column RelatedPostId: column description -> the id of the related post, value description -> 
+Column LinkTypeId: column description -> the id of the link type, value description -> 
+Sample rows from posts (columns: ["Id", "PostTypeId", "AcceptedAnswerId", "CreaionDate", "Score", "ViewCount", "Body", "OwnerUserId", "LasActivityDate", "Title", "Tags", "AnswerCount", "CommentCount", "FavoriteCount", "LastEditorUserId", "LastEditDate", "CommunityOwnedDate", "ParentId", "ClosedDate", "OwnerDisplayName", "LastEditorDisplayName"]):
+[[1, 1, 15, "2010-07-19 19:12:12.0", 23, 1278, "<p>How should I elicit prior distributions from experts when fitting a Bayesian model?</p>\n", 8, "2010-09-15 21:08:26.0", "Eliciting priors from experts", "<bayesian><prior><elicitation>", 5, 1, 14, null, null, null, null, null, null, null], [2, 1, 59, "2010-07-19 19:12:57.0", 22, 8198, "<p>In many different statistical methods there is an \"assumption of normality\".  What is \"normality\" and how do I know if there is normality?</p>\n", 24, "2012-11-12 09:21:54.0", "What is normality?", "<distributions><normality>", 7, 1, 8, 88, "2010-08-07 17:56:44.0", null, null, null, null, null], [3, 1, 5, "2010-07-19 19:13:28.0", 54, 3613, "<p>What are some valuable Statistical Analysis open source projects available right now?</p>\n\n<p>Edit: as pointed out by Sharpie, valuable could mean helping you get things done faster or more cheaply.</p>\n", 18, "2013-05-27 14:48:36.0", "What are some valuable Statistical Analysis open source projects?", "<software><open-source>", 19, 4, 36, 183, "2011-02-12 05:50:03.0", "2010-07-19 19:13:28.0", null, null, null, null]]
+Column descriptions and value descriptions for posts:
+Column Id: column description -> the post id, value description -> 
+Column PostTypeId: column description -> the id of the post type, value description -> 
+Column AcceptedAnswerId: column description -> the accepted answer id of the post , value description -> 
+Column CreaionDate: column description -> the creation date of the post, value description -> 
+Column Score: column description -> the score of the post, value description -> 
+Column ViewCount: column description -> the view count of the post, value description -> commonsense evidence:
+Higher view count means the post has higher popularity
+Column Body: column description -> the body of the post, value description -> 
+Column OwnerUserId: column description -> the id of the owner user, value description -> 
+Column LasActivityDate: column description -> the last activity date, value description -> 
+Column Title: column description -> the title of the post, value description -> 
+Column Tags: column description -> the tag of the post, value description -> 
+Column AnswerCount: column description -> the total number of answers of the post, value description -> 
+Column CommentCount: column description -> the total number of comments of the post, value description -> 
+Column FavoriteCount: column description -> the total number of favorites of the post, value description -> commonsense evidence:
+more favorite count refers to more valuable posts. 
+Column LastEditorUserId: column description -> the id of the last editor, value description -> 
+Column LastEditDate: column description -> the last edit date, value description -> 
+Column CommunityOwnedDate: column description -> the community owned date, value description -> 
+Column ParentId: column description -> the id of the parent post, value description -> commonsense evidence:
+If the parent id is null, the post is the root post. Otherwise, the post is the child post of other post. 
+Column ClosedDate: column description -> the closed date of the post, value description -> commonsense evidence:
+if ClosedDate is null or empty, it means this post is not well-finished
+if CloseDate is not null or empty, it means this post has well-finished.
+Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 
+Column LastEditorDisplayName: column description -> the display name of the last editor, value description -> 
+Sample rows from tags (columns: ["Id", "TagName", "Count", "ExcerptPostId", "WikiPostId"]):
+[[1, "bayesian", 1342, 20258, 20257], [2, "prior", 168, 62158, 62157], [3, "elicitation", 6, null, null]]
+Column descriptions and value descriptions for tags:
+Column Id: column description -> the tag id, value description -> 
+Column TagName: column description -> the name of the tag, value description -> 
+Column Count: column description -> the count of posts that contain this tag, value description -> more counts --> this tag is more popular
+Column ExcerptPostId: column description -> the excerpt post id of the tag, value description -> 
+Column WikiPostId: column description -> the wiki post id of the tag, value description -> 
+Sample rows from users (columns: ["Id", "Reputation", "CreationDate", "DisplayName", "LastAccessDate", "WebsiteUrl", "Location", "AboutMe", "Views", "UpVotes", "DownVotes", "AccountId", "Age", "ProfileImageUrl"]):
+[[-1, 1, "2010-07-19 06:55:26.0", "Community", "2010-07-19 06:55:26.0", "http://meta.stackexchange.com/", "on the server farm", "<p>Hi, I'm not really a person.</p>\n\n<p>I'm a background process that helps keep this site clean!</p>\n\n<p>I do things like</p>\n\n<ul>\n<li>Randomly poke old unanswered questions every hour so they get some attention</li>\n<li>Own community questions and answers so nobody gets unnecessary reputation from them</li>\n<li>Own downvotes on spam/evil posts that get permanently deleted</li>\n<li>Own suggested edits from anonymous users</li>\n<li><a href=\"http://meta.stackexchange.com/a/92006\">Remove abandoned questions</a></li>\n</ul>\n", 0, 5007, 1920, -1, null, null], [2, 101, "2010-07-19 14:01:36.0", "Geoff Dalgas", "2013-11-12 22:07:23.0", "http://stackoverflow.com", "Corvallis, OR", "<p>Developer on the StackOverflow team.  Find me on</p>\n\n<p><a href=\"http://www.twitter.com/SuperDalgas\" rel=\"nofollow\">Twitter</a>\n<br><br>\n<a href=\"http://blog.stackoverflow.com/2009/05/welcome-stack-overflow-valued-associate-00003/\">Stack Overflow Valued Associate #00003</a></p>\n", 25, 3, 0, 2, 37, null], [3, 101, "2010-07-19 15:34:50.0", "Jarrod Dixon", "2014-08-08 06:42:58.0", "http://stackoverflow.com", "New York, NY", "<p><a href=\"http://blog.stackoverflow.com/2009/01/welcome-stack-overflow-valued-associate-00002/\">Developer on the Stack Overflow team</a>.</p>\n\n<p>Was dubbed <strong>SALTY SAILOR</strong> by Jeff Atwood, as filth and flarn would oft-times fly when dealing with a particularly nasty bug!</p>\n\n<ul>\n<li>Twitter me: <a href=\"http://twitter.com/jarrod_dixon\" rel=\"nofollow\">jarrod_dixon</a></li>\n<li>Email me: jarrod.m.dixon@gmail.com</li>\n</ul>\n", 22, 19, 0, 3, 35, null]]
+Column descriptions and value descriptions for users:
+Column Id: column description -> the user id, value description -> 
+Column Reputation: column description -> the user's reputation, value description -> commonsense evidence:
+The user with higher reputation has more influence. 
+Column CreationDate: column description -> the creation date of the user account, value description -> 
+Column DisplayName: column description -> the user's display name, value description -> 
+Column LastAccessDate: column description -> the last access date of the user account, value description -> 
+Column WebsiteUrl: column description -> the website url of the user account, value description -> 
+Column Location: column description -> user's location, value description -> 
+Column AboutMe: column description -> the self introduction of the user, value description -> 
+Column Views: column description -> the number of views , value description -> 
+Column UpVotes: column description -> the number of upvotes, value description -> 
+Column DownVotes: column description -> the number of downvotes, value description -> 
+Column AccountId: column description -> the unique id of the account, value description -> 
+Column Age: column description -> user's age, value description ->  teenager: 13-18
+ adult: 19-65
+ elder: > 65
+Column ProfileImageUrl: column description -> the profile image url, value description -> 
+Sample rows from votes (columns: ["Id", "PostId", "VoteTypeId", "CreationDate", "UserId", "BountyAmount"]):
+[[1, 3, 2, "2010-07-19", null, null], [2, 2, 2, "2010-07-19", null, null], [3, 5, 2, "2010-07-19", null, null]]
+Column descriptions and value descriptions for votes:
+Column Id: column description -> the vote id, value description -> 
+Column PostId: column description -> the id of the post that is voted, value description -> 
+Column VoteTypeId: column description -> the id of the vote type, value description -> 
+Column CreationDate: column description -> the creation date of the vote, value description -> 
+Column UserId: column description -> the id of the voter, value description -> 
+Column BountyAmount: column description -> the amount of bounty, value description -> 
+
+
+#
+Q: What are the titles of the top 5 posts with the highest popularity?
+Hint: Higher view count means the post has higher popularity; the highest popularity refers to MAX(ViewCount);
+SQL: SELECT Title FROM posts ORDER BY ViewCount DESC LIMIT 5
+A: Let's think step by step to find the correct answer.

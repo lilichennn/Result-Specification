@@ -187,12 +187,12 @@ Hint: double type bond refers to bond_type = '=';
 Schema_links: [atom.element,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'=']
 Result Contract:
 {
-  "population": "Chemical elements of atoms that appear as either endpoint of at least one bond whose bond type is double (bond_type = '=').",
-  "row_grain": "One element.",
-  "column_role": "The chemical element value (element code) for each element that appears in a double bond.",
+  "population": "Chemical elements of atoms that appear as an endpoint of at least one bond and belong to a molecule that contains at least one double bond (bond_type = '=').",
+  "row_grain": "One row per distinct chemical element.",
+  "column_role": "The chemical element value (element code) for each distinct qualifying element.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata shows that connected records both atom endpoints of a bond and atom.element stores chemical-element codes, while bond.bond_type '=' identifies double bonds. This resolves that qualifying results are element codes from atoms on either side of double bonds."
+  "filter_policy": "Duplicate element values are eliminated, so each qualifying element appears once.",
+  "meta_review": "Metadata shows that connection records identify atom endpoints and atom element values store chemical-element codes, while bond type '=' identifies double bonds. This resolves that qualifying results are element codes from connected atoms in molecules containing double bonds, without requiring the atom to be an endpoint of a double bond."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

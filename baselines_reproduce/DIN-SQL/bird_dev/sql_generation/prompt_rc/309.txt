@@ -187,12 +187,12 @@ Hint:
 Schema_links: [atom.atom_id,atom.molecule_id,bond.bond_type,bond.molecule_id,atom.molecule_id = molecule.molecule_id,bond.molecule_id = molecule.molecule_id,TR346]
 Result Contract:
 {
-  "population": "Atoms that belong to the molecule TR346, and, for the bond-type count, the bonds associated with molecule TR346.",
-  "row_grain": "One row per atom belonging to molecule TR346.",
-  "column_role": "The atom's id and the number of distinct bond types created by molecule TR346 (a molecule-level value accompanying each listed atom).",
-  "derivation": "Count the distinct bond types among the bonds of molecule TR346.",
+  "population": "Atoms belonging to molecule TR000, together with the distinct bond types represented among the bonds of molecule TR000.",
+  "row_grain": "One row for each atom of molecule TR000 paired with each distinct bond type represented among that molecule's bonds.",
+  "column_role": "The atom identifier, the molecule identifier, and the count of distinct bond types for that atom-and-bond-type combination.",
+  "derivation": "Count distinct bond types within the scope of each atom-and-bond-type combination, rather than computing a single molecule-wide total.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -296,12 +296,12 @@ Hint: examinations done after 1997/1/1 refers to `Examination Date` > '1997-01-0
 Schema_links: [Examination.`Examination Date`,Examination.ID,Laboratory.APTT,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,'1997-01-01',45]
 Result Contract:
 {
-  "population": "Examinations with Examination Date > '1997-01-01' whose associated activated partial prothrombin time (APTT) laboratory result is abnormal, where normal is defined as APTT < 45, so the qualifying result is APTT >= 45.",
-  "row_grain": "One global summary row covering all qualifying examinations.",
-  "column_role": "The count of qualifying examinations.",
-  "derivation": "Count the examinations in the eligible population.",
+  "population": "Laboratory examination results dated after 1997-01-01 whose activated partial prothrombin time (APTT) result is abnormal, where normal is defined as APTT < 45, so the qualifying result is APTT >= 45.",
+  "row_grain": "One global summary row covering all qualifying laboratory examination results.",
+  "column_role": "The count of qualifying laboratory examination results.",
+  "derivation": "Count the qualifying laboratory examination results.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies APTT as Laboratory.APTT, an activated partial prothrombin time measurement with normal range < 45. This validates treating the qualifying result as an associated laboratory APTT >= 45 for examinations dated after 1997-01-01."
+  "meta_review": "APTT is the activated partial prothrombin time measurement, with normal range < 45, so the requested abnormal result corresponds to APTT >= 45. The relevant date is the date of the laboratory examination."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

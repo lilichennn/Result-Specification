@@ -484,12 +484,12 @@ Hint: preferred foot when attacking was the left refers to preferred_foot = 'lef
 Schema_links: [Player_Attributes.player_api_id,Player_Attributes.preferred_foot,Player_Attributes.attacking_work_rate,left,low]
 Result Contract:
 {
-  "population": "Players whose preferred foot when attacking is the left foot (preferred_foot = 'left') and who would remain in their position when the team attacked (attacking_work_rate = 'low'); both conditions must hold.",
-  "row_grain": "One global summary row for the entire qualifying player population.",
-  "column_role": "The count of qualifying players.",
-  "derivation": "Count the players satisfying both population conditions.",
+  "population": "Player attribute entries whose preferred foot when attacking is the left foot and whose attacking work rate indicates the player would remain in position when the team attacked; both conditions must hold.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "The count of qualifying player attribute entries.",
+  "derivation": "Count the qualifying player attribute entries satisfying both population conditions, without deduplicating by player.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a non-deduplicated count of qualifying entries rather than a count of distinct players."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

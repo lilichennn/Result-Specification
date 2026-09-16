@@ -421,12 +421,12 @@ Hint:
 Schema_links: [schools.CDSCode,schools.DOCType,schools.StatusType,schools.ClosedDate,schools.City,'Community College District','Closed','1989','San Francisco']
 Result Contract:
 {
-  "population": "All closure records whose closure category is Community College District, occurring in the year 1989, and located in the city of San Francisco.",
+  "population": "All school closure records dated in 1989, located in San Francisco, whose type is Community College District.",
   "row_grain": "One global summary row covering all qualifying closure records.",
-  "column_role": "The total amount of the qualifying Community College District closures.",
-  "derivation": "Sum the closure amount over all records in the eligible population.",
+  "column_role": "The total count of the qualifying Community College District closures.",
+  "derivation": "Count the eligible school closure records; no summation of an amount is performed.",
   "filter_policy": "none",
-  "meta_review": "The complete catalog contains no closure-amount metric or Community College District closure category, so the requested total amount is unsupported. Round-1 semantics are preserved as a conflict."
+  "meta_review": "The requested total is operationalized as a count of qualifying closures rather than a summed monetary amount."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

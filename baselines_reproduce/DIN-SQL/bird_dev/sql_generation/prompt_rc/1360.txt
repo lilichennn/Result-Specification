@@ -233,9 +233,9 @@ Result Contract:
   "population": "Budget records for the event 'November Speaker', with the target subset being those records whose category is 'Parking' and the reference set being all records for that event.",
   "row_grain": "One global summary row representing the single requested percentage.",
   "column_role": "The percentage that the Parking budget represents relative to the total budget for the 'November Speaker' event.",
-  "derivation": "Compute 100 times the sum of amounts over 'November Speaker' records with category 'Parking' divided by the count of all 'November Speaker' records, as specified by the evidence formula.",
+  "derivation": "Compute 100 times the sum of amounts over 'November Speaker' budget records with category 'Parking' divided by the sum of amounts over all 'November Speaker' budget records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

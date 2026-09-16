@@ -251,12 +251,12 @@ Hint: the youngest user refers to MIN(Age); first post refers to MIN(CreaionDate
 Schema_links: [users.Age,posts.CreaionDate,users.Id = posts.OwnerUserId]
 Result Contract:
 {
-  "population": "All users constitute the candidate set from which the youngest user is determined; no Boolean eligibility condition restricts them.",
-  "row_grain": "One global summary row representing the single requested date.",
-  "column_role": "The date of the youngest user's first post.",
-  "derivation": "The earliest post creation date, i.e., the minimum CreaionDate across all posts made by the selected user.",
-  "filter_policy": "Select the user with the minimum age (argmin over Age); tie handling is unspecified.",
-  "meta_review": "Metadata confirms posts.CreaionDate is the post creation date, distinguishing it from comment or history dates; therefore the first-post date is the minimum CreaionDate among the selected user's posts."
+  "population": "Users with a recorded age who have made at least one post; the returned date is drawn from those posts.",
+  "row_grain": "One global row representing the single requested date.",
+  "column_role": "The creation date of the selected first post.",
+  "derivation": "The returned value is a stored post creation date selected as the earliest qualifying post date, not an aggregate computed over all posts.",
+  "filter_policy": "Among users with a recorded age and at least one post, choose the youngest age group; if several users share that age, choose the earliest post creation date among them, and return only that first date.",
+  "meta_review": "Metadata confirms the post creation date, rather than comment or history dates, identifies when a post was made; therefore the first-post date is the earliest post creation date for the selected youngest user."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

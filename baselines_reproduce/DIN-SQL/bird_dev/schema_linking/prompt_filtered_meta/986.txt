@@ -182,23 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table lapTimes, columns = [*,raceId,lap,time,milliseconds]
-Table races, columns = [*,raceId,year,round,name]
-Foreign_keys = [lapTimes.raceId = races.raceId]
-Sample rows from lapTimes (columns: ["raceId", "lap", "time", "milliseconds"]):
-[[1, 1, "1:49.088", 109088], [1, 2, "1:33.740", 93740], [1, 3, "1:31.600", 91600]]
+Table lapTimes, columns = [*,lap,time,milliseconds]
+Foreign_keys = []
+Sample rows from lapTimes (columns: ["lap", "time", "milliseconds"]):
+[[1, "1:49.088", 109088], [2, "1:33.740", 93740], [3, "1:31.600", 91600]]
 Column descriptions and value descriptions for lapTimes:
-Column raceId: column description -> , value description -> 
 Column lap: column description -> , value description -> 
 Column time: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "round", "name"]):
-[[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 3, "Chinese Grand Prix"]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
-Column year: column description -> , value description -> 
-Column round: column description -> , value description -> 
-Column name: column description -> , value description -> 
 
 Q: In which race did the fastest 1st lap time was recorded? Please indicate the time in milliseconds.
 Hint: fastest refers to Min(time);

@@ -321,7 +321,7 @@ Schema_links: [users.Reputation,users.Views,users.DisplayName,'Jarrod Dixon']
 Result Contract:
 {
   "population": "Users whose display name is 'Jarrod Dixon'.",
-  "row_grain": "One user matching the given display name.",
+  "row_grain": "One row per user whose display name is 'Jarrod Dixon'.",
   "column_role": "The user's reputation value and the user's view count value.",
   "derivation": "none",
   "filter_policy": "none",

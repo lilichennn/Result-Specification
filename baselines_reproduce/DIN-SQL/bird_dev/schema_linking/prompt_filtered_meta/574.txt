@@ -182,12 +182,11 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table users, columns = [*,Id,DisplayName,WebsiteUrl]
+Table users, columns = [*,DisplayName,WebsiteUrl]
 Foreign_keys = []
-Sample rows from users (columns: ["Id", "DisplayName", "WebsiteUrl"]):
-[[-1, "Community", "http://meta.stackexchange.com/"], [2, "Geoff Dalgas", "http://stackoverflow.com"], [3, "Jarrod Dixon", "http://stackoverflow.com"]]
+Sample rows from users (columns: ["DisplayName", "WebsiteUrl"]):
+[["Community", "http://meta.stackexchange.com/"], ["Geoff Dalgas", "http://stackoverflow.com"], ["Jarrod Dixon", "http://stackoverflow.com"]]
 Column descriptions and value descriptions for users:
-Column Id: column description -> the user id, value description -> 
 Column DisplayName: column description -> the user's display name, value description -> 
 Column WebsiteUrl: column description -> the website url of the user account, value description -> 
 

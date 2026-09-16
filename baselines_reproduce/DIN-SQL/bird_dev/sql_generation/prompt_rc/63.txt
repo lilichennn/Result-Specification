@@ -421,10 +421,10 @@ Hint: Chartered schools refer to Charter = 1 in the table schools; Full name ref
 Schema_links: [schools.Charter,schools.CharterNum,schools.AdmFName1,schools.AdmLName1,schools.School,schools.City,1,'00D2']
 Result Contract:
 {
-  "population": "Administrators associated with schools that are chartered (Charter = 1) and have charter number '00D2'.",
+  "population": "Administrators listed for schools that are chartered (Charter = 1) and have charter number '00D2'.",
   "row_grain": "One administrator at a qualifying school.",
-  "column_role": "Administrator full name, the name of the school, and the city to which the school belongs.",
-  "derivation": "Administrator full name is composed of the administrator's first name and last name.",
+  "column_role": "Administrator first name and last name, the name of the school, and the city to which the school belongs.",
+  "derivation": "The administrator name is returned as the stored first-name and last-name values.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

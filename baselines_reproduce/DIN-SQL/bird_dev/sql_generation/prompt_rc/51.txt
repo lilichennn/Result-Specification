@@ -352,12 +352,12 @@ Hint:
 Schema_links: [schools.MailStreet,satscores.sname,satscores.AvgScrRead,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible; no membership restriction is stated.",
+  "population": "Schools with a recorded, non-missing average reading score.",
   "row_grain": "One result row represents the single selected school.",
   "column_role": "The school's mailing street address and the school's name.",
-  "derivation": "Each school's average score in reading is its school-level average reading score.",
-  "filter_policy": "Select the school with the lowest average reading score (argmin); tie handling is unspecified.",
-  "meta_review": "Metadata confirms satscores.AvgScrRead is a school-level average reading score, resolving the metric grain. It also confirms the requested address is a mailing street address rather than the physical location street."
+  "derivation": "The average reading score is the recorded school-level average reading score.",
+  "filter_policy": "Select one school with the lowest average reading score; tie handling is unspecified.",
+  "meta_review": "Metadata confirms the average reading score is a school-level average reading score, resolving the metric grain. It also confirms the requested address is a mailing street address rather than the physical location street."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

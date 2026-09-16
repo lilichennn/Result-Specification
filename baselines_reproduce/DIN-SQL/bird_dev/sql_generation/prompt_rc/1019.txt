@@ -288,7 +288,7 @@ Result Contract:
   "population": "All lap-time records for races held at circuits located in Italy.",
   "row_grain": "One global summary row for the whole set of lap-time records.",
   "column_role": "The average lap time expressed in milliseconds.",
-  "derivation": "Compute the average (AVG) of the lap-time value in milliseconds across all lap-time records in the population.",
+  "derivation": "Compute the average by dividing the total lap-time milliseconds by the number of lap records in the population.",
   "filter_policy": "none",
   "meta_review": "Metadata shows lapTimes.milliseconds stores lap times in milliseconds, whereas qualifying times are text. This resolves the requested lap records to lap-time records for races at Italian circuits, not qualifying records."
 }

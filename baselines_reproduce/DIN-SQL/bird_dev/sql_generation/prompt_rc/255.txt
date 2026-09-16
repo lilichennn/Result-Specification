@@ -190,7 +190,7 @@ Result Contract:
   "population": "All single bonds (bond_type = '-'); each bond's carcinogenic status is the label of the molecule in which the bond appears.",
   "row_grain": "One global summary row for the entire single-bond population.",
   "column_role": "The percentage of single bonds that are carcinogenic, reported with five decimal places.",
-  "derivation": "Compute 100 times the count of single bonds whose associated molecule has label = '+' divided by the total count of single bonds.",
+  "derivation": "Compute 100 times the count of single bonds whose associated molecule has label = '+' divided by the total count of single bonds, rounded to five decimal places.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that carcinogenic label is a molecule-level attribute, while bond records identify bond_type and the containing molecule. The contract therefore counts single bonds whose molecule has label = '+'."
 }

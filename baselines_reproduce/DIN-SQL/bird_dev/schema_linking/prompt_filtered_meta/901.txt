@@ -184,7 +184,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,name,location]
 Table races, columns = [*,raceId,year,circuitId,name,date]
-Foreign_keys = [races.circuitId = circuits.circuitId]
+Table seasons, columns = [*,year]
+Foreign_keys = [races.circuitId = circuits.circuitId,races.year = seasons.year]
 Sample rows from circuits (columns: ["circuitId", "name", "location"]):
 [[2, "Sepang International Circuit", "Kuala Lumpur"], [3, "Bahrain International Circuit", "Sakhir"], [4, "Circuit de Barcelona-Catalunya", "Montmeló"]]
 Column descriptions and value descriptions for circuits:
@@ -199,6 +200,10 @@ Column year: column description -> , value description ->
 Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
 Column date: column description -> , value description -> 
+Sample rows from seasons (columns: ["year"]):
+[[1950], [1951], [1952]]
+Column descriptions and value descriptions for seasons:
+Column year: column description -> , value description -> 
 
 Q: Name the races along with its circuit name and location for f1 races hosted in September 2005.
 Hint: in September 2005 refers to MONTH(date) = 9 and YEAR(date) = 2005

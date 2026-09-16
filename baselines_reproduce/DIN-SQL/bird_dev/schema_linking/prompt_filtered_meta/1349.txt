@@ -182,13 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table budget, columns = [*,budget_id,amount,link_to_event]
+Table budget, columns = [*,amount,link_to_event]
 Table event, columns = [*,event_id,event_name]
 Foreign_keys = [budget.link_to_event = event.event_id]
-Sample rows from budget (columns: ["budget_id", "amount", "link_to_event"]):
-[["rec0QmEc3cSQFQ6V2", 75, "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", 150, "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", 20, "recJ4Witp9tpjaugn"]]
+Sample rows from budget (columns: ["amount", "link_to_event"]):
+[[75, "recI43CzsZ0Q625ma"], [150, "recggMW2eyCYceNcy"], [20, "recJ4Witp9tpjaugn"]]
 Column descriptions and value descriptions for budget:
-Column budget_id: column description -> A unique identifier for the budget entry, value description -> 
 Column amount: column description -> The amount budgeted for the specified category and event, value description -> the unit is dollar 
 commonsense evidence:
 some computation like: amount = spent + remaining 

@@ -251,12 +251,12 @@ Hint: the highest score refers to MAX(Score);
 Schema_links: [comments.Id,posts.Score,comments.PostId = posts.Id]
 Result Contract:
 {
-  "population": "All posts are eligible candidates, and only comments belonging to the single selected post contribute to the count.",
+  "population": "Posts with at least one associated comment are eligible candidates, and only comments associated with the single selected post contribute to the count.",
   "row_grain": "One global summary row for the selected post.",
-  "column_role": "The number of comments on the selected post.",
+  "column_role": "The number of comments associated with the selected post.",
   "derivation": "Count the comments associated with the selected post.",
-  "filter_policy": "Select the post with the highest Score (argmax over all posts on Score); tie handling is not specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Among posts with at least one associated comment, select the post whose score summed over its comment associations is greatest; tie handling is not specified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -225,12 +225,12 @@ Hint: average = AVG(attribute_value); neutral superheroes refers to alignment_id
 Schema_links: [hero_attribute.attribute_value,superhero.alignment_id,hero_attribute.hero_id = superhero.id,3]
 Result Contract:
 {
-  "population": "All superheroes whose alignment is neutral, i.e., alignment_id = 3.",
-  "row_grain": "One global summary row covering all neutral superheroes.",
+  "population": "All attribute values associated with superheroes whose alignment is Neutral.",
+  "row_grain": "One global summary row covering all eligible attribute values.",
   "column_role": "The average attribute value of the neutral superheroes.",
-  "derivation": "Compute AVG(attribute_value) over the attribute values associated with superheroes in the eligible population.",
+  "derivation": "Compute the average of the eligible attribute values.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms hero_attribute.attribute_value is linked to superhero records, so the average is taken over attribute values associated with neutral superheroes rather than over superhero rows directly."
+  "meta_review": "The average is taken over attribute values associated with neutral superheroes rather than over superhero rows directly."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

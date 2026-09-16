@@ -235,7 +235,7 @@ Result Contract:
   "column_role": "The full name (first name and last name) of each qualifying student, answering who they are.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata states that a member's full name is first_name plus last_name, resolving the identity output for 'who' to full name rather than an internal member identifier. Round-1 population and grain are preserved."
+  "meta_review": "Metadata states that a member's full name is first_name plus last_name, resolving the identity output for 'who' to full name rather than an internal member identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

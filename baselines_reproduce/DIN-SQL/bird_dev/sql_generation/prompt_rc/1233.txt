@@ -296,12 +296,12 @@ Hint: blood glucose (GLU) index that were within normal range refers to GLU < 18
 Schema_links: [Patient.ID,Laboratory.GLU,Patient.Description,Laboratory.ID = Patient.ID,180,1991]
 Result Contract:
 {
-  "population": "Laboratory blood glucose (GLU) measurements for patients whose patient-level first data recording date (Description) has year 1991, where the GLU value is within the normal range (GLU < 180); both conditions must hold.",
-  "row_grain": "One row per qualifying laboratory GLU measurement.",
+  "population": "Laboratory blood glucose (GLU) measurements for patients whose patient-level first recorded date falls in 1991, with GLU below 180; both conditions must hold.",
+  "row_grain": "One row per distinct patient ID and GLU value combination among the qualifying measurements.",
   "column_role": "The patient's ID and the blood glucose (GLU) index value.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms Patient.Description is the patient-level first date when patient data was recorded, distinguishing it from visit or test dates, and Laboratory.GLU is the blood glucose measurement. This fixes eligibility to patient-level first-record year and output to laboratory GLU values."
+  "filter_policy": "Duplicate patient ID and GLU value combinations are eliminated; no ranking or ordering is applied.",
+  "meta_review": "The patient-level first recorded date, rather than a visit or test date, determines first-record eligibility, and the returned measure is the laboratory blood glucose value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -299,12 +299,12 @@ Hint: total cost of the pizzas refers to SUM(cost) where expense_description = '
 Schema_links: [expense.cost,expense.expense_description,Pizza]
 Result Contract:
 {
-  "population": "All expense records across all events whose expense description is 'Pizza'.",
-  "row_grain": "One global summary row covering all events.",
+  "population": "All expense records whose expense description is 'Pizza'.",
+  "row_grain": "One global summary row.",
   "column_role": "The total cost of the pizzas.",
-  "derivation": "Sum the cost values over all qualifying pizza expense records across all events.",
+  "derivation": "Sum the cost values over all qualifying pizza expense records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

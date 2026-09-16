@@ -320,12 +320,12 @@ Hint: tag specified as 'careers' refers to TagName = 'careers';
 Schema_links: [tags.Count,tags.TagName,'careers']
 Result Contract:
 {
-  "population": "Posts that have a tag whose TagName equals 'careers'.",
+  "population": "Tag entries whose TagName equals 'careers'.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The count of qualifying posts.",
-  "derivation": "Return the recorded count of posts for the tag whose TagName equals 'careers'.",
+  "column_role": "The count of qualifying tag entries.",
+  "derivation": "Return the computed count of tag entries whose TagName equals 'careers'.",
   "filter_policy": "none",
-  "meta_review": "Metadata defines tags.Count as the count of posts that contain each tag, resolving that the requested post count for TagName = 'careers' can be represented by the stored tag-level post count."
+  "meta_review": "The requested count is a computed count of qualifying tag entries, not a stored tag-level post count."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

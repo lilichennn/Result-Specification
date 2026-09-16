@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Match, columns = [*,id,home_team_api_id,home_team_goal]
-Table Team, columns = [*,id,team_api_id,team_short_name]
+Table Team, columns = [*,team_api_id,team_short_name]
 Foreign_keys = [Match.home_team_api_id = Team.team_api_id]
 Sample rows from Match (columns: ["id", "home_team_api_id", "home_team_goal"]):
 [[1, 9987, 1], [2, 10000, 0], [3, 9984, 0]]
@@ -191,10 +191,9 @@ Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
 Column home_team_api_id: column description -> the id of the home team api, value description -> 
 Column home_team_goal: column description -> the goal of the home team, value description -> 
-Sample rows from Team (columns: ["id", "team_api_id", "team_short_name"]):
-[[1, 9987, "GEN"], [2, 9993, "BAC"], [3, 10000, "ZUL"]]
+Sample rows from Team (columns: ["team_api_id", "team_short_name"]):
+[[9987, "GEN"], [9993, "BAC"], [10000, "ZUL"]]
 Column descriptions and value descriptions for Team:
-Column id: column description -> the unique id for teams, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_short_name: column description -> the team's short name, value description -> 
 

@@ -415,12 +415,12 @@ Hint: heights are above 180 refers to Player.height > 180; average heading accur
 Schema_links: [Player.player_name,Player.height,Player_Attributes.heading_accuracy,Player_Attributes.player_fifa_api_id,Player.player_fifa_api_id = Player_Attributes.player_fifa_api_id,180]
 Result Contract:
 {
-  "population": "Players whose height is greater than 180.",
+  "population": "Players whose height is greater than 180 and who have at least one associated player attribute record.",
   "row_grain": "One row per eligible player.",
   "column_role": "The player's name.",
-  "derivation": "For each player, average heading accuracy is the sum of heading accuracy across that player's records divided by the count of those records.",
+  "derivation": "For each player, average heading accuracy is the sum of heading accuracy across that player's attribute records divided by the count of those records.",
   "filter_policy": "Return the 10 players with the highest average heading accuracy, ordered by that metric in descending order.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

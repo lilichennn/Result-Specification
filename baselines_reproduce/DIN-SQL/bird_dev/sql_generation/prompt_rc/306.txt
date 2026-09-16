@@ -188,11 +188,11 @@ Schema_links: [molecule.molecule_id,atom.element,bond.bond_type,atom.molecule_id
 Result Contract:
 {
   "population": "Molecules that contain at least one bond with bond_type '#' (a triple bond); for each such molecule, every element it contains is eligible to be listed.",
-  "row_grain": "One row per element contained in a qualifying molecule, i.e., one molecule–element combination.",
+  "row_grain": "One row per distinct molecule–element combination.",
   "column_role": "The identity of the qualifying molecule and one element it contains (the element symbol, translatable to its name via the provided mapping).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

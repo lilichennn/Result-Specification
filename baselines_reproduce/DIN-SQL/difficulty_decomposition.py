@@ -20,7 +20,7 @@ from schema_linking import MODEL_ALIASES, database_context, model_config
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-TIMEOUT = 300
+TIMEOUT = 500
 DECOMPOSITION_INSTRUCTION = (
     "The difficulty label has already been determined from the gold SQL as NESTED.\n"
     "Do not classify the question again. Identify the sub-question or sub-questions "

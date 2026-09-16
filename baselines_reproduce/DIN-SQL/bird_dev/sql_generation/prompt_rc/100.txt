@@ -248,7 +248,7 @@ Hint: Customers refer to clients; Female refers to gender = 'F'; Names of distri
 Schema_links: [client.client_id,client.gender,client.birth_date,district.A2,account.account_id,client.district_id = district.district_id,disp.client_id = client.client_id,disp.account_id = account.account_id,'F',1950,'Sokolov']
 Result Contract:
 {
-  "population": "Customers (clients) who opened an account and who are female (gender = 'F'), were born before 1950, and whose customer-associated district is named Sokolov.",
+  "population": "Customers (clients) who are female (gender = 'F'), were born before 1950, and whose customer-associated district is named Sokolov.",
   "row_grain": "One global summary row covering all qualifying customers.",
   "column_role": "The count of qualifying female customers.",
   "derivation": "Count the customers belonging to the eligible population.",

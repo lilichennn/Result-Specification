@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table customers, columns = [*,CustomerID]
 Table gasstations, columns = [*,GasStationID,Country]
-Table transactions_1k, columns = [*,TransactionID,Date,Time,CustomerID,GasStationID,Amount,Price]
+Table transactions_1k, columns = [*,TransactionID,Date,Time,CustomerID,GasStationID]
 Foreign_keys = []
 Sample rows from customers (columns: ["CustomerID"]):
 [[3], [5], [6]]
@@ -195,18 +195,14 @@ Sample rows from gasstations (columns: ["GasStationID", "Country"]):
 Column descriptions and value descriptions for gasstations:
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column Country: column description -> , value description -> 
-Sample rows from transactions_1k (columns: ["TransactionID", "Date", "Time", "CustomerID", "GasStationID", "Amount", "Price"]):
-[[1, "2012-08-24", "09:41:00", 31543, 3704, 28, 672.64], [2, "2012-08-24", "10:03:00", 46707, 3704, 18, 430.72], [3, "2012-08-24", "10:03:00", 46707, 3704, 1, 121.99]]
+Sample rows from transactions_1k (columns: ["TransactionID", "Date", "Time", "CustomerID", "GasStationID"]):
+[[1, "2012-08-24", "09:41:00", 31543, 3704], [2, "2012-08-24", "10:03:00", 46707, 3704], [3, "2012-08-24", "10:03:00", 46707, 3704]]
 Column descriptions and value descriptions for transactions_1k:
 Column TransactionID: column description -> Transaction ID, value description -> 
 Column Date: column description -> Date, value description -> 
 Column Time: column description -> Time, value description -> 
 Column CustomerID: column description -> Customer ID, value description -> 
 Column GasStationID: column description -> Gas Station ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
-Column Price: column description -> Price, value description -> commonsense evidence:
-
-total price = Amount x Price
 
 Q: Which country's gas station had the first paid cusomer in 2012/8/25?
 Hint: '2012/8/25' can be represented by '2012-08-25'

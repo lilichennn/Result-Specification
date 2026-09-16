@@ -306,12 +306,12 @@ Hint: meetings events refers to type = 'Meeting'; attended by more than 10 membe
 Schema_links: [event.event_id,event.type,attendance.link_to_event,attendance.link_to_member,attendance.link_to_event = event.event_id,Meeting,10]
 Result Contract:
 {
-  "population": "Reference population: events attended by more than 10 members of the Student_Club, where each event's attendance count of Student_Club members must be greater than 10; target population: those reference events whose type is 'Meeting'.",
-  "row_grain": "One global summary row representing the total across all qualifying events.",
-  "column_role": "A single numeric value: the number of qualifying events (meetings among the highly attended events).",
-  "derivation": "Count the events in the target population, with eligibility based on each event's count of attending Student_Club members exceeding 10.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Reference population: events with an attendance count greater than 10; target population: the event names of those high-attendance events, excluding any event name associated with an event whose type is 'Meeting'.",
+  "row_grain": "One row for each distinct returned event name.",
+  "column_role": "The event name identifying a qualifying high-attendance event after meeting names are excluded.",
+  "derivation": "Return the event name value for each qualifying event name; the attendance threshold is based on an aggregate count of attendances per event, but the returned result is not a numeric count.",
+  "filter_policy": "Exclude event names associated with meeting events from the high-attendance set; no ranking, top-k, ordering, or limit is applied.",
+  "meta_review": "The result is a distinct list of event names for high-attendance events excluding meetings, not a scalar count of meetings."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -367,11 +367,11 @@ Schema_links: [cards.manaCost,cards.artist,Rob Alexander]
 Result Contract:
 {
   "population": "All cards whose artist is Rob Alexander.",
-  "row_grain": "One global summary row covering all eligible cards.",
-  "column_role": "The total unconverted mana cost (manaCost) across the eligible cards.",
-  "derivation": "Sum the unconverted mana cost (manaCost) over all cards created by Rob Alexander.",
+  "row_grain": "One row for each eligible card.",
+  "column_role": "The unconverted mana cost (manaCost) of each eligible card.",
+  "derivation": "Return the stored unconverted mana cost value for each eligible card, without aggregation.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.manaCost is the unconverted mana cost, validating the requested metric mapping. No other Round-1 refinement is needed."
+  "meta_review": "Metadata confirms manaCost is the unconverted mana cost, but the result consists of individual card values rather than a summed total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

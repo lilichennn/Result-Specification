@@ -286,7 +286,7 @@ Schema_links: [circuits.lat,circuits.lng,races.name,races.circuitId = circuits.c
 Result Contract:
 {
   "population": "Circuits for which there exists a race with name 'Australian Grand Prix' held at that circuit.",
-  "row_grain": "One row per circuit that hosted the Australian Grand Prix.",
+  "row_grain": "One row per distinct coordinate location of a circuit that hosted the Australian Grand Prix.",
   "column_role": "The circuit's coordinate location, given as its latitude and longitude values.",
   "derivation": "none",
   "filter_policy": "none",

@@ -296,12 +296,12 @@ Hint: followed at the outpatient clinic refers to Admission = '-'; normal level 
 Schema_links: [Patient.ID,Patient.Admission,Laboratory.ALP,Laboratory.ID = Patient.ID,'-',300]
 Result Contract:
 {
-  "population": "Patients who are followed at the outpatient clinic (Admission = '-') and who have a normal alkaliphosphatase level (ALP < 300); both conditions must hold for a patient to be counted.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The count of qualifying patients.",
-  "derivation": "Count the patients satisfying the population conditions.",
+  "population": "Patient-laboratory occurrences in which the patient is followed at the outpatient clinic (Admission = '-') and the alkaline phosphatase measurement is normal (ALP < 300); both conditions must hold for an occurrence to be counted.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "The count of qualifying patient-laboratory occurrences.",
+  "derivation": "Count the qualifying patient-laboratory occurrences satisfying the population conditions, without deduplication by patient.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -356,7 +356,7 @@ Result Contract:
 {
   "population": "The single circuit whose name is Hungaroring.",
   "row_grain": "One row representing the Hungaroring circuit.",
-  "column_role": "The circuit's location, its country, and its coordinates expressed as latitude and longitude values in (lat, lng) order.",
+  "column_role": "The circuit's country and its coordinates expressed as latitude and longitude values in (lat, lng) order.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata confirms circuits.lat and circuits.lng are the circuit's latitude and longitude, validating the coordinate output as (lat, lng)."

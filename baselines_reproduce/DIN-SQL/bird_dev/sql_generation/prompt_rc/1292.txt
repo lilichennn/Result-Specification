@@ -296,12 +296,12 @@ Hint: anti Cardiolipin antibody concentration refers to `aCL IgG`, `aCL IgM`, `a
 Schema_links: [Examination.aCL IgG,Examination.aCL IgM,Examination.aCL IgA,Patient.SEX,Laboratory.UA,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,'F',6.50]
 Result Contract:
 {
-  "population": "Female patients (Sex = 'F') whose uric acid level satisfies the range condition given in evidence, UA > 6.50.",
+  "population": "Female patients (Sex = 'F') whose uric acid level is greater than 6.50 and for whom anti-cardiolipin antibody concentration information is available.",
   "row_grain": "One patient, namely the single eligible female patient selected by the uric acid comparison.",
   "column_role": "The patient's anti-cardiolipin antibody concentration, given as its three components aCL IgG, aCL IgM, and aCL IgA.",
   "derivation": "none",
   "filter_policy": "Select the eligible patient with the highest uric acid level (argmax on UA).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

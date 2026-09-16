@@ -182,37 +182,22 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table customers, columns = [*,CustomerID,Currency]
 Table gasstations, columns = [*,GasStationID,Country]
-Table transactions_1k, columns = [*,Date,CustomerID,GasStationID,Amount,Price]
-Table yearmonth, columns = [*,CustomerID,Date,Consumption]
-Foreign_keys = [yearmonth.CustomerID = customers.CustomerID,yearmonth.CustomerID = customers.CustomerID]
-Sample rows from customers (columns: ["CustomerID", "Currency"]):
-[[3, "EUR"], [5, "EUR"], [6, "EUR"]]
-Column descriptions and value descriptions for customers:
-Column CustomerID: column description -> identification of the customer, value description -> 
-Column Currency: column description -> Currency, value description -> 
+Table transactions_1k, columns = [*,Date,GasStationID,Price]
+Foreign_keys = []
 Sample rows from gasstations (columns: ["GasStationID", "Country"]):
 [[44, "CZE"], [45, "CZE"], [46, "CZE"]]
 Column descriptions and value descriptions for gasstations:
 Column GasStationID: column description -> Gas Station ID, value description -> 
 Column Country: column description -> , value description -> 
-Sample rows from transactions_1k (columns: ["Date", "CustomerID", "GasStationID", "Amount", "Price"]):
-[["2012-08-24", 31543, 3704, 28, 672.64], ["2012-08-24", 46707, 3704, 18, 430.72], ["2012-08-24", 46707, 3704, 1, 121.99]]
+Sample rows from transactions_1k (columns: ["Date", "GasStationID", "Price"]):
+[["2012-08-24", 3704, 672.64], ["2012-08-24", 3704, 430.72], ["2012-08-24", 3704, 121.99]]
 Column descriptions and value descriptions for transactions_1k:
 Column Date: column description -> Date, value description -> 
-Column CustomerID: column description -> Customer ID, value description -> 
 Column GasStationID: column description -> Gas Station ID, value description -> 
-Column Amount: column description -> Amount, value description -> 
 Column Price: column description -> Price, value description -> commonsense evidence:
 
 total price = Amount x Price
-Sample rows from yearmonth (columns: ["CustomerID", "Date", "Consumption"]):
-[[5, "201207", 528.3], [5, "201302", 1598.28], [5, "201303", 1931.36]]
-Column descriptions and value descriptions for yearmonth:
-Column CustomerID: column description -> Customer ID, value description -> 
-Column Date: column description -> Date, value description -> 
-Column Consumption: column description -> consumption, value description -> 
 
 Q: What's the nationality of the customer who spent 548.4 in 2012/8/24?
 Hint: '2012/8/24' can be represented by '2012-08-24'

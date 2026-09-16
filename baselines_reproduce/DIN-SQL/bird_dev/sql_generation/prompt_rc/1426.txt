@@ -230,12 +230,12 @@ Hint: 'Environmental Engineering' is the major_name;
 Schema_links: [member.last_name,major.major_name,major.department,major.college,member.link_to_major = major.major_id,Environmental Engineering]
 Result Contract:
 {
-  "population": "Members who have a major whose major_name is 'Environmental Engineering'.",
-  "row_grain": "One row per member majoring in Environmental Engineering.",
-  "column_role": "The member's last name, the department name offering that major, and the college name housing that department.",
+  "population": "Members whose position is 'Member' and whose linked major is named 'Environmental Engineering'.",
+  "row_grain": "One row per qualifying member.",
+  "column_role": "The member's last name, the department name of that major, and the college name of that department.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that a member's major is linked to the Major table, where department is the department offering the major and college is the college housing that department. This validates the requested department and college outputs as attributes of the member's major."
+  "meta_review": "Metadata confirms that a member's major is linked to major information, where department is the department offering the major and college is the college housing that department. This validates the requested department and college outputs as attributes of the member's major."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

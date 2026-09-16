@@ -301,12 +301,12 @@ Hint: highest attribute value in strength refers to MAX(attribute_value) WHERE a
 Schema_links: [hero_attribute.hero_id,hero_attribute.attribute_value,attribute.attribute_name,hero_attribute.attribute_id = attribute.id,Strength]
 Result Contract:
 {
-  "population": "Heroes whose strength attribute value equals the maximum strength attribute value, where the maximum is determined over the reference set of all heroes' strength attribute values.",
+  "population": "Heroes whose Strength attribute value equals the maximum attribute value across all hero attribute values.",
   "row_grain": "One global summary row.",
   "column_role": "The count of qualifying heroes.",
-  "derivation": "Count the heroes whose strength attribute value equals the maximum strength attribute value computed across all heroes' strength attributes.",
+  "derivation": "Count the heroes whose Strength attribute value equals the maximum attribute value across all hero attribute values.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -296,10 +296,10 @@ Hint: male refers to Sex = 'M'; glutamic oxaloacetic transaminase in the normal 
 Schema_links: [Patient.SEX,Patient.ID,Laboratory.GOT,Laboratory.ID = Patient.ID,M,60]
 Result Contract:
 {
-  "population": "Male patients (Sex = 'M') whose associated laboratory glutamic oxaloacetic transaminase (GOT) measurement is in the normal range (GOT < 60); both conditions must hold for a patient to be counted.",
-  "row_grain": "One global summary row for the entire eligible patient population.",
-  "column_role": "The count of distinct qualifying male patients.",
-  "derivation": "Count the distinct patients satisfying the population conditions.",
+  "population": "Male patients (Sex = 'M') as represented by associated laboratory glutamic oxaloacetic transaminase (GOT) measurements in the normal range (GOT < 60); each qualifying patient-laboratory measurement association is part of the counted population.",
+  "row_grain": "One global summary row for the entire eligible patient-laboratory population.",
+  "column_role": "The count of qualifying male patient-laboratory measurement associations, rather than a deduplicated count of unique patients.",
+  "derivation": "Count the eligible patient-laboratory occurrences satisfying the male and normal GOT conditions, with no deduplication of patients.",
   "filter_policy": "none",
   "meta_review": "Metadata places GOT in the Laboratory table, resolving that the normal-range condition applies to laboratory results associated with patients rather than a patient-level attribute. Patient.SEX confirms 'M' as the male value."
 }

@@ -327,12 +327,12 @@ Hint: highest score comment refers to Max(comments.Score)
 Schema_links: [posts.Title,comments.Score,comments.PostId = posts.Id]
 Result Contract:
 {
-  "population": "All comments, each associated with the post it belongs to; the candidate posts are those that have at least one comment.",
+  "population": "Posts, each considered together with the comments that belong to them; the candidate posts are those that have at least one comment.",
   "row_grain": "One row representing the single post that received the highest-scoring comment.",
   "column_role": "The title of that post.",
   "derivation": "none",
-  "filter_policy": "Select the comment with the maximum score (argmax over comments.Score) and return the post it belongs to; tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select one comment with the highest score and return the post it belongs to; tie handling is unspecified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

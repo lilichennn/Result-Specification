@@ -415,12 +415,12 @@ Hint: ADO Den Haag refers to team_long_name = 'ADO Den Haag'; freedom of movemen
 Schema_links: [Team_Attributes.buildUpPlayPositioningClass,Team.team_long_name,Team_Attributes.team_api_id = Team.team_api_id,'ADO Den Haag']
 Result Contract:
 {
-  "population": "Teams whose long name is 'ADO Den Haag'.",
-  "row_grain": "One row per ADO Den Haag team record.",
-  "column_role": "The team's freedom of movement in the 1st two thirds of the pitch, i.e., its build-up play positioning class value (Organised / Free Form).",
+  "population": "Build-up play positioning class values recorded for the team whose long name is 'ADO Den Haag'.",
+  "row_grain": "One row per distinct build-up play positioning class value recorded for that team.",
+  "column_role": "The freedom of movement in the 1st two thirds of the pitch, represented by the build-up play positioning class value (Organised / Free Form).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms Team_Attributes.buildUpPlayPositioningClass represents a team's freedom of movement in the 1st two thirds of the pitch and uses the categorical values Organised / Free Form."
+  "meta_review": "Metadata confirms that the team build-up play positioning attribute represents a team's freedom of movement in the 1st two thirds of the pitch and uses the categorical values Organised / Free Form."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

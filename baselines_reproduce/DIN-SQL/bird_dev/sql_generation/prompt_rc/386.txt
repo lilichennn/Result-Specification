@@ -297,12 +297,12 @@ Hint: future frame version refers to frameVersion = 'future'; legility status re
 Schema_links: [cards.id,cards.frameVersion,legalities.status,cards.uuid = legalities.uuid,future,legal]
 Result Contract:
 {
-  "population": "Cards whose frame version is future (frameVersion = 'future') and that have a legality status of legal (status = 'legal').",
-  "row_grain": "One global summary row covering all eligible cards.",
-  "column_role": "The count of qualifying cards.",
-  "derivation": "Count the distinct cards belonging to the eligible population.",
+  "population": "Cards with a future frame version that have associated legality information, regardless of their legality status.",
+  "row_grain": "One global summary row covering all matching card-legality occurrences.",
+  "column_role": "The count of qualifying card occurrences.",
+  "derivation": "Count all matching card occurrences associated with legality information, without deduplicating cards.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows legalities.status is stored in separate per-legality/format records linked to cards, so the count must be over distinct cards having a legal status rather than over individual legality rows."
+  "meta_review": "Because legality information is stored as separate per-legality records, the result counts matching card-legality occurrences rather than distinct cards, and it does not restrict the count to legal status."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

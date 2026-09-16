@@ -183,18 +183,13 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table badges, columns = [*,Id,UserId,Name]
-Table users, columns = [*,Id]
-Foreign_keys = [badges.UserId = users.Id]
+Foreign_keys = []
 Sample rows from badges (columns: ["Id", "UserId", "Name"]):
 [[1, 5, "Teacher"], [2, 6, "Teacher"], [3, 8, "Teacher"]]
 Column descriptions and value descriptions for badges:
 Column Id: column description -> the badge id, value description -> 
 Column UserId: column description -> the unique id of the user, value description -> 
 Column Name: column description -> the badge name the user obtained, value description -> 
-Sample rows from users (columns: ["Id"]):
-[[-1], [2], [3]]
-Column descriptions and value descriptions for users:
-Column Id: column description -> the user id, value description -> 
 
 Q: How many users were awarded with 'Citizen Patrol' badge?
 Hint: Citizen Patrol' is the name of the badge;

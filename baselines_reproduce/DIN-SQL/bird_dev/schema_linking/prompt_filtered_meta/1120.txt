@@ -182,26 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Match, columns = [*,id,away_team_api_id,away_team_goal,home_player_1,home_player_2,home_player_3,home_player_4,home_player_5,home_player_6,home_player_7,home_player_8,home_player_9,home_player_10,home_player_11,away_player_1,away_player_2,away_player_3,away_player_4,away_player_5,away_player_6,away_player_7,away_player_8,away_player_9,away_player_10,away_player_11,goal]
-Table Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id]
-Foreign_keys = [Match.away_player_11 = Player.player_api_id,Match.away_player_10 = Player.player_api_id,Match.away_player_9 = Player.player_api_id,Match.away_player_8 = Player.player_api_id,Match.away_player_7 = Player.player_api_id,Match.away_player_6 = Player.player_api_id,Match.away_player_5 = Player.player_api_id,Match.away_player_4 = Player.player_api_id,Match.away_player_3 = Player.player_api_id,Match.away_player_2 = Player.player_api_id,Match.away_player_1 = Player.player_api_id,Match.home_player_11 = Player.player_api_id,Match.home_player_10 = Player.player_api_id,Match.home_player_9 = Player.player_api_id,Match.home_player_8 = Player.player_api_id,Match.home_player_7 = Player.player_api_id,Match.home_player_6 = Player.player_api_id,Match.home_player_5 = Player.player_api_id,Match.home_player_4 = Player.player_api_id,Match.home_player_3 = Player.player_api_id,Match.home_player_2 = Player.player_api_id,Match.home_player_1 = Player.player_api_id]
-Sample rows from Match (columns: ["id", "away_team_api_id", "away_team_goal", "home_player_1", "home_player_2", "home_player_3", "home_player_4", "home_player_5", "home_player_6", "home_player_7", "home_player_8", "home_player_9", "home_player_10", "home_player_11", "away_player_1", "away_player_2", "away_player_3", "away_player_4", "away_player_5", "away_player_6", "away_player_7", "away_player_8", "away_player_9", "away_player_10", "away_player_11", "goal"]):
-[[1, 9993, 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [2, 9994, 0, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [3, 8635, 3, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]]
+Table Match, columns = [*,id,away_team_goal,away_player_1,away_player_2,away_player_3,away_player_4,away_player_5,away_player_6,away_player_7,away_player_8,away_player_9,away_player_10,away_player_11]
+Table Player, columns = [*,id,player_api_id,player_name]
+Foreign_keys = [Match.away_player_11 = Player.player_api_id,Match.away_player_10 = Player.player_api_id,Match.away_player_9 = Player.player_api_id,Match.away_player_8 = Player.player_api_id,Match.away_player_7 = Player.player_api_id,Match.away_player_6 = Player.player_api_id,Match.away_player_5 = Player.player_api_id,Match.away_player_4 = Player.player_api_id,Match.away_player_3 = Player.player_api_id,Match.away_player_2 = Player.player_api_id,Match.away_player_1 = Player.player_api_id]
+Sample rows from Match (columns: ["id", "away_team_goal", "away_player_1", "away_player_2", "away_player_3", "away_player_4", "away_player_5", "away_player_6", "away_player_7", "away_player_8", "away_player_9", "away_player_10", "away_player_11"]):
+[[1, 1, null, null, null, null, null, null, null, null, null, null, null], [2, 0, null, null, null, null, null, null, null, null, null, null, null], [3, 3, null, null, null, null, null, null, null, null, null, null, null]]
 Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
-Column away_team_api_id: column description -> the id of the away team api, value description -> 
 Column away_team_goal: column description -> the goal of the away team, value description -> 
-Column home_player_1: column description -> , value description -> 
-Column home_player_2: column description -> , value description -> 
-Column home_player_3: column description -> , value description -> 
-Column home_player_4: column description -> , value description -> 
-Column home_player_5: column description -> , value description -> 
-Column home_player_6: column description -> , value description -> 
-Column home_player_7: column description -> , value description -> 
-Column home_player_8: column description -> , value description -> 
-Column home_player_9: column description -> , value description -> 
-Column home_player_10: column description -> , value description -> 
-Column home_player_11: column description -> , value description -> 
 Column away_player_1: column description -> , value description -> 
 Column away_player_2: column description -> , value description -> 
 Column away_player_3: column description -> , value description -> 
@@ -213,14 +201,12 @@ Column away_player_8: column description -> , value description ->
 Column away_player_9: column description -> , value description -> 
 Column away_player_10: column description -> , value description -> 
 Column away_player_11: column description -> , value description -> 
-Column goal: column description -> the goal of the match, value description -> 
-Sample rows from Player (columns: ["id", "player_api_id", "player_name", "player_fifa_api_id"]):
-[[1, 505942, "Aaron Appindangoye", 218353], [2, 155782, "Aaron Cresswell", 189615], [3, 162549, "Aaron Doran", 186170]]
+Sample rows from Player (columns: ["id", "player_api_id", "player_name"]):
+[[1, 505942, "Aaron Appindangoye"], [2, 155782, "Aaron Cresswell"], [3, 162549, "Aaron Doran"]]
 Column descriptions and value descriptions for Player:
 Column id: column description -> the unique id for players, value description -> 
 Column player_api_id: column description -> the id of the player api, value description -> 
 Column player_name: column description -> player name, value description -> 
-Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 
 Q: Sum up the away team goal scored by both Daan Smith and Filipe Ferreira.
 Hint: Daan Smith refers to player_name = 'Daan Smith'; Filipe Ferreira refers to player_name = 'Filipe Ferreira'

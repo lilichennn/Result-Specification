@@ -185,7 +185,7 @@ Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,circuitRef,name]
 Table drivers, columns = [*,driverId,forename,surname]
 Table qualifying, columns = [*,raceId,driverId,position,q3]
-Table races, columns = [*,raceId,year,circuitId,name,date]
+Table races, columns = [*,raceId,year,circuitId]
 Foreign_keys = [qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId,races.circuitId = circuits.circuitId]
 Sample rows from circuits (columns: ["circuitId", "circuitRef", "name"]):
 [[2, "sepang", "Sepang International Circuit"], [3, "bahrain", "Bahrain International Circuit"], [4, "catalunya", "Circuit de Barcelona-Catalunya"]]
@@ -206,14 +206,12 @@ Column raceId: column description -> , value description ->
 Column driverId: column description -> , value description -> 
 Column position: column description -> , value description -> 
 Column q3: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "circuitId", "name", "date"]):
-[[1, 2009, 1, "Australian Grand Prix", "2009-03-29"], [2, 2009, 2, "Malaysian Grand Prix", "2009-04-05"], [3, 2009, 17, "Chinese Grand Prix", "2009-04-19"]]
+Sample rows from races (columns: ["raceId", "year", "circuitId"]):
+[[1, 2009, 1], [2, 2009, 2], [3, 2009, 17]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
-Column name: column description -> , value description -> 
-Column date: column description -> , value description -> 
 
 Q: What is full name of the racer who ranked 1st in the 3rd qualifying race held in the Marina Bay Street Circuit in 2008?
 Hint: Ranked 1st in the 3rd qualifying race refer to MIN(q3); 2008 is the year of race; full name of racer = forename, surname

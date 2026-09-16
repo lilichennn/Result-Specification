@@ -225,12 +225,12 @@ Hint: name refers to superhero_name; the tallest hero refers to MAX(height_cm); 
 Schema_links: [superhero.superhero_name,superhero.height_cm,publisher.publisher_name,superhero.publisher_id = publisher.id,Marvel Comics]
 Result Contract:
 {
-  "population": "All heroes whose publisher is Marvel Comics (publisher_name = 'Marvel Comics').",
+  "population": "All heroes whose publisher is Marvel Comics.",
   "row_grain": "One row per hero.",
-  "column_role": "The hero's name (superhero_name).",
-  "derivation": "none",
-  "filter_policy": "Order all eligible heroes by their height (height_cm) in descending order, with no limit on the number returned.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "column_role": "The hero's name, the hero's height, and the hero's computed height rank.",
+  "derivation": "The returned rank is a computed ranking of the eligible heroes by descending height; height is returned as the underlying measure.",
+  "filter_policy": "All eligible heroes are included and ranked by height in descending order, with no limit or post-ranking filtering; ties receive the same rank, and the next rank skips the tied positions.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

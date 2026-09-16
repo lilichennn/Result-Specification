@@ -285,7 +285,7 @@ Hint:
 Schema_links: [races.year,circuits.name,races.circuitId = circuits.circuitId,Silverstone Circuit]
 Result Contract:
 {
-  "population": "Formula 1 races that were held at Silverstone Circuit.",
+  "population": "Years of Formula 1 races held at Silverstone Circuit.",
   "row_grain": "One year in which at least one race at Silverstone Circuit occurred.",
   "column_role": "The year in which a race at Silverstone Circuit was held.",
   "derivation": "none",

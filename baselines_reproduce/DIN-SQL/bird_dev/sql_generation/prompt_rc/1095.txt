@@ -418,7 +418,7 @@ Result Contract:
   "population": "Team attribute records for the team whose team_long_name is 'Heart of Midlothian'.",
   "row_grain": "One global summary row for the Heart of Midlothian team.",
   "column_role": "The average build up play speed value for the team.",
-  "derivation": "Compute AVG(buildUpPlaySpeed) across the team's attribute records.",
+  "derivation": "Compute the average build up play speed by dividing the total build up play speed by the number of the team's attribute records.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms buildUpPlaySpeed is a team attribute in Team_Attributes while team_long_name identifies the team in Team, so the average is over the named team's attribute records."
 }

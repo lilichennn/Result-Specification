@@ -248,10 +248,10 @@ Hint: A3 contains the data of region
 Schema_links: [account.account_id,district.A3,disp.type,account.district_id = district.district_id,disp.account_id = account.account_id,'Prague','OWNER']
 Result Contract:
 {
-  "population": "Accounts whose branch district is in the Prague region and that are eligible for loans; the question does not further specify what determines loan eligibility.",
+  "population": "Accounts whose branch district is in the Prague region and that have an associated loan.",
   "row_grain": "One global summary row.",
   "column_role": "The number of qualifying accounts.",
-  "derivation": "Count the accounts belonging to the eligible population.",
+  "derivation": "Count the accounts belonging to the qualifying population.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms that region is district.A3 and account.district_id identifies the account's branch district, so the Prague-region condition is scoped to the account's associated district region."
 }

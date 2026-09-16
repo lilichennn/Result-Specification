@@ -182,27 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Examination, columns = [*,ID,aCL IgG,aCL IgM,aCL IgA,Diagnosis,KCT,RVVT,LAC,Symptoms,Thrombosis]
+Table Examination, columns = [*,ID,Diagnosis,Symptoms,Thrombosis]
 Table Laboratory, columns = [*,ID,C4]
 Table Patient, columns = [*,ID,Diagnosis]
 Foreign_keys = [Examination.ID = Patient.ID,Laboratory.ID = Patient.ID]
-Sample rows from Examination (columns: ["ID", "aCL IgG", "aCL IgM", "aCL IgA", "Diagnosis", "KCT", "RVVT", "LAC", "Symptoms", "Thrombosis"]):
-[[14872, 1.3, 1.6, 0, "MCTD, AMI", null, null, "-", "AMI", 1], [48473, 4.3, 4.6, 3, "SLE", "-", "-", "-", null, 0], [102490, 2.3, 2.5, 4, "PSS", null, null, null, null, 0]]
+Sample rows from Examination (columns: ["ID", "Diagnosis", "Symptoms", "Thrombosis"]):
+[[14872, "MCTD, AMI", "AMI", 1], [48473, "SLE", null, 0], [102490, "PSS", null, 0]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
-Column aCL IgG: column description -> anti-Cardiolipin antibody (IgG) concentration, value description -> 
-Column aCL IgM: column description -> anti-Cardiolipin antibody (IgM) concentration, value description -> 
-Column aCL IgA: column description -> anti-Cardiolipin antibody (IgA) concentration, value description -> 
 Column Diagnosis: column description -> disease names, value description -> 
-Column KCT: column description -> measure of degree of coagulation, value description -> +: positive
-
--: negative
-Column RVVT: column description -> measure of degree of coagulation, value description -> +: positive
-
--: negative
-Column LAC: column description -> measure of degree of coagulation, value description -> +: positive
-
--: negative
 Column Symptoms: column description -> other symptoms observed, value description -> 
 Column Thrombosis: column description -> degree of thrombosis, value description -> 0: negative (no thrombosis)
 1: positive (the most serious)

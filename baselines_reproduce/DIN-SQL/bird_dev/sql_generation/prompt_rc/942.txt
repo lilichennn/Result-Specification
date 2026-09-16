@@ -290,7 +290,7 @@ Result Contract:
   "column_role": "The average fastest lap time, expressed in seconds.",
   "derivation": "Convert each fastest lap time recorded in 'MM:SS.mmm' format to total seconds, then average those values across the included race-result records.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows fastestLapTime belongs to race-result records in results, not qualifying, so the Round-1 references to qualifying were corrected to race results."
+  "meta_review": "Metadata shows the fastest lap time is a race-result attribute, not a qualifying attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -296,12 +296,12 @@ Hint: male patients refers to Sex = 'M'; normal level of white blood cells refer
 Schema_links: [Patient.SEX,Laboratory.WBC,Laboratory.FG,Patient.ID,Patient.ID = Laboratory.ID,'M',3.5,9.0,150,450]
 Result Contract:
 {
-  "population": "Patients who are male (Sex = 'M'), have a normal white blood cell level (WBC > 3.5 and WBC < 9.0), and have an abnormal fibrinogen level (FG <= 150 or FG >= 450).",
+  "population": "Patients with at least one laboratory result satisfying either a fibrinogen level of 150 or below, or a fibrinogen level of 450 or above together with a normal white blood cell level (greater than 3.5 and less than 9.0) and male sex.",
   "row_grain": "One global summary row over the entire qualifying patient population.",
   "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the qualifying patients, counting each patient only once without repetition.",
+  "derivation": "Count distinct qualifying patients, counting each patient only once.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

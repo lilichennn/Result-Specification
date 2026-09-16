@@ -285,12 +285,12 @@ Hint: full name refers to forename+surname; Youngest racer = MAX(dob)
 Schema_links: [drivers.forename,drivers.surname,drivers.nationality,drivers.dob,races.name,races.date,results.driverId = drivers.driverId,results.raceId = races.raceId]
 Result Contract:
 {
-  "population": "All racers.",
-  "row_grain": "One row representing the single youngest racer.",
-  "column_role": "The racer's full name, the racer's nationality, and the name of the race the racer first joined.",
-  "derivation": "Full name is the combination of forename and surname. The first-joined race is the race with the earliest race date among the selected racer's recorded race-result participations.",
-  "filter_policy": "Select the racer with the maximum date of birth as the youngest as of the present.",
-  "meta_review": "Metadata confirms that racer attributes such as date of birth and nationality are owned by drivers, and that a driver's race participation is represented by results linked to races with a race date and race name. This resolves the first-joined race to the earliest dated race result for the selected racer."
+  "population": "Racers who have at least one recorded standing entry associated with a race.",
+  "row_grain": "One selected row for a youngest such racer, paired with one associated race-standing entry.",
+  "column_role": "The selected racer’s forename and surname, the racer’s nationality, and the name of the associated race.",
+  "derivation": "Forename, surname, nationality, and race name are returned as stored values; the full name is represented by separate forename and surname values, and the race name is taken from the associated standing entry rather than derived as the earliest race.",
+  "filter_policy": "Select one row for a racer with the latest date of birth among the qualified racers; the returned race is the race associated with the selected standing entry.",
+  "meta_review": "Metadata confirms that racer attributes such as date of birth and nationality are owned by racer records and that race involvement is represented through standing records linked to races. The returned race is therefore an associated standing race, not necessarily the earliest dated participation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

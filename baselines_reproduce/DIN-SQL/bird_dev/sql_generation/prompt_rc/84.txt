@@ -428,12 +428,12 @@ Hint:
 Schema_links: [schools.AdmFName1,schools.District]
 Result Contract:
 {
-  "population": "All school administrators.",
-  "row_grain": "One row per pairing of a top-two first name with a district administered by an administrator bearing that first name.",
+  "population": "All school administrator entries.",
+  "row_grain": "One row per distinct pairing of a top-two first name with a district administered by an administrator bearing that first name.",
   "column_role": "The administrator's first name and the district to which that administrator administers.",
-  "derivation": "The commonness of a first name is the count of school administrators who bear that first name.",
-  "filter_policy": "Retain only the two first names with the highest administrator counts (top-2 by frequency); tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The commonness of a first name is the count of school administrator entries bearing that first name.",
+  "filter_policy": "Retain only the two first names with the highest counts of school administrator entries (top-2 by frequency); tie handling is unspecified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

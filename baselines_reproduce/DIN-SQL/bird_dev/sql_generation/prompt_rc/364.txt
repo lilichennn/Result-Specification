@@ -297,12 +297,12 @@ Hint: Cloudchaser Eagle is the name of card;
 Schema_links: [legalities.status,cards.name,legalities.uuid = cards.uuid,Cloudchaser Eagle]
 Result Contract:
 {
-  "population": "The card whose name is \"Cloudchaser Eagle\".",
-  "row_grain": "One legality status associated with the card.",
-  "column_role": "The legality status of the card.",
+  "population": "The legality status values associated with the card whose name is \"Cloudchaser Eagle\".",
+  "row_grain": "One row for each distinct legality status value associated with the card.",
+  "column_role": "The legality status.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that status is stored in legalities.status with values legal, banned, or restricted, and is associated with a card per format. This makes the requested status a related legality status rather than a card-level attribute."
+  "meta_review": "Metadata establishes that status is a legality attribute with values legal, banned, or restricted, associated with a card per format. This makes the requested status a related legality status rather than a card-level attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

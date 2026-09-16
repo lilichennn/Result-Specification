@@ -320,12 +320,12 @@ Hint: Commentator is the name of the badge; year(Date) = 2014;
 Schema_links: [badges.UserId,badges.Name,badges.Date,'Commentator',2014]
 Result Contract:
 {
-  "population": "Users who received a badge named 'Commentator' whose award date falls in the year 2014.",
-  "row_grain": "One global summary row for the entire qualifying user population.",
-  "column_role": "The count of qualifying users.",
-  "derivation": "Count the users who have at least one Commentator badge award dated in 2014.",
+  "population": "Badge award events for the badge named 'Commentator' whose award date falls in the year 2014.",
+  "row_grain": "One global summary row for the entire qualifying badge-award population.",
+  "column_role": "The count of qualifying badge awards.",
+  "derivation": "Count each qualifying Commentator badge award in 2014 once, without collapsing multiple awards to the same user.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms badges records individual badge awards with UserId and Date, validating that the result counts distinct qualifying users rather than badge award rows."
+  "meta_review": "Metadata describes individual badge award records, so the result counts qualifying award records rather than distinct users."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

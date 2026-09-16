@@ -297,12 +297,12 @@ Hint: banned card refers to status = 'Banned'; white border refers to borderColo
 Schema_links: [cards.id,legalities.status,cards.borderColor,legalities.uuid = cards.uuid,'Banned','white']
 Result Contract:
 {
-  "population": "Cards that have at least one associated legality with status 'Banned' and whose borderColor is 'white'.",
-  "row_grain": "One global summary row for the entire qualifying card set.",
-  "column_role": "The count of qualifying banned white-border cards.",
-  "derivation": "Count the distinct cards satisfying the population conditions.",
+  "population": "Card occurrences linked to a legality with status 'Banned' where the card's border color is 'white'.",
+  "row_grain": "One global summary row for the entire qualifying occurrence set.",
+  "column_role": "The count of qualifying banned white-border card occurrences.",
+  "derivation": "Count the qualifying card-legality occurrences without deduplicating cards.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows status is owned by legalities rather than cards, so a banned card is a card with at least one associated legality status 'Banned'. This makes the count distinct cards rather than legality records."
+  "meta_review": "Status is owned by legalities, so the banned condition is evaluated through associated legality records; the result counts matching occurrences rather than distinct cards."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

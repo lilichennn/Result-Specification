@@ -251,12 +251,12 @@ Hint: user with the most comments refers to UserId where Max(Count(Id)
 Schema_links: [badges.Name,comments.UserId,comments.Id,comments.UserId = users.Id,badges.UserId = users.Id]
 Result Contract:
 {
-  "population": "All users who have posted comments; each candidate user is associated with the comments they have posted.",
-  "row_grain": "One result row per user whose posted-comment count is the maximum.",
-  "column_role": "The badge name of each such user, which is the explicitly requested output value.",
-  "derivation": "For each user, the count of comments they have posted (per the evidence, Count of comment Ids per UserId), which defines the comparison metric.",
-  "filter_policy": "Argmax: retain the user(s) whose per-user comment count equals the maximum across all candidate users; no further ordering or limit is specified.",
-  "meta_review": "Metadata shows badges.Name is the badge name obtained by a user, resolving that the requested badge output is the badge name rather than a badge identifier."
+  "population": "Badge-holding users who have posted comments; each candidate user is considered together with their comment activity.",
+  "row_grain": "One result row total: a single badge name for the single top-ranked user.",
+  "column_role": "The badge name of the selected user, which is the explicitly requested output value.",
+  "derivation": "For each candidate user, the aggregate count of comment occurrences associated with that user defines the comparison metric; the returned badge name is a descriptive stored value.",
+  "filter_policy": "Top-1 selection: retain only one result row for the user with the greatest comment count; no explicit tie-breaking is specified.",
+  "meta_review": "Metadata shows the badge name obtained by a user is the requested output, rather than a badge identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

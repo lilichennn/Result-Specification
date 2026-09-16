@@ -297,7 +297,7 @@ Hint: restricted refers to status = 'restricted'; found in the starter deck refe
 Schema_links: [cards.id,legalities.status,cards.isStarter,legalities.uuid = cards.uuid,restricted,1]
 Result Contract:
 {
-  "population": "Cards that have at least one legality with status 'restricted' and have the card-level starter flag isStarter = 1; both conditions must hold for a card to be counted.",
+  "population": "Cards that have at least one legality with status 'Restricted' and have the card-level starter flag isStarter = 1; both conditions must hold for a card to be counted.",
   "row_grain": "One global summary row for the entire qualifying card population.",
   "column_role": "The count of qualifying cards.",
   "derivation": "Count each qualifying card once, regardless of the number of restricted legality records it has.",

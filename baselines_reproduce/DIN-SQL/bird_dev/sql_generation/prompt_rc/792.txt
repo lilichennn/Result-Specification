@@ -225,12 +225,12 @@ Hint: Abomination refers to superhero_name = 'Abomination'; superpower refers to
 Schema_links: [superhero.superhero_name,superpower.power_name,hero_power.hero_id = superhero.id,hero_power.power_id = superpower.id,Abomination]
 Result Contract:
 {
-  "population": "The superhero whose superhero_name is 'Abomination'.",
-  "row_grain": "One superpower associated with Abomination.",
-  "column_role": "The superpower name (power_name).",
+  "population": "Superpowers associated with the superhero whose superhero_name is 'Abomination'.",
+  "row_grain": "One row for each superpower associated with Abomination.",
+  "column_role": "The superpower name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

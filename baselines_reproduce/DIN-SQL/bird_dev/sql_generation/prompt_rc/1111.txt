@@ -415,12 +415,12 @@ Hint: "PEC Zwolle" refers to team_long_name = 'PEC Zwolle'; on 2013/9/20 refers 
 Schema_links: [Team_Attributes.chanceCreationPassingClass,Team.team_long_name,Team_Attributes.date,Team.team_api_id = Team_Attributes.team_api_id,'PEC Zwolle','2013-09-20 00:00:00']
 Result Contract:
 {
-  "population": "Team attribute records for the team with long name 'PEC Zwolle' recorded on date '2013-09-20 00:00:00'.",
-  "row_grain": "One team attributes record for PEC Zwolle on the specified date.",
-  "column_role": "The chance creation passing class value (a categorical label) of the team.",
+  "population": "Team attribute records for the team with long name 'PEC Zwolle' whose date falls on 2013-09-20.",
+  "row_grain": "One chance creation passing class value per matching team attribute record.",
+  "column_role": "The chance creation passing class value of the team.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The date scope is the calendar date 2013-09-20."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

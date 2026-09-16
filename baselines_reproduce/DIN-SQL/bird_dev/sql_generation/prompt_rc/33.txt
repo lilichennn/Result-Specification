@@ -352,12 +352,12 @@ Hint:
 Schema_links: [schools.Website,schools.School,frpm.Free Meal Count (Ages 5-17),frpm.CDSCode = schools.CDSCode,1900,2000]
 Result Contract:
 {
-  "population": "Schools whose free meal count for students aged 5-17 falls within the range 1,900 to 2,000.",
+  "population": "Schools whose free meal count for students aged 5-17 is between 1,900 and 2,000 inclusive and that have a website address available.",
   "row_grain": "One row per qualifying school.",
   "column_role": "The school's website address and the school's name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,10 +230,10 @@ Hint: total amount spent = SUM(spent) where category = 'Speaker Gifts'
 Schema_links: [budget.spent,budget.category,event.event_name,budget.link_to_event = event.event_id,Speaker Gifts]
 Result Contract:
 {
-  "population": "All budget records whose category is 'Speaker Gifts'.",
-  "row_grain": "One row per event on which speaker-gift spending occurred.",
-  "column_role": "The name of the event and the total amount spent on speaker gifts for that event.",
-  "derivation": "The total amount spent is the sum of the budget spent values over the 'Speaker Gifts' budget records associated with each event.",
+  "population": "Budget records whose category is 'Speaker Gifts' and that are associated with an event.",
+  "row_grain": "One row per distinct event name for which speaker-gift spending occurred.",
+  "column_role": "The event name and the total amount spent on speaker gifts for that event name.",
+  "derivation": "The total amount spent is the sum of the budget spent values over the 'Speaker Gifts' budget records associated with each event name.",
   "filter_policy": "none",
   "meta_review": "Metadata shows budget.spent is the dollar amount spent for a budget category linked to an event, so the requested total is computed from budget records with category 'Speaker Gifts'. This resolves the spending-record representation as budget entries rather than individual expense rows."
 }

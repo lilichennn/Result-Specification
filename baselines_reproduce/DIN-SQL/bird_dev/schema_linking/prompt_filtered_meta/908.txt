@@ -183,20 +183,20 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId,location,country]
-Table lapTimes, columns = [*,raceId,lap]
+Table lapTimes, columns = [*,raceId,driverId,lap]
 Table races, columns = [*,raceId,year,circuitId,name]
-Table results, columns = [*,raceId,laps]
-Foreign_keys = [lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId,results.raceId = races.raceId]
+Foreign_keys = [lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId]
 Sample rows from circuits (columns: ["circuitId", "location", "country"]):
 [[2, "Kuala Lumpur", "Malaysia"], [3, "Sakhir", "Bahrain"], [4, "Montmeló", "Spain"]]
 Column descriptions and value descriptions for circuits:
 Column circuitId: column description -> unique identification number of the circuit , value description -> 
 Column location: column description -> , value description -> 
 Column country: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "lap"]):
-[[1, 1], [1, 2], [1, 3]]
+Sample rows from lapTimes (columns: ["raceId", "driverId", "lap"]):
+[[1, 1, 1], [1, 1, 2], [1, 1, 3]]
 Column descriptions and value descriptions for lapTimes:
 Column raceId: column description -> , value description -> 
+Column driverId: column description -> , value description -> 
 Column lap: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "year", "circuitId", "name"]):
 [[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 17, "Chinese Grand Prix"]]
@@ -205,11 +205,6 @@ Column raceId: column description -> , value description ->
 Column year: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "laps"]):
-[[18, 58], [18, 58], [18, 58]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column laps: column description -> , value description -> 
 
 Q: What is the most laps f1 races had? Name the race, year and circuit location where the races with most laps was hosted.
 A: Let’s think step by step.

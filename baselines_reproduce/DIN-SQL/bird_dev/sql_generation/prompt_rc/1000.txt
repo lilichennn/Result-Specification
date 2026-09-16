@@ -287,12 +287,12 @@ Hint: full location refers to location+country; most recent race = MAX(date)
 Schema_links: [circuits.name,circuits.location,circuits.country,races.date,races.circuitId = circuits.circuitId]
 Result Contract:
 {
-  "population": "All races, each associated with the racetrack that hosted it and its date; no eligibility conditions restrict this set.",
-  "row_grain": "One racetrack, namely the one that hosted the most recent race.",
-  "column_role": "The full location of that racetrack, expressed as its location together with its country.",
-  "derivation": "The full location is the combination of the racetrack's location and its country.",
-  "filter_policy": "Select the racetrack whose hosted race has the maximum date (argmax on race date, i.e., the most recent race).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "All race events, each associated with the racetrack that hosted it and its date; no eligibility conditions restrict this set.",
+  "row_grain": "One row: the racetrack that hosted the most recent race.",
+  "column_role": "The location of that racetrack, without a separate country component.",
+  "derivation": "The result is the directly provided location value for the selected racetrack, not a combination of location and country.",
+  "filter_policy": "Select the single latest race by date and return the associated racetrack's location.",
+  "meta_review": "The 'full location' clarification is operationalized as the racetrack's location alone, not location plus country."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

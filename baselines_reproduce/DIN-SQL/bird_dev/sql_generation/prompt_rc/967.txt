@@ -361,12 +361,12 @@ Hint: youngest driver refers to Max (year(dob)); Netherlandic and Dutch refer to
 Schema_links: [drivers.code,drivers.driverId,drivers.dob,drivers.nationality,'Dutch']
 Result Contract:
 {
-  "population": "All drivers are eligible for the youngest ranking; for the count, only drivers whose nationality is Netherlandic (Dutch) contribute.",
-  "row_grain": "One row per selected top-3 youngest driver, accompanied by a summary count of the Netherlandic drivers among those three.",
-  "column_role": "The driver code (abbreviated code) of each selected driver and the number of Netherlandic (Dutch) drivers among the top three.",
-  "derivation": "Youngest is defined by maximum year of date of birth, and the count tallies the selected drivers whose nationality is Netherlandic (Dutch).",
-  "filter_policy": "Keep the 3 drivers with the maximum (latest) birth year; tie handling is not specified.",
-  "meta_review": "Metadata identifies drivers.code as the abbreviated driver code, distinguishing it from drivers.number, so the requested code numbers are driver codes. No other Round-1 ambiguity is resolved."
+  "population": "Drivers considered for the top-3 youngest ranking are all drivers; the counted population is the subset of those selected drivers whose nationality is Netherlandic (Dutch).",
+  "row_grain": "One global summary row giving the count of Netherlandic drivers among the top three youngest drivers.",
+  "column_role": "The returned measure is the number of Netherlandic (Dutch) drivers among the top three youngest drivers; no driver code is returned.",
+  "derivation": "Youngest is determined by the latest date of birth; the result counts the selected top three drivers whose nationality is Netherlandic (Dutch).",
+  "filter_policy": "Select the three drivers with the latest birth dates; tie handling is not specified, then count only those with Netherlandic (Dutch) nationality.",
+  "meta_review": "Although the question mentions code numbers, the result semantics provide only the count; driver codes are not part of the returned result."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

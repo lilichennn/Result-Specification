@@ -183,18 +183,13 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Examination Date,ANA]
-Table Patient, columns = [*,ID]
-Foreign_keys = [Examination.ID = Patient.ID]
+Foreign_keys = []
 Sample rows from Examination (columns: ["ID", "Examination Date", "ANA"]):
 [[14872, "1997-05-27", 256], [48473, "1992-12-21", 256], [102490, "1995-04-20", 0]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
 Column Examination Date: column description -> Examination Date, value description -> 
 Column ANA: column description -> anti-nucleus antibody concentration, value description -> 
-Sample rows from Patient (columns: ["ID"]):
-[[2110], [11408], [12052]]
-Column descriptions and value descriptions for Patient:
-Column ID: column description -> identification of the patient, value description -> 
 
 Q: What was the anti-nucleus antibody concentration level for the patient id 3605340 on 1996/12/2?
 Hint: anti-nucleus antibody refers to ANA; 1996/12/2 refers to `Examination Date` = '1996-12-02'

@@ -225,12 +225,12 @@ Hint: Abomination refers to superhero_name = 'Abomination';
 Schema_links: [hero_attribute.attribute_value,superhero.superhero_name,hero_attribute.hero_id = superhero.id,Abomination]
 Result Contract:
 {
-  "population": "The superhero whose superhero_name is 'Abomination'.",
+  "population": "Attribute values associated with the superhero named 'Abomination'.",
   "row_grain": "One row per attribute value recorded for that superhero.",
   "column_role": "The attribute value of that superhero.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows hero_attribute.attribute_value is stored per hero-attribute association, so the result consists of Abomination's attribute-value rows rather than a single superhero row."
+  "meta_review": "Metadata shows attribute values are stored per hero-attribute association, so the result consists of Abomination's attribute-value rows rather than a single superhero row."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

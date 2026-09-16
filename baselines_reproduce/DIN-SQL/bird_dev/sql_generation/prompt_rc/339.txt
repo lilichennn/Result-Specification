@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic; oxygen refers to element = 'o
 Schema_links: [atom.atom_id,atom.element,molecule.label,atom.molecule_id = molecule.molecule_id,'+','o']
 Result Contract:
 {
-  "population": "Atoms belonging to a molecule that is carcinogenic (label = '+') and that contains at least one oxygen atom (an atom with element = 'o').",
-  "row_grain": "One row per atom of each qualifying carcinogenic, oxygen-containing molecule.",
-  "column_role": "The atom ID of each qualifying atom.",
+  "population": "Oxygen atoms (element = 'o') that belong to molecules classified as carcinogenic (label = '+').",
+  "row_grain": "One row per qualifying oxygen atom.",
+  "column_role": "The atom ID of each qualifying oxygen atom.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is atom-level: only oxygen atoms are returned, with carcinogenic molecule status as the qualifying context."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: Full name of the driver refers to drivers.forename and drivers.surname; bo
 Schema_links: [drivers.forename,drivers.surname,drivers.nationality,drivers.dob,pitStops.duration,pitStops.driverId = drivers.driverId,German,1980,1985]
 Result Contract:
 {
-  "population": "Drivers who are German and whose birth year is strictly between 1980 and 1985 (year of birth greater than 1980 and less than 1985).",
-  "row_grain": "One row per eligible driver.",
-  "column_role": "The driver's full name, composed of forename and surname.",
-  "derivation": "For each driver, the average pit stop duration computed as the sum of pit stop durations divided by the count of pit stop durations across that driver's pit stops.",
-  "filter_policy": "Return the top 3 drivers ranked by shortest average pit stop duration (ascending order); tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "German drivers whose birth year is from 1980 through 1985 inclusive and who have at least one pit stop.",
+  "row_grain": "One row per selected eligible driver full name.",
+  "column_role": "The driver's full name, represented by forename and surname.",
+  "derivation": "The returned name components are stored driver attributes; the per-driver average pit stop duration is an aggregate used only for ranking.",
+  "filter_policy": "Return the top 3 rows ordered by shortest average pit stop duration ascending; tie handling is unspecified.",
+  "meta_review": "The birth-year range includes 1980 and 1985."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

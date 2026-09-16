@@ -324,11 +324,11 @@ Hint: Male refers to gender = 'M'; A15 stands for no. of commited crimes 1995
 Schema_links: [client.client_id,client.gender,district.district_id,district.A15,client.district_id = district.district_id,'M']
 Result Contract:
 {
-  "population": "Male clients (gender = 'M') whose branch location is the selected branch location (district) having the second-highest number of committed crimes in 1995 (A15); the selection reference is all branch locations, each characterized by A15.",
-  "row_grain": "One global summary row for the selected branch location.",
-  "column_role": "The count of male clients in the selected branch location.",
-  "derivation": "Count the eligible male clients whose branch location is the selected branch location.",
-  "filter_policy": "Select the single branch location ranking second-highest by number of committed crimes in 1995 (A15) relative to all branch locations.",
+  "population": "Male clients (gender = 'M') whose branch location (district) has the number of committed crimes in 1995 (A15) equal to the A15 value of the branch location appearing second when all branch locations are ordered by A15 descending; all branch locations with that A15 value are eligible.",
+  "row_grain": "One global summary row for the eligible branch locations.",
+  "column_role": "The count of male clients in the eligible branch locations.",
+  "derivation": "Count the eligible male clients whose branch location has the selected second-position A15 value.",
+  "filter_policy": "Select the A15 value occupying the second position when all branch locations are ordered by A15 descending, and include every branch location with that value rather than a single branch location.",
   "meta_review": "Metadata identifies A15 as an attribute of district and describes district_id in client and district as location of branch. This refines the selected branch and client affiliation to branch-location (district) semantics."
 }
 

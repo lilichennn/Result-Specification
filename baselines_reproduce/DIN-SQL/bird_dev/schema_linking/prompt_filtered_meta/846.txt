@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,driverRef]
 Table qualifying, columns = [*,raceId,driverId,position,q1,q2]
-Table races, columns = [*,raceId]
-Foreign_keys = [qualifying.driverId = drivers.driverId,qualifying.raceId = races.raceId]
+Foreign_keys = [qualifying.driverId = drivers.driverId]
 Sample rows from drivers (columns: ["driverId", "driverRef"]):
 [[1, "hamilton"], [2, "heidfeld"], [3, "rosberg"]]
 Column descriptions and value descriptions for drivers:
@@ -199,10 +198,6 @@ Column driverId: column description -> , value description ->
 Column position: column description -> , value description -> 
 Column q1: column description -> , value description -> 
 Column q2: column description -> , value description -> 
-Sample rows from races (columns: ["raceId"]):
-[[837], [833], [838]]
-Column descriptions and value descriptions for races:
-Column raceId: column description -> , value description -> 
 
 Q: Please list the reference names of the drivers who are eliminated in the first period in race number 20.
 Hint: driver reference name refers to driverRef; first qualifying period refers to q1; drivers who are eliminated in the first qualifying period refers to 5 drivers with MAX(q1); race number refers to raceId;

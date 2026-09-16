@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,spent,amount,event_status,link_to_event]
 Table event, columns = [*,event_id,event_name,status]
-Table expense, columns = [*,cost,link_to_budget]
-Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id]
+Foreign_keys = [budget.link_to_event = event.event_id]
 Sample rows from budget (columns: ["budget_id", "spent", "amount", "event_status", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", 67.81, 75, "Closed", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", 121.14, 150, "Closed", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", 20.2, 20, "Closed", "recJ4Witp9tpjaugn"]]
 Column descriptions and value descriptions for budget:
@@ -206,11 +205,6 @@ Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
 Column status: column description -> One of three values indicating if the event is in planning, is opened, or is closed, value description -> Open/ Closed/ Planning
-Sample rows from expense (columns: ["cost", "link_to_budget"]):
-[[122.06, "recvKTAWAFKkVNnXQ"], [20.2, "recy8KY5bUdzF81vv"], [51.81, "recwXIiKoBMjXJsGZ"]]
-Column descriptions and value descriptions for expense:
-Column cost: column description -> The dollar amount of the expense, value description -> the unit is dollar
-Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table
 
 Q: Among all the closed events, which event has the highest spend-to-budget ratio?
 Hint: closed events refers to event_name where status = 'Closed'; highest spend-to budget ratio refers to MAX(DIVIDE(spent, amount))

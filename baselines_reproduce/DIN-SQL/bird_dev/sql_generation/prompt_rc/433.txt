@@ -297,12 +297,12 @@ Hint: are only available for online games refers to isOnlineOnly = 1; percentage
 Schema_links: [set_translations.language,sets.isOnlineOnly,set_translations.setCode = sets.code,Chinese Simplified,1]
 Result Contract:
 {
-  "population": "All cards whose recorded foreign language is Chinese Simplified.",
-  "row_grain": "One global summary row for the entire eligible card population.",
-  "column_role": "A single numeric value: the percentage of eligible cards that are only available for online games.",
-  "derivation": "Percentage = (count of eligible cards with card-level isOnlineOnly = 1) divided by (count of all eligible cards) multiplied by 100.",
+  "population": "All recorded card-set language entries, i.e., each language in which a set is recorded.",
+  "row_grain": "One global summary row for the entire set-language population.",
+  "column_role": "A single numeric value: the percentage of all set-language entries that are Chinese Simplified and belong to a set available only for online games.",
+  "derivation": "Percentage = (count of set-language entries whose language is Chinese Simplified and whose set has online-only availability) divided by (count of all set-language entries), multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that card language is recorded in foreign_data.language and card online-only availability is cards.isOnlineOnly. This refines the population representation and metric owner while preserving the global percentage."
+  "meta_review": "The result concerns card sets and their language records, not individual cards; online-only availability is treated as a set-level property, and the denominator covers all set-language records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

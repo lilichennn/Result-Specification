@@ -230,12 +230,12 @@ Hint: t_shirt_size = 'Medium' where position = 'Member'; percentage = DIVIDE(COU
 Schema_links: [member.member_id,member.t_shirt_size,member.position,income.amount,member.member_id = income.link_to_member,Medium,Member,50]
 Result Contract:
 {
-  "population": "Members, i.e. records with position = 'Member', whose t-shirt size is 'Medium'.",
-  "row_grain": "One global summary row for the entire eligible member population.",
-  "column_role": "The percentage of eligible members associated with a received amount of 50.",
-  "derivation": "Percentage = (count of eligible members associated with a received amount of 50) divided by (count of all eligible members) multiplied by 100.",
+  "population": "Received-amount records linked to members whose position is 'Member' and whose t-shirt size is 'Medium'.",
+  "row_grain": "One global summary row for the eligible received-amount population.",
+  "column_role": "The percentage of eligible received amounts whose amount is 50.",
+  "derivation": "Percentage = (count of eligible received amounts with amount 50) divided by (count of all eligible received amounts), multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies the received amount as income.amount linked to a member, distinguishing it from budget.amount. This supports describing the numerator as eligible members associated with a received amount of 50 while preserving the Round-1 member-level percentage."
+  "meta_review": "The received amount is the unit of analysis linked to a member, so the percentage is over received-amount records rather than over members."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

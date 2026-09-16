@@ -251,10 +251,10 @@ Hint: "Yevgeny" is the DisplayName; edited refers to LastEditorUserId
 Schema_links: [posts.Score,users.WebsiteUrl,users.DisplayName,posts.LastEditorUserId = users.Id,Yevgeny]
 Result Contract:
 {
-  "population": "All posts whose last editor is the user with DisplayName \"Yevgeny\" (edited refers to LastEditorUserId).",
-  "row_grain": "One global summary row for the user Yevgeny across all qualifying posts.",
-  "column_role": "The total score of the qualifying posts, and the website URL of the user Yevgeny.",
-  "derivation": "Sum the scores of all posts whose last editor is Yevgeny.",
+  "population": "All posts whose last editor is a user with DisplayName \"Yevgeny\" (edited refers to LastEditorUserId).",
+  "row_grain": "One summary row for each distinct website URL of the matching last-editor users, aggregating the qualifying posts for that website URL.",
+  "column_role": "The total score of the qualifying posts for each returned website URL, and that website URL.",
+  "derivation": "Sum the scores of qualifying posts separately for each returned website URL.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms posts.LastEditorUserId is the last editor's user id and users.WebsiteUrl is the user's website URL. This validates matching posts to the user by editor identity and returning the user-level website URL."
 }

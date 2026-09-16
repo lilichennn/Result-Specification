@@ -230,12 +230,12 @@ Hint: budget category refers to category; events located at refers to location; 
 Schema_links: [budget.category,event.location,event.type,budget.spent,budget.link_to_event = event.event_id,'MU 215','Guest Speaker',0]
 Result Contract:
 {
-  "population": "Budget categories of events where the event location is 'MU 215', the event type is 'Guest Speaker', and the budget category's spent amount is 0; all three conditions must hold together.",
-  "row_grain": "One row per qualifying budget category associated with an event.",
-  "column_role": "The budget category.",
+  "population": "Budget category and event type values for events whose location is 'MU 215', whose type is 'Guest Speaker', and whose associated budget spent amount is 0; all three conditions must hold together.",
+  "row_grain": "One row per distinct qualifying budget category and event type combination.",
+  "column_role": "The budget category and the event type.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows category and spent are attributes of budget entries linked to events, not event-level attributes. The contract therefore treats each qualifying budget category for an event as a result row."
+  "meta_review": "Metadata shows category and spent are attributes of budget entries linked to events, while event type is an event attribute; the result is distinct qualifying budget category and event type values rather than one row per event association."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

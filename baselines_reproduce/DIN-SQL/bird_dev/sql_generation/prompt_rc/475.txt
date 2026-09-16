@@ -297,10 +297,10 @@ Hint: card set Coldsnap refers to name = 'Coldsnap'; black border color refers t
 Schema_links: [cards.id,sets.name,cards.borderColor,cards.setCode = sets.code,'Coldsnap','black']
 Result Contract:
 {
-  "population": "Cards that belong to the set named 'Coldsnap' and have border color 'black'.",
-  "row_grain": "One global summary row for the entire qualifying card population.",
-  "column_role": "The count of qualifying cards.",
-  "derivation": "Count the cards satisfying the population conditions.",
+  "population": "Cards that belong to the set named 'Coldsnap'.",
+  "row_grain": "One global summary row for the entire Coldsnap card population.",
+  "column_role": "The number of those cards whose border color is 'black'.",
+  "derivation": "Aggregate over the Coldsnap cards by adding one for each card with border color 'black' and zero otherwise.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms sets.name is the card-set name, distinguishing it from cards.name, so 'Coldsnap' scopes the set entity. It also confirms cards.borderColor is the card-level border color with 'black' as a valid value."
 }

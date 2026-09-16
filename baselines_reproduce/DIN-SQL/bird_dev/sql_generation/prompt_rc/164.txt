@@ -248,12 +248,12 @@ Hint:
 Schema_links: [order.order_id,client.client_id,disp.type,order.account_id = account.account_id,disp.account_id = account.account_id,disp.client_id = client.client_id,32423,'OWNER']
 Result Contract:
 {
-  "population": "The order whose id equals 32423.",
-  "row_grain": "One order, specifically the order with id 32423.",
-  "column_role": "The identity of the person who placed the order.",
+  "population": "The client or clients associated with the order whose id is 32423.",
+  "row_grain": "One row for each client associated with that order.",
+  "column_role": "The identity of the client or clients who placed the order.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

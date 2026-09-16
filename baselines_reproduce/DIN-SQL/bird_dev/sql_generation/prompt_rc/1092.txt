@@ -491,12 +491,12 @@ Hint: league that had the most matches in the 2008/2009 season refers to MAX(lea
 Schema_links: [League.name,Match.id,Match.season,Match.league_id = League.id,'2008/2009']
 Result Contract:
 {
-  "population": "All leagues, with only matches played in the 2008/2009 season contributing to each league's match count.",
-  "row_grain": "One single league.",
+  "population": "Leagues that had matches in the 2008/2009 season; only those matches contribute to each league's match count.",
+  "row_grain": "One row per distinct league name tied for the highest 2008/2009 match count.",
   "column_role": "The name of the league.",
-  "derivation": "For each league, the count of its matches in the 2008/2009 season.",
-  "filter_policy": "Select the league with the highest match count (argmax over per-league match counts).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The returned value is the league name as a stored attribute; the match count is aggregated only to identify the maximum.",
+  "filter_policy": "Keep only leagues whose 2008/2009 match count equals the maximum 2008/2009 match count among leagues.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

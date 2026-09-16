@@ -415,12 +415,12 @@ Hint: heaviest average weights refers to MAX(AVG(weight))
 Schema_links: [Country.name,Player.weight,Match.country_id = Country.id,Match.home_player_1 = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players, each associated with a country; no eligibility conditions restrict which players contribute.",
+  "population": "Home-player match appearances belonging to a country, where the contributing player is the player listed as the first home player in a match; only countries with such appearances are considered.",
   "row_grain": "One country.",
   "column_role": "The identity (name) of the country; the average weight serves only as a ranking measure and is not a required output.",
-  "derivation": "For each country, compute the average weight of that country's players.",
-  "filter_policy": "Argmax: retain the country whose players' average weight is the maximum across all countries.",
-  "meta_review": "Metadata confirms Player.weight is the player-level weight and Country.name is the country name, validating the metric grain and requested country identity."
+  "derivation": "For each country, compute the average weight over its included home-player match appearances, counting each appearance separately rather than distinct players.",
+  "filter_policy": "Argmax: retain a single country whose included home-player appearances have the maximum average weight across all countries.",
+  "meta_review": "Metadata supports player weight as the metric and country name as the requested identity, but the country association is based on first home-player match appearances rather than all players associated with a country."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

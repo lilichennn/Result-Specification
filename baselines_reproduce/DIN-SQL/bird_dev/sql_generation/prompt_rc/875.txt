@@ -285,12 +285,12 @@ Hint: the season page refers to url; race number refers to raceId;
 Schema_links: [seasons.url,races.year,races.raceId,races.year = seasons.year,901]
 Result Contract:
 {
-  "population": "The season whose year equals the year in which the race with raceId 901 took place.",
-  "row_grain": "One season, namely the season of the year when race 901 occurred.",
+  "population": "The season whose year equals the year in which the race with race number 901 took place.",
+  "row_grain": "One season, namely the season of the year when race number 901 occurred.",
   "column_role": "The season page URL of that season.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that the season page is seasons.url and that the race year is races.year. This validates the season-owned URL and race-year matching used in the Round-1 contract."
+  "meta_review": "Metadata confirms that the season page is the season URL and that the race year identifies the corresponding season."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

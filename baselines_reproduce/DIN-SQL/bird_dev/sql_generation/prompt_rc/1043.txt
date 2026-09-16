@@ -485,7 +485,7 @@ Schema_links: [Team.team_short_name,Team.team_long_name,'Queens Park Rangers']
 Result Contract:
 {
   "population": "Football teams whose long name is 'Queens Park Rangers'.",
-  "row_grain": "One football team matching the requested long name.",
+  "row_grain": "One row per matching football team.",
   "column_role": "The short name of the team.",
   "derivation": "none",
   "filter_policy": "none",

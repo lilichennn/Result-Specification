@@ -182,28 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,convertedManaCost,name,setCode]
-Table set_translations, columns = [*,language,setCode,translation]
-Table sets, columns = [*,code,name]
-Foreign_keys = [set_translations.setCode = sets.code]
-Sample rows from cards (columns: ["id", "convertedManaCost", "name", "setCode"]):
-[[1, 7.0, "Ancestor's Chosen", "10E"], [2, 5.0, "Angel of Mercy", "10E"], [3, 4.0, "Aven Cloudchaser", "10E"]]
+Table cards, columns = [*,id,convertedManaCost,name]
+Foreign_keys = []
+Sample rows from cards (columns: ["id", "convertedManaCost", "name"]):
+[[1, 7.0, "Ancestor's Chosen"], [2, 5.0, "Angel of Mercy"], [3, 4.0, "Aven Cloudchaser"]]
 Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
 Column convertedManaCost: column description -> The converted mana cost of the card. Use the manaValue property., value description -> if value is higher, it means that this card cost more converted mana 
 Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
-Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from set_translations (columns: ["language", "setCode", "translation"]):
-[["Chinese Simplified", "10E", "核心系列第十版"], ["Chinese Traditional", "10E", "核心系列第十版"], ["French", "10E", "Dixième édition"]]
-Column descriptions and value descriptions for set_translations:
-Column language: column description -> language of this card set, value description -> 
-Column setCode: column description -> the set code for this set, value description -> 
-Column translation: column description -> translation of this card set, value description -> 
-Sample rows from sets (columns: ["code", "name"]):
-[["10E", "Tenth Edition"], ["2ED", "Unlimited Edition"], ["2XM", "Double Masters"]]
-Column descriptions and value descriptions for sets:
-Column code: column description -> The set code for the set., value description -> 
-Column name: column description -> The name of the set., value description -> 
 
 Q: What is percentage of the cards with a converted Mana Cost of 10 in set of Abyssal Horror?
 Hint: set of Abyssal Horror refers to name = 'Abyssal Horror'; percentage refers to DIVIDE(COUNT(convertedManaCost = 16),COUNT(convertedManaCost))*100

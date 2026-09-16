@@ -366,12 +366,12 @@ Hint: Ancestor's Chosen' is the name of card; type of the card as originally pri
 Schema_links: [cards.originalType,cards.name,"Ancestor's Chosen"]
 Result Contract:
 {
-  "population": "The card whose name is \"Ancestor's Chosen\".",
+  "population": "The card whose name is \"Ancestor's Chosen\" and whose originaltype is present.",
   "row_grain": "One card.",
   "column_role": "The card's type as originally printed (originaltype).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.originalType is the type of a card as originally printed, including any supertypes and subtypes. This validates the requested output and requires no refinement."
+  "meta_review": "Metadata confirms cards.originalType is the type of a card as originally printed, including any supertypes and subtypes; the requested output is the non-missing originally printed type for the named card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

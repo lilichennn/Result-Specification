@@ -230,9 +230,9 @@ Hint: major refers to major name;
 Schema_links: [major.major_name,major.department,member.first_name,member.last_name,member.link_to_major = major.major_id,Garrett,Gerke]
 Result Contract:
 {
-  "population": "The member named Garrett Gerke and the major associated with that member.",
+  "population": "The major associated with the member named Garrett Gerke.",
   "row_grain": "One major associated with the member Garrett Gerke.",
-  "column_role": "The major name and the name of the department that offers that major.",
+  "column_role": "The major name and the department that the major belongs to.",
   "derivation": "none",
   "filter_policy": "Restrict to the member whose first name is 'Garrett' and last name is 'Gerke'; no ordering.",
   "meta_review": "Metadata shows the named person is represented in member with separate first_name and last_name and a singular link_to_major. This resolved that Garrett Gerke is identified by first and last name and that the requested outputs come from the associated major's major_name and department."

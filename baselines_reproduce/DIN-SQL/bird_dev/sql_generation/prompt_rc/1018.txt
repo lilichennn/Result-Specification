@@ -290,7 +290,7 @@ Result Contract:
   "column_role": "The average pit stop time expressed in milliseconds.",
   "derivation": "Compute the average of the pit stop duration in milliseconds over the eligible pit stop events.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms pitStops.milliseconds provides pit-stop time in milliseconds, validating the Round-1 use of AVG(milliseconds) for pit stops."
+  "meta_review": "Metadata confirms pit-stop duration is recorded in milliseconds, validating the average over pit-stop milliseconds."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

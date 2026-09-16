@@ -296,12 +296,12 @@ Hint: ALT glutamic pylvic transaminase beyond the normal range refers to GPT > 6
 Schema_links: [Patient.Diagnosis,Laboratory.GPT,Patient.Birthday,Patient.ID = Laboratory.ID,60]
 Result Contract:
 {
-  "population": "Patients who have a laboratory GPT (ALT glutamic pyruvic transaminase) measurement greater than 60.",
-  "row_grain": "One row per patient.",
-  "column_role": "The patient-level diagnosis (disease name) of the patient.",
+  "population": "Diagnoses of patients who have a laboratory GPT (ALT glutamic pyruvic transaminase) measurement greater than 60.",
+  "row_grain": "One row per distinct diagnosis.",
+  "column_role": "The patient-level diagnosis (disease name) associated with the qualifying patients.",
   "derivation": "none",
-  "filter_policy": "Order the qualifying patients ascending by date of birth (from older to younger, since larger birthday values indicate younger patients).",
-  "meta_review": "Metadata confirms Laboratory.GPT is the ALT/GPT measurement and Patient.Birthday is the date of birth. It also distinguishes Patient.Diagnosis as the patient-level diagnosis, so the contract remains patient-grained and ordered by birth date."
+  "filter_policy": "Order the returned diagnoses ascending by the associated patient's date of birth (older to younger).",
+  "meta_review": "Metadata confirms the GPT measurement, date of birth, and patient diagnosis concepts. The result is diagnosis-level, de-duplicated, and ordered ascending by date of birth."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

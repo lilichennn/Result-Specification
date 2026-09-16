@@ -182,12 +182,12 @@ Hint: '2012/8/23' can be represented by '2012-08-23'
 Schema_links: [customers.Segment,transactions_1k.Date,transactions_1k.Time,customers.CustomerID = transactions_1k.CustomerID,'2012-08-23','21:20:00']
 Result Contract:
 {
-  "population": "The client segment of the customer associated with the transaction recorded at 2012-08-23 21:20:00.",
-  "row_grain": "One row representing the customer's client segment at that moment.",
-  "column_role": "The customer's client segment value.",
+  "population": "The client segment values for customers associated with transactions recorded on 2012-08-23 at 21:20:00.",
+  "row_grain": "One row for each transaction recorded on 2012-08-23 at 21:20:00, carrying the associated customer's client segment.",
+  "column_role": "The associated customer's client segment value.",
   "derivation": "none",
-  "filter_policy": "Limit to the customer segment associated with the transaction event on 2012-08-23 at 21:20:00.",
-  "meta_review": "Metadata shows customers.Segment is the customer's client segment and transactions_1k supplies Date and Time for event identification. This resolves the segment owner and the timestamp representation used to identify the customer."
+  "filter_policy": "Limit to client segment values associated with transaction events recorded on 2012-08-23 at 21:20:00.",
+  "meta_review": "Metadata identifies the customer's client segment attribute and the transaction date and time attributes used for event identification. This resolves the segment owner and the timestamp representation used to identify the associated customers."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -248,12 +248,12 @@ Hint: Frequency = 'POPLATEK TYDNE' refers to weekly issuance
 Schema_links: [client.client_id,account.frequency,disp.type,disp.client_id = client.client_id,disp.account_id = account.account_id,'POPLATEK TYDNE','OWNER']
 Result Contract:
 {
-  "population": "Clients linked to an account whose statement issuance frequency is weekly (frequency = 'POPLATEK TYDNE') and whose disposition type for that account is Owner ('OWNER'); both conditions must hold.",
-  "row_grain": "One global summary row for the entire qualifying client population.",
-  "column_role": "A single value representing the number of qualifying clients.",
-  "derivation": "Count the unique clients satisfying the population conditions.",
+  "population": "Client-account ownership dispositions linked to accounts whose statement issuance frequency is weekly, with the disposition type being Owner.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "A single value representing the number of qualifying client-account ownership dispositions.",
+  "derivation": "Count the qualifying ownership disposition links; no deduplication or distinct counting is applied.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms weekly issuance is represented by account.frequency = 'POPLATEK TYDNE' and Owner is a disposition type in disp. This supports counting qualifying clients rather than disposition rows."
+  "meta_review": "Metadata confirms weekly issuance and Owner disposition type. This supports counting qualifying ownership disposition links rather than distinct clients."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

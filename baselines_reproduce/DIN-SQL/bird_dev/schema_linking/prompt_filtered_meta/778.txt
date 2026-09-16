@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table hero_power, columns = [*,hero_id,power_id]
-Table superhero, columns = [*,id,superhero_name,full_name]
+Table superhero, columns = [*,id,superhero_name]
 Table superpower, columns = [*,id,power_name]
 Foreign_keys = [hero_power.power_id = superpower.id,hero_power.hero_id = superhero.id]
 Sample rows from hero_power (columns: ["hero_id", "power_id"]):
@@ -194,13 +194,11 @@ Maps to superhero(id), value description ->
 Column power_id: column description -> the id of the power
 Maps to superpower(id), value description -> commonsense evidence:
 In general, a superhero's attributes provide the foundation for their abilities and help to define who they are, while their powers are the specific abilities that they use to fight crime and protect others.
-Sample rows from superhero (columns: ["id", "superhero_name", "full_name"]):
-[[1, "3-D Man", "Charles Chandler"], [2, "A-Bomb", "Richard Milhouse Jones"], [3, "Abe Sapien", "Abraham Sapien"]]
+Sample rows from superhero (columns: ["id", "superhero_name"]):
+[[1, "3-D Man"], [2, "A-Bomb"], [3, "Abe Sapien"]]
 Column descriptions and value descriptions for superhero:
 Column id: column description -> the unique identifier of the superhero, value description -> 
 Column superhero_name: column description -> the name of the superhero, value description -> 
-Column full_name: column description -> the full name of the superhero, value description -> commonsense evidence:
-The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is "John" and their surname is "Smith," their full name would be "John Smith."
 Sample rows from superpower (columns: ["id", "power_name"]):
 [[1, "Agility"], [2, "Accelerated Healing"], [3, "Lantern Power Ring"]]
 Column descriptions and value descriptions for superpower:

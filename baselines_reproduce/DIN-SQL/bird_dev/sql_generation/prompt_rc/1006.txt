@@ -355,10 +355,10 @@ Schema_links: [lapTimes.time,lapTimes.milliseconds,lapTimes.raceId = races.raceI
 Result Contract:
 {
   "population": "All lap records set on circuits, with no additional eligibility conditions.",
-  "row_grain": "One global summary representing the single fastest lap record value across the entire population.",
+  "row_grain": "One row representing the single fastest lap record value across the entire population.",
   "column_role": "The time of the fastest lap record.",
-  "derivation": "The minimum lap time over all lap records, comparing lap durations as numeric elapsed times rather than as formatted text, and returning the corresponding recorded time value.",
-  "filter_policy": "none",
+  "derivation": "The stored recorded time value of the lap record with the minimum numeric elapsed duration.",
+  "filter_policy": "Top-1 selection of the fastest lap record by ordering the population by numeric elapsed duration ascending and keeping the first row.",
   "meta_review": "Metadata shows lapTimes.time is formatted text while lapTimes.milliseconds stores integer elapsed duration, so the fastest lap must be selected by minimum numeric duration. The output remains the recorded lap time value."
 }
 

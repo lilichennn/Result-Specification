@@ -484,7 +484,7 @@ Hint: 35 years old and above refers to datetime(CURRENT_TIMESTAMP,'localtime') -
 Schema_links: [Player.player_name,Player.birthday]
 Result Contract:
 {
-  "population": "Players whose age is 35 years or above, defined as the difference between the current local timestamp and the player's birthday being greater than 34.",
+  "population": "Players whose age is at least 35, determined by dividing the number of days between the current date and the player's birthday by 365 and requiring the result to be at least 35.",
   "row_grain": "One row per qualifying player.",
   "column_role": "The name of the player.",
   "derivation": "none",

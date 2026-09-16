@@ -230,12 +230,12 @@ Hint: 'President' is a position of Student Club;
 Schema_links: [zip_code.city,zip_code.state,member.position,member.zip = zip_code.zip_code,President]
 Result Contract:
 {
-  "population": "The person who holds the position of President in the Student Club.",
-  "row_grain": "One person, namely the Student Club member who is the President.",
-  "column_role": "The city where the person grew up and the state where the person grew up.",
-  "derivation": "The city and state are resolved from the president's hometown ZIP code.",
+  "population": "The Student Club member or members whose position is President.",
+  "row_grain": "One row for each qualifying president, giving the city and state associated with that president's ZIP code.",
+  "column_role": "The city and state where the president grew up.",
+  "derivation": "The city and state are looked up from the ZIP code associated with the president.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that Member.zip is the member's hometown ZIP and ZIP_code provides city and state, so the grew-up location is resolved from the president's hometown ZIP."
+  "meta_review": "The president's ZIP code provides the city and state for the grew-up location."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

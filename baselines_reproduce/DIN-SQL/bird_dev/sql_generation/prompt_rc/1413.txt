@@ -230,12 +230,12 @@ Hint: incurred less than 50USD refers to cost < 50
 Schema_links: [member.zip,expense.cost,expense.link_to_member = member.member_id,50]
 Result Contract:
 {
-  "population": "All members linked to an expense whose cost is less than 50 USD (cost < 50).",
-  "row_grain": "One row per member who incurred less than 50 USD.",
-  "column_role": "The zip code of the qualifying member.",
+  "population": "Expense records linked to a member where the expense cost is less than 50 USD, with each qualifying expense supplying the linked member's zip code.",
+  "row_grain": "One row per qualifying expense linked to a member, not one deduplicated row per member.",
+  "column_role": "The zip code of the linked member.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that incurred cost is an expense linked to the member and that the requested zip code is a member property. This supports preserving the member-level result grain rather than treating each expense as a result row."
+  "meta_review": "Metadata confirms that incurred cost is an expense property and zip code is a member property. The result is expense-driven, so the grain follows qualifying expenses and a member's zip code may appear more than once if multiple qualifying expenses exist."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -297,12 +297,12 @@ Hint: ID 1-20 refers to id BETWEEN 1 and 20;
 Schema_links: [cards.colors,legalities.format,cards.id,legalities.uuid = cards.uuid,1,20]
 Result Contract:
 {
-  "population": "All cards whose id is between 1 and 20 inclusive.",
-  "row_grain": "One row per eligible card.",
-  "column_role": "Each row must show the card's colors and the format of play associated with the card.",
+  "population": "All associations between cards whose id is between 1 and 20 inclusive and their formats of play.",
+  "row_grain": "One row per associated format for an eligible card; a card with multiple associated formats appears once for each format.",
+  "column_role": "Each row must show the card's colors and the associated format of play.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata defines legalities.format as the format of play associated with a card, resolving the requested format to that associated attribute. Card-level row grain is preserved because metadata does not explicitly require expanding multiple formats."
+  "meta_review": "The requested format is resolved as an associated format-of-play attribute. Because the result is formed from card-format associations, the row grain is per associated format rather than one row per card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -230,12 +230,12 @@ Hint: The first 4 strings of the event_date values in the event table can repres
 Schema_links: [budget.spent,event.event_date,budget.link_to_event = event.event_id,2019,2020]
 Result Contract:
 {
-  "population": "All events held by the Student_Club, divided into two subpopulations: those whose event year (the first 4 characters of event_date) is 2019 and those whose event year is 2020.",
+  "population": "All events, divided into two subpopulations: those whose event year (the first 4 characters of event_date) is 2019 and those whose event year is 2020.",
   "row_grain": "One global summary row representing the single requested difference.",
   "column_role": "A single numeric value: the difference between the total amount spent in 2019 and the total amount spent in 2020.",
-  "derivation": "Sum the spent amount recorded for each event's budget categories over Student_Club events whose event year (the first 4 characters of event_date) is 2019, separately sum the same amount for events whose event year is 2020, then subtract the 2020 total from the 2019 total.",
+  "derivation": "Sum the spent amount recorded for each event's budget categories over events whose event year (the first 4 characters of event_date) is 2019, separately sum the same amount for events whose event year is 2020, then subtract the 2020 total from the 2019 total.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that the spent amount for an event is recorded as budget.spent on budget lines linked to the event, resolving the metric representation and grain. No other Round-1 semantic commitment changed."
+  "meta_review": "Metadata confirms that the spent amount for an event is recorded on budget lines linked to the event, resolving the metric representation and grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

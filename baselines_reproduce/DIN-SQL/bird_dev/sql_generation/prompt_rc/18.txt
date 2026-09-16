@@ -352,7 +352,7 @@ Hint:
 Schema_links: [schools.CDSCode,schools.County,schools.FundingType,satscores.NumTstTakr,schools.CDSCode = satscores.cds,Fresno,Directly funded,250]
 Result Contract:
 {
-  "population": "Schools that are located in Fresno, have the directly funded charter-school funding type, and have a school-level number of test takers not more than 250 (i.e., ≤ 250); all three conditions must hold.",
+  "population": "Schools that are located in Fresno County, have the directly funded charter-school funding type, and have a school-level number of test takers not more than 250 (i.e., ≤ 250); all three conditions must hold.",
   "row_grain": "One global summary row for the entire qualifying school population.",
   "column_role": "A single value representing how many qualifying schools there are.",
   "derivation": "Count the schools satisfying the population conditions.",

@@ -263,12 +263,12 @@ Hint: double bond refers to bond_type = ' = '; label = '+' mean molecules are ca
 Schema_links: [bond.bond_type,bond.bond_id,molecule.label,bond.molecule_id = molecule.molecule_id,'=','+']
 Result Contract:
 {
-  "population": "All molecules; no eligibility restriction is stated.",
-  "row_grain": "One row representing the single molecule identified as having the most double bonds.",
-  "column_role": "Whether that molecule is carcinogenic (a yes/no answer), where label '+' means carcinogenic.",
-  "derivation": "For each molecule, the number of its bonds with bond_type '=' (double bonds) is the metric used for selection; the molecule's carcinogenicity is determined by its label, with '+' meaning carcinogenic.",
-  "filter_policy": "Select the molecule with the greatest double-bond count (argmax); tie handling is unspecified.",
-  "meta_review": "Metadata confirms bond.bond_type '=' represents double bonds and molecule.label is the molecule-level carcinogenicity indicator. The plus/minus description under molecule_id does not change the evidence-assigned label owner."
+  "population": "Candidate molecules are those that have at least one double bond; no other eligibility restriction is stated.",
+  "row_grain": "One row for the single molecule selected as having the greatest number of double bonds.",
+  "column_role": "The selected molecule's carcinogenicity label is returned; '+' means carcinogenic. The label itself is returned rather than a converted yes/no value.",
+  "derivation": "The selection metric is the per-molecule count of double bonds; the returned carcinogenicity label is the stored molecule-level label, not an aggregate or recomputed yes/no value.",
+  "filter_policy": "Choose the candidate molecule with the highest double-bond count; tie handling is unspecified.",
+  "meta_review": "Metadata confirms that '=' bond type represents double bonds and the molecule-level label is the carcinogenicity indicator, with '+' meaning carcinogenic. The plus/minus description associated with molecule identifiers does not change the label owner."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

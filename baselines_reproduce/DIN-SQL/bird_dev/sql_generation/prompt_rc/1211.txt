@@ -296,12 +296,12 @@ Hint: age refers to SUBTRACT(year(current_timestamp), year(Birthday)); lactate d
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.LDH,Laboratory.ID = Patient.ID,600,800]
 Result Contract:
 {
-  "population": "Patients whose lactate dehydrogenase (LDH) value is between 600 and 800, which is the meaning of 'LDH between 100-300 index above the normal range'.",
-  "row_grain": "One row per qualifying patient.",
+  "population": "Patients whose lactate dehydrogenase (LDH) value is greater than 600 and less than 800, which is the meaning of 'LDH between 100-300 index above the normal range'.",
+  "row_grain": "One distinct row per qualifying patient.",
   "column_role": "The patient's ID and the patient's age.",
   "derivation": "Age is computed as the current year minus the year of the patient's birthday.",
   "filter_policy": "none",
-  "meta_review": "Laboratory.LDH is documented as lactate dehydrogenase with normal range N < 500, validating the evidence-based 600-800 eligibility threshold. Patient.Birthday establishes the birthday used for the year-based age calculation."
+  "meta_review": "Laboratory.LDH is documented as lactate dehydrogenase with normal range N < 500, supporting the eligibility interval strictly greater than 600 and strictly less than 800. Patient.Birthday establishes the birthday used for the year-based age calculation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

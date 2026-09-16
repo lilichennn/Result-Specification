@@ -230,7 +230,7 @@ Hint:
 Schema_links: [member.member_id,major.college,member.link_to_major = major.major_id,College of Engineering]
 Result Contract:
 {
-  "population": "Students who are members of the Student_Club and whose major is in the College of Engineering; both conditions must hold for a student to be counted.",
+  "population": "Students who are members of the Student_Club and whose linked major is in the College of Engineering; both conditions must hold for a student to be counted.",
   "row_grain": "One global summary row for the entire qualifying student population.",
   "column_role": "A single value representing the number of qualifying students.",
   "derivation": "Count the students satisfying the population conditions.",

@@ -306,12 +306,12 @@ Hint: MAX(amount) where category = 'Food'
 Schema_links: [budget.budget_id,budget.amount,budget.category,Food]
 Result Contract:
 {
-  "population": "All budgets whose category is 'Food'.",
-  "row_grain": "One budget, namely the single Food budget selected as the answer.",
-  "column_role": "The identity of the selected budget as its budget_id; the budgeted amount serves only as the ranking measure and is not a required output.",
+  "population": "Budgets whose category is 'Food'.",
+  "row_grain": "One row per selected Food budget; the result may contain multiple budgets in ties and may be empty if no Food budget satisfies the selection.",
+  "column_role": "The selected budget identifier is returned; the budgeted amount is used only for selection and is not returned.",
   "derivation": "none",
-  "filter_policy": "Argmax: retain the Food budget with the highest budgeted amount; tie handling is unspecified.",
-  "meta_review": "Metadata confirms budget.budget_id is the unique identifier of a budget entry, resolving the 'which one' output to the budget identifier. It also confirms budget.amount is the budgeted amount used for ranking."
+  "filter_policy": "Retain the Food budgets whose budgeted amount equals the maximum budgeted amount over all budgets; all matching tied budgets are returned.",
+  "meta_review": "Metadata confirms the budget identifier uniquely identifies a budget entry, resolving the output to the budget identifier, and confirms the amount is the budgeted amount used to determine the maximum."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

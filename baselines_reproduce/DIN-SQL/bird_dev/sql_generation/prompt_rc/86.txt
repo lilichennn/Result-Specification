@@ -421,12 +421,12 @@ Hint:
 Schema_links: [schools.AdmLName1,schools.District,schools.County,schools.School,schools.CharterNum,40]
 Result Contract:
 {
-  "population": "Schools whose charter number is 40.",
-  "row_grain": "One row per eligible school, i.e., each school with charter number 40.",
+  "population": "Schools whose charter number is exactly 0040.",
+  "row_grain": "One row per eligible school, i.e., each school with charter number 0040.",
   "column_role": "The last name of the administrator who oversees the school, the district, the county where the school is situated, and the name of the school.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

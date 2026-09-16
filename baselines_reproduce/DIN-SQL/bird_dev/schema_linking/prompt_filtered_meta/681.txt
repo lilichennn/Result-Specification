@@ -182,18 +182,17 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,CreaionDate,ViewCount,OwnerUserId,OwnerDisplayName]
+Table posts, columns = [*,Id,CreaionDate,ViewCount,OwnerUserId]
 Table users, columns = [*,Id,DisplayName]
 Foreign_keys = [posts.OwnerUserId = users.Id]
-Sample rows from posts (columns: ["Id", "CreaionDate", "ViewCount", "OwnerUserId", "OwnerDisplayName"]):
-[[1, "2010-07-19 19:12:12.0", 1278, 8, null], [2, "2010-07-19 19:12:57.0", 8198, 24, null], [3, "2010-07-19 19:13:28.0", 3613, 18, null]]
+Sample rows from posts (columns: ["Id", "CreaionDate", "ViewCount", "OwnerUserId"]):
+[[1, "2010-07-19 19:12:12.0", 1278, 8], [2, "2010-07-19 19:12:57.0", 8198, 24], [3, "2010-07-19 19:13:28.0", 3613, 18]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column CreaionDate: column description -> the creation date of the post, value description -> 
 Column ViewCount: column description -> the view count of the post, value description -> commonsense evidence:
 Higher view count means the post has higher popularity
 Column OwnerUserId: column description -> the id of the owner user, value description -> 
-Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 
 Sample rows from users (columns: ["Id", "DisplayName"]):
 [[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
 Column descriptions and value descriptions for users:

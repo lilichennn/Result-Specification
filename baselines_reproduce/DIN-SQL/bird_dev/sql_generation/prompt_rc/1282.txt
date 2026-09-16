@@ -296,12 +296,12 @@ Hint: highest glutamic pylvic transaminase in the normal range refers to MAX(GPT
 Schema_links: [Patient.Birthday,Laboratory.GPT,Laboratory.ID = Patient.ID,60]
 Result Contract:
 {
-  "population": "Patients who have at least one glutamic pyruvic transaminase (GPT) measurement in the normal range, i.e., GPT < 60; only measurements with GPT < 60 contribute to each patient's GPT metric.",
-  "row_grain": "One row per selected patient.",
-  "column_role": "The patient's birthday (date of birth).",
-  "derivation": "For each eligible patient, the GPT metric is the maximum GPT value among that patient's measurements with GPT < 60.",
-  "filter_policy": "Keep the three patients with the highest GPT metric, i.e., top 3 ranked by descending maximum normal-range GPT.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Patient laboratory measurement occurrences where the glutamic pyruvic transaminase (GPT) value is in the normal range, i.e., below 60.",
+  "row_grain": "One row per selected normal-range GPT measurement occurrence, up to three rows total; the same patient may appear more than once.",
+  "column_role": "The patient's birthday is returned; the GPT value is used only for ranking and is not returned.",
+  "derivation": "No per-patient maximum or other aggregation is computed; each qualifying measurement's individual GPT value is used directly for ranking.",
+  "filter_policy": "Keep the three qualifying measurement occurrences with the highest individual GPT values, ordered from highest to lowest GPT.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

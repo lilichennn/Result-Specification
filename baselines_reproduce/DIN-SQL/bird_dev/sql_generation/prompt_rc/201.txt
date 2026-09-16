@@ -187,12 +187,12 @@ Hint: carbon refers to element = 'c'; double-bond molecules refers to bond_type 
 Schema_links: [atom.element,atom.atom_id,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'c','=']
 Result Contract:
 {
-  "population": "All atoms belonging to molecules that have a double bond (bond_type = '='); within this atom population, atoms with element = 'c' (carbon) form the counted subset for the numerator.",
+  "population": "Distinct atoms belonging to molecules that contain at least one double bond (bond_type = '='); among these atoms, those with element = 'c' form the carbon subset for the numerator.",
   "row_grain": "One global summary row representing a single percentage across all eligible atoms.",
   "column_role": "The percentage of carbon atoms among atoms in double-bond molecules.",
-  "derivation": "Percentage = DIVIDE(SUM(element = 'c'), COUNT(atom_id)) computed over the atoms of double-bond molecules, i.e., the share of carbon atoms among all atoms in those molecules.",
+  "derivation": "Percentage = 100 × (count of distinct atoms with element = 'c') / (count of distinct atoms) within molecules that contain at least one double bond.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

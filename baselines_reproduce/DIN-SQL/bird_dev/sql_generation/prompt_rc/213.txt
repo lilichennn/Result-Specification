@@ -187,12 +187,12 @@ Hint: type of bond refers to bond_type; between the atoms TR004_8 and TR004_20 r
 Schema_links: [bond.bond_type,connected.atom_id,connected.atom_id2,connected.bond_id = bond.bond_id,TR004_8,TR004_20]
 Result Contract:
 {
-  "population": "Bond records for bonds connecting the atom pair TR004_8 and TR004_20, where the bond's atom-pair connection lists the two atom identifiers in either order: (atom_id = 'TR004_8' AND atom_id2 = 'TR004_20') OR (atom_id = 'TR004_20' AND atom_id2 = 'TR004_8').",
-  "row_grain": "One bond between the specified pair of atoms.",
-  "column_role": "The bond type of the bond between the two atoms.",
+  "population": "Bonds that connect the atom pair TR004_8 and TR004_20, where the two atom identifiers may appear in either order in the bond's atom-pair connection.",
+  "row_grain": "One row for each qualifying bond connecting the specified atom pair.",
+  "column_role": "The bond type of each qualifying bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows the atom-pair identifiers are represented on connection records while bond type is stored on bond records, so the pair condition applies to the bond's connection rather than to bond columns directly. This refines the population representation without changing the requested bond-type output."
+  "meta_review": "The atom-pair condition identifies the relevant bond through its connection information, while the requested output remains the bond's type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

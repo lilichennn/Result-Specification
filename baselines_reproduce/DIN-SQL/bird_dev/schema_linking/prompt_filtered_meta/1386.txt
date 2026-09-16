@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,link_to_event]
 Table event, columns = [*,event_id,event_name]
-Table expense, columns = [*,expense_id,cost,link_to_budget]
+Table expense, columns = [*,cost,link_to_budget]
 Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_budget = budget.budget_id]
 Sample rows from budget (columns: ["budget_id", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "recJ4Witp9tpjaugn"]]
@@ -196,10 +196,9 @@ Sample rows from event (columns: ["event_id", "event_name"]):
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
-Sample rows from expense (columns: ["expense_id", "cost", "link_to_budget"]):
-[["rec017x6R3hQqkLAo", 122.06, "recvKTAWAFKkVNnXQ"], ["rec1nIjoZKTYayqZ6", 20.2, "recy8KY5bUdzF81vv"], ["rec1oMgNFt7Y0G40x", 51.81, "recwXIiKoBMjXJsGZ"]]
+Sample rows from expense (columns: ["cost", "link_to_budget"]):
+[[122.06, "recvKTAWAFKkVNnXQ"], [20.2, "recy8KY5bUdzF81vv"], [51.81, "recwXIiKoBMjXJsGZ"]]
 Column descriptions and value descriptions for expense:
-Column expense_id: column description -> unique id of income, value description -> 
 Column cost: column description -> The dollar amount of the expense, value description -> the unit is dollar
 Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table
 

@@ -183,11 +183,11 @@ Schema_links: [gasstations.Country,transactions_1k.Date,transactions_1k.Time,tra
 Result Contract:
 {
   "population": "All paid-customer events at gas stations that occurred on 2012-08-25.",
-  "row_grain": "One country, namely the country of the single gas station selected as having the first paid customer.",
+  "row_grain": "One country, namely the country of the single gas station selected by the latest paid-customer event on that date.",
   "column_role": "The country of the gas station.",
   "derivation": "none",
-  "filter_policy": "Select the paid-customer event with the earliest time on 2012-08-25 (argmin over event time) and return the country of its gas station; a single result is requested.",
-  "meta_review": "Metadata confirms transactions_1k records dated gas-station events with a separate Time field, and gasstations owns Country. This validates selecting the earliest event time on 2012-08-25 and returning the gas station country."
+  "filter_policy": "Select the paid-customer event with the latest time on 2012-08-25 (argmax over event time) and return the country of its gas station; a single result is requested.",
+  "meta_review": "Metadata confirms dated gas-station transaction events with a separate time field, and gas stations own Country. This validates selecting the latest event time on 2012-08-25 and returning the gas station country."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

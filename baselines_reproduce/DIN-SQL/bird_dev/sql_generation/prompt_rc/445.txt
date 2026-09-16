@@ -297,12 +297,12 @@ Hint:
 Schema_links: [foreign_data.language,foreign_data.flavorText,cards.type,cards.watermark,foreign_data.uuid = cards.uuid,colorpie]
 Result Contract:
 {
-  "population": "All cards whose watermark is \"colorpie\".",
-  "row_grain": "One row per foreign-language card record associated with a qualifying card.",
-  "column_role": "The foreign language, the foreign flavor text, and the card's type.",
+  "population": "Foreign-language data associated with cards whose watermark is \"colorpie\".",
+  "row_grain": "One row per distinct language and flavor text combination among that foreign-language data.",
+  "column_role": "The language and the flavor text.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata establishes that language and flavor text are foreign-language card data, so the result grain is foreign-language records linked to watermark-qualified cards. The requested type remains the card's type rather than a derived attribute."
+  "filter_policy": "Duplicate language and flavor text combinations are eliminated.",
+  "meta_review": "Language and flavor text are foreign-language attributes linked to watermark-qualified cards; the returned result contains only those attributes, not the card type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

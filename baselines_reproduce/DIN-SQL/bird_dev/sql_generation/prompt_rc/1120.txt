@@ -415,12 +415,12 @@ Hint: Daan Smith refers to player_name = 'Daan Smith'; Filipe Ferreira refers to
 Schema_links: [Match.away_team_goal,Player.player_name,Match.away_player_1 = Player.player_api_id,Match.away_player_2 = Player.player_api_id,Match.away_player_3 = Player.player_api_id,Match.away_player_4 = Player.player_api_id,Match.away_player_5 = Player.player_api_id,Match.away_player_6 = Player.player_api_id,Match.away_player_7 = Player.player_api_id,Match.away_player_8 = Player.player_api_id,Match.away_player_9 = Player.player_api_id,Match.away_player_10 = Player.player_api_id,Match.away_player_11 = Player.player_api_id,'Daan Smith','Filipe Ferreira']
 Result Contract:
 {
-  "population": "All goal-scoring events where the goal is an away team goal and the scorer is Daan Smith (player_name = 'Daan Smith') or Filipe Ferreira (player_name = 'Filipe Ferreira'); the two player conditions combine with OR and both are restricted to away team goals.",
-  "row_grain": "One global summary row representing the combined total across both players.",
-  "column_role": "A single value: the total number of away team goals scored by Daan Smith and Filipe Ferreira combined.",
-  "derivation": "Sum the away team goals over all qualifying scoring events by either of the two named players.",
+  "population": "Matches where the away-team goal value is considered and either Daan Smith (player_name = 'Daan Smith') or Filipe Ferreira (player_name = 'Filipe Ferreira') is the associated away-team player; the two player conditions combine with OR.",
+  "row_grain": "One global summary row representing the combined total across the qualifying matches for both players.",
+  "column_role": "A single value: the summed away-team goal total for the qualifying matches associated with Daan Smith and Filipe Ferreira.",
+  "derivation": "Sum the away-team goal values across all qualifying match rows for either named player.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is a match-level away-team goal total associated with the named away players, not a count of individual scoring events."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

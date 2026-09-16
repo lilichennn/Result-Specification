@@ -248,12 +248,12 @@ Hint:
 Schema_links: [trans.amount,card.issued,card.disp_id = disp.disp_id,disp.account_id = account.account_id,trans.account_id = account.account_id,'1996-10-21']
 Result Contract:
 {
-  "population": "Transactions made by the client who has a credit card issued on 1996-10-21; the card-opening date is the credit-card issue date encoded as YYMMDD, and eligible transactions are those recorded for the account associated with that client.",
-  "row_grain": "One global summary row for the qualifying client.",
-  "column_role": "The maximum transaction amount value.",
-  "derivation": "Take the maximum of the transaction amounts over the eligible transactions.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms card.issued is the credit-card issue/opening date encoded as YYMMDD and that transaction amounts are account-owned trans.amount values. This resolves the card-date representation and makes eligible transactions the account transactions associated with the identified client."
+  "population": "Transactions recorded for the account associated with the credit card issued on 1996-10-21.",
+  "row_grain": "One row containing the largest eligible transaction amount.",
+  "column_role": "The transaction amount of the largest eligible transaction.",
+  "derivation": "The returned value is the stored transaction amount from the eligible transaction ranked highest by amount.",
+  "filter_policy": "Among eligible transactions, retain only the single highest amount.",
+  "meta_review": "The card-opening date is treated as an exact calendar date matching 1996-10-21, not a YYMMDD encoding, and eligible transactions are those recorded for the account linked to that card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

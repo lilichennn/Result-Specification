@@ -225,9 +225,9 @@ Hint: hero ID refers to superhero.id; have intelligence as their power refers to
 Schema_links: [superhero.id,superpower.power_name,hero_power.hero_id = superhero.id,hero_power.power_id = superpower.id,Intelligence]
 Result Contract:
 {
-  "population": "All superheroes who have Intelligence as one of their superpowers (superpower.power_name = 'Intelligence').",
-  "row_grain": "One row per qualifying superhero.",
-  "column_role": "The hero ID (superhero.id) of each qualifying superhero.",
+  "population": "Hero-power associations that assign the superpower named Intelligence to a hero.",
+  "row_grain": "One row per qualifying hero-power association; the result is not explicitly de-duplicated by hero.",
+  "column_role": "The hero ID carried by each qualifying association.",
   "derivation": "none",
   "filter_policy": "none",
   "meta_review": "Metadata confirms power_name is a superpower property in superpower, distinct from attribute_name in attribute. The population was therefore refined to require Intelligence as superpower.power_name."

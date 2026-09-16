@@ -184,10 +184,10 @@ Result Contract:
 {
   "population": "All transactions associated with customers whose recorded currency is euro.",
   "row_grain": "One global summary row for the entire eligible set of transactions.",
-  "column_role": "A single value: the average total price of the eligible transactions.",
-  "derivation": "Compute the arithmetic mean of the transaction total price across all eligible transactions, where total price is Amount multiplied by Price.",
+  "column_role": "A single value: the average transaction price of the eligible transactions.",
+  "derivation": "Compute the arithmetic mean of the transaction's recorded price across all eligible transactions.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes customer currency as the representation of euro payment eligibility, so eligibility is applied through customers.Currency. transactions_1k.Price documentation resolves total price as Amount × Price."
+  "meta_review": "Metadata establishes customer currency as the representation of euro payment eligibility. The averaged measure is the transaction's recorded price rather than a derived amount-times-price total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

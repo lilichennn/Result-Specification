@@ -416,7 +416,7 @@ Schema_links: [Player.player_name,Player_Attributes.attacking_work_rate,Player_A
 Result Contract:
 {
   "population": "Player attribute records for Francesco Migliore (player_name = 'Francesco Migliore') dated 2015-05-01 (date LIKE '2015-05-01%').",
-  "row_grain": "One player attribute record for Francesco Migliore on 2015-05-01.",
+  "row_grain": "One output row for each matching player attribute record for Francesco Migliore on 2015-05-01.",
   "column_role": "The attacking work rate value for that player on that date.",
   "derivation": "none",
   "filter_policy": "none",

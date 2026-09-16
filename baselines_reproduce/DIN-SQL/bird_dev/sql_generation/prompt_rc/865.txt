@@ -285,12 +285,12 @@ Hint: drivers who finished the race refers to time is not empty (i.e. time IS NO
 Schema_links: [drivers.forename,drivers.surname,drivers.dob,results.time,results.raceId,results.driverId = drivers.driverId,592]
 Result Contract:
 {
-  "population": "All drivers who have a race result in race No. 592 (raceId = 592) whose result finish time is not null.",
+  "population": "All drivers who have a race result in race No. 592 (raceId = 592) whose result finish time is not null and whose date of birth is not null.",
   "row_grain": "One driver, namely the single oldest finisher.",
   "column_role": "The identity of the driver, answering who the oldest is.",
   "derivation": "A driver's age is determined by their date of birth (drivers.dob), where a smaller dob value means an older driver.",
-  "filter_policy": "Argmin: select the single eligible driver with the smallest date-of-birth value, i.e., the oldest.",
-  "meta_review": "Metadata confirms that results.time is the race-result finish time and that a non-null value indicates the driver finished, resolving which time field satisfies the evidence. No other Round-1 semantics required refinement."
+  "filter_policy": "Argmin: select the single eligible driver with the smallest non-null date-of-birth value, i.e., the oldest.",
+  "meta_review": "Metadata confirms that results.time is the race-result finish time and that a non-null value indicates the driver finished, resolving which time field satisfies the evidence; a known date of birth is also required to determine the oldest driver."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

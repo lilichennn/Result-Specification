@@ -366,12 +366,12 @@ Hint: below 100 on EDHRec refers to EDHRec <100; with 2015 frame style refers to
 Schema_links: [cards.name,cards.frameVersion,cards.edhrecRank,2015,100]
 Result Contract:
 {
-  "population": "All cards whose frame style is 2015 (frameVersion = '2015') and whose EDHRec ranking is below 100 (edhrecRank < 100); both conditions must hold.",
+  "population": "All cards whose frame style is 2015 (frameVersion = 2015) and whose EDHRec ranking is below 100 (edhrecRank < 100); both conditions must hold.",
   "row_grain": "One card.",
-  "column_role": "The name of the card.",
+  "column_role": "The identifier of the card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.edhrecRank is the EDHRec rank and cards.frameVersion includes the value '2015', resolving the filter representations. It also confirms cards.name is the card name output."
+  "meta_review": "Metadata confirms the EDHRec rank and frame version filter representations. It confirms the returned output is the card identifier, not the card name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

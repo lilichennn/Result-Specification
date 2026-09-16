@@ -225,7 +225,7 @@ Hint: superpower refers to hero_power
 Schema_links: [superpower.power_name,hero_power.hero_id,hero_power.power_id = superpower.id,56]
 Result Contract:
 {
-  "population": "The hero whose ID is 56.",
+  "population": "Superpowers linked to the hero whose ID is 56.",
   "row_grain": "One row per superpower assigned to the hero with ID 56.",
   "column_role": "The superpower name.",
   "derivation": "none",

@@ -226,11 +226,11 @@ Schema_links: [race.race,colour.colour,gender.gender,superhero.hair_colour_id = 
 Result Contract:
 {
   "population": "Superheroes whose hair colour is blue and whose gender is male.",
-  "row_grain": "One superhero.",
-  "column_role": "The race of the superhero.",
+  "row_grain": "One row per qualifying superhero.",
+  "column_role": "The race of each qualifying superhero.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

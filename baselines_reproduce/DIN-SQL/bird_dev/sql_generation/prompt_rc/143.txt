@@ -248,12 +248,12 @@ Hint:
 Schema_links: [account.account_id,card.type,card.disp_id = disp.disp_id,disp.account_id = account.account_id,gold]
 Result Contract:
 {
-  "population": "Accounts for which there exists at least one associated credit card whose type is 'gold'.",
-  "row_grain": "One account per result row.",
-  "column_role": "The account identifier of each qualifying account.",
+  "population": "Accounts associated with at least one credit card whose type is 'gold'.",
+  "row_grain": "One result row for each qualifying account-gold-card association, so the same account may appear more than once.",
+  "column_role": "The account identifier of each qualifying account occurrence.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms card.type uses the literal 'gold' for gold-class credit cards and account.account_id is the account identifier. These refine the qualifying literal and output identity."
+  "meta_review": "Metadata confirms the literal 'gold' for gold-class credit cards and that the returned value identifies the account; it does not require distinct account rows."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -256,7 +256,7 @@ Hint: TR047 is the molecule id; double bond refers to bond_type = ' = '; percent
 Schema_links: [bond.bond_type,bond.bond_id,bond.molecule_id,TR047,=]
 Result Contract:
 {
-  "population": "All bonds belonging to the chemical compound(s) containing molecule TR047 (molecule_id = 'TR047').",
+  "population": "All bonds belonging to the molecule identified as TR047.",
   "row_grain": "One global summary row representing the entire eligible bond population.",
   "column_role": "A single value: the percentage of bonds that are double bonds.",
   "derivation": "Percent computed as the count of bonds with bond_type = '=' divided by the count of all bonds in the eligible population, expressed as a percentage.",

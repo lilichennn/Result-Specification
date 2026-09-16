@@ -187,12 +187,12 @@ Hint: hydrogen refers to element = 'h'; label = '+' mean molecules are carcinoge
 Schema_links: [molecule.label,molecule.molecule_id,atom.element,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,bond.molecule_id = molecule.molecule_id,h,#,+]
 Result Contract:
 {
-  "population": "Distinct molecules that contain at least one hydrogen atom participating in a triple bond; among these, molecules whose label is '+' are carcinogenic for the numerator and all distinct eligible molecules form the denominator.",
+  "population": "Molecules that contain at least one hydrogen atom and at least one triple bond; eligibility does not require the hydrogen atom to be directly involved in the triple bond. Among these, molecules labeled '+' are carcinogenic for the numerator, while distinct eligible molecules form the denominator.",
   "row_grain": "One global summary row representing the entire eligible population.",
-  "column_role": "A single value: the percentage of carcinogenic molecules among distinct molecules with at least one triple-bonded hydrogen atom.",
-  "derivation": "Count distinct eligible molecules with label = '+', divide by the count of all distinct eligible molecules, and multiply by 100.0.",
+  "column_role": "A single value: the percentage measure comparing carcinogenic eligible occurrences to the number of distinct eligible molecules.",
+  "derivation": "Sum the carcinogenic indicator over eligible molecule occurrences produced by hydrogen atoms and triple bonds co-occurring in the same molecule, divide by the count of distinct eligible molecules, and multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes molecule.label at molecule grain and connected links individual atoms to specific bonds, so eligibility is distinct molecules with a hydrogen atom connected to a triple bond. This prevents counting atom or bond instances and prevents qualifying molecules by mere co-occurrence of hydrogen atoms and triple bonds in the same molecule."
+  "meta_review": "The operational semantics treats eligibility as molecule-level co-occurrence of a hydrogen atom and a triple bond, not as a direct atom-to-bond participation relationship. The numerator is an occurrence-level sum rather than a distinct-molecule count, while the denominator counts distinct eligible molecules."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

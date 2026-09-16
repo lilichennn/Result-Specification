@@ -231,7 +231,7 @@ Schema_links: [member.phone,event.event_name,attendance.link_to_member = member.
 Result Contract:
 {
   "population": "Students represented as club members who attended the event whose event name is \"Women's Soccer\".",
-  "row_grain": "One row per qualifying student/member.",
+  "row_grain": "One row for each qualifying attendance link, with no deduplication by student or phone number.",
   "column_role": "The student's phone number (phone).",
   "derivation": "none",
   "filter_policy": "none",

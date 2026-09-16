@@ -184,8 +184,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table budget, columns = [*,budget_id,link_to_event]
 Table event, columns = [*,event_id,event_name]
-Table expense, columns = [*,approved,link_to_member,link_to_budget]
-Table member, columns = [*,member_id,first_name,last_name,position]
+Table expense, columns = [*,link_to_member,link_to_budget]
+Table member, columns = [*,member_id,first_name,last_name]
 Foreign_keys = [budget.link_to_event = event.event_id,expense.link_to_member = member.member_id,expense.link_to_budget = budget.budget_id]
 Sample rows from budget (columns: ["budget_id", "link_to_event"]):
 [["rec0QmEc3cSQFQ6V2", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "recJ4Witp9tpjaugn"]]
@@ -197,20 +197,18 @@ Sample rows from event (columns: ["event_id", "event_name"]):
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
-Sample rows from expense (columns: ["approved", "link_to_member", "link_to_budget"]):
-[["true", "rec4BLdZHS2Blfp4v", "recvKTAWAFKkVNnXQ"], ["true", "recro8T1MPMwRadVH", "recy8KY5bUdzF81vv"], ["true", "recD078PnS3x2doBe", "recwXIiKoBMjXJsGZ"]]
+Sample rows from expense (columns: ["link_to_member", "link_to_budget"]):
+[["rec4BLdZHS2Blfp4v", "recvKTAWAFKkVNnXQ"], ["recro8T1MPMwRadVH", "recy8KY5bUdzF81vv"], ["recD078PnS3x2doBe", "recwXIiKoBMjXJsGZ"]]
 Column descriptions and value descriptions for expense:
-Column approved: column description -> A true or false value indicating if the expense was approved, value description -> true/ false
 Column link_to_member: column description -> The member who incurred the expense, value description -> 
 Column link_to_budget: column description -> The unique identifier of the record in the Budget table that indicates the expected total expenditure for a given category and event. , value description -> References the Budget table
-Sample rows from member (columns: ["member_id", "first_name", "last_name", "position"]):
-[["rec1x5zBFIqoOuPW8", "Angela", "Sanders", "Member"], ["rec280Sk7o31iG0Tx", "Grant", "Gilmour", "Member"], ["rec28ORZgcm1dtqBZ", "Luisa", "Guidi", "Member"]]
+Sample rows from member (columns: ["member_id", "first_name", "last_name"]):
+[["rec1x5zBFIqoOuPW8", "Angela", "Sanders"], ["rec280Sk7o31iG0Tx", "Grant", "Gilmour"], ["rec28ORZgcm1dtqBZ", "Luisa", "Guidi"]]
 Column descriptions and value descriptions for member:
 Column member_id: column description -> unique id of member, value description -> 
 Column first_name: column description -> member's first name, value description -> 
 Column last_name: column description -> member's last name, value description -> commonsense evidence: 
 full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.
-Column position: column description -> The position the member holds in the club, value description -> 
 
 Q: Which student has been entrusted to manage the budget for the Yearly Kickoff?
 Hint: name of students means the full name; full name refers to first_name, last_name;'Yearly Kickoff' is an event name;

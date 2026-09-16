@@ -285,11 +285,11 @@ Hint: fastest lap refers to min(milliseconds); Alex Yoong refers to the full nam
 Schema_links: [races.name,races.year,lapTimes.milliseconds,drivers.forename,drivers.surname,lapTimes.raceId = races.raceId,lapTimes.driverId = drivers.driverId,Michael,Schumacher]
 Result Contract:
 {
-  "population": "All races in which the driver with forename Michael and surname Schumacher has at least one lap-time record with a milliseconds value.",
-  "row_grain": "One row representing the single race in which Michael Schumacher's overall fastest lap occurred.",
+  "population": "All races in which the driver with forename Michael and surname Schumacher has at least one lap-time record.",
+  "row_grain": "One row representing the race associated with Michael Schumacher's overall fastest lap-time record.",
   "column_role": "The name of the race and the year in which the race was held.",
-  "derivation": "For each eligible race, Michael Schumacher's fastest lap is the minimum milliseconds value among his lap-time records for that race; the overall fastest lap is the minimum of these race-level fastest laps.",
-  "filter_policy": "Select the race whose race-level fastest-lap milliseconds value is the minimum across all eligible races.",
+  "derivation": "Michael Schumacher's fastest lap is the minimum milliseconds value among all his lap-time records; the returned race name and year are the race attributes associated with that lap-time record.",
+  "filter_policy": "Select the single race associated with the lap-time record having the smallest milliseconds value among all Michael Schumacher lap-time records.",
   "meta_review": "Metadata shows lapTimes.milliseconds records lap times while results.milliseconds is actual finishing time, so the fastest-lap minimum is taken from lap-time records. Metadata also identifies races.name and races.year as the requested race and year outputs."
 }
 

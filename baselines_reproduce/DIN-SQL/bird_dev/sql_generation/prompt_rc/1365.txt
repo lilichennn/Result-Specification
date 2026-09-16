@@ -230,12 +230,12 @@ Hint: expense of budget refers to expense_description; lowest remaining refers t
 Schema_links: [expense.expense_description,budget.remaining,expense.link_to_budget = budget.budget_id]
 Result Contract:
 {
-  "population": "All budgets, each together with the expenses associated with that budget.",
-  "row_grain": "One row per expense belonging to the single selected budget.",
-  "column_role": "The description of each expense of the selected budget.",
+  "population": "Expenses associated with budgets.",
+  "row_grain": "One row total: a single expense description selected from a budget with the lowest remaining.",
+  "column_role": "The description of the selected expense.",
   "derivation": "none",
-  "filter_policy": "Retain only the budget with the lowest remaining value (argmin on remaining) and return its expenses; tie handling is not specified.",
-  "meta_review": "Metadata confirms expense.link_to_budget references budget.budget_id, validating the expense-to-budget association used to return expenses of the minimum-remaining budget."
+  "filter_policy": "Retain only one expense associated with a budget having the lowest remaining value; if multiple budgets or expenses qualify, one row is chosen and tie handling is not specified.",
+  "meta_review": "Metadata confirms expense.link_to_budget references budget.budget_id, validating the expense-to-budget association used to return an expense from a budget with the minimum remaining."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

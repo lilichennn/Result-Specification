@@ -232,9 +232,9 @@ Result Contract:
 {
   "population": "Eligible members are those who incurred expenses in more than one distinct event, i.e., members whose count of distinct events associated with their incurred expenses is greater than 1.",
   "row_grain": "One member, producing a single-row result identifying the top payer.",
-  "column_role": "The identity of the member who paid the most; the amount paid functions as the ranking measure and is not required as an output column.",
-  "derivation": "For each member, determine the number of distinct events associated with their incurred expenses and the expense cost paid; the distinct-event count establishes eligibility and the cost is the metric compared across eligible members.",
-  "filter_policy": "Return the single eligible member with the maximum amount paid (argmax over cost); tie handling is unspecified.",
+  "column_role": "The identity of the member who paid the most; the total amount paid functions as the ranking measure and is not required as an output column.",
+  "derivation": "For each member, determine the number of distinct events associated with their incurred expenses and the total expense cost paid; the distinct-event count establishes eligibility and the total cost is the metric compared across eligible members.",
+  "filter_policy": "Return the single eligible member with the maximum total amount paid; tie handling is unspecified.",
   "meta_review": "Metadata confirms that event identity is separate from expense identity, so the eligibility count is over distinct events associated with a member's expenses rather than expense records."
 }
 

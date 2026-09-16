@@ -248,12 +248,12 @@ Hint: Female refers to gender = 'F'
 Schema_links: [client.client_id,client.gender,card.type,card.disp_id = disp.disp_id,disp.client_id = client.client_id,F,junior]
 Result Contract:
 {
-  "population": "Customers who are female (gender = 'F') and have a credit card whose type is 'junior'.",
-  "row_grain": "One global summary row for the entire qualifying customer population.",
-  "column_role": "The count of qualifying customers.",
-  "derivation": "Count the customers satisfying the population conditions.",
+  "population": "Female customers (gender = 'F') paired with a credit card whose type is 'junior'.",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "The count of qualifying female customer-junior credit card pairs.",
+  "derivation": "Count the qualifying customer-card pairs, so a customer with multiple qualifying junior cards is counted multiple times.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms card.type records credit-card class and includes 'junior', resolving how a junior credit card is identified. No other Round-1 semantics were changed."
+  "meta_review": "Metadata confirms the credit-card type includes 'junior', resolving how a junior credit card is identified."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

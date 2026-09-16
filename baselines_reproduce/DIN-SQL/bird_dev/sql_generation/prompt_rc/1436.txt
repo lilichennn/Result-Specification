@@ -231,10 +231,10 @@ Schema_links: [attendance.link_to_event,expense.cost,attendance.link_to_member =
 Result Contract:
 {
   "population": "Event links associated with members who have at least one expense cost greater than 50 dollars.",
-  "row_grain": "One event link for an event associated with a qualifying member.",
+  "row_grain": "One row per distinct event link associated with at least one qualifying member.",
   "column_role": "The link to the event.",
   "derivation": "A member qualifies when an expense owned by that member has cost greater than 50; return the event links associated with qualifying members.",
-  "filter_policy": "Restrict event links to those associated with qualifying members; no ordering.",
+  "filter_policy": "Restrict event links to those associated with qualifying members and return each qualifying event link only once; no ordering.",
   "meta_review": "Metadata identifies expense.cost as the dollar payment amount owned by expense.link_to_member and attendance.link_to_event as the member-event link. This resolves the qualification to member expense cost > 50 and the output to the member-associated event link."
 }
 

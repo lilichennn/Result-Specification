@@ -183,27 +183,19 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Country, columns = [*,id,name]
-Table League, columns = [*,id,country_id]
-Table Match, columns = [*,id,country_id,league_id,season,date]
-Foreign_keys = [League.country_id = country.id,Match.league_id = League.id,Match.country_id = Country.id]
+Table Match, columns = [*,id,country_id,season]
+Foreign_keys = [Match.country_id = Country.id]
 Sample rows from Country (columns: ["id", "name"]):
 [[1, "Belgium"], [1729, "England"], [4769, "France"]]
 Column descriptions and value descriptions for Country:
 Column id: column description -> the unique id for countries, value description -> 
 Column name: column description -> country name, value description -> 
-Sample rows from League (columns: ["id", "country_id"]):
-[[1, 1], [1729, 1729], [4769, 4769]]
-Column descriptions and value descriptions for League:
-Column id: column description -> the unique id for leagues, value description -> 
-Column country_id: column description -> the unique id for countries, value description -> 
-Sample rows from Match (columns: ["id", "country_id", "league_id", "season", "date"]):
-[[1, 1, 1, "2008/2009", "2008-08-17 00:00:00"], [2, 1, 1, "2008/2009", "2008-08-16 00:00:00"], [3, 1, 1, "2008/2009", "2008-08-16 00:00:00"]]
+Sample rows from Match (columns: ["id", "country_id", "season"]):
+[[1, 1, "2008/2009"], [2, 1, "2008/2009"], [3, 1, "2008/2009"]]
 Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
 Column country_id: column description -> country id, value description -> 
-Column league_id: column description -> league id, value description -> 
 Column season: column description -> the season of the match, value description -> 
-Column date: column description -> the date of the match, value description -> e.g. 2008-08-17 00:00:00
 
 Q: How many matches in the 2008/2009 season were held in Belgium?
 Hint: Belgium refers to Country.name = 'Belgium';

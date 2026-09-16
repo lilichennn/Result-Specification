@@ -248,12 +248,12 @@ Hint: Growth rate = (sum of amount_1997 - sum of amount_1996) / (sum of amount_1
 Schema_links: [loan.amount,loan.date,client.gender,loan.account_id = account.account_id,disp.account_id = account.account_id,disp.client_id = client.client_id,'M',1996,1997]
 Result Contract:
 {
-  "population": "All loans across accounts belonging to male clients (gender = 'M'), where loans approved in 1996 contribute to the 1996 total and loans approved in 1997 contribute to the 1997 total.",
+  "population": "Loans on accounts that have a male client (gender = 'M') as an owner; loans dated in 1996 contribute to the 1996 total and loans dated in 1997 contribute to the 1997 total.",
   "row_grain": "One global summary row representing the growth rate across all qualifying loans.",
-  "column_role": "A single value: the growth rate of the total approved loan amount between 1996 and 1997, expressed as a percentage.",
-  "derivation": "Growth rate = (sum of approved loan amounts in 1997 - sum of approved loan amounts in 1996) / (sum of approved loan amounts in 1996) * 100%, computed over the qualifying loans.",
+  "column_role": "A single value: the growth rate of the total loan amount between 1996 and 1997, expressed as a percentage.",
+  "derivation": "Growth rate = (sum of loan amounts dated in 1997 - sum of loan amounts dated in 1996) / (sum of loan amounts dated in 1996) * 100%, computed over loans on accounts owned by male clients.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that loan.date is the approval date and loan.amount is the approved amount, so the year totals are based on approval-year approved loan amounts. No other Round-1 semantics are changed."
+  "meta_review": "The year totals are based on the loan date year and the loan amount, with account eligibility based on male ownership; the result is not restricted to approved loans."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

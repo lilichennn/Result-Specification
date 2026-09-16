@@ -263,12 +263,12 @@ Hint: label = '-' means molecules are non-carcinogenic; least numerous refers to
 Schema_links: [atom.element,molecule.label,atom.molecule_id = molecule.molecule_id,'-']
 Result Contract:
 {
-  "population": "Elements that occur as atoms in molecules labeled non-carcinogenic (label = '-'), with only atom occurrences within those molecules contributing to each element's count.",
+  "population": "Elements that occur as atoms in molecules labeled non-carcinogenic (label = '-'), with eligibility determined by atom occurrences within those molecules.",
   "row_grain": "One element.",
   "column_role": "The identity of the element that is least numerous, expressed as the recorded element value/code.",
-  "derivation": "For each element, the count of its atom occurrences across the non-carcinogenic molecules.",
-  "filter_policy": "Select the element with the minimum occurrence count (argmin); tie handling is unspecified.",
-  "meta_review": "Metadata establishes that element is recorded per atom and non-carcinogenic status is a molecule label, so occurrence counts are atom-level counts within molecules labeled '-'. It also shows that element identity is represented as a text element code."
+  "derivation": "For each element, the count of distinct non-carcinogenic molecules in which the element occurs.",
+  "filter_policy": "Select the element with the minimum distinct-molecule count; tie handling is unspecified.",
+  "meta_review": "Metadata establishes that element is recorded per atom and non-carcinogenic status is a molecule label, so the result identifies an element code by counting the distinct non-carcinogenic molecules associated with each element."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

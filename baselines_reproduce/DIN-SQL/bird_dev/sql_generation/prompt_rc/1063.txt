@@ -415,12 +415,12 @@ Hint: potential score refers to potential;
 Schema_links: [Player_Attributes.potential,Player.player_name,Player_Attributes.player_api_id = Player.player_api_id,Aaron Doran]
 Result Contract:
 {
-  "population": "The single person or player named Aaron Doran.",
-  "row_grain": "One row representing Aaron Doran.",
-  "column_role": "The potential score (the potential attribute) of Aaron Doran.",
+  "population": "Recorded potential score entries associated with a player named Aaron Doran.",
+  "row_grain": "One row per matching recorded potential score entry.",
+  "column_role": "The potential score.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Player_Attributes.potential is documented as the player's FIFA potential score, validating the requested metric's owner and representation. No metadata statement establishes multiple dated snapshots or a selection rule, so the contract remains unchanged."
+  "meta_review": "The potential score is documented as the player's FIFA potential score, validating the requested metric's owner and representation. No metadata statement imposes a single-snapshot or selection rule, so matching potential records are not reduced to one chosen score."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

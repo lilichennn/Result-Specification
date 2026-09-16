@@ -251,12 +251,12 @@ Hint: "A Lion" is the DisplayName of user; comment refers to Text
 Schema_links: [comments.Text,users.DisplayName,comments.UserId = users.Id,'A Lion']
 Result Contract:
 {
-  "population": "All comments authored by the user whose DisplayName is 'A Lion'.",
+  "population": "All comments authored by users whose DisplayName is 'A Lion'.",
   "row_grain": "One comment per result row.",
   "column_role": "The text of each comment.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

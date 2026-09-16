@@ -285,12 +285,12 @@ Hint: the fastest lap speed among all refers to max(fastestLapSpeed); Spanish Gr
 Schema_links: [results.fastestLapSpeed,races.name,races.year,results.raceId = races.raceId,'Spanish Grand Prix',2009]
 Result Contract:
 {
-  "population": "All driver race result records from the 2009 running of the race named 'Spanish Grand Prix'.",
-  "row_grain": "One global summary for the entire 2009 Spanish Grand Prix.",
-  "column_role": "The single maximum fastest lap speed value, in kilometres per hour, achieved in that race.",
-  "derivation": "Take the maximum of the fastest lap speed metric, interpreted as a speed quantity in kilometres per hour, across all eligible driver race result records.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms fastest lap speed is a driver race result attribute recorded in km/h, so the contract uses driver race result records and treats the maximum as a km/h speed. No other Round-1 semantics changed."
+  "population": "All driver race result records from the 2009 running of the race named 'Spanish Grand Prix' that have a recorded fastest lap speed.",
+  "row_grain": "One selected fastest-lap speed value for the entire 2009 Spanish Grand Prix.",
+  "column_role": "The fastest lap speed value, in kilometres per hour, from the selected record.",
+  "derivation": "Return the stored fastest lap speed from an eligible record with the highest recorded speed.",
+  "filter_policy": "Select only the top one record by fastest lap speed.",
+  "meta_review": "Metadata confirms fastest lap speed is a driver race result attribute recorded in km/h; the result is the top recorded speed value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,14 +182,9 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id]
 Table users, columns = [*,Id,Age]
-Table votes, columns = [*,Id,PostId,UserId]
-Foreign_keys = [votes.UserId = users.Id,votes.PostId = posts.Id]
-Sample rows from posts (columns: ["Id"]):
-[[1], [2], [3]]
-Column descriptions and value descriptions for posts:
-Column Id: column description -> the post id, value description -> 
+Table votes, columns = [*,PostId,UserId]
+Foreign_keys = [votes.UserId = users.Id]
 Sample rows from users (columns: ["Id", "Age"]):
 [[-1, null], [2, 37], [3, 35]]
 Column descriptions and value descriptions for users:
@@ -197,10 +192,9 @@ Column Id: column description -> the user id, value description ->
 Column Age: column description -> user's age, value description ->  teenager: 13-18
  adult: 19-65
  elder: > 65
-Sample rows from votes (columns: ["Id", "PostId", "UserId"]):
-[[1, 3, null], [2, 2, null], [3, 5, null]]
+Sample rows from votes (columns: ["PostId", "UserId"]):
+[[3, null], [2, null], [5, null]]
 Column descriptions and value descriptions for votes:
-Column Id: column description -> the vote id, value description -> 
 Column PostId: column description -> the id of the post that is voted, value description -> 
 Column UserId: column description -> the id of the voter, value description -> 
 

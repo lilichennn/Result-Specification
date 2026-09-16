@@ -248,12 +248,12 @@ Hint: A2 refers to district name; type = 'VYDAJ' stands for withdrawal transacti
 Schema_links: [district.A2,trans.type,account.district_id = district.district_id,trans.account_id = account.account_id,VYDAJ]
 Result Contract:
 {
-  "population": "Districts that have at least one account that made at least one withdrawal transaction (type = 'VYDAJ').",
-  "row_grain": "One qualifying district per row.",
-  "column_role": "The district name (A2).",
+  "population": "District names of districts that have at least one account with at least one withdrawal transaction.",
+  "row_grain": "One distinct district name per row.",
+  "column_role": "The district name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms account.district_id represents the district of an account, validating the account-based district qualification. No Round-1 semantic field required change."
+  "meta_review": "Metadata confirms the account-to-district relationship supports qualifying districts by accounts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

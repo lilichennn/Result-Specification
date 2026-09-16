@@ -291,8 +291,8 @@ Result Contract:
   "row_grain": "One race.",
   "column_role": "The name of the race.",
   "derivation": "none",
-  "filter_policy": "Select the race associated with the minimum fastest lap time, where fastest lap speed is defined as MIN(fastestLapTime); tie-breaking is unspecified.",
-  "meta_review": "Metadata confirms fastestLapTime is recorded per racer race result in results, while the requested race name is a race attribute, validating the Round-1 race-level selection."
+  "filter_policy": "Select the race associated with the minimum fastest lap time, treating fastest lap speed as the minimum fastest lap time; tie-breaking is unspecified.",
+  "meta_review": "Metadata confirms fastest lap time is recorded per racer race result, while the requested race name is a race attribute, supporting race-level selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -366,12 +366,12 @@ Hint:
 Schema_links: [cards.layout,cards.keywords,Flying]
 Result Contract:
 {
-  "population": "All cards whose list of keywords includes the keyword \"flying\".",
-  "row_grain": "One row per card that has the keyword \"flying\".",
+  "population": "All cards whose keyword is exactly \"Flying\".",
+  "row_grain": "One row per card that has the keyword exactly \"Flying\".",
   "column_role": "The card layout of each qualifying card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows cards.keywords is a list-valued column and cards.layout stores the card layout, so keyword eligibility is membership in the card's keyword list and the result remains one row per card. No expansion of list values is implied."
+  "meta_review": "Keyword eligibility is an exact match to the keyword \"Flying\", not membership in a list-valued keyword collection, and the result returns the card layout for each qualifying card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

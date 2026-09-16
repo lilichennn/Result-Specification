@@ -285,12 +285,12 @@ Hint: oldest racer refers to MIN(dob); full name refers to forename, surname.
 Schema_links: [driverStandings.wins,drivers.dob,drivers.forename,drivers.surname,driverStandings.driverId = drivers.driverId]
 Result Contract:
 {
-  "population": "All racers are eligible candidates for the oldest-racer selection.",
-  "row_grain": "One row representing the single racer identified as the oldest.",
-  "column_role": "The racer's full name (forename and surname) and the number of wins achieved by that racer.",
-  "derivation": "Count of win events attributed to the selected racer.",
-  "filter_policy": "Argmin over racers by date of birth: retain the racer with the minimum dob (the oldest).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Racers with associated standing records that provide wins information are eligible candidates for the oldest-racer selection.",
+  "row_grain": "One row representing the single racer selected as the oldest.",
+  "column_role": "The selected racer's full name (forename and surname) and the total number of wins achieved by that racer.",
+  "derivation": "Aggregate sum of the wins values recorded for the selected racer's associated standing records.",
+  "filter_policy": "Retain a single racer with the earliest date of birth.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

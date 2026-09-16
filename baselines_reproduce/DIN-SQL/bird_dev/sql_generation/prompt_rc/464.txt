@@ -298,7 +298,7 @@ Schema_links: [cards.name,set_translations.translation,cards.setCode = set_trans
 Result Contract:
 {
   "population": "All cards that belong to the card set whose translation is 'Hauptset Zehnte Edition'.",
-  "row_grain": "One card.",
+  "row_grain": "One distinct card name.",
   "column_role": "The name of the card.",
   "derivation": "none",
   "filter_policy": "none",

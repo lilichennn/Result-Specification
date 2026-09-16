@@ -183,24 +183,14 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table badges, columns = [*,UserId,Name,Date]
-Table comments, columns = [*,PostId,CreationDate,UserId,UserDisplayName]
 Table postHistory, columns = [*,PostId,CreationDate,UserId,UserDisplayName]
-Table posts, columns = [*,Id]
-Table users, columns = [*,Id,DisplayName]
-Foreign_keys = [badges.UserId = users.Id,comments.UserId = users.Id,comments.PostId = posts.Id,postHistory.UserId = users.Id,postHistory.PostId = posts.Id]
+Foreign_keys = []
 Sample rows from badges (columns: ["UserId", "Name", "Date"]):
 [[5, "Teacher", "2010-07-19 19:39:07.0"], [6, "Teacher", "2010-07-19 19:39:07.0"], [8, "Teacher", "2010-07-19 19:39:07.0"]]
 Column descriptions and value descriptions for badges:
 Column UserId: column description -> the unique id of the user, value description -> 
 Column Name: column description -> the badge name the user obtained, value description -> 
 Column Date: column description -> the date that the user obtained the badge, value description -> 
-Sample rows from comments (columns: ["PostId", "CreationDate", "UserId", "UserDisplayName"]):
-[[3, "2010-07-19 19:15:52.0", 13, null], [5, "2010-07-19 19:16:14.0", 13, null], [9, "2010-07-19 19:18:54.0", 13, null]]
-Column descriptions and value descriptions for comments:
-Column PostId: column description -> the unique id of the post, value description -> 
-Column CreationDate: column description -> the creation date of the comment, value description -> 
-Column UserId: column description -> the id of the user who post the comment, value description -> 
-Column UserDisplayName: column description -> user's display name, value description -> 
 Sample rows from postHistory (columns: ["PostId", "CreationDate", "UserId", "UserDisplayName"]):
 [[1, "2010-07-19 19:12:12.0", 8, ""], [1, "2010-07-19 19:12:12.0", 8, ""], [1, "2010-07-19 19:12:12.0", 8, ""]]
 Column descriptions and value descriptions for postHistory:
@@ -208,15 +198,6 @@ Column PostId: column description -> the unique id of the post, value descriptio
 Column CreationDate: column description -> the creation date of the post, value description -> 
 Column UserId: column description -> the user who post the post, value description -> 
 Column UserDisplayName: column description -> user's display name, value description -> 
-Sample rows from posts (columns: ["Id"]):
-[[1], [2], [3]]
-Column descriptions and value descriptions for posts:
-Column Id: column description -> the post id, value description -> 
-Sample rows from users (columns: ["Id", "DisplayName"]):
-[[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
-Column descriptions and value descriptions for users:
-Column Id: column description -> the user id, value description -> 
-Column DisplayName: column description -> the user's display name, value description -> 
 
 Q: List the post IDs and badge names of the user Samuel in 2013.
 Hint: Samuel refers to UserDisplayName; YEAR(CreationDate) = 2013 relates to PostId; YEAR(Date) = 2013 relates to the badge;

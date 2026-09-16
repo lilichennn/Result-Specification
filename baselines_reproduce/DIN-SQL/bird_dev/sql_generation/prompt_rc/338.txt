@@ -187,12 +187,12 @@ Hint: carbon refers to element = 'c'; double bond refers to bond_type = ' = ';
 Schema_links: [atom.atom_id,atom.element,atom.molecule_id,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'c','=','TR012']
 Result Contract:
 {
-  "population": "Atoms belonging to molecule TR012 that are carbon (element = 'c') and that appear as either endpoint of a double bond (bond_type = '=').",
-  "row_grain": "One row per qualifying double-bonded carbon atom in molecule TR012.",
-  "column_role": "The atom ID of the qualifying carbon atom.",
+  "population": "Carbon atoms (element = 'c') belonging to molecule TR012, returned in rows that also involve double bonds (bond_type = '=') of the same molecule rather than atoms that are endpoints of those bonds.",
+  "row_grain": "One row per combination of a qualifying carbon atom and a double bond in molecule TR012, so the same atom ID may appear multiple times.",
+  "column_role": "The atom ID of the carbon atom.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms bond_type = '=' is a bond property and connected supplies the two atom endpoints of a bond, so participation in a double bond was refined to appearing as either endpoint."
+  "meta_review": "Metadata confirms bond_type = '=' is a bond property, but the result does not require endpoint participation; carbon atoms are associated with double bonds only by belonging to the same molecule."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

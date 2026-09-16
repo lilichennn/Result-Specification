@@ -251,12 +251,12 @@ Hint: About data visualization is the Title that contains 'data visualization';
 Schema_links: [votes.Id,posts.Title,votes.PostId = posts.Id,data visualization]
 Result Contract:
 {
-  "population": "Posts whose Title contains 'data visualization'.",
-  "row_grain": "One post.",
-  "column_role": "The number of votes for the post.",
-  "derivation": "Count the vote records associated with the post.",
+  "population": "Vote records associated with posts whose Title contains 'data visualization'.",
+  "row_grain": "A single global count.",
+  "column_role": "The number of votes for the matching posts.",
+  "derivation": "Count the vote records associated with the matching posts.",
   "filter_policy": "none",
-  "meta_review": "The votes table records individual votes and links each vote to a post via PostId, resolving the post's number of votes as a count of vote records for that post."
+  "meta_review": "The votes table records individual votes and links each vote to a post via PostId, resolving the result as a count of vote records for the matching posts."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

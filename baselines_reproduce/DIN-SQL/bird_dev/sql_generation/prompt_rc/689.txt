@@ -251,12 +251,12 @@ Hint: last to edit refers to MAX(LastEditDate);
 Schema_links: [users.DisplayName,users.Location,posts.Id,posts.LastEditDate,posts.LastEditorUserId = users.Id,183]
 Result Contract:
 {
-  "population": "Users who have performed an edit on the post with ID 183.",
-  "row_grain": "One user, namely the single user identified as the last editor.",
-  "column_role": "The user's display name and the user's location.",
+  "population": "The user linked to the post with ID 183 as its owner.",
+  "row_grain": "A single user row selected as the latest-edit result for that post.",
+  "column_role": "The user's display name and location.",
   "derivation": "none",
-  "filter_policy": "Select the user associated with the maximum (latest) LastEditDate for post 183.",
-  "meta_review": "Metadata establishes posts.LastEditDate as a post-level last-edit timestamp, so the latest edit for post 183 is resolved from the post's stored last-edit information rather than from separate edit events."
+  "filter_policy": "Select the user associated with the maximum (latest) last-edit date for post 183.",
+  "meta_review": "Metadata establishes the post's last-edit date as a post-level last-edit timestamp, so the latest-edit result is resolved from the post's stored last-edit information and its associated owner rather than from separate edit events."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

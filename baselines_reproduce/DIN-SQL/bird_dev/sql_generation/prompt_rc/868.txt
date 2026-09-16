@@ -285,12 +285,12 @@ Hint: location coordinates refers to (lat, lng); Malaysian Grand Prix refers to 
 Schema_links: [circuits.lat,circuits.lng,races.name,races.circuitId = circuits.circuitId,'Malaysian Grand Prix']
 Result Contract:
 {
-  "population": "All race events named 'Malaysian Grand Prix'.",
-  "row_grain": "One row per Malaysian Grand Prix race event, representing the venue where that race is held.",
-  "column_role": "The location coordinates of the venue where the race is held, given as a latitude value and a longitude value (lat, lng).",
+  "population": "Venue locations of circuits that hosted at least one race named 'Malaysian Grand Prix'.",
+  "row_grain": "One row per distinct latitude-longitude pair for those venue locations.",
+  "column_role": "The location coordinates of the venue, given as latitude and longitude.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms circuits.lat and circuits.lng are the latitude and longitude of a circuit's location, validating that the requested coordinates are venue-level attributes associated with the named race."
+  "meta_review": "Metadata confirms that latitude and longitude are venue-level attributes associated with the named race."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

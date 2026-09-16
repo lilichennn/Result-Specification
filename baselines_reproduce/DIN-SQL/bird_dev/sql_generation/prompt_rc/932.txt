@@ -286,9 +286,9 @@ Schema_links: [races.year,drivers.forename,drivers.surname,results.driverId = dr
 Result Contract:
 {
   "population": "All Formula_1 race participation events in which Lewis Hamilton is a participant.",
-  "row_grain": "One row per year in which Lewis Hamilton participated in at least one Formula_1 race.",
+  "row_grain": "One row per distinct year in which Lewis Hamilton participated in at least one Formula_1 race.",
   "column_role": "The year of participation.",
-  "derivation": "Map each qualifying race participation to the year in which the race occurred.",
+  "derivation": "Return the distinct years of races in which Lewis Hamilton participated.",
   "filter_policy": "none",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }

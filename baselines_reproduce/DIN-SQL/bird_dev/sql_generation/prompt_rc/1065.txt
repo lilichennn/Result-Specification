@@ -415,12 +415,12 @@ Hint: team names refers to team_long_name; speed class refers to buildUpPlaySpee
 Schema_links: [Team.team_long_name,Team_Attributes.buildUpPlaySpeedClass,Team_Attributes.team_api_id = Team.team_api_id,Fast]
 Result Contract:
 {
-  "population": "All teams whose speed class (buildUpPlaySpeedClass) is 'Fast'.",
-  "row_grain": "One team per result row.",
+  "population": "All team names of teams that have a speed class (buildUpPlaySpeedClass) of 'Fast'.",
+  "row_grain": "One distinct team name per result row.",
   "column_role": "The team name (team_long_name) of each qualifying team.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

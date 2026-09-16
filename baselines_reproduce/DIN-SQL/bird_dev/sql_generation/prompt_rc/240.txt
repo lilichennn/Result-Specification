@@ -256,12 +256,12 @@ Hint: TR004 is the molecule id;
 Schema_links: [atom.element,atom.molecule_id,TR004]
 Result Contract:
 {
-  "population": "All toxicology element occurrences associated with the molecule whose molecule id is \"TR004\".",
-  "row_grain": "One row per toxicology element occurrence (atom-level element record) for molecule \"TR004\".",
-  "column_role": "The toxicology element value for each occurrence; no additional attributes are requested.",
+  "population": "All distinct toxicology element values associated with the molecule whose molecule id is \"TR004\".",
+  "row_grain": "One row per distinct toxicology element value for molecule \"TR004\".",
+  "column_role": "The toxicology element value for each returned distinct element; no additional attributes are requested.",
   "derivation": "none",
-  "filter_policy": "Only the molecule-id restriction applies; no ordering, ranking, or distinctness is specified.",
-  "meta_review": "The metadata identifies atom.element as \"the element of the toxicology\" and atom.molecule_id as the link to the molecule, so the requested outputs are atom-level element values for TR004. This resolves the output representation and confirms the row grain is per toxicology-element occurrence rather than per molecule or bond."
+  "filter_policy": "Only the molecule-id restriction applies, and duplicate toxicology element values are collapsed so each element appears once; no ordering or ranking is specified.",
+  "meta_review": "The metadata identifies the toxicology element as an atom-level attribute linked to the molecule, so the requested outputs are element values for TR004; because duplicate element values are collapsed, the row grain is per distinct element value rather than per atom occurrence."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

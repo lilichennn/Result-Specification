@@ -301,7 +301,7 @@ Result Contract:
   "column_role": "The patient's ID and the patient's age.",
   "derivation": "Age is computed as the current year minus the year of the patient's birthday.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms RVVT value '+' denotes positive coagulation and Birthday is the patient birth date used for age. No Round-1 field required refinement."
+  "meta_review": "RVVT value '+' denotes positive coagulation, and Birthday is the patient birth date used for age."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

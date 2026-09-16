@@ -415,12 +415,12 @@ Hint: most matches end as draw refers to MAX(SUM(home_team_goal = away_team_goal
 Schema_links: [League.name,Match.home_team_goal,Match.away_team_goal,Match.season,Match.league_id = League.id,'2015/2016']
 Result Contract:
 {
-  "population": "All leagues, where each league is evaluated on its matches from season '2015/2016' that ended in a draw, i.e., home_team_goal equals away_team_goal; only such matches contribute to a league's draw count.",
+  "population": "Leagues that had at least one match in the 2015/2016 season ending in a draw; each league is evaluated only over those drawn matches.",
   "row_grain": "One league.",
   "column_role": "The name of the league.",
-  "derivation": "For each league, count (SUM) its season '2015/2016' matches in which home_team_goal equals away_team_goal.",
-  "filter_policy": "Argmax: return the league with the highest count of drawn matches.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "For each candidate league, count its matches in the 2015/2016 season that ended in a draw.",
+  "filter_policy": "Return one league with the highest count of drawn matches.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

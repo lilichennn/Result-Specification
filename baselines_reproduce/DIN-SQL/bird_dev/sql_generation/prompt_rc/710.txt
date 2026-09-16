@@ -251,12 +251,12 @@ Hint: in posts with 1 comment refers to CommentCount = 1;
 Schema_links: [comments.Id,comments.Score,posts.CommentCount,comments.PostId = posts.Id,1,0]
 Result Contract:
 {
-  "population": "Comments that belong to a post whose comment count equals 1 (CommentCount = 1) and whose own score equals 0.",
+  "population": "Comments attached to posts whose comment count equals 1 and whose post score equals 0.",
   "row_grain": "One global summary row.",
   "column_role": "The count of qualifying comments.",
   "derivation": "Count the comments in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The zero-score condition applies to the post, not to the comment."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

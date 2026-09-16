@@ -182,24 +182,24 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,School Code,County Name,School Name,Low Grade,High Grade]
-Table schools, columns = [*,CDSCode,County,School]
+Table frpm, columns = [*,CDSCode,County Name,School Name,Low Grade,High Grade]
+Table schools, columns = [*,CDSCode,County,School,City]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "School Code", "County Name", "School Name", "Low Grade", "High Grade"]):
-[["01100170109835", "0109835", "Alameda", "FAME Public Charter", "K", "12"], ["01100170112607", "0112607", "Alameda", "Envision Academy for Arts & Technology", "9", "12"], ["01100170118489", "0118489", "Alameda", "Aspire California College Preparatory Academy", "9", "12"]]
+Sample rows from frpm (columns: ["CDSCode", "County Name", "School Name", "Low Grade", "High Grade"]):
+[["01100170109835", "Alameda", "FAME Public Charter", "K", "12"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "9", "12"], ["01100170118489", "Alameda", "Aspire California College Preparatory Academy", "9", "12"]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School Code: column description -> , value description -> 
 Column County Name: column description -> County Code , value description -> 
 Column School Name: column description -> School Name , value description -> 
 Column Low Grade: column description -> Low Grade, value description -> 
 Column High Grade: column description -> High Grade, value description -> 
-Sample rows from schools (columns: ["CDSCode", "County", "School"]):
-[["01100170000000", "Alameda", null], ["01100170109835", "Alameda", "FAME Public Charter"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology"]]
+Sample rows from schools (columns: ["CDSCode", "County", "School", "City"]):
+[["01100170000000", "Alameda", null, "Hayward"], ["01100170109835", "Alameda", "FAME Public Charter", "Newark"], ["01100170112607", "Alameda", "Envision Academy for Arts & Technology", "Oakland"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column County: column description -> County name, value description -> 
 Column School: column description -> School, value description -> 
+Column City: column description -> City, value description -> 
 
 Q: How many schools in Amador which the Low Grade is 9 and the High Grade is 12?
 A: Let’s think step by step.

@@ -182,26 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id,height]
-Table Player_Attributes, columns = [*,id,player_fifa_api_id,player_api_id,overall_rating]
-Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id]
-Sample rows from Player (columns: ["id", "player_api_id", "player_name", "player_fifa_api_id", "height"]):
-[[1, 505942, "Aaron Appindangoye", 218353, 182.88], [2, 155782, "Aaron Cresswell", 189615, 170.18], [3, 162549, "Aaron Doran", 186170, 170.18]]
+Table Player, columns = [*,id,player_name,height]
+Foreign_keys = []
+Sample rows from Player (columns: ["id", "player_name", "height"]):
+[[1, "Aaron Appindangoye", 182.88], [2, "Aaron Cresswell", 170.18], [3, "Aaron Doran", 170.18]]
 Column descriptions and value descriptions for Player:
 Column id: column description -> the unique id for players, value description -> 
-Column player_api_id: column description -> the id of the player api, value description -> 
 Column player_name: column description -> player name, value description -> 
-Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
 Column height: column description -> the player's height, value description -> 
-Sample rows from Player_Attributes (columns: ["id", "player_fifa_api_id", "player_api_id", "overall_rating"]):
-[[1, 218353, 505942, 67], [2, 218353, 505942, 67], [3, 218353, 505942, 62]]
-Column descriptions and value descriptions for Player_Attributes:
-Column id: column description -> the unique id for players, value description -> 
-Column player_fifa_api_id: column description -> the id of the player fifa api, value description -> 
-Column player_api_id: column description -> the id of the player api, value description -> 
-Column overall_rating: column description -> the overall rating of the player, value description -> commonsense reasoning: 
-The rating is between 0-100 which is calculated by FIFA.
- Higher overall rating means the player has a stronger overall strength.
 
 Q: Please provide the names of top three football players who are over 180 cm tall in alphabetical order.
 Hint: over 180 cm tall refers to height > 180; name of football player refers to player_name

@@ -298,10 +298,10 @@ Result Contract:
 {
   "population": "Total cholesterol measurement records of the patient whose birthday is 1959-02-18, restricted to records dated in November 1981 and records dated in December 1981.",
   "row_grain": "One global summary row for that patient.",
-  "column_role": "The decrease in total cholesterol for the patient, expressed as the November 1981 total minus the December 1981 total.",
-  "derivation": "Subtract the sum of T-CHO over the patient's December 1981 records from the sum of T-CHO over the patient's November 1981 records.",
+  "column_role": "The decrease rate in total cholesterol for the patient, expressed as the difference between the November 1981 total and the December 1981 total relative to the December 1981 total.",
+  "derivation": "Subtract the sum of total cholesterol values over the patient's December 1981 records from the sum over the patient's November 1981 records, then divide that difference by the sum of total cholesterol values over the patient's December 1981 records.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

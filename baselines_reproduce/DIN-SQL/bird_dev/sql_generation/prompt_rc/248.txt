@@ -187,12 +187,12 @@ Hint: TR041 is the molecule id; triple bond refers to bond_type = '#';
 Schema_links: [connected.atom_id,connected.atom_id2,bond.bond_type,bond.molecule_id,connected.bond_id = bond.bond_id,'#','TR041']
 Result Contract:
 {
-  "population": "Atoms that participate in a bond with bond_type = '#' (triple bond) belonging to the molecule whose id is TR041; either atom identifier recorded for that bond counts as participation.",
-  "row_grain": "One atom involved in a triple bond in molecule TR041.",
-  "column_role": "The atom_id of each qualifying atom.",
+  "population": "Atom pairs recorded for bonds with bond_type = '#' (triple bond) belonging to the molecule whose id is TR041.",
+  "row_grain": "One atom pair for each qualifying triple bond in molecule TR041.",
+  "column_role": "The identifiers of the two atoms participating in the qualifying triple bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that connected records contain two participant identifiers (atom_id and atom_id2) for each bond and that atom_id is the unique atom identity. This resolves that both participants of a qualifying triple bond are in scope and the output identity is atom_id."
+  "meta_review": "Metadata establishes that connected records contain two participant identifiers (atom_id and atom_id2) for each bond and that atom_id is the unique atom identity. This resolves that both participants of a qualifying triple bond are returned, with the result representing the atom pair for each bond."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

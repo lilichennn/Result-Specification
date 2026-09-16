@@ -187,12 +187,12 @@ Hint:
 Schema_links: [bond.molecule_id,bond.bond_id,TR001_1_7]
 Result Contract:
 {
-  "population": "Bonds whose bond id equals 'TR001_1_7'.",
-  "row_grain": "One bond, namely the bond with bond id 'TR001_1_7'.",
-  "column_role": "The molecule id of the bond.",
+  "population": "Molecules associated with the bond whose bond id is 'TR001_1_7', as identified through atoms connected by that bond.",
+  "row_grain": "One row for each distinct molecule id associated with that bond.",
+  "column_role": "The molecule id associated with the bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms bond.molecule_id identifies the molecule in which a bond appears, validating that the requested molecule id is owned by the bond entity."
+  "meta_review": "Metadata supports resolving the molecule associated with a bond through the atoms connected by that bond."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

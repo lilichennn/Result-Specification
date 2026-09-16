@@ -486,10 +486,10 @@ Result Contract:
 {
   "population": "The two players identified as player 6 and player 23.",
   "row_grain": "One global summary row representing the comparison between the two players.",
-  "column_role": "The numeric difference between the two players' jumping scores.",
-  "derivation": "Subtract player 23's jumping score from player 6's jumping score.",
+  "column_role": "The numeric difference between the two players' total jumping scores.",
+  "derivation": "Subtract the total jumping score for player 23 from the total jumping score for player 6.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

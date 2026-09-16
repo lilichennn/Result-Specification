@@ -235,7 +235,7 @@ Result Contract:
   "column_role": "The type of the member's hometown ZIP code.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that member.zip is the member's hometown ZIP code and zip_code.type is the kind of ZIP code, so the requested output is the type of the member's recorded ZIP code. Round-1 entity and one-row grain preserved."
+  "meta_review": "The member's recorded ZIP code is the member's hometown ZIP code, and the requested output is the type of that ZIP code."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

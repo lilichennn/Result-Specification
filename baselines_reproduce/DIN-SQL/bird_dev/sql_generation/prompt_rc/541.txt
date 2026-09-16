@@ -256,7 +256,7 @@ Result Contract:
   "column_role": "The display name of that owner user.",
   "derivation": "none",
   "filter_policy": "Select the post with the maximum FavoriteCount (argmax over posts by FavoriteCount) and return its owner; tie handling is not specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

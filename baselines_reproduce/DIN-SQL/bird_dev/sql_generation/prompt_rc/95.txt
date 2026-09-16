@@ -324,12 +324,12 @@ Hint: If the person A's birthdate < B's birthdate, it means that person B is you
 Schema_links: [account.account_id,client.birth_date,district.A11,disp.client_id = client.client_id,disp.account_id = account.account_id,client.district_id = district.district_id]
 Result Contract:
 {
-  "population": "All clients that can be associated with an account number.",
-  "row_grain": "One returned account number associated with a selected client.",
+  "population": "Accounts that are associated with a client.",
+  "row_grain": "One row per distinct account number associated with the selected youngest client.",
   "column_role": "The account number.",
   "derivation": "none",
-  "filter_policy": "Retain only clients that are youngest by having the latest client.birth_date and whose associated district has the highest average salary value A11; all tied qualifying account numbers are returned, with no ordering or limit specified.",
-  "meta_review": "Metadata shows A11 is district.average_salary and clients carry a district_id, so the salary condition is the district average salary associated with the client. This resolves the owner of A11 without changing the requested account-number output."
+  "filter_policy": "Retain only accounts linked to the single client with the latest birth date, selecting one client rather than all tied youngest clients; no highest-average-salary filter, ranking, ordering, or limit is applied to the returned account numbers.",
+  "meta_review": "The average-salary attribute does not create a highest-salary condition in the result; the result is determined by selecting a single youngest client and returning associated account numbers only."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

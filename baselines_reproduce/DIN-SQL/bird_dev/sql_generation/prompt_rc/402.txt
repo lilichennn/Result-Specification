@@ -366,12 +366,12 @@ Hint: Story Spotlight cards that do not have a text box refers to isStorylight =
 Schema_links: [cards.id,cards.isStorySpotlight,cards.isTextless,1,0]
 Result Contract:
 {
-  "population": "Target population: cards with isStorySpotlight = 1 AND isTextless = 1 (Story Spotlight cards that do not have a text box); reference population for the percentage denominator: all cards.",
-  "row_grain": "One row per qualifying Story Spotlight card without a text box.",
-  "column_role": "The qualifying card's ID and the percentage of Story Spotlight cards without a text box relative to all cards.",
-  "derivation": "The percentage equals the count of cards with isStorySpotlight = 1 AND isTextless = 1 divided by the count of all cards, multiplied by 100.",
+  "population": "Reference population for the percentage: Story Spotlight cards (isStorySpotlight = 1). Numerator subset: Story Spotlight cards without a text box (isTextless = 0).",
+  "row_grain": "One global aggregate row containing the percentage.",
+  "column_role": "Only the percentage measure is returned; no card ID is returned.",
+  "derivation": "The percentage is the count of Story Spotlight cards with isTextless = 0 divided by the count of Story Spotlight cards, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.isStorySpotlight is the Story Spotlight flag and cards.isTextless = 1 means the card does not have a text box. This resolved the qualifying condition for the requested no-text-box cards."
+  "meta_review": "The no-text-box condition is isTextless = 0, not isTextless = 1, and the percentage is computed within the Story Spotlight population rather than all cards."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

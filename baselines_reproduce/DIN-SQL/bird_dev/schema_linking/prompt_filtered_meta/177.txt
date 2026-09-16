@@ -185,7 +185,7 @@ Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id]
 Table client, columns = [*,client_id,gender]
 Table disp, columns = [*,client_id,account_id,type]
-Table trans, columns = [*,trans_id,account_id,date,type,amount,balance]
+Table trans, columns = [*,trans_id,account_id,balance]
 Foreign_keys = [disp.client_id = client.client_id,disp.account_id = account.account_id,trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id"]):
 [[1], [2], [3]]
@@ -205,15 +205,11 @@ Column account_id: column description -> id number of account, value description
 Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
 commonsense evidence:
 the account can only have the right to issue permanent orders or apply for loans
-Sample rows from trans (columns: ["trans_id", "account_id", "date", "type", "amount", "balance"]):
-[[1, 1, "1995-03-24", "PRIJEM", 1000, 1000], [5, 1, "1995-04-13", "PRIJEM", 3679, 4679], [6, 1, "1995-05-13", "PRIJEM", 3679, 20977]]
+Sample rows from trans (columns: ["trans_id", "account_id", "balance"]):
+[[1, 1, 1000], [5, 1, 4679], [6, 1, 20977]]
 Column descriptions and value descriptions for trans:
 Column trans_id: column description -> transaction id, value description -> 
 Column account_id: column description -> , value description -> 
-Column date: column description -> date of transaction, value description -> 
-Column type: column description -> +/- transaction, value description -> "PRIJEM" stands for credit
-"VYDAJ" stands for withdrawal
-Column amount: column description -> amount of money, value description -> Unit：USD
 Column balance: column description -> balance after transaction, value description -> Unit：USD
 
 Q: What is the sum that client number 4's account has following transaction 851? Who owns this account, a man or a woman?

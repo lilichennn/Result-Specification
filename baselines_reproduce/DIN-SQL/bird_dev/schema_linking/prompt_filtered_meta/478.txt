@@ -182,18 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,name,number,setCode]
-Table sets, columns = [*,code,name]
+Table cards, columns = [*,id,name,number,setCode]
+Table sets, columns = [*,id,code,name]
 Foreign_keys = []
-Sample rows from cards (columns: ["name", "number", "setCode"]):
-[["Ancestor's Chosen", "1", "10E"], ["Angel of Mercy", "2", "10E"], ["Aven Cloudchaser", "7", "10E"]]
+Sample rows from cards (columns: ["id", "name", "number", "setCode"]):
+[[1, "Ancestor's Chosen", "1", "10E"], [2, "Angel of Mercy", "2", "10E"], [3, "Aven Cloudchaser", "7", "10E"]]
 Column descriptions and value descriptions for cards:
+Column id: column description -> , value description -> 
 Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
 Column number: column description -> The number of the card, value description -> 
 Column setCode: column description -> The set printing code that the card is from., value description -> 
-Sample rows from sets (columns: ["code", "name"]):
-[["10E", "Tenth Edition"], ["2ED", "Unlimited Edition"], ["2XM", "Double Masters"]]
+Sample rows from sets (columns: ["id", "code", "name"]):
+[[1, "10E", "Tenth Edition"], [2, "2ED", "Unlimited Edition"], [3, "2XM", "Double Masters"]]
 Column descriptions and value descriptions for sets:
+Column id: column description -> unique id identifying this set, value description -> 
 Column code: column description -> The set code for the set., value description -> 
 Column name: column description -> The name of the set., value description -> 
 

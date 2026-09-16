@@ -258,10 +258,10 @@ Result Contract:
 {
   "population": "All bonds belonging to the molecule with id TR008.",
   "row_grain": "One global summary row for molecule TR008.",
-  "column_role": "The percentage of double bonds in molecule TR008, expressed with five decimal places.",
-  "derivation": "Divide the count of the molecule's bonds that are double bonds (bond_type = '=') by the total count of the molecule's bonds, and express the result as a percentage with five decimal places.",
+  "column_role": "The percentage of double bonds in molecule TR008, rounded to five decimal places.",
+  "derivation": "Divide the count of the molecule's bonds that are double bonds (bond_type = '=') by the total count of the molecule's bonds, multiply by 100, and round the resulting percentage to five decimal places.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -296,12 +296,12 @@ Hint: average blood albumin level refers to AVG(ALB); female refers to SEX = 'F'
 Schema_links: [Laboratory.ALB,Patient.SEX,Laboratory.PLT,Patient.Diagnosis,Laboratory.ID = Patient.ID,F,400,SLE]
 Result Contract:
 {
-  "population": "Patients who are female (SEX = 'F'), have a PLT greater than 400, and have a patient-level diagnosis of SLE (Diagnosis = 'SLE'); all three conditions must hold together.",
-  "row_grain": "One global summary row across all qualifying patients.",
-  "column_role": "The average blood albumin level of the qualifying patients.",
-  "derivation": "Compute the average of blood albumin level (ALB) over the qualifying patient population.",
+  "population": "Laboratory measurements associated with female patients (SEX = 'F') who have a patient-level diagnosis of SLE (Diagnosis = 'SLE'), where the measurement's platelet count (PLT) is greater than 400; all three conditions must hold together.",
+  "row_grain": "One global summary row across all qualifying laboratory measurements.",
+  "column_role": "The average blood albumin level of the qualifying measurements.",
+  "derivation": "Compute the average of blood albumin level (ALB) over the qualifying laboratory measurements.",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes Patient.Diagnosis from Examination.Diagnosis; because the question asks for patients diagnosed with SLE, the diagnosis condition applies to the patient-level diagnosis. No other Round-1 semantics changed."
+  "meta_review": "Metadata distinguishes patient-level diagnosis from examination diagnosis; because the question asks for patients diagnosed with SLE, the diagnosis condition applies to patient-level diagnosis."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

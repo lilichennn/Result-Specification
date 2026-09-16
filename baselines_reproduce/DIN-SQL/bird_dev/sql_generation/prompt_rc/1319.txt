@@ -230,12 +230,12 @@ Hint: Vice President is a position of the Student Club
 Schema_links: [major.college,member.position,member.link_to_major = major.major_id,'Vice President']
 Result Contract:
 {
-  "population": "The member who holds the position of Vice President in the Student Club.",
-  "row_grain": "One row representing the college associated with the vice president's major.",
-  "column_role": "The name of the college associated with the vice president's major.",
+  "population": "The member or members whose position is Vice President.",
+  "row_grain": "One row for each qualifying member, giving the college associated with that member's major.",
+  "column_role": "The name of the college associated with the qualifying member's major.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows that a member's college is represented through the member's major, with major.college giving the college name. This resolves the requested college as the college name associated with the vice president's major."
+  "meta_review": "Metadata shows that a member's college is represented through the member's major, with the major providing the college name. This resolves the requested college as the college name associated with the vice president's major."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

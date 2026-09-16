@@ -296,12 +296,12 @@ Hint: normal blood glucose refers to GLU < 180; don't have thrombosis refers to 
 Schema_links: [Patient.ID,Laboratory.GLU,Examination.Thrombosis,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,180,0]
 Result Contract:
 {
-  "population": "Patients whose blood glucose is normal (GLU < 180) and who do not have thrombosis (Thrombosis = 0); both conditions must hold for a patient to be counted.",
+  "population": "Patient instances with normal blood glucose (GLU < 180) and no thrombosis (Thrombosis = 0); both conditions must hold for an instance to be counted.",
   "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the patients satisfying the population conditions.",
+  "column_role": "A single value representing the number of qualifying patient instances.",
+  "derivation": "Count all qualifying patient instances, without deduplicating by patient.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -251,12 +251,12 @@ Hint: positive comments refer to Score > 60;
 Schema_links: [posts.Title,comments.Score,users.DisplayName,comments.PostId = posts.Id,comments.UserId = users.Id,60]
 Result Contract:
 {
-  "population": "All comments with Score > 60 (positive comments), together with the posts that received those comments and the users who authored them.",
-  "row_grain": "One row per positive comment, associated with the post it was made on and the user who wrote it.",
-  "column_role": "The title of the post that received a positive comment, and the display name of the user who posted that positive comment.",
+  "population": "Post-comment pairs in which the post has Score > 60, together with the users who posted those comments.",
+  "row_grain": "One row per such post-comment pair.",
+  "column_role": "The title of the post and the display name of the user who posted the comment.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -256,12 +256,12 @@ Hint: carbon refers to element = 'c'; between TR010 to TR050 refers to substr(mo
 Schema_links: [atom.atom_id,atom.molecule_id,atom.element,'c',10,50]
 Result Contract:
 {
-  "population": "Atoms that belong to a molecule whose molecule ID falls between TR010 and TR050 inclusive (the numeric substring in positions 3-5 of the molecule ID is between 10 and 50) and whose element is carbon (element = 'c').",
+  "population": "Atoms whose molecule ID falls between TR010 and TR050 inclusive and whose element is carbon.",
   "row_grain": "One row per qualifying atom.",
   "column_role": "The atom ID of each qualifying atom.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms atom.atom_id is the unique identifier for atoms, resolving the requested atom identity to the atom ID. No other metadata refinement was needed."
+  "meta_review": "Metadata confirms the atom identifier uniquely identifies atoms, resolving the requested atom identity to the atom ID. No other metadata refinement was needed."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

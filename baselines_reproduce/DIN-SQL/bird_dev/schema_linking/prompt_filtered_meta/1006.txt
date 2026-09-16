@@ -185,8 +185,7 @@ Schema of the current database with sample rows and column descriptions:
 Table circuits, columns = [*,circuitId]
 Table lapTimes, columns = [*,raceId,time,milliseconds]
 Table races, columns = [*,raceId,circuitId]
-Table results, columns = [*,raceId,rank,fastestLapTime]
-Foreign_keys = [lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId,results.raceId = races.raceId]
+Foreign_keys = [lapTimes.raceId = races.raceId,races.circuitId = circuits.circuitId]
 Sample rows from circuits (columns: ["circuitId"]):
 [[23], [61], [29]]
 Column descriptions and value descriptions for circuits:
@@ -202,12 +201,6 @@ Sample rows from races (columns: ["raceId", "circuitId"]):
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column circuitId: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "rank", "fastestLapTime"]):
-[[18, 2, "1:27.452"], [18, 3, "1:27.739"], [18, 5, "1:28.090"]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column rank: column description -> , value description -> 
-Column fastestLapTime: column description -> , value description -> 
 
 Q: Among all the lap records set on various circuits, what is the time for the fastest one?
 A: Let’s think step by step.

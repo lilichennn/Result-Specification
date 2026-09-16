@@ -296,12 +296,12 @@ Hint: Ig G higher than normal refers to IGG >= 2000; Should consider DISTINCT in
 Schema_links: [Patient.ID,Laboratory.IGG,Laboratory.ID = Patient.ID,2000]
 Result Contract:
 {
-  "population": "Patients whose Ig G level is higher than normal, defined as IGG >= 2000.",
+  "population": "Patients with at least one Ig G laboratory result of 2000 or higher and at least one examination record for the same patient.",
   "row_grain": "One global summary row for the entire qualifying patient population.",
   "column_role": "The number of qualifying patients.",
-  "derivation": "Count the patients satisfying the eligibility condition, with each patient counted once.",
+  "derivation": "Count the qualifying patients, with each patient counted once.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms IGG is the laboratory Ig G measurement associated with patient ID, validating a distinct-patient count for IGG >= 2000."
+  "meta_review": "Metadata confirms Ig G is the laboratory measurement used for patient-level counting, and the count is distinct over patients meeting the threshold who also have examination data."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

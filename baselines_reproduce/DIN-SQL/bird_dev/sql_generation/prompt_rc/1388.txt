@@ -230,12 +230,12 @@ Hint: name of students means the full name; full name refers to first_name, last
 Schema_links: [member.first_name,member.last_name,income.source,income.amount,income.link_to_member = member.member_id]
 Result Contract:
 {
-  "population": "All students who have at least one income entry; no further Boolean eligibility conditions restrict which students are considered.",
-  "row_grain": "One row per individual income entry whose amount equals the maximum income amount, reporting the linked student's full name and that entry's income source.",
-  "column_role": "The student's full name (first name and last name) and the income source; the income amount is a ranking measure, not a requested output.",
-  "derivation": "The student's full name is composed from the first name and last name; the compared metric is the amount of the individual income entry linked to the student, not an aggregated amount across multiple income entries.",
-  "filter_policy": "Argmax: the qualifying income amount is the maximum individual income amount across eligible income entries; rows associated with that amount are eligible, and any tie-breaking or deduplication is not specified.",
-  "meta_review": "Metadata establishes that income.amount and income.source are properties of individual income records linked to a member, while student names come from member records. This fixes the maximum-income comparison to individual income records rather than aggregated student income and ties the reported source to the maximum-income record."
+  "population": "Student full name and income source combinations that are supported by at least one linked income entry; no further Boolean eligibility conditions restrict the combinations considered.",
+  "row_grain": "A single row representing the student full name and income source combination with the highest total income amount.",
+  "column_role": "The student's full name, expressed through first name and last name, and the income source are returned; the income amount is only a ranking measure and is not returned.",
+  "derivation": "The full name is reported from the student's first and last name; the ranking metric is the total income amount summed over all income entries for each student full name and income source combination, not the amount of a single income entry.",
+  "filter_policy": "Top-1 selection: choose the one student full name and income source group with the greatest total income amount; tie handling is not specified.",
+  "meta_review": "Income records linked to students provide both amount and source, and student names come from student records. The result compares total income amounts across student full name and income source groups, rather than selecting an individual maximum-income income record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

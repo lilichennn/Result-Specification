@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table comments, columns = [*,Id,PostId,Score,UserId,UserDisplayName]
-Table posts, columns = [*,Id,Title]
+Table posts, columns = [*,Id,Score,Title]
 Table users, columns = [*,Id,DisplayName]
 Foreign_keys = [comments.UserId = users.Id,comments.PostId = posts.Id]
 Sample rows from comments (columns: ["Id", "PostId", "Score", "UserId", "UserDisplayName"]):
@@ -195,10 +195,11 @@ Column Score: column description -> rating score, value description -> commonsen
 The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. 
 Column UserId: column description -> the id of the user who post the comment, value description -> 
 Column UserDisplayName: column description -> user's display name, value description -> 
-Sample rows from posts (columns: ["Id", "Title"]):
-[[1, "Eliciting priors from experts"], [2, "What is normality?"], [3, "What are some valuable Statistical Analysis open source projects?"]]
+Sample rows from posts (columns: ["Id", "Score", "Title"]):
+[[1, 23, "Eliciting priors from experts"], [2, 22, "What is normality?"], [3, 54, "What are some valuable Statistical Analysis open source projects?"]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
+Column Score: column description -> the score of the post, value description -> 
 Column Title: column description -> the title of the post, value description -> 
 Sample rows from users (columns: ["Id", "DisplayName"]):
 [[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]

@@ -226,11 +226,11 @@ Schema_links: [superhero.superhero_name,hero_attribute.attribute_value,hero_attr
 Result Contract:
 {
   "population": "Superheroes with at least one attribute value between 75 and 80 inclusive.",
-  "row_grain": "One row per superhero with a qualifying attribute value.",
+  "row_grain": "One row per qualifying superhero-attribute association, so a superhero may appear more than once.",
   "column_role": "The superhero's name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows hero_attribute.attribute_value is recorded per superhero-attribute association, so qualification is existential across associated values. This supports one row per superhero rather than one row per qualifying attribute value."
+  "meta_review": "Metadata shows attribute values are recorded per superhero-attribute association, so a superhero with multiple qualifying attributes can produce multiple name rows rather than a single deduplicated row."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

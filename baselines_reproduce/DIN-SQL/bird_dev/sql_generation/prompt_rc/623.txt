@@ -251,12 +251,12 @@ Hint: "Supporter" is the Name of badge;  elders refers to Age > 65
 Schema_links: [badges.Name,users.Age,badges.UserId = users.Id,Supporter,65]
 Result Contract:
 {
-  "population": "People who are elders (Age > 65) and who obtained the badge whose Name is \"Supporter\".",
+  "population": "Instances of elders (Age > 65) obtaining the badge whose Name is \"Supporter\".",
   "row_grain": "One global summary row for the entire qualifying population.",
-  "column_role": "A single value representing the number of qualifying elders.",
-  "derivation": "Count the elders who obtained the \"Supporter\" badge.",
+  "column_role": "A single value representing the number of qualifying badge-obtaining instances.",
+  "derivation": "Count the qualifying instances of elders obtaining the \"Supporter\" badge.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result counts qualifying badge-obtaining instances rather than distinct elders."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

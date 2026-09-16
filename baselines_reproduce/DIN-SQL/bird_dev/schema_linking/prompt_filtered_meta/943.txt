@@ -182,19 +182,26 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
+Table circuits, columns = [*,circuitId,country]
 Table drivers, columns = [*,driverId]
-Table races, columns = [*,raceId,year,name]
+Table races, columns = [*,raceId,year,circuitId,name]
 Table results, columns = [*,resultId,raceId,driverId,time]
-Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
+Foreign_keys = [races.circuitId = circuits.circuitId,results.driverId = drivers.driverId,results.raceId = races.raceId]
+Sample rows from circuits (columns: ["circuitId", "country"]):
+[[2, "Malaysia"], [3, "Bahrain"], [4, "Spain"]]
+Column descriptions and value descriptions for circuits:
+Column circuitId: column description -> unique identification number of the circuit , value description -> 
+Column country: column description -> , value description -> 
 Sample rows from drivers (columns: ["driverId"]):
 [[452], [625], [103]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "name"]):
-[[1, 2009, "Australian Grand Prix"], [2, 2009, "Malaysian Grand Prix"], [3, 2009, "Chinese Grand Prix"]]
+Sample rows from races (columns: ["raceId", "year", "circuitId", "name"]):
+[[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 17, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
+Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
 Sample rows from results (columns: ["resultId", "raceId", "driverId", "time"]):
 [[1, 18, 1, "1:34:50.616"], [2, 18, 2, "+5.478"], [3, 18, 3, "+8.163"]]

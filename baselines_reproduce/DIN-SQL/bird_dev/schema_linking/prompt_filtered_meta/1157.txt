@@ -182,14 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Examination, columns = [*,ID,Diagnosis,Thrombosis]
+Table Examination, columns = [*,ID,Thrombosis]
 Table Patient, columns = [*,ID,SEX,Diagnosis]
 Foreign_keys = [Examination.ID = Patient.ID]
-Sample rows from Examination (columns: ["ID", "Diagnosis", "Thrombosis"]):
-[[14872, "MCTD, AMI", 1], [48473, "SLE", 0], [102490, "PSS", 0]]
+Sample rows from Examination (columns: ["ID", "Thrombosis"]):
+[[14872, 1], [48473, 0], [102490, 0]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
-Column Diagnosis: column description -> disease names, value description -> 
 Column Thrombosis: column description -> degree of thrombosis, value description -> 0: negative (no thrombosis)
 1: positive (the most serious)
 2: positive (severe)3: positive (mild)

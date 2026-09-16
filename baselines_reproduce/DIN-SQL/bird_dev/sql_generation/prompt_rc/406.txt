@@ -297,12 +297,12 @@ Hint: legal status refer to status = 'legal'; Goblin-type cards refer to types =
 Schema_links: [cards.id,cards.types,legalities.status,cards.uuid = legalities.uuid,'Creature','legal']
 Result Contract:
 {
-  "population": "All cards that are Creature-type (types = 'Creature') and that have at least one recorded legal status (status = 'legal'); both conditions must hold.",
-  "row_grain": "One row per eligible card, even if the card has multiple legal-status records.",
+  "population": "All Creature-type cards (types = 'Creature') that have at least one legal status of 'Legal' and at least one ruling; all conditions must hold.",
+  "row_grain": "One row for each matching combination of a qualifying card's ruling records and legal-status records, so the same card ID may appear multiple times.",
   "column_role": "The card identifier (ID), explicitly requested as the output value.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that legal status is stored per format in legalities.status, so eligibility is existence of a legal status and the result remains one row per card. This confirms the output is the card-level ID, not a legality-record ID."
+  "meta_review": "Metadata establishes that legal status is recorded per format and rulings are recorded separately, so eligibility requires both a legal status and a ruling, and the result can repeat the card ID rather than returning one distinct row per card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

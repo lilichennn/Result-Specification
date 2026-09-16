@@ -182,27 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,School Name]
-Table satscores, columns = [*,cds,sname]
-Table schools, columns = [*,CDSCode,School,Zip,MailZip,Phone,Ext]
-Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "School Name"]):
-[["01100170109835", "FAME Public Charter"], ["01100170112607", "Envision Academy for Arts & Technology"], ["01100170118489", "Aspire California College Preparatory Academy"]]
-Column descriptions and value descriptions for frpm:
-Column CDSCode: column description -> CDSCode, value description -> 
-Column School Name: column description -> School Name , value description -> 
-Sample rows from satscores (columns: ["cds", "sname"]):
-[["1100170000000", null], ["1100170109835", "FAME Public Charter"], ["1100170112607", "Envision Academy for Arts & Technology"]]
-Column descriptions and value descriptions for satscores:
-Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
-Sample rows from schools (columns: ["CDSCode", "School", "Zip", "MailZip", "Phone", "Ext"]):
-[["01100170000000", null, "94544-1136", "94544-1136", "(510) 887-0152", null], ["01100170109835", "FAME Public Charter", "94560-5359", "94560-5359", null, null], ["01100170112607", "Envision Academy for Arts & Technology", "94612-3355", "94612", "(510) 596-8901", null]]
+Table schools, columns = [*,CDSCode,School,Zip,Phone,Ext]
+Foreign_keys = []
+Sample rows from schools (columns: ["CDSCode", "School", "Zip", "Phone", "Ext"]):
+[["01100170000000", null, "94544-1136", "(510) 887-0152", null], ["01100170109835", "FAME Public Charter", "94560-5359", null, null], ["01100170112607", "Envision Academy for Arts & Technology", "94612-3355", "(510) 596-8901", null]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column School: column description -> School, value description -> 
 Column Zip: column description -> Zip, value description -> 
-Column MailZip: column description -> , value description -> The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.
 Column Phone: column description -> Phone, value description -> 
 Column Ext: column description -> The phone number extension of the school, district, or administrative authority., value description -> The phone number extension of the school, district, or administrative authority.
 

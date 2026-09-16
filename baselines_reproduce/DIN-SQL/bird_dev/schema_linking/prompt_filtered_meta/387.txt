@@ -182,19 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,asciiName,colorIdentity,colorIndicator,colors,faceName,name,setCode]
+Table cards, columns = [*,id,colors,number,setCode]
 Table sets, columns = [*,code]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "asciiName", "colorIdentity", "colorIndicator", "colors", "faceName", "name", "setCode"]):
-[[1, null, "W", null, "W", null, "Ancestor's Chosen", "10E"], [2, null, "W", null, "W", null, "Angel of Mercy", "10E"], [3, null, "W", null, "W", null, "Aven Cloudchaser", "10E"]]
+Sample rows from cards (columns: ["id", "colors", "number", "setCode"]):
+[[1, "W", "1", "10E"], [2, "W", "2", "10E"], [3, "W", "7", "10E"]]
 Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
-Column asciiName: column description -> The ASCII(opens new window) (Basic/128) code formatted card name with no special unicode characters., value description -> 
-Column colorIdentity: column description -> A list of all the colors found in manaCost, colorIndicator, and text, value description -> 
-Column colorIndicator: column description -> A list of all the colors in the color indicator (The symbol prefixed to a card's types)., value description -> 
 Column colors: column description -> A list of all the colors in manaCost and colorIndicator. , value description -> Some cards may not have values, such as cards with "Devoid" in its text.
-Column faceName: column description -> The name on the face of the card., value description -> 
-Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
+Column number: column description -> The number of the card, value description -> 
 Column setCode: column description -> The set printing code that the card is from., value description -> 
 Sample rows from sets (columns: ["code"]):
 [["10E"], ["2ED"], ["2XM"]]

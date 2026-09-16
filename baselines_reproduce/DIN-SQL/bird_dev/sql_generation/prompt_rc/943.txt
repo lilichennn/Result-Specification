@@ -287,8 +287,8 @@ Result Contract:
 {
   "population": "All driver race-result records for the 2008 Australian Grand Prix.",
   "row_grain": "One global summary row for the specified race.",
-  "column_role": "The rate of drivers completing all the laps in the race.",
-  "derivation": "The rate equals the count of the race's driver race-result records whose finish time is not null divided by the total count of the race's driver race-result records.",
+  "column_role": "The rate of drivers completing all the laps in the race, expressed as a percentage.",
+  "derivation": "The percentage equals the count of the race's driver race-result records whose finish time is not null divided by the total count of the race's driver race-result records, multiplied by 100.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms results.time is the driver race-result finish time and that a non-null value indicates the driver finished, validating the completion condition."
 }

@@ -184,7 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table Country, columns = [*,id,name]
 Table Match, columns = [*,id,country_id,away_team_api_id,away_team_goal]
-Table Team, columns = [*,team_api_id,team_long_name,team_short_name]
+Table Team, columns = [*,team_api_id,team_long_name]
 Foreign_keys = [Match.away_team_api_id = Team.team_api_id,Match.country_id = Country.id]
 Sample rows from Country (columns: ["id", "name"]):
 [[1, "Belgium"], [1729, "England"], [4769, "France"]]
@@ -198,12 +198,11 @@ Column id: column description -> the unique id for matches, value description ->
 Column country_id: column description -> country id, value description -> 
 Column away_team_api_id: column description -> the id of the away team api, value description -> 
 Column away_team_goal: column description -> the goal of the away team, value description -> 
-Sample rows from Team (columns: ["team_api_id", "team_long_name", "team_short_name"]):
-[[9987, "KRC Genk", "GEN"], [9993, "Beerschot AC", "BAC"], [10000, "SV Zulte-Waregem", "ZUL"]]
+Sample rows from Team (columns: ["team_api_id", "team_long_name"]):
+[[9987, "KRC Genk"], [9993, "Beerschot AC"], [10000, "SV Zulte-Waregem"]]
 Column descriptions and value descriptions for Team:
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_long_name: column description -> the team's long name, value description -> 
-Column team_short_name: column description -> the team's short name, value description -> 
 
 Q: What is the average number of goals made by Parma as the away team while playing in Italy?
 Hint: Parma refers to team_long_name = 'Parma'; average number of goals refers to AVG(away_team_goal)

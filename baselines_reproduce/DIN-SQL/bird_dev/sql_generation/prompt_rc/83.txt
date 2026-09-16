@@ -352,12 +352,12 @@ Hint: Kindergarten to 8th grade refers to K-8; 'Offers a magnet program' means M
 Schema_links: [frpm.`NSLP Provision Status`,schools.Magnet,schools.GSserved,schools.City,schools.CDSCode,frpm.CDSCode = schools.CDSCode,1,K-8,Multiple Provision Types]
 Result Contract:
 {
-  "population": "For the Multiple Provision Types count, eligible schools are schools that offer a magnet program (Magnet = 1) and have a grade span served of Kindergarten-to-8th grade (K-8), with the counted subset limited to schools whose NSLP Provision Status is 'Multiple Provision Types'; for the city-level listing, eligible schools are schools with a grade span served of K-8, and eligible cities are cities containing at least one such school.",
-  "row_grain": "One global summary for the Multiple Provision Types count and one row for each eligible city with its K-8 school count.",
-  "column_role": "The city, the number of K-8 schools in that city, and the global number of magnet K-8 schools with Multiple Provision Types.",
-  "derivation": "Count the eligible schools with Multiple Provision Types globally, and count the eligible K-8 schools within each eligible city.",
+  "population": "Eligible schools are schools that offer a magnet program, have an offered grade span of Kindergarten-to-8th grade, and have NSLP Provision Status 'Multiple Provision Types'. Eligible cities are cities containing at least one such school.",
+  "row_grain": "One row for each eligible city, giving the number of eligible schools in that city; no separate global summary row is returned.",
+  "column_role": "The city and the number of eligible schools in that city.",
+  "derivation": "Count the eligible schools within each eligible city.",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes schools.GSoffered from schools.GSserved; because the question asks for schools serving K-8, eligibility is schools.GSserved = 'K-8'. No other metadata refinement changed the contract."
+  "meta_review": "The grade-span condition is the offered grade span, not the served grade span. No other metadata refinement changes the contract."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

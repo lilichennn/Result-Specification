@@ -182,12 +182,12 @@ Hint: September 2013 refers to 201309; The first 4 strings of the Date values in
 Schema_links: [products.Description,yearmonth.Date,products.ProductID = transactions_1k.ProductID,yearmonth.CustomerID = transactions_1k.CustomerID,201309]
 Result Contract:
 {
-  "population": "Products that were consumed in at least one transaction recorded in transactions_1k whose transaction date falls in September 2013, i.e., the date's year portion is 2013 and its month portion is 09 (year-month 201309).",
-  "row_grain": "One product consumed in September 2013.",
-  "column_role": "The product description of each qualifying product.",
+  "population": "Products consumed in transaction records whose customer has a monthly record dated September 2013, i.e., year-month 201309.",
+  "row_grain": "One qualifying transaction record, not one distinct product; the same product description may appear multiple times.",
+  "column_role": "The product description of the product consumed in each qualifying transaction record.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that product-level consumption events are represented by transactions_1k rows containing ProductID and Date, whereas yearmonth is customer-level and lacks product identity. The population was therefore refined to products tied to September 2013 transactions."
+  "meta_review": "September 2013 is identified by a customer-level monthly value of 201309, while product identity comes from transaction-linked product records; the result lists product descriptions for qualifying transaction occurrences rather than distinct products."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

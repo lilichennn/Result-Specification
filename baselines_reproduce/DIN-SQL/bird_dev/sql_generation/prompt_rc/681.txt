@@ -251,8 +251,8 @@ Hint: had over 20000 views in 2011 refers to ViewCount > 20000 where YEAR(Creati
 Schema_links: [users.DisplayName,posts.ViewCount,posts.CreaionDate,posts.OwnerUserId = users.Id,20000,2011]
 Result Contract:
 {
-  "population": "Users who have at least one post with ViewCount > 20000 and whose post's CreationDate falls in the year 2011.",
-  "row_grain": "One row per qualifying user.",
+  "population": "User display names associated with posts that had ViewCount > 20000 and were created in 2011.",
+  "row_grain": "One row per qualifying post, so the same user's display name may appear multiple times.",
   "column_role": "The user's display name.",
   "derivation": "none",
   "filter_policy": "none",

@@ -248,12 +248,12 @@ Hint: A11 refers to average salary; Female mapps to gender = 'F'
 Schema_links: [district.district_id,district.A11,client.gender,client.district_id = district.district_id,'F',6000,10000]
 Result Contract:
 {
-  "population": "Districts whose female average salary (average salary over individuals with gender = 'F') is strictly greater than 6000 and strictly less than 10000; the supplied catalog does not provide a female-specific salary attribute, so this eligibility condition is unsupported as represented.",
+  "population": "Districts associated with at least one female client and whose district-level average salary is between 6000 and 10000 inclusive.",
   "row_grain": "One global summary row over the qualifying districts.",
-  "column_role": "A single value: the number of districts satisfying the female average salary condition.",
-  "derivation": "The requested female average salary cannot be derived from the catalog: average salary is stored only as an overall district-level value, while female gender is recorded for clients without any salary attribute; therefore no district-level female average salary can be computed.",
+  "column_role": "A single value: the number of qualifying districts.",
+  "derivation": "A distinct count of qualifying districts, using the district-level average salary for the salary condition rather than a separately computed female average salary.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that district.A11 is an overall district-level average salary and client.gender has no associated salary. Therefore the requested female-specific average salary is unsupported."
+  "meta_review": "The average salary is a district-level measure and female gender is a client attribute; the result counts districts that have female clients and meet the district average salary range."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

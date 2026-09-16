@@ -248,12 +248,12 @@ Hint: After 1996 means date > = '1997-01-01
 Schema_links: [client.client_id,card.type,card.issued,card.disp_id = disp.disp_id,disp.client_id = client.client_id,'junior','1997-01-01']
 Result Contract:
 {
-  "population": "Clients who hold at least one junior credit card whose issue date is on or after '1997-01-01' (the meaning of 'after 1996'), with the issue date represented in YYMMDD format.",
-  "row_grain": "One client per result row.",
+  "population": "Client IDs associated with a junior credit card whose issue date is on or after 1997-01-01.",
+  "row_grain": "One row per qualifying junior credit card association; the same client ID can appear more than once.",
   "column_role": "The client's ID.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms card.type value 'junior' and card.issued is the credit-card issue date stored in YYMMDD format, refining the eligibility condition's card type and date representation."
+  "meta_review": "Metadata confirms the junior card type and the issue-date condition as on or after 1997-01-01."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

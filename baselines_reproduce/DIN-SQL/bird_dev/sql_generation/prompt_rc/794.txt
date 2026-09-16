@@ -225,12 +225,12 @@ Hint: which hero refers to superhero_name; fastest refers to MAX(attribute_value
 Schema_links: [superhero.superhero_name,hero_attribute.attribute_value,attribute.attribute_name,hero_attribute.hero_id = superhero.id,hero_attribute.attribute_id = attribute.id,Speed]
 Result Contract:
 {
-  "population": "All heroes, with each hero's speed defined as the attribute_value recorded for that hero under attribute_name = 'Speed'.",
-  "row_grain": "One hero, namely the single fastest hero.",
+  "population": "Heroes for whom an attribute_value is recorded under attribute_name = 'Speed'.",
+  "row_grain": "One hero row, namely the top-ranked hero by speed.",
   "column_role": "The hero's name (superhero_name).",
-  "derivation": "For each hero, the speed metric is the attribute_value associated with the 'Speed' attribute, compared across all heroes.",
-  "filter_policy": "Select the hero whose speed value is the maximum among all heroes (argmax on speed).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "For each hero with a Speed record, the speed metric is the stored attribute_value associated with attribute_name = 'Speed'.",
+  "filter_policy": "Rank heroes by speed value from highest to lowest and return only the first hero.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

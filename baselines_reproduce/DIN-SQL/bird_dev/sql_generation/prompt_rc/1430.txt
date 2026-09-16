@@ -230,8 +230,8 @@ Hint: bought pizza on 09/10/2019 refers to expense_description = 'Pizza' where e
 Schema_links: [member.last_name,member.position,expense.expense_description,expense.expense_date,expense.link_to_member = member.member_id,Pizza,2019-09-10]
 Result Contract:
 {
-  "population": "Members (students) linked to an expense with expense_description = 'Pizza' and expense_date = '2019-09-10'.",
-  "row_grain": "One member (student) who made such a pizza purchase.",
+  "population": "Students linked to an expense with expense_description = 'Pizza' and expense_date = '2019-09-10'.",
+  "row_grain": "One row for each qualifying pizza purchase, so the same student may appear more than once if linked to multiple qualifying expenses.",
   "column_role": "The student's last name and the student's position.",
   "derivation": "none",
   "filter_policy": "none",

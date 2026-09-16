@@ -373,12 +373,12 @@ Hint: Italian is a language which refers to language = 'Italian'; with "Ancestor
 Schema_links: [set_translations.translation,set_translations.language,cards.name,cards.setCode = sets.code,set_translations.setCode = sets.code,Italian,Ancestor's Chosen]
 Result Contract:
 {
-  "population": "The eligible entities are card sets that contain a card whose name is 'Ancestor''s Chosen'.",
-  "row_grain": "One card set containing the card named 'Ancestor''s Chosen'.",
+  "population": "The eligible entities are Italian set translations of card sets that contain a card named \"Ancestor's Chosen\".",
+  "row_grain": "One row for each Italian set translation of a card set containing a card named \"Ancestor's Chosen\".",
   "column_role": "The Italian name of the card set, i.e., the set translation whose language is 'Italian'.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies set_translations.translation as the translation of a card set with set_translations.language, distinguishing it from foreign_data.name, which is the foreign card name. This confirms the requested Italian name is the Italian set translation, not the card's foreign name."
+  "meta_review": "Metadata distinguishes the set translation, identified by language, from a foreign card name; this confirms the requested Italian name is the Italian set translation, not the card's foreign name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: average points = AVG(points where year = 2000)
 Schema_links: [drivers.forename,drivers.surname,results.points,races.year,results.driverId = drivers.driverId,results.raceId = races.raceId,Eddie,Irvine,2000]
 Result Contract:
 {
-  "population": "All race-result records belonging to driver Eddie Irvine in races whose year is 2000; both the driver being Eddie Irvine and the race year being 2000 determine which points values contribute to the average.",
+  "population": "All driver-standing records belonging to driver Eddie Irvine that are associated with races whose year is 2000; both the driver being Eddie Irvine and the race year being 2000 determine which points values contribute to the average.",
   "row_grain": "One global summary row for Eddie Irvine.",
   "column_role": "The average points value.",
-  "derivation": "Average of the points values across the eligible race-result records, i.e., AVG(points where race year = 2000) for Eddie Irvine.",
+  "derivation": "Average of the points values across the eligible driver-standing records for Eddie Irvine in races whose year is 2000.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies results.points as driver race-result points and races.year as the race year, so the eligible records are Eddie Irvine's race results in 2000."
+  "meta_review": "Metadata identifies the points being averaged as driver-standing points and the year as the race year, so the eligible records are Eddie Irvine's driver-standing entries in 2000."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

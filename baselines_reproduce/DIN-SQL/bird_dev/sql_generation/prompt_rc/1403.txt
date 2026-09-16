@@ -230,12 +230,12 @@ Hint: closed events refers to event_name where status = 'Closed'; exceed the bud
 Schema_links: [event.event_name,event.status,budget.remaining,budget.link_to_event = event.event_id,Closed,0]
 Result Contract:
 {
-  "population": "Events whose own status is 'Closed' and that have at least one associated budget entry with remaining < 0, meaning cost exceeded budget.",
-  "row_grain": "One single event: the closed, over-budget event associated with the greatest overrun.",
+  "population": "Events linked to at least one budget entry recorded as 'Closed' with a negative remaining amount, meaning cost exceeded budget.",
+  "row_grain": "One single event: the event linked to the closed, negative-remaining budget entry with the greatest overrun.",
   "column_role": "The name of the event.",
-  "derivation": "The overrun is measured by the remaining dollar amount recorded for budget entries associated with the event, where remaining is amount budgeted minus spent; the evidence selects the minimum remaining value among negative remaining values.",
-  "filter_policy": "Among eligible closed events with negative associated remaining values, select the event linked to the minimum remaining value; tie handling is unspecified.",
-  "meta_review": "Metadata shows budget.remaining is a stored dollar value calculated as amount budgeted minus spent at the category-and-event grain, with negative values indicating overrun. This refines the overspend comparison to the minimum negative remaining among budget entries linked to a closed event while preserving the event-level result."
+  "derivation": "The overrun is measured by the stored remaining dollar amount for the eligible budget entries, where remaining is amount budgeted minus spent; the selected event is the one linked to the entry with the minimum negative remaining value.",
+  "filter_policy": "Among eligible budget entries recorded as 'Closed' with negative remaining amounts, select the event linked to the entry with the smallest remaining value; tie handling is unspecified.",
+  "meta_review": "Metadata shows the remaining amount is a stored dollar value calculated as amount budgeted minus spent at the category-and-event grain, with negative values indicating overrun. This refines the overspend comparison to the minimum negative remaining among budget entries recorded as 'Closed' while preserving the event-level result."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

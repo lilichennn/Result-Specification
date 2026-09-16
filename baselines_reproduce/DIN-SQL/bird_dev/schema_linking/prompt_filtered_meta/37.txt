@@ -182,35 +182,27 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table satscores, columns = [*,cds,sname,NumTstTakr,NumGE1500]
-Table schools, columns = [*,CDSCode,School,Street,StreetAbr,City,Zip,State,MailStreet,MailStrAbr,MailCity,MailZip,MailState]
+Table satscores, columns = [*,cds,NumTstTakr,NumGE1500]
+Table schools, columns = [*,CDSCode,Street,City,Zip,State]
 Foreign_keys = [satscores.cds = schools.CDSCode]
-Sample rows from satscores (columns: ["cds", "sname", "NumTstTakr", "NumGE1500"]):
-[["1100170000000", null, 88, 14], ["1100170109835", "FAME Public Charter", 17, 9], ["1100170112607", "Envision Academy for Arts & Technology", 71, 5]]
+Sample rows from satscores (columns: ["cds", "NumTstTakr", "NumGE1500"]):
+[["1100170000000", 88, 14], ["1100170109835", 17, 9], ["1100170112607", 71, 5]]
 Column descriptions and value descriptions for satscores:
 Column cds: column description -> California Department Schools, value description -> 
-Column sname: column description -> school name, value description -> 
 Column NumTstTakr: column description -> Number of Test Takers in this school, value description -> number of test takers in each school
 Column NumGE1500: column description -> Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500, value description -> Number of Test Takers Whose Total SAT Scores Are Greater or Equal to 1500
 
 commonsense evidence:
 
 Excellence Rate = NumGE1500 / NumTstTakr
-Sample rows from schools (columns: ["CDSCode", "School", "Street", "StreetAbr", "City", "Zip", "State", "MailStreet", "MailStrAbr", "MailCity", "MailZip", "MailState"]):
-[["01100170000000", null, "313 West Winton Avenue", "313 West Winton Ave.", "Hayward", "94544-1136", "CA", "313 West Winton Avenue", "313 West Winton Ave.", "Hayward", "94544-1136", "CA"], ["01100170109835", "FAME Public Charter", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "Newark", "94560-5359", "CA", "39899 Balentine Drive, Suite 335", "39899 Balentine Dr., Ste. 335", "Newark", "94560-5359", "CA"], ["01100170112607", "Envision Academy for Arts & Technology", "1515 Webster Street", "1515 Webster St.", "Oakland", "94612-3355", "CA", "1515 Webster Street", "1515 Webster St.", "Oakland", "94612", "CA"]]
+Sample rows from schools (columns: ["CDSCode", "Street", "City", "Zip", "State"]):
+[["01100170000000", "313 West Winton Avenue", "Hayward", "94544-1136", "CA"], ["01100170109835", "39899 Balentine Drive, Suite 335", "Newark", "94560-5359", "CA"], ["01100170112607", "1515 Webster Street", "Oakland", "94612-3355", "CA"]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column School: column description -> School, value description -> 
 Column Street: column description -> Street, value description -> 
-Column StreetAbr: column description -> The abbreviated street address of the school, district, or administrative authority’s physical location., value description -> The abbreviated street address of the school, district, or administrative authority’s physical location. Note: Some records (primarily records of closed or retired schools) may not have data in this field.
 Column City: column description -> City, value description -> 
 Column Zip: column description -> Zip, value description -> 
 Column State: column description -> State, value description -> 
-Column MailStreet: column description -> MailStreet, value description -> The unabbreviated mailing address of the school, district, or administrative authority. Note: 1) Some entities (primarily closed or retired schools) may not have data in this field; 2) Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStreet cells with Street data.
-Column MailStrAbr: column description -> , value description -> the abbreviated mailing street address of the school, district, or administrative authority.Note: Many active entities have not provided a mailing street address. For your convenience we have filled the unpopulated MailStrAbr cells with StreetAbr data.
-Column MailCity: column description -> , value description -> The city associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address city. For your convenience we have filled the unpopulated MailCity cells with City data.
-Column MailZip: column description -> , value description -> The zip code associated with the mailing address of the school, district, or administrative authority. Note: Many entities have not provided a mailing address zip code. For your convenience we have filled the unpopulated MailZip cells with Zip data.
-Column MailState: column description -> , value description -> The state within the mailing address. For your convenience we have filled the unpopulated MailState cells with State data.
 
 Q: What is the complete address of the school with the lowest excellence rate? Indicate the Street, City, Zip and State.
 Hint: Execellence Rate = NumGE1500 / NumTstTakr; complete address has Street, City, State, Zip code

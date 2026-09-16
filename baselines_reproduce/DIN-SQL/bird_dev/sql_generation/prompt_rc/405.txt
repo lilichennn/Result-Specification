@@ -297,12 +297,12 @@ Hint: Commander block refer to block = 'Commander'; sets refer to code = setCode
 Schema_links: [sets.block,set_translations.language,set_translations.setCode,set_translations.setCode = sets.code,'Commander','Portuguese (Brasil)']
 Result Contract:
 {
-  "population": "Sets that belong to the Commander block (block = 'Commander') and have a Brazilian Portuguese translation (language = 'Portuguese (Brasil)').",
+  "population": "Sets that belong to the Commander block (block = 'Commander') and have a Brazilian Portuguese translation (language = 'Portuguese (Brazil)').",
   "row_grain": "One global summary row over all qualifying sets.",
   "column_role": "The count of qualifying Brazilian Portuguese translated sets.",
-  "derivation": "Count the sets (setCode) that satisfy the population conditions.",
+  "derivation": "Count the sets that satisfy the population conditions.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "Brazilian Portuguese is represented by the language value 'Portuguese (Brazil)'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

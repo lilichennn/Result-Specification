@@ -225,11 +225,11 @@ Hint: highest attribute in strength refers to MAX(attribute_value) WHERE attribu
 Schema_links: [superhero.full_name,hero_attribute.attribute_value,attribute.attribute_name,hero_attribute.hero_id = superhero.id,hero_attribute.attribute_id = attribute.id,Strength]
 Result Contract:
 {
-  "population": "All heroes are eligible; the restriction to attribute name 'strength' scopes the compared metric, not hero membership.",
+  "population": "Heroes with a recorded attribute named 'Strength'; the attribute condition defines the eligible population and the compared metric.",
   "row_grain": "One hero, namely the single hero selected as having the highest strength.",
   "column_role": "The hero's full name, not the superhero alias.",
-  "derivation": "For each hero, the strength metric is the attribute value recorded under attribute name 'strength'.",
-  "filter_policy": "Select the hero whose strength attribute value is maximal (argmax over per-hero strength values); tie handling is unspecified.",
+  "derivation": "The full name is a stored hero property; the strength metric is the stored attribute value recorded under attribute name 'Strength'.",
+  "filter_policy": "Select the single hero with the greatest Strength attribute value; if there is a tie, one tied hero is returned without specified priority.",
   "meta_review": "Metadata shows superhero.full_name is the full-name property distinct from superhero_name, so the requested output is the hero's full name rather than the alias. It also confirms strength is an attribute name whose per-hero value is recorded as an attribute value."
 }
 

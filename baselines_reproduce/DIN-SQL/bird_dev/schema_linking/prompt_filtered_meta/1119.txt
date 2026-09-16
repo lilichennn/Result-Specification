@@ -182,27 +182,15 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Match, columns = [*,id,home_team_api_id,home_team_goal,home_player_1,home_player_2,home_player_3,home_player_4,home_player_5,home_player_6,home_player_7,home_player_8,home_player_9,home_player_10,home_player_11,goal]
+Table Match, columns = [*,id,home_team_goal,away_player_9]
 Table Player, columns = [*,id,player_api_id,player_name]
-Foreign_keys = [Match.home_player_11 = Player.player_api_id,Match.home_player_10 = Player.player_api_id,Match.home_player_9 = Player.player_api_id,Match.home_player_8 = Player.player_api_id,Match.home_player_7 = Player.player_api_id,Match.home_player_6 = Player.player_api_id,Match.home_player_5 = Player.player_api_id,Match.home_player_4 = Player.player_api_id,Match.home_player_3 = Player.player_api_id,Match.home_player_2 = Player.player_api_id,Match.home_player_1 = Player.player_api_id]
-Sample rows from Match (columns: ["id", "home_team_api_id", "home_team_goal", "home_player_1", "home_player_2", "home_player_3", "home_player_4", "home_player_5", "home_player_6", "home_player_7", "home_player_8", "home_player_9", "home_player_10", "home_player_11", "goal"]):
-[[1, 9987, 1, null, null, null, null, null, null, null, null, null, null, null, null], [2, 10000, 0, null, null, null, null, null, null, null, null, null, null, null, null], [3, 9984, 0, null, null, null, null, null, null, null, null, null, null, null, null]]
+Foreign_keys = [Match.away_player_9 = Player.player_api_id]
+Sample rows from Match (columns: ["id", "home_team_goal", "away_player_9"]):
+[[1, 1, null], [2, 0, null], [3, 0, null]]
 Column descriptions and value descriptions for Match:
 Column id: column description -> the unique id for matches, value description -> 
-Column home_team_api_id: column description -> the id of the home team api, value description -> 
 Column home_team_goal: column description -> the goal of the home team, value description -> 
-Column home_player_1: column description -> , value description -> 
-Column home_player_2: column description -> , value description -> 
-Column home_player_3: column description -> , value description -> 
-Column home_player_4: column description -> , value description -> 
-Column home_player_5: column description -> , value description -> 
-Column home_player_6: column description -> , value description -> 
-Column home_player_7: column description -> , value description -> 
-Column home_player_8: column description -> , value description -> 
-Column home_player_9: column description -> , value description -> 
-Column home_player_10: column description -> , value description -> 
-Column home_player_11: column description -> , value description -> 
-Column goal: column description -> the goal of the match, value description -> 
+Column away_player_9: column description -> , value description -> 
 Sample rows from Player (columns: ["id", "player_api_id", "player_name"]):
 [[1, 505942, "Aaron Appindangoye"], [2, 155782, "Aaron Cresswell"], [3, 162549, "Aaron Doran"]]
 Column descriptions and value descriptions for Player:

@@ -182,12 +182,12 @@ Hint: Gas station in the Czech Republic implies that Country = 'CZE'
 Schema_links: [transactions_1k.TransactionID,gasstations.Country,transactions_1k.Amount,transactions_1k.Price,transactions_1k.GasStationID = gasstations.GasStationID,CZE,1000]
 Result Contract:
 {
-  "population": "Transactions that took place at a gas station in the Czech Republic (Country = 'CZE') and whose total transaction price (Amount * Price) is over 1000.",
+  "population": "Transactions that took place at a gas station in the Czech Republic (Country = 'CZE') and whose transaction price is over 1000.",
   "row_grain": "One global summary row for all qualifying transactions.",
   "column_role": "The count of qualifying transactions.",
-  "derivation": "Count the transactions satisfying the population conditions, evaluating the price threshold as Amount * Price > 1000.",
+  "derivation": "Count the transactions satisfying the population conditions, using the transaction's price itself as the value compared with 1000.",
   "filter_policy": "none",
-  "meta_review": "Metadata for transactions_1k states that total price is Amount * Price, resolving the requested transaction price as a computed total rather than the stored Price value."
+  "meta_review": "The requested price threshold is interpreted as the transaction's own price, not as a computed total based on amount and unit price."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

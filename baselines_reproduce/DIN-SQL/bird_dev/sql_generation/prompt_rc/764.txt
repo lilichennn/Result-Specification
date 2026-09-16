@@ -226,11 +226,11 @@ Schema_links: [superpower.power_name,hero_power.hero_id,hero_power.power_id = su
 Result Contract:
 {
   "population": "Superpowers belonging to the hero(s) with hero_id = 1.",
-  "row_grain": "One row per superpower of the hero with ID 1.",
+  "row_grain": "One row per distinct superpower name of the hero with ID 1.",
   "column_role": "The superpower name (power_name).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that hero_id identifies the requested hero and that the requested superpower is represented by power_name. This validates the Round-1 population, grain, and output without changing them."
+  "meta_review": "Metadata confirms that hero_id identifies the requested hero and that the requested superpower is represented by power_name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

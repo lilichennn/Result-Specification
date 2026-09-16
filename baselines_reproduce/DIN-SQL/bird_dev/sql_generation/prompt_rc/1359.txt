@@ -230,12 +230,12 @@ Hint: budget in Advertisement refer to category = 'Advertisement' in the budget 
 Schema_links: [budget.category,budget.amount,event.event_name,budget.link_to_event = event.event_id,'Advertisement','Yearly Kickoff','October Meeting']
 Result Contract:
 {
-  "population": "Budget records with category = 'Advertisement', comprising a target subpopulation associated with the event named 'Yearly Kickoff' and a reference subpopulation associated with the event named 'October Meeting'.",
+  "population": "Budget records with category 'Advertisement' that are linked to events of type 'Meeting', including a target subpopulation linked to the event named 'Yearly Kickoff' and a reference subpopulation linked to the event named 'October Meeting'.",
   "row_grain": "One global summary row representing the single comparison between the two named events.",
-  "column_role": "A single numeric value expressing how many times the Advertisement budget for 'Yearly Kickoff' exceeds that for 'October Meeting'.",
-  "derivation": "Divide the sum of amount over Advertisement budget records associated with the event named 'Yearly Kickoff' by the sum of amount over Advertisement budget records associated with the event named 'October Meeting'.",
+  "column_role": "A single numeric value expressing how many times the Advertisement meeting budget for 'Yearly Kickoff' exceeds that for 'October Meeting'.",
+  "derivation": "Within Advertisement budget records linked to Meeting events, divide the sum of amount for the event named 'Yearly Kickoff' by the sum of amount for the event named 'October Meeting'.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows event_name is an Event attribute and budget.link_to_event references the event, so event-name conditions apply to the linked event rather than a budget column. This refinement was applied to population and derivation."
+  "meta_review": "Metadata shows event_name and event type are Event attributes and budget.link_to_event references the event, so event-name and meeting-type conditions apply to the linked event rather than a budget column."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: born from 1980-1990 refers to year(dob) between 1980 and 1990; earliest la
 Schema_links: [drivers.forename,drivers.surname,drivers.nationality,drivers.dob,lapTimes.time,lapTimes.driverId = drivers.driverId,German,1980,1990]
 Result Contract:
 {
-  "population": "Drivers who are German and whose year of birth is between 1980 and 1990, as defined by year(dob) between 1980 and 1990.",
-  "row_grain": "One row per selected driver.",
-  "column_role": "The identity of each selected driver; no other output values are explicitly requested.",
-  "derivation": "For each driver, the earliest lap time is the minimum lap-time duration recorded for that driver across lap-time records, used as the ranking metric.",
-  "filter_policy": "Keep the top 3 eligible drivers ranked by the smallest earliest (minimum) lap time; tie handling is unspecified.",
-  "meta_review": "Metadata confirms lapTimes.time is the lap-time value on driver-lap records, validating the minimum-lap-time metric at one row per selected driver. No other Round-1 semantics were changed."
+  "population": "Pit-stop occurrences associated with drivers whose nationality is German and whose birth year is between 1980 and 1990.",
+  "row_grain": "One row per selected pit-stop occurrence, not necessarily one row per distinct driver.",
+  "column_role": "The driver identity associated with each selected pit-stop occurrence; no time value or other measure is returned.",
+  "derivation": "The ranking uses the stored time value of each qualifying pit-stop occurrence directly; no minimum per driver is computed.",
+  "filter_policy": "Keep the three qualifying pit-stop occurrences with the earliest time values, ordered from earliest to latest; tie handling is unspecified and the same driver may appear more than once.",
+  "meta_review": "The time metric is the pit-stop occurrence time used for ordering, not a per-driver minimum lap-time aggregate, and the result is occurrence-level rather than distinct-driver-level."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,13 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table event, columns = [*,event_id,event_name,event_date,location,status]
+Table event, columns = [*,event_id,event_date,location,status]
 Foreign_keys = []
-Sample rows from event (columns: ["event_id", "event_name", "event_date", "location", "status"]):
-[["rec0Si5cQ4rJRVzd6", "March Meeting", "2020-03-10T12:00:00", "MU 215", "Open"], ["rec0akZnLLpGUloLH", "Officers meeting - January", "2020-01-14T09:30:00", null, "Open"], ["rec0dZPcWXF0QjNnE", "Spring Elections", "2019-11-24T09:00:00", "MU 215", "Open"]]
+Sample rows from event (columns: ["event_id", "event_date", "location", "status"]):
+[["rec0Si5cQ4rJRVzd6", "2020-03-10T12:00:00", "MU 215", "Open"], ["rec0akZnLLpGUloLH", "2020-01-14T09:30:00", null, "Open"], ["rec0dZPcWXF0QjNnE", "2019-11-24T09:00:00", "MU 215", "Open"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
-Column event_name: column description -> event name, value description -> 
 Column event_date: column description -> The date the event took place or is scheduled to take place, value description -> e.g. 2020-03-10T12:00:00
 Column location: column description -> Address where the event was held or is to be held or the name of such a location, value description -> 
 Column status: column description -> One of three values indicating if the event is in planning, is opened, or is closed, value description -> Open/ Closed/ Planning

@@ -415,12 +415,12 @@ Hint:
 Schema_links: [Player_Attributes.heading_accuracy,Player.player_name,Player_Attributes.player_api_id = Player.player_api_id,Ariel Borysiuk]
 Result Contract:
 {
-  "population": "The player named Ariel Borysiuk.",
-  "row_grain": "One row representing the player Ariel Borysiuk.",
-  "column_role": "The heading accuracy value of Ariel Borysiuk.",
+  "population": "The player attribute entries associated with the player named Ariel Borysiuk.",
+  "row_grain": "One row per player attribute entry.",
+  "column_role": "The heading accuracy value for each player attribute entry.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

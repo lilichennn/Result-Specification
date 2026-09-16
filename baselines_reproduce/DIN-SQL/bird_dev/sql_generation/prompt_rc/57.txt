@@ -352,12 +352,12 @@ Hint:
 Schema_links: [schools.Phone,schools.Ext,satscores.AvgScrWrite,satscores.cds = schools.CDSCode,333]
 Result Contract:
 {
-  "population": "All schools.",
+  "population": "Schools that have a corresponding average writing score entry.",
   "row_grain": "One school, specifically the single school selected by its rank on average writing score.",
   "column_role": "The selected school's phone number and its extension number; the average writing score is a ranking measure, not a requested output.",
   "derivation": "Each eligible school is associated with a stored school-level average writing score metric used for comparison.",
   "filter_policy": "Order the eligible schools by average writing score from highest to lowest and retain only the school at the 333rd position.",
-  "meta_review": "Metadata establishes satscores.AvgScrWrite as a stored school-level average writing score metric, resolving the storage-versus-computation uncertainty. No other Round-1 semantics were changed."
+  "meta_review": "The average writing score is treated as a stored school-level metric used for ranking, not a computed aggregate."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

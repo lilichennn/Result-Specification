@@ -286,11 +286,11 @@ Hint: number of accidents refers to the number where statusid = 3; Canadian Gran
 Schema_links: [results.resultId,results.driverId,results.statusId,races.name,results.raceId = races.raceId,3,'Canadian Grand Prix']
 Result Contract:
 {
-  "population": "Drivers with race-result records in races named 'Canadian Grand Prix', where only result records with statusId = 3 count as accidents contributing to a driver's accident total.",
-  "row_grain": "One global summary row representing the single requested number.",
+  "population": "Drivers with race-result records in races named 'Canadian Grand Prix' that have statusId = 3, treating only those records as accidents.",
+  "row_grain": "One row representing the requested count for the selected driver.",
   "column_role": "The number of accidents attributed to the driver with the highest Canadian Grand Prix accident count.",
-  "derivation": "For each driver, count their race-result records with statusId = 3 across races named 'Canadian Grand Prix'; the reported value is that count for the selected driver.",
-  "filter_policy": "Argmax over drivers by their Canadian Grand Prix accident count; tie handling is not specified.",
+  "derivation": "For each driver, count their race-result records with statusId = 3 in races named 'Canadian Grand Prix'; the reported value is that count for the selected driver.",
+  "filter_policy": "Select the driver with the highest Canadian Grand Prix accident count and return that count; tie handling is not specified.",
   "meta_review": "Metadata establishes that statusId belongs to race-result records and that race identity by name is races.name, resolving the record owner for accident counts. This supports counting driver result rows with statusId = 3 across races named 'Canadian Grand Prix'."
 }
 

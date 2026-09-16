@@ -182,35 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table schools, columns = [*,CDSCode,District,School,Website,SOC,SOCType,AdmFName1,AdmLName1,AdmFName2,AdmLName2]
+Table schools, columns = [*,CDSCode,Website,AdmFName1,AdmLName1,AdmFName2,AdmLName2,AdmFName3,AdmLName3]
 Foreign_keys = []
-Sample rows from schools (columns: ["CDSCode", "District", "School", "Website", "SOC", "SOCType", "AdmFName1", "AdmLName1", "AdmFName2", "AdmLName2"]):
-[["01100170000000", "Alameda County Office of Education", null, "www.acoe.org", null, null, "L Karen", "Monroe", null, null], ["01100170109835", "Alameda County Office of Education", "FAME Public Charter", null, "65", "K-12 Schools (Public)", null, null, null, null], ["01100170112607", "Alameda County Office of Education", "Envision Academy for Arts & Technology", "www.envisionacademy.org/", "66", "High Schools (Public)", "Laura", "Robell", null, null]]
+Sample rows from schools (columns: ["CDSCode", "Website", "AdmFName1", "AdmLName1", "AdmFName2", "AdmLName2", "AdmFName3", "AdmLName3"]):
+[["01100170000000", "www.acoe.org", "L Karen", "Monroe", null, null, null, null], ["01100170109835", null, null, null, null, null, null, null], ["01100170112607", "www.envisionacademy.org/", "Laura", "Robell", null, null, null, null]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
-Column District: column description -> District, value description -> 
-Column School: column description -> School, value description -> 
 Column Website: column description -> The website address of the school, district, or administrative authority., value description -> The website address of the school, district, or administrative authority.
-Column SOC: column description -> The School Ownership Code is a numeric code used to identify the type of school., value description -> •      08 - Preschool      
-•       09 – Special Education Schools (Public)
-•      11 – Youth Authority Facilities (CEA)
-•       13 – Opportunity Schools
-•       14 – Juvenile Court Schools
-•       15 – Other County or District Programs
-•       31 – State Special Schools
-•       60 – Elementary School (Public)
-•       61 – Elementary School in 1 School District (Public)
-•       62 – Intermediate/Middle Schools (Public)
-•       63 – Alternative Schools of Choice
-•       64 – Junior High Schools (Public)
-•       65 – K-12 Schools (Public)
-•       66 – High Schools (Public)
-•       67 – High Schools in 1 School District (Public)
-•       68 – Continuation High Schools
-•       69 – District Community Day Schools
-•       70 – Adult Education Centers
-•       98 – Regional Occupational Center/Program (ROC/P)
-Column SOCType: column description -> The School Ownership Code Type is the text description of the type of school., value description -> The School Ownership Code Type is the text description of the type of school.
 Column AdmFName1: column description -> administrator's first name, value description -> The superintendent’s or principal’s first name.
 
 commonsense evidence:
@@ -222,6 +200,8 @@ commonsense evidence:
 Only active and pending districts and schools will display administrator information, if applicable.
 Column AdmFName2: column description -> , value description -> SAME as 1
 Column AdmLName2: column description -> , value description -> 
+Column AdmFName3: column description -> , value description -> not useful
+Column AdmLName3: column description -> , value description -> not useful
 
 Q: What is the website for the schools under the administrations of Mike Larson and Dante Alvarez?
 A: Let’s think step by step.

@@ -328,10 +328,10 @@ Schema_links: [users.DisplayName,users.Views]
 Result Contract:
 {
   "population": "All users are eligible; no membership conditions are stated.",
-  "row_grain": "One user, namely the user identified as having the most views.",
-  "column_role": "The display name of the selected user.",
+  "row_grain": "One row per user whose view count equals the maximum view count; ties produce multiple rows.",
+  "column_role": "The display name of each selected user.",
   "derivation": "A per-user views metric (number of views) is stored directly at user grain and is used for comparison.",
-  "filter_policy": "Argmax: select the user whose Views value equals Max(Views) across all users; tie handling is unspecified.",
+  "filter_policy": "Select every user whose view count equals the maximum view count across all users; no tie-break or limit is applied.",
   "meta_review": "Metadata establishes that users.Views is the user-level number-of-views metric and users.DisplayName is the user's display name. This resolves the metric storage and output representation."
 }
 

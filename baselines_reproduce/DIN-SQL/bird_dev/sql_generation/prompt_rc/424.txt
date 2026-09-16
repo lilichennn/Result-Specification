@@ -366,12 +366,12 @@ Hint: do not have a text box refers to isTextless = 1; proportion refers to DIVI
 Schema_links: [cards.isTextless,cards.layout,1,normal]
 Result Contract:
 {
-  "population": "The reference population is all cards that are textless (isTextless = 1); the target subpopulation is those among them whose layout is 'normal'.",
-  "row_grain": "One global summary row representing the proportion across the entire eligible card population.",
-  "column_role": "A single output value: the proportion, expressed as a percentage, of textless cards that have a normal layout.",
-  "derivation": "Compute the count of textless cards with layout 'normal' divided by the count of all textless cards, multiplied by 100.",
+  "population": "The reference population is all cards; the target subpopulation is cards that are textless (isTextless = 1) and have a normal layout.",
+  "row_grain": "One global summary row representing the proportion across the entire card population.",
+  "column_role": "A single output value: the proportion, expressed as a percentage, of all cards that are textless and have a normal layout.",
+  "derivation": "Compute the count of cards with isTextless = 1 and layout = 'normal' divided by the count of all cards, multiplied by 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.isTextless uses 1 for cards without a text box and cards.layout stores the card layout, validating the textless denominator and normal-layout numerator condition."
+  "meta_review": "Metadata confirms isTextless = 1 identifies cards without a text box and layout stores the card layout, validating the combined numerator condition and the percentage computed relative to all cards."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

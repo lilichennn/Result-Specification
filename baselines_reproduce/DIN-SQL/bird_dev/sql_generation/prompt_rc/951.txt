@@ -286,11 +286,11 @@ Schema_links: [constructors.constructorId,constructors.nationality,constructorRe
 Result Contract:
 {
   "population": "Constructors whose nationality is 'Japanese' and for whom the number of races in which they have 0 points is exactly 2.",
-  "row_grain": "One global summary row representing the total over all qualifying constructors.",
-  "column_role": "The count of qualifying Japanese constructors.",
-  "derivation": "Count the eligible constructors, where eligibility requires evaluating, per constructor, the count of races with 0 points and comparing it to 2.",
+  "row_grain": "One row per qualifying Japanese constructor.",
+  "column_role": "The number of zero-point races for each qualifying Japanese constructor.",
+  "derivation": "For each Japanese constructor, count the zero-point races and return that count for constructors whose count equals 2.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

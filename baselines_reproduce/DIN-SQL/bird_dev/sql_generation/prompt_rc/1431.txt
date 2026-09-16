@@ -230,12 +230,12 @@ Hint: members of the club refers to position = 'Member'; 'Women's Soccer' is eve
 Schema_links: [member.last_name,member.position,event.event_name,attendance.link_to_member = member.member_id,attendance.link_to_event = event.event_id,Member,Women's Soccer]
 Result Contract:
 {
-  "population": "People whose club position is 'Member' and who attended the event named 'Women's Soccer'; both conditions must hold.",
-  "row_grain": "One row per qualifying club member.",
-  "column_role": "The last name of the qualifying member.",
+  "population": "Attendance records linking a club member whose position is 'Member' to the event named \"Women's Soccer\".",
+  "row_grain": "One row per qualifying attendance record, so a member's last name may appear more than once.",
+  "column_role": "The last name of the member associated with the qualifying attendance record.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that attendance records link members to events and event_name identifies the event, validating the attended-event condition. Member position and last_name support the club-member filter and requested output."
+  "meta_review": "Metadata confirms that attendance records link members to events and the event name identifies the event, validating the attended-event condition. Member position and last name support the club-member filter and requested output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

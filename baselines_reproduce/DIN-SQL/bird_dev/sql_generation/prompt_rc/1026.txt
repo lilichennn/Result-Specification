@@ -415,11 +415,11 @@ Hint: home team lost the matches refers to SUBTRACT(home_team_goal, away_team_go
 Schema_links: [Match.home_team_api_id,Match.home_team_goal,Match.away_team_goal,Match.season,Match.id,Team.team_long_name,Match.home_team_api_id = Team.team_api_id,'2015/2016']
 Result Contract:
 {
-  "population": "Home teams appearing in matches of season '2015/2016'; only matches in that season where the home team lost (home_team_goal − away_team_goal < 0) contribute to each team's loss count.",
+  "population": "Home teams with at least one home-loss match in season '2015/2016'; only matches in that season where the home team lost (home-team goal minus away-team goal < 0) form the loss count used for selection.",
   "row_grain": "One home team.",
   "column_role": "The identity of the home team.",
-  "derivation": "For each home team, the count of its home matches in season '2015/2016' satisfying the home-loss condition (home_team_goal − away_team_goal < 0).",
-  "filter_policy": "Select the home team with the fewest losses (argmin over the loss count); tie handling is unspecified.",
+  "derivation": "The returned value is the stored identity of the selected home team.",
+  "filter_policy": "Among those home teams, select the one with the lowest count of home-loss matches; if several tie, the choice is unspecified.",
   "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
 }
 

@@ -354,12 +354,12 @@ Hint: disqualified refers to statusID = 2, finisher refers to time! = null; race
 Schema_links: [results.resultId,results.raceId,results.time,results.statusId,2,50,100]
 Result Contract:
 {
-  "population": "Race result records for finishers (time is not null) who were disqualified (statusID = 2), in races with raceId greater than 50 and less than 100.",
+  "population": "Race result records for disqualified entries (statusID = 2) in races with raceId greater than 50 and less than 100, with a non-null time identifying finishers among those entries.",
   "row_grain": "One global summary row for the entire qualifying population.",
-  "column_role": "The count of qualifying disqualified finishers.",
-  "derivation": "Count the number of finisher records satisfying the population conditions.",
+  "column_role": "The count of disqualified finishers within that population.",
+  "derivation": "Aggregate by adding one for each disqualified race result that has a non-null time.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms results.time indicates whether a driver finished and results.statusId identifies the status category, validating the finisher and disqualified conditions. No semantic change to the Round-1 contract."
+  "meta_review": "Metadata confirms that a non-null time indicates a finisher and statusID = 2 identifies disqualification."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

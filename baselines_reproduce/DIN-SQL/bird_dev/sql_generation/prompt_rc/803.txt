@@ -294,12 +294,12 @@ Hint: power ID refers to superpower.id; cryokinesis refers to power_name = 'cryo
 Schema_links: [superpower.id,superpower.power_name,cryokinesis]
 Result Contract:
 {
-  "population": "The superpower whose power_name is 'cryokinesis'.",
-  "row_grain": "One superpower record, the one named cryokinesis.",
+  "population": "The superpower whose power name is 'Cryokinesis'.",
+  "row_grain": "One superpower record, the one named 'Cryokinesis'.",
   "column_role": "The power ID of the requested superpower.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

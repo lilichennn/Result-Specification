@@ -182,12 +182,12 @@ Hint: June 2012 refers to yearmonth.date = '201206'
 Schema_links: [customers.CustomerID,customers.Segment,yearmonth.Consumption,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID,SME,201206]
 Result Contract:
 {
-  "population": "All customers whose client segment is SME; the June 2012 condition (yearmonth.Date = '201206') scopes the consumption measurement rather than customer membership.",
-  "row_grain": "One row representing the single SME customer who consumed the least in June 2012.",
+  "population": "All customers whose client segment is SME and who have at least one consumption record in June 2012 (date = '201206').",
+  "row_grain": "One row representing the single SME customer with the lowest total consumption in June 2012.",
   "column_role": "The identity of the SME customer as the customer identifier; the consumption amount is a ranking measure and is not required as an output column.",
-  "derivation": "For each SME customer, determine the consumption amount from the customer-month consumption value for June 2012 (yearmonth.Date = '201206').",
-  "filter_policy": "Argmin over SME customers by their June 2012 customer-month consumption amount; tie handling is unspecified.",
-  "meta_review": "Metadata establishes customer segment as a customer-level client segment, CustomerID as customer identification, and yearmonth.Consumption as consumption associated with CustomerID and Date. This resolves SME eligibility as a customer-segment condition, the output identity as the customer identifier, and the ranking measure as the stored June 2012 consumption value."
+  "derivation": "For each eligible SME customer, determine the total June 2012 consumption by summing the consumption amounts recorded for that customer in June 2012 (date = '201206').",
+  "filter_policy": "Argmin over eligible SME customers by their summed June 2012 consumption amount; tie handling is unspecified.",
+  "meta_review": "Metadata establishes customer segment as a customer-level client segment, the customer identifier as customer identification, and consumption as associated with customer and date. This resolves SME eligibility as a customer-segment condition, the output identity as the customer identifier, and the ranking measure as the summed June 2012 consumption value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

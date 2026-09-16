@@ -248,12 +248,12 @@ Hint:
 Schema_links: [disp.disp_id,trans.amount,trans.date,disp.account_id = account.account_id,trans.account_id = account.account_id,5100,'1998-09-02']
 Result Contract:
 {
-  "population": "Clients who made at least one transaction of 5100 USD on 1998/9/2; the qualifying transaction must have amount 5100 USD and date 1998/9/2.",
-  "row_grain": "One client who made a qualifying transaction.",
-  "column_role": "The disposition id of the client.",
+  "population": "Client disposition records whose account has a transaction of 5100 USD on 1997-08-20.",
+  "row_grain": "One returned disposition id for each qualifying disposition-transaction link.",
+  "column_role": "The disposition id.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

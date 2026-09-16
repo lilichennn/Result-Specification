@@ -231,11 +231,11 @@ Schema_links: [zip_code.city,zip_code.state,member.position,major.department,mem
 Result Contract:
 {
   "population": "Members with position = 'Member' whose major's department is 'Electrical and Computer Engineering Department'.",
-  "row_grain": "One member enrolled under the Electrical and Computer Engineering Department.",
-  "column_role": "The city and state associated with the member's hometown ZIP code.",
+  "row_grain": "One row per qualifying member, represented by the member's city and state.",
+  "column_role": "The city and state associated with the member's ZIP code.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that a member's department is determined by the member's major and that city/state are attributes of the member's hometown ZIP code. The contract reflects these ownership and representation distinctions while preserving the requested outputs."
+  "meta_review": "Metadata establishes that a member's department is determined by the member's major and that city and state are obtained from the member's ZIP code. The contract reflects these ownership and representation distinctions while preserving the requested outputs."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

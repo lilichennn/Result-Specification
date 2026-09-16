@@ -187,12 +187,12 @@ Hint: label = '+' mean molecules are carcinogenic
 Schema_links: [molecule.label,bond.bond_id,bond.molecule_id = molecule.molecule_id,TR001_2_4,+]
 Result Contract:
 {
-  "population": "The single bond identified as TR001_2_4.",
-  "row_grain": "One row representing the bond TR001_2_4.",
-  "column_role": "The carcinogenic label of the molecule containing bond TR001_2_4, where '+' indicates the molecule is carcinogenic.",
-  "derivation": "Direct lookup of the molecule-level carcinogenic label associated with the specified bond.",
-  "filter_policy": "none",
-  "meta_review": "Metadata identifies the carcinogenic label as a molecule-level attribute (molecule.label), while bond identifiers locate the molecule containing a bond. The contract therefore outputs the molecule label associated with bond TR001_2_4 rather than a bond-level label."
+  "population": "The carcinogenic label value or values of the molecule or molecules containing the bond TR001_2_4.",
+  "row_grain": "One row per distinct carcinogenic label value associated with the specified bond.",
+  "column_role": "The carcinogenic label of the molecule, where '+' indicates the molecule is carcinogenic.",
+  "derivation": "The stored molecule-level carcinogenic label is returned, with duplicate label values eliminated.",
+  "filter_policy": "No ranking, ordering, extrema, or top-k selection is applied.",
+  "meta_review": "The carcinogenic label is a molecule-level attribute; the bond identifier identifies the containing molecule, and the returned result is the distinct molecule-level label rather than a bond-level label or bond entity."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

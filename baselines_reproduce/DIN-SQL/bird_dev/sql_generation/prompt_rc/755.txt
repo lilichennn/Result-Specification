@@ -229,8 +229,8 @@ Result Contract:
   "row_grain": "One row per Demi-God superhero.",
   "column_role": "The full name of the superhero.",
   "derivation": "none",
-  "filter_policy": "Return at least five qualifying superheroes; no ranking or selection criterion among them is specified.",
-  "meta_review": "Metadata confirms superhero.full_name stores the requested full name, distinct from superhero_name, and race.race stores the race label used for 'Demi-God'. This validates the Round-1 semantics without requiring refinement."
+  "filter_policy": "No ranking, ordering, or fixed-number selection is applied; all qualifying superheroes are returned.",
+  "meta_review": "Metadata confirms superhero.full_name stores the requested full name, distinct from superhero_name, and race.race stores the race label used for 'Demi-God'."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -227,10 +227,10 @@ Result Contract:
 {
   "population": "All superheroes whose eye colour is Blue.",
   "row_grain": "One superhero per result row.",
-  "column_role": "The superhero's full name (full_name).",
+  "column_role": "The superhero's name.",
   "derivation": "none",
-  "filter_policy": "Return at least five qualifying superheroes; no ranking or ordering criterion is specified.",
-  "meta_review": "Metadata defines superhero.full_name as the superhero's full name, distinguishing it from superhero_name. This resolves the requested output representation for full names."
+  "filter_policy": "Return up to five qualifying superheroes; no ranking or ordering criterion is specified.",
+  "meta_review": "The requested names are operationalized as the superhero name rather than a separate full-name attribute."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

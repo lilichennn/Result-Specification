@@ -298,11 +298,11 @@ Schema_links: [cards.name,cards.convertedManaCost,sets.name,cards.setCode = sets
 Result Contract:
 {
   "population": "All cards belonging to the card set whose name is 'Coldsnap'.",
-  "row_grain": "One card.",
+  "row_grain": "Exactly one card.",
   "column_role": "The name of the card.",
   "derivation": "none",
-  "filter_policy": "Retain only the card(s) whose converted mana cost equals the maximum converted mana cost among all Coldsnap cards, keeping all cards tied at that maximum.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Return a single card with the highest converted mana cost within Coldsnap; if multiple cards share the highest converted mana cost, only one of them is returned.",
+  "meta_review": "The result is a single top-ranked card rather than all cards tied at the maximum converted mana cost."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

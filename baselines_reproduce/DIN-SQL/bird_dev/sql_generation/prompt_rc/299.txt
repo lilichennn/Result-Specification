@@ -259,7 +259,7 @@ Result Contract:
   "population": "The single molecule identified as TR124.",
   "row_grain": "One row representing the molecule TR124.",
   "column_role": "The carcinogenicity status of the molecule, indicating whether it is carcinogenic.",
-  "derivation": "Carcinogenicity is determined from the molecule's label, where a label of '+' means the molecule is carcinogenic.",
+  "derivation": "The molecule's stored label is returned, with a label of '+' meaning the molecule is carcinogenic.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms molecule.label is the molecule-level carcinogenicity indicator, validating use of the molecule's label to determine whether TR124 is carcinogenic."
 }

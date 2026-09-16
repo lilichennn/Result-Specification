@@ -296,12 +296,12 @@ Hint: highest lactate dehydrogenase in the normal range refers to MAX(LDH < 500)
 Schema_links: [Laboratory.LDH,Patient.First Date,Laboratory.ID = Patient.ID,500]
 Result Contract:
 {
-  "population": "Patients who have at least one lactate dehydrogenase (LDH) measurement in the normal range, where normal range means LDH < 500; only measurements with LDH < 500 are eligible when determining the highest normal-range LDH.",
-  "row_grain": "One row representing the single patient selected as having the highest normal-range LDH.",
-  "column_role": "The date on which the selected patient's data was first recorded, mapped by evidence to First Date.",
-  "derivation": "The output is the minimum First Date associated with the selected patient.",
-  "filter_policy": "Argmax: select the patient with the highest LDH value among eligible normal-range (LDH < 500) measurements; tie handling is unspecified.",
-  "meta_review": "Metadata confirms Laboratory.LDH has normal range <500 and Patient.`First Date` is a patient-level date. Although Patient.Description is described as the first date patient data was recorded, the evidence explicitly maps the requested phrase to MIN(`First Date`), so that mapping is preserved."
+  "population": "Patients who have at least one lactate dehydrogenase (LDH) measurement in the normal range, where normal range means LDH < 500; only measurements with LDH < 500 are eligible when determining the selected lowest normal-range LDH.",
+  "row_grain": "One row representing the single patient associated with the lowest eligible normal-range LDH measurement.",
+  "column_role": "The date on which the selected patient's data was first recorded.",
+  "derivation": "The output is the stored patient-level first-recorded date associated with the selected patient, not a minimum aggregation.",
+  "filter_policy": "Argmin: select the patient associated with the lowest LDH value among eligible normal-range (LDH < 500) measurements; tie handling is unspecified.",
+  "meta_review": "Metadata confirms LDH normal range as <500 and the patient's first-recorded date as a patient-level date. Although the patient description is described as the first date patient data was recorded, the result uses the stored first-recorded date for the selected patient rather than computing a minimum over dates."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

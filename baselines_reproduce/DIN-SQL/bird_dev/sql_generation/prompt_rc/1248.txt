@@ -296,10 +296,10 @@ Hint: born after 1980/1/1 refers to Birthday > '1980-01-01'; normal fibrinogen l
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.FG,Laboratory.ID = Patient.ID,'1980-01-01',150,450]
 Result Contract:
 {
-  "population": "Patients born after 1980-01-01 (Birthday > '1980-01-01') who have an abnormal fibrinogen level, where the documented normal fibrinogen range is 150 < FG < 450, so abnormal means FG <= 150 or FG >= 450.",
+  "population": "Patients with at least one laboratory fibrinogen value of 150 or less, together with patients born after 1980-01-01 who have at least one laboratory fibrinogen value of 450 or more.",
   "row_grain": "One global summary row covering the whole eligible patient population.",
   "column_role": "A single value representing the number of qualifying patients.",
-  "derivation": "Count the eligible patients, counting each patient once even if they have multiple abnormal fibrinogen measurements.",
+  "derivation": "Count distinct patients, counting each patient once even if they have multiple qualifying fibrinogen measurements.",
   "filter_policy": "none",
   "meta_review": "Laboratory.FG documents the normal fibrinogen range as 150 < N < 450, resolving the abnormal boundary to FG <= 150 or FG >= 450."
 }

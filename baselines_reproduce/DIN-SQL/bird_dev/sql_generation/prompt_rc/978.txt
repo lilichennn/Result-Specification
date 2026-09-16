@@ -355,11 +355,11 @@ Schema_links: [circuits.country,circuits.location,circuits.lat,circuits.lng,race
 Result Contract:
 {
   "population": "Circuits located in Austria, i.e., circuits whose country is 'Austria'.",
-  "row_grain": "One row per circuit in Austria.",
-  "column_role": "The number of times the circuit was held, the circuit's location, and its coordinates expressed as latitude and longitude (lat, lng).",
-  "derivation": "For each qualifying circuit, the number of times it was held is the count of race events recorded for that circuit.",
+  "row_grain": "One row per distinct location and coordinate combination for circuits in Austria.",
+  "column_role": "The circuit's location and its coordinates expressed as latitude and longitude (lat, lng).",
+  "derivation": "The returned values are stored location and coordinate attributes, with no count or aggregation produced.",
   "filter_policy": "none",
-  "meta_review": "The races table records individual race events linked to circuits, resolving 'held' as a count of race events per circuit."
+  "meta_review": "The result does not resolve 'held' as a race-event count; it only reports location and coordinates for Austrian circuits."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

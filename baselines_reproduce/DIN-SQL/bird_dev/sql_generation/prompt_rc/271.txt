@@ -187,12 +187,12 @@ Hint: chlorine refers to element = 'cl'; carbon refers to element = 'c'
 Schema_links: [connected.bond_id,atom.element,connected.atom_id = atom.atom_id,connected.atom_id2 = atom.atom_id,TR001_1_8,cl,c]
 Result Contract:
 {
-  "population": "The single bond identified by bond id TR001_1_8, together with the elements of the atoms connected to that bond.",
-  "row_grain": "One global summary row giving a single answer for the specified bond.",
-  "column_role": "A Boolean (yes/no) indicator of whether the bond involves both chlorine and carbon.",
-  "derivation": "Evaluate the conjunction of two existence checks over the elements of the atoms connected to the bond: at least one connected atom has element = 'cl' AND at least one connected atom has element = 'c'.",
+  "population": "Atom-bond associations for bond TR001_1_8 where the associated atom has element 'c1' or 'c'.",
+  "row_grain": "One row for each qualifying atom-bond association.",
+  "column_role": "The bond identifier, an associated atom identifier, and the element of the associated atom.",
+  "derivation": "Directly returned stored values from qualifying associations; no aggregation or Boolean evaluation.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows element is an atom property and connected links a bond_id to its endpoint atoms, so the bond's associated elements are the elements of its connected atoms. This refines the Round-1 association without changing the Boolean result grain."
+  "meta_review": "Element remains an atom property associated through bond connections, but the result is a row-level listing of qualifying associations rather than a single yes/no answer; the element condition covers 'c1' or 'c' rather than jointly checking chlorine and carbon."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

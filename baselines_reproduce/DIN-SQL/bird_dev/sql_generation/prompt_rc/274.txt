@@ -256,12 +256,12 @@ Hint: TR001 is the molecule id
 Schema_links: [atom.element,atom.molecule_id,TR001]
 Result Contract:
 {
-  "population": "All toxicology elements associated with the molecule whose molecule id is TR001.",
-  "row_grain": "One row per toxicology element associated with molecule TR001.",
+  "population": "All distinct toxicology elements associated with the molecule whose molecule id is TR001.",
+  "row_grain": "One row per distinct toxicology element associated with molecule TR001.",
   "column_role": "The identity of each toxicology element.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that atom.element is the toxicology element associated with a molecule through molecule_id, validating the requested population and output semantics. No additional grain or computation was imposed."
+  "meta_review": "Metadata confirms that the toxicology element is associated with a molecule through the molecule identifier, and the requested result is the distinct set of such elements for TR001, with no additional computation beyond selecting those elements."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: with iodine element refer to element = 'i'; with sulfur element refers to 
 Schema_links: [atom.atom_id,atom.element,bond.bond_type,connected.atom_id = atom.atom_id,connected.bond_id = bond.bond_id,'i','s','-']
 Result Contract:
 {
-  "population": "Atoms whose element type is iodine ('i') or sulfur ('s') and that belong to molecules having a single bond (bond_type = '-').",
-  "row_grain": "One global summary row representing the total across all qualifying atoms.",
-  "column_role": "The count of qualifying distinct atoms.",
-  "derivation": "Count the distinct atom identifiers (atom_id) satisfying the population conditions, treating each distinct atom only once as required.",
+  "population": "Distinct iodine atoms and distinct sulfur atoms that are connected to a single bond (bond type '-').",
+  "row_grain": "One global summary row containing two separate counts, one for iodine atoms and one for sulfur atoms.",
+  "column_role": "Two measures: the distinct count of iodine atoms connected to single bonds and the distinct count of sulfur atoms connected to single bonds.",
+  "derivation": "Count distinct atom identifiers separately for element 'i' and element 's' among atoms connected to single bonds; each atom is counted once per element-specific total.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms atom.atom_id is the unique atom identifier, so distinct atoms are counted by atom_id. It also confirms bond.bond_type = '-' identifies single bonds used for molecule-level qualification."
+  "meta_review": "Metadata confirms the unique atom identifier is used for distinct atom counting and bond type '-' identifies single bonds; qualification applies through the atom's connection to a single bond rather than to its whole molecule."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

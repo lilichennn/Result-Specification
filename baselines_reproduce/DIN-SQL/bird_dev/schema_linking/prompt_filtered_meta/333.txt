@@ -183,8 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table atom, columns = [*,atom_id,molecule_id,element]
-Table molecule, columns = [*,molecule_id]
-Foreign_keys = [atom.molecule_id = molecule.molecule_id]
+Foreign_keys = []
 Sample rows from atom (columns: ["atom_id", "molecule_id", "element"]):
 [["TR000_1", "TR000", "cl"], ["TR000_2", "TR000", "c"], ["TR000_3", "TR000", "cl"]]
 Column descriptions and value descriptions for atom:
@@ -206,11 +205,6 @@ Column element: column description -> the element of the toxicology , value desc
  pb: lead
  te: tellurium
  ca: Calcium
-Sample rows from molecule (columns: ["molecule_id"]):
-[["TR000"], ["TR001"], ["TR002"]]
-Column descriptions and value descriptions for molecule:
-Column molecule_id: column description -> unique id of molecule, value description -> "+" --> this molecule / compound is carcinogenic
-'-' this molecule is not / compound carcinogenic
 
 Q: In the molecule TR008, how many carbons are present?
 Hint: carbon refers to element = 'c'

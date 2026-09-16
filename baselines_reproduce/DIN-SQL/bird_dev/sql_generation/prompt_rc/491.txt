@@ -367,7 +367,7 @@ Schema_links: [sets.mcmName,sets.releaseDate,'2017-06-09']
 Result Contract:
 {
   "population": "All card sets whose set-level release date is 2017-06-09.",
-  "row_grain": "One set released on 2017-06-09.",
+  "row_grain": "One row for each card set released on 2017-06-09.",
   "column_role": "The magic card market name (mcmName) of the set.",
   "derivation": "none",
   "filter_policy": "none",

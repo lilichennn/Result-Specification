@@ -361,12 +361,12 @@ Hint: lap record means the fastest time recorded which refers to time
 Schema_links: [lapTimes.time,races.name,lapTimes.raceId = races.raceId,'Austrian Grand Prix']
 Result Contract:
 {
-  "population": "Lap time records associated with the Austrian Grand Prix Circuit.",
-  "row_grain": "One global summary for the Austrian Grand Prix Circuit.",
+  "population": "Recorded fastest lap times from race results for races named Austrian Grand Prix.",
+  "row_grain": "One global summary for the selected Austrian Grand Prix races.",
   "column_role": "The lap record, expressed as a time value.",
-  "derivation": "The fastest (minimum) recorded lap time for the Austrian Grand Prix Circuit, determined by shortest elapsed lap duration rather than lexical ordering of a text time, whether stored directly or computed at query time.",
+  "derivation": "The fastest recorded lap time, obtained as the minimum of the recorded fastest lap time values.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirmed lapTimes.time is a lap time and lapTimes.milliseconds provides its numeric duration, validating comparison by shortest elapsed duration rather than text ordering."
+  "meta_review": "The lap-record measure is the recorded fastest lap time, and the minimum recorded value identifies the lap record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

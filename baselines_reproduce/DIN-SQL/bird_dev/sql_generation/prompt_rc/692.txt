@@ -256,7 +256,7 @@ Result Contract:
   "column_role": "The elapsed time between the user's account creation date and the badge award date.",
   "derivation": "Subtract the user's account creation date from the badge award date to obtain the elapsed duration.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms badge award records provide the award date and users provide the account creation date and display name. This directly validates the elapsed-time computation and user identification in the Round-1 contract."
+  "meta_review": "Metadata confirms badge award records provide the award date and users provide the account creation date and display name. This directly validates the elapsed-time computation and user identification."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

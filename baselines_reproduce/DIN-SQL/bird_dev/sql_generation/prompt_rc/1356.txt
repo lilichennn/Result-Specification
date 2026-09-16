@@ -231,11 +231,11 @@ Schema_links: [major.department,member.position,member.link_to_major = major.maj
 Result Contract:
 {
   "population": "Club members who hold the position 'President' in a student club.",
-  "row_grain": "One row representing the President of the club.",
-  "column_role": "The department of the President's major.",
+  "row_grain": "One row per qualifying member holding the President position.",
+  "column_role": "The department of the qualifying member's major.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that department is an attribute of a major linked to a member, so the President's department is the department of the President's major. This resolves the owner of the requested department without changing the requested population or output."
+  "meta_review": "Metadata establishes that department is an attribute of a major linked to a member, so a qualifying President's department is the department of that member's major. This resolves the owner of the requested department without changing the requested population or output."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

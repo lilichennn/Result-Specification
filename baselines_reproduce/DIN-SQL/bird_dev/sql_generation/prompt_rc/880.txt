@@ -285,12 +285,12 @@ Hint: Paul di Resta refers to the full name of the driver; Full name of the driv
 Schema_links: [drivers.forename,drivers.surname,results.raceId,results.fastestLapSpeed,results.driverId = drivers.driverId,'Paul','di Resta',853,854]
 Result Contract:
 {
-  "population": "The race-result fastest lap speed values for driver Paul di Resta (drivers.forename = 'Paul' and drivers.surname = 'di Resta') in raceId 853 and in the next race, raceId 854.",
+  "population": "The race-result rows for driver Paul di Resta, with fastest lap speed values conditionally identified for race 853 and the next race, race 854.",
   "row_grain": "One global summary row representing the single requested percentage for Paul di Resta.",
-  "column_role": "A single output value: the percent by which his fastest lap speed in raceId 853 was faster than his fastest lap speed in raceId 854.",
-  "derivation": "Interpret the two fastest lap speed values as numeric speeds in km/h and compute (speed at raceId 853 − speed at raceId 854) × 100 ÷ speed at raceId 853.",
+  "column_role": "A single output value: the percent by which the fastest lap speed measure for race 853 was faster than the fastest lap speed measure for race 854.",
+  "derivation": "Interpret fastest lap speed values as numeric speeds, total them separately for race 853 and race 854, and compute (race-853 total − race-854 total) × 100 ÷ race-853 total.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms fastest lap speed is a race-result attribute (results.fastestLapSpeed) expressed in km/h as text, so the comparison uses the driver's two race-result speeds after numeric interpretation."
+  "meta_review": "Metadata confirms fastest lap speed is a race-result attribute expressed in km/h as text, so the comparison uses the driver's race-result fastest-lap speed contributions for the specified races after numeric interpretation."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

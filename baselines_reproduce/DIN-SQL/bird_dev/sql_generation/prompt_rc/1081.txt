@@ -415,8 +415,8 @@ Hint: Belgium Jupiler League refers to League.name = 'Belgium Jupiler League';
 Schema_links: [Country.name,League.name,League.country_id = Country.id,Belgium Jupiler League]
 Result Contract:
 {
-  "population": "The league whose name is 'Belgium Jupiler League'.",
-  "row_grain": "One league, namely the Belgium Jupiler League.",
+  "population": "The country associated with the league named 'Belgium Jupiler League'.",
+  "row_grain": "One country associated with that league.",
   "column_role": "The name of the country that the league is from.",
   "derivation": "none",
   "filter_policy": "none",

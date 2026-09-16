@@ -317,12 +317,12 @@ Hint: Percent of Gold = [ count(type = 'gold' and issued date < 1998) / count(al
 Schema_links: [card.type,card.issued,card.card_id,gold,1998]
 Result Contract:
 {
-  "population": "The target population is cards of type 'gold' issued before 1998, and the reference population is all cards regardless of type or issue date.",
+  "population": "The target population is cards of type 'gold' whose issue-date year is before 1998, and the reference population is all cards regardless of type or issue date.",
   "row_grain": "One global summary row over the whole card set.",
   "column_role": "The percentage that gold cards issued before 1998 represent of all cards.",
-  "derivation": "Compute (count of cards with type 'gold' and issued date before 1998 / count of all cards) * 100, using the card issued date encoded in YYMMDD form.",
+  "derivation": "Compute (count of cards with type 'gold' and issue-date year before 1998 / count of all cards) * 100.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that card.type uses the lowercase value 'gold' and card.issued is encoded as YYMMDD, resolving the Gold value and pre-1998 date comparison representations."
+  "meta_review": "Metadata confirms that the card type value is lowercase 'gold' and that the pre-1998 condition is evaluated from the year component of the issue date."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,11 +285,11 @@ Hint: Spain is a name of country;
 Schema_links: [races.name,circuits.country,races.circuitId = circuits.circuitId,Spain]
 Result Contract:
 {
-  "population": "All races held on circuits located in the country Spain.",
-  "row_grain": "One race held on a circuit in Spain.",
+  "population": "Names of races held on circuits located in the country Spain.",
+  "row_grain": "One distinct race name.",
   "column_role": "The name of the race.",
   "derivation": "none",
-  "filter_policy": "none",
+  "filter_policy": "Duplicate race names are eliminated.",
   "meta_review": "Metadata confirms that the requested name is a race attribute and the country condition is a circuit attribute, validating the race-name output and Spain eligibility."
 }
 

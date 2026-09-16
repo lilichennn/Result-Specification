@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table attendance, columns = [*,link_to_event,link_to_member]
 Table event, columns = [*,event_id,event_name]
-Table member, columns = [*,member_id]
-Foreign_keys = [attendance.link_to_member = member.member_id,attendance.link_to_event = event.event_id]
+Foreign_keys = [attendance.link_to_event = event.event_id]
 Sample rows from attendance (columns: ["link_to_event", "link_to_member"]):
 [["rec2N69DMcrqN9PJC", "recD078PnS3x2doBe"], ["rec2N69DMcrqN9PJC", "recP6DJPyi5donvXL"], ["rec2N69DMcrqN9PJC", "rec28ORZgcm1dtqBZ"]]
 Column descriptions and value descriptions for attendance:
@@ -196,10 +195,6 @@ Sample rows from event (columns: ["event_id", "event_name"]):
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_name: column description -> event name, value description -> 
-Sample rows from member (columns: ["member_id"]):
-[["rec1x5zBFIqoOuPW8"], ["rec280Sk7o31iG0Tx"], ["rec28ORZgcm1dtqBZ"]]
-Column descriptions and value descriptions for member:
-Column member_id: column description -> unique id of member, value description -> 
 
 Q: How many members attended the "Women's Soccer" event?
 Hint: 'Women's Soccer' is the event name;

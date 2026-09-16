@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
-Table district, columns = [*,district_id,A2,A3,A11]
+Table district, columns = [*,district_id,A2,A11]
 Table loan, columns = [*,loan_id,account_id,duration]
 Foreign_keys = [account.district_id = district.district_id,loan.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
@@ -191,12 +191,11 @@ Sample rows from account (columns: ["account_id", "district_id"]):
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from district (columns: ["district_id", "A2", "A3", "A11"]):
-[[1, "Hl.m. Praha", "Prague", 12541], [2, "Benesov", "central Bohemia", 8507], [3, "Beroun", "central Bohemia", 8980]]
+Sample rows from district (columns: ["district_id", "A2", "A11"]):
+[[1, "Hl.m. Praha", 12541], [2, "Benesov", 8507], [3, "Beroun", 8980]]
 Column descriptions and value descriptions for district:
 Column district_id: column description -> location of branch, value description -> 
 Column A2: column description -> district_name, value description -> 
-Column A3: column description -> region, value description -> 
 Column A11: column description -> average salary, value description -> 
 Sample rows from loan (columns: ["loan_id", "account_id", "duration"]):
 [[4959, 2, 24], [4961, 19, 12], [4962, 25, 12]]

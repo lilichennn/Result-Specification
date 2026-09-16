@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table set_translations, columns = [*,id,language,setCode,translation]
-Table sets, columns = [*,id,baseSetSize,code,name]
+Table sets, columns = [*,id,baseSetSize,code]
 Foreign_keys = [set_translations.setCode = sets.code]
 Sample rows from set_translations (columns: ["id", "language", "setCode", "translation"]):
 [[1, "Chinese Simplified", "10E", "核心系列第十版"], [2, "Chinese Traditional", "10E", "核心系列第十版"], [3, "French", "10E", "Dixième édition"]]
@@ -192,13 +192,12 @@ Column id: column description -> unique id identifying this set, value descripti
 Column language: column description -> language of this card set, value description -> 
 Column setCode: column description -> the set code for this set, value description -> 
 Column translation: column description -> translation of this card set, value description -> 
-Sample rows from sets (columns: ["id", "baseSetSize", "code", "name"]):
-[[1, 383, "10E", "Tenth Edition"], [2, 302, "2ED", "Unlimited Edition"], [3, 332, "2XM", "Double Masters"]]
+Sample rows from sets (columns: ["id", "baseSetSize", "code"]):
+[[1, 383, "10E"], [2, 302, "2ED"], [3, 332, "2XM"]]
 Column descriptions and value descriptions for sets:
 Column id: column description -> unique id identifying this set, value description -> 
 Column baseSetSize: column description -> The number of cards in the set., value description -> 
 Column code: column description -> The set code for the set., value description -> 
-Column name: column description -> The name of the set., value description -> 
 
 Q: Among the sets of cards that have an Italian translation, how many of them have a base set number of under 100?
 Hint: Italian translation refers to language = 'Italian'; have a translation means translation is not null; base set number of under 100 refers to baseSetSize < 10

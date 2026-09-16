@@ -182,12 +182,12 @@ Hint: September 2013 refers to yearmonth.date = '201309'
 Schema_links: [customers.Segment,yearmonth.Consumption,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID,201309]
 Result Contract:
 {
-  "population": "All client segments of customers, with only consumption records from September 2013 (yearmonth.date = '201309') contributing to each segment's consumption.",
-  "row_grain": "One client segment.",
-  "column_role": "The identity (name or label) of the client segment.",
-  "derivation": "For each client segment, the total consumption amount for September 2013, aggregated from customer-level consumption records for that month.",
-  "filter_policy": "Select the client segment with the least total consumption (argmin); tie handling is unspecified.",
-  "meta_review": "Metadata shows customers.Segment is the client segment, distinct from gasstations.Segment, and yearmonth.Consumption is recorded per CustomerID and Date. This resolves that the requested segment is the customer segment and that segment consumption for September 2013 is aggregated from customer-level consumption records."
+  "population": "Client-segment labels of customers with consumption records in September 2013; only September 2013 consumption records contribute to each customer's consumption total.",
+  "row_grain": "One output row: the client segment of the single selected customer.",
+  "column_role": "The identity (name or label) of the client segment of the selected customer.",
+  "derivation": "The returned value is the stored client-segment label of the selected customer; the customer's consumption total is the sum of that customer's September 2013 consumption records and is used only to choose the customer.",
+  "filter_policy": "Among eligible customers, select the one with the smallest total September 2013 consumption and return its client segment; tie handling is unspecified.",
+  "meta_review": "Metadata supports using the customer's segment as the returned label and consumption recorded per customer for the month; the result is based on the least-consuming customer rather than an aggregated segment-level consumption total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

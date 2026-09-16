@@ -256,12 +256,12 @@ Hint: TR001 is the molecule id; TR001_2_6 is the bond id
 Schema_links: [connected.atom_id,connected.atom_id2,bond.molecule_id,connected.bond_id,connected.bond_id = bond.bond_id,TR001,TR001_2_6]
 Result Contract:
 {
-  "population": "Atoms that are endpoints of the bond with bond ID TR001_2_6 in the molecule with molecule ID TR001.",
-  "row_grain": "One row per atom participating in the specified bond.",
-  "column_role": "The atom ID of each bonded atom.",
-  "derivation": "none",
+  "population": "The two atoms that are endpoints of the bond with bond ID TR001_2_6 in the molecule with molecule ID TR001.",
+  "row_grain": "One row for the specified bond, containing the identifiers of its two endpoint atoms.",
+  "column_role": "The identifiers of the two bonded atoms, one for each endpoint of the bond.",
+  "derivation": "The endpoint atom identifiers are derived from the bond identification information for the specified molecule and bond.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms connected records associate a bond_id with two endpoint atom IDs, and atom.atom_id is the unique atom identity. This resolves the output as atom IDs for the specified bond."
+  "meta_review": "The specified bond yields a single bond-level result with two endpoint atom identifiers, rather than separate rows per atom."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

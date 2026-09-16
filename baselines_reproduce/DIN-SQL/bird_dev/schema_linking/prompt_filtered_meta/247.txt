@@ -183,8 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table atom, columns = [*,atom_id,element]
-Table connected, columns = [*,atom_id,atom_id2]
-Foreign_keys = [connected.atom_id2 = atom.atom_id,connected.atom_id = atom.atom_id]
+Table connected, columns = [*,atom_id]
+Foreign_keys = [connected.atom_id = atom.atom_id]
 Sample rows from atom (columns: ["atom_id", "element"]):
 [["TR000_1", "cl"], ["TR000_2", "c"], ["TR000_3", "cl"]]
 Column descriptions and value descriptions for atom:
@@ -204,11 +204,10 @@ Column element: column description -> the element of the toxicology , value desc
  pb: lead
  te: tellurium
  ca: Calcium
-Sample rows from connected (columns: ["atom_id", "atom_id2"]):
-[["TR000_1", "TR000_2"], ["TR000_2", "TR000_1"], ["TR000_2", "TR000_3"]]
+Sample rows from connected (columns: ["atom_id"]):
+[["TR000_1"], ["TR000_2"], ["TR000_2"]]
 Column descriptions and value descriptions for connected:
 Column atom_id: column description -> id of the first atom, value description -> 
-Column atom_id2: column description -> id of the second atom, value description -> 
 
 Q: List all the elements of atoms that can not bond with any other atoms.
 Hint:  atoms cannot bond with other atoms means atom_id NOT in connected table;

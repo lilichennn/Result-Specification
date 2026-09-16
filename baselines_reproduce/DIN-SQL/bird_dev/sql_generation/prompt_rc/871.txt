@@ -285,8 +285,8 @@ Hint: race number refers to raceId;
 Schema_links: [drivers.nationality,qualifying.q2,qualifying.raceId,qualifying.driverId = drivers.driverId,347,0:01:15]
 Result Contract:
 {
-  "population": "Drivers who recorded a Q2 time of 0:01:15 in the race whose race number (raceId) is 347.",
-  "row_grain": "One driver matching the stated Q2 time and race conditions.",
+  "population": "Drivers with a qualifying Q2 time beginning with 1:15 in race No. 347.",
+  "row_grain": "One row for each distinct driver nationality among those matching drivers.",
   "column_role": "The driver's nationality, representing where the driver is from.",
   "derivation": "none",
   "filter_policy": "none",

@@ -183,9 +183,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table hero_power, columns = [*,hero_id,power_id]
-Table superhero, columns = [*,id]
 Table superpower, columns = [*,id,power_name]
-Foreign_keys = [hero_power.power_id = superpower.id,hero_power.hero_id = superhero.id]
+Foreign_keys = [hero_power.power_id = superpower.id]
 Sample rows from hero_power (columns: ["hero_id", "power_id"]):
 [[1, 1], [1, 18], [1, 26]]
 Column descriptions and value descriptions for hero_power:
@@ -194,10 +193,6 @@ Maps to superhero(id), value description ->
 Column power_id: column description -> the id of the power
 Maps to superpower(id), value description -> commonsense evidence:
 In general, a superhero's attributes provide the foundation for their abilities and help to define who they are, while their powers are the specific abilities that they use to fight crime and protect others.
-Sample rows from superhero (columns: ["id"]):
-[[1], [2], [3]]
-Column descriptions and value descriptions for superhero:
-Column id: column description -> the unique identifier of the superhero, value description -> 
 Sample rows from superpower (columns: ["id", "power_name"]):
 [[1, "Agility"], [2, "Accelerated Healing"], [3, "Lantern Power Ring"]]
 Column descriptions and value descriptions for superpower:

@@ -285,8 +285,8 @@ Hint:
 Schema_links: [circuits.name,races.year,races.name,races.circuitId = circuits.circuitId,2009,Spanish Grand Prix]
 Result Contract:
 {
-  "population": "The race event that is the Spanish Grand Prix held in 2009.",
-  "row_grain": "One row representing the 2009 Spanish Grand Prix race.",
+  "population": "The circuit used for the race event named Spanish Grand Prix held in 2009.",
+  "row_grain": "One row representing that circuit.",
   "column_role": "The full name of the circuit at which that race was held.",
   "derivation": "none",
   "filter_policy": "none",

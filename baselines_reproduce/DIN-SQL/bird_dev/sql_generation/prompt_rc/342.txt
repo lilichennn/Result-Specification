@@ -367,11 +367,11 @@ Schema_links: [cards.name,cards.faceConvertedManaCost]
 Result Contract:
 {
   "population": "All cards.",
-  "row_grain": "One row per card.",
-  "column_role": "The card name and its face converted mana cost value.",
+  "row_grain": "A single row for the top-1 selected card.",
+  "column_role": "The card name only.",
   "derivation": "none",
-  "filter_policy": "Retain only the card(s) whose face converted mana cost equals the maximum face converted mana cost across all cards (argmax on faceConvertedManaCost).",
-  "meta_review": "Metadata identifies cards.name as the card name and cards.faceConvertedManaCost as the face-specific converted mana cost. This validates the Round-1 output and maximum-based filter."
+  "filter_policy": "Retain only the first card when all cards are ordered by face converted mana cost in ascending order.",
+  "meta_review": "Metadata identifies the card name and face-specific converted mana cost; the face converted mana cost is used only to order and select one card, and the returned result is the card name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

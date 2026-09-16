@@ -248,12 +248,12 @@ Hint: Female refers to gender = 'F'; A3 contains the region 'south Bohemia'
 Schema_links: [account.account_id,client.gender,district.A3,disp.client_id = client.client_id,disp.account_id = account.account_id,account.district_id = district.district_id,F,south Bohemia]
 Result Contract:
 {
-  "population": "Accounts held by a female client (gender = 'F') and located in the region of South Bohemia.",
+  "population": "Female clients whose associated district is in the region of South Bohemia.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The total number of qualifying accounts.",
-  "derivation": "Count the accounts in the eligible population.",
+  "column_role": "The total number of qualifying female clients.",
+  "derivation": "Count the clients in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms district.A3 stores the region and account.district_id locates the account branch, validating the account-level region condition."
+  "meta_review": "Metadata supports linking clients to a geographic district with a region attribute, so the region condition applies at the client level rather than the account level."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -415,12 +415,12 @@ Hint: Abdou Diallo refers to player_name = 'Abdou Diallo'; foot is preferred ref
 Schema_links: [Player_Attributes.preferred_foot,Player.player_name,Player_Attributes.player_api_id = Player.player_api_id,'Abdou Diallo']
 Result Contract:
 {
-  "population": "The player whose player_name is 'Abdou Diallo'.",
-  "row_grain": "One row representing the player Abdou Diallo.",
-  "column_role": "The player's preferred foot value.",
+  "population": "Preferred foot values associated with the player named 'Abdou Diallo'.",
+  "row_grain": "One row for each distinct preferred foot value associated with that player.",
+  "column_role": "The preferred foot value.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

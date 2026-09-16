@@ -258,12 +258,12 @@ Hint:
 Schema_links: [gasstations.Country,gasstations.GasStationID,gasstations.Segment,"Value for money"]
 Result Contract:
 {
-  "population": "Gas stations whose chain segment is \"value for money\", each associated with the country in which it is located.",
-  "row_grain": "One row per country.",
-  "column_role": "The country and the total number of \"value for money\" gas stations in that country.",
-  "derivation": "For each country, count the gas stations whose chain segment is \"value for money\".",
-  "filter_policy": "Relative selection of the country with the greatest per-country count of \"value for money\" gas stations (argmax across countries); totals for all countries are still requested, so no country rows are excluded or limited.",
-  "meta_review": "The gasstations.Segment column is a station-level chain segment, resolving \"value for money\" as a chain-segment designation. gasstations.Country establishes the country owner for the per-country station count."
+  "population": "Countries that have at least one gas station whose chain segment is \"Value for money\".",
+  "row_grain": "One row for the top-ranked selected country.",
+  "column_role": "The selected country and the total number of \"Value for money\" gas stations overall.",
+  "derivation": "The returned number is the count of all gas stations whose chain segment is \"Value for money\".",
+  "filter_policy": "Return only the country with the greatest per-country number of \"Value for money\" gas stations.",
+  "meta_review": "The gasstations.Segment column is a station-level chain segment, resolving \"Value for money\" as a chain-segment designation. gasstations.Country establishes the country owner for the per-country comparison used to select the top country."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

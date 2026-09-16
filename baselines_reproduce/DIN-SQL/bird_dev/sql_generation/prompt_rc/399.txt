@@ -368,12 +368,12 @@ availble in arena refers to availability = 'arena'
 Schema_links: [cards.subtypes,cards.supertypes,cards.availability,'arena']
 Result Contract:
 {
-  "population": "Cards whose availability equals 'arena'.",
-  "row_grain": "One row per type value (subtype or supertype) that occurs on at least one eligible card.",
-  "column_role": "The card type value, which may be a subtype or a supertype.",
-  "derivation": "The reported types are the combination of subtype values and supertype values found on eligible cards.",
+  "population": "Cards whose availability equals 'arena' and that have both a subtype and a supertype recorded.",
+  "row_grain": "One row per distinct combination of subtype and supertype occurring on those cards.",
+  "column_role": "The subtype value and the supertype value.",
+  "derivation": "The reported values are the stored subtype and supertype values, returned as distinct pairs rather than merged into a single type list.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.supertypes documents all types as the union of cards.subtypes and cards.supertypes, validating the Round-1 type source. It also lists 'arena' as a valid cards.availability value, validating the arena filter."
+  "meta_review": "Metadata confirms subtypes and supertypes as the relevant card type fields and 'arena' as a valid availability value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

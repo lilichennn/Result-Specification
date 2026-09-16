@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Team, columns = [*,team_api_id,team_fifa_api_id,team_long_name]
-Table Team_Attributes, columns = [*,team_fifa_api_id,team_api_id,buildUpPlaySpeed]
+Table Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,buildUpPlaySpeed]
 Foreign_keys = [Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]
 Sample rows from Team (columns: ["team_api_id", "team_fifa_api_id", "team_long_name"]):
 [[9987, 673, "KRC Genk"], [9993, 675, "Beerschot AC"], [10000, 15005, "SV Zulte-Waregem"]]
@@ -191,9 +191,10 @@ Column descriptions and value descriptions for Team:
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_long_name: column description -> the team's long name, value description -> 
-Sample rows from Team_Attributes (columns: ["team_fifa_api_id", "team_api_id", "buildUpPlaySpeed"]):
-[[434, 9930, 60], [434, 9930, 52], [434, 9930, 47]]
+Sample rows from Team_Attributes (columns: ["id", "team_fifa_api_id", "team_api_id", "buildUpPlaySpeed"]):
+[[1, 434, 9930, 60], [2, 434, 9930, 52], [3, 434, 9930, 47]]
 Column descriptions and value descriptions for Team_Attributes:
+Column id: column description -> the unique id for teams, value description -> 
 Column team_fifa_api_id: column description -> the id of the team fifa api, value description -> 
 Column team_api_id: column description -> the id of the team api, value description -> 
 Column buildUpPlaySpeed: column description -> the speed in which attacks are put together , value description -> the score which is between 1-00 to measure the team's attack speed

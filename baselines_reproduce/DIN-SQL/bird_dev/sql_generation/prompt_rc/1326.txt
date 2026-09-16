@@ -231,12 +231,12 @@ Hint: 'Environmental Engineering' is the major name
 Schema_links: [member.member_id,major.major_name,member.link_to_major = major.major_id,Environmental Engineering]
 Result Contract:
 {
-  "population": "Members of the Student_Club whose major is 'Environmental Engineering'; both club membership and the major equality are required eligibility conditions.",
+  "population": "Members of the Student_Club whose major name is 'Environmental Engineering'.",
   "row_grain": "One global summary row for the entire qualifying population.",
   "column_role": "A single value representing the number of qualifying Student_Club members.",
   "derivation": "Count the members satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -301,7 +301,7 @@ Result Contract:
   "column_role": "The patient's ID, the patient's sex, and the patient's birthday.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes Patient.Diagnosis as the patient-level disease name and Laboratory.UN as urea nitrogen with normal range N < 30. This resolved the owner of the requested diagnosis and the laboratory measurement used for the UN normal-index filter."
+  "meta_review": "Metadata establishes Patient.Diagnosis as the patient-level disease name and Laboratory.UN as urea nitrogen with normal range UN < 30. This resolved the owner of the requested diagnosis and the laboratory measurement used for the UN normal-index filter."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

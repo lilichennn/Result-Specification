@@ -484,12 +484,12 @@ Hint: overall_rating > = 60 AND overall_rating < 65; players whose going to be i
 Schema_links: [Player_Attributes.player_api_id,Player_Attributes.overall_rating,Player_Attributes.defensive_work_rate,60,65,'low']
 Result Contract:
 {
-  "population": "Players whose overall rating is at least 60 and less than 65 and whose defensive work rate is 'low' (i.e., players who participate in attack moves rather than defending).",
-  "row_grain": "One global summary row for the entire qualifying player population.",
-  "column_role": "The count of qualifying players.",
-  "derivation": "Count the players satisfying all population conditions.",
+  "population": "Player attribute entries whose overall rating is between 60 and 65 inclusive and whose defensive work rate is 'low' (i.e., entries associated with players who join attack moves rather than defend).",
+  "row_grain": "One global summary row for the entire qualifying population.",
+  "column_role": "The count of qualifying entries.",
+  "derivation": "Count the qualifying entries satisfying all population conditions.",
   "filter_policy": "none",
-  "meta_review": "Player_Attributes.defensive_work_rate documents 'low' as meaning the player is in all attack moves instead of defending, validating the evidence mapping."
+  "meta_review": "The defensive work rate value 'low' is understood as meaning the player joins attack moves instead of defending."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

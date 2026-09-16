@@ -226,11 +226,11 @@ Schema_links: [superhero.superhero_name,superhero.height_cm,colour.colour,superh
 Result Contract:
 {
   "population": "Superheroes whose height is between 170 and 190 inclusive and who have no eye color (eye color equal to 'No Colour').",
-  "row_grain": "One result row per qualifying superhero.",
+  "row_grain": "One result row per distinct superhero name among the qualifying superheroes.",
   "column_role": "The superhero name, not the full name.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that eye color is stored as superhero.eye_colour_id linking to the colour lookup, so 'No Colour' applies to the eye-color value rather than hair or skin color. It also distinguishes superhero_name as the superhero's name, separate from full_name."
+  "meta_review": "Metadata establishes that 'No Colour' applies to the eye-color value rather than hair or skin color, and that the requested name is the superhero name rather than the full name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

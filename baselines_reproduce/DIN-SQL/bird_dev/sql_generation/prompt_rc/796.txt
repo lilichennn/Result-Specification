@@ -226,7 +226,7 @@ Schema_links: [superhero.superhero_name,attribute.attribute_name,hero_attribute.
 Result Contract:
 {
   "population": "All attribute value associations belonging to the superhero whose superhero_name is '3-D Man'.",
-  "row_grain": "One row per attribute of 3-D Man.",
+  "row_grain": "One row per attribute-value association of 3-D Man.",
   "column_role": "The attribute name and its corresponding attribute value.",
   "derivation": "none",
   "filter_policy": "none",

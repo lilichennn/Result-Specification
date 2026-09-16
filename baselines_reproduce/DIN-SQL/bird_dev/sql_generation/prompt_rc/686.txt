@@ -327,12 +327,12 @@ Hint: views above average refer to ViewCount > AVG(ViewCount);
 Schema_links: [posts.Id,posts.ViewCount]
 Result Contract:
 {
-  "population": "All posts whose ViewCount is greater than the average ViewCount computed across the entire post population.",
-  "row_grain": "One global summary row for the whole post population.",
-  "column_role": "The total number of qualifying posts.",
-  "derivation": "Count the posts meeting the above-average condition, where the average ViewCount over all posts serves as the comparison threshold.",
+  "population": "All posts whose view count is greater than the average view count computed over all posts.",
+  "row_grain": "One row for each qualifying post.",
+  "column_role": "The identifier of each qualifying post.",
+  "derivation": "Return the qualifying posts directly by comparing each post's view count to the average view count over all posts; no count or other aggregate is produced.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.ViewCount is the view count owned by each post, validating the Round-1 post-level above-average condition."
+  "meta_review": "Metadata confirms the view count is owned by each post, supporting the post-level above-average condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

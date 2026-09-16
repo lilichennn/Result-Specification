@@ -231,11 +231,11 @@ Schema_links: [major.college,member.first_name,member.last_name,member.link_to_m
 Result Contract:
 {
   "population": "Colleges that offer a major taken by the person named Tyler Hewitt.",
-  "row_grain": "One college.",
+  "row_grain": "One row per matching person-major association for Tyler Hewitt.",
   "column_role": "The identity (name) of the college offering the major.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

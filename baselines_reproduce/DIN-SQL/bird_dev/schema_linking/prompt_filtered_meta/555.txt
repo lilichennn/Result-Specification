@@ -182,13 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,Score,OwnerUserId,OwnerDisplayName]
+Table posts, columns = [*,Score,OwnerUserId,OwnerDisplayName]
 Table users, columns = [*,Id,DisplayName]
 Foreign_keys = [posts.OwnerUserId = users.Id]
-Sample rows from posts (columns: ["Id", "Score", "OwnerUserId", "OwnerDisplayName"]):
-[[1, 23, 8, null], [2, 22, 24, null], [3, 54, 18, null]]
+Sample rows from posts (columns: ["Score", "OwnerUserId", "OwnerDisplayName"]):
+[[23, 8, null], [22, 24, null], [54, 18, null]]
 Column descriptions and value descriptions for posts:
-Column Id: column description -> the post id, value description -> 
 Column Score: column description -> the score of the post, value description -> 
 Column OwnerUserId: column description -> the id of the owner user, value description -> 
 Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 

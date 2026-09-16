@@ -183,16 +183,17 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,date]
-Table loan, columns = [*,account_id,amount,duration]
+Table loan, columns = [*,loan_id,account_id,amount,duration]
 Foreign_keys = [loan.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "date"]):
 [[1, "1995-03-24"], [2, "1993-02-26"], [3, "1997-07-07"]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column date: column description -> the creation date of the account, value description -> in the form YYMMDD
-Sample rows from loan (columns: ["account_id", "amount", "duration"]):
-[[2, 80952, 24], [19, 30276, 12], [25, 30276, 12]]
+Sample rows from loan (columns: ["loan_id", "account_id", "amount", "duration"]):
+[[4959, 2, 80952, 24], [4961, 19, 30276, 12], [4962, 25, 30276, 12]]
 Column descriptions and value descriptions for loan:
+Column loan_id: column description -> the id number identifying the loan data, value description -> 
 Column account_id: column description -> the id number identifying the account, value description -> 
 Column amount: column description -> approved amount, value description -> unit：US dollar
 Column duration: column description -> loan duration, value description -> unit：month

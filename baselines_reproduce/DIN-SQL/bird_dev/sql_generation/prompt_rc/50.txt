@@ -352,12 +352,12 @@ Hint: Postal street and mailing street are synonyms.
 Schema_links: [schools.MailStreet,schools.School,satscores.AvgScrMath,satscores.cds = schools.CDSCode]
 Result Contract:
 {
-  "population": "All schools are eligible; the question imposes no Boolean membership restriction on which schools are considered.",
+  "population": "Schools that have a corresponding school-level Math average in the SAT score data are eligible; no other Boolean membership restriction is imposed.",
   "row_grain": "One result row representing a single school, namely the one selected by the ranking.",
   "column_role": "The school's postal street address, which is the mailing street address in its unabbreviated form, and the school's name.",
   "derivation": "Rank schools by their school-level average Math score; metadata establishes that this metric is stored at school level in the SAT score data, so no computation from individual test records is implied.",
   "filter_policy": "Rank schools by their Math average from highest to lowest and retain only the school at the 7th position; tie handling is unspecified.",
-  "meta_review": "Metadata establishes satscores.AvgScrMath as a stored school-level average Math score, resolving the Round-1 uncertainty about the ranking metric. It also identifies schools.MailStreet as the unabbreviated mailing street address, matching the evidence that postal street means mailing street."
+  "meta_review": "Metadata establishes the Math average as a stored school-level score. It also identifies the mailing street as the unabbreviated mailing street address, matching the evidence that postal street means mailing street."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

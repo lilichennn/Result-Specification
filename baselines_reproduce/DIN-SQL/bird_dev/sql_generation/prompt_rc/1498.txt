@@ -251,12 +251,12 @@ Hint: The first 4 strings of the Date values in the yearmonth table can represen
 Schema_links: [yearmonth.Consumption,yearmonth.Date,2012]
 Result Contract:
 {
-  "population": "All monthly consumption records whose date's year portion (the first four characters) equals 2012.",
-  "row_grain": "One global summary value across all eligible monthly consumption records.",
-  "column_role": "The highest monthly consumption value.",
-  "derivation": "Take the maximum of the monthly consumption metric over the eligible monthly consumption records.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms yearmonth.Consumption as the monthly consumption metric and yearmonth.Date as text, validating the first-four-character year filter. This supports a single maximum over eligible monthly consumption records."
+  "population": "Monthly consumption totals for months whose date's year portion equals 2012.",
+  "row_grain": "One selected value representing the month in 2012 with the highest total consumption.",
+  "column_role": "The highest total monthly consumption value.",
+  "derivation": "Sum consumption within each eligible month, then take the greatest of those monthly totals.",
+  "filter_policy": "Select the single monthly total with the highest summed consumption.",
+  "meta_review": "Metadata supports interpreting the date text by year and month and treating consumption as the metric, yielding the highest summed monthly consumption for 2012 rather than a maximum over individual records."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

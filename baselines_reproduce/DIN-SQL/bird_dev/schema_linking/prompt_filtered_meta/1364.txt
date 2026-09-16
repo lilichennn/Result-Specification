@@ -183,7 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table member, columns = [*,member_id,first_name,last_name,zip]
-Table zip_code, columns = [*,zip_code,city,county,state,short_state]
+Table zip_code, columns = [*,zip_code,city,county,state]
 Foreign_keys = [member.zip = zip_code.zip_code]
 Sample rows from member (columns: ["member_id", "first_name", "last_name", "zip"]):
 [["rec1x5zBFIqoOuPW8", "Angela", "Sanders", 55108], ["rec280Sk7o31iG0Tx", "Grant", "Gilmour", 29440], ["rec28ORZgcm1dtqBZ", "Luisa", "Guidi", 10002]]
@@ -193,14 +193,13 @@ Column first_name: column description -> member's first name, value description 
 Column last_name: column description -> member's last name, value description -> commonsense evidence: 
 full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.
 Column zip: column description -> the zip code of the member's hometown, value description -> 
-Sample rows from zip_code (columns: ["zip_code", "city", "county", "state", "short_state"]):
-[[501, "Holtsville", "Suffolk County", "New York", "NY"], [544, "Holtsville", "Suffolk County", "New York", "NY"], [601, "Adjuntas", "Adjuntas Municipio", "Puerto Rico", "PR"]]
+Sample rows from zip_code (columns: ["zip_code", "city", "county", "state"]):
+[[501, "Holtsville", "Suffolk County", "New York"], [544, "Holtsville", "Suffolk County", "New York"], [601, "Adjuntas", "Adjuntas Municipio", "Puerto Rico"]]
 Column descriptions and value descriptions for zip_code:
 Column zip_code: column description -> The ZIP code itself. A five-digit number identifying a US post office., value description -> 
 Column city: column description -> The city to which the ZIP pertains, value description -> 
 Column county: column description -> The county to which the ZIP pertains, value description -> 
 Column state: column description -> The name of the state to which the ZIP pertains, value description -> 
-Column short_state: column description -> The abbreviation of the state to which the ZIP pertains, value description -> 
 
 Q: Where is Amy Firth's hometown?
 Hint: hometown refers to city, county, state

@@ -422,11 +422,11 @@ Schema_links: [schools.Website,schools.Virtual,schools.Charter,schools.City,P,1,
 Result Contract:
 {
   "population": "All schools that are partially virtual (Virtual = 'P'), chartered (Charter = 1), and located in San Joaquin; all three conditions must hold together.",
-  "row_grain": "One partially virtual charter school located in San Joaquin.",
+  "row_grain": "One website row for each partially virtual charter school located in San Joaquin.",
   "column_role": "The school's website.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

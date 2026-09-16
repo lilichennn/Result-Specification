@@ -183,39 +183,22 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,frequency]
-Table order, columns = [*,order_id,account_id,amount,k_symbol]
-Table trans, columns = [*,trans_id,account_id,type,amount,k_symbol]
-Foreign_keys = [order.account_id = account.account_id,trans.account_id = account.account_id]
+Table order, columns = [*,account_id,amount,k_symbol]
+Foreign_keys = [order.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "frequency"]):
 [[1, "POPLATEK MESICNE"], [2, "POPLATEK MESICNE"], [3, "POPLATEK MESICNE"]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
 Column frequency: column description -> frequency of the acount, value description -> 
-Sample rows from order (columns: ["order_id", "account_id", "amount", "k_symbol"]):
-[[29401, 1, 2452.0, "SIPO"], [29402, 2, 3372.7, "UVER"], [29403, 2, 7266.0, "SIPO"]]
+Sample rows from order (columns: ["account_id", "amount", "k_symbol"]):
+[[1, 2452.0, "SIPO"], [2, 3372.7, "UVER"], [2, 7266.0, "SIPO"]]
 Column descriptions and value descriptions for order:
-Column order_id: column description -> identifying the unique order, value description -> 
 Column account_id: column description -> id number of account, value description -> 
 Column amount: column description -> debited amount, value description -> 
 Column k_symbol: column description -> purpose of the payment, value description -> "POJISTNE" stands for insurance payment
 "SIPO" stands for household payment
 "LEASING" stands for leasing
 "UVER" stands for loan payment
-Sample rows from trans (columns: ["trans_id", "account_id", "type", "amount", "k_symbol"]):
-[[1, 1, "PRIJEM", 1000, null], [5, 1, "PRIJEM", 3679, null], [6, 1, "PRIJEM", 3679, null]]
-Column descriptions and value descriptions for trans:
-Column trans_id: column description -> transaction id, value description -> 
-Column account_id: column description -> , value description -> 
-Column type: column description -> +/- transaction, value description -> "PRIJEM" stands for credit
-"VYDAJ" stands for withdrawal
-Column amount: column description -> amount of money, value description -> Unit：USD
-Column k_symbol: column description -> , value description -> "POJISTNE": stands for insurrance payment
-"SLUZBY": stands for payment for statement
-"UROK": stands for interest credited
-"SANKC. UROK": sanction interest if negative balance
-"SIPO": stands for household
-"DUCHOD": stands for old-age pension
-"UVER": stands for loan payment
 
 Q: How often does account number 3 request an account statement to be released? What was the aim of debiting 3539 in total?
 Hint: k_symbol refers to the purpose of payments

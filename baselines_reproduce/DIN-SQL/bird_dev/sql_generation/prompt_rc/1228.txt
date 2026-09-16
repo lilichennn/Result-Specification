@@ -296,12 +296,12 @@ Hint: triglyceride (TG) index greater than 100 of the normal range refers to TG 
 Schema_links: [Patient.ID,Patient.Diagnosis,Laboratory.TG,Laboratory.ID = Patient.ID,300]
 Result Contract:
 {
-  "population": "Patients who have at least one triglyceride (TG) measurement greater than 300, as clarified by the evidence.",
-  "row_grain": "One row per eligible patient together with that patient's diagnosis.",
-  "column_role": "The patient's identifier and the patient's diagnosis (disease names); the TG value itself is not required as an output column.",
+  "population": "Patients associated with a triglyceride (TG) measurement greater than 300, with the qualifying measurement condition applied to the linked laboratory event.",
+  "row_grain": "One row for each qualifying triglyceride measurement, returning the associated patient identifier and diagnosis; the same patient may appear multiple times.",
+  "column_role": "The patient's identifier and the patient's diagnosis; the TG value itself is not required as an output column.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Laboratory.TG is a dated measurement, so eligibility is based on at least one qualifying value and the result remains one patient-level row. Patient.Diagnosis establishes the diagnosis output as the patient's disease names."
+  "meta_review": "Triglyceride measurements are dated events, so the result is not collapsed to one distinct patient per diagnosis; each qualifying measurement produces a row with the patient's identifier and diagnosis."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

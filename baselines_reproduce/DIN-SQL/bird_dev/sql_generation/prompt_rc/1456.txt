@@ -230,12 +230,12 @@ Hint: full name refers to first_name, last_name; spend the most money refers to 
 Schema_links: [member.first_name,member.last_name,expense.cost,expense.link_to_member = member.member_id]
 Result Contract:
 {
-  "population": "All members are eligible; no Boolean condition restricts which members are considered.",
-  "row_grain": "One row per member.",
-  "column_role": "The member's full name as a single value, formed by combining first_name and last_name (e.g., first_name last_name).",
-  "derivation": "For each member, spending is defined as the maximum cost among that member's expenses.",
-  "filter_policy": "Retain the five members with the highest spending and present them in descending order of spending; tie handling is unspecified.",
-  "meta_review": "Metadata for member.last_name states that full name is formed from first_name and last_name, resolving the requested full name as a combined first and last name value."
+  "population": "Returned rows are member-name rows generated from expense records that have an associated budget and member; no additional Boolean restriction applies.",
+  "row_grain": "One row per qualifying expense occurrence, carrying the associated member's name; the result is not deduplicated to one row per member.",
+  "column_role": "The member's full name represented by two returned components: first name and last name.",
+  "derivation": "The returned names are stored member attributes; the spending measure is the stored spent amount on the associated budget, with no maximum over expense costs and no aggregation per member.",
+  "filter_policy": "Retain the first five rows after ordering by the associated budget's spent amount in descending order; tie handling is unspecified.",
+  "meta_review": "The full-name concept is resolved to the member's first and last name components, returned separately rather than combined into a single value."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

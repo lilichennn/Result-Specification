@@ -251,12 +251,12 @@ Hint: detailed content of the comment refers to Text; created on 7/19/2010 7:37:
 Schema_links: [comments.Text,posts.CreaionDate,comments.PostId = posts.Id,2010-07-19 19:37:33.0]
 Result Contract:
 {
-  "population": "All comments that belong to the post whose post-level creation date is 2010-07-19 19:37:33.",
+  "population": "All comments that are linked to a post and whose comment-level creation date is 2010-07-19 19:37:33.",
   "row_grain": "One row per qualifying comment.",
   "column_role": "The text content of the comment.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that the creation date is a post-level attribute and that the detailed comment content is the comment-owned Text value. This keeps the eligibility filter on the parent post and the output on the comment text."
+  "meta_review": "The creation-date condition applies to the comment itself, while the post serves only as the parent context for the comment. The returned result is the comment-owned text content."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

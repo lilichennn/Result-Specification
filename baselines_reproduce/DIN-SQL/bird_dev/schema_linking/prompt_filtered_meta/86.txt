@@ -182,7 +182,38 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Foreign_keys = []
+Table frpm, columns = [*,CDSCode,County Name,District Name,School Name,Charter School Number]
+Table satscores, columns = [*,cds,sname,dname,cname]
+Table schools, columns = [*,CDSCode,County,District,School,CharterNum,AdmLName1,AdmLName2]
+Foreign_keys = [frpm.CDSCode = schools.CDSCode,satscores.cds = schools.CDSCode]
+Sample rows from frpm (columns: ["CDSCode", "County Name", "District Name", "School Name", "Charter School Number"]):
+[["01100170109835", "Alameda", "Alameda County Office of Education", "FAME Public Charter", "0728"], ["01100170112607", "Alameda", "Alameda County Office of Education", "Envision Academy for Arts & Technology", "0811"], ["01100170118489", "Alameda", "Alameda County Office of Education", "Aspire California College Preparatory Academy", "1049"]]
+Column descriptions and value descriptions for frpm:
+Column CDSCode: column description -> CDSCode, value description -> 
+Column County Name: column description -> County Code , value description -> 
+Column District Name: column description -> , value description -> 
+Column School Name: column description -> School Name , value description -> 
+Column Charter School Number: column description -> Charter School Number, value description -> 
+Sample rows from satscores (columns: ["cds", "sname", "dname", "cname"]):
+[["1100170000000", null, "Alameda County Office of Education", "Alameda"], ["1100170109835", "FAME Public Charter", "Alameda County Office of Education", "Alameda"], ["1100170112607", "Envision Academy for Arts & Technology", "Alameda County Office of Education", "Alameda"]]
+Column descriptions and value descriptions for satscores:
+Column cds: column description -> California Department Schools, value description -> 
+Column sname: column description -> school name, value description -> 
+Column dname: column description -> district segment, value description -> 
+Column cname: column description -> county name, value description -> 
+Sample rows from schools (columns: ["CDSCode", "County", "District", "School", "CharterNum", "AdmLName1", "AdmLName2"]):
+[["01100170000000", "Alameda", "Alameda County Office of Education", null, null, "Monroe", null], ["01100170109835", "Alameda", "Alameda County Office of Education", "FAME Public Charter", "0728", null, null], ["01100170112607", "Alameda", "Alameda County Office of Education", "Envision Academy for Arts & Technology", "0811", "Robell", null]]
+Column descriptions and value descriptions for schools:
+Column CDSCode: column description -> CDSCode, value description -> 
+Column County: column description -> County name, value description -> 
+Column District: column description -> District, value description -> 
+Column School: column description -> School, value description -> 
+Column CharterNum: column description -> The charter school number,, value description -> 4-digit number assigned to a charter school.
+Column AdmLName1: column description -> administrator's last name, value description -> The superintendent’s or principal’s last name.
+
+commonsense evidence:
+Only active and pending districts and schools will display administrator information, if applicable.
+Column AdmLName2: column description -> , value description -> 
 
 Q: What is the administrator's last name that oversees the school with Charter number 40? Indicate the district, the county where the school is situated, and the name of the school.
 A: Let’s think step by step.

@@ -303,8 +303,8 @@ Result Contract:
   "row_grain": "One row representing the single top source of funds.",
   "column_role": "The identity of the top source of funds.",
   "derivation": "none",
-  "filter_policy": "Select the single source whose received amount is the maximum (argmax by the funds' amount) among the eligible receipts.",
-  "meta_review": "Metadata confirms that income records represent received funds, with date_received, amount, and source documenting receipt date, dollar amount, and funding source. This validates the receipt-level population and amount-based top-source selection."
+  "filter_policy": "Select the single source whose source value is the maximum among the eligible receipts.",
+  "meta_review": "Metadata confirms that income records represent received funds, with date_received and source documenting receipt date and funding source. This validates the receipt-level population and source-value-based top-source selection."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

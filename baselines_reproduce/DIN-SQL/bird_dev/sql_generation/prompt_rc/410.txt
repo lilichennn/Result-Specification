@@ -298,11 +298,11 @@ Schema_links: [cards.id,cards.artist,legalities.format,cards.availability,legali
 Result Contract:
 {
   "population": "Cards whose artist is Erica Yang, whose availability is 'paper', and whose legalities include a pauper format record; all three conditions must hold together.",
-  "row_grain": "One qualifying card; legality rows are only eligibility evidence and do not define separate result rows.",
-  "column_role": "The unique numeric card ID of the qualifying card.",
+  "row_grain": "One row for each qualifying card; the result is not limited to a single card.",
+  "column_role": "The card ID of each qualifying card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata shows that format is stored in legalities records associated with cards, so the pauper condition is a card legality condition rather than a card attribute. It also identifies cards.id as the unique numeric card identifier requested."
+  "meta_review": "Metadata shows that format is stored in legality records associated with cards, so the pauper condition is a card legality condition rather than a card attribute. It also identifies the card ID as the unique numeric card identifier requested."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

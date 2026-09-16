@@ -230,12 +230,12 @@ Hint: full name refers to first_name, last name
 Schema_links: [member.first_name,member.last_name,expense.cost,member.member_id,member.member_id = expense.link_to_member,rec4BLdZHS2Blfp4v]
 Result Contract:
 {
-  "population": "The single member whose member_id is \"rec4BLdZHS2Blfp4v\"; only expense records incurred by that member contribute to the requested total.",
-  "row_grain": "One summary row for that one member.",
-  "column_role": "The member's full name as a single value formed from first_name and last_name, and the total dollar cost the member incurred.",
-  "derivation": "Total cost is the sum of the cost values of all expense records incurred by the member; full name is the member's first_name and last_name combined.",
+  "population": "The member whose member_id is \"rec4BLdZHS2Blfp4v\" and who has expense records; only expense records incurred by that member contribute to the requested total.",
+  "row_grain": "One summary row for that member, aggregating the member's expense records.",
+  "column_role": "The member's first name and last name, which together constitute the full name, and the total dollar cost the member incurred.",
+  "derivation": "Total cost is the sum of the cost values of all expense records incurred by the member; the full name is represented by the returned first name and last name components.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that expense.link_to_member identifies the member who incurred an expense and expense.cost is the dollar amount. This resolves total cost as the sum of expense costs for that member and full name as first_name plus last_name."
+  "meta_review": "Metadata establishes that expense.link_to_member identifies the member who incurred an expense and expense.cost is the dollar amount. This resolves total cost as the sum of expense costs for that member and full name as the first name and last name components."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

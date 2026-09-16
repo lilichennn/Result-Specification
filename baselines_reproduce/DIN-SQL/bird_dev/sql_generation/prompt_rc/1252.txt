@@ -296,12 +296,12 @@ Hint: normal Ig G level refers to IGG > 900 and IGG < 2000; have symptoms refers
 Schema_links: [Patient.ID,Laboratory.IGG,Examination.Symptoms,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,900,2000]
 Result Contract:
 {
-  "population": "Patients whose Ig G level is normal (IGG > 900 and IGG < 2000) and who have symptoms (Symptoms IS NOT NULL).",
+  "population": "Patients whose Ig G level is normal (IGG >= 900 and IGG <= 2000) and who have symptoms (Symptoms IS NOT NULL).",
   "row_grain": "One global summary row for the qualifying patient population.",
   "column_role": "The count of qualifying patients.",
   "derivation": "Count the patients satisfying all population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that Laboratory.IGG is the Ig G measurement with the normal range cited in the evidence, and Examination.Symptoms records observed symptoms. This validates the Round-1 eligibility semantics."
+  "meta_review": "Metadata confirms that Laboratory.IGG is the IgG measurement and Examination.Symptoms records observed symptoms; the applicable normal IgG range is 900 through 2000 inclusive."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

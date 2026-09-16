@@ -248,12 +248,12 @@ Hint: A3 refers to region names; A15 stands for the average number of crimes com
 Schema_links: [district.A3,district.A15,account.date,account.district_id = district.district_id,4000,1997]
 Result Contract:
 {
-  "population": "Regions whose average number of crimes committed in 1995 exceeds 4000 and that have at least one account whose creation date is in 1997 or later and whose branch district belongs to the region; both conditions must hold.",
-  "row_grain": "One row per qualifying region.",
-  "column_role": "The region's average number of crimes committed in 1995.",
-  "derivation": "Each output value is the average, within the region, of the district-level values for the average number of crimes committed in 1995; no aggregation across regions is requested.",
+  "population": "Accounts opened in 1997 or later whose associated district has an average number of crimes committed in 1995 greater than 4000.",
+  "row_grain": "One global aggregate row.",
+  "column_role": "A single average value of the 1995 crime metric of the districts associated with the qualifying accounts.",
+  "derivation": "The output is computed by averaging, over the qualifying accounts, the stored 1995 crime metric of each account's associated district.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes district.A15 as a district-level 1995 crime metric and account.date as the account creation date, with accounts attached to branch districts. The contract therefore computes the region-level average from district values and applies the 1997-or-later condition to accounts in the region's districts."
+  "meta_review": "The metadata supports a district-level 1995 crime metric and an account opening date; the result is a single global average over qualifying accounts, not one value per region."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

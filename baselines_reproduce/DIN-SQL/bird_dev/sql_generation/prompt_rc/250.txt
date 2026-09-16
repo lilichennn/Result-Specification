@@ -263,11 +263,11 @@ Hint: label = '+' mean molecules are carcinogenic; double bond refers to bond_ty
 Schema_links: [molecule.molecule_id,molecule.label,bond.bond_type,bond.bond_id,molecule.molecule_id = bond.molecule_id,'+','=']
 Result Contract:
 {
-  "population": "All molecules that are carcinogenic, i.e., molecules with label = '+'.",
-  "row_grain": "One molecule: the single carcinogenic molecule selected as the answer.",
+  "population": "Carcinogenic molecules that have at least one double bond, i.e., molecules labeled '+' with at least one bond whose bond_type = '='.",
+  "row_grain": "One molecule: the single candidate molecule selected as the answer.",
   "column_role": "The identity of the molecule (molecule_id).",
   "derivation": "For each eligible molecule, count its bonds whose bond_type = '='.",
-  "filter_policy": "Argmax: retain the molecule with the greatest number of double bonds.",
+  "filter_policy": "Argmax/top-1: retain one eligible molecule with the greatest number of double bonds.",
   "meta_review": "Metadata confirms bond.bond_type uses '=' for double bonds and molecule.molecule_id uniquely identifies molecules. This resolves the stored double-bond literal and the molecule identity output."
 }
 

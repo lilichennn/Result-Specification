@@ -231,11 +231,11 @@ Schema_links: [major.college,member.first_name,member.link_to_major,member.link_
 Result Contract:
 {
   "population": "Persons, represented as members, whose first name is \"Katy\" and whose link to major is \"rec1N0upiVLy5esTO\".",
-  "row_grain": "One person matching the stated name and major-link conditions.",
+  "row_grain": "One row for each person matching the stated name and major-link conditions, containing that person's linked-major college.",
   "column_role": "The college of the person, represented by the college of the major linked to that person.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that a member has a link_to_major referencing major.major_id and that college is an attribute of major. Therefore, the requested person college is resolved as the college of the linked major for the matching member."
+  "meta_review": "Metadata establishes that a member has a link_to_major referencing major.major_id and that college is an attribute of major. Therefore, the requested college is resolved as the college of the linked major for each matching member."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: TR181 molecule refers to molecule_id = 'TR181'
 Schema_links: [connected.atom_id2,atom.molecule_id,connected.atom_id = atom.atom_id,'TR181']
 Result Contract:
 {
-  "population": "Atoms that are connected by a bond to at least one atom whose molecule_id = 'TR181'.",
-  "row_grain": "One row per distinct connected atom.",
-  "column_role": "The atom_id of each connected atom.",
+  "population": "Recorded connections from atoms whose molecule_id = 'TR181' to the atoms connected to them.",
+  "row_grain": "One row per recorded connection pair, not one row per distinct connected atom.",
+  "column_role": "The identifier of the TR181 atom and the identifier of the atom connected to it.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that atom identity is atom_id and that atoms of a molecule are identified by atom.molecule_id. It also shows connections are represented as paired atom endpoints, supporting distinct connected atoms rather than connection rows."
+  "meta_review": "Metadata confirms atom identity and molecule membership, and that connections are represented as paired atom endpoints. The result returns paired connection endpoints for TR181 atoms, rather than distinct connected atoms."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

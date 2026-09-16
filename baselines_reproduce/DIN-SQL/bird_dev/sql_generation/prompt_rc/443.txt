@@ -297,8 +297,8 @@ Hint: code of sets refers to setCode
 Schema_links: [sets.code,sets.type,expansion]
 Result Contract:
 {
-  "population": "All sets whose expansion type is 'expansion'.",
-  "row_grain": "One row per qualifying set.",
+  "population": "All set codes associated with sets whose expansion type is 'expansion'.",
+  "row_grain": "One row per distinct qualifying set code.",
   "column_role": "The set-level code of the set (requested as setCode).",
   "derivation": "none",
   "filter_policy": "none",

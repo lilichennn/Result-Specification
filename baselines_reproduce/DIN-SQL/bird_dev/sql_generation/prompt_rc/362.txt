@@ -298,7 +298,7 @@ Schema_links: [rulings.text,cards.name,rulings.uuid = cards.uuid,Condemn]
 Result Contract:
 {
   "population": "Rulings associated with the card whose name is \"Condemn\".",
-  "row_grain": "One ruling description of the card named \"Condemn\".",
+  "row_grain": "One row for each ruling associated with the card named \"Condemn\".",
   "column_role": "The text giving the description about the ruling of the card.",
   "derivation": "none",
   "filter_policy": "none",

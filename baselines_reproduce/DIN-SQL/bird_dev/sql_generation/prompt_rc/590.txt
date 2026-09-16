@@ -328,11 +328,11 @@ Schema_links: [users.Id,users.Views]
 Result Contract:
 {
   "population": "All users; no eligibility conditions are stated.",
-  "row_grain": "One user.",
+  "row_grain": "One row per qualifying user; all users whose view count equals the minimum are returned, so ties can produce multiple rows.",
   "column_role": "The user identifier; the view count itself is not requested as an output.",
   "derivation": "none",
-  "filter_policy": "Select the user with the minimum Views value (argmin over Views); tie handling is unspecified.",
-  "meta_review": "Metadata confirms that Views is a stored user-level attribute in users.Views and that users.Id is the user identifier, validating the Round-1 user-grain interpretation."
+  "filter_policy": "Select users whose view count equals the global minimum view count; no ordering or tie reduction is applied.",
+  "meta_review": "Metadata confirms that view count is a stored user-level attribute and that the user identifier is available at user grain."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -185,7 +185,7 @@ Result Contract:
   "population": "Monthly gas-consumption records for customers whose client segment denotes SME, limited to year-month values between 201301 and 201312.",
   "row_grain": "One single summary row representing the peak month within 2013.",
   "column_role": "The month (within 2013) in which SME gas consumption peaked.",
-  "derivation": "Total gas consumption aggregated per calendar month over the eligible SME customer monthly consumption records in 2013.",
+  "derivation": "The returned value is the calendar-month identifier of the selected month group; monthly total gas consumption is used only to choose that group.",
   "filter_policy": "Argmax: select the month with the highest total gas consumption.",
   "meta_review": "Metadata establishes that customer segment is owned by the customers table as client segment and that gas consumption is recorded as customer-month consumption in yearmonth.Consumption. This resolves the eligibility owner and metric grain for the peak-month aggregation."
 }

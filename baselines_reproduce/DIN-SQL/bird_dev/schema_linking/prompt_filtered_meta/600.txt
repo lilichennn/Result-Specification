@@ -182,22 +182,21 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table postLinks, columns = [*,PostId,RelatedPostId,LinkTypeId]
-Table posts, columns = [*,Id,ViewCount,Title]
+Table postLinks, columns = [*,Id,PostId,RelatedPostId]
+Table posts, columns = [*,Id,ViewCount]
 Foreign_keys = [postLinks.RelatedPostId = posts.Id,postLinks.PostId = posts.Id]
-Sample rows from postLinks (columns: ["PostId", "RelatedPostId", "LinkTypeId"]):
-[[395, 173, 1], [548, 539, 1], [375, 30, 1]]
+Sample rows from postLinks (columns: ["Id", "PostId", "RelatedPostId"]):
+[[108, 395, 173], [145, 548, 539], [217, 375, 30]]
 Column descriptions and value descriptions for postLinks:
+Column Id: column description -> the post link id, value description -> 
 Column PostId: column description -> the post id, value description -> 
 Column RelatedPostId: column description -> the id of the related post, value description -> 
-Column LinkTypeId: column description -> the id of the link type, value description -> 
-Sample rows from posts (columns: ["Id", "ViewCount", "Title"]):
-[[1, 1278, "Eliciting priors from experts"], [2, 8198, "What is normality?"], [3, 3613, "What are some valuable Statistical Analysis open source projects?"]]
+Sample rows from posts (columns: ["Id", "ViewCount"]):
+[[1, 1278], [2, 8198], [3, 3613]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column ViewCount: column description -> the view count of the post, value description -> commonsense evidence:
 Higher view count means the post has higher popularity
-Column Title: column description -> the title of the post, value description -> 
 
 Q: List out all post that are related to post ID 61217 and what is the popularity of this post?
 Hint: post related refers to RelatedPostId; popularity refers to ViewCount

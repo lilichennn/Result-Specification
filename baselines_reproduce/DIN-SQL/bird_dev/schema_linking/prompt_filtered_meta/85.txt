@@ -182,15 +182,14 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table frpm, columns = [*,CDSCode,District Code,School Code,Enrollment (K-12),Free Meal Count (K-12),Percent (%) Eligible Free (K-12)]
-Table schools, columns = [*,CDSCode,NCESDist,NCESSchool,AdmFName1,AdmFName2]
+Table frpm, columns = [*,CDSCode,District Code,Enrollment (K-12),Free Meal Count (K-12),Percent (%) Eligible Free (K-12)]
+Table schools, columns = [*,CDSCode,NCESDist,AdmFName1,AdmFName2]
 Foreign_keys = [frpm.CDSCode = schools.CDSCode]
-Sample rows from frpm (columns: ["CDSCode", "District Code", "School Code", "Enrollment (K-12)", "Free Meal Count (K-12)", "Percent (%) Eligible Free (K-12)"]):
-[["01100170109835", 10017, "0109835", 1087.0, 565.0, 0.519779208831647], ["01100170112607", 10017, "0112607", 395.0, 186.0, 0.470886075949367], ["01100170118489", 10017, "0118489", 244.0, 134.0, 0.549180327868853]]
+Sample rows from frpm (columns: ["CDSCode", "District Code", "Enrollment (K-12)", "Free Meal Count (K-12)", "Percent (%) Eligible Free (K-12)"]):
+[["01100170109835", 10017, 1087.0, 565.0, 0.519779208831647], ["01100170112607", 10017, 395.0, 186.0, 0.470886075949367], ["01100170118489", 10017, 244.0, 134.0, 0.549180327868853]]
 Column descriptions and value descriptions for frpm:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column District Code: column description -> District Code, value description -> 
-Column School Code: column description -> , value description -> 
 Column Enrollment (K-12): column description -> Enrollment (K-12), value description -> commonsense evidence:
 
 K-12: 1st grade - 12nd grade 
@@ -198,12 +197,11 @@ Column Free Meal Count (K-12): column description -> Free Meal Count (K-12), val
 
 eligible free rate = Free Meal Count / Enrollment
 Column Percent (%) Eligible Free (K-12): column description -> , value description -> 
-Sample rows from schools (columns: ["CDSCode", "NCESDist", "NCESSchool", "AdmFName1", "AdmFName2"]):
-[["01100170000000", "0691051", null, "L Karen", null], ["01100170109835", "0691051", "10546", null, null], ["01100170112607", "0691051", "10947", "Laura", null]]
+Sample rows from schools (columns: ["CDSCode", "NCESDist", "AdmFName1", "AdmFName2"]):
+[["01100170000000", "0691051", "L Karen", null], ["01100170109835", "0691051", null, null], ["01100170112607", "0691051", "Laura", null]]
 Column descriptions and value descriptions for schools:
 Column CDSCode: column description -> CDSCode, value description -> 
 Column NCESDist: column description -> This field represents the 7-digit National Center for Educational Statistics (NCES) school district identification number. The first 2 digits identify the state and the last 5 digits identify the school district. Combined, they make a unique 7-digit ID for each school district., value description -> 
-Column NCESSchool: column description -> This field represents the 5-digit NCES school identification number. The NCESSchool combined with the NCESDist form a unique 12-digit ID for each school., value description -> 
 Column AdmFName1: column description -> administrator's first name, value description -> The superintendent’s or principal’s first name.
 
 commonsense evidence:

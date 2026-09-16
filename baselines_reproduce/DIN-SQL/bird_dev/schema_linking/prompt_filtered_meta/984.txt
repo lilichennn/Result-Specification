@@ -182,13 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table constructorStandings, columns = [*,constructorId,wins]
+Table constructorStandings, columns = [*,constructorStandingsId,constructorId,wins]
 Table constructors, columns = [*,constructorId,url]
-Table results, columns = [*,resultId,constructorId,position]
-Foreign_keys = [constructorStandings.constructorId = constructors.constructorId,results.constructorId = constructors.constructorId]
-Sample rows from constructorStandings (columns: ["constructorId", "wins"]):
-[[1, 1], [2, 0], [3, 0]]
+Foreign_keys = [constructorStandings.constructorId = constructors.constructorId]
+Sample rows from constructorStandings (columns: ["constructorStandingsId", "constructorId", "wins"]):
+[[1, 1, 1], [2, 2, 0], [3, 3, 0]]
 Column descriptions and value descriptions for constructorStandings:
+Column constructorStandingsId: column description -> , value description -> 
 Column constructorId: column description -> , value description -> 
 Column wins: column description -> , value description -> 
 Sample rows from constructors (columns: ["constructorId", "url"]):
@@ -196,12 +196,6 @@ Sample rows from constructors (columns: ["constructorId", "url"]):
 Column descriptions and value descriptions for constructors:
 Column constructorId: column description -> , value description -> 
 Column url: column description -> , value description -> 
-Sample rows from results (columns: ["resultId", "constructorId", "position"]):
-[[1, 1, 1], [2, 2, 2], [3, 3, 3]]
-Column descriptions and value descriptions for results:
-Column resultId: column description -> the unique identification number identifying race result , value description -> 
-Column constructorId: column description -> , value description -> 
-Column position: column description -> , value description -> 
 
 Q: What is the website of the constructor who tallied the most total wins.
 Hint: introduction website refers to url;

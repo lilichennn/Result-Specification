@@ -415,12 +415,12 @@ Hint: vision scores of 90 and above refers to vision > 89
 Schema_links: [Player.player_name,Player_Attributes.vision,Country.name,Player_Attributes.player_api_id = Player.player_api_id,Match.country_id = Country.id,Match.home_player_1 = Player.player_api_id,Match.home_player_2 = Player.player_api_id,Match.home_player_3 = Player.player_api_id,Match.home_player_4 = Player.player_api_id,Match.home_player_5 = Player.player_api_id,Match.home_player_6 = Player.player_api_id,Match.home_player_7 = Player.player_api_id,Match.home_player_8 = Player.player_api_id,Match.home_player_9 = Player.player_api_id,Match.home_player_10 = Player.player_api_id,Match.home_player_11 = Player.player_api_id,Match.away_player_1 = Player.player_api_id,Match.away_player_2 = Player.player_api_id,Match.away_player_3 = Player.player_api_id,Match.away_player_4 = Player.player_api_id,Match.away_player_5 = Player.player_api_id,Match.away_player_6 = Player.player_api_id,Match.away_player_7 = Player.player_api_id,Match.away_player_8 = Player.player_api_id,Match.away_player_9 = Player.player_api_id,Match.away_player_10 = Player.player_api_id,Match.away_player_11 = Player.player_api_id,89]
 Result Contract:
 {
-  "population": "Players whose vision score is greater than 89 (i.e., 90 and above).",
-  "row_grain": "One qualifying player per row.",
-  "column_role": "The player's identity and the player's country.",
+  "population": "Countries of matches in which a player with a recorded vision score greater than 89 appears as the home player in lineup slot 8.",
+  "row_grain": "One distinct country per row.",
+  "column_role": "The country name only.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Player_Attributes.vision validates the player-owned vision score filter as a FIFA 0-100 integer. The catalog has no player-owned country representation, so the requested player country remains a question-owned semantic output."
+  "meta_review": "The vision-score condition validates the player filter. The country output is the match country associated with the qualifying player's home-lineup appearance, not a direct player nationality."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

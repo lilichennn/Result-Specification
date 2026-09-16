@@ -182,15 +182,12 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table superhero, columns = [*,id,superhero_name,full_name,height_cm]
+Table superhero, columns = [*,id,height_cm]
 Foreign_keys = []
-Sample rows from superhero (columns: ["id", "superhero_name", "full_name", "height_cm"]):
-[[1, "3-D Man", "Charles Chandler", 188], [2, "A-Bomb", "Richard Milhouse Jones", 203], [3, "Abe Sapien", "Abraham Sapien", 191]]
+Sample rows from superhero (columns: ["id", "height_cm"]):
+[[1, 188], [2, 203], [3, 191]]
 Column descriptions and value descriptions for superhero:
 Column id: column description -> the unique identifier of the superhero, value description -> 
-Column superhero_name: column description -> the name of the superhero, value description -> 
-Column full_name: column description -> the full name of the superhero, value description -> commonsense evidence:
-The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is "John" and their surname is "Smith," their full name would be "John Smith."
 Column height_cm: column description -> the height of the superhero, value description -> commonsense evidence:
 The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. 
 

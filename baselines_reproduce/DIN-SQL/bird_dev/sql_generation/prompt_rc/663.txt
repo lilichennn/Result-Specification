@@ -328,11 +328,11 @@ Schema_links: [users.Id,users.Age]
 Result Contract:
 {
   "population": "All users are eligible.",
-  "row_grain": "One user, namely the youngest.",
-  "column_role": "The identifier (id) of the selected user.",
+  "row_grain": "One row for each user whose age is the global minimum; multiple rows are possible when users tie for youngest.",
+  "column_role": "The identifier of the selected user or users.",
   "derivation": "none",
-  "filter_policy": "Select the user whose Age is the minimum among all users (argmin on Age); tie handling is unspecified.",
-  "meta_review": "Metadata confirms users.Age is the user's age and users.Id is the user identifier, validating the argmin over users."
+  "filter_policy": "Select all users whose Age equals the minimum Age among all users; tied youngest users are all returned.",
+  "meta_review": "Metadata confirms users.Age is the user's age and users.Id is the user identifier, validating selection by minimum age."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

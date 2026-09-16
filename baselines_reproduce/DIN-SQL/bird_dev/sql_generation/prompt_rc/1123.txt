@@ -415,12 +415,12 @@ Hint: highest potential refers to MAX(potential)
 Schema_links: [Player.player_name,Player_Attributes.potential,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All players are eligible; no membership conditions restrict the set.",
-  "row_grain": "One result row per player whose potential equals the highest potential.",
+  "population": "Players for whom a potential value is recorded.",
+  "row_grain": "A single result row containing one selected player name.",
   "column_role": "The player's name.",
   "derivation": "none",
-  "filter_policy": "Retain the player(s) whose potential equals the maximum potential across all players (argmax on potential), including all tied players.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Retain only the top-ranked player name by potential; if several players share the highest potential, only one name is returned.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -183,8 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table comments, columns = [*,Id,Score,UserId]
-Table users, columns = [*,Id]
-Foreign_keys = [comments.UserId = users.Id]
+Foreign_keys = []
 Sample rows from comments (columns: ["Id", "Score", "UserId"]):
 [[1, 5, 13], [2, 0, 13], [3, 0, 13]]
 Column descriptions and value descriptions for comments:
@@ -192,10 +191,6 @@ Column Id: column description -> the comment Id, value description ->
 Column Score: column description -> rating score, value description -> commonsense evidence:
 The score is from 0 to 100. The score more than 60 refers that the comment is a positive comment. The score less than 60 refers that the comment is a negative comment. 
 Column UserId: column description -> the id of the user who post the comment, value description -> 
-Sample rows from users (columns: ["Id"]):
-[[-1], [2], [3]]
-Column descriptions and value descriptions for users:
-Column Id: column description -> the user id, value description -> 
 
 Q: How many negative comments were given by user ID 13?
 Hint: negative comments refer to Score < 60;

@@ -256,12 +256,12 @@ Hint: type of bond refers to bond_type; TR000 is the molecule id
 Schema_links: [bond.bond_type,bond.molecule_id,TR000]
 Result Contract:
 {
-  "population": "All bonds recorded for the molecule with id TR000.",
-  "row_grain": "One bond recorded for molecule TR000.",
-  "column_role": "The bond type of each such bond.",
+  "population": "The distinct bond types recorded for the molecule with id TR000.",
+  "row_grain": "One row per distinct bond type recorded for molecule TR000.",
+  "column_role": "The bond type.",
   "derivation": "none",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms that bond.bond_type is the bond-level type and bond.molecule_id identifies the molecule in which each bond appears. This validates selecting TR000 at the bond-record grain."
+  "filter_policy": "Duplicate bond types are removed so only unique bond types are returned.",
+  "meta_review": "Metadata confirms the bond type attribute describes each bond and the molecule identifier selects the molecule. The result is unique bond types for TR000, not one row per bond record."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

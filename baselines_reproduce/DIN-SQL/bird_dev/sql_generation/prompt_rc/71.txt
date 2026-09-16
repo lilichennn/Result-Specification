@@ -352,12 +352,12 @@ Hint: When magent is equal to 0 in the database, it means ths school doesn't off
 Schema_links: [frpm.District Code,schools.City,schools.Magnet,frpm.CDSCode = schools.CDSCode,Fresno,0]
 Result Contract:
 {
-  "population": "Schools located in the city of Fresno that do not offer a magnet program (magnet = 0 per the evidence).",
-  "row_grain": "One school.",
-  "column_role": "The district code of the school.",
+  "population": "Schools located in the city of Fresno that do not offer a magnet program (magnet = 0).",
+  "row_grain": "One row per qualifying school, not limited to a single school.",
+  "column_role": "The district code of each qualifying school.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,14 +182,9 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table drivers, columns = [*,driverId]
 Table races, columns = [*,raceId,year,name]
 Table results, columns = [*,resultId,raceId,driverId,time]
-Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
-Sample rows from drivers (columns: ["driverId"]):
-[[452], [625], [103]]
-Column descriptions and value descriptions for drivers:
-Column driverId: column description -> , value description -> 
+Foreign_keys = [results.raceId = races.raceId]
 Sample rows from races (columns: ["raceId", "year", "name"]):
 [[1, 2009, "Australian Grand Prix"], [2, 2009, "Malaysian Grand Prix"], [3, 2009, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:

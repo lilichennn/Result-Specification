@@ -251,12 +251,12 @@ Hint: who obtained the most number of badges refers to UserID with Max(Count(Id)
 Schema_links: [users.DisplayName,badges.UserId,badges.Id,badges.UserId = users.Id]
 Result Contract:
 {
-  "population": "All users are eligible; no Boolean membership condition restricts which users are considered.",
-  "row_grain": "One single user, namely the one determined to have obtained the most badges.",
-  "column_role": "The display name of that user.",
-  "derivation": "For each user, the number of badges obtained, i.e., a per-user count of badge records (Count of badge Id per UserID).",
-  "filter_policy": "Argmax: retain the user whose badge count is the maximum across all users.",
-  "meta_review": "Metadata confirms users.DisplayName as the display name owned by the user entity, distinguishing it from denormalized display-name fields on other tables."
+  "population": "Candidate user display names associated with at least one badge record; no other membership condition restricts the candidates.",
+  "row_grain": "One single display name, namely the candidate display name with the highest total number of badges.",
+  "column_role": "The selected display name.",
+  "derivation": "The badge total is an aggregate count of badge records for each candidate display name; the returned value is the display-name group label.",
+  "filter_policy": "Top-1 selection by descending total badge count; if multiple display names tie for the maximum, one is selected.",
+  "meta_review": "Metadata confirms the display name owned by the user entity as the appropriate output, distinguishing it from denormalized display-name fields on other tables."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

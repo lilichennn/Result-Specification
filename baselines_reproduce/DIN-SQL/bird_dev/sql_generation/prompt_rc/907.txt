@@ -286,11 +286,11 @@ Schema_links: [races.name,circuits.country,races.year,races.date,races.circuitId
 Result Contract:
 {
   "population": "All races held in the year 2017.",
-  "row_grain": "One row per race held in 2017.",
+  "row_grain": "One row per distinct race name and hosting country combination among races held in 2017.",
   "column_role": "The race name and the hosting country (country of the circuit hosting the race).",
   "derivation": "none",
-  "filter_policy": "Order the result rows by the date of the event; no limit on the number of rows returned.",
-  "meta_review": "Metadata confirms that the event date is the race's date and that the hosting country is the country of the race's circuit. This validates the Round-1 event-date ordering and hosting-country semantics."
+  "filter_policy": "Order the result rows by the date of the event in ascending order; no limit on the number of rows returned.",
+  "meta_review": "Metadata confirms that the event date is the race's date and that the hosting country is the country of the race's circuit."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -307,11 +307,11 @@ Schema_links: [budget.amount,budget.remaining,budget.category,Food]
 Result Contract:
 {
   "population": "All budget records whose category is 'Food'.",
-  "row_grain": "One budget record.",
-  "column_role": "The remaining value of the selected budget.",
+  "row_grain": "One row for each Food budget record whose budget amount is the maximum among Food budgets.",
+  "column_role": "The remaining value of each selected budget.",
   "derivation": "none",
-  "filter_policy": "Select the single budget with the maximum amount (argmax on budget amount) among the eligible Food budgets.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Retain all eligible Food budgets whose amount equals the maximum Food budget amount, including ties.",
+  "meta_review": "The maximum Food budget is not assumed to be unique."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

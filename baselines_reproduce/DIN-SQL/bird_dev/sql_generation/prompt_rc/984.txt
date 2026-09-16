@@ -285,11 +285,11 @@ Hint: introduction website refers to url;
 Schema_links: [constructors.url,constructorStandings.wins,constructorStandings.constructorId = constructors.constructorId]
 Result Contract:
 {
-  "population": "All constructors are eligible; no additional membership conditions are stated.",
-  "row_grain": "One row representing the single constructor identified as having the most total wins.",
+  "population": "Constructors that have at least one constructor standing record are eligible; no additional membership conditions are stated.",
+  "row_grain": "One row representing the website of the constructor associated with the constructor standing record having the greatest wins value.",
   "column_role": "The website (URL) of the selected constructor.",
-  "derivation": "For each constructor, determine the total number of wins attributed to that constructor; the input does not determine whether this total is stored directly or aggregated from individual win records.",
-  "filter_policy": "Select the constructor with the maximum total wins (argmax); tie handling is not specified.",
+  "derivation": "The website is a stored attribute of the selected constructor; the wins criterion is the wins value recorded on a constructor standing entry, not a sum or other aggregate across entries.",
+  "filter_policy": "Select the constructor standing entry with the maximum wins value and return the associated constructor's website; tie handling is not specified.",
   "meta_review": "Metadata confirms constructors.url is described as the constructor's introduction website, validating the requested website output."
 }
 

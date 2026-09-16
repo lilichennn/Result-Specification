@@ -415,12 +415,12 @@ Hint: speed in which attacks are put together refers to buildUpPlaySpeed;highest
 Schema_links: [Team_Attributes.buildUpPlaySpeed]
 Result Contract:
 {
-  "population": "All teams; no Boolean eligibility condition restricts which teams are considered.",
-  "row_grain": "One row per selected team.",
-  "column_role": "The team's build-up play speed, i.e., the speed at which attacks are put together (buildUpPlaySpeed).",
+  "population": "All recorded build-up play speed values associated with a team; no Boolean eligibility condition restricts which values are considered.",
+  "row_grain": "One row per selected build-up play speed entry; the result is limited to four rows and does not guarantee distinct teams.",
+  "column_role": "The build-up play speed value, i.e., the speed at which attacks are put together.",
   "derivation": "none",
-  "filter_policy": "Keep only the 4 teams with the highest build-up play speed, ranking teams by descending buildUpPlaySpeed (the maximum speed, per the evidence); tie handling is unspecified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Keep only the first four values with the lowest build-up play speed, ordered ascending by build-up play speed; tie handling is unspecified.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,18 +182,23 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table posts, columns = [*,Id,ViewCount,OwnerUserId,Title,OwnerDisplayName]
+Table postHistory, columns = [*,Id,PostId,UserId,UserDisplayName]
+Table posts, columns = [*,Id,ViewCount]
 Table users, columns = [*,Id,DisplayName]
-Foreign_keys = [posts.OwnerUserId = users.Id]
-Sample rows from posts (columns: ["Id", "ViewCount", "OwnerUserId", "Title", "OwnerDisplayName"]):
-[[1, 1278, 8, "Eliciting priors from experts", null], [2, 8198, 24, "What is normality?", null], [3, 3613, 18, "What are some valuable Statistical Analysis open source projects?", null]]
+Foreign_keys = [postHistory.UserId = users.Id,postHistory.PostId = posts.Id]
+Sample rows from postHistory (columns: ["Id", "PostId", "UserId", "UserDisplayName"]):
+[[1, 1, 8, ""], [2, 1, 8, ""], [3, 1, 8, ""]]
+Column descriptions and value descriptions for postHistory:
+Column Id: column description -> the post history id, value description -> 
+Column PostId: column description -> the unique id of the post, value description -> 
+Column UserId: column description -> the user who post the post, value description -> 
+Column UserDisplayName: column description -> user's display name, value description -> 
+Sample rows from posts (columns: ["Id", "ViewCount"]):
+[[1, 1278], [2, 8198], [3, 3613]]
 Column descriptions and value descriptions for posts:
 Column Id: column description -> the post id, value description -> 
 Column ViewCount: column description -> the view count of the post, value description -> commonsense evidence:
 Higher view count means the post has higher popularity
-Column OwnerUserId: column description -> the id of the owner user, value description -> 
-Column Title: column description -> the title of the post, value description -> 
-Column OwnerDisplayName: column description -> the display name of the post owner, value description -> 
 Sample rows from users (columns: ["Id", "DisplayName"]):
 [[-1, "Community"], [2, "Geoff Dalgas"], [3, "Jarrod Dixon"]]
 Column descriptions and value descriptions for users:

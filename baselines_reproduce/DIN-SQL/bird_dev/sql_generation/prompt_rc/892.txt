@@ -285,12 +285,12 @@ Hint: the most points scored refers to max(points); Full name of the driver refe
 Schema_links: [drivers.forename,drivers.surname,driverStandings.points,driverStandings.driverId = drivers.driverId]
 Result Contract:
 {
-  "population": "All drivers who have a points scored value; no additional eligibility conditions are stated.",
-  "row_grain": "One row representing the single driver who has the most points.",
-  "column_role": "The driver's full name (forename and surname) and that driver's points scored.",
-  "derivation": "The driver-level points scored metric for each driver; the input does not specify any aggregation domain or computation beyond this metric.",
-  "filter_policy": "Select the driver with the maximum points scored (argmax over points); tie handling is not specified.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Drivers that have at least one recorded points value in a driver standing entry.",
+  "row_grain": "One row representing the driver associated with the highest recorded points value in a driver standing entry.",
+  "column_role": "The driver's full name and the points value from that driver standing entry.",
+  "derivation": "The points value is the recorded value from the selected driver standing entry; no aggregation or arithmetic is applied.",
+  "filter_policy": "Select the single driver standing entry with the highest points value and return the associated driver; ties are not resolved beyond returning one row.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

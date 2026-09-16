@@ -225,11 +225,11 @@ Hint: weighs 108kg refers to weight_kg = 108; 188cm tall refers to height_cm = 1
 Schema_links: [race.race,superhero.weight_kg,superhero.height_cm,superhero.race_id = race.id,108,188]
 Result Contract:
 {
-  "population": "Superheroes whose weight is 108 kg and whose height is 188 cm; both conditions must hold.",
-  "row_grain": "One superhero matching the stated weight and height.",
+  "population": "Race values associated with superheroes whose weight is 108 kg and whose height is 188 cm; both conditions must hold.",
+  "row_grain": "One row per distinct race value among the qualifying superheroes.",
   "column_role": "The race label of the matching superhero, not the race identifier.",
   "derivation": "none",
-  "filter_policy": "none",
+  "filter_policy": "Duplicate race values are eliminated.",
   "meta_review": "Metadata shows superhero.race_id is an identifier referencing race.race, so the requested race should be returned as the race label rather than the numeric identifier."
 }
 

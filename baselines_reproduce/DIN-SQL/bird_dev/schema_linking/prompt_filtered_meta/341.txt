@@ -182,18 +182,16 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,availability,borderColor,cardKingdomFoilId,cardKingdomId,name]
+Table cards, columns = [*,id,borderColor,cardKingdomFoilId,cardKingdomId]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "availability", "borderColor", "cardKingdomFoilId", "cardKingdomId", "name"]):
-[[1, "mtgo,paper", "black", null, "122719", "Ancestor's Chosen"], [2, "mtgo,paper", "black", null, "122720", "Angel of Mercy"], [3, "mtgo,paper", "black", null, "122725", "Aven Cloudchaser"]]
+Sample rows from cards (columns: ["id", "borderColor", "cardKingdomFoilId", "cardKingdomId"]):
+[[1, "black", null, "122719"], [2, "black", null, "122720"], [3, "black", null, "122725"]]
 Column descriptions and value descriptions for cards:
 Column id: column description -> , value description -> 
-Column availability: column description -> A list of the card's available printing types., value description -> "arena", "dreamcast", "mtgo", "paper", "shandalar"
 Column borderColor: column description -> The color of the card border., value description -> "black", "borderless", "gold", "silver", "white"
 Column cardKingdomFoilId: column description -> card Kingdom Foil Id, value description -> commonsense evidence:
 cardKingdomFoilId, when paired with cardKingdomId that is not Null, is incredibly powerful. 
 Column cardKingdomId: column description -> card Kingdom Id, value description -> A list of all the colors in the color indicator
-Column name: column description -> The name of the card., value description -> Cards with multiple faces, like "Split" and "Meld" cards are given a delimiter.
 
 Q: What are the borderless cards available without powerful foils?
 Hint: borderless' refers to borderColor; poweful foils refers to cardKingdomFoilId paired with cardKingdomId AND cardKingdomId is not null

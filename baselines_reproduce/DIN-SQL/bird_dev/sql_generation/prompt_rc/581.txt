@@ -251,12 +251,12 @@ Hint: 'Open source tools for visualizing multi-dimensional data' is the Title of
 Schema_links: [users.DisplayName,posts.Title,posts.LastEditorUserId = users.Id,'Open source tools for visualizing multi-dimensional data']
 Result Contract:
 {
-  "population": "Posts whose Title is 'Open source tools for visualizing multi-dimensional data'.",
-  "row_grain": "One row per editor of the qualifying post.",
-  "column_role": "The display name of the editor.",
+  "population": "Posts whose title is 'Open source tools for visualizing multi-dimensional data?' together with their owner users.",
+  "row_grain": "One row per qualifying post-owner association.",
+  "column_role": "The display name of the owner user, i.e., the editor.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The exact title includes the trailing question mark; the editor is the post's owner."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

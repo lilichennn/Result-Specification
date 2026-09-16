@@ -183,8 +183,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Laboratory, columns = [*,ID,Date,GOT]
-Table Patient, columns = [*,ID]
-Foreign_keys = [Laboratory.ID = Patient.ID]
+Foreign_keys = []
 Sample rows from Laboratory (columns: ["ID", "Date", "GOT"]):
 [[27654, "1991-09-11", 34], [27654, "1991-09-17", 29], [27654, "1991-09-19", 26]]
 Column descriptions and value descriptions for Laboratory:
@@ -193,10 +192,6 @@ Column Date: column description -> Date of the laboratory tests (YYMMDD), value 
 Column GOT: column description -> AST glutamic oxaloacetic transaminase, value description -> Commonsense evidence:
 
 Normal range: N < 60
-Sample rows from Patient (columns: ["ID"]):
-[[2110], [11408], [12052]]
-Column descriptions and value descriptions for Patient:
-Column ID: column description -> identification of the patient, value description -> 
 
 Q: When is the laboratory examination of patient '48473' where his/her AST glutamic oxaloacetic transaminase (GOT) index is above the normal range.
 Hint: AST glutamic oxaloacetic transaminase (GOT) index is above the normal range refers to GOT > = 60; when refers to DATE

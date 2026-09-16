@@ -182,29 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table budget, columns = [*,spent,remaining,amount,event_status,link_to_event]
-Table event, columns = [*,event_id,status]
+Table budget, columns = [*,budget_id,remaining,link_to_event]
+Table event, columns = [*,event_id]
 Foreign_keys = [budget.link_to_event = event.event_id]
-Sample rows from budget (columns: ["spent", "remaining", "amount", "event_status", "link_to_event"]):
-[[67.81, 7.19, 75, "Closed", "recI43CzsZ0Q625ma"], [121.14, 28.86, 150, "Closed", "recggMW2eyCYceNcy"], [20.2, -0.199999999999999, 20, "Closed", "recJ4Witp9tpjaugn"]]
+Sample rows from budget (columns: ["budget_id", "remaining", "link_to_event"]):
+[["rec0QmEc3cSQFQ6V2", 7.19, "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", 28.86, "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", -0.199999999999999, "recJ4Witp9tpjaugn"]]
 Column descriptions and value descriptions for budget:
-Column spent: column description -> The total amount spent in the budgeted category for an event., value description -> the unit is dollar. This is summarized from the Expense table
+Column budget_id: column description -> A unique identifier for the budget entry, value description -> 
 Column remaining: column description -> A value calculated as the amount budgeted minus the amount spent, value description -> the unit is dollar 
 commonsense evidence: If the remaining < 0, it means that the cost has exceeded the budget.
-Column amount: column description -> The amount budgeted for the specified category and event, value description -> the unit is dollar 
-commonsense evidence:
-some computation like: amount = spent + remaining 
-Column event_status: column description -> the status of the event, value description -> Closed / Open/ Planning 
-commonsense evidence: 
- Closed: It means that the event is closed. The spent and the remaining won't change anymore.
- Open: It means that the event is already opened. The spent and the remaining will change with new expenses.
- Planning: The event is not started yet but is planning. The spent and the remaining won't change at this stage. 
 Column link_to_event: column description -> The unique identifier of the event to which the budget line applies., value description -> References the Event table
-Sample rows from event (columns: ["event_id", "status"]):
-[["rec0Si5cQ4rJRVzd6", "Open"], ["rec0akZnLLpGUloLH", "Open"], ["rec0dZPcWXF0QjNnE", "Open"]]
+Sample rows from event (columns: ["event_id"]):
+[["rec0Si5cQ4rJRVzd6"], ["rec0akZnLLpGUloLH"], ["rec0dZPcWXF0QjNnE"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
-Column status: column description -> One of three values indicating if the event is in planning, is opened, or is closed, value description -> Open/ Closed/ Planning
 
 Q: What is the percentage of the events that went over budget?
 Hint: went over budget refers to remaining < 0; percentage = DIVIDE(SUM(remaining < 0), COUNT(event_id)) * 100

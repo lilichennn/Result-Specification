@@ -352,7 +352,7 @@ Hint: State of California refers to state = 'CA'
 Schema_links: [schools.City,schools.School,frpm.Low Grade,schools.Latitude,schools.State,frpm.CDSCode = schools.CDSCode,'CA']
 Result Contract:
 {
-  "population": "All schools physically located in the state of California (state = 'CA').",
+  "population": "Schools physically located in the state of California (state = 'CA') that have a corresponding free/reduced-price meal record.",
   "row_grain": "One school, namely the single California school identified as having the lowest latitude.",
   "column_role": "The school's physical city, the school's lowest grade value, and the school's name.",
   "derivation": "none",

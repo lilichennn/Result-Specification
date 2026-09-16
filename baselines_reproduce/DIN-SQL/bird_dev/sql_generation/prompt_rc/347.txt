@@ -297,12 +297,12 @@ Hint: cards have missing or degraded properties and value refers to hasContentWa
 Schema_links: [cards.id,cards.artist,rulings.text,cards.hasContentWarning,rulings.uuid = cards.uuid,'Stephen Daniele',1]
 Result Contract:
 {
-  "population": "All cards illustrated by the artist 'Stephen Daniele'.",
-  "row_grain": "One row per card illustrated by Stephen Daniele.",
-  "column_role": "The card's unique identifier, the text of the ruling associated with the card, and an indicator of whether the card has missing or degraded properties and values (hasContentWarning = 1).",
+  "population": "Card-ruling pairs for cards illustrated by the artist 'Stephen Daniele'.",
+  "row_grain": "One row per ruling associated with a card illustrated by Stephen Daniele.",
+  "column_role": "The card's unique identifier, the text of the ruling, and an indicator of whether the card has missing or degraded properties and values (hasContentWarning = 1).",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms cards.id is the unique card identifier, hasContentWarning = 1 marks missing or degraded properties and values, and ruling text is rulings.text rather than cards.text. The Round-1 card-level grain and requested outputs are preserved."
+  "meta_review": "Metadata confirms the card identifier is the unique card output, hasContentWarning = 1 marks missing or degraded properties and values, and ruling text is the ruling statement rather than card text. The result is expressed per ruling associated with a qualifying card, not one row per card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

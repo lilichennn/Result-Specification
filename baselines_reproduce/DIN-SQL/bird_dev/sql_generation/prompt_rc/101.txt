@@ -318,11 +318,11 @@ Schema_links: [account.account_id,trans.date,trans.account_id = account.account_
 Result Contract:
 {
   "population": "Accounts that have at least one transaction dated in 1995.",
-  "row_grain": "One row per qualifying account.",
+  "row_grain": "One row only: the account from the single earliest 1995 trading event selected.",
   "column_role": "The identity of the account; no other value is requested.",
-  "derivation": "For each account, its earliest transaction date among its transactions in 1995.",
-  "filter_policy": "Argmin: retain only the account(s) whose earliest 1995 transaction date equals the earliest such date across all eligible accounts.",
-  "meta_review": "Metadata confirms that trading dates are represented by trans.date, the date of transaction, while account.date is account creation date. This validates using transaction dates, not account creation dates, for the 1995 earliest-date comparison."
+  "derivation": "The returned value is the account identifier associated with the selected earliest 1995 transaction.",
+  "filter_policy": "Choose a single earliest 1995 trading date and return only one associated account; if multiple transactions share the earliest date, the result is one arbitrary tied account.",
+  "meta_review": "Metadata confirms that trading dates are transaction dates, not account creation dates, validating use of transaction dates for the 1995 earliest-date comparison."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

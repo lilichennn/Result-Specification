@@ -182,21 +182,32 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table constructorResults, columns = [*,raceId,constructorId,points]
-Table constructorStandings, columns = [*,raceId,constructorId,points]
+Table circuits, columns = [*,circuitId,circuitRef,name,location,country]
+Table constructorResults, columns = [*,constructorResultsId,raceId,constructorId,points]
+Table constructorStandings, columns = [*,constructorStandingsId,raceId,constructorId,points]
 Table constructors, columns = [*,constructorId,constructorRef,name,nationality]
-Table races, columns = [*,raceId,year,name]
-Table results, columns = [*,raceId,constructorId,points]
-Foreign_keys = [constructorResults.constructorId = constructors.constructorId,constructorResults.raceId = races.raceId,constructorStandings.constructorId = constructors.constructorId,constructorStandings.raceId = races.raceId,results.constructorId = constructors.constructorId,results.raceId = races.raceId]
-Sample rows from constructorResults (columns: ["raceId", "constructorId", "points"]):
-[[18, 1, 14.0], [18, 2, 8.0], [18, 3, 9.0]]
+Table races, columns = [*,raceId,year,circuitId,name,date]
+Table results, columns = [*,resultId,raceId,constructorId,points]
+Foreign_keys = [constructorResults.constructorId = constructors.constructorId,constructorResults.raceId = races.raceId,constructorStandings.constructorId = constructors.constructorId,constructorStandings.raceId = races.raceId,races.circuitId = circuits.circuitId,results.constructorId = constructors.constructorId,results.raceId = races.raceId]
+Sample rows from circuits (columns: ["circuitId", "circuitRef", "name", "location", "country"]):
+[[2, "sepang", "Sepang International Circuit", "Kuala Lumpur", "Malaysia"], [3, "bahrain", "Bahrain International Circuit", "Sakhir", "Bahrain"], [4, "catalunya", "Circuit de Barcelona-Catalunya", "Montmeló", "Spain"]]
+Column descriptions and value descriptions for circuits:
+Column circuitId: column description -> unique identification number of the circuit , value description -> 
+Column circuitRef: column description -> circuit reference name , value description -> 
+Column name: column description -> , value description -> 
+Column location: column description -> , value description -> 
+Column country: column description -> , value description -> 
+Sample rows from constructorResults (columns: ["constructorResultsId", "raceId", "constructorId", "points"]):
+[[1, 18, 1, 14.0], [2, 18, 2, 8.0], [3, 18, 3, 9.0]]
 Column descriptions and value descriptions for constructorResults:
+Column constructorResultsId: column description -> constructor Results Id, value description -> 
 Column raceId: column description -> race id, value description -> 
 Column constructorId: column description -> constructor id, value description -> 
 Column points: column description -> points, value description -> 
-Sample rows from constructorStandings (columns: ["raceId", "constructorId", "points"]):
-[[18, 1, 14.0], [18, 2, 8.0], [18, 3, 9.0]]
+Sample rows from constructorStandings (columns: ["constructorStandingsId", "raceId", "constructorId", "points"]):
+[[1, 18, 1, 14.0], [2, 18, 2, 8.0], [3, 18, 3, 9.0]]
 Column descriptions and value descriptions for constructorStandings:
+Column constructorStandingsId: column description -> , value description -> 
 Column raceId: column description -> , value description -> 
 Column constructorId: column description -> , value description -> 
 Column points: column description -> how many points acquired in each race , value description -> 
@@ -207,15 +218,18 @@ Column constructorId: column description -> , value description ->
 Column constructorRef: column description -> , value description -> 
 Column name: column description -> , value description -> 
 Column nationality: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "name"]):
-[[1, 2009, "Australian Grand Prix"], [2, 2009, "Malaysian Grand Prix"], [3, 2009, "Chinese Grand Prix"]]
+Sample rows from races (columns: ["raceId", "year", "circuitId", "name", "date"]):
+[[1, 2009, 1, "Australian Grand Prix", "2009-03-29"], [2, 2009, 2, "Malaysian Grand Prix", "2009-04-05"], [3, 2009, 17, "Chinese Grand Prix", "2009-04-19"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
+Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "constructorId", "points"]):
-[[18, 1, 10.0], [18, 2, 8.0], [18, 3, 6.0]]
+Column date: column description -> , value description -> 
+Sample rows from results (columns: ["resultId", "raceId", "constructorId", "points"]):
+[[1, 18, 1, 10.0], [2, 18, 2, 8.0], [3, 18, 3, 6.0]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column constructorId: column description -> , value description -> 
 Column points: column description -> , value description -> 

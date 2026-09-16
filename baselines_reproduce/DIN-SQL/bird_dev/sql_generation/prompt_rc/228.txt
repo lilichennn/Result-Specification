@@ -261,7 +261,7 @@ Result Contract:
   "column_role": "A single value: the percentage of hydrogen atoms in molecule TR206, presented with four decimal places.",
   "derivation": "Compute the ratio of the number of hydrogen atoms (element = 'h') to the total number of atoms in molecule TR206, expressed as a percentage and rounded to four decimal places.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

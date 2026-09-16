@@ -184,8 +184,7 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,ANA]
 Table Laboratory, columns = [*,ID,CRE]
-Table Patient, columns = [*,ID]
-Foreign_keys = [Examination.ID = Patient.ID,Laboratory.ID = Patient.ID]
+Foreign_keys = []
 Sample rows from Examination (columns: ["ID", "ANA"]):
 [[14872, 256], [48473, 256], [102490, 0]]
 Column descriptions and value descriptions for Examination:
@@ -198,10 +197,6 @@ Column ID: column description -> identification of the patient, value descriptio
 Column CRE: column description -> creatinine, value description -> Commonsense evidence:
 
 Normal range: N < 1.5
-Sample rows from Patient (columns: ["ID"]):
-[[2110], [11408], [12052]]
-Column descriptions and value descriptions for Patient:
-Column ID: column description -> identification of the patient, value description -> 
 
 Q: What is the highest anti-nucleus antibody concentration level of a patient with a normal creatinine level?
 Hint: highest anti-nucleus antibody concentration level refers to MAX(ANA); normal creatinine level refers to CRE < 1.5;

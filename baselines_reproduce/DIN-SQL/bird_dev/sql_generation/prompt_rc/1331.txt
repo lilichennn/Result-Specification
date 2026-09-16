@@ -230,12 +230,12 @@ Hint: 'Vice President' is a position of Student Club; funds received refers to a
 Schema_links: [income.amount,member.position,income.link_to_member = member.member_id,Vice President]
 Result Contract:
 {
-  "population": "The funds received by the member whose position in the Student Club is 'Vice President'.",
-  "row_grain": "One result row representing the funds received by the Vice President.",
+  "population": "The funds received by members whose position in the Student Club is 'Vice President'.",
+  "row_grain": "One result row for each received fund amount associated with a member holding the Vice President position.",
   "column_role": "The dollar amount of the received funds.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms member.position identifies the club position and income.amount stores the dollar amount of funds received, tying the requested amount to the member holding the Vice President position."
+  "meta_review": "Metadata confirms member.position identifies the club position and income.amount stores the dollar amount of funds received, tying the requested amount to the members holding the Vice President position."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

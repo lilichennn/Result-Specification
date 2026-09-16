@@ -366,12 +366,12 @@ Hint: don't have multiple faces on a single card side is null
 Schema_links: [cards.number,cards.side,cards.subtypes,Angel,Wizard]
 Result Contract:
 {
-  "population": "Cards whose side is null (i.e., no multiple faces on a single card) and whose subtypes list contains both Angel and Wizard.",
+  "population": "Cards whose side is null and whose subtypes are exactly the combined value Angel,Wizard.",
   "row_grain": "One card per result row.",
-  "column_role": "The card number, not the internal unique identifier, of each qualifying card.",
+  "column_role": "The unique card identifier of each qualifying card.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata distinguishes cards.number from cards.id, confirming the requested output is the card number rather than the internal identifier. Metadata also describes cards.subtypes as a list-valued card property, so both subtypes are evaluated on one card without expanding rows."
+  "meta_review": "The result returns the card's unique identifier as the requested card number. Subtypes are treated as a single combined card property, requiring the exact Angel,Wizard combination on one card."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

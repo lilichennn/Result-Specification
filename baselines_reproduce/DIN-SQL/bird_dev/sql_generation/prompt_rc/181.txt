@@ -249,11 +249,11 @@ Schema_links: [client.client_id,client.gender,loan.amount,client.client_id = dis
 Result Contract:
 {
   "population": "Female clients (gender = 'F') associated with an account that has at least one loan.",
-  "row_grain": "One row per selected female client.",
+  "row_grain": "One row per eligible female client-loan association, limited to three selected rows.",
   "column_role": "The client identifier (client ID), as explicitly requested.",
   "derivation": "none",
-  "filter_policy": "Select the 3 clients with the largest approved loan amounts (top-3 ranked by approved loan amount, descending).",
-  "meta_review": "Metadata shows loans are recorded against accounts and identifies loan.amount as the approved loan amount. This refines client eligibility to account-associated loans and loan size to approved amount."
+  "filter_policy": "Select the three associations with the largest loan amounts, ordered by loan amount descending.",
+  "meta_review": "Metadata shows loans are recorded against accounts and treats the loan amount as the loan size; it does not restrict loans to approved status."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

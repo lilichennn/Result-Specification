@@ -251,10 +251,10 @@ Hint: Amount of more SMEs = Total of SMEs pay using Currency CZK - Total of SMEs
 Schema_links: [customers.Segment,customers.Currency,customers.CustomerID,SME,CZK,EUR]
 Result Contract:
 {
-  "population": "Two separately defined populations of SME customers: those whose customer-level currency is Czech koruna (CZK) and those whose customer-level currency is euro (EUR).",
-  "row_grain": "One global summary row representing the comparison between the CZK-paying and EUR-paying SME groups.",
-  "column_role": "A truth indicator of whether more SMEs pay in CZK than in EUR, and the number of additional CZK-paying SMEs, which is required only when that answer is yes.",
-  "derivation": "Count the SME customers paying in CZK and count the SME customers paying in EUR; the truth value is whether the CZK count exceeds the EUR count, and the excess amount is the CZK count minus the EUR count.",
+  "population": "SME customers; within that population, separate counts are formed for customer-level currency Czech koruna (CZK) and customer-level currency euro (EUR).",
+  "row_grain": "One global summary row representing the numeric difference between the CZK-paying and EUR-paying SME counts.",
+  "column_role": "A single numeric measure giving the difference between the number of SME customers paying in CZK and the number paying in EUR.",
+  "derivation": "Count the SME customers whose customer-level currency is CZK, count the SME customers whose customer-level currency is EUR, and subtract the EUR count from the CZK count.",
   "filter_policy": "none",
   "meta_review": "Metadata shows Currency is an attribute of customers, resolving that the comparison counts SME customers by their customer currency rather than transaction records."
 }

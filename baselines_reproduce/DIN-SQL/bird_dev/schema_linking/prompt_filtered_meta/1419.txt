@@ -182,14 +182,20 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table event, columns = [*,event_id,event_date,type]
-Foreign_keys = []
-Sample rows from event (columns: ["event_id", "event_date", "type"]):
-[["rec0Si5cQ4rJRVzd6", "2020-03-10T12:00:00", "Meeting"], ["rec0akZnLLpGUloLH", "2020-01-14T09:30:00", "Meeting"], ["rec0dZPcWXF0QjNnE", "2019-11-24T09:00:00", "Election"]]
+Table budget, columns = [*,budget_id,category,link_to_event]
+Table event, columns = [*,event_id,event_date]
+Foreign_keys = [budget.link_to_event = event.event_id]
+Sample rows from budget (columns: ["budget_id", "category", "link_to_event"]):
+[["rec0QmEc3cSQFQ6V2", "Advertisement", "recI43CzsZ0Q625ma"], ["rec1bG6HSft7XIvTP", "Food", "recggMW2eyCYceNcy"], ["rec1z6ISJU2HdIsVm", "Food", "recJ4Witp9tpjaugn"]]
+Column descriptions and value descriptions for budget:
+Column budget_id: column description -> A unique identifier for the budget entry, value description -> 
+Column category: column description -> The area for which the amount is budgeted, such as, advertisement, food, parking, value description -> 
+Column link_to_event: column description -> The unique identifier of the event to which the budget line applies., value description -> References the Event table
+Sample rows from event (columns: ["event_id", "event_date"]):
+[["rec0Si5cQ4rJRVzd6", "2020-03-10T12:00:00"], ["rec0akZnLLpGUloLH", "2020-01-14T09:30:00"], ["rec0dZPcWXF0QjNnE", "2019-11-24T09:00:00"]]
 Column descriptions and value descriptions for event:
 Column event_id: column description -> A unique identifier for the event, value description -> 
 Column event_date: column description -> The date the event took place or is scheduled to take place, value description -> e.g. 2020-03-10T12:00:00
-Column type: column description -> The kind of event, such as game, social, election, value description -> 
 
 Q: What is the category of event which was taken place in 2020-03-24T12:00:00?
 Hint: taken place in 2020-03-24T12:00:00 refers to event_date = '2020-03-24T12:00:00'

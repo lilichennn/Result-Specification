@@ -297,12 +297,12 @@ Hint: set of 180 cards refers to baseSetSize = 180
 Schema_links: [set_translations.language,sets.baseSetSize,sets.block,set_translations.setCode = sets.code,180,Ravnica]
 Result Contract:
 {
-  "population": "Card sets whose base set size is 180 cards and that belong to the Ravnica block.",
-  "row_grain": "One card set.",
+  "population": "Translation languages of card sets whose base set size is 180 cards and that belong to the Ravnica block.",
+  "row_grain": "One translation language for each matching translation of a qualifying card set.",
   "column_role": "The language of the card set translation, not the translated set name.",
-  "derivation": "none",
+  "derivation": "Stored language value for each matching translation.",
   "filter_policy": "none",
-  "meta_review": "set_translations distinguishes language from translation, establishing that the requested output is the translation language rather than the translated set name."
+  "meta_review": "Translation metadata distinguishes language from translated name, establishing that the requested output is the translation language rather than the translated set name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

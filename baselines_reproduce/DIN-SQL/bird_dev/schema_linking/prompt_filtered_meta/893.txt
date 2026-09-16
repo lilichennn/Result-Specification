@@ -182,46 +182,29 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table circuits, columns = [*,circuitId,country]
-Table driverStandings, columns = [*,raceId,driverId,points,position]
-Table drivers, columns = [*,driverId,driverRef,forename,surname]
-Table races, columns = [*,raceId,year,circuitId,name]
-Table results, columns = [*,raceId,driverId,position,positionOrder,points]
-Foreign_keys = [driverStandings.driverId = drivers.driverId,driverStandings.raceId = races.raceId,races.circuitId = circuits.circuitId,results.driverId = drivers.driverId,results.raceId = races.raceId]
-Sample rows from circuits (columns: ["circuitId", "country"]):
-[[2, "Malaysia"], [3, "Bahrain"], [4, "Spain"]]
-Column descriptions and value descriptions for circuits:
-Column circuitId: column description -> unique identification number of the circuit , value description -> 
-Column country: column description -> , value description -> 
-Sample rows from driverStandings (columns: ["raceId", "driverId", "points", "position"]):
-[[18, 1, 10.0, 1], [18, 2, 8.0, 2], [18, 3, 6.0, 3]]
+Table driverStandings, columns = [*,driverStandingsId,raceId,driverId,points]
+Table drivers, columns = [*,driverId,forename,surname]
+Table races, columns = [*,raceId,year,name]
+Foreign_keys = [driverStandings.driverId = drivers.driverId,driverStandings.raceId = races.raceId]
+Sample rows from driverStandings (columns: ["driverStandingsId", "raceId", "driverId", "points"]):
+[[1, 18, 1, 10.0], [2, 18, 2, 8.0], [3, 18, 3, 6.0]]
 Column descriptions and value descriptions for driverStandings:
+Column driverStandingsId: column description -> , value description -> 
 Column raceId: column description -> , value description -> 
 Column driverId: column description -> , value description -> 
 Column points: column description -> , value description -> 
-Column position: column description -> , value description -> 
-Sample rows from drivers (columns: ["driverId", "driverRef", "forename", "surname"]):
-[[1, "hamilton", "Lewis", "Hamilton"], [2, "heidfeld", "Nick", "Heidfeld"], [3, "rosberg", "Nico", "Rosberg"]]
+Sample rows from drivers (columns: ["driverId", "forename", "surname"]):
+[[1, "Lewis", "Hamilton"], [2, "Nick", "Heidfeld"], [3, "Nico", "Rosberg"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
-Column driverRef: column description -> , value description -> 
 Column forename: column description -> , value description -> 
 Column surname: column description -> , value description -> 
-Sample rows from races (columns: ["raceId", "year", "circuitId", "name"]):
-[[1, 2009, 1, "Australian Grand Prix"], [2, 2009, 2, "Malaysian Grand Prix"], [3, 2009, 17, "Chinese Grand Prix"]]
+Sample rows from races (columns: ["raceId", "year", "name"]):
+[[1, 2009, "Australian Grand Prix"], [2, 2009, "Malaysian Grand Prix"], [3, 2009, "Chinese Grand Prix"]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
-Column circuitId: column description -> , value description -> 
 Column name: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "driverId", "position", "positionOrder", "points"]):
-[[18, 1, 1, 1, 10.0], [18, 2, 2, 2, 8.0], [18, 3, 3, 3, 6.0]]
-Column descriptions and value descriptions for results:
-Column raceId: column description -> the identification number identifying the race , value description -> 
-Column driverId: column description -> , value description -> 
-Column position: column description -> , value description -> 
-Column positionOrder: column description -> , value description -> 
-Column points: column description -> , value description -> 
 
 Q: Name the top 3 drivers and the points they scored in the 2017 Chinese Grand Prix.
 A: Let’s think step by step.

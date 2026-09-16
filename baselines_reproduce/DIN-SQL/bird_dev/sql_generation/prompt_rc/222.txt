@@ -256,12 +256,12 @@ Hint: label = '+' means molecules are carcinogenic; label = '-' means molecules 
 Schema_links: [molecule.molecule_id,molecule.label,'+','-']
 Result Contract:
 {
-  "population": "All molecules, partitioned into two contributing groups: those with label '+' (carcinogenic) and those with label '-' (non-carcinogenic).",
+  "population": "All molecules, with two contributing groups: those with label '+' (carcinogenic) and those with label '-' (non-carcinogenic).",
   "row_grain": "One global summary row covering the entire molecule set.",
   "column_role": "A single numeric value representing the difference between the number of carcinogenic molecules and the number of non-carcinogenic molecules.",
   "derivation": "Subtract the number of molecules with label '-' from the number of molecules with label '+', i.e., count of carcinogenic molecules minus count of non-carcinogenic molecules.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

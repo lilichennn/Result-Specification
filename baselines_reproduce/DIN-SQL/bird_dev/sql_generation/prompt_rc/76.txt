@@ -353,11 +353,11 @@ Schema_links: [schools.City,schools.EILCode,frpm.NSLP Provision Status,frpm.Low 
 Result Contract:
 {
   "population": "Schools that are high school level (EILCode = 'HS'), have Lunch Provision 2, have a lowest grade of 9 and a highest grade of 12, and are located in the county of Merced.",
-  "row_grain": "One school satisfying all the stated eligibility conditions.",
+  "row_grain": "One city location row for each school satisfying all the stated eligibility conditions.",
   "column_role": "The city location of the school.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

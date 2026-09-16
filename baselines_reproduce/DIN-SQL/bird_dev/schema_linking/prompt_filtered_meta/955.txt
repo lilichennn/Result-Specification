@@ -183,34 +183,28 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table races, columns = [*,raceId,year]
-Table results, columns = [*,raceId,position,positionText,positionOrder,time,milliseconds,statusId]
+Table results, columns = [*,resultId,raceId,position,positionText,positionOrder,time,milliseconds]
 Table seasons, columns = [*,year]
-Table status, columns = [*,statusId,status]
-Foreign_keys = [races.year = seasons.year,results.statusId = status.statusId,results.raceId = races.raceId]
+Foreign_keys = [races.year = seasons.year,results.raceId = races.raceId]
 Sample rows from races (columns: ["raceId", "year"]):
 [[1, 2009], [2, 2009], [3, 2009]]
 Column descriptions and value descriptions for races:
 Column raceId: column description -> , value description -> 
 Column year: column description -> , value description -> 
-Sample rows from results (columns: ["raceId", "position", "positionText", "positionOrder", "time", "milliseconds", "statusId"]):
-[[18, 1, "1", 1, "1:34:50.616", 5690616, 1], [18, 2, "2", 2, "+5.478", 5696094, 1], [18, 3, "3", 3, "+8.163", 5698779, 1]]
+Sample rows from results (columns: ["resultId", "raceId", "position", "positionText", "positionOrder", "time", "milliseconds"]):
+[[1, 18, 1, "1", 1, "1:34:50.616", 5690616], [2, 18, 2, "2", 2, "+5.478", 5696094], [3, 18, 3, "3", 3, "+8.163", 5698779]]
 Column descriptions and value descriptions for results:
+Column resultId: column description -> the unique identification number identifying race result , value description -> 
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column position: column description -> , value description -> 
 Column positionText: column description -> , value description -> 
 Column positionOrder: column description -> , value description -> 
 Column time: column description -> , value description -> 
 Column milliseconds: column description -> , value description -> 
-Column statusId: column description -> , value description -> 
 Sample rows from seasons (columns: ["year"]):
 [[1950], [1951], [1952]]
 Column descriptions and value descriptions for seasons:
 Column year: column description -> , value description -> 
-Sample rows from status (columns: ["statusId", "status"]):
-[[1, "Finished"], [2, "Disqualified"], [3, "Accident"]]
-Column descriptions and value descriptions for status:
-Column statusId: column description -> , value description -> 
-Column status: column description -> , value description -> 
 
 Q: What is the average time in seconds of champion for each year, before year 1975?
 Hint: only champion's finished time is represented by 'HH:MM:SS.mmm'; finished the game refers to time is not null; before year 1975 refers to year < 1975;

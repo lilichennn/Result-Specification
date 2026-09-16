@@ -415,12 +415,12 @@ Hint: percentage refers to DIVIDE(COUNT(height < 180 AND overall_rating > 70),CO
 Schema_links: [Player.id,Player.height,Player_Attributes.overall_rating,Player_Attributes.player_api_id = Player.player_api_id,180,70]
 Result Contract:
 {
-  "population": "The reference population is all players; the qualifying subset is players whose height is under 180 cm and whose overall rating is greater than 70.",
-  "row_grain": "One global summary row over the entire player population.",
-  "column_role": "A single value representing the percentage of qualifying players among all players.",
-  "derivation": "Divide the count of players with height under 180 cm and overall rating above 70 by the count of all players, then multiply by 100.",
+  "population": "The reference population is player strength records associated with players whose height is under 180 cm; the qualifying subset is those records whose overall strength is greater than 70.",
+  "row_grain": "One global summary row over the entire reference population.",
+  "column_role": "A single value representing the percentage of qualifying under-180 player strength records among all under-180 player strength records.",
+  "derivation": "Divide the count of under-180 player strength records with overall strength greater than 70 by the count of under-180 player strength records, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

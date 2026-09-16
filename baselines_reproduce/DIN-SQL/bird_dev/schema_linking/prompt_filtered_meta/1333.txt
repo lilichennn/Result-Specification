@@ -182,16 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table member, columns = [*,member_id,first_name,last_name,position,zip]
+Table member, columns = [*,member_id,position,zip]
 Table zip_code, columns = [*,zip_code,city,state,short_state]
 Foreign_keys = [member.zip = zip_code.zip_code]
-Sample rows from member (columns: ["member_id", "first_name", "last_name", "position", "zip"]):
-[["rec1x5zBFIqoOuPW8", "Angela", "Sanders", "Member", 55108], ["rec280Sk7o31iG0Tx", "Grant", "Gilmour", "Member", 29440], ["rec28ORZgcm1dtqBZ", "Luisa", "Guidi", "Member", 10002]]
+Sample rows from member (columns: ["member_id", "position", "zip"]):
+[["rec1x5zBFIqoOuPW8", "Member", 55108], ["rec280Sk7o31iG0Tx", "Member", 29440], ["rec28ORZgcm1dtqBZ", "Member", 10002]]
 Column descriptions and value descriptions for member:
 Column member_id: column description -> unique id of member, value description -> 
-Column first_name: column description -> member's first name, value description -> 
-Column last_name: column description -> member's last name, value description -> commonsense evidence: 
-full name is first_name + last_name. e.g. A member's first name is Angela and last name is Sanders. Thus, his/her full name is Angela Sanders.
 Column position: column description -> The position the member holds in the club, value description -> 
 Column zip: column description -> the zip code of the member's hometown, value description -> 
 Sample rows from zip_code (columns: ["zip_code", "city", "state", "short_state"]):

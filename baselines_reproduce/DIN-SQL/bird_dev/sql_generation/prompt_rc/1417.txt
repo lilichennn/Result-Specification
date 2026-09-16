@@ -230,12 +230,12 @@ Hint: remaining budget more than 30 USD refers to remaining > 30
 Schema_links: [event.type,budget.remaining,budget.link_to_event = event.event_id,30]
 Result Contract:
 {
-  "population": "Events whose remaining budget is greater than 30 USD (remaining > 30).",
-  "row_grain": "One event type per row, representing the type of at least one qualifying event.",
+  "population": "Events with at least one linked budget entry whose remaining budget is greater than 30 USD.",
+  "row_grain": "One row for each qualifying linked budget entry, giving the type of its event; duplicate event types are possible.",
   "column_role": "The event type.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms that remaining budget is budget.remaining, a dollar amount recorded on budget entries linked to events, and that the requested type is event.type. This validates the event-type result and the remaining-budget condition without changing the Round-1 semantics."
+  "meta_review": "Metadata confirms that remaining budget is budget.remaining, a dollar amount recorded on budget entries linked to events, and that the requested type is event.type. This supports the event-type result and the remaining-budget condition."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

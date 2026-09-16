@@ -415,12 +415,12 @@ Hint: KSV Cercle Brugge refers to team_long_name = 'KSV Cercle Brugge'; speed cl
 Schema_links: [Team.team_long_name,Team_Attributes.buildUpPlaySpeedClass,Team_Attributes.team_api_id = Team.team_api_id,'KSV Cercle Brugge']
 Result Contract:
 {
-  "population": "The team whose long name is 'KSV Cercle Brugge'.",
-  "row_grain": "One row representing the KSV Cercle Brugge team.",
+  "population": "The recorded build-up play speed classes associated with the team whose long name is 'KSV Cercle Brugge'.",
+  "row_grain": "One row for each distinct recorded speed class value for that team.",
   "column_role": "The team's build-up play speed class value, which answers whether it is slow, balanced, or fast.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The team name identifies the source of the speed-class values; the result consists of those values rather than a team entity row."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

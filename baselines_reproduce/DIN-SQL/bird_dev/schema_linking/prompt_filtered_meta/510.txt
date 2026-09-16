@@ -182,15 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table cards, columns = [*,id,artist,convertedManaCost,faceConvertedManaCost,side]
+Table cards, columns = [*,artist,convertedManaCost,side]
 Foreign_keys = []
-Sample rows from cards (columns: ["id", "artist", "convertedManaCost", "faceConvertedManaCost", "side"]):
-[[1, "Pete Venters", 7.0, null, null], [2, "Volkan Baǵa", 5.0, null, null], [3, "Justin Sweet", 4.0, null, null]]
+Sample rows from cards (columns: ["artist", "convertedManaCost", "side"]):
+[["Pete Venters", 7.0, null], ["Volkan Baǵa", 5.0, null], ["Justin Sweet", 4.0, null]]
 Column descriptions and value descriptions for cards:
-Column id: column description -> , value description -> 
 Column artist: column description -> The name of the artist that illustrated the card art., value description -> 
 Column convertedManaCost: column description -> The converted mana cost of the card. Use the manaValue property., value description -> if value is higher, it means that this card cost more converted mana 
-Column faceConvertedManaCost: column description -> The converted mana cost or mana value for the face for either half or part of the card. , value description -> if value is higher, it means that this card cost more converted mana for the face
 Column side: column description -> The identifier of the card side. , value description -> Used on cards with multiple faces on the same card.
 commonsense evidence:
 if this value is empty, then it means this card doesn't have multiple faces on the same card.

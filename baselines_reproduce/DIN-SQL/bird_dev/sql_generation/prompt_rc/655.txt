@@ -251,12 +251,12 @@ Hint: Title = 'What are principal component scores?';
 Schema_links: [posts.Title,postLinks.LinkTypeId,postLinks.PostId = posts.Id,postLinks.RelatedPostId = posts.Id,"What are principal component scores?"]
 Result Contract:
 {
-  "population": "Posts that are the related post in a post-to-post link whose source post has the title 'What are principal component scores?'.",
-  "row_grain": "One related post (one post-to-post link) per result row.",
+  "population": "Post-to-post links whose source post has the title 'What are principal component scores?' and whose related post supplies the returned title.",
+  "row_grain": "One post-to-post link (one related-post association) per result row.",
   "column_role": "The title of each related post and the link type ID of the link connecting it to the given post.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "postLinks metadata distinguishes PostId as the source post and RelatedPostId as the related post, resolving that the requested related-post title belongs to RelatedPostId while the titled post is the link source. No other metadata refinement was needed."
+  "meta_review": "Link metadata distinguishes the source post from the related post, resolving that the titled post is the link source and the requested title belongs to the related post. No other metadata refinement was needed."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

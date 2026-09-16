@@ -372,12 +372,12 @@ Hint: age = SUBTRACT(year(current_timestamp), year(Birthday)); patient with two 
 Schema_links: [Patient.ID,Patient.Birthday,Laboratory.HCT,Laboratory.ID = Patient.ID,52,2]
 Result Contract:
 {
-  "population": "Patients who have more than two laboratory examinations (COUNT > 2 per evidence) in which the hematocrit level exceeded the normal range, i.e., HCT >= 52.",
+  "population": "Patients who have two or more laboratory examinations in which the hematocrit level exceeded the normal range, i.e., HCT >= 52.",
   "row_grain": "One row per qualifying patient.",
   "column_role": "The patient's ID and the patient's age.",
-  "derivation": "For each patient, count their laboratory examinations showing HCT >= 52 to test eligibility; age is derived as the current year minus the birth year.",
+  "derivation": "For each patient, count their laboratory examinations showing HCT >= 52 and require the count to be at least two; age is derived as the current year minus the birth year.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

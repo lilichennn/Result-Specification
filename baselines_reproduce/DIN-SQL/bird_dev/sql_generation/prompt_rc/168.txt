@@ -248,12 +248,12 @@ Hint: Female refers to gender = 'F'; Woman and female are closed; Average salary
 Schema_links: [client.client_id,client.gender,district.A11,disp.client_id = client.client_id,disp.account_id = account.account_id,account.district_id = district.district_id,'F',10000]
 Result Contract:
 {
-  "population": "Clients who opened their account in a district whose average salary (A11) is over 10000; the salary threshold qualifies the district where the account was opened, not the client.",
+  "population": "Clients associated with a district whose average salary (A11) is over 10000; the salary threshold qualifies the district, not the client.",
   "row_grain": "One global summary row covering the entire eligible client population.",
   "column_role": "The percentage of eligible clients who are women.",
   "derivation": "The count of eligible clients who are women (gender = 'F') divided by the total count of eligible clients, expressed as a percentage.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

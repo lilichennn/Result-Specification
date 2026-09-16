@@ -285,12 +285,12 @@ Hint: fastest lap refers to MIN(time)
 Schema_links: [lapTimes.position,lapTimes.time,drivers.forename,drivers.surname,lapTimes.driverId = drivers.driverId,'Lewis','Hamilton']
 Result Contract:
 {
-  "population": "Circuits where Lewis Hamilton recorded at least one lap in a Formula 1 race; only Hamilton's laps set in Formula 1 races contribute to each circuit's fastest-lap time.",
-  "row_grain": "One row per circuit.",
-  "column_role": "The circuit's identity and its position (rank) determined by Hamilton's fastest lap at that circuit.",
-  "derivation": "For each circuit, Hamilton's fastest lap is the minimum lap time (MIN(time)) across his Formula 1 race laps at that circuit, and the position is the circuit's rank among all eligible circuits by that minimum time, with the lowest (fastest) time ranked first.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Lewis Hamilton's Formula 1 lap-time records.",
+  "row_grain": "A single row for the fastest selected lap-time record.",
+  "column_role": "Only the position value associated with the selected lap; no circuit identity or lap time is returned.",
+  "derivation": "The position is taken directly from the selected lap-time record, which is chosen as the record with the smallest time.",
+  "filter_policy": "Choose the single fastest lap overall by smallest time; no grouping or circuit-level ranking is applied.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,11 +182,11 @@ Hint: October 2013 refers to 201310 in the yearmonth.date
 Schema_links: [customers.CustomerID,customers.Segment,customers.Currency,yearmonth.Consumption,yearmonth.Date,yearmonth.CustomerID = customers.CustomerID,LAM,EUR,201310]
 Result Contract:
 {
-  "population": "Customers whose customer segment is LAM and whose currency is the Euro.",
+  "population": "Customers whose customer segment is LAM, whose currency is the Euro, and who have at least one consumption record for October 2013.",
   "row_grain": "One customer, namely the single customer selected as the answer.",
   "column_role": "The customer identifier of the qualifying customer, as requested by 'which customer'.",
-  "derivation": "Each eligible customer's October 2013 consumption is taken from yearmonth.Consumption for records associated with that customer and Date = '201310'.",
-  "filter_policy": "Argmax: return the customer with the highest October 2013 consumption; tie handling is not specified.",
+  "derivation": "Each eligible customer's October 2013 consumption is computed as the sum of that customer's consumption values for records dated 201310.",
+  "filter_policy": "Argmax: return the customer with the highest total October 2013 consumption; tie handling is not specified.",
   "meta_review": "Metadata places client segment and currency on customers and identifies CustomerID as customer identification. It also records consumption in yearmonth.Consumption by CustomerID and Date, resolving the October 2013 consumption metric."
 }
 

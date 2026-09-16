@@ -361,12 +361,12 @@ Hint: only champion's finished time is represented by 'HH:MM:SS.mmm'; finished t
 Schema_links: [races.year,results.time,results.position,results.raceId = races.raceId,1,1975]
 Result Contract:
 {
-  "population": "Champions who finished the game (finished time is not null) in years with year < 1975.",
+  "population": "Race champions who finished the game (finished time is not null) in years with year < 1975.",
   "row_grain": "One row per year.",
   "column_role": "The year, and the average champion finished time in seconds for that year.",
-  "derivation": "For each year, average the qualifying champions' finished times (represented as 'HH:MM:SS.mmm') expressed in seconds.",
-  "filter_policy": "none",
-  "meta_review": "Metadata confirms results.time records a non-null finish time and that only the champion's time is the full finish-time representation, validating the population and seconds conversion."
+  "derivation": "For each year, average the qualifying race champions' finished times after converting each recorded finish time to seconds.",
+  "filter_policy": "Retain only years whose average champion finished time in seconds is not null.",
+  "meta_review": "Metadata confirms that a non-null recorded time indicates a finish and that only the champion's recorded time is the full finish-time representation used for conversion to seconds."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

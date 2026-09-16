@@ -263,12 +263,12 @@ Hint: TR010 is the molecule id; majority of the bond found refers to MAX(COUNT(b
 Schema_links: [bond.bond_type,molecule.label,bond.molecule_id = molecule.molecule_id,molecule.molecule_id,TR010]
 Result Contract:
 {
-  "population": "Bonds found in the molecule whose molecule id is TR010; the molecule TR010 itself is the entity whose carcinogenicity is reported.",
-  "row_grain": "One summary row for molecule TR010.",
-  "column_role": "The bond type that accounts for the majority of TR010's bonds, and a value stating whether or not molecule TR010 is carcinogenic, represented by the molecule's carcinogenicity label.",
-  "derivation": "For each bond type, count the bonds of that type within molecule TR010; retrieve the carcinogenicity label for molecule TR010.",
-  "filter_policy": "Retain the bond type with the maximum bond count (argmax over bond types by their count within TR010).",
-  "meta_review": "Metadata identifies molecule.label as the carcinogenicity attribute of a molecule, distinguishing it from molecule_id. The contract therefore reports TR010's carcinogenicity from molecule.label while keeping bond majority based on bond.bond_type counts."
+  "population": "Bond types present among the bonds belonging to molecule TR010.",
+  "row_grain": "One row for the selected majority bond type within molecule TR010.",
+  "column_role": "The bond type that accounts for the largest number of bonds in molecule TR010.",
+  "derivation": "The returned bond type is chosen by counting the bonds of each bond type within molecule TR010 and taking the type with the largest count.",
+  "filter_policy": "Retain the bond type with the maximum bond count within molecule TR010.",
+  "meta_review": "The molecule's carcinogenicity is not part of the returned result; the result reports only the majority bond type."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

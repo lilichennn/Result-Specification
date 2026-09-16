@@ -296,12 +296,12 @@ Hint: Hematoclit is normal refers to 29 < N < 52; highest anti-Cardiolipin antib
 Schema_links: [Laboratory.HCT,Examination.aCL IgA,Patient.ID,Examination.ID = Patient.ID,Laboratory.ID = Patient.ID,29,52]
 Result Contract:
 {
-  "population": "Patients whose Hematocrit level is not normal, i.e., Hematocrit falls outside the exclusive normal range 29 < N < 52 (Hematocrit ≤ 29 or ≥ 52).",
+  "population": "Patients whose Hematocrit level is not normal, i.e., Hematocrit ≤ 29 or ≥ 52, and who have an associated aCL IgA anti-Cardiolipin antibody concentration.",
   "row_grain": "One patient.",
   "column_role": "The patient's ID.",
   "derivation": "none",
-  "filter_policy": "Select the single patient with the highest anti-Cardiolipin antibody concentration, where that concentration is defined as the aCL IgA value (argmax over aCL IgA).",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Select one patient with the highest anti-Cardiolipin antibody concentration, using the aCL IgA value as the concentration; if several patients tie, any one of them may be selected.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

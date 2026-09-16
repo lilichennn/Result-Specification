@@ -183,17 +183,16 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table major, columns = [*,major_id,major_name]
-Table member, columns = [*,member_id,position,link_to_major]
+Table member, columns = [*,position,link_to_major]
 Foreign_keys = [member.link_to_major = major.major_id]
 Sample rows from major (columns: ["major_id", "major_name"]):
 [["rec06DF6vZ1CyPKpc", "Outdoor Product Design and Development"], ["rec09LedkREyskCNv", "Agricultural Communication"], ["rec0Eanv576RhQllI", "Fisheries and Aquatic Sciences"]]
 Column descriptions and value descriptions for major:
 Column major_id: column description -> A unique identifier for each major, value description -> 
 Column major_name: column description -> major name, value description -> 
-Sample rows from member (columns: ["member_id", "position", "link_to_major"]):
-[["rec1x5zBFIqoOuPW8", "Member", "recxK3MHQFbR9J5uO"], ["rec280Sk7o31iG0Tx", "Member", "rec7BxKpjJ7bNph3O"], ["rec28ORZgcm1dtqBZ", "Member", "recdIBgeU38UbV2sy"]]
+Sample rows from member (columns: ["position", "link_to_major"]):
+[["Member", "recxK3MHQFbR9J5uO"], ["Member", "rec7BxKpjJ7bNph3O"], ["Member", "recdIBgeU38UbV2sy"]]
 Column descriptions and value descriptions for member:
-Column member_id: column description -> unique id of member, value description -> 
 Column position: column description -> The position the member holds in the club, value description -> 
 Column link_to_major: column description -> The unique identifier of the major of the member. References the Major table, value description -> 
 

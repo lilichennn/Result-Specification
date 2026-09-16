@@ -1,0 +1,169 @@
+[SYSTEM]
+
+For the given question, use the provided tables, columns, foreign keys, and primary keys to fix the given SQLite SQL QUERY for any issues. If there are any problems, fix them. If there are no issues, return the SQLite SQL QUERY as is.
+Hint helps you to write the correct sqlite SQL query.
+Use the following instructions for fixing the sqlite SQL query:
+1) Avoid redundant columns in SELECT clause, all of the columns should be mentioned in the question.
+2) Pay attention to the columns that are used for the JOIN by checking the Foreign keys.
+3) Pay attention to the columns that are used for the WHERE statement.
+4) Pay attention to the columns that are used for the GROUP BY statement.
+5) Pay attention to the columns that are used for the ORDER BY statement.
+6) check that all of the columns exist in the table and there are no typos.
+7) Use CAST when is needed.
+8) USE CASE WHEN is needed.
+###
+Few examples of this task are:
+###
+Schema of the database with sample rows and column descriptions:
+#
+CREATE TABLE movies (
+        movie_id INTEGER NOT NULL, 
+        movie_title TEXT, 
+        movie_release_year INTEGER, 
+        movie_url TEXT, 
+        movie_title_language TEXT, 
+        movie_popularity INTEGER, 
+        movie_image_url TEXT, 
+        director_id TEXT, 
+        director_name TEXT, 
+        director_url TEXT, 
+        PRIMARY KEY (movie_id)
+)
+
+/*
+3 rows from movies table:
+movie_id        movie_title     movie_release_year      movie_url       movie_title_language    movie_popularity        movie_image_url director_id     director_namedirector_url
+1       La Antena       2007    http://mubi.com/films/la-antena en      105     https://images.mubicdn.net/images/film/1/cache-7927-1581389497/image-w1280.jpg  131  Esteban Sapir    http://mubi.com/cast/esteban-sapir
+2       Elementary Particles    2006    http://mubi.com/films/elementary-particles      en      23      https://images.mubicdn.net/images/film/2/cache-512179-1581389841/image-w1280.jpg      73      Oskar Roehler   http://mubi.com/cast/oskar-roehler
+3       It's Winter     2006    http://mubi.com/films/its-winter        en      21      https://images.mubicdn.net/images/film/3/cache-7929-1481539519/image-w1280.jpg82      Rafi Pitts      http://mubi.com/cast/rafi-pitts
+*/
+
+Table: movies
+Column movie_id: column description -> ID related to the movie on Mubi
+Column movie_title: column description -> Name of the movie
+Column movie_release_year: column description -> Release year of the movie
+Column movie_url: column description -> URL to the movie page on Mubi
+Column movie_title_language: column description -> By default, the title is in English., value description -> Only contains one value which is 'en'
+Column movie_popularity: column description -> Number of Mubi users who love this movie
+Column movie_image_url: column description -> Image URL to the movie on Mubi
+Column director_id: column description -> ID related to the movie director on Mubi
+Column director_name: column description -> Full Name of the movie director
+Column director_url : column description -> URL to the movie director page on Mubi
+#
+Q: Name movie titles released in year 1945. Sort the listing by the descending order of movie popularity.
+Hint: released in the year 1945 refers to movie_release_year = 1945;
+SQL: SELECT movie_title, movie_popularity FROM movies WHERE movie_release_year = 1945/01/01 ORDER BY movie_popularity DESC LIMIT 1
+A: Let's think step by step to find the correct answer.
+1) The column movie_popularity is not mentioned in the question so it's redundant.
+2) JOIN is not required as there is no need to join any tables.
+3) The condition movie_release_year = 1945/01/01 is not correct. The correct condition is movie_release_year = 1945.
+4) GROUP BY is not required as there is no need to group any columns.
+5) The ORDER BY clause is correct.
+6) all columns are correct and there are no typo errors.
+7) CAST is not required as there is no need to cast any columns.
+8) CASE is not required as there is no need to use CASE.
+So, the final sqlite SQL query answer to the question the given question is =
+Revised_SQL: SELECT movie_title FROM movies WHERE movie_release_year = 1945 ORDER BY movie_popularity DESC LIMIT 1
+
+
+[USER]
+
+Evaluate the correctness of this query for the given question.
+Hint helps you to write the correct SQL query.
+Correct it if there are any issues. If there are no issues, return the SQLite SQL QUERY as is.
+Schema of the database with sample rows and column descriptions:
+#
+Table alignment, columns = [*,id,alignment]
+Table attribute, columns = [*,id,attribute_name]
+Table colour, columns = [*,id,colour]
+Table gender, columns = [*,id,gender]
+Table hero_attribute, columns = [*,hero_id,attribute_id,attribute_value]
+Table hero_power, columns = [*,hero_id,power_id]
+Table publisher, columns = [*,id,publisher_name]
+Table race, columns = [*,id,race]
+Table superhero, columns = [*,id,superhero_name,full_name,gender_id,eye_colour_id,hair_colour_id,skin_colour_id,race_id,publisher_id,alignment_id,height_cm,weight_kg]
+Table superpower, columns = [*,id,power_name]
+Foreign_keys = [hero_attribute.hero_id = superhero.id,hero_attribute.attribute_id = attribute.id,hero_power.power_id = superpower.id,hero_power.hero_id = superhero.id,superhero.skin_colour_id = colour.id,superhero.race_id = race.id,superhero.publisher_id = publisher.id,superhero.hair_colour_id = colour.id,superhero.gender_id = gender.id,superhero.eye_colour_id = colour.id,superhero.alignment_id = alignment.id]
+Sample rows from alignment (columns: ["id", "alignment"]):
+[[1, "Good"], [2, "Bad"], [3, "Neutral"]]
+Column descriptions and value descriptions for alignment:
+Column id: column description -> the unique identifier of the alignment, value description -> 
+Column alignment: column description -> the alignment of the superhero, value description -> commonsense evidence:
+Alignment refers to a character's moral and ethical stance and can be used to describe the overall attitude or behavior of a superhero. Some common alignments for superheroes include:
+Good: These superheroes are typically kind, selfless, and dedicated to protecting others and upholding justice. Examples of good alignments include Superman, Wonder Woman, and Spider-Man.
+Neutral: These superheroes may not always prioritize the greater good, but they are not necessarily evil either. They may act in their own self-interest or make decisions based on their own moral code. Examples of neutral alignments include the Hulk and Deadpool.
+	Bad: These superheroes are typically selfish, manipulative, and willing to harm others in pursuit of their own goals. Examples of evil alignments include Lex Luthor and the Joker.
+Sample rows from attribute (columns: ["id", "attribute_name"]):
+[[1, "Intelligence"], [2, "Strength"], [3, "Speed"]]
+Column descriptions and value descriptions for attribute:
+Column id: column description -> the unique identifier of the attribute, value description -> 
+Column attribute_name: column description -> the attribute, value description -> commonsense evidence:
+A superhero's attribute is a characteristic or quality that defines who they are and what they are capable of. This could be a physical trait, such as superhuman strength or the ability to fly, or a personal trait, such as extraordinary intelligence or exceptional bravery. 
+Sample rows from colour (columns: ["id", "colour"]):
+[[1, "No Colour"], [2, "Amber"], [3, "Auburn"]]
+Column descriptions and value descriptions for colour:
+Column id: column description -> the unique identifier of the color, value description -> 
+Column colour: column description -> the color of the superhero's skin/eye/hair/etc, value description -> 
+Sample rows from gender (columns: ["id", "gender"]):
+[[1, "Male"], [2, "Female"], [3, "N/A"]]
+Column descriptions and value descriptions for gender:
+Column id: column description -> the unique identifier of the gender, value description -> 
+Column gender: column description -> the gender of the superhero, value description -> 
+Sample rows from hero_attribute (columns: ["hero_id", "attribute_id", "attribute_value"]):
+[[1, 1, 80], [2, 1, 75], [3, 1, 95]]
+Column descriptions and value descriptions for hero_attribute:
+Column hero_id: column description -> the id of the hero
+Maps to superhero(id), value description -> 
+Column attribute_id: column description -> the id of the attribute
+Maps to attribute(id), value description -> 
+Column attribute_value: column description -> the attribute value, value description -> commonsense evidence:
+If a superhero has a higher attribute value on a particular attribute, it means that they are more skilled or powerful in that area compared to other superheroes. For example, if a superhero has a higher attribute value for strength, they may be able to lift heavier objects or deliver more powerful punches than other superheroes.
+Sample rows from hero_power (columns: ["hero_id", "power_id"]):
+[[1, 1], [1, 18], [1, 26]]
+Column descriptions and value descriptions for hero_power:
+Column hero_id: column description -> the id of the hero
+Maps to superhero(id), value description -> 
+Column power_id: column description -> the id of the power
+Maps to superpower(id), value description -> commonsense evidence:
+In general, a superhero's attributes provide the foundation for their abilities and help to define who they are, while their powers are the specific abilities that they use to fight crime and protect others.
+Sample rows from publisher (columns: ["id", "publisher_name"]):
+[[1, ""], [2, "ABC Studios"], [3, "Dark Horse Comics"]]
+Column descriptions and value descriptions for publisher:
+Column id: column description -> the unique identifier of the publisher, value description -> 
+Column publisher_name: column description -> the name of the publisher, value description -> 
+Sample rows from race (columns: ["id", "race"]):
+[[1, "-"], [2, "Alien"], [3, "Alpha"]]
+Column descriptions and value descriptions for race:
+Column id: column description -> the unique identifier of the race, value description -> 
+Column race: column description -> the race of the superhero, value description -> commonsense evidence:
+In the context of superheroes, a superhero's race would refer to the particular group of people that the superhero belongs to base on these physical characteristics
+Sample rows from superhero (columns: ["id", "superhero_name", "full_name", "gender_id", "eye_colour_id", "hair_colour_id", "skin_colour_id", "race_id", "publisher_id", "alignment_id", "height_cm", "weight_kg"]):
+[[1, "3-D Man", "Charles Chandler", 1, 9, 13, 1, 1, 13, 1, 188, 90], [2, "A-Bomb", "Richard Milhouse Jones", 1, 33, 1, 1, 24, 13, 1, 203, 441], [3, "Abe Sapien", "Abraham Sapien", 1, 7, 1, 7, 33, 3, 1, 191, 65]]
+Column descriptions and value descriptions for superhero:
+Column id: column description -> the unique identifier of the superhero, value description -> 
+Column superhero_name: column description -> the name of the superhero, value description -> 
+Column full_name: column description -> the full name of the superhero, value description -> commonsense evidence:
+The full name of a person typically consists of their given name, also known as their first name or personal name, and their surname, also known as their last name or family name. For example, if someone's given name is "John" and their surname is "Smith," their full name would be "John Smith."
+Column gender_id: column description -> the id of the superhero's gender, value description -> 
+Column eye_colour_id: column description -> the id of the superhero's eye color, value description -> 
+Column hair_colour_id: column description -> the id of the superhero's hair color, value description -> 
+Column skin_colour_id: column description -> the id of the superhero's skin color, value description -> 
+Column race_id: column description -> the id of the superhero's race, value description -> 
+Column publisher_id: column description -> the id of the publisher, value description -> 
+Column alignment_id: column description -> the id of the superhero's alignment, value description -> 
+Column height_cm: column description -> the height of the superhero, value description -> commonsense evidence:
+The unit of height is centimeter. If the height_cm is NULL or 0, it means the height of the superhero is missing. 
+Column weight_kg: column description -> the weight of the superhero, value description -> commonsense evidence:
+The unit of weight is kilogram. If the weight_kg is NULL or 0, it means the weight of the superhero is missing.
+Sample rows from superpower (columns: ["id", "power_name"]):
+[[1, "Agility"], [2, "Accelerated Healing"], [3, "Lantern Power Ring"]]
+Column descriptions and value descriptions for superpower:
+Column id: column description -> the unique identifier of the superpower, value description -> 
+Column power_name: column description -> the superpower name, value description -> 
+
+
+#
+Q: Provide the heights of the heroes whose eye colours are amber.
+Hint: heights of the heroes refers to height_cm; eye colours are amber refers to colour.colour = 'Amber' WHERE eye_colour_id = colour.id;
+SQL: SELECT T1.height_cm FROM superhero AS T1 INNER JOIN colour AS T2 ON T1.eye_colour_id = T2.id WHERE T2.colour = 'Amber'
+A: Let's think step by step to find the correct answer.

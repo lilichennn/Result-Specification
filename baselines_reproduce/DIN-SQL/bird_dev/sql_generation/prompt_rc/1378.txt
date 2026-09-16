@@ -299,12 +299,12 @@ Hint: highest amount of budget spend refers to MAX(spent)
 Schema_links: [budget.spent]
 Result Contract:
 {
-  "population": "All events with a budget spend amount.",
+  "population": "All budget entries with a recorded spend amount.",
   "row_grain": "One global summary row.",
   "column_role": "The highest budget spend amount.",
-  "derivation": "Take the maximum of the spent amounts recorded for event budget categories.",
+  "derivation": "Take the maximum of the spent amounts recorded for budget entries.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows budget.spent is the dollar amount spent for a budget category linked to an event, validating the use of MAX(spent) for the highest event-related budget spend."
+  "meta_review": "Metadata shows the spent amount is the dollar amount spent for a budget entry, validating the use of the maximum spent amount for the highest budget spend."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

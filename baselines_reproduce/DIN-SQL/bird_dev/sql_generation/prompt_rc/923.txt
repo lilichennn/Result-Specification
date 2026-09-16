@@ -286,8 +286,8 @@ Schema_links: [races.raceId,circuits.country,races.circuitId = circuits.circuitI
 Result Contract:
 {
   "population": "All Formula_1 races that took place on circuits whose country is Italy.",
-  "row_grain": "One global summary row for the entire set of qualifying races.",
-  "column_role": "A single value representing the number of qualifying races.",
+  "row_grain": "One global summary row for the entire set of eligible races.",
+  "column_role": "A single value representing the number of eligible races.",
   "derivation": "Count the races in the eligible population.",
   "filter_policy": "none",
   "meta_review": "Metadata establishes country as a circuit attribute and links races to circuits, resolving 'circuits in Italy' as the circuit's country."

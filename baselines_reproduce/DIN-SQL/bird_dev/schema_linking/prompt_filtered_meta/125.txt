@@ -184,8 +184,8 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id,district_id]
 Table client, columns = [*,client_id,district_id]
-Table disp, columns = [*,disp_id,client_id,account_id,type]
-Table district, columns = [*,district_id,A2,A3,A12,A13]
+Table disp, columns = [*,client_id,account_id,type]
+Table district, columns = [*,district_id,A12,A13]
 Table loan, columns = [*,loan_id,account_id,status]
 Foreign_keys = [account.district_id = district.district_id,client.district_id = district.district_id,disp.client_id = client.client_id,disp.account_id = account.account_id,loan.account_id = account.account_id]
 Sample rows from account (columns: ["account_id", "district_id"]):
@@ -198,21 +198,18 @@ Sample rows from client (columns: ["client_id", "district_id"]):
 Column descriptions and value descriptions for client:
 Column client_id: column description -> the unique number, value description -> 
 Column district_id: column description -> location of branch, value description -> 
-Sample rows from disp (columns: ["disp_id", "client_id", "account_id", "type"]):
-[[1, 1, 1, "OWNER"], [2, 2, 2, "OWNER"], [3, 3, 2, "DISPONENT"]]
+Sample rows from disp (columns: ["client_id", "account_id", "type"]):
+[[1, 1, "OWNER"], [2, 2, "OWNER"], [3, 2, "DISPONENT"]]
 Column descriptions and value descriptions for disp:
-Column disp_id: column description -> unique number of identifying this row of record, value description -> 
 Column client_id: column description -> id number of client, value description -> 
 Column account_id: column description -> id number of account, value description -> 
 Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
 commonsense evidence:
 the account can only have the right to issue permanent orders or apply for loans
-Sample rows from district (columns: ["district_id", "A2", "A3", "A12", "A13"]):
-[[1, "Hl.m. Praha", "Prague", 0.2, 0.43], [2, "Benesov", "central Bohemia", 1.6, 1.85], [3, "Beroun", "central Bohemia", 1.9, 2.21]]
+Sample rows from district (columns: ["district_id", "A12", "A13"]):
+[[1, 0.2, 0.43], [2, 1.6, 1.85], [3, 1.9, 2.21]]
 Column descriptions and value descriptions for district:
 Column district_id: column description -> location of branch, value description -> 
-Column A2: column description -> district_name, value description -> 
-Column A3: column description -> region, value description -> 
 Column A12: column description -> unemployment rate 1995, value description -> 
 Column A13: column description -> unemployment rate 1996, value description -> 
 Sample rows from loan (columns: ["loan_id", "account_id", "status"]):

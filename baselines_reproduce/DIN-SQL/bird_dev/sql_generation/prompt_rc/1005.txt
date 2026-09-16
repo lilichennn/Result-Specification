@@ -355,11 +355,11 @@ Schema_links: [pitStops.duration]
 Result Contract:
 {
   "population": "All pit stop records are eligible; no membership conditions restrict which pit stops contribute.",
-  "row_grain": "One global summary row representing the single longest pit stop duration across all pit stops.",
+  "row_grain": "One result row containing the duration from the longest pit stop.",
   "column_role": "The value of the longest pit stop duration.",
-  "derivation": "Take the maximum of the pit stop duration over all pit stop records, as clarified by MAX(duration).",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "derivation": "The output is the stored duration value from the pit stop ranked first by duration from longest to shortest.",
+  "filter_policy": "Rank pit stops by duration in descending order and keep only the top-ranked row.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

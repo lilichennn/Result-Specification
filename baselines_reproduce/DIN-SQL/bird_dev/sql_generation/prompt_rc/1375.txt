@@ -232,10 +232,10 @@ Result Contract:
 {
   "population": "All members whose major is offered by the department named \"School of Applied Sciences, Technology and Education\".",
   "row_grain": "One row per member of that department.",
-  "column_role": "The member's full name, consisting of first name and last name.",
-  "derivation": "The full name output value is composed from the member's first name and last name.",
+  "column_role": "The member's full name, represented as separate first and last name components.",
+  "derivation": "The returned name components are stored per-member first and last name values, not an aggregate or single combined computed value.",
   "filter_policy": "none",
-  "meta_review": "Metadata shows member.link_to_major references major.department, so department membership is resolved through the member's major rather than a direct member department field. No other Round-1 semantics changed."
+  "meta_review": "Department membership is resolved through the member's linked major, using the major's department, rather than a direct member department field. No other Round-1 semantics changed."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

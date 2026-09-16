@@ -185,7 +185,7 @@ Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id]
 Table card, columns = [*,card_id,disp_id,issued]
 Table client, columns = [*,client_id]
-Table disp, columns = [*,disp_id,client_id,account_id,type]
+Table disp, columns = [*,disp_id,client_id,account_id]
 Table trans, columns = [*,trans_id,account_id,amount]
 Foreign_keys = [card.disp_id = disp.disp_id,disp.client_id = client.client_id,disp.account_id = account.account_id,trans.account_id = account.account_id]
 Sample rows from account (columns: ["account_id"]):
@@ -202,15 +202,12 @@ Sample rows from client (columns: ["client_id"]):
 [[1], [2], [3]]
 Column descriptions and value descriptions for client:
 Column client_id: column description -> the unique number, value description -> 
-Sample rows from disp (columns: ["disp_id", "client_id", "account_id", "type"]):
-[[1, 1, 1, "OWNER"], [2, 2, 2, "OWNER"], [3, 3, 2, "DISPONENT"]]
+Sample rows from disp (columns: ["disp_id", "client_id", "account_id"]):
+[[1, 1, 1], [2, 2, 2], [3, 3, 2]]
 Column descriptions and value descriptions for disp:
 Column disp_id: column description -> unique number of identifying this row of record, value description -> 
 Column client_id: column description -> id number of client, value description -> 
 Column account_id: column description -> id number of account, value description -> 
-Column type: column description -> type of disposition, value description -> "OWNER" : "USER" : "DISPONENT"
-commonsense evidence:
-the account can only have the right to issue permanent orders or apply for loans
 Sample rows from trans (columns: ["trans_id", "account_id", "amount"]):
 [[1, 1, 1000], [5, 1, 3679], [6, 1, 3679]]
 Column descriptions and value descriptions for trans:

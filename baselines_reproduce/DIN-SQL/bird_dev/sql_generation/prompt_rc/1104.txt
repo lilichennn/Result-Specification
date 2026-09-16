@@ -415,12 +415,12 @@ Hint: Francesco Parravicini refers to player_name = 'Francesco Parravicini'; on 
 Schema_links: [Player_Attributes.potential,Player.player_name,Player_Attributes.date,Player_Attributes.player_api_id = Player.player_api_id,'Francesco Parravicini','2010-08-30 00:00:00']
 Result Contract:
 {
-  "population": "Player attribute records belonging to the player named 'Francesco Parravicini' and dated '2010-08-30 00:00:00'.",
-  "row_grain": "One player attribute observation for Francesco Parravicini on the specified date.",
+  "population": "Player attribute records belonging to the player named 'Francesco Parravicini' whose date falls on 2010-08-30.",
+  "row_grain": "One row for each matching player attribute observation for Francesco Parravicini on that date.",
   "column_role": "The potential rating value of the player on that date.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The temporal condition is calendar-date scope rather than an exact timestamp."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

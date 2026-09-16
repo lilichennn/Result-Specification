@@ -285,12 +285,12 @@ Hint: Alex Yoong refers to the full name of the driver; Full name of the driver 
 Schema_links: [races.name,drivers.forename,drivers.surname,results.position,results.driverId = drivers.driverId,results.raceId = races.raceId,'Alex','Yoong',20]
 Result Contract:
 {
-  "population": "All race participation records of the driver whose full name (forename and surname) is Alex Yoong where his race result position is less than 20.",
-  "row_grain": "One race in which Alex Yoong competed with a race result position less than 20.",
+  "population": "Race events associated with a driver standing record for the driver whose full name is Alex Yoong, where the driver's standing position is less than 20.",
+  "row_grain": "One race event corresponding to a qualifying driver standing record for Alex Yoong with standing position less than 20.",
   "column_role": "The name of the race.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes results.position as the finishing position for a driver's race result, resolving the track-number condition to race results. Metadata also identifies races.name as the race label, resolving the requested race output to the race name."
+  "meta_review": "Metadata resolves the track-number condition to the driver's standing position rather than a race-result finishing position, and identifies the race label as the requested race name."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

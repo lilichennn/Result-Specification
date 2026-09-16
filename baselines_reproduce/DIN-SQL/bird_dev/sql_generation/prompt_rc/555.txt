@@ -251,12 +251,12 @@ Hint: "csgillespie" is the DisplayName of user; average score refers to AVG(Scor
 Schema_links: [posts.Score,users.DisplayName,posts.OwnerUserId = users.Id,csgillespie]
 Result Contract:
 {
-  "population": "All posts owned by the user whose DisplayName is \"csgillespie\".",
+  "population": "All posts owned by a user whose display name is \"csgillespie\".",
   "row_grain": "One global summary across all qualifying posts.",
   "column_role": "The average score value of the qualifying posts.",
-  "derivation": "Compute the average (AVG) of the Score metric over the posts in the eligible population.",
+  "derivation": "Compute the average of the post score over the posts in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms posts.Score is the post-level score and users.DisplayName is the user display name, validating the Round-1 metric and user filter."
+  "meta_review": "Metadata confirms the post-level score and user display name attributes, validating the metric and user filter."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

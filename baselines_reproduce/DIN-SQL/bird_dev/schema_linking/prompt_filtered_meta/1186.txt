@@ -183,19 +183,12 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table Examination, columns = [*,ID,Examination Date,Diagnosis]
-Table Patient, columns = [*,ID,Description,Diagnosis]
-Foreign_keys = [Examination.ID = Patient.ID]
+Foreign_keys = []
 Sample rows from Examination (columns: ["ID", "Examination Date", "Diagnosis"]):
 [[14872, "1997-05-27", "MCTD, AMI"], [48473, "1992-12-21", "SLE"], [102490, "1995-04-20", "PSS"]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
 Column Examination Date: column description -> Examination Date, value description -> 
-Column Diagnosis: column description -> disease names, value description -> 
-Sample rows from Patient (columns: ["ID", "Description", "Diagnosis"]):
-[[2110, "1994-02-14", "RA susp."], [11408, "1996-12-01", "PSS"], [12052, "1991-08-13", "SLE"]]
-Column descriptions and value descriptions for Patient:
-Column ID: column description -> identification of the patient, value description -> 
-Column Description: column description -> the first date when a patient data was recorded, value description -> null or empty: not recorded
 Column Diagnosis: column description -> disease names, value description -> 
 
 Q: Lists all patients by ID who were diagnosed with Behcet's and had their exams between 01/01/197 and 12/31/1997.

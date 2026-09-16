@@ -225,7 +225,7 @@ Hint: which superhero refers to superhero_name; the same eyes, hair and skin col
 Schema_links: [superhero.superhero_name,publisher.publisher_name,superhero.eye_colour_id,superhero.hair_colour_id,superhero.skin_colour_id,superhero.publisher_id = publisher.id]
 Result Contract:
 {
-  "population": "All superheroes whose eye colour, hair colour, and skin colour are all the same, i.e., hair_colour_id = skin_colour_id AND hair_colour_id = eye_colour_id.",
+  "population": "All superheroes whose eye colour, hair colour, and skin colour are all the same, i.e., hair_colour_id = skin_colour_id AND hair_colour_id = eye_colour_id, and who have an associated publisher.",
   "row_grain": "One row per qualifying superhero.",
   "column_role": "The superhero's name (superhero_name) and the superhero's publisher name (publisher_name).",
   "derivation": "none",

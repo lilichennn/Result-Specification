@@ -183,22 +183,14 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table drivers, columns = [*,driverId,dob]
-Table lapTimes, columns = [*,raceId,driverId,lap]
 Table races, columns = [*,raceId,year]
 Table results, columns = [*,resultId,raceId,driverId,laps]
-Table seasons, columns = [*,year]
-Foreign_keys = [lapTimes.driverId = drivers.driverId,lapTimes.raceId = races.raceId,races.year = seasons.year,results.driverId = drivers.driverId,results.raceId = races.raceId]
+Foreign_keys = [results.driverId = drivers.driverId,results.raceId = races.raceId]
 Sample rows from drivers (columns: ["driverId", "dob"]):
 [[1, "1985-01-07"], [2, "1977-05-10"], [3, "1985-06-27"]]
 Column descriptions and value descriptions for drivers:
 Column driverId: column description -> , value description -> 
 Column dob: column description -> , value description -> 
-Sample rows from lapTimes (columns: ["raceId", "driverId", "lap"]):
-[[1, 1, 1], [1, 1, 2], [1, 1, 3]]
-Column descriptions and value descriptions for lapTimes:
-Column raceId: column description -> , value description -> 
-Column driverId: column description -> , value description -> 
-Column lap: column description -> , value description -> 
 Sample rows from races (columns: ["raceId", "year"]):
 [[1, 2009], [2, 2009], [3, 2009]]
 Column descriptions and value descriptions for races:
@@ -211,10 +203,6 @@ Column resultId: column description -> the unique identification number identify
 Column raceId: column description -> the identification number identifying the race , value description -> 
 Column driverId: column description -> , value description -> 
 Column laps: column description -> , value description -> 
-Sample rows from seasons (columns: ["year"]):
-[[1950], [1951], [1952]]
-Column descriptions and value descriptions for seasons:
-Column year: column description -> , value description -> 
 
 Q: From 2000 to 2005, what percentage of drivers who were born before 1985 and the lap numbers were over 50?
 Hint: born before 1985 refers to year(dob)<1985; in 2000 to 2005 refers to year between 2000 and 2005; percentage = Divide(COUNT(driverId where year (dob) <1985 and laps >50),COUNT(DriverID where year between 2000 and 2005) *100;

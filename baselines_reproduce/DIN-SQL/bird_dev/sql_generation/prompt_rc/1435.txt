@@ -299,8 +299,8 @@ Hint: name of events refers event_name; game event that was closed refers to typ
 Schema_links: [event.event_name,event.type,event.status,event.event_date,Game,Closed,2019-03-15,2020-03-20]
 Result Contract:
 {
-  "population": "All events with type = 'Game' and status = 'Closed' whose event_date, ignoring any time-of-day component, falls between '2019-03-15' and '2020-03-20', inclusive.",
-  "row_grain": "One row per qualifying closed game event.",
+  "population": "Event names of events with type = 'Game' and status = 'Closed' whose event date, ignoring any time-of-day component, falls between '2019-03-15' and '2020-03-20', inclusive.",
+  "row_grain": "One row per distinct event name among qualifying closed game events.",
   "column_role": "The name of the event (event_name).",
   "derivation": "none",
   "filter_policy": "none",

@@ -296,12 +296,12 @@ Hint: uric acid within a normal range refers to UA > 8.0 and SEX = 'M'OR UA > 6.
 Schema_links: [Patient.ID,Laboratory.UA,Patient.SEX,Laboratory.ID = Patient.ID,57266,M,F,8.0,6.5]
 Result Contract:
 {
-  "population": "The single patient identified by patient number 57266.",
-  "row_grain": "One row representing the determination for that single patient.",
-  "column_role": "A value indicating whether the patient's uric acid is within the normal range (a yes/no determination).",
-  "derivation": "Evaluate the patient's uric acid against the sex-dependent normal-range condition: UA > 8.0 when the patient's sex is male, or UA > 6.5 when the patient's sex is female.",
+  "population": "The laboratory result(s) associated with the patient identified by patient number 57266.",
+  "row_grain": "One row per associated laboratory result for that patient.",
+  "column_role": "A Boolean value indicating whether the uric acid value in that result is within the normal range.",
+  "derivation": "Return true when the patient is female and the uric acid value is greater than 6.5, or when the patient is male and the uric acid value is greater than 8.0; otherwise return false.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

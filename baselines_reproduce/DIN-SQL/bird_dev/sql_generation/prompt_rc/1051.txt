@@ -491,12 +491,12 @@ Hint: potential score refers to potential; highest potential score refers to MAX
 Schema_links: [Player.player_name,Player_Attributes.potential,Player_Attributes.player_api_id = Player.player_api_id]
 Result Contract:
 {
-  "population": "All football players are eligible; no Boolean membership condition restricts the set.",
-  "row_grain": "One row per football player who attains the highest potential score.",
-  "column_role": "The identity of the football player.",
+  "population": "Football players with at least one recorded potential score are eligible; no other Boolean membership condition restricts the set.",
+  "row_grain": "One row per distinct football player name attaining the highest potential score.",
+  "column_role": "The identity of the football player, expressed as the player name.",
   "derivation": "none",
-  "filter_policy": "Argmax selection: retain every player whose potential equals the maximum potential across all football players, keeping all tied players.",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "filter_policy": "Argmax selection: retain every distinct player name associated with a potential score equal to the maximum potential score among all recorded potential scores, keeping all tied names.",
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: the first refers to min(year);
 Schema_links: [circuits.country,circuits.name,circuits.location,races.year,races.name,races.circuitId = circuits.circuitId,European Grand Prix]
 Result Contract:
 {
-  "population": "All race events whose race name is the European Grand Prix.",
+  "population": "All race events whose race_name is the European Grand Prix.",
   "row_grain": "One European Grand Prix race event.",
-  "column_role": "The host circuit's country, full circuit name, and location.",
+  "column_role": "The host circuit's country and location.",
   "derivation": "none",
   "filter_policy": "Select the single race event named European Grand Prix with the minimum year (the earliest one).",
-  "meta_review": "Metadata establishes that the race name identifies a European Grand Prix and that country, circuit name, and location are attributes of the host circuit. This resolves the requested outputs to circuit properties rather than race-level fields."
+  "meta_review": "Metadata establishes that the race name identifies a European Grand Prix and that country and location are attributes of the host circuit. This resolves the returned values to circuit properties for the selected earliest race."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -182,14 +182,13 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table Examination, columns = [*,ID,Examination Date,Diagnosis,Symptoms]
+Table Examination, columns = [*,ID,Diagnosis,Symptoms]
 Table Patient, columns = [*,ID,Birthday,Diagnosis]
 Foreign_keys = [Examination.ID = Patient.ID]
-Sample rows from Examination (columns: ["ID", "Examination Date", "Diagnosis", "Symptoms"]):
-[[14872, "1997-05-27", "MCTD, AMI", "AMI"], [48473, "1992-12-21", "SLE", null], [102490, "1995-04-20", "PSS", null]]
+Sample rows from Examination (columns: ["ID", "Diagnosis", "Symptoms"]):
+[[14872, "MCTD, AMI", "AMI"], [48473, "SLE", null], [102490, "PSS", null]]
 Column descriptions and value descriptions for Examination:
 Column ID: column description -> identification of the patient, value description -> 
-Column Examination Date: column description -> Examination Date, value description -> 
 Column Diagnosis: column description -> disease names, value description -> 
 Column Symptoms: column description -> other symptoms observed, value description -> 
 Sample rows from Patient (columns: ["ID", "Birthday", "Diagnosis"]):

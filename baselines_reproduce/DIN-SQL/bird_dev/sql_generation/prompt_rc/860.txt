@@ -285,12 +285,12 @@ Hint: race number refers to raceId;
 Schema_links: [qualifying.q2,qualifying.raceId,drivers.nationality,qualifying.driverId = drivers.driverId,0:01:40,355]
 Result Contract:
 {
-  "population": "Drivers who have a qualifying record in race No. 355 (raceId = 355) with a Q2 time equal to 0:01:40.",
-  "row_grain": "One driver matching the qualifying time condition in race No. 355.",
-  "column_role": "The driver's nationality.",
+  "population": "Drivers with a qualifying record in race No. 355 whose Q2 time starts with 1:40.",
+  "row_grain": "One row per distinct nationality of the matching drivers.",
+  "column_role": "The nationality of the matching driver or drivers.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

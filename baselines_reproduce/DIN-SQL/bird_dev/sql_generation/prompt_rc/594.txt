@@ -251,12 +251,12 @@ Hint:
 Schema_links: [users.DisplayName,users.Reputation,posts.Id,posts.OwnerUserId = users.Id,1]
 Result Contract:
 {
-  "population": "The user who created the post with ID 1; the only membership condition is that the post's ID equals 1.",
-  "row_grain": "One user, namely the creator of post ID 1.",
-  "column_role": "The identity of the user who created post ID 1 and that user's reputation value.",
+  "population": "Users returned through their association with a comment on post ID 1; a user qualifies when they are the user attached to such a comment.",
+  "row_grain": "One row for each qualifying comment-user association, so a user may appear more than once.",
+  "column_role": "The user's identifier and that user's reputation value.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The result is not guaranteed to identify a single unique user; duplicate user rows may occur."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

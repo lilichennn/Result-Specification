@@ -304,7 +304,7 @@ Result Contract:
   "column_role": "The total expense amount for 2019-08-20.",
   "derivation": "Sum the cost values across all eligible expense records dated 2019-08-20.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -285,12 +285,12 @@ Hint: lap time less than 02:00.00 refers to seconds < 120;
 Schema_links: [drivers.nationality,lapTimes.milliseconds,lapTimes.driverId = drivers.driverId,French,120000]
 Result Contract:
 {
-  "population": "Drivers who are French and who have obtained at least one lap time less than 02:00.00 (i.e., lap time in seconds < 120).",
-  "row_grain": "One global summary row for the entire qualifying driver population.",
-  "column_role": "The count of qualifying French drivers.",
-  "derivation": "Count the drivers in the eligible population.",
+  "population": "Lap-time performances by French drivers with a lap time less than 02:00.00 (i.e., seconds < 120).",
+  "row_grain": "One global summary row for the qualifying lap-time population.",
+  "column_role": "The count of qualifying lap-time performances by French drivers.",
+  "derivation": "Count the qualifying lap-time performances, without deduplicating by driver.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "No relevant metadata refinement."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -187,12 +187,12 @@ Hint: bond ID of atom 45 refers to SUBSTR(atom_id, 7, 2) + 0 = 45; double bond r
 Schema_links: [bond.bond_type,connected.bond_id,connected.atom_id,connected.bond_id = bond.bond_id,45]
 Result Contract:
 {
-  "population": "Bond records whose atom_id, representing the first atom in the connection, has the designated numeric portion equal to 45, i.e., SUBSTR(atom_id, 7, 2) + 0 = 45.",
+  "population": "Bond records linked to a bond connection whose first atom identifier has the two-character segment beginning at the seventh character equal to '45'.",
   "row_grain": "One row per qualifying bond.",
   "column_role": "The bond type and the bond ID of each qualifying bond.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes that connected.atom_id identifies the first atom in a bond connection, so the evidence's atom_id condition scopes the result to that atom identifier rather than atom_id2."
+  "meta_review": "Metadata establishes that the atom condition is scoped to the first atom identifier in a bond connection rather than to any secondary atom identifier."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

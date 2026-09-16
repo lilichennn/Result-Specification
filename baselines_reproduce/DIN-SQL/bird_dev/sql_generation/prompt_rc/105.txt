@@ -248,10 +248,10 @@ Hint:
 Schema_links: [account.district_id,loan.date,loan.account_id = account.account_id,1994-08-25]
 Result Contract:
 {
-  "population": "Loans whose approval date is 1994-08-25, together with the account each such loan belongs to.",
-  "row_grain": "One row per account associated with a loan approved on 1994-08-25.",
-  "column_role": "The district identifier of the branch where the account was opened.",
-  "derivation": "Follow the qualifying loan to its associated account and then to the branch where that account was opened to obtain that branch's district identifier.",
+  "population": "Loans whose approval date is 1994-08-25, together with the account associated with each such loan.",
+  "row_grain": "One row for each qualifying loan, represented by the district identifier of its associated account.",
+  "column_role": "The district identifier of the branch where the associated account was opened.",
+  "derivation": "Follow each qualifying loan to its associated account and return that account's branch district identifier.",
   "filter_policy": "none",
   "meta_review": "Metadata confirms loan.date is the loan approval date and account.district_id is the branch location, validating the date condition and the account-owned branch district output."
 }

@@ -352,12 +352,12 @@ Hint:
 Schema_links: [satscores.NumTstTakr,schools.MailCity,satscores.cds = schools.CDSCode,Fresno]
 Result Contract:
 {
-  "population": "Test takers at schools whose mailing city address is Fresno.",
-  "row_grain": "One global summary row for all qualifying schools combined.",
-  "column_role": "The total number of test takers.",
-  "derivation": "Sum the school-level test taker counts across all schools whose mailing city is Fresno.",
+  "population": "Schools with a reported school-level test taker count whose mailing city address is Fresno.",
+  "row_grain": "One row for each qualifying school-level test taker count.",
+  "column_role": "The number of test takers for each qualifying school.",
+  "derivation": "Return the reported school-level test taker count without summing or counting individual test takers.",
   "filter_policy": "none",
-  "meta_review": "Metadata establishes satscores.NumTstTakr as a school-level number of test takers and schools.MailCity as the mailing city. This supports summing school-level counts for schools whose mailing city is Fresno."
+  "meta_review": "The school-level nature of the test taker count and the mailing city condition support returning separate counts for matching schools, not a combined total."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

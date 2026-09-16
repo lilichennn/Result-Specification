@@ -248,12 +248,12 @@ Hint: Percentage of the male clients = DIVIDE(COUNT(male clients), COUNT(clients
 Schema_links: [district.A3,district.A4,client.gender,client.client_id,client.district_id = district.district_id,M,south Bohemia]
 Result Contract:
 {
-  "population": "Branches located in the South Bohemia region (region name given by A3); the clients measured are those linked to the selected branch by its branch-location identifier.",
-  "row_grain": "One summary row for the single selected branch.",
+  "population": "Branch locations in the south Bohemia region (region name given by A3), grouped by inhabitant count A4; the clients measured are those linked to the selected highest-inhabitant-count location group.",
+  "row_grain": "One summary row for the selected highest-inhabitant-count south Bohemia location group.",
   "column_role": "The percentage of male clients as a single numeric value.",
-  "derivation": "Percentage of male clients = (count of the selected branch's clients with gender = 'M' divided by count of all clients linked to that branch) * 100.",
-  "filter_policy": "Among South Bohemia branches, choose the branch with the greatest number of inhabitants recorded in A4, interpreted as numeric inhabitant counts; tie handling is unspecified.",
-  "meta_review": "Metadata shows client.district_id and district.district_id both describe location of branch, and district.A4 is the number of inhabitants. This resolved the branch-to-client linkage and confirmed that selection uses the numeric magnitude of A4 among South Bohemia branch locations."
+  "derivation": "Percentage of male clients = (count of clients in the selected location group with gender = 'M' divided by count of all clients in that location group) * 100.",
+  "filter_policy": "Among south Bohemia branch locations, select the inhabitant-count group with the greatest A4; locations sharing the greatest A4 are treated as the same selected group.",
+  "meta_review": "Metadata shows client.district_id and district.district_id both describe location of branch, and district.A4 is the number of inhabitants. This resolved the branch-to-client linkage and confirmed that selection uses the numeric magnitude of A4 among south Bohemia branch-location groups."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

@@ -287,10 +287,10 @@ Result Contract:
 {
   "population": "Race result records for the driver Bruce McLaren in the race whose race number (raceId) is 743.",
   "row_grain": "One race result entry representing Bruce McLaren's participation in race No.743.",
-  "column_role": "The actual finishing time, expressed in milliseconds, for that race result.",
+  "column_role": "The actual finishing time value for that race result.",
   "derivation": "none",
   "filter_policy": "none",
-  "meta_review": "Metadata states that results.milliseconds is the actual finishing time of drivers, distinguishing it from results.time, which may represent a gap for non-winners. This resolves the requested actual finish time to the stored milliseconds value."
+  "meta_review": "The requested actual finish time is resolved to the stored finishing time value for the matching result, not to a separate milliseconds measure."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

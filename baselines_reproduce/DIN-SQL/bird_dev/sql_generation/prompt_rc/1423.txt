@@ -299,12 +299,12 @@ Hint: amount of 50 refers to amount = 50
 Schema_links: [income.income_id,income.amount,50]
 Result Contract:
 {
-  "population": "Income records that are received and whose amount equals 50.",
+  "population": "Income records whose amount equals 50.",
   "row_grain": "One global summary row for the entire eligible population.",
-  "column_role": "The count of qualifying received income records.",
+  "column_role": "The count of qualifying income records.",
   "derivation": "Count the income records in the eligible population.",
   "filter_policy": "none",
-  "meta_review": "Metadata confirms income.amount is the amount of funds received, validating the Round-1 amount condition. No other refinement was made."
+  "meta_review": "The amount predicate fully defines the eligible population; no additional received-status condition is applied."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

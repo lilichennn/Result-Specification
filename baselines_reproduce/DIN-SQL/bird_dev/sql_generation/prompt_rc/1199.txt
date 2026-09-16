@@ -365,12 +365,12 @@ Hint: underwent testing in 1997 refers to YEAR(DATE) = '1997'; protein levels wi
 Schema_links: [Patient.ID,Laboratory.Date,Laboratory.TP,Laboratory.ID = Patient.ID,1997,6,8.5]
 Result Contract:
 {
-  "population": "Patients who underwent laboratory testing in 1997 (year of the laboratory testing date is 1997) and whose total protein (TP) level is outside the normal range, where within the normal range is defined as tp > 6 and tp < 8.5, so outside means not satisfying that condition.",
-  "row_grain": "One global summary row for the entire qualifying patient population.",
-  "column_role": "The count of qualifying patients.",
-  "derivation": "Count the patients satisfying the population conditions.",
+  "population": "Patient laboratory tests whose testing date falls in 1997 and whose albumin level is outside the normal range, with outside defined as albumin at most 6.0 or at least 8.5.",
+  "row_grain": "One global summary row for the entire qualifying laboratory-test population.",
+  "column_role": "The count of qualifying patient laboratory tests.",
+  "derivation": "Count the qualifying patient laboratory tests satisfying the population conditions.",
   "filter_policy": "none",
-  "meta_review": "Metadata identifies Laboratory.Date as the date of laboratory tests and Laboratory.TP as total protein, resolving that the testing date and protein measurement are laboratory-test attributes rather than examination or patient attributes."
+  "meta_review": "Metadata identifies the laboratory date as the date of laboratory tests and the relevant protein measurement as albumin, resolving that the testing date and protein measurement are laboratory-test attributes rather than examination or patient attributes."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

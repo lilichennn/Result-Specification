@@ -182,13 +182,17 @@ Based on the tables, columns, and Foreign_keys, The set of possible cell values 
 Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = lists_user.user_id,lists.list_id = lists_user.list_id, lists_users.user_id, 4208563, 1]
 
 Schema of the current database with sample rows and column descriptions:
-Table income, columns = [*,income_id,date_received,amount,link_to_member]
+Table attendance, columns = [*,link_to_member]
+Table income, columns = [*,date_received,amount,link_to_member]
 Table member, columns = [*,member_id,first_name,last_name]
-Foreign_keys = [income.link_to_member = member.member_id]
-Sample rows from income (columns: ["income_id", "date_received", "amount", "link_to_member"]):
-[["rec0s9ZrO15zhzUeE", "2019-10-17", 50, "reccW7q1KkhSKZsea"], ["rec7f5XMQZexgtQJo", "2019-09-04", 50, "recTjHY5xXhvkCdVT"], ["rec8BUJa8GXUjiglg", "2019-10-08", 50, "recUdRhbhcEO1Hk5r"]]
+Foreign_keys = [attendance.link_to_member = member.member_id,income.link_to_member = member.member_id]
+Sample rows from attendance (columns: ["link_to_member"]):
+[["recD078PnS3x2doBe"], ["recP6DJPyi5donvXL"], ["rec28ORZgcm1dtqBZ"]]
+Column descriptions and value descriptions for attendance:
+Column link_to_member: column description -> The unique identifier of the member who attended the event, value description -> References the Member table
+Sample rows from income (columns: ["date_received", "amount", "link_to_member"]):
+[["2019-10-17", 50, "reccW7q1KkhSKZsea"], ["2019-09-04", 50, "recTjHY5xXhvkCdVT"], ["2019-10-08", 50, "recUdRhbhcEO1Hk5r"]]
 Column descriptions and value descriptions for income:
-Column income_id: column description -> A unique identifier for each record of income, value description -> 
 Column date_received: column description -> the date that the fund received, value description -> 
 Column amount: column description -> amount of funds, value description -> the unit is dollar
 Column link_to_member: column description -> link to member, value description -> 

@@ -372,10 +372,10 @@ Hint: thrombosis level 2 refers to Thrombosis = 2; ANA pattern of only S refers 
 Schema_links: [Examination.ID,Examination.Thrombosis,Examination.`ANA Pattern`,Examination.`aCL IgM`,2,'S',0.2]
 Result Contract:
 {
-  "population": "Patients with Thrombosis = 2 and ANA pattern = 'S' whose anti-Cardiolipin antibody IgM (aCL IgM) level is more than 20% higher than the average aCL IgM; the question does not specify whether that average is taken over all patients or only over the Thrombosis = 2, ANA pattern = 'S' subset.",
+  "population": "Patients with Thrombosis = 2 and ANA pattern = 'S' whose anti-Cardiolipin antibody IgM (aCL IgM) level is more than 20% higher than the average aCL IgM level among patients with Thrombosis = 2 and ANA pattern = 'S'.",
   "row_grain": "One global summary row spanning the entire qualifying patient population.",
   "column_role": "A single numeric value: the number of qualifying patients.",
-  "derivation": "Count the qualifying patients, where the eligibility threshold is derived from the average aCL IgM (AVG(aCL IgM)) increased by 20% per the evidence calculation.",
+  "derivation": "Count the qualifying patients, where the eligibility threshold is the average aCL IgM level within the Thrombosis = 2 and ANA pattern = 'S' population increased by 20%.",
   "filter_policy": "none",
   "meta_review": "Metadata distinguishes Examination.ANA Pattern (text pattern) from Examination.ANA (integer concentration), so the S condition is retained as ANA pattern = 'S' rather than numeric ANA. No other Round-1 ambiguity is resolved by the metadata."
 }

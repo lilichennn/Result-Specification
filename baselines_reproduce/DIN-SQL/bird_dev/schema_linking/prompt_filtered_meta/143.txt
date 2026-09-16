@@ -183,17 +183,16 @@ Schema_links: [lists.list_followers,lists_users.user_subscriber,lists.user_id = 
 
 Schema of the current database with sample rows and column descriptions:
 Table account, columns = [*,account_id]
-Table card, columns = [*,card_id,disp_id,type]
+Table card, columns = [*,disp_id,type]
 Table disp, columns = [*,disp_id,account_id]
 Foreign_keys = [card.disp_id = disp.disp_id,disp.account_id = account.account_id]
 Sample rows from account (columns: ["account_id"]):
 [[1], [2], [3]]
 Column descriptions and value descriptions for account:
 Column account_id: column description -> the id of the account, value description -> 
-Sample rows from card (columns: ["card_id", "disp_id", "type"]):
-[[1, 9, "gold"], [2, 19, "classic"], [3, 41, "gold"]]
+Sample rows from card (columns: ["disp_id", "type"]):
+[[9, "gold"], [19, "classic"], [41, "gold"]]
 Column descriptions and value descriptions for card:
-Column card_id: column description -> id number of credit card, value description -> 
 Column disp_id: column description -> disposition id, value description -> 
 Column type: column description -> type of credit card, value description -> "junior": junior class of credit card; 
 "classic": standard class of credit card; 

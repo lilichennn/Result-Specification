@@ -230,12 +230,12 @@ Hint: DIVIDE(SUM(position = 'Member' and major_name = 'Business'), COUNT(member_
 Schema_links: [member.member_id,member.position,major.major_name,member.link_to_major = major.major_id,Member,Business]
 Result Contract:
 {
-  "population": "The reference population is all members in the list (every member_id record); the target subpopulation is those members whose position is 'Member' and whose major is Business.",
+  "population": "The reference population is members in the list whose position is 'Member' and who have an associated major; the target subpopulation is those whose major is Business.",
   "row_grain": "One global summary row for the entire member list.",
-  "column_role": "The percentage of members who major in Business.",
-  "derivation": "Divide the count of members with position 'Member' and major 'Business' by the total count of all members, then multiply by 100.",
+  "column_role": "The percentage of members with position 'Member' whose major is Business.",
+  "derivation": "Divide the count of members with position 'Member' and major 'Business' by the count of members with position 'Member' who have an associated major, then multiply by 100.",
   "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "meta_review": "The denominator is restricted to members whose position is 'Member', not all members in the list."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

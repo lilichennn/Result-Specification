@@ -251,12 +251,12 @@ Hint: more than 4 votes refer to PostId > 4; DisplayName = 'Matt Parker';
 Schema_links: [posts.Id,users.DisplayName,votes.PostId,posts.OwnerUserId = users.Id,votes.PostId = posts.Id,'Matt Parker',4]
 Result Contract:
 {
-  "population": "Posts authored by the user with DisplayName = 'Matt Parker' that satisfy PostId > 4, which the evidence gives as the meaning of 'more than 4 votes'.",
-  "row_grain": "One global summary row covering all qualifying posts.",
-  "column_role": "The number of qualifying posts.",
-  "derivation": "Count the posts in the eligible population.",
-  "filter_policy": "none",
-  "meta_review": "No relevant metadata refinement; Round-1 contract preserved."
+  "population": "Post-and-vote groups linked to the user named 'Matt Parker' through post-history activity.",
+  "row_grain": "One row for each qualifying post-and-vote group, not a single global summary.",
+  "column_role": "The number of user/post-history occurrences associated with each qualifying group.",
+  "derivation": "Count the user occurrences within each post-and-vote group.",
+  "filter_policy": "Keep only groups whose aggregated vote-record count is greater than 4.",
+  "meta_review": "The phrase 'more than 4 votes' is operationalized as an aggregate vote-record qualification, not as a post-identifier threshold."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:

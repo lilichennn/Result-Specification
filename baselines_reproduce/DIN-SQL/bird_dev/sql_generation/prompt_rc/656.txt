@@ -327,12 +327,12 @@ Hint: If the parent id is not null, the post is the child post; the highest scor
 Schema_links: [posts.OwnerDisplayName,posts.ParentId,posts.Score,posts.ParentId = posts.Id]
 Result Contract:
 {
-  "population": "Eligible posts are child posts, meaning posts whose ParentId is not null.",
-  "row_grain": "One single result representing the parent post of the selected highest-scoring child post.",
-  "column_role": "The owner display name of the parent post identified by the selected child post's ParentId.",
+  "population": "The result identifies the owner of a child post; the child posts considered are those whose parent identifier is not null.",
+  "row_grain": "One single result representing the owner display name of the selected highest-scoring child post.",
+  "column_role": "The display name of the owner of the selected highest-scoring child post.",
   "derivation": "none",
-  "filter_policy": "Select the child post with the highest score (argmax over Score) and return the owner display name of its parent post; tie handling is unspecified.",
-  "meta_review": "Metadata establishes that ParentId references a parent post and that posts.OwnerDisplayName is the display name of the post owner, resolving the requested parent display name to the parent post's owner display name."
+  "filter_policy": "Select the child post with the highest score (argmax over score) and return the display name of its owner; tie handling is unspecified.",
+  "meta_review": "Metadata establishes that a non-null parent identifier marks a child post and that a post owner has a display name; the requested display name resolves to the owner of the selected child post."
 }
 
 Use the Result Contract as a semantic specification of the table that the SQL must return. Translate each field into SQL as follows:
