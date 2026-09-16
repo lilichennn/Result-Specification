@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 import asyncio
+from contextlib import redirect_stdout
 from dataclasses import replace
 import hashlib
+import io
 import json
 from pathlib import Path
 import sqlite3
@@ -12,8 +14,9 @@ import threading
 from types import SimpleNamespace
 import unittest
 
-from scripts.rc_evaluation.schema_linking_gold.cli import build_parser
+from scripts.rc_evaluation.schema_linking_gold.cli import build_parser, main
 from scripts.rc_evaluation.schema_linking_gold.runner import (
+    EXPECTED_MODEL,
     PILOT_LIMITS,
     RunnerSettings,
     build_batches,
@@ -39,10 +42,26 @@ def _task(key: str, *, schema_hash: str = "a" * 64, sql_hash: str | None = None)
     )
 
 
-def _manifest(tasks, model="fixture-model"):
+def _manifest(tasks, model=EXPECTED_MODEL, pilot_keys=None):
+    representatives = {}
+    for task in tasks:
+        cache_key = (task.dialect, task.schema_sha256, task.sql_sha256)
+        if cache_key not in representatives or task.task_key < representatives[cache_key].task_key:
+            representatives[cache_key] = task
+    representatives = list(representatives.values())
+    pilot_keys = set(pilot_keys if pilot_keys is not None else (task.task_key for task in representatives))
+    pilot = [task for task in representatives if task.task_key in pilot_keys]
+    remaining = [task for task in representatives if task.task_key not in pilot_keys]
     return {
         "model": model,
         "prompt_version": "gold-sql-schema-linking-v1",
+        "pilot_size": len(pilot_keys),
+        "pilot_task_keys": sorted(pilot_keys),
+        "batch_plan": [
+            {"phase": phase, "task_keys": [task.task_key for task in batch]}
+            for phase, selected in (("pilot", pilot), ("rest", remaining))
+            for batch in build_batches(selected)
+        ],
         "tasks": [
             {
                 "task_key": task.task_key,
@@ -102,7 +121,7 @@ class RunnerTests(unittest.TestCase):
         self.temporary = tempfile.TemporaryDirectory()
         self.root = Path(self.temporary.name)
         self.settings = RunnerSettings(
-            model="fixture-model",
+            model=EXPECTED_MODEL,
             base_url="https://model.invalid/v1",
             api_key="super-secret-token",
         )
@@ -174,7 +193,7 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(status["accepted_tasks"], 2)
         self.assertEqual(len(clients[0].requests), 1)
         request = clients[0].requests[0]
-        self.assertEqual(request["model"], "fixture-model")
+        self.assertEqual(request["model"], EXPECTED_MODEL)
         self.assertEqual(request["temperature"], 0)
         self.assertEqual(request["n"], 1)
         self.assertEqual([message["role"] for message in request["messages"]], ["user"])
@@ -196,7 +215,7 @@ class RunnerTests(unittest.TestCase):
             nonlocal calls
             calls += 1
             if calls == 1:
-                raise RuntimeError("secret-bearing upstream failure")
+                raise TimeoutError("secret-bearing upstream failure")
             return _response_for(kwargs["messages"][0]["content"])
 
         path, result, status, _ = self._run([_task("spider/dev/i:0")], handler)
@@ -323,13 +342,13 @@ class RunnerTests(unittest.TestCase):
         self.assertEqual(peak, 2)
 
     def test_bounded_smoke_succeeds_without_claiming_the_store_is_complete(self):
-        """Catches treating an intentionally bounded first-N run as a failed command."""
+        """Catches treating an intentionally bounded whole-batch run as a failed command."""
         tasks = [_task(f"group/item/{number}", schema_hash=f"{number + 1:064x}") for number in range(2)]
 
         async def handler(kwargs):
             return _response_for(kwargs["messages"][0]["content"])
 
-        _, result, status, _ = self._run(tasks, handler, task_limit=1)
+        _, result, status, _ = self._run(tasks, handler, batch_limit=1)
 
         self.assertEqual(result["status"], "success")
         self.assertEqual(status["accepted_inputs"], 1)
@@ -340,15 +359,163 @@ class RunnerTests(unittest.TestCase):
         task = _task("spider/dev/i:0")
         path = self.root / "annotations.sqlite3"
         with AnnotationStore.create(path, _manifest([task])) as store:
-            with self.assertRaisesRegex(ValueError, "frozen model"):
+            with self.assertRaisesRegex(ValueError, "configured model"):
                 run_annotations(store, [task], replace(self.settings, model="other"),
                                 client_factory=lambda *_: self.fail("client must not be created"))
+
+    def test_preparation_rejects_any_model_except_the_expected_one_before_loading_sources(self):
+        """Catches permanently freezing a typo or unintended production model."""
+        with self.assertRaisesRegex(ValueError, EXPECTED_MODEL):
+            prepare_pilot(
+                self.root / "missing-source",
+                self.root / "never-created.sqlite3",
+                replace(self.settings, model="wrong-model"),
+                size=5320,
+            )
+
+    def test_permanent_4xx_stops_new_admission_without_retrying_or_leaking_details(self):
+        """Catches four retries and continued fan-out after an authentication/configuration error."""
+        calls = 0
+
+        class AuthenticationFailure(RuntimeError):
+            status_code = 401
+
+        async def handler(kwargs):
+            nonlocal calls
+            calls += 1
+            raise AuthenticationFailure("api-key=super-secret-token")
+
+        tasks = [_task(f"group/item/{number}", schema_hash=f"{number + 1:064x}") for number in range(3)]
+        limits = replace(
+            PILOT_LIMITS,
+            request_limit=1,
+            request_workers=1,
+            http_connections=1,
+            start_rate=10_000.0,
+            request_timeout=2.0,
+        )
+
+        path, result, status, _ = self._run(tasks, handler, limits=limits)
+
+        self.assertEqual(result["status"], "incomplete")
+        self.assertEqual(result["permanent_failures"], 1)
+        self.assertEqual((calls, status["attempts"]), (1, 1))
+        with sqlite3.connect(path) as connection:
+            error_json = connection.execute("SELECT error_json FROM outcomes").fetchone()[0]
+        self.assertEqual(json.loads(error_json), {
+            "kind": "permanent_request_failure",
+            "retryable": False,
+            "type": "AuthenticationFailure",
+        })
+        self.assertNotIn("super-secret-token", error_json)
+
+    def test_phase_runs_frozen_pilot_batches_before_remaining_batches(self):
+        """Catches lexicographic pending-task slicing instead of the frozen pilot phase."""
+        tasks = [_task(f"group/item/{number}", schema_hash=f"{number + 1:064x}") for number in range(4)]
+        manifest = _manifest(tasks, pilot_keys={tasks[1].task_key, tasks[3].task_key})
+        path = self.root / "phases.sqlite3"
+        requested = []
+
+        async def handler(kwargs):
+            payload = json.loads(kwargs["messages"][0]["content"].split("\n\nINPUTS:\n", 1)[1])
+            requested.append([item["task_key"] for item in payload["tasks"]])
+            return _response_for(kwargs["messages"][0]["content"])
+
+        def factory(dispatcher, settings):
+            return _LocalClient(dispatcher, handler)
+
+        limits = replace(PILOT_LIMITS, start_rate=10_000.0, request_timeout=2.0)
+        with AnnotationStore.create(path, manifest) as store:
+            pilot = run_annotations(
+                store, tasks, self.settings, phase="pilot",
+                client_factory=factory, limits=limits,
+            )
+            self.assertEqual(store.status()["accepted_inputs"], 2)
+            remaining = run_annotations(
+                store, tasks, self.settings, phase="rest",
+                client_factory=factory, limits=limits,
+            )
+        self.assertEqual((pilot["status"], remaining["status"]), ("success", "success"))
+        self.assertEqual(requested, [[tasks[1].task_key], [tasks[3].task_key],
+                                     [tasks[0].task_key], [tasks[2].task_key]])
+
+    def test_bounded_failure_and_full_resume_share_one_frozen_batch_retry_budget(self):
+        """Catches rebuilding a new batch key that gives the same inputs eight attempts."""
+        calls = 0
+
+        async def handler(kwargs):
+            nonlocal calls
+            calls += 1
+            raise TimeoutError("transient")
+
+        tasks = [_task(f"group/item/{number}") for number in range(12)]
+        path, first, status, _ = self._run(tasks, handler, batch_limit=1)
+        self.assertEqual((first["exhausted_batches"], calls, status["attempts"]), (1, 4, 4))
+
+        clients = []
+
+        def factory(dispatcher, settings):
+            client = _LocalClient(dispatcher, handler)
+            clients.append(client)
+            return client
+
+        with AnnotationStore.open(path, _manifest(tasks)) as store:
+            resumed = run_annotations(
+                store, tasks, self.settings, client_factory=factory,
+                limits=replace(PILOT_LIMITS, start_rate=10_000.0, request_timeout=2.0),
+            )
+        self.assertEqual((resumed["exhausted_batches"], calls), (1, 4))
+        self.assertEqual(clients, [])
+
+    def test_task_limit_must_end_on_a_frozen_batch_boundary(self):
+        """Catches task-level slicing that changes persisted batch identity."""
+        tasks = [_task(f"group/item/{number}") for number in range(12)]
+        path = self.root / "boundary.sqlite3"
+        with AnnotationStore.create(path, _manifest(tasks)) as store:
+            with self.assertRaisesRegex(ValueError, "batch boundary"):
+                run_annotations(store, tasks, self.settings, task_limit=3,
+                                client_factory=lambda *_: self.fail("must fail before client creation"))
 
     def test_cli_registers_all_required_commands_without_importing_reporting(self):
         """Catches a missing command or eager dependency on unfinished reporting code."""
         parser = build_parser()
         actions = [action for action in parser._actions if action.dest == "command"]
         self.assertEqual(set(actions[0].choices), {"prepare-pilot", "run", "status", "verify", "export"})
+
+    def test_verify_cli_has_distinct_command_status_and_store_progress(self):
+        """Catches store verification progress overwriting the CLI success/failure status."""
+        task = _task("spider/dev/i:0")
+        path = self.root / "verify.sqlite3"
+        with AnnotationStore.create(path, _manifest([task])) as store:
+            attempt = store.start_attempt([task.task_key])
+            store.finish_attempt(
+                attempt["attempt_id"], "failed", usage={"available": False},
+                latency_seconds=0.0, endpoint_hash="f" * 64,
+                error={"kind": "fixture"},
+            )
+        output = io.StringIO()
+        with redirect_stdout(output):
+            healthy_code = main(["verify", "--store", str(path)])
+        healthy = json.loads(output.getvalue())
+        self.assertEqual(healthy_code, 0)
+        self.assertEqual(healthy["status"], "success")
+        self.assertTrue(healthy["ok"])
+        self.assertIsInstance(healthy["progress"], dict)
+
+        with sqlite3.connect(path) as connection:
+            trigger_sql = connection.execute(
+                "SELECT sql FROM sqlite_master WHERE type = 'trigger' AND name = 'outcomes_no_update'"
+            ).fetchone()[0]
+            connection.execute("DROP TRIGGER outcomes_no_update")
+            connection.execute("UPDATE outcomes SET record_checksum = ?", ("0" * 64,))
+            connection.execute(trigger_sql)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            corrupt_code = main(["verify", "--store", str(path)])
+        corrupt = json.loads(output.getvalue())
+        self.assertEqual(corrupt_code, 1)
+        self.assertEqual(corrupt["status"], "failed")
+        self.assertFalse(corrupt["ok"])
 
     def test_cli_can_freeze_the_full_5320_task_store_then_bound_the_same_run(self):
         """Catches forcing pilot labels into a separate store that full annotation cannot resume."""
@@ -357,14 +524,30 @@ class RunnerTests(unittest.TestCase):
 
         result = prepare_pilot(source_root, store_path, self.settings, size=5320, seed=20260916)
         run_args = build_parser().parse_args([
-            "run", "--store", str(store_path), "--task-limit", "3", "--batch-limit", "1",
+            "run", "--store", str(store_path), "--phase", "pilot", "--batch-limit", "1",
         ])
 
         self.assertEqual(result["progress"]["total_tasks"], 5320)
         with AnnotationStore.open(store_path) as store:
-            self.assertEqual(store.manifest["selection"], "full")
-            self.assertEqual(store.manifest["selection_size"], 5320)
-        self.assertEqual((run_args.task_limit, run_args.batch_limit), (3, 1))
+            manifest = store.manifest
+            self.assertEqual(manifest["selection"], "full")
+            self.assertEqual(manifest["selection_size"], 5320)
+            self.assertEqual(len(manifest["pilot_task_keys"]), 200)
+            pilot_tasks = [task for task in manifest["tasks"] if task["task_key"] in manifest["pilot_task_keys"]]
+            self.assertEqual({task["group"] for task in pilot_tasks}, {
+                "bird_dev", "bird_interact_full", "bird_interact_lite", "spider_dev", "spider_test",
+            })
+            self.assertEqual({task["group"]: sum(item["group"] == task["group"] for item in pilot_tasks)
+                              for task in pilot_tasks}, {
+                "bird_dev": 40, "bird_interact_full": 40, "bird_interact_lite": 40,
+                "spider_dev": 40, "spider_test": 40,
+            })
+            plan_keys = [key for batch in manifest["batch_plan"] for key in batch["task_keys"]]
+            self.assertEqual(len(plan_keys), store.status()["unique_inputs"])
+            self.assertEqual(len(plan_keys), len(set(plan_keys)))
+            phases = [batch["phase"] for batch in manifest["batch_plan"]]
+            self.assertEqual(phases, sorted(phases, key={"pilot": 0, "rest": 1}.get))
+        self.assertEqual((run_args.phase, run_args.batch_limit), ("pilot", 1))
 
 
 if __name__ == "__main__":

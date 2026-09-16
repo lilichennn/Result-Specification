@@ -6,7 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .runner import PILOT_SEED, PILOT_SIZE, load_settings, prepare_pilot, run_store
+from .runner import PILOT_SEED, load_settings, prepare_pilot, run_store
+from .source import TOTAL_TASKS
 from .store import AnnotationStore
 
 
@@ -20,11 +21,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
 
-    prepare = commands.add_parser("prepare-pilot", help="Freeze the deterministic pilot store")
+    prepare = commands.add_parser("prepare-pilot", help="Freeze the full store with a deterministic pilot-first plan")
     prepare.add_argument("--source-root", type=Path, default=DEFAULT_SOURCE)
     prepare.add_argument("--store", type=Path, default=DEFAULT_STORE)
     prepare.add_argument("--env-file", type=Path, default=DEFAULT_ENV)
-    prepare.add_argument("--size", type=int, default=PILOT_SIZE)
+    prepare.add_argument("--size", type=int, default=TOTAL_TASKS)
     prepare.add_argument("--seed", type=int, default=PILOT_SEED)
 
     run = commands.add_parser("run", help="Run or resume bounded annotation requests")
@@ -36,6 +37,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="Process only the first N pending unique inputs",
     )
     run.add_argument("--batch-limit", type=int, help="Process only the first N pending batches")
+    run.add_argument("--phase", choices=("pilot", "rest"), default="pilot",
+                     help="Run the frozen pilot first; run rest only after pilot review")
 
     for name in ("status", "verify"):
         command = commands.add_parser(name, help=f"{name.title()} the append-only annotation store")
@@ -67,6 +70,7 @@ def main(argv: list[str] | None = None) -> int:
                 settings,
                 task_limit=args.task_limit,
                 batch_limit=args.batch_limit,
+                phase=args.phase,
             )
         elif args.command == "status":
             with AnnotationStore.open(args.store) as store:
@@ -74,7 +78,12 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "verify":
             with AnnotationStore.open(args.store) as store:
                 verification = store.verify()
-            result = {"status": "success" if verification["ok"] else "failed", **verification}
+            result = {
+                "status": "success" if verification["ok"] else "failed",
+                "ok": verification["ok"],
+                "errors": verification["errors"],
+                "progress": verification["status"],
+            }
         else:
             # Reporting is a later task; keep it out of every other CLI path.
             from .reporting import export_annotations
