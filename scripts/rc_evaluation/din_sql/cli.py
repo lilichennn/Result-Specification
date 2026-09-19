@@ -48,6 +48,19 @@ def main(argv=None):
     ev.add_argument('--batch',type=Path,required=True)
     ev.add_argument('--groups',nargs='+',default=['all'])
     ev.add_argument('--env-file',type=Path,default=CODE_ROOT/'config/.env')
+    records_export = sub.add_parser('export-records')
+    records_export.add_argument('--batch',type=Path,required=True)
+    records_export.add_argument('--output',type=Path,required=True)
+    records_export.add_argument('--env-file',type=Path,default=CODE_ROOT/'config/.env')
+    compact = sub.add_parser('evaluate-compact')
+    compact.add_argument('--batch',type=Path,required=True)
+    compact.add_argument('--output',type=Path,required=True)
+    compact.add_argument('--env-file',type=Path,default=CODE_ROOT/'config/.env')
+    handoff = sub.add_parser('export-handoff')
+    handoff.add_argument('--batch',type=Path,required=True)
+    handoff.add_argument('--output',type=Path,required=True)
+    handoff.add_argument('--guide',type=Path)
+    handoff.add_argument('--env-file',type=Path,default=CODE_ROOT/'config/.env')
     for command in ('run','resume','rerun','status'):
         p = sub.add_parser(command)
         p.add_argument('--batch',type=Path,required=True)
@@ -71,6 +84,15 @@ def main(argv=None):
     elif args.command=='status':
         from .campaign import status
         result = status(args.batch)
+    elif args.command=='export-records':
+        from .compact_reporting import export_records
+        result = {'output':str(export_records(args.batch,args.output))}
+    elif args.command=='evaluate-compact':
+        from .compact_reporting import evaluate_compact
+        result = {'output':str(evaluate_compact(args.batch,args.output))}
+    elif args.command=='export-handoff':
+        from .compact_reporting import export_handoff
+        result = {'output':str(export_handoff(args.batch,args.output,guide=args.guide))}
     else:
         from .campaign import run_batch
         targets = [TaskKey(args.group,q) for q in args.ids] if args.command=='rerun' else None
