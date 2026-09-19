@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import sqlite3
 import tempfile
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -381,6 +382,100 @@ class ReportingTests(unittest.TestCase):
         exported = self.reporting.export_current(self.batch)
         native = next(r for r in self.load_rows(exported) if r['task_key'] == asdict(self.key) and r['mode'] == 'native')
         self.assertTrue(native['final_match'])
+
+    def test_deepeye_profile_uses_sqlite_timeout_without_changing_batch(self):
+        self.publish(self.key)
+        self.publish(TaskKey('batch', 'bird_dev', '1'))
+        before = (self.batch / 'manifest.json').read_bytes()
+        original = self.reporting.execute_sql
+        timeouts = []
+        def execute(database, sql, *, timeout_seconds):
+            timeouts.append(timeout_seconds)
+            return original(database, sql, timeout_seconds=timeout_seconds)
+        with patch.object(self.reporting, 'execute_sql', side_effect=execute):
+            exported = self.reporting.export_current(self.batch, evaluation_profile='deepeye')
+        self.assertEqual(timeouts, [600, 600])
+        self.assertEqual((self.batch / 'manifest.json').read_bytes(), before)
+        self.assertEqual(sum(r['final_match'] is True for r in self.load_rows(exported)), 8)
+        saved = json.loads((exported / 'versions.json').read_text())
+        self.assertEqual(saved['evaluation_policy']['groups']['bird_dev'],
+                         {'timeout_seconds':600, 'question_workers':16, 'query_workers':16})
+        self.assertEqual(saved['evaluation_policy']['groups']['spider_dev'],
+                         {'timeout_seconds':600, 'question_workers':4, 'query_workers':0})
+
+    def test_parallel_questions_make_progress_without_a_slow_question_blocking(self):
+        for qid in ('0', '1', '2'):
+            self.publish(TaskKey('batch', 'spider_dev', qid))
+        barrier = threading.Barrier(3)
+        original = self.reporting.execute_sql
+        def execute(database, sql, *, timeout_seconds):
+            barrier.wait(timeout=3)
+            return original(database, sql, timeout_seconds=timeout_seconds)
+        with patch.object(self.reporting, 'execute_sql', side_effect=execute):
+            exported = self.reporting.export_current(self.batch, evaluation_profile='deepeye')
+        rows = self.load_rows(exported)
+        self.assertEqual(sum(r['final_match'] is True for r in rows), 12)
+        self.assertEqual(len((exported / 'executions.jsonl').read_text().splitlines()), 3)
+
+    def test_bird_candidates_and_reference_use_shared_query_parallelism(self):
+        key = TaskKey('batch', 'bird_dev', '1')
+        self.publish(key)
+        source = Path(self.manifest['evaluation_source'])
+        binding_path = source.parent / 'bindings.json'
+        bindings = json.loads(binding_path.read_text())
+        bindings['bird_dev']['1']['reference_sql'] = 'SELECT 2'
+        raw = json.dumps(bindings).encode()
+        binding_path.write_bytes(raw)
+        source.write_text(json.dumps({'bindings':'evaluation/bindings.json',
+                                     'sha256':hashlib.sha256(raw).hexdigest()}))
+        barrier = threading.Barrier(2)
+        original = self.reporting.execute_sql
+        def execute(database, sql, *, timeout_seconds):
+            barrier.wait(timeout=3)
+            return original(database, sql, timeout_seconds=timeout_seconds)
+        with patch.object(self.reporting, 'execute_sql', side_effect=execute):
+            exported = self.reporting.export_current(self.batch, evaluation_profile='deepeye')
+        rows = [r for r in self.load_rows(exported) if r['task_key']['group'] == 'bird_dev']
+        self.assertEqual([r['final_match'] for r in rows], [False] * 4)
+        self.assertEqual(len((exported / 'executions.jsonl').read_text().splitlines()), 2)
+
+    def test_profile_runs_groups_independently_and_pg_timeout_is_not_retried(self):
+        # The two group queries must overlap; a serial group loop breaks the barrier.
+        self.publish(self.key)
+        self.publish(TaskKey('batch', 'bird_dev', '1'))
+        source = Path(self.manifest['evaluation_source'])
+        binding_path = source.parent / 'bindings.json'
+        bindings = json.loads(binding_path.read_text())
+        bindings['bird_dev']['1']['database'] = {'dialect':'postgresql', 'database_id':'pg_fixture'}
+        raw = json.dumps(bindings).encode()
+        binding_path.write_bytes(raw)
+        source.write_text(json.dumps({'bindings':'evaluation/bindings.json',
+                                     'sha256':hashlib.sha256(raw).hexdigest()}))
+        barrier = threading.Barrier(2)
+        original = self.reporting.execute_sql
+        seen = []
+        def execute(database, sql, *, timeout_seconds):
+            seen.append((database['dialect'], timeout_seconds))
+            barrier.wait(timeout=3)
+            if database['dialect'] == 'postgresql':
+                return {'status':'timeout', 'rows':[], 'columns':[], 'error':{'type':'QueryCanceled'}}
+            return original(database, sql, timeout_seconds=timeout_seconds)
+        with patch.object(self.reporting, 'execute_sql', side_effect=execute):
+            exported = self.reporting.export_current(self.batch, evaluation_profile='deepeye')
+        self.assertCountEqual(seen, [('sqlite',600), ('postgresql',30)])
+        rows = [r for r in self.load_rows(exported) if r['task_key']['group'] == 'bird_dev']
+        self.assertTrue(all(r['final_match'] is None for r in rows))
+        saved = json.loads((exported / 'versions.json').read_text())
+        self.assertEqual(saved['evaluation_policy']['groups']['bird_dev'],
+                         {'timeout_seconds':30, 'question_workers':5, 'query_workers':0})
+        self.assertIsNone(saved['sql_timeout_seconds'])
+
+    def test_parallel_execution_failure_cannot_publish_a_partial_export(self):
+        self.publish(self.key)
+        with patch.object(self.reporting, 'execute_sql', side_effect=RuntimeError('injected export failure')):
+            with self.assertRaisesRegex(RuntimeError, 'injected export failure'):
+                self.reporting.export_current(self.batch, evaluation_profile='deepeye')
+        self.assertFalse((self.batch / 'exports/full/latest.json').exists())
 
 
 if __name__ == '__main__':

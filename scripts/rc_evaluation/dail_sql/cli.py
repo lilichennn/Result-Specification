@@ -90,6 +90,13 @@ def main(argv=None):
         operation.add_argument('--batch', type=Path, required=True)
         if command == 'rerun':
             operation.add_argument('--targets', type=Path, required=True)
+        if command == 'export':
+            operation.add_argument('--evaluation-profile', choices=('batch', 'deepeye'), default='deepeye',
+                                   help='Post-hoc SQL limits/scheduling only; never changes frozen inference settings')
+            operation.add_argument('--output', type=Path,
+                                   help='Compact export parent; defaults to BATCH/exports/compact')
+            operation.add_argument('--seed', type=Path,
+                                   help='Optional interrupted uncompressed export whose SQL results are imported once')
     args = parser.parse_args(argv)
     try:
         if args.command == 'prepare' or args.command == 'status' and args.preparation:
@@ -141,15 +148,16 @@ def main(argv=None):
             elif args.command == 'status':
                 result = campaign.status(args.batch)
             else:
-                from .reporting import export_current, current_export
+                from .compact_reporting import export_compact_current, compact_current_export
                 manifest = json.loads((args.batch / 'manifest.json').read_text(encoding='utf-8'))
                 values = campaign.environment(manifest.get('env_file'))
                 for name in campaign.PG_FIELDS:
                     if values.get(name) is not None:
                         os.environ[name] = values[name]
-                publication = export_current(args.batch)
+                publication = export_compact_current(args.batch, evaluation_profile=args.evaluation_profile,
+                                                     seed=args.seed, output_root=args.output)
                 result = {'status': 'success', 'directory': str(publication),
-                          'current': current_export(args.batch) == publication}
+                          'current': compact_current_export(args.batch, args.output) == publication}
             print(json.dumps(result, ensure_ascii=False))
             return 0 if args.command == 'status' or result['status'] == 'success' else 1
         environment = dict(os.environ)

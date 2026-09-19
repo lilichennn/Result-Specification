@@ -1,12 +1,14 @@
 """Compact current-version statistics and separately observed historical costs.
 
 Batch layout: DailRecords root, current.sqlite3, manifest.evaluation_source
-(Task4 source.json), manifest.sql_timeout_seconds (default 60). Call synchronous
-export_current on a caller-owned worker; it executes at most one bounded SQL at
-a time and keeps execution tables only for the current question.
+(Task4 source.json), manifest.sql_timeout_seconds (default 60). The explicit
+deepeye evaluation profile changes only post-hoc SQL limits and scheduling;
+the frozen inference manifest is never edited. SQL caches stay question-local.
 """
 
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import nullcontext
 from dataclasses import asdict
 from datetime import datetime, timezone
 import hashlib
@@ -15,6 +17,7 @@ import math
 import os
 from pathlib import Path
 import tempfile
+import threading
 import uuid
 
 from scripts.baseline_adapters.dail_sql.config import MODES, TaskKey
@@ -360,7 +363,28 @@ def current_export(batch_root: Path) -> Path | None:
     return directory if saved['versions'] == now and saved['manifest_sha256'] == hashlib.sha256((root / 'manifest.json').read_bytes()).hexdigest() else None
 
 
-def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None = None) -> Path:
+def _evaluation_policy(keys, bindings, timeout, profile):
+    if profile not in ('batch', 'deepeye'):
+        raise ValueError('Unknown SQL evaluation profile')
+    groups = {}
+    for group in dict.fromkeys(key.group for key in keys):
+        if profile == 'batch':
+            groups[group] = {'timeout_seconds':timeout, 'question_workers':1, 'query_workers':0}
+            continue
+        dialects = {bindings[key.group][key.question_id]['database']['dialect']
+                    for key in keys if key.group == group}
+        if dialects == {'postgresql'}:
+            groups[group] = {'timeout_seconds':30, 'question_workers':5, 'query_workers':0}
+        elif dialects == {'sqlite'}:
+            groups[group] = {'timeout_seconds':600, 'question_workers':16 if group == 'bird_dev' else 4,
+                             'query_workers':16 if group == 'bird_dev' else 0}
+        else:
+            raise ValueError('DeepEye evaluation profile requires one supported dialect per group')
+    return {'profile':profile, 'parallel_groups':profile == 'deepeye', 'groups':groups}
+
+
+def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None = None,
+                   evaluation_profile: str = 'batch') -> Path:
     """Atomically publish a derived directory from one immutable mode snapshot.
 
     Files: versions.json, summary.json, modes.jsonl, rounds.jsonl,
@@ -383,6 +407,7 @@ def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None
     timeout = manifest.get('sql_timeout_seconds', 60)
     if not isinstance(timeout, (int,float)) or not math.isfinite(timeout) or timeout <= 0:
         raise ValueError('SQL timeout must be positive and finite')
+    policy = _evaluation_policy(keys, bindings, timeout, evaluation_profile)
     with CurrentIndex(root / 'current.sqlite3', read_only=True) as index:
         snapshot = index.snapshot()
     version_list = _versions(keys, snapshot)
@@ -390,14 +415,17 @@ def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None
     parent.mkdir(parents=True, exist_ok=True)
     staging = Path(tempfile.mkdtemp(prefix='.staging-', dir=parent))
     evaluation_started = datetime.now(timezone.utc).isoformat()
-    rows = []
+    write_lock = threading.Lock()
+    progress = {'phase':'sql_evaluation', 'evaluation_policy':policy, 'groups':{
+        group:{'total':sum(k.group == group for k in keys), 'completed':0}
+        for group in policy['groups']}}
+    _write_json(staging / 'progress.json', progress)
     with DailRecords(root, manifest, read_only=True) as records:
         with (staging / 'rounds.jsonl').open('w') as round_file, (staging / 'candidates.jsonl').open('w') as candidate_file, (staging / 'executions.jsonl').open('w') as execution_file:
-            for key in keys:
+            def question(key, group_policy, query_pool):
                 version_id = snapshot.get(key)
                 if version_id is None:
-                    rows.extend(_pending(key, mode) for mode in MODES)
-                    continue
+                    return [_pending(key, mode) for mode in MODES]
                 if not records.is_sealed(key, version_id):
                     raise ValueError('current version must be sealed for its manifest key')
                 version = records.get_version(version_id)
@@ -406,11 +434,13 @@ def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None
                 def execute(database, sql):
                     identity = [asdict(key), version_id, database, binding.get('database_version'), sql]
                     execution_id = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
-                    result = execute_sql(database, sql, timeout_seconds=timeout)
+                    result = execute_sql(database, sql, timeout_seconds=group_policy['timeout_seconds'])
                     result['execution_id'] = execution_id
-                    _write_line(execution_file, {'execution_id': execution_id, 'task_key': asdict(key),
-                        'version_id': version_id, 'database': database, 'database_version': binding.get('database_version'),
-                        'sql': sql, 'result': result})
+                    with write_lock:
+                        _write_line(execution_file, {'execution_id': execution_id, 'task_key': asdict(key),
+                            'version_id': version_id, 'database': database, 'database_version': binding.get('database_version'),
+                            'sql': sql, 'result': result})
+                        execution_file.flush()
                     return result
                 for rid in version['round_ids']:
                     event = records.find_source(version_id, 'round_result', rid)
@@ -419,22 +449,65 @@ def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None
                     for candidate in round_['candidates']:
                         vote_ref = candidate['vote_execution_ref']
                         candidate['vote_execution_summary'] = _vote_summary(records.get_event(version_id, vote_ref), vote_ref)
-                        candidate['evaluation'] = evaluate_candidate(candidate, binding, execute=execute, cache=cache)
                     rounds[rid] = round_
+                # One shared pool per group, not one pool per question. Pre-fill
+                # the existing evaluator's exact-SQL cache; comparison semantics
+                # and timeout/error caching remain unchanged, with no retries.
+                if query_pool is not None and any(r['candidates'] for r in rounds.values()):
+                    sqls = dict.fromkeys([binding['reference_sql']] +
+                        [c.get('candidate_sql') for r in rounds.values() for c in r['candidates']])
+                    futures = {sql:query_pool.submit(execute, binding['database'], sql) for sql in sqls}
+                    cache_identity = json.dumps([binding['database'], binding.get('database_version')], sort_keys=True)
+                    for sql, future in futures.items():
+                        cache[(cache_identity, sql)] = future.result()
+                for round_ in rounds.values():
+                    for candidate in round_['candidates']:
+                        candidate['evaluation'] = evaluate_candidate(candidate, binding, execute=execute, cache=cache)
                 mode_rows = expand_modes(version, rounds)
                 emitted = set()
-                for row in mode_rows:
-                    for round_ in row['rounds']:
-                        if round_ is None or round_['round_execution_id'] in emitted:
-                            continue
-                        emitted.add(round_['round_execution_id'])
-                        provenance = {'task_key': asdict(key), 'version_id': version_id,
-                                      'round_execution_id': round_['round_execution_id']}
-                        _write_line(round_file, {**provenance, **{k:v for k,v in round_.items() if k != 'candidates'}})
-                        for candidate in round_['candidates']:
-                            _write_line(candidate_file, {**provenance, **candidate})
-                rows.extend(mode_rows)
+                with write_lock:
+                    for row in mode_rows:
+                        for round_ in row['rounds']:
+                            if round_ is None or round_['round_execution_id'] in emitted:
+                                continue
+                            emitted.add(round_['round_execution_id'])
+                            provenance = {'task_key': asdict(key), 'version_id': version_id,
+                                          'round_execution_id': round_['round_execution_id']}
+                            _write_line(round_file, {**provenance, **{k:v for k,v in round_.items() if k != 'candidates'}})
+                            for candidate in round_['candidates']:
+                                _write_line(candidate_file, {**provenance, **candidate})
+                    round_file.flush()
+                    candidate_file.flush()
+                return mode_rows
+
+            def group_export(group):
+                group_policy = policy['groups'][group]
+                group_keys = [key for key in keys if key.group == group]
+                group_rows = []
+                query_context = (ThreadPoolExecutor(max_workers=group_policy['query_workers'])
+                                 if group_policy['query_workers'] else nullcontext(None))
+                with query_context as query_pool, ThreadPoolExecutor(max_workers=group_policy['question_workers']) as question_pool:
+                    def work(key):
+                        result = question(key, group_policy, query_pool)
+                        with write_lock:
+                            state = progress['groups'][group]
+                            state['completed'] += 1
+                            if state['completed'] % 25 == 0 or state['completed'] == state['total']:
+                                _write_json(staging / 'progress.json', progress)
+                                if evaluation_profile != 'batch':
+                                    print(f"SQL export {group}: {state['completed']}/{state['total']}", flush=True)
+                        return result
+                    for result in question_pool.map(work, group_keys):
+                        group_rows.extend(result)
+                return group_rows
+
+            # Group and question executors are separate from SQL executors;
+            # waiting coordinators cannot consume the query pool's slots.
+            with ThreadPoolExecutor(max_workers=len(policy['groups']) if policy['parallel_groups'] else 1) as group_pool:
+                rows = [row for group_rows in group_pool.map(group_export, policy['groups']) for row in group_rows]
         evaluation_finished = datetime.now(timezone.utc).isoformat()
+        progress['phase'] = 'request_accounting'
+        _write_json(staging / 'progress.json', progress)
         observed_start = evaluation_finished
         with (staging / 'requests.jsonl').open('w') as request_file:
             def observed():
@@ -446,7 +519,8 @@ def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None
         summary['actual_cost'] = cost
         summary['evaluation_observation'] = {'started_at': evaluation_started, 'finished_at': evaluation_finished,
             'boundary': 'SQL queries observe database contents during this export; no global database snapshot',
-            'cache': 'one question at a time; exact database identity/version and SQL; historical votes not reused'}
+            'cache': 'question-local; exact database identity/version and SQL; historical votes not reused',
+            'evaluation_policy':policy}
         summary['cost_observation'] = {'started_at': observed_start, 'finished_at': datetime.now(timezone.utc).isoformat(),
             'scope': 'whole batch, including historical and unfinished versions, even for diagnostic exports',
             'boundary': 'sequential per-group version lists and bounded per-version request-event snapshots; not a global transaction'}
@@ -459,12 +533,16 @@ def export_current(batch_root: Path, *, diagnostic_targets: list[TaskKey] | None
         for group, question_id in sorted(failed_questions):
             _write_line(stream, {'group': group, 'question_id': question_id})
     _write_json(staging / 'summary.json', summary)
+    timeouts = {value['timeout_seconds'] for value in policy['groups'].values()}
     _write_json(staging / 'versions.json', {'format': 'dail-current-export-v1', 'versions': version_list,
         'manifest_sha256': hashlib.sha256((root / 'manifest.json').read_bytes()).hexdigest(),
-        'evaluation_source': source, 'sql_timeout_seconds': timeout,
+        'evaluation_source': source, 'sql_timeout_seconds': next(iter(timeouts)) if len(timeouts) == 1 else None,
+        'evaluation_policy':policy,
         'comparison': {'rule': 'compare_results', 'module': comparison.__name__,
                        'source_sha256': hashlib.sha256(Path(comparison.__file__).read_bytes()).hexdigest()},
         'scope': 'full' if diagnostic_targets is None else 'diagnostic'})
+    progress['phase'] = 'complete'
+    _write_json(staging / 'progress.json', progress)
     for path in staging.iterdir():
         with path.open('rb') as stream:
             os.fsync(stream.fileno())
