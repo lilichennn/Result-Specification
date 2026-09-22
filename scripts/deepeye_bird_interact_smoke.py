@@ -1,6 +1,6 @@
 """Bounded PostgreSQL integration smoke using the original DeepEye runners.
 
-Run with code/.venv/bin/python. This is not a gold-SQL accuracy evaluation.
+Run with uv run python. This is not a gold-SQL accuracy evaluation.
 """
 from __future__ import annotations
 
@@ -303,7 +303,7 @@ def run_smoke(args, env):
             handle.write(text)
     logger.add(safe_sink, level="INFO", format="{time:HH:mm:ss} | {level} | {message}", diagnose=False, backtrace=False)
 
-    preprocessed = args.preprocessed_dir or CODE_ROOT / "scripts" / f"bird_interact_{args.variant}" / "preprocessed_data"
+    preprocessed = args.preprocessed_dir or CODE_ROOT / "data" / f"bird_interact_{args.variant}"
     cfg = build_runtime_config(env, args.variant, preprocessed, output, max_tokens=args.max_tokens, thinking_budget=args.thinking_budget)
     instance_id = args.instance_id or {"lite": "alien_1", "full": "exchange_traded_funds_1"}[args.variant]
     recorder = CallRecorder(args.max_api_calls)
@@ -425,7 +425,7 @@ def main():
         parser.error("thinking-budget must be 1..32768 when supplied")
     if args.output_dir is None:
         stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
-        args.output_dir = CODE_ROOT / "baselines_reproduce/deepeye_bird_interact" / f"{stamp}_{args.variant}"
+        args.output_dir = CODE_ROOT / "outputs/deepeye_bird_interact" / f"{stamp}_{args.variant}"
     env = {}
     try:
         env = read_environment(args.env_file)

@@ -27,7 +27,7 @@ REQUIRED_INSTANCE_FIELDS = {
 
 def preprocess_spider2_snow(
     spider2_root: str | Path,
-    output_dir: str | Path = "preprocessed_data",
+    output_dir: str | Path | None = None,
     max_database_columns: int = DEFAULT_MAX_DATABASE_COLUMNS,
 ) -> dict[str, Any]:
     """Preprocess Spider2-Snow while excluding oversized database catalogs."""
@@ -35,7 +35,10 @@ def preprocess_spider2_snow(
         raise ValueError("max_database_columns must be positive")
 
     spider2_root = Path(spider2_root).resolve()
-    output_dir = Path(output_dir).resolve()
+    output_dir = Path(
+        output_dir if output_dir is not None
+        else Path(__file__).resolve().parents[2] / "data" / "spider2_snow"
+    ).resolve()
     snow_root = _resolve_snow_root(spider2_root)
     dataset_path = snow_root / "spider2-snow.jsonl"
     database_root = snow_root / "resource" / "databases"

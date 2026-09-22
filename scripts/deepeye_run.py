@@ -591,7 +591,7 @@ def build_runtime_config(environment, args, run_dir: Path):
     from scripts.deepeye_bird_interact_smoke import build_runtime_config as smoke_config
 
     native_output = Path(run_dir) / ".native_non_authoritative"
-    preprocessed = CODE_ROOT / "scripts/bird_interact_lite/preprocessed_data"
+    preprocessed = CODE_ROOT / "data/bird_interact_lite"
     config = smoke_config(environment, "lite", preprocessed, native_output,
                           max_tokens=args.max_tokens, thinking_budget=args.thinking_budget)
     config.run_config.parallelism = runtime_limits(args)['coordinator_workers']

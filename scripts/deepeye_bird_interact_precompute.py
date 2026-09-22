@@ -34,7 +34,7 @@ def load_inputs():
     tasks = []
     databases = {}
     for variant in ('lite', 'full'):
-        source = CODE_ROOT / 'scripts' / f'bird_interact_{variant}' / 'preprocessed_data'
+        source = CODE_ROOT / 'data' / f'bird_interact_{variant}'
         dataset = BirdInteractDataset(BirdInteractDatasetConfig(split=variant, root_path=str(source)))
         for item in dataset:
             tasks.append((variant, item))
@@ -324,7 +324,7 @@ def verify(args, tasks, databases, *, embedding_service=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stage', choices=('collect', 'compute', 'verify'), required=True)
-    parser.add_argument('--output-dir', type=Path, default=CODE_ROOT / 'baselines_reproduce/deepeye_bird_interact/precomputed')
+    parser.add_argument('--output-dir', type=Path, default=CODE_ROOT / 'cache/deepeye_bird_interact/precomputed')
     parser.add_argument('--env-file', type=Path, default=CODE_ROOT / 'config/.env')
     parser.add_argument('--sample-cap', type=int, default=1000)
     parser.add_argument('--initial-concurrency', type=int, default=200)

@@ -92,6 +92,13 @@ def _source_file_digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _task_meta_dir(task: LinkingTask, code_root: str | Path) -> Path:
+    """Use the prepared Meta binding; older task records retain their default."""
+    if task.source_refs.get("meta_dir"):
+        return Path(task.source_refs["meta_dir"])
+    return Path(code_root) / "data" / task.key.group / "meta" / task.database["database_id"]
+
+
 def load_source_snapshot(
     source_batch: str | Path,
     code_root: str | Path,
@@ -147,7 +154,7 @@ def load_source_snapshot(
     for task in tasks.values():
         if task.schema_ref in metadata:
             continue
-        meta_dir = code_root / "scripts" / task.key.group / "preprocessed_data/meta" / task.database["database_id"]
+        meta_dir = _task_meta_dir(task, code_root)
         raw, hashes = _load_database_metadata(meta_dir)
         metadata[task.schema_ref] = raw
         identities.update(hashes)
@@ -343,10 +350,7 @@ def build_filtered_context(
     if task.database["dialect"] != "sqlite":
         raise ValueError(f'Unsupported database dialect: {task.database["dialect"]}')
     if meta_dir is None:
-        meta_dir = (
-            Path(code_root) / "scripts" / task.key.group / "preprocessed_data/meta"
-            / task.database["database_id"]
-        )
+        meta_dir = _task_meta_dir(task, code_root)
     database_context = _sqlite_context_builder(str(Path(code_root).resolve()))
     return database_context(
         Path(task.database["path"]),

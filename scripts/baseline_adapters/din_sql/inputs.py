@@ -118,7 +118,7 @@ def literal_values(path):
 
 def load_templates(code_root):
     official = code_root/'baselines/DIN-SQL'
-    legacy = code_root/'baselines_reproduce/DIN-SQL'
+    legacy = code_root/'scripts/baseline_adapters/din_sql/stages'
     spider = literal_values(official/'DIN-SQL.py')
     source = (official/'DIN-SQL.py').read_text()
     match = re.search(r'def debuger\(.*?instruction = (""".*?""")', source, re.S)
@@ -138,7 +138,7 @@ def legacy_pure_functions(code_root, filename, names, extra=None):
     Used for already-tested context formatting and parsing; the file is frozen
     by the batch source hashes. This avoids a second copy of long method code.
     """
-    path = code_root/'baselines_reproduce/DIN-SQL'/filename
+    path = code_root/'scripts/baseline_adapters/din_sql/stages'/filename
     tree = ast.parse(path.read_text())
     selected = [node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name in names]
     if len(selected) != len(names):
@@ -219,7 +219,7 @@ def prepare_inputs(config, code_root):
         identities[str(path)] = hashlib.sha256(raw).hexdigest()
         return json.loads(raw)
     templates = load_templates(code_root)
-    for directory in ('baselines/DIN-SQL', 'baselines_reproduce/DIN-SQL'):
+    for directory in ('baselines/DIN-SQL', 'scripts/baseline_adapters/din_sql/stages'):
         for path in (code_root/directory).glob('*.py'):
             identities[str(path)] = file_hash(path)
     sqlite_context = legacy_pure_functions(code_root, 'schema_linking.py',
@@ -227,7 +227,7 @@ def prepare_inputs(config, code_root):
     spider = {}
     if any(g['name'].startswith('spider') for g in config['groups']):
         for filename in ('tables.json', 'test_tables.json'):
-            for schema in read('../Spider/data/'+filename):
+            for schema in read(str(Path(config.get('spider_schema_root', '../Spider/data'))/filename)):
                 spider[schema['db_id']] = spider_context(schema)
                 primary = [schema['column_names_original'][i] for i in schema.get('primary_keys',[])]
                 spider[schema['db_id']+':primary'] = 'Primary_keys = [' + ','.join(
@@ -236,14 +236,14 @@ def prepare_inputs(config, code_root):
     tasks, evaluation = {}, {}
     for group in config['groups']:
         name = group['name']
-        base = Path('scripts')/name
-        rows = read(str(base/'preprocessed_data'/f'{name}.json'))
+        base = Path(config.get('data_root', 'data'))/name
+        rows = read(str(group.get('questions', base/f'{name}.json')))
         if 'ids' in group:
             selected = {str(i) for i in group['ids']}
             if not selected or selected-{str(r['index']) for r in rows}:
                 raise ValueError(f'Invalid selected IDs: {name}')
             rows = [r for r in rows if str(r['index']) in selected]
-        rc_rows = read(str(base/'rc.json'))
+        rc_rows = read(str(group.get('rc', base/'rc.json')))
         rc = {str(r['index']): select_rc3(r) for r in rc_rows}
         if len(rc) != len(rc_rows):
             raise ValueError(f'Duplicate RC IDs: {name}')
@@ -251,7 +251,7 @@ def prepare_inputs(config, code_root):
         gold = {str(r.get('index', r.get('question_id', i))): r for i, r in enumerate(gold_rows)}
         dependencies = {}
         if group['dialect'] == 'sqlite':
-            dependencies = {str(r['index']): r for r in read(str(base/'gold_sql_schema_linking.json'))}
+            dependencies = {str(r['index']): r for r in read(str(group.get('gold_dependencies', base/'gold_sql_schema_linking.json')))}
         for row in rows:
             key = TaskKey(name, row['index'])
             if key in tasks:
@@ -276,8 +276,8 @@ def prepare_inputs(config, code_root):
             else:
                 tables = physical_tables(sql, 'postgres')
             ref = f'{name}:{row["db_id"]}'
+            meta = (code_root/Path(group.get('meta', base/'meta'))/row['db_id']).resolve()
             if ref not in schemas:
-                meta = code_root/base/'preprocessed_data/meta'/row['db_id']
                 for path in meta.glob('*.csv'):
                     identities[str(path)] = file_hash(path)
                 context = (public_pg_context(database, meta) if group['dialect'] == 'postgresql'
@@ -285,11 +285,12 @@ def prepare_inputs(config, code_root):
                 schemas[ref] = {'context':context, 'spider':spider.get(row['db_id']),
                                 'primary':spider.get(row['db_id']+':primary','Primary_keys = []')}
             tasks[key] = DinTask(key, row['question'], row.get('evidence',''), database, ref,
-                                contract['rc_round3'], classify_gold(sql, tables), {'input':str(base)})
+                                contract['rc_round3'], classify_gold(sql, tables),
+                                {'input':str(base), 'meta_dir':str(meta)})
             evaluation[f'{name}/{key.question_id}'] = {'gold_sql':sql, 'database':database}
     prepared = PreparedInputs(tasks, schemas, evaluation, templates, {}, identities)
-    if config.get('reuse_legacy', True):
-        prepared.legacy = read_legacy(code_root/'baselines_reproduce/DIN-SQL', prepared)
+    if config.get('reuse_legacy', False):
+        prepared.legacy = read_legacy(code_root/config.get('legacy_root', 'outputs/din_sql/legacy'), prepared)
     return prepared
 
 

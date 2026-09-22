@@ -19,7 +19,7 @@ def prepare(config_path, batch_id, *, code_root=CODE_ROOT, groups=None):
         config['groups'] = [g for g in config['groups'] if g['name'] in groups]
         if not config['groups']:
             raise ValueError('No selected groups')
-    root = code_root/'baselines_reproduce/din_sql/batches'/batch_id
+    root = code_root/'outputs/din_sql/batches'/batch_id
     if (root/'prepared/import_report.json').exists():
         manifest = read_json(root/'manifest.json')
         if manifest['config'] != config:

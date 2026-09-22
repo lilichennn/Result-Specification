@@ -182,7 +182,7 @@ def _root_with_groups(root: Path) -> Path:
     root = Path(root)
     if (root / "bird_dev" / "offline.json").is_file():
         return root
-    nested = root / "docs" / "analysis_rc3_five_groups_20260915"
+    nested = root / "outputs" / "analysis" / "deepeye"
     if (nested / "bird_dev" / "offline.json").is_file():
         return nested
     raise ValueError(f"Offline group root not found below {root}")

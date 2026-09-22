@@ -1,6 +1,6 @@
 """One-time local DAIL Linking comparison using previously generated RC3 filters.
 
-Run from code/: uv run python -m scripts.rc_evaluation.dail_sql.linking_handoff
+Run with python -m scripts.rc_evaluation.dail_sql.linking_handoff --help.
 --smoke-per-group 2 checks the original linking and writes only a small subset.
 Rerunning without that option resumes the remaining questions and exports.
 """
@@ -21,12 +21,6 @@ from scripts.baseline_adapters.dail_sql.tokenizer import LocalCoreNLP
 from scripts.rc_evaluation.din_sql_linking.reporting import _canonical_gold, _usage, _ratio
 
 ROOT = Path(__file__).resolve().parents[3]
-BASE = ROOT / 'baselines_reproduce/dail_sql'
-SOURCE = BASE / 'analysis_dail_rc3_five_groups_20260916'
-DESTINATION = BASE / 'analysis_dail_rc3_five_groups_20260917'
-BATCH = BASE / 'batches/qwen38_2p4t_a95b_rc3_five_groups_20260916_r1'
-FILTER = ROOT / 'baselines_reproduce/din_sql/din_qwen38_2p4t_rc3_five_groups_handoff_20260917'
-WORK = BASE / 'linking_comparison_20260917'
 ZERO = {'prompt_tokens': 0, 'completion_tokens': 0, 'total_tokens': 0}
 
 
@@ -68,8 +62,8 @@ def catalog(schema):
     return result
 
 
-def load_inputs():
-    manifest = read(BATCH / 'manifest.json')
+def load_inputs(source, batch, filter_source):
+    manifest = read(batch / 'manifest.json')
     preparation = Path(manifest['prepared_root'])
     for relative, expected in manifest['prepared_files'].items():
         if _file_hash(preparation / relative) != expected:
@@ -79,20 +73,20 @@ def load_inputs():
         if relative.endswith('native.py') or '/linking_utils/' in relative:
             if _file_hash(ROOT / relative) != expected:
                 raise ValueError(f'Native DAIL implementation changed: {relative}')
-    seal, index = read(FILTER / 'COMPLETE.json'), read(FILTER / 'index.json')
-    if not seal['complete'] or seal['index_sha256'] != _file_hash(FILTER / 'index.json'):
+    seal, index = read(filter_source / 'COMPLETE.json'), read(filter_source / 'index.json')
+    if not seal['complete'] or seal['index_sha256'] != _file_hash(filter_source / 'index.json'):
         raise ValueError('Filter source seal mismatch')
     expected_files = {entry['path']: entry for entry in index['files']}
     for name in ('records/questions.jsonl', 'records/nodes.jsonl', 'evaluation/linking_details.jsonl',
                  'raw_records/linking_extension_prepared_inputs.json'):
-        if _file_hash(FILTER / name) != expected_files[name]['sha256']:
+        if _file_hash(filter_source / name) != expected_files[name]['sha256']:
             raise ValueError(f'Filter source changed: {name}')
-    source_questions = {key(row): row for row in lines(FILTER / 'records/questions.jsonl')}
-    filters = {key(row): row for row in lines(FILTER / 'records/nodes.jsonl')
+    source_questions = {key(row): row for row in lines(filter_source / 'records/questions.jsonl')}
+    filters = {key(row): row for row in lines(filter_source / 'records/nodes.jsonl')
                if row['node'] == 'schema_filter_rc3'}
-    annotations = {key(row): row for row in lines(FILTER / 'evaluation/linking_details.jsonl')}
-    versions = {key(row): row for row in lines(SOURCE / 'record_export/versions.jsonl')}
-    prepared_filter = read(FILTER / 'raw_records/linking_extension_prepared_inputs.json')
+    annotations = {key(row): row for row in lines(filter_source / 'evaluation/linking_details.jsonl')}
+    versions = {key(row): row for row in lines(source / 'record_export/versions.jsonl')}
+    prepared_filter = read(filter_source / 'raw_records/linking_extension_prepared_inputs.json')
     tasks, schemas = {}, {}
     group_config = {entry['name']: entry for entry in manifest['config']['groups']}
     for group, binding in manifest['groups'].items():
@@ -130,10 +124,10 @@ def load_inputs():
         list(pool.map(check_database, cv_paths))
     return tasks, schemas, {
         'format': 'dail-linking-comparison-v1', 'questions': len(tasks),
-        'source_analysis': str(SOURCE), 'filter_source': str(FILTER),
-        'dail_manifest_sha256': _file_hash(BATCH / 'manifest.json'),
-        'source_versions_sha256': _file_hash(SOURCE / 'record_export/versions.jsonl'),
-        'filter_index_sha256': _file_hash(FILTER / 'index.json'),
+        'source_analysis': str(source), 'filter_source': str(filter_source),
+        'dail_manifest_sha256': _file_hash(batch / 'manifest.json'),
+        'source_versions_sha256': _file_hash(source / 'record_export/versions.jsonl'),
+        'filter_index_sha256': _file_hash(filter_source / 'index.json'),
         'preparation_identity_sha256': _file_hash(preparation / 'identity.json'),
         'primary_metric': 'column_macro_recall', 'new_model_requests': 0,
         'execution': 'native.link_question over cropped schema; original question tokens reused',
@@ -148,7 +142,7 @@ class QuestionTokens:
         return list(self.linking['question']), list(self.linking['question_for_copying'])
 
 
-def native_run(item, schema, tokens):
+def native_run(item, schema, tokens, stopwords_path):
     task = item['task']
     question = task['question'] + (' ' + task['evidence'] if task.get('evidence') else '')
     connection = None
@@ -158,7 +152,7 @@ def native_run(item, schema, tokens):
             connection.execute('PRAGMA query_only=ON')
         return native.link_question(question, schema, QuestionTokens(item['linking']),
             compute_cv_link=item['compute_cv_link'], connection=connection,
-            tokenized_schema=tokens, stopwords_path=BASE / 'assets/nltk_data')
+            tokenized_schema=tokens, stopwords_path=stopwords_path)
     finally:
         if connection is not None:
             connection.close()
@@ -188,12 +182,12 @@ def evaluate(identity, item, cropped, raw, status, error):
             'error': error}
 
 
-def run_item(identity, item, all_tokens, verify_base=False):
+def run_item(identity, item, all_tokens, verify_base=False, *, stopwords_path):
     start = time.monotonic()
     filter_node = item['filter']
     source_tokens = all_tokens[item['schema_id']]
     if verify_base:
-        baseline = native_run(item, item['schema'], source_tokens)
+        baseline = native_run(item, item['schema'], source_tokens, stopwords_path)
         if baseline != item['linking']:
             raise ValueError(f'Original native Linking cannot be reproduced: {identity}')
     cropped, raw, error = None, None, None
@@ -203,7 +197,7 @@ def run_item(identity, item, all_tokens, verify_base=False):
         tokens = {'columns': [source_tokens['columns'][i] for i in cropped['column_local_to_full']],
                   'tables': [source_tokens['tables'][i] for i in cropped['table_local_to_full']]}
         try:
-            raw = native_run(item, cropped['schema'], tokens)
+            raw = native_run(item, cropped['schema'], tokens, stopwords_path)
             status = 'succeeded'
         except Exception as exc:
             status, error = 'failed', {'type': type(exc).__name__, 'message': str(exc)}
@@ -225,16 +219,15 @@ def run_item(identity, item, all_tokens, verify_base=False):
             }, 'evaluation': evaluation}
 
 
-def schema_tokens(schemas, pending):
-    path = WORK / 'schema_tokens.json'
+def schema_tokens(schemas, pending, work, resources):
+    path = work / 'schema_tokens.json'
     cached = read(path) if path.exists() else {}
     required = {item['schema_id']: schemas[item['schema_id']] for item in pending}
     names = sorted({name for schema in required.values() for name in
                     [*(value for _, value in schema['column_names']), *schema['table_names']]})
     missing = [name for name in names if name not in cached]
     if missing:
-        resources = read(BASE / 'assets/resources_20260916.json')
-        with LocalCoreNLP(resources, WORK / 'corenlp', root=ROOT) as tokenizer:
+        with LocalCoreNLP(resources, work / 'corenlp', root=ROOT) as tokenizer:
             for number, name in enumerate(missing, 1):
                 cached[name] = tokenizer.tokenize(name)
                 if number % 500 == 0:
@@ -247,16 +240,35 @@ def schema_tokens(schemas, pending):
             for sid, schema in required.items()}
 
 
-def main():
+def build_parser():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--source', type=Path, required=True, help='Sealed Generation analysis directory')
+    parser.add_argument('--output', type=Path, required=True, help='New handoff directory; must not exist')
+    parser.add_argument('--batch', type=Path, required=True, help='Frozen DAIL Generation batch')
+    parser.add_argument('--filter-handoff', type=Path, required=True, help='Sealed DIN schema-filter handoff')
+    parser.add_argument('--work-dir', type=Path, required=True, help='Resumable local comparison directory')
+    parser.add_argument('--resources', type=Path, help='Verified local resource manifest; required unless exporting only')
+    parser.add_argument('--nltk-data', type=Path, help='Stopwords directory; otherwise use resource manifest or cache/dail_sql/assets/nltk_data')
+    parser.add_argument('--guide', type=Path, help='Optional handoff guide; defaults to docs/evaluation.md')
     parser.add_argument('--workers', type=int, default=12)
     parser.add_argument('--smoke-per-group', type=int, default=0)
     parser.add_argument('--export-only', action='store_true')
-    args = parser.parse_args()
-    WORK.mkdir(parents=True, exist_ok=True)
-    store_path = WORK / 'linking.sqlite3'
+    return parser
+
+
+def main(argv=None):
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if args.workers < 1 or args.smoke_per_group < 0:
+        parser.error('workers must be positive and smoke-per-group nonnegative')
+    if not args.export_only and args.resources is None:
+        parser.error('--resources is required unless --export-only is used')
+    args.work_dir.mkdir(parents=True, exist_ok=True)
+    store_path = args.work_dir / 'linking.sqlite3'
     if not args.export_only:
-        tasks, schemas, frozen = load_inputs()
+        resources = read(args.resources)
+        stopwords = args.nltk_data or Path(resources.get('nltk_data', ROOT / 'cache/dail_sql/assets/nltk_data'))
+        tasks, schemas, frozen = load_inputs(args.source, args.batch, args.filter_handoff)
         print(encoded({'phase': 'validated', 'questions': len(tasks), 'schemas': len(schemas)}), flush=True)
         with sqlite3.connect(store_path) as db:
             db.execute('PRAGMA journal_mode=WAL')
@@ -288,11 +300,11 @@ def main():
                         selected.append(identity)
                         counts[group] = counts.get(group, 0) + 1
             pending = [identity for identity in selected if identity not in done]
-            tokens = schema_tokens(schemas, [tasks[identity] for identity in pending])
-            native._functions(str((BASE / 'assets/nltk_data').resolve()))
+            tokens = schema_tokens(schemas, [tasks[identity] for identity in pending], args.work_dir, resources)
+            native._functions(str(stopwords.resolve()))
             with ThreadPoolExecutor(max_workers=args.workers) as pool:
                 futures = {pool.submit(run_item, identity, tasks[identity], tokens,
-                                       bool(args.smoke_per_group)): identity for identity in pending}
+                                       bool(args.smoke_per_group), stopwords_path=stopwords): identity for identity in pending}
                 for future in as_completed(futures):
                     identity, result = futures[future], future.result()
                     raw = encoded(result)
@@ -306,7 +318,7 @@ def main():
         if args.smoke_per_group:
             return
     from scripts.rc_evaluation.dail_sql.linking_package import export_package
-    print(export_package(SOURCE, DESTINATION, store_path), flush=True)
+    print(export_package(args.source, args.output, store_path, guide=args.guide), flush=True)
 
 
 if __name__ == '__main__':

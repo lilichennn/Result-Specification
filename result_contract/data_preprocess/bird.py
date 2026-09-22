@@ -12,11 +12,14 @@ REQUIRED_INSTANCE_FIELDS = {"db_id", "question", "evidence"}
 def preprocess_bird(
     bird_root: str | Path,
     split: str = "dev",
-    output_dir: str | Path = "preprocessed_data",
+    output_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     """Preprocess one BIRD split and copy its database metadata."""
     bird_root = Path(bird_root).resolve()
-    output_dir = Path(output_dir).resolve()
+    output_dir = Path(
+        output_dir if output_dir is not None
+        else Path(__file__).resolve().parents[2] / "data" / f"bird_{split}"
+    ).resolve()
     split_root = bird_root / "data" / split
     dataset_path = split_root / f"{split}.json"
     database_root = split_root / f"{split}_databases"

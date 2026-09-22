@@ -13,7 +13,6 @@ from .store import AnnotationStore
 
 
 _STATUSES = ("resolved", "needs_review", "invalid_sql", "pending")
-_DEFAULT_SOURCE = Path(__file__).resolve().parents[3] / "docs" / "analysis_rc3_five_groups_20260915"
 
 
 def _ratio(numerator: int | float, denominator: int | float) -> float | None:
@@ -480,7 +479,7 @@ def export_annotations(
     output: str | Path,
     *,
     tasks: Sequence[AnnotationTask] | None = None,
-    source_root: str | Path = _DEFAULT_SOURCE,
+    source_root: str | Path | None = None,
     scope: str = "pilot",
 ) -> dict[str, Any]:
     """Write one immutable pilot or full annotation/report bundle."""
@@ -489,6 +488,8 @@ def export_annotations(
         if not verification["ok"]:
             raise ValueError("annotation store verification failed")
         manifest = store.manifest
+        if tasks is None and source_root is None:
+            raise ValueError("source_root is required when annotation tasks are not supplied")
         frozen = _selected_tasks(manifest, list(tasks) if tasks is not None else load_offline_groups(source_root))
         selected = _scoped_tasks(manifest, frozen, scope)
         annotations = {task.task_key: store.annotation_for_task(task.task_key) for task in selected}

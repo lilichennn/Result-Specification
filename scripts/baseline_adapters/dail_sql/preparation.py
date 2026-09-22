@@ -281,7 +281,7 @@ def prepare(manifest, output: Path, resources: dict) -> dict:
     cv_training, cv_fingerprints = _cv_inputs(manifest)
     safe_groups = {name: {**group, "rows": [runtime_task(row) for row in group["rows"]]}
                    for name, group in manifest["groups"].items()}
-    stopwords = Path(resources.get("nltk_data", ROOT / "baselines_reproduce/dail_sql/assets/nltk_data"))
+    stopwords = Path(resources.get("nltk_data", ROOT / "cache/dail_sql/assets/nltk_data"))
     identity = {"algorithm": ALGORITHM_VERSION, "input_manifest_hash": _digest(manifest),
                 "manifest": {**manifest, "groups": safe_groups},
                 "schemas": source_hashes, "native": native.source_fingerprints(), "block_size": block_size,

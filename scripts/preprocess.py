@@ -49,12 +49,12 @@ def preprocess_dataset(
     resolved_dataset_root = Path(
         dataset_root if dataset_root is not None else DEFAULT_DATASET_ROOTS[dataset]
     )
-    # Preserve the existing BIRD-Interact workspace names used by RC generation.
+    # Preserve the BIRD-Interact group names used by RC generation.
     output_dataset = "bird_interact" if dataset == "birdinteract" else dataset
     resolved_output_dir = Path(
         output_dir
         if output_dir is not None
-        else SCRIPT_DIR / f"{output_dataset}_{split}" / "preprocessed_data"
+        else CODE_ROOT / "data" / f"{output_dataset}_{split}"
     )
 
     if dataset == "bird":
@@ -127,7 +127,7 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help=(
             "Override the output directory; defaults to "
-            "<this script's directory>/<dataset>_<split>/preprocessed_data "
+            "data/<dataset>_<split>/ at the repository root "
             "(birdinteract uses bird_interact_<split>). "
             "An explicit relative path uses the working directory."
         ),

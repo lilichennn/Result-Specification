@@ -94,7 +94,7 @@ def implementation_hashes(code_root: str | Path) -> dict[str, str]:
         "result_contract/rc/filter.py",
         "result_contract/rc/rc_round1.py",
         "result_contract/rc/rc_round2.py",
-        "baselines_reproduce/DIN-SQL/schema_linking.py",
+        "scripts/baseline_adapters/din_sql/stages/schema_linking.py",
         "uv.lock",
     ))
     missing = [str(path) for path in paths if not path.is_file()]
@@ -131,7 +131,7 @@ def prepare_batch(
     if not batch_id or Path(batch_id).name != batch_id or batch_id in (".", ".."):
         raise ValueError("batch-id must be one directory name")
     code_root = Path(code_root).resolve()
-    root = code_root / "baselines_reproduce/din_sql_linking/batches" / batch_id
+    root = code_root / "outputs/din_sql_linking/batches" / batch_id
     source_manifest = _read_json(Path(source_batch) / "manifest.json")
     settings = validate_execution_profile(
         DinSettings(**source_manifest.get("settings", {}))

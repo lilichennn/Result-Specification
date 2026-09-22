@@ -12,8 +12,7 @@ from .store import AnnotationStore
 
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_SOURCE = ROOT / "docs" / "analysis_rc3_five_groups_20260915"
-DEFAULT_STORE = ROOT / "baselines_reproduce" / "schema_linking_gold_annotations" / "pilot.sqlite3"
+DEFAULT_STORE = ROOT / "outputs" / "schema_linking_gold_annotations" / "pilot.sqlite3"
 DEFAULT_ENV = ROOT / "config" / ".env"
 
 
@@ -22,14 +21,14 @@ def build_parser() -> argparse.ArgumentParser:
     commands = parser.add_subparsers(dest="command", required=True)
 
     prepare = commands.add_parser("prepare-pilot", help="Freeze the full store with a deterministic pilot-first plan")
-    prepare.add_argument("--source-root", type=Path, default=DEFAULT_SOURCE)
+    prepare.add_argument("--source-root", type=Path, required=True, help="Offline analysis directory containing the five group directories")
     prepare.add_argument("--store", type=Path, default=DEFAULT_STORE)
     prepare.add_argument("--env-file", type=Path, default=DEFAULT_ENV)
     prepare.add_argument("--size", type=int, default=TOTAL_TASKS)
     prepare.add_argument("--seed", type=int, default=PILOT_SEED)
 
     run = commands.add_parser("run", help="Run or resume bounded annotation requests")
-    run.add_argument("--source-root", type=Path, default=DEFAULT_SOURCE)
+    run.add_argument("--source-root", type=Path, required=True)
     run.add_argument("--store", type=Path, default=DEFAULT_STORE)
     run.add_argument("--env-file", type=Path, default=DEFAULT_ENV)
     run.add_argument(
@@ -46,6 +45,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     export = commands.add_parser("export", help="Export accepted labels and reports")
     export.add_argument("--store", type=Path, default=DEFAULT_STORE)
+    export.add_argument("--source-root", type=Path, required=True)
     export.add_argument("--output", type=Path, required=True)
     export.add_argument("--scope", choices=("pilot", "full"), default="pilot")
     return parser
@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None) -> int:
             # Reporting is a later task; keep it out of every other CLI path.
             from .reporting import export_annotations
 
-            result = export_annotations(args.store, args.output, scope=args.scope)
+            result = export_annotations(args.store, args.output, scope=args.scope, source_root=args.source_root)
     except Exception as error:
         # Upstream exceptions and URLs can contain credentials. Never print
         # their messages from this model-facing command.

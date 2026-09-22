@@ -138,7 +138,7 @@ def main(argv=None):
                 if args.sql_workers is not None:
                     resources['sql_workers'] = args.sql_workers
                 config['resources'] = resources
-                parent = args.output or campaign.ROOT / 'baselines_reproduce/dail_sql' / ('smoke' if args.command == 'smoke' else 'batches')
+                parent = args.output or campaign.ROOT / 'outputs/dail_sql' / ('smoke' if args.command == 'smoke' else 'batches')
                 result = campaign.run_batch(config, args.prepared, parent / batch_id)
             elif args.command == 'resume':
                 result = campaign.resume_batch(args.batch)

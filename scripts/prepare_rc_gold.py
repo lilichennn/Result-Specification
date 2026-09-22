@@ -499,19 +499,16 @@ def prepare_rc_gold(
             else None
         )
     )
-    script_dir = Path(__file__).resolve().parent
+    data_dir = Path(__file__).resolve().parent.parent / "data" / dataset_split
     resolved_input = (
         _resolve_from_cwd(input_path, working_dir)
         if input_path is not None
-        else script_dir
-        / dataset_split
-        / "preprocessed_data"
-        / f"{dataset_split}.json"
+        else data_dir / f"{dataset_split}.json"
     ).resolve()
     resolved_output = (
         _resolve_from_cwd(output_dir, working_dir)
         if output_dir is not None
-        else script_dir / dataset_split
+        else data_dir
     ).resolve()
     output_paths = {
         (resolved_output / "gold_sql.json").resolve(),

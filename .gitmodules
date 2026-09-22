@@ -1,3 +1,6 @@
 [submodule "baselines/DIN-SQL"]
 	path = baselines/DIN-SQL
 	url = https://github.com/MohammadrezaPourreza/Few-shot-NL2SQL-with-prompting.git
+[submodule "baselines/DAIL-SQL"]
+	path = baselines/DAIL-SQL
+	url = https://github.com/BeachWang/DAIL-SQL.git

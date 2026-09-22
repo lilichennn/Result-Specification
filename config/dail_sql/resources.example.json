@@ -1,0 +1,12 @@
+{
+  "java": {
+    "home": "resources/jdk"
+  },
+  "corenlp": {
+    "directory": "resources/stanford-corenlp-full-2018-10-05"
+  },
+  "mpnet": {
+    "snapshot": "resources/all-mpnet-base-v2"
+  },
+  "nltk_data": "resources/nltk_data"
+}

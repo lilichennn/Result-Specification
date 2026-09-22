@@ -5,7 +5,7 @@ the table's primary key, or blank. ref_key retains the existing semicolon-separa
 table.column format. Undeclared keys stay blank. Ambiguous mappings abort.
 Confirmed missing databases/tables cause the whole logical database's Meta
 and instances to be removed. Access errors abort before writing any changes.
-Only our preprocessed_data is updated; original Spider2 resources are untouched.
+Only the prepared data group is updated; original Spider2 resources are untouched.
 """
 
 from __future__ import annotations
@@ -22,8 +22,7 @@ from pathlib import Path
 
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[1]
-LITE_ROOT = ROOT / "Spider2.0/spider2-lite"
+LITE_ROOT = Path("Spider2.0/spider2-lite")
 
 
 def database_key(name: str) -> str:
@@ -315,7 +314,7 @@ def main() -> None:
     parser.add_argument("--backend", choices=("all", "sqlite", "bigquery"), default="all")
     parser.add_argument("--db-id", help="Process one existing Meta database directory")
     parser.add_argument("--lite-root", type=Path, default=LITE_ROOT)
-    parser.add_argument("--meta-root", type=Path, default=HERE / "spider2_lite/preprocessed_data/meta")
+    parser.add_argument("--meta-root", type=Path, default=HERE.parent / "data/spider2_lite/meta")
     parser.add_argument("--credential", type=Path, help="BigQuery service-account JSON")
     args = parser.parse_args()
     credential = args.credential or args.lite_root / "evaluation_suite/bigquery_credential.json"

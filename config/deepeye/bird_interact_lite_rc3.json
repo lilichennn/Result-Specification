@@ -1,16 +1,16 @@
 {
   "benchmark": "bird_interact",
   "split": "lite",
-  "questions": "../../scripts/bird_interact_lite/preprocessed_data/bird_interact_lite.json",
-  "meta": "../../scripts/bird_interact_lite/preprocessed_data/meta",
+  "questions": "../../data/bird_interact_lite/bird_interact_lite.json",
+  "meta": "../../data/bird_interact_lite/meta",
   "resource_root": "../../../BIRD-Interact",
-  "rc": "../../scripts/bird_interact_lite/rc.json",
+  "rc": "../../data/bird_interact_lite/rc.json",
   "rc_version": 3,
   "few_shot_strategy": "native_dynamic",
-  "preparation_root": "../../baselines_reproduce/deepeye_shared_preparation",
-  "prepared_dataset": "../../baselines_reproduce/deepeye_shared_preparation/prepared/bird_interact/lite.snapshot",
+  "preparation_root": "../../cache/deepeye_shared_preparation",
+  "prepared_dataset": "../../cache/deepeye_shared_preparation/prepared/bird_interact/lite.snapshot",
   "few_shot_dataset": "bird",
   "few_shot_source": "../../../BIRD/data",
-  "precompute_dir": "../../baselines_reproduce/deepeye_bird_interact/precomputed",
+  "precompute_dir": "../../cache/deepeye_bird_interact/precomputed",
   "reference_questions": "../../../BIRD-Interact/BIRD-Interact-ADK/bird-interact-lite/bird_interact_data.jsonl"
 }

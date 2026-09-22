@@ -484,7 +484,9 @@ def main() -> None:
 
 def _dataset_split_paths(dataset_split: str) -> tuple[Path, Path, Path, Path]:
     if (
-        not dataset_split
+        not isinstance(dataset_split, str)
+        or not dataset_split
+        or dataset_split in (".", "..")
         or Path(dataset_split).name != dataset_split
         or "/" in dataset_split
         or "\\" in dataset_split
@@ -493,12 +495,11 @@ def _dataset_split_paths(dataset_split: str) -> tuple[Path, Path, Path, Path]:
             "dataset_split must be a directory name such as bird_dev or spider_test"
         )
 
-    dataset_split_root = SCRIPT_DIR / dataset_split
-    preprocessed_root = dataset_split_root / "preprocessed_data"
-    input_path = preprocessed_root / f"{dataset_split}.json"
-    meta_root = preprocessed_root / "meta"
+    dataset_split_root = CODE_ROOT / "data" / dataset_split
+    input_path = dataset_split_root / f"{dataset_split}.json"
+    meta_root = dataset_split_root / "meta"
     output_path = dataset_split_root / "rc.json"
-    log_path = dataset_split_root / "generate_rc.log"
+    log_path = CODE_ROOT / "outputs" / "rc_generation" / dataset_split / "generate_rc.log"
     return input_path, meta_root, output_path, log_path
 
 

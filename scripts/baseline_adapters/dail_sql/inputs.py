@@ -270,7 +270,7 @@ def write_manifest(workspace_root: Path, manifest: dict) -> Path:
     encoded = (json.dumps(manifest, sort_keys=True, ensure_ascii=False,
                           separators=(",", ":")) + "\n").encode("utf-8")
     preparation_id = "inputs-v1-" + hashlib.sha256(encoded).hexdigest()[:24]
-    destination = (Path(workspace_root).resolve() / "baselines_reproduce" / "dail_sql" /
+    destination = (Path(workspace_root).resolve() / "cache" / "dail_sql" /
                    "prepared" / preparation_id / "inputs_manifest.json")
     destination.parent.mkdir(parents=True, exist_ok=True)
     descriptor, temporary_name = tempfile.mkstemp(prefix=".inputs-manifest-", suffix=".tmp",

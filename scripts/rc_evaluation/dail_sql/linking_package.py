@@ -215,7 +215,7 @@ def _verify_final(stage: Path, index: dict, versions: list[dict], rows: list[dic
             raise ValueError('final Linking reference mismatch')
 
 
-def export_package(source: Path, destination: Path, run_store: Path) -> Path:
+def export_package(source: Path, destination: Path, run_store: Path, *, guide: Path | None = None) -> Path:
     """Publish one self-contained analysis directory, refusing an existing target."""
     source = Path(source).resolve(strict=True)
     destination = Path(destination).absolute()
@@ -319,7 +319,7 @@ def export_package(source: Path, destination: Path, run_store: Path) -> Path:
         }
         _write(records / 'verification.json', record_verification)
         _source_snapshots(stage)
-        guide = Path(__file__).resolve().parents[3] / 'docs' / GUIDE
+        guide = Path(guide) if guide is not None else Path(__file__).resolve().parents[3] / 'docs/evaluation.md'
         _copy_file(guide, stage / GUIDE)
         verification = {
             'format': 'dail-offline-handoff-verification-v3', 'ok': True,
