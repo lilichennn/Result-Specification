@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USC00296061"", ""USC00050834"", ""USC00148648""]",
-time,TEXT,,[],
-value,FLOAT,,[3.0],
-element,TEXT,,"[""DAEV""]",
-date,DATE,,"[""1993-06-07"", ""1993-06-28"", ""1993-04-23""]",
-mflag,TEXT,,[],
-qflag,TEXT,,[],
-sflag,TEXT,,"[""0""]",

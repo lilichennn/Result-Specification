@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-mflag,TEXT,,[],
-date,DATE,,"[""1920-06-12"", ""1920-05-17"", ""1920-02-13""]",
-qflag,TEXT,,[],
-id,TEXT,,"[""AGE00147704""]",
-sflag,TEXT,,"[""E""]",
-element,TEXT,,"[""PRCP""]",
-value,FLOAT,,"[0.0, 420.0]",
-time,TEXT,,[],

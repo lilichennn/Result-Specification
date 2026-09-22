@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-mflag,TEXT,,[],
-id,TEXT,,"[""USW00094910"", ""USW00013883"", ""USW00012919""]",
-value,FLOAT,,[0.0],
-sflag,TEXT,,"[""X""]",
-element,TEXT,,"[""ACMH""]",
-time,TEXT,,[],
-date,DATE,,"[""1984-03-25"", ""1984-08-07"", ""1984-11-28""]",
-qflag,TEXT,,[],

@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-contributing_circumstances_motor_vehicle_name,TEXT,,"[""None Noted""]",
-contributing_circumstances_motor_vehicle,NUMBER,,[0],
-state_number,NUMBER,,"[1, 4]",
-vehicle_number,NUMBER,,"[5, 6]",
-consecutive_number,NUMBER,,"[10049, 10571, 10572]",
-state_name,TEXT,,"[""Alabama"", ""Arizona""]",

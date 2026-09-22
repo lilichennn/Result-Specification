@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-start_year,NUMBER,,"[2021, 1999, 1991]",
-constructor_ref,TEXT,,"[""alpine"", ""arrows"", ""aston_martin""]",
-end_year,FLOAT,,"[2002.0, 2005.0, 1991.0]",
-primary_hex_code,TEXT,,"[""#F7A7D1"", ""#E47B0F"", ""#006E61""]",

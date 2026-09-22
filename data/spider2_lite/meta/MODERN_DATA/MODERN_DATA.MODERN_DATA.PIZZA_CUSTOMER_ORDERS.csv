@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-order_id,NUMBER,,"[1, 2, 3]",
-customer_id,NUMBER,,"[101, 102, 103]",
-exclusions,TEXT,,"["""", ""4""]",
-pizza_id,NUMBER,,"[1, 2]",
-extras,TEXT,,"["""", ""1""]",
-order_time,TEXT,,"[""2021-01-01 18:05:02"", ""2021-01-01 19:00:52"", ""2021-01-02 23:51:23""]",

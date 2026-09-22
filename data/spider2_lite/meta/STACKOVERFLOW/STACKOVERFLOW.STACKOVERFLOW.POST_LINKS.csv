@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-post_id,NUMBER,,"[22342898, 22343608, 22341042]",
-related_post_id,NUMBER,,"[21111070, 2743989, 5596747]",
-creation_date,NUMBER,,"[1394603209690000, 1394606380723000, 1394611923473000]",
-id,NUMBER,,"[880002256, 880016624, 880046283]",
-link_type_id,NUMBER,,[1],

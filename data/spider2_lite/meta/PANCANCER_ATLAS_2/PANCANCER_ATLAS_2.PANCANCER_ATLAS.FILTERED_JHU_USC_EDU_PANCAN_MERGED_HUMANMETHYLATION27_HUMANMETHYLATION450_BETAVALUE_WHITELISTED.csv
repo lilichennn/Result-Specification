@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SampleType,TEXT,"There are 10 sample types: Blood Derived Normal, Primary solid Tumor, Solid Tissue Normal, Recurrent Solid Tumor, Metastatic, Additional - New Primary, Primary Blood Derived Cancer - Peripheral Blood, Buccal Cell Normal, Additioanal Metastatic, Bone Marrrow Normal","[""Primary solid Tumor""]",
-AliquotBarcode,TEXT,"TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-28","[""TCGA-XE-AANR-01A-11D-A436-05"", ""TCGA-XE-AANV-01A-11D-A436-05"", ""TCGA-XE-AAOF-01A-11D-A436-05""]",
-SampleBarcode,TEXT,"Barcode of the biospecimen sample, eg TCGA-13-1489-02A","[""TCGA-XE-AANR-01A"", ""TCGA-XE-AANV-01A"", ""TCGA-XE-AAOF-01A""]",
-ID,TEXT,Unique probe identifier (eg cg04676771) from the Illumina Human Methylation array -- please refer to the annotation table (isb-cgc-bq.annotations.methylation_annotation_hg19_illumina_current) for more details about any particular probe,"[""cg09273772"", ""cg14951734"", ""cg23316360""]",
-ParticipantBarcode,TEXT,"TCGA barcode identifier for the study participant, eg TCGA-02-0001","[""TCGA-XE-AANR"", ""TCGA-XE-AANV"", ""TCGA-XE-AAOF""]",
-Study,TEXT,"TCGA study abbreviation, eg LAML. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/tcga-study-abbreviations","[""TGCT""]",
-Beta,FLOAT,"Normalized DNA methylation beta value (between 0 and 1, where 0 indicates completely un-methylated and 1 indicates fully methylated)","[0.0284830181414593, 0.0302655093294783, 0.0442997867853539]",
-SampleTypeLetterCode,TEXT,"Letter code of the sample type using the TCGA standards, eg TPN, EBV. Full list available at https://gdc.cancer.gov/resources-tcga-users/tcga-code-tables/sample-type-codes","[""TP""]",

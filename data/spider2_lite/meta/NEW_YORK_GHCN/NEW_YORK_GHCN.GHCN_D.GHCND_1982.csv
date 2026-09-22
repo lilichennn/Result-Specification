@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1982-11-07"", ""1982-01-26"", ""1982-10-05""]",
-id,TEXT,,"[""USW00013970"", ""USW00023009"", ""USW00023232""]",
-value,FLOAT,,[0.0],
-mflag,TEXT,,[],
-qflag,TEXT,,[],
-time,TEXT,,[],
-sflag,TEXT,,"[""X""]",
-element,TEXT,,"[""ACMH""]",

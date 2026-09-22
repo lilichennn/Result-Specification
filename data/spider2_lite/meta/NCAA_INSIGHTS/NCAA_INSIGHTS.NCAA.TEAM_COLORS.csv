@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""5d77800f-1ae6-4b66-8e97-b0dbb8bbc717"", ""9fccbf28-2858-4263-821c-fdefb3c7efa3"", ""9b66e1e0-aace-4671-9be2-54c8acf5ecfc""]",
-market,TEXT,,"[""Milwaukee"", ""Colorado"", ""Richmond""]",
-code_ncaa,NUMBER,,"[797, 157, 575]",
-color,TEXT,,"[""#000000"", ""#000066"", ""#000144""]",

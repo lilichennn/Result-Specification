@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-race_id,NUMBER,,[1],
-stdev_seconds,FLOAT,,"[15.927054702406851, 16.195558090157455, 13.366691980686165]",
-avg_milliseconds,FLOAT,,"[97563.75862068965, 97597.63793103448, 97622.10344827586]",
-stdev_milliseconds,FLOAT,,"[15927.054702406851, 16195.558090157458, 13366.691980686164]",
-avg_seconds,FLOAT,,"[97.56375862068965, 97.59763793103448, 97.62210344827584]",
-driver_id,NUMBER,,"[1, 4, 7]",

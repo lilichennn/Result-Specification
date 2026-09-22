@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-user_id,TEXT,,"[""U001"", ""U002""]",
-session,TEXT,,"[""98900e"", ""1cf768"", ""87b575""]",
-action,TEXT,,"[""view""]",
-stamp,TEXT,,"[""2016-01-02 20:00:00"", ""2016-01-04 23:00:00"", ""2016-01-07 03:30:00""]",

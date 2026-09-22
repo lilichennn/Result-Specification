@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-DeptChair,NUMBER,,"[98010, 98005]",
-DeptName,TEXT,,"[""Sciences"", ""Humanities""]",
-DepartmentID,NUMBER,,"[2, 3]",

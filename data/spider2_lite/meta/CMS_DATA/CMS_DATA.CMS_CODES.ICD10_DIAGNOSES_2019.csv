@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-order_number,TEXT,Unique header code that makes it easier for users to communicate a range of codes,"[""03541"", ""03955"", ""06022""]",
-short_description,TEXT,Short text description of the diagnosis,"[""Thrombocytopenia, unspecified"", ""Drug/chem diab with prolif diab rtnop without mclr edema, bi"", ""Gen idiopathic epilepsy, not intractable, w/o stat epi""]",
-cm_code,TEXT,Diagnosis code,"[""D696"", ""E093593"", ""G40309""]",
-is_header_code,BOOLEAN,TRUE -  The code is a “header” code and not valid for HIPAA-covered transactions. FALSE - The code is valid for submission for HIPAA-covered transactions.,[false],
-long_description,TEXT,Full text description of the diagnosis,"[""Thrombocytopenia, unspecified"", ""Drug or chemical induced diabetes mellitus with proliferative diabetic retinopathy without macular edema, bilateral"", ""Generalized idiopathic epilepsy and epileptic syndromes, not intractable, without status epilepticus""]",

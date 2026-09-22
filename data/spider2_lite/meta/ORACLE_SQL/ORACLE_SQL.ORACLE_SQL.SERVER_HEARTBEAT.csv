@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-beat_time,TEXT,,"[""2019-04-10 13:45"", ""2019-04-10 13:55"", ""2019-04-10 13:00""]",
-server,TEXT,,"[""10.0.0.100"", ""10.0.0.142""]",

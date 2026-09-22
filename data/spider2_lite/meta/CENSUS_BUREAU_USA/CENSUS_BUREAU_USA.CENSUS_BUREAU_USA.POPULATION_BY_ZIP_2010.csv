@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-gender,TEXT,"male or female. If empty, the row is a total population summary.",[],
-population,NUMBER,The total count of the population for this segment.,"[5376, 2305, 515]",
-geo_id,TEXT,Geo code,"[""8600000US72106"", ""8600000US50833"", ""8600000US40052""]",
-minimum_age,NUMBER,"The minimum age in the age range. If null, this indicates the row as a total for male, female, or overall population.",[],
-maximum_age,NUMBER,"The maximum age in the age range. If null, this indicates the row as having no maximum (such as 85 and over) or the row is a total of the male, female, or overall population.",[],
-zipcode,TEXT,Five digit ZIP Code Tabulation Area Census Code,"[""72106"", ""50833"", ""40052""]",

@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-description,TEXT,,"[""Not specified"", ""Source: United Nations Conference on Trade and Development,  Foreign Direct Investment Online database.""]",
-year,TEXT,,"[""    "", ""1994"", ""1993""]",
-country_code,TEXT,,"[""ABW""]",
-series_code,TEXT,,"[""AG.LND.FRST.K2"", ""BM.KLT.DINV.CD.WD""]",

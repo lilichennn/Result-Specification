@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-qflag,TEXT,,[],
-sflag,TEXT,,"[""0""]",
-value,FLOAT,,"[2.0, 3.0]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-id,TEXT,,"[""USC00519432"", ""USC00165065"", ""USC00028619""]",
-element,TEXT,,"[""DAPR""]",
-date,DATE,,"[""2005-08-25"", ""2005-01-31"", ""2005-02-07""]",

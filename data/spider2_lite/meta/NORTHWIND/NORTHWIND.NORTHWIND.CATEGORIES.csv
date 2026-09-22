@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-categoryid,NUMBER,,"[2, 3, 8]",
-categoryname,TEXT,,"[""Condiments"", ""Confections"", ""Seafood""]",
-description,TEXT,,"[""Sweet and savory sauces, relishes, spreads, and seasonings"", ""Desserts, candies, and sweet breads"", ""Seaweed and fish""]",
-picture,TEXT,,"[""\\x""]",

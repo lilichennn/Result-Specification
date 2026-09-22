@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-log_time,TEXT,,"[""2019-01-16 14:05:44"", ""2019-01-16 14:06:01"", ""2019-01-16 14:06:20""]",
-pickline_no,FLOAT,,"[2.0, 3.0]",
-picklist_id,NUMBER,,[841],
-activity,TEXT,,"[""A"", ""D"", ""P""]",
-location_id,FLOAT,,"[16.0, 29.0, 77.0]",

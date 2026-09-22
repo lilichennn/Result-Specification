@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-vehicle_number,NUMBER,,[0],
-non_motorist_action_circumstances_name,TEXT,,"[""Going to or from School (K-12)""]",
-non_motorist_action_circumstances,NUMBER,,[1],
-person_number,NUMBER,,[1],
-state_number,NUMBER,,"[15, 8, 28]",
-consecutive_number,NUMBER,,"[150091, 80017, 280634]",

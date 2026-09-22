@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-category_name,TEXT,,"[""dvd"", ""cd""]",
-product_id,TEXT,,"[""D001"", ""D002"", ""D003""]",
-sales,NUMBER,,"[50000, 20000, 10000]",

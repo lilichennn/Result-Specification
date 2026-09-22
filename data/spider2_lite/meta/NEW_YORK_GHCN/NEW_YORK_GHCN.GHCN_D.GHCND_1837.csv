@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-qflag,TEXT,,[],
-value,FLOAT,,"[54.0, 77.0, 63.0]",
-date,DATE,,"[""1837-05-25"", ""1837-08-12"", ""1837-07-25""]",
-id,TEXT,,"[""EZE00100082""]",
-sflag,TEXT,,"[""E""]",
-mflag,TEXT,,[],
-time,TEXT,,[],
-element,TEXT,,"[""PRCP""]",

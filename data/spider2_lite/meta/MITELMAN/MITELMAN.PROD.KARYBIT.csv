@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CloneNo,NUMBER,clone number,[1],
-RefNo,NUMBER,reference number,"[524, 623, 631]",
-Bit,TEXT,"karyotype 'bit', eg '46', or 'Xy', or 'idem', etc","[""??""]",
-CaseNo,TEXT,"case number, usually an integer but can be a string, eg 'A11'","[""1""]",
-OrderNo,NUMBER,order number,[1],
-InvNo,NUMBER,investigation number,[1],

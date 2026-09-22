@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-time,TEXT,,[],
-sflag,TEXT,,"[""E"", ""F""]",
-mflag,TEXT,,[],
-qflag,TEXT,,"[""K"", ""I""]",
-element,TEXT,,"[""PRCP"", ""TMIN"", ""TMAX""]",
-date,DATE,,"[""1858-09-09"", ""1858-08-23"", ""1858-02-11""]",
-id,TEXT,,"[""GM000010962"", ""ITE00100554"", ""USC00090430""]",
-value,FLOAT,,"[233.0, -1.0, 28.0]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""ITE00100554""]",
-date,DATE,,"[""1768-01-16"", ""1768-01-26"", ""1768-02-07""]",
-time,TEXT,,[],
-value,FLOAT,,"[-2.0, 3.0, 5.0]",
-element,TEXT,,"[""TMAX""]",
-sflag,TEXT,,"[""E""]",
-qflag,TEXT,,[],
-mflag,TEXT,,[],

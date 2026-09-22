@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ID,TEXT,Unique probe identifier (eg cg04676771) from the Illumina Human Methylation array -- please refer to the annotation table (isb-cgc-bq.annotations.methylation_annotation_hg19_illumina_current) for more details about any particular probe,"[""cg03039556"", ""cg26123975"", ""cg09161455""]",
-AliquotBarcode,TEXT,"TCGA aliquot barcode, eg TCGA-12-1089-01A-01D-0517-28","[""TCGA-DC-6160-01A-11D-1658-05""]",
-Beta,FLOAT,"Normalized DNA methylation beta value (between 0 and 1, where 0 indicates completely un-methylated and 1 indicates fully methylated)","[0.607045, 0.80025, 0.229706]",

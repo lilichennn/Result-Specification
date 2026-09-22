@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-year,NUMBER,,[1990],
-series_code,TEXT,,"[""SP.DYN.CONU.ZS"", ""SP.REG.DTHS.ZS"", ""SP.DYN.WFRT""]",
-description,TEXT,,"[""Averages for regions/groups are based on country-level data around 1990.""]",

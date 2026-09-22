@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-eCommerceAction_type_max,TEXT,,"[""5""]",
-fullVisitorID,TEXT,,"[""0697698087141419098"", ""1495718436219461866"", ""2728377808603106296""]",
-session_time_on_site_minutes_max,FLOAT,,"[7.2, 127.36666666666666, 30.066666666666666]",
-number_of_sessions,NUMBER,,[1],
-number_of_products_viewed,NUMBER,,"[256, 1]",

@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_name,TEXT,,"[""Florida"", ""Nevada"", ""Texas""]",
-non_motorist_action_circumstances,NUMBER,,"[1, 2]",
-non_motorist_action_circumstances_name,TEXT,,"[""Going To or From School (K-12)"", ""Waiting to Cross Roadway""]",
-vehicle_number,NUMBER,,[0],
-person_number,NUMBER,,[1],
-consecutive_number,NUMBER,,"[120768, 320108, 482437]",
-state_number,NUMBER,,"[12, 32, 48]",

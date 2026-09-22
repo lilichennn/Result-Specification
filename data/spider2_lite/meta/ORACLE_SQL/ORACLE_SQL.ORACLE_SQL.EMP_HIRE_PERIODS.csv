@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-end_,TEXT,,"[""2012-04-01"", ""2013-07-01"", """"]",
-start_,TEXT,,"[""2010-07-01"", ""2012-04-01"", ""2014-02-01""]",
-title,TEXT,,"[""Product Director"", ""Sales Manager"", ""IT Developer""]",
-emp_id,NUMBER,,"[142, 144, 145]",

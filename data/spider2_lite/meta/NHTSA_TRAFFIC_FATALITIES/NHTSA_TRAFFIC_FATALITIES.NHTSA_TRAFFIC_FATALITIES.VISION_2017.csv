@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-vehicle_number,NUMBER,,"[5, 9, 11]",
-drivers_vision_obscured_by,NUMBER,,[0],
-consecutive_number,NUMBER,,"[40497, 40529, 40700]",
-state_name,TEXT,,"[""Arizona""]",
-state_number,NUMBER,,[4],
-drivers_vision_obscured_by_name,TEXT,,"[""No Obstruction Noted""]",

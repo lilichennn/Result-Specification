@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ancestor_concept_id,NUMBER,,"[40996756, 41112406, 41116306]",
-descendant_concept_id,NUMBER,,"[40996756, 41112406, 41093594]",
-max_levels_of_separation,NUMBER,,[0],
-min_levels_of_separation,NUMBER,,[0],

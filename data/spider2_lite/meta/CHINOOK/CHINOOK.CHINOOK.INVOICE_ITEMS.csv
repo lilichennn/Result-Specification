@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-InvoiceId,NUMBER,,"[1, 2, 3]",
-InvoiceLineId,NUMBER,,"[1, 5, 7]",
-TrackId,NUMBER,,"[2, 10, 16]",
-Quantity,NUMBER,,[1],
-UnitPrice,FLOAT,,[0.99],

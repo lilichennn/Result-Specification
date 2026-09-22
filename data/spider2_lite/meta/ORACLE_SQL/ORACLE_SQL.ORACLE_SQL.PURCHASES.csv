@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-product_id,NUMBER,,"[4280, 7870, 5310]",
-purchased,TEXT,,"[""2016-01-03"", ""2016-01-09"", ""2016-02-04""]",
-cost,FLOAT,,"[122.0, 770.0, 654.0]",
-id,NUMBER,,"[602, 605, 607]",
-qty,NUMBER,,"[17, 105, 87]",
-brewery_id,NUMBER,,"[536, 523, 518]",

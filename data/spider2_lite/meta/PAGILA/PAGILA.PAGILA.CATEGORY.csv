@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-last_update,TEXT,,"[""2021-03-06 15:52:00""]",
-name,TEXT,,"[""Action"", ""Classics"", ""Documentary""]",
-category_id,NUMBER,,"[1, 4, 6]",

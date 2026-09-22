@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-consecutive_number,NUMBER,,"[380091, 230018, 460022]",
-vehicle_number,NUMBER,,[1],
-state_number,NUMBER,,"[38, 23, 46]",
-drivers_vision_obscured_by,NUMBER,,[99],
-drivers_vision_obscured_by_name,TEXT,,"[""Unknown""]",

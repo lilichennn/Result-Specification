@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-html,TEXT,,[],
-url,TEXT,,"[""http://www.profightdb.com/cards/wwwf-cards-pg2-no-20.html?order=&type="", ""http://www.profightdb.com/cards/wwwf-cards-pg3-no-20.html?order=&type="", ""http://www.profightdb.com/cards/wwwf-cards-pg5-no-20.html?order=&type=""]",
-id,NUMBER,,"[11, 21, 41]",

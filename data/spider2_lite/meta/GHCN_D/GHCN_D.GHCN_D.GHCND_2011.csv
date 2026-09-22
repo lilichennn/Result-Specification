@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USC00102942"", ""USC00217107"", ""USC00517711""]",
-time,TEXT,,"[""0700""]",
-qflag,TEXT,,[],
-date,DATE,,"[""2011-11-27"", ""2011-06-06"", ""2011-08-04""]",
-mflag,TEXT,,"[""T""]",
-value,FLOAT,,[0.0],
-sflag,TEXT,,"[""7""]",
-element,TEXT,,"[""EVAP"", ""MDPR""]",

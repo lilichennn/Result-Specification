@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-stamp,TEXT,,"[""2016-11-03 18:10:00"", ""2016-11-03 18:00:00"", ""2016-11-03 18:02:00""]",
-session,TEXT,,"[""0CVKaz"", ""1QceiB""]",
-action,TEXT,,"[""purchase"", ""favorite"", ""add_cart""]",
-user_id,TEXT,,"[""U001"", ""U002""]",
-category,TEXT,,"[""drama"", ""action""]",
-products,TEXT,,"[""D001,D002"", ""D001"", """"]",
-amount,FLOAT,,"[2000.0, 1000.0]",

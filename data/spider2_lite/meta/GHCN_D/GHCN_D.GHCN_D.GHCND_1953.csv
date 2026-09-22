@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-value,FLOAT,,"[0.0, 1.0]",
-date,DATE,,"[""1953-08-18"", ""1953-07-28"", ""1953-11-25""]",
-mflag,TEXT,,[],
-time,TEXT,,[],
-id,TEXT,,"[""AG000060390""]",
-qflag,TEXT,,[],
-sflag,TEXT,,"[""E""]",
-element,TEXT,,"[""PRCP""]",

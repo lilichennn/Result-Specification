@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-vehicle_event_number,NUMBER,,"[10, 9, 11]",
-sequence_of_events,NUMBER,,[1],
-consecutive_number,NUMBER,,"[100107, 10274, 40536]",
-vehicle_number,NUMBER,,[1],
-sequence_of_events_name,TEXT,,"[""Rollover/Overturn""]",
-area_of_Impact_associated_with_the_event_name,TEXT,,"[""Non-Collision""]",
-area_of_Impact_associated_with_the_event,NUMBER,,[0],
-state_number,NUMBER,,"[10, 1, 4]",

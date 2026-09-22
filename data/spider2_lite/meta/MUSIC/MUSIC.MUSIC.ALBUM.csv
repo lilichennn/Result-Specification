@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-AlbumId,NUMBER,,"[1, 2, 8]",
-Title,TEXT,,"[""For Those About To Rock We Salute You"", ""Balls to the Wall"", ""Warner 25 Anos""]",
-ArtistId,NUMBER,,"[1, 2, 6]",

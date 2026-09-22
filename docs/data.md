@@ -9,9 +9,8 @@ Reusable inputs live under `data/<group>/`. Generated experiment records belong 
 | `spider_test` | 2,147 | SQLite | 2,147 |
 | `bird_interact_lite` | 195 | PostgreSQL | 195 |
 | `bird_interact_full` | 410 | PostgreSQL | 410 |
-| `spider2_lite` | 280 | SQLite / BigQuery | 121 |
 
-The first five groups contain 5,320 questions. Spider2 Lite is an additional preparation resource; the five-group experiment configurations do not include it. Its availability depends on the corresponding local/cloud resources, and Round-3 specifications are only present for the subset with supplied reference SQL.
+These five groups contain 5,320 questions, each with a successful Round-3 specification.
 
 ## Per-group files
 
@@ -41,8 +40,6 @@ uv run python scripts/preprocess.py --dataset birdinteract --split full \
 These commands write to `data/<group>/`. Use `--output-dir` for a separate scratch destination when inspecting a different benchmark version. Relative input paths are resolved from the current working directory. Without overrides, the preprocessing scripts look for benchmark directories in that working directory; the examples above explicitly use sibling directories.
 
 BIRD-Interact preparation selects `Query` instances only, without expanding follow-up interactions. Full questions are joined back to LiveSQLBench by `instance_id`. Public metadata defines the schema exposed to the method; PostgreSQL execution still requires the actual databases.
-
-For Spider2 Lite, inspect `uv run python scripts/preprocess_spider2.py --help`. Cloud credentials and database availability are separate from metadata preparation.
 
 ## Resource roots
 

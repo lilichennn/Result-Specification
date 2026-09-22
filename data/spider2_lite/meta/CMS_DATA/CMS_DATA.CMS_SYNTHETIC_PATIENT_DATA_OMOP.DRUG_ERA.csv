@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-gap_days,NUMBER,,[0],
-person_id,NUMBER,,"[1746574, 328004, 940928]",
-drug_era_start_date,DATE,,"[""2010-05-11""]",
-drug_concept_id,NUMBER,,"[1560524, 733008, 1373928]",
-drug_era_end_date,DATE,,"[""2010-06-10""]",
-drug_era_id,NUMBER,,"[91765796, 17245157, 49459210]",
-drug_exposure_count,NUMBER,,[1],

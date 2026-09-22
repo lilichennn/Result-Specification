@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-station_id,NUMBER,Station ID number,[82],
-bikes_available,NUMBER,Number of available bikes,[10],
-time,NUMBER,"Date and time, PST","[1426254602000000, 1407321243000000, 1433324342000000]",
-docks_available,NUMBER,Number of available docks,[5],

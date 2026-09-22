@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-start_date,TEXT,,[],
-campaign_id,NUMBER,,[],
-campaign_name,TEXT,,[],
-end_date,TEXT,,[],
-products,TEXT,,[],

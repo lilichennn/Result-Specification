@@ -15,7 +15,7 @@ A Result Specification (RS) records what an answer should represent: its populat
 | Reusable inputs | Questions, public metadata, generated RS, reference SQL where available, and schema-linking reference annotations. |
 | Analysis | SQL execution comparison, stage-specific summaries, compact exports, and plotting programs. |
 
-The five main evaluation groups are BIRD dev, Spider dev, Spider test, BIRD-Interact Lite, and BIRD-Interact Full. Additional Spider2 Lite preprocessing inputs are included, with partial Round-3 coverage. Database files, downloaded models, vector caches, and experiment outputs are not bundled.
+The five evaluation groups are BIRD dev, Spider dev, Spider test, BIRD-Interact Lite, and BIRD-Interact Full. Database files, downloaded models, vector caches, and experiment outputs are not bundled.
 
 ## Quick start
 

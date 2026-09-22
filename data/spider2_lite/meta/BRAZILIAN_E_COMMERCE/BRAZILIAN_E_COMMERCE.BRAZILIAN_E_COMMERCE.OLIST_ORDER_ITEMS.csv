@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-seller_id,TEXT,,"[""dd7ddc04e1b6c2c614352b383efe2d36"", ""df560393f3a51e74553ab94004ba5c87"", ""6426d21aca402a131fc0a5d0960a3c90""]",
-price,FLOAT,,"[239.9, 199.9, 21.9]",
-order_item_id,NUMBER,,[1],
-shipping_limit_date,TEXT,,"[""2017-05-03 11:05:13"", ""2017-02-13 13:57:51"", ""2017-05-23 03:55:27""]",
-order_id,TEXT,,"[""00018f77f2f0320c557190d7a144bdd3"", ""00042b26cf59d7ce69dfabb4e55b4fd9"", ""00048cc3ae777c65dbb7d2a0634bc1ea""]",
-product_id,TEXT,,"[""e5f2d52b802189ee658865ca93d83a8f"", ""ac6c3623068f30de03045865e4e10089"", ""ef92defde845ab8450f9d70c526ef70f""]",
-freight_value,FLOAT,,"[19.93, 18.14, 12.69]",

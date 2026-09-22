@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-last_update,TEXT,,"[""2021-03-06 15:52:08""]",
-inventory_id,NUMBER,,"[1, 2, 4]",
-film_id,NUMBER,,[1],
-store_id,NUMBER,,"[1, 2]",

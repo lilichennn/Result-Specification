@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1963-12-23"", ""1963-09-15"", ""1963-11-18""]",
-mflag,TEXT,,[],
-time,TEXT,,[],
-sflag,TEXT,,"[""0""]",
-value,FLOAT,,[2.0],
-element,TEXT,,"[""DAEV""]",
-qflag,TEXT,,[],
-id,TEXT,,"[""RQC00660152"", ""RQC00668306"", ""USC00035200""]",

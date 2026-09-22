@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-consecutive_number,NUMBER,,"[40164, 40497, 40715]",
-vehicle_number,NUMBER,,"[7, 5, 9]",
-state_name,TEXT,,"[""Arizona""]",
-state_number,NUMBER,,[4],
-driver_maneuvered_to_avoid_name,TEXT,,"[""Driver Did Not Maneuver to Avoid""]",
-driver_maneuvered_to_avoid,NUMBER,,[0],

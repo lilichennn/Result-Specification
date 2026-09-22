@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_number,NUMBER,,"[1, 2]",
-consecutive_number,NUMBER,,"[10264, 10762, 10845]",
-state_name,TEXT,,"[""Alabama"", ""Alaska""]",
-driver_distracted_by,NUMBER,,[0],
-vehicle_number,NUMBER,,"[5, 6]",
-driver_distracted_by_name,TEXT,,"[""Not Distracted""]",

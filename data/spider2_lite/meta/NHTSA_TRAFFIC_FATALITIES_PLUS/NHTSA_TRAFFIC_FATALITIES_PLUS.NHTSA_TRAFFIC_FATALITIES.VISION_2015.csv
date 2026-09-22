@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-consecutive_number,NUMBER,,"[10095, 10141, 10286]",
-drivers_vision_obscured_by_name,TEXT,,"[""No Obstruction Noted""]",
-state_name,TEXT,,"[""Alabama""]",
-state_number,NUMBER,,[1],
-drivers_vision_obscured_by,NUMBER,,[0],
-vehicle_number,NUMBER,,"[8, 9, 7]",

@@ -10,7 +10,7 @@ from result_contract.rc.rc_round3 import Round3RC
 
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = ('bird_dev', 'spider_dev', 'spider_test',
-          'bird_interact_lite', 'bird_interact_full', 'spider2_lite')
+          'bird_interact_lite', 'bird_interact_full')
 
 
 def identities(rows):
@@ -33,7 +33,7 @@ def check_group(group):
         if row.get('round3_status') == 'succeeded':
             Round3RC.from_value(row['rc_round3'])
             successful += 1
-    if group != 'spider2_lite' and successful != len(questions):
+    if successful != len(questions):
         raise ValueError(f'{group}: missing successful Round-3 specifications')
     return len(questions), successful
 
@@ -63,8 +63,7 @@ def main():
         try:
             count, ready = check_group(group)
             print(f'{group}: {count} questions, {ready} successful Round-3 specifications')
-            if group != 'spider2_lite':
-                total += count
+            total += count
         except (OSError, ValueError, KeyError, TypeError) as error:
             errors.append(f'{group}: {error}')
     print(f'Main five-group question total: {total}')

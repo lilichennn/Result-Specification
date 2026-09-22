@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-MID,TEXT,,"[""tt0848228"", ""tt3741834"", ""tt6747420""]",
-GID,NUMBER,,"[3, 7, 8]",
-index,NUMBER,,"[3, 8, 9]",
-ID,NUMBER,,"[3, 8, 9]",

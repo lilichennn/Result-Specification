@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-lap,NUMBER,,"[1, 7, 8]",
-running_milliseconds,NUMBER,,"[109088, 657581, 747883]",
-milliseconds,NUMBER,,"[109088, 89488, 90302]",
-race_id,NUMBER,,[1],
-seconds,FLOAT,,"[109.088, 89.488, 90.302]",
-driver_id,NUMBER,,[1],
-position,NUMBER,,"[13, 9, 8]",
-time,TEXT,,"[""1:49.088"", ""1:29.488"", ""1:30.302""]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-time,TEXT,,[],
-date,DATE,,"[""1916-03-29"", ""1916-06-17"", ""1916-03-20""]",
-sflag,TEXT,,"[""E""]",
-value,FLOAT,,"[107.0, 0.0]",
-id,TEXT,,"[""AGE00135039""]",
-element,TEXT,,"[""PRCP""]",
-qflag,TEXT,,[],
-mflag,TEXT,,[],

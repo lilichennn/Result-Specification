@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-time,TEXT,,[],
-sflag,TEXT,,"[""0"", ""6""]",
-qflag,TEXT,,"[""I"", ""G"", ""O""]",
-date,DATE,,"[""1879-09-24"", ""1879-09-23"", ""1879-07-29""]",
-mflag,TEXT,,[],
-element,TEXT,,"[""TMAX"", ""TMIN"", ""PRCP""]",
-value,FLOAT,,"[111.0, 122.0, 5372.0]",
-id,TEXT,,"[""USC00338366"", ""USC00314055"", ""USC00469368""]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-latitude,FLOAT,,[17.1167],
-source_url,TEXT,,"[""ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt""]",
-longitude,FLOAT,,[-61.7833],
-etl_timestamp,NUMBER,,[1729302243944523],
-element,TEXT,,"[""TMAX"", ""PRCP"", ""PGTM""]",
-firstyear,NUMBER,,[1949],
-lastyear,NUMBER,,[1949],
-id,TEXT,,"[""ACW00011604""]",

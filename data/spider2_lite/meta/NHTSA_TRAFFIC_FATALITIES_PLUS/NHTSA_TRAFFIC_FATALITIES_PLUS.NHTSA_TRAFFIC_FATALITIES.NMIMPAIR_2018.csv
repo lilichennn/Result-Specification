@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_name,TEXT,,"[""Indiana"", ""California"", ""Florida""]",
-vehicle_number,NUMBER,,[0],
-condition_impairment_at_time_of_crash_non_motorist_name,TEXT,,"[""None/Apparently Normal"", ""Not Reported""]",
-condition_impairment_at_time_of_crash_non_motorist,NUMBER,,"[0, 98]",
-person_number,NUMBER,,"[9, 6, 7]",
-consecutive_number,NUMBER,,"[180490, 62680, 121870]",
-state_number,NUMBER,,"[18, 6, 12]",

@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-channel_desc,TEXT,,"[""Partners"", ""Tele Sales""]",
-channel_class_id,NUMBER,,"[14, 12]",
-channel_id,NUMBER,,"[2, 9]",
-channel_total_id,NUMBER,,[1],
-channel_total,TEXT,,"[""Channel total""]",
-channel_class,TEXT,,"[""Others"", ""Direct""]",

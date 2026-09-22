@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-element,TEXT,,"[""MDPR"", ""PRCP""]",
-time,TEXT,,[],
-sflag,TEXT,,"[""a""]",
-id,TEXT,,"[""ASN00066046""]",
-qflag,TEXT,,[],
-mflag,TEXT,,[],
-date,DATE,,"[""1832-05-11"", ""1832-02-02"", ""1832-08-11""]",
-value,FLOAT,,"[381.0, 0.0]",

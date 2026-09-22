@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ArtistId,NUMBER,,"[2, 11, 12]",
-Name,TEXT,,"[""Accept"", ""Black Label Society"", ""Black Sabbath""]",

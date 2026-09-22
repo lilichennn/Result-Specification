@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-value,FLOAT,,[0.0],
-id,TEXT,,"[""USS0015E09S"", ""USS0021G17S"", ""USS0021G16S""]",
-element,TEXT,,"[""AWDR"", ""AWND""]",
-date,DATE,,"[""2010-01-06"", ""2010-10-15"", ""2010-12-02""]",
-sflag,TEXT,,"[""T"", ""W""]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-qflag,TEXT,,[],

@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-constructor_id,NUMBER,,"[3, 4, 6]",
-name,TEXT,,"[""Williams"", ""Renault"", ""Ferrari""]",
-url,TEXT,,"[""http://en.wikipedia.org/wiki/Williams_Grand_Prix_Engineering"", ""http://en.wikipedia.org/wiki/Renault_in_Formula_One"", ""http://en.wikipedia.org/wiki/Scuderia_Ferrari""]",
-nationality,TEXT,,"[""British"", ""French"", ""Italian""]",
-constructor_ref,TEXT,,"[""williams"", ""renault"", ""ferrari""]",

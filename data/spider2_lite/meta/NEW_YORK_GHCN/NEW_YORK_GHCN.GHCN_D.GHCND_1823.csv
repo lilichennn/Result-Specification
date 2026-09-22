@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1823-04-22"", ""1823-05-02"", ""1823-05-27""]",
-id,TEXT,,"[""EZE00100082""]",
-sflag,TEXT,,"[""E""]",
-element,TEXT,,"[""PRCP""]",
-qflag,TEXT,,[],
-time,TEXT,,[],
-mflag,TEXT,,[],
-value,FLOAT,,[0.0],

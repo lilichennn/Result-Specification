@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1974-12-11"", ""1974-12-10"", ""1974-10-29""]",
-value,FLOAT,,"[100.0, 80.0, 90.0]",
-element,TEXT,,"[""ACMH""]",
-mflag,TEXT,,[],
-time,TEXT,,[],
-sflag,TEXT,,"[""X""]",
-id,TEXT,,"[""AQW00061705""]",
-qflag,TEXT,,[],

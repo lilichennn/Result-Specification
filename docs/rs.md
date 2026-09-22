@@ -29,7 +29,7 @@ uv run python scripts/generate_rc.py --dataset_split bird_dev --llm qwen38 \
 
 The commands update `data/<group>/rc.json`; preserve a copy before deliberately regenerating a released artifact. Logs go to `outputs/rc_generation/<group>/`. `--concurrency` sets the **initial** request concurrency, not a fixed ceiling: this generator increases concurrency dynamically. Review its settings and your provider quota before starting a large generation job.
 
-`scripts/prepare_rc_gold.py` prepares reference records for BIRD-Interact and Spider2 Lite. `scripts/extract_gold_schema_linking.py` extracts reference dependencies for BIRD/Spider. Both expose explicit resource-path options; inspect `--help` when working with a new raw-data layout. `--allow-partial-gold` on the Round-3 command restricts processing to available reference IDs and preserves the other records.
+`scripts/prepare_rc_gold.py` prepares reference records for BIRD-Interact. `scripts/extract_gold_schema_linking.py` extracts reference dependencies for BIRD/Spider. Both expose explicit resource-path options; inspect `--help` when working with a new raw-data layout. `--allow-partial-gold` on the Round-3 command restricts processing to available reference IDs and preserves the other records.
 
 ## Schema filtering
 

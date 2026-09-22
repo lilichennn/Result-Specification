@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1923-03-08"", ""1923-10-19"", ""1923-11-28""]",
-sflag,TEXT,,"[""a""]",
-time,TEXT,,[],
-element,TEXT,,"[""PRCP""]",
-qflag,TEXT,,[],
-id,TEXT,,"[""ASN00009719"", ""ASN00009722"", ""ASN00009723""]",
-value,FLOAT,,[0.0],
-mflag,TEXT,,[],

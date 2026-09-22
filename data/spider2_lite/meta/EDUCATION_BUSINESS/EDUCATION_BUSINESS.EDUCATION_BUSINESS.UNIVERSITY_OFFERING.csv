@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-OffYear,NUMBER,,"[2009, 2010]",
-OfferNo,NUMBER,,"[2222, 5555, 5679]",
-OffTerm,TEXT,,"[""SUMMER"", ""WINTER"", ""SPRING""]",
-CourseNo,TEXT,,"[""IS460"", ""FIN300"", ""IS480""]",
-OffLocation,TEXT,,"[""BLM412"", ""BLM207"", ""BLM305""]",
-FacNo,FLOAT,,"[765432109.0, 876543210.0, 654321098.0]",
-OffTime,TEXT,,"[""1:30 PM"", ""8:30 AM"", ""3:30 PM""]",
-OffDays,TEXT,,"[""TTH"", ""MW""]",

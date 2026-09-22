@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-MemberID,NUMBER,,"[107, 118, 102]",
-Status,NUMBER,,"[1, 2]",
-EntertainerID,NUMBER,,"[1001, 1003]",

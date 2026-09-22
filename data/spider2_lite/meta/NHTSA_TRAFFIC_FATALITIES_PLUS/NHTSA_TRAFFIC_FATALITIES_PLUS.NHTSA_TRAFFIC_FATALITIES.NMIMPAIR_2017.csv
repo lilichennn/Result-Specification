@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_name,TEXT,,"[""Arizona"", ""California"", ""Connecticut""]",
-vehicle_number,NUMBER,,[0],
-state_number,NUMBER,,"[4, 6, 9]",
-condition_impairment_at_time_of_crash_non_motorist_name,TEXT,,"[""None/Apparently Normal""]",
-person_number,NUMBER,,"[4, 5]",
-consecutive_number,NUMBER,,"[40255, 62631, 90215]",
-condition_impairment_at_time_of_crash_non_motorist,NUMBER,,[0],

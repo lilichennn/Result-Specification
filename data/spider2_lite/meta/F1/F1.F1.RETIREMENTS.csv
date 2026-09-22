@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-retirement_type,TEXT,,"[""Retirement (Mechanical Problem)"", ""Retirement (Driver Error)""]",
-lap,NUMBER,,"[56, 26, 9]",
-driver_id,NUMBER,,"[7, 14, 16]",
-status_id,NUMBER,,"[5, 4, 9]",
-position_order,NUMBER,,"[7, 14, 16]",
-race_id,NUMBER,,[18],

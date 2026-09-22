@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-BowlerID,TEXT,,[],
-WonGame,TEXT,,[],
-GameNumber,TEXT,,[],
-HandiCapScore,TEXT,,[],
-RawScore,TEXT,,[],
-MatchID,TEXT,,[],

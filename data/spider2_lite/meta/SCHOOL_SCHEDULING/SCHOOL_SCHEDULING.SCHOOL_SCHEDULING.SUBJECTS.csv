@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SubjectDescription,TEXT,,"[""Introduces basic accounting concepts, principles and prodcedures for recording business transactions and developing financial accounting reports. Excel spreadsheet component."", ""Analysis of accounting data as part of the managerial process of planning, decision making and control. Concentrates on economic decision making in enterprises. Includes computerized element. Prereq: ACC 220 or instructor permission."", ""In-depth review of financial accounting principles. Emphasizes the conceptual framework of accounting, revenue and expense recognition. Accounts Receivable, Depreciation, and Amortization, etc. Prereq: ACC 220 or instructor permission.""]",
-SubjectID,NUMBER,,"[1, 3, 4]",
-SubjectCode,TEXT,,"[""ACC 210"", ""ACC 230"", ""ACC 251""]",
-SubjectPreReq,TEXT,,"["""", ""ACC 220""]",
-CategoryID,TEXT,,"[""ACC"", ""BUS""]",
-SubjectName,TEXT,,"[""Financial Accounting Fundamentals I"", ""Fundamentals of Managerial Accounting"", ""Intermediate Accounting""]",

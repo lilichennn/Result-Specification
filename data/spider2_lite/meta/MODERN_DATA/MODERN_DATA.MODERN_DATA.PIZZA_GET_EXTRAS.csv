@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-row_id,NUMBER,,"[1, 2]",
-extras_count,NUMBER,,"[1, 2]",
-order_id,NUMBER,,"[5, 9, 10]",
-extras,NUMBER,,"[1, 5, 4]",

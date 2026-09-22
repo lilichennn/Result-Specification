@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-seq,NUMBER,,"[34, 10]",
-name,TEXT,,"[""Bowlers"", ""Teams""]",

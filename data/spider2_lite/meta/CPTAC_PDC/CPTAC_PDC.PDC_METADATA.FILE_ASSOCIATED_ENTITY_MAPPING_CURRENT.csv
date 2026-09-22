@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-case_id,TEXT,,"[""0067a0e0-63d8-11e8-bcf1-0a2705229b82""]",
-entity_submitter_id,TEXT,,"[""TCGA-61-1911-01A-32-2224-29""]",
-entity_type,TEXT,,"[""aliquot""]",
-entity_id,TEXT,,"[""2a6b4244-6428-11e8-bcf1-0a2705229b82""]",
-file_id,TEXT,,"[""ef9f2ec8-8de6-453a-9848-4f8ac587644f"", ""26a67215-9cf0-46cb-aef8-1938df733d2b"", ""b8cb61c9-68bb-4fc0-9e70-3e39ea3e2976""]",

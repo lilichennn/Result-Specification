@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-tbl,TEXT,,"[""playlist_track"", ""artists"", ""customers""]",
-stat,TEXT,,"[""8715 623 1"", ""275"", ""59 20""]",
-idx,TEXT,,"[""sqlite_autoindex_playlist_track_1"", """", ""IFK_CustomerSupportRepId""]",

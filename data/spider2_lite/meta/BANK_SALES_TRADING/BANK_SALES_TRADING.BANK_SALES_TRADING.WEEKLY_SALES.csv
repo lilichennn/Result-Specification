@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-region,TEXT,,"[""ASIA"", ""OCEANIA"", ""AFRICA""]",
-week_date,TEXT,,"[""31/8/20""]",
-segment,TEXT,,"[""F1"", ""C2"", ""C3""]",
-customer_type,TEXT,,"[""New"", ""Existing""]",
-sales,NUMBER,,"[996575, 882690, 5185233]",
-platform,TEXT,,"[""Retail"", ""Shopify""]",
-transactions,NUMBER,,"[31574, 4661, 97604]",

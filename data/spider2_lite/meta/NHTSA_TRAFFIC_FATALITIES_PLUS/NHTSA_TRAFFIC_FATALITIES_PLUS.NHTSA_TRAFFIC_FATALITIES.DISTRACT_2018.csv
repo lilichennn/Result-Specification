@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-driver_distracted_by,NUMBER,,[96],
-vehicle_number,NUMBER,,"[5, 6]",
-driver_distracted_by_name,TEXT,,"[""Not Reported""]",
-state_name,TEXT,,"[""Alabama"", ""California""]",
-consecutive_number,NUMBER,,"[10141, 10333, 61372]",
-state_number,NUMBER,,"[1, 6]",

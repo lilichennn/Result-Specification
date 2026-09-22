@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""AGE00135039""]",
-sflag,TEXT,,"[""E""]",
-element,TEXT,,"[""PRCP""]",
-value,FLOAT,,"[60.0, 170.0, 27.0]",
-mflag,TEXT,,[],
-qflag,TEXT,,[],
-time,TEXT,,[],
-date,DATE,,"[""1889-11-27"", ""1889-01-16"", ""1889-02-06""]",

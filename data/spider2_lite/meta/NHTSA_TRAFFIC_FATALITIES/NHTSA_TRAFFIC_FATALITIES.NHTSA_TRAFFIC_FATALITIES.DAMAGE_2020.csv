@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-vehicle_number,NUMBER,,"[6, 5, 10]",
-damaged_areas,NUMBER,,[13],
-consecutive_number,NUMBER,,"[10572, 50460, 60600]",
-damaged_areas_name,TEXT,,"[""Top""]",
-state_number,NUMBER,,"[1, 5, 6]",
-state_name,TEXT,,"[""Alabama"", ""Arkansas"", ""California""]",

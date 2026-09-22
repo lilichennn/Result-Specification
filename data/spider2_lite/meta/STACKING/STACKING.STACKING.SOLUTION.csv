@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-version,NUMBER,,"[2, 4, 5]",
-test_size,FLOAT,,[0.33],
-nb_model,NUMBER,,"[2, 3, 5]",
-resampling,NUMBER,,[0],
-correlation,FLOAT,,[0.75],
-score,FLOAT,,[0.7],
-nb_feature,NUMBER,,"[5, 3]",
-name,TEXT,,"[""iris"", ""concrete""]",

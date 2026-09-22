@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-target,TEXT,,"[""Concrete compressive strength(MPa, megapascals) "", ""chf_exp [MW/m2]"", ""is_safe""]",
-path,TEXT,,"[""https://www.kaggle.com/datasets/prathamtripathi/regression-with-neural-networking"", ""https://www.kaggle.com/datasets/saurabhshahane/predicting-heat-flux"", ""https://www.kaggle.com/datasets/mssmartypants/water-quality""]",
-name,TEXT,,"[""concrete"", ""Critical Heat Flux"", ""water quality""]",
-type,TEXT,,"[""regression"", ""classification""]",

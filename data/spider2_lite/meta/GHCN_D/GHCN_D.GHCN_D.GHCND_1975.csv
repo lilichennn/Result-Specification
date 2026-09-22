@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-element,TEXT,,"[""TMAX""]",
-id,TEXT,,"[""CA001171393"", ""CA004015960"", ""CA008401500""]",
-time,TEXT,,"[""1700""]",
-mflag,TEXT,,[],
-date,DATE,,"[""1975-11-19"", ""1975-03-22"", ""1975-03-14""]",
-value,FLOAT,,[-61.0],
-sflag,TEXT,,"[""C"", ""0""]",
-qflag,TEXT,,[],

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-element,TEXT,,"[""TMAX""]",
-qflag,TEXT,,[],
-date,DATE,,"[""1781-12-05"", ""1781-02-06"", ""1781-12-06""]",
-id,TEXT,,"[""EZE00100082""]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-sflag,TEXT,,"[""E""]",
-value,FLOAT,,"[0.0, -3.0, -4.0]",

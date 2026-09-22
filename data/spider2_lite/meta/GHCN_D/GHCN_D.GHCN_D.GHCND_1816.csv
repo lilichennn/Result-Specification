@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sflag,TEXT,,"[""E""]",
-element,TEXT,,"[""TMAX"", ""TMIN""]",
-date,DATE,,"[""1816-11-12"", ""1816-11-11"", ""1816-07-31""]",
-id,TEXT,,"[""ITE00100554""]",
-qflag,TEXT,,"[""I""]",
-value,FLOAT,,"[56.0, 86.0, 175.0]",
-mflag,TEXT,,[],
-time,TEXT,,[],

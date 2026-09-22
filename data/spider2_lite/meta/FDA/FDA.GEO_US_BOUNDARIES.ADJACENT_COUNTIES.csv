@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-neighbors_fips_code,VARIANT,,"[""[\n  \""19153\"",\n  \""19049\"",\n  \""19187\"",\n  \""19073\"",\n  \""19169\"",\n  \""19079\""\n]"", ""[\n  \""19163\"",\n  \""19105\"",\n  \""19045\"",\n  \""19103\"",\n  \""19139\"",\n  \""19113\""\n]"", ""[\n  \""19069\"",\n  \""19083\"",\n  \""19023\"",\n  \""19127\"",\n  \""19013\"",\n  \""19171\""\n]""]",
-county_fips_code,TEXT,,"[""19015"", ""19031"", ""19075""]",
-neighbors,VARIANT,,"[""[\n  \""Polk\"",\n  \""Dallas\"",\n  \""Webster\"",\n  \""Greene\"",\n  \""Story\"",\n  \""Hamilton\""\n]"", ""[\n  \""Scott\"",\n  \""Jones\"",\n  \""Clinton\"",\n  \""Johnson\"",\n  \""Muscatine\"",\n  \""Linn\""\n]"", ""[\n  \""Franklin\"",\n  \""Hardin\"",\n  \""Butler\"",\n  \""Marshall\"",\n  \""Black Hawk\"",\n  \""Tama\""\n]""]",
-neighbors_state,VARIANT,,"[""[\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\""\n]""]",
-state,TEXT,,"[""Iowa""]",
-county,TEXT,,"[""Boone County"", ""Cedar County"", ""Grundy County""]",

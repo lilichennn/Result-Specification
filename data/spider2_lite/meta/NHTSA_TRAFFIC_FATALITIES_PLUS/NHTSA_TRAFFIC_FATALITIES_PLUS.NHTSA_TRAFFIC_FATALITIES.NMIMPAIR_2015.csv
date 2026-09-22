@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-vehicle_number,NUMBER,,[0],
-condition_impairment_at_time_of_crash_non_motorist_name,TEXT,,"[""None/Apparently Normal""]",
-state_number,NUMBER,,"[1, 6]",
-condition_impairment_at_time_of_crash_non_motorist,NUMBER,,[0],
-person_number,NUMBER,,"[5, 8, 10]",
-consecutive_number,NUMBER,,"[10777, 62816]",

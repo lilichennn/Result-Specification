@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-modifieddate,TEXT,,"[""2014-02-08 10:17:21.51""]",
-countryregioncode,TEXT,,"[""AE"", ""AR"", ""AT""]",
-currencycode,TEXT,,"[""AED"", ""ARS"", ""ATS""]",

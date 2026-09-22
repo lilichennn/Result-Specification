@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state,TEXT,,"[""AR"", ""CA"", ""CT""]",
-neighbors_fips_code,VARIANT,,"[""[\n  \""47\"",\n  \""48\"",\n  \""29\"",\n  \""28\"",\n  \""22\"",\n  \""40\""\n]"", ""[\n  \""04\"",\n  \""32\"",\n  \""41\""\n]"", ""[\n  \""44\"",\n  \""36\"",\n  \""25\""\n]""]",
-state_fips_code,TEXT,,"[""05"", ""06"", ""09""]",
-state_name,TEXT,,"[""Arkansas"", ""California"", ""Connecticut""]",
-neighbors_state,VARIANT,,"[""[\n  \""Tennessee\"",\n  \""Texas\"",\n  \""Missouri\"",\n  \""Mississippi\"",\n  \""Louisiana\"",\n  \""Oklahoma\""\n]"", ""[\n  \""Arizona\"",\n  \""Nevada\"",\n  \""Oregon\""\n]"", ""[\n  \""Rhode Island\"",\n  \""New York\"",\n  \""Massachusetts\""\n]""]",

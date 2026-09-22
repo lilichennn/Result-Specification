@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-species,TEXT,Reactome pathway species,"[""Homo sapiens""]",
-url,TEXT,URL to pathway on the Reactome website,"[""https://reactome.org/PathwayBrowser/#/R-HSA-5654743"", ""https://reactome.org/PathwayBrowser/#/R-HSA-5684996"", ""https://reactome.org/PathwayBrowser/#/R-HSA-70326""]",
-name,TEXT,Reactome pathway name,"[""Signaling by FGFR4"", ""MAPK1/MAPK3 signaling"", ""Glucose metabolism""]",
-lowest_level,BOOLEAN,"Indicates if pathway is at the lowest level in the hierarchy, i.e., not a parent",[false],
-stable_id,TEXT,Reactome pathway stable identifier,"[""R-HSA-5654743"", ""R-HSA-5684996"", ""R-HSA-70326""]",

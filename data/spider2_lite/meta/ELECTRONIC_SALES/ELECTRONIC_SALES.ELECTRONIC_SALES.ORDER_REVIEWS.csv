@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-review_comment_message,TEXT,,"["""", ""Recebi bem antes do prazo estipulado.""]",
-review_comment_title,TEXT,,"[""""]",
-review_creation_date,TEXT,,"[""2018-03-10 00:00:00"", ""2017-04-21 00:00:00"", ""2018-04-13 00:00:00""]",
-index,NUMBER,,"[1, 3, 5]",
-review_id,TEXT,,"[""80e641a11e56f04c1ad469d5645fdfde"", ""e64fb393e7b32834bb789ff8bb30750e"", ""15197aa66ff4d0650b5434f1b46cda19""]",
-order_id,TEXT,,"[""a548910a1c6147796b98fdf73dbeba33"", ""658677c97b385a9be170737859d3511b"", ""b18dcdf73be66366873cd26c5724d1dc""]",
-review_answer_timestamp,TEXT,,"[""2018-03-11 03:05:13"", ""2017-04-21 22:02:06"", ""2018-04-16 00:39:37""]",
-review_score,NUMBER,,"[5, 1]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_number,NUMBER,,"[37, 39, 48]",
-area_of_Impact_associated_with_the_event_name,TEXT,,"[""Top""]",
-consecutive_number,NUMBER,,"[371350, 390178, 481149]",
-sequence_of_events,NUMBER,,"[8, 9]",
-area_of_Impact_associated_with_the_event,NUMBER,,[13],
-sequence_of_events_name,TEXT,,"[""Pedestrian"", ""Pedalcyclist""]",
-vehicle_event_number,NUMBER,,"[1, 2, 3]",
-vehicle_number,NUMBER,,[1],

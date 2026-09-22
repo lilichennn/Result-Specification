@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-child_id,TEXT,Reactome pathway stable identifier associated with 'parent' pathways,"[""R-HSA-8956319"", ""R-HSA-499943"", ""R-HSA-8956320""]",
-parent_id,TEXT,Reactome pathway stable identifier associated with 'child' pathways,"[""R-HSA-15869"", ""R-HSA-68867""]",

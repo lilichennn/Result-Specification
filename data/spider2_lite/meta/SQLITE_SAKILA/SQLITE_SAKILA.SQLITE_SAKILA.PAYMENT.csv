@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-last_update,TEXT,,"[""2021-03-06 15:55:57""]",
-staff_id,NUMBER,,"[1, 2]",
-payment_date,TEXT,,"[""2005-05-25 11:30:37.000"", ""2005-06-15 18:02:53.000"", ""2005-06-18 13:33:59.000""]",
-rental_id,FLOAT,,"[76.0, 1422.0, 2363.0]",
-payment_id,NUMBER,,"[1, 4, 8]",
-customer_id,NUMBER,,[1],
-amount,FLOAT,,"[2.99, 0.99, 3.99]",

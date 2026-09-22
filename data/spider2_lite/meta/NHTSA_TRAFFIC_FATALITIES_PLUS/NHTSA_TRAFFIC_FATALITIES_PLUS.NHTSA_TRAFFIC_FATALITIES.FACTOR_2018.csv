@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_name,TEXT,,"[""Alabama"", ""Alaska"", ""Arizona""]",
-contributing_circumstances_motor_vehicle,NUMBER,,[0],
-vehicle_number,NUMBER,,[5],
-contributing_circumstances_motor_vehicle_name,TEXT,,"[""None""]",
-state_number,NUMBER,,"[1, 2, 4]",
-consecutive_number,NUMBER,,"[10059, 10333, 10531]",

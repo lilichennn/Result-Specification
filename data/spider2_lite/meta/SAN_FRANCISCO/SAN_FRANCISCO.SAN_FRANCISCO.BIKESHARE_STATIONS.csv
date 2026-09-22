@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-latitude,FLOAT,Latitude,"[37.342725, 37.330165, 37.348742]",
-dockcount,NUMBER,Number of total docks at station,[15],
-landmark,TEXT,"City (San Francisco, Redwood City, Palo Alto, Mountain View, San Jose)","[""San Jose""]",
-installation_date,DATE,"Original date that station was installed. If station was moved, it is noted below.","[""2014-04-09"", ""2013-08-05"", ""2013-08-07""]",
-longitude,FLOAT,Longitude,"[-121.895617, -121.885831, -121.894715]",
-station_id,NUMBER,Station ID number,"[84, 8, 9]",
-name,TEXT,Name of station,"[""Ryland Park"", ""San Salvador at 1st"", ""Japantown""]",

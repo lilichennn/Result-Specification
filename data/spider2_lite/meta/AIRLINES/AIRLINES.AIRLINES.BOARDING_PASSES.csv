@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-flight_id,NUMBER,,[30625],
-ticket_no,TEXT,,"[""0005435212386"", ""0005435212357"", ""0005435212393""]",
-seat_no,TEXT,,"[""3G"", ""11A"", ""11H""]",
-boarding_no,NUMBER,,"[2, 5, 7]",

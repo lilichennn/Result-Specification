@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_number,NUMBER,,"[38, 56]",
-consecutive_number,NUMBER,,"[380097, 560031]",
-violations_charged_name,TEXT,,"[""None""]",
-vehicle_number,NUMBER,,"[5, 6, 7]",
-violations_charged,TEXT,,"[""0""]",

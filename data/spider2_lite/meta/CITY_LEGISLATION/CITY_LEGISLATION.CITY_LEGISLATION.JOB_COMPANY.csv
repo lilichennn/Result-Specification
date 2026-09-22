@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-name,TEXT,,"[""acalerate"", ""Agile Rays"", ""San Francisco Health Plan""]",
-thumbnail,TEXT,,"[""https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCm6EZgIRlEbYcGXoDJebGoHBEYxzYRVLeizWvrxdzl450ZvIoKKmGHho&s"", ""https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn4Y07H9Jx7HKR_Q6XvX57PFoGHz2SKIATLFWygWU&s"", """"]",
-link_google,TEXT,,"[""https://www.google.com/search?gl=us&hl=en&q=acalerate&sa=X&ved=0ahUKEwjarf7iq7iAAxVjF1kFHS6SDlcQmJACCLQN"", ""https://www.google.com/search?hl=en&gl=us&q=Agile+Rays&sa=X&ved=0ahUKEwjV37OH2fj8AhVpKlkFHWP3AgwQmJACCJYK"", ""https://www.google.com/search?gl=us&hl=en&q=San+Francisco+Health+Plan&sa=X&ved=0ahUKEwiS5bW25Y__AhUJlIkEHRRgAig4ChCYkAIInws""]",
-company_id,NUMBER,,"[211890, 450894, 99586]",
-link,TEXT,,"["""", ""http://www.motivitylabs.com/""]",

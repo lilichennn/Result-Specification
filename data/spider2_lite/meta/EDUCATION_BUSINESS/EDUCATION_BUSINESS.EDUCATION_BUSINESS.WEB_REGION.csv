@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,NUMBER,,"[2, 3, 4]",
-name,TEXT,,"[""Midwest"", ""Southeast"", ""West""]",

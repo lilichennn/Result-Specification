@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-day,TEXT,,"[""2019-04-05"", ""2019-04-07"", ""2019-04-08""]",
-app_id,NUMBER,,[542],
-page_no,NUMBER,,[1],
-counter,NUMBER,,"[5311, 5458, 5517]",

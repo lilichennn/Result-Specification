@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-team_api_id,NUMBER,,"[9987, 9994, 9991]",
-team_long_name,TEXT,,"[""KRC Genk"", ""Sporting Lokeren"", ""KAA Gent""]",
-team_fifa_api_id,FLOAT,,"[673.0, 2007.0, 674.0]",
-id,NUMBER,,"[1, 4, 7]",
-team_short_name,TEXT,,"[""GEN"", ""LOK"", ""MON""]",

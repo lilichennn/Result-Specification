@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-position,NUMBER,,"[1, 3, 4]",
-warehouse,NUMBER,,[1],
-aisle,TEXT,,"[""A""]",
-id,NUMBER,,"[1, 3, 4]",

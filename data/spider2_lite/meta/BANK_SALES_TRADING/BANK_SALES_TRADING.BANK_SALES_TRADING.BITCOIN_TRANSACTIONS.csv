@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-quantity,FLOAT,,[50.0],
-member_id,TEXT,,"[""eccbc8"", ""a87ff6"", ""8f14e4""]",
-txn_id,NUMBER,,"[2, 3, 7]",
-ticker,TEXT,,"[""BTC""]",
-txn_type,TEXT,,"[""BUY""]",
-percentage_fee,FLOAT,,"[0.3, 0.0, 0.21]",
-txn_time,TEXT,,"[""2017-01-01T00:00:00.000Z""]",
-txn_date,TEXT,,"[""01-01-2017""]",

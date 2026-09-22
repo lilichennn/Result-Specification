@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-last_round,NUMBER,,"[6, 3, 5]",
-is_first_drive_of_season,NUMBER,,[1],
-drive_id,NUMBER,,[1],
-year,NUMBER,,[1950],
-constructor_id,NUMBER,,"[105, 157, 113]",
-is_final_drive_of_season,NUMBER,,[1],
-first_round,NUMBER,,"[2, 3]",
-driver_id,NUMBER,,"[498, 520, 611]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-value,FLOAT,,"[280.0, 219.0, 243.0]",
-date,DATE,,"[""1956-03-17"", ""1956-12-11"", ""1956-03-05""]",
-id,TEXT,,"[""AE000041196""]",
-time,TEXT,,[],
-mflag,TEXT,,"[""H""]",
-sflag,TEXT,,"[""S""]",
-qflag,TEXT,,[],
-element,TEXT,,"[""TAVG""]",

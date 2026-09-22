@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CustomerID,NUMBER,,"[10001, 10002, 10003]",
-StyleID,NUMBER,,"[10, 3, 8]",
-PreferenceSeq,NUMBER,,"[2, 1]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-qflag,TEXT,,[],
-mflag,TEXT,,[],
-date,DATE,,"[""1990-03-31"", ""1990-10-25"", ""1990-01-09""]",
-id,TEXT,,"[""USW00003927"", ""USW00012926"", ""USW00023184""]",
-sflag,TEXT,,"[""X""]",
-element,TEXT,,"[""SNOW""]",
-value,FLOAT,,[0.0],
-time,TEXT,,[],

@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-delivery,TEXT,,"[""""]",
-id,NUMBER,,"[421, 425, 426]",
-ordered,TEXT,,"[""2019-01-15"", ""2019-02-17"", ""2019-02-26""]",
-customer_id,NUMBER,,"[50042, 51069, 50741]",
