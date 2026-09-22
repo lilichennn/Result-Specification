@@ -2,7 +2,7 @@
 
 **Separating result semantics from SQL implementation.**
 
-A Result Specification (RS) records what an answer should represent: its population, row granularity, column roles, derivation, and filtering policy. This repository provides RS generation, benchmark input preparation, and native/RS-assisted experiments for **DeepEye-SQL, DAIL-SQL, and DIN-SQL**.
+A Result Specification (RS) is a structured set of semantic constraints on the intended result table, organized into five dimensions: **Population, Row Grain, Column Role, Derivation, and Filter Policy**. It specifies what a query should return without prescribing a particular SQL implementation. This repository provides RS generation, benchmark input preparation, and comparisons of the original and RS variants of **DeepEye-SQL, DAIL-SQL, and DIN-SQL**.
 
 [Data](docs/data.md) · [RS generation](docs/rs.md) · [Experiments](docs/experiments.md) · [Evaluation](docs/evaluation.md) · [Analysis tools](docs/analysis.md) · [Dependencies](docs/dependencies.md)
 
@@ -13,9 +13,13 @@ A Result Specification (RS) records what an answer should represent: its populat
 | RS generation | Question-based generation, metadata review, and reference-SQL correction; prompts and reusable Python functions. |
 | Method integration | Adapters, RS injection, concurrent execution, resumable records, and targeted reruns. |
 | Reusable inputs | Questions, public metadata, generated RS, reference SQL where available, and schema-linking reference annotations. |
-| Analysis | SQL execution comparison, stage-specific summaries, compact exports, and plotting programs. |
+| Analysis | SQL execution comparison, stage-specific summary tables, and compact exports. |
 
 The five evaluation groups are BIRD dev, Spider dev, Spider test, BIRD-Interact Lite, and BIRD-Interact Full. Database files, downloaded models, vector caches, and experiment outputs are not bundled.
+
+## Terminology
+
+The concept is **Result Specification (RS)**. The implementation retains the earlier **Result Contract (RC)** naming in paths, functions, command-line options, data fields, and saved records for compatibility. For example, `rc.json` stores RS records, and `rc_round3` stores the specification after gold-SQL correction. These names refer to the same concept. Prompt templates retain their original wording for reproducibility. Use the identifiers in commands and configuration examples exactly as written.
 
 ## Quick start
 
@@ -50,7 +54,7 @@ scripts/
   filter_meta.py        Schema filtering
   baseline_adapters/    Method and database integration
   rc_evaluation/        Experiment runners, records, and exports
-  analysis/             Summary tables and figures
+  analysis/             Evaluation summaries and tables
 baselines/              Upstream method source and pinned submodules
 docs/                   Setup, execution, and analysis guides
 pyproject.toml          Python dependencies
@@ -59,11 +63,9 @@ uv.lock                 Locked dependency versions
 
 Runtime directories are created as needed and ignored by Git: `resources/` for downloaded tools/models, `cache/` for reusable preparation, and `outputs/` for runs and analyses.
 
-## Terminology and reproducibility
+## Oracle RS and reproducibility
 
-The public concept is **Result Specification (RS)**. Existing interfaces retain `result_contract`, `rc.json`, `rc_round3`, and related RC names. These identifiers refer to the same software pipeline; a broad identifier rename is not required to use it.
-
-Round 3 uses reference SQL to correct the specification. The supplied RC3 experiments therefore use **reference-assisted RS**, not a gold-free predictor. The runners select Round 3 explicitly and do not silently fall back to Round 2.
+Oracle RS is constructed by checking and correcting the specification against gold SQL. The scripts name this correction step **Round 3** and store its output in `rc_round3`. The supplied experiment configurations select this field explicitly and do not silently fall back to Round 2.
 
 Configuration, prompt snapshots, question identities, individual model attempts, and stage outputs are retained in experiment records. Reused computations remain traceable. See [evaluation and record handling](docs/evaluation.md) before combining reruns or calculating accuracy and token statistics.
 

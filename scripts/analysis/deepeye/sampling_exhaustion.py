@@ -1,4 +1,4 @@
-"""Read-only exhaustion audit of the five frozen qwen3.8-2.4t-a95b RC3 groups.
+"""Read-only exhaustion audit of the five frozen qwen3.8-2.4t-a95b RS groups.
 
 Reuse the prior checksum-verified offline extraction for membership/denominators;
 reconcile every nonzero failure row with original sample outcomes and attempts.
@@ -159,7 +159,7 @@ def run(output, campaign_root=None, campaign_pattern='{group}'):
         print(json.dumps(summary, ensure_ascii=False), flush=True)
     report = {'created_at': datetime.now(timezone.utc).isoformat(), 'model': 'qwen3.8-2.4t-a95b',
               'question_count': sum(GROUPS.values()), 'timeout_seconds': 660, 'sample_max_attempts': 4,
-              'definition': 'One unique fixed sampling slot with a terminal unsuccessful sample_result after all four attempts. Fourth-attempt success is not exhaustion. Counts exclude reused zero-call RC artifacts and historical unrelated runs.',
+              'definition': 'One unique fixed sampling slot with a terminal unsuccessful sample_result after all four attempts. Fourth-attempt success is not exhaustion. Counts exclude reused zero-call RS artifacts and historical unrelated runs.',
               'method': 'Membership and zero-failure rows reuse the checksum-verified offline extraction. All source run manifest hashes are checked; every nonzero-failure stage row and failed sample outcome is reconciled with checksummed source records. No whole-store event replay or SQL scoring is claimed.',
               'groups': summaries, 'total': summarize(slots),
               'total_by_condition': {c:summarize([s for s in slots if s['condition'] == c]) for c in ('native', 'rc')},

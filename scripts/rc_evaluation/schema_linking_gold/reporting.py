@@ -411,22 +411,23 @@ def _markdown(report: Mapping[str, Any]) -> str:
         f"{coverage['invalid_sql_tasks']} | {coverage['pending_tasks']} | "
         f"{coverage['cached_unique_input_count']} |",
         "",
-        "## Native and RC3 metrics",
+        "## Original and RS metrics",
         "",
         "| Prediction | Level | Micro P | Micro R | Micro F1 | Macro P | Macro R | Macro F1 | Exact sets | Full recall |",
         "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for prediction in ("native", "rc3"):
+        prediction_label = "Original" if prediction == "native" else "RS"
         for level in ("tables", "columns"):
             metric = report["metrics"][prediction][level]
             lines.append(
-                f"| {prediction} | {level} | {_number(metric['micro']['precision'])} | "
+                f"| {prediction_label} | {level} | {_number(metric['micro']['precision'])} | "
                 f"{_number(metric['micro']['recall'])} | {_number(metric['micro']['f1'])} | "
                 f"{_number(metric['macro']['precision'])} | {_number(metric['macro']['recall'])} | "
                 f"{_number(metric['macro']['f1'])} | {metric['exact_set']['count']}/{metric['questions']} | "
                 f"{metric['full_recall']['count']}/{metric['full_recall']['eligible']} |"
             )
-    lines += ["", "## Paired native-to-RC3 directions", "",
+    lines += ["", "## Paired Original-to-RS directions", "",
               "Lower symmetric-difference error is an improvement.", "",
               "| Level | Improvements | Regressions | Unchanged |", "| --- | ---: | ---: | ---: |"]
     for level in ("tables", "columns"):

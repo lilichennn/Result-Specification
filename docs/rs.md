@@ -1,6 +1,6 @@
 # Generating and using a Result Specification
 
-The reusable implementation is in `result_contract/rc/`; command-line orchestration is in `scripts/generate_rc.py`. Prompts live next to the implementation. Existing filenames and JSON keys keep the RC abbreviation.
+The reusable implementation is in `result_contract/rc/`; command-line orchestration is in `scripts/generate_rc.py`. Prompts live next to the implementation. Paths and identifiers retain the RC abbreviation as explained in [Terminology](../README.md#terminology).
 
 ## Rounds and fields
 
@@ -10,9 +10,9 @@ The reusable implementation is in `result_contract/rc/`; command-line orchestrat
 | 2 | Public database metadata | Revised fields plus `meta_review` |
 | 3 | Reference SQL, alongside the question, evidence, and Round-2 specification | Corrected six-field specification |
 
-All six final fields are text. They describe the population to consider, what one result row represents, the roles of result columns, how values are derived, filtering/selection policy, and metadata-related interpretation. The full definitions and generation instructions are in the versioned prompt files, not an independently maintained parallel schema.
+The five RS dimensions are **Population, Row Grain, Column Role, Derivation, and Filter Policy**, stored as `population`, `row_grain`, `column_role`, `derivation`, and `filter_policy`. The additional `meta_review` field records metadata-refinement notes. All six JSON fields contain text. The full generation instructions are in the versioned prompt files.
 
-Round 3 is **reference-assisted**. It should not be described as inferred solely from the user question. The method experiments in the supplied five-group configurations explicitly use `rc_round3`.
+**Oracle RS** is constructed by checking and correcting RS against gold SQL. This correction step is named **Round 3** in the scripts; the supplied five-group experiment configurations explicitly use `rc_round3`. The correction step uses gold SQL, not solely the user question.
 
 ## Commands
 

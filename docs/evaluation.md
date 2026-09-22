@@ -2,6 +2,8 @@
 
 Inference records, SQL assessments, and summary tables serve different purposes. Keep the original run directory until all exports have been verified. A table alone does not contain enough information to reconstruct a run.
 
+The concept is Result Specification (RS). Paths, options, and record fields retain their existing RC names: for example, `rc3` identifies the RS after gold-SQL correction. Use these identifiers exactly as shown when reading records or running commands; they do not denote a separate method.
+
 ## SQL correctness
 
 The shared execution comparison checks a predicted SQL query against its reference query on the same database. The number and positions of result columns must agree. Row order is ignored; duplicate rows retain their multiplicities. Column names are not used as the correctness criterion. A query that fails or times out is not a successful match. Keep execution failures separate from successful-but-different answers in subsequent analysis.
@@ -19,7 +21,7 @@ Database access is required when executing or re-evaluating SQL. Once the compac
 
 Stage-specific DeepEye runs normally restart only the selected stage from a native snapshot; downstream execution is optional. Do not present a stage-local candidate statistic as the accuracy of an end-to-end rerun.
 
-DAIL has four logical modes: `native`, `rc_first`, `rc_second`, and `rc_both`. Their records can reference shared physical executions when the ordered retrieved-example IDs match. Count a mode's resolved outputs once, not every stored event. DIN stores native and RS-assisted stage outputs as distinct records. Its schema-filtering/linking comparison is an additional operation; running Generation or Revision does not implicitly run that comparison.
+DAIL has four logical modes: `native` (Original), `rc_first` (RS in the first generation round), `rc_second` (RS in the second round), and `rc_both` (RS in both rounds). Their records can reference shared physical executions when the ordered retrieved-example IDs match. Count a mode's resolved outputs once, not every stored event. DIN stores original and RS-augmented stage outputs as distinct records. Its schema-filtering/linking comparison is an additional operation; running Generation or Revision does not implicitly run that comparison.
 
 ## Token accounting
 
@@ -51,4 +53,4 @@ uv run python -m scripts.analysis.deepeye.analyze --help
 
 The DAIL and DIN exports can execute SQL and therefore need database access. DeepEye's `analyze` entry separates extraction and SQL evaluation; `scripts.analysis.deepeye.summarize` performs offline summarization afterwards. Inspect the command help before running. Other tools under `scripts/analysis/deepeye/` read the resulting assessment files. The bundled `data/reference/schema_linking_annotations.jsonl` contains reference labels, not prediction results or raw model-response logs.
 
-See [Analysis commands](analysis.md) for the complete table-generation sequence and input requirements. Plotting programs under `scripts/analysis/` accept explicit input paths. They do not constitute an independent correctness evaluator. Keep the source tables and evaluation settings alongside generated figures.
+See [Analysis commands](analysis.md) for the complete table-generation sequence and input requirements. Keep the source assessments and evaluation settings alongside generated tables.

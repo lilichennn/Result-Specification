@@ -16,7 +16,7 @@ These five groups contain 5,320 questions, each with a successful Round-3 specif
 
 - `<group>.json`: question records with `index`, `db_id`, `question`, and `evidence`.
 - `meta/`: database metadata exposed to the methods and RS generation, organized by database.
-- `rc.json`: question-aligned records with `rc_round1`, `rc_round2`, `rc_round3`, and per-round status/error fields.
+- `rc.json`: question-aligned RS records with `rc_round1`, `rc_round2`, `rc_round3`, and per-round status/error fields. These are the actual field names; see [Terminology](../README.md#terminology).
 - `gold_sql.json`, `gold_sql_schema_linking.json`, and `gold_sql_preparation.json`: reference SQL/dependency information and preparation provenance, where available. The runners' configuration identifies the actual evaluation reference source.
 - `data/reference/schema_linking_annotations.jsonl`: final model-assisted reference labels for the five main groups. It does not include annotation request logs or a run database.
 

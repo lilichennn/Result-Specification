@@ -360,7 +360,7 @@ def export_package(source: Path, destination: Path, run_store: Path, *, guide: P
                       'Four historical Generation modes retain their original full-schema inputs.',
                       'New DAIL Linking is a separate local stage, not a parent of historical Generation.',
                       'Schema filtering reuses historical DIN filter records; no DIN Linking output is substituted.',
-                      'Local Linking uses zero LLM tokens; conceptual RC cost includes reused filter usage.',
+                      'Local Linking uses zero LLM tokens; conceptual RS cost includes reused filter usage.',
                       'All SQLite files are standalone backup snapshots; sidecars are not required.'],
         }
         index['files'] = [{'path': str(path.relative_to(stage)), **_info(path)}

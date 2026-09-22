@@ -293,7 +293,7 @@ def build_parser():
     prepare.add_argument('--target-stage', choices=STAGES, required=True)
     prepare.add_argument('--condition', choices=('none', 'rc'), required=True)
     prepare.add_argument('--rc-version', type=int, choices=(2, 3),
-                         help='Explicit RC version; must agree with the workload (legacy default: 2)')
+                         help='Explicit RS artifact version; must agree with the workload (legacy default: 2)')
     prepare.add_argument('--repeat-id', default='1')
     prepare.add_argument('--continue-downstream', action='store_true')
     prepare.add_argument('--precompute-dir', type=Path)
@@ -310,7 +310,7 @@ def build_parser():
     for name in ('rc-lite', 'rc-full'):
         prepare.add_argument('--' + name, type=Path)
     prepare.add_argument('--rc', action='append', type=_partition_path, metavar='PARTITION=PATH',
-                         help='RC source for an exact workload partition; repeat as needed')
+                         help='RS source for an exact workload partition; repeat as needed')
     for name in ('workers', 'inner-workers', 'pg-concurrency', 'max-tokens', 'thinking-budget', 'chat-timeout',
                  'request-limit', 'request-workers', 'coordinator-workers', 'http-connections',
                  'extractor-retries', 'direct-linking-budget', 'reversed-linking-budget', 'dc-generation-budget',

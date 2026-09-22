@@ -88,7 +88,7 @@ def preprocess_dataset(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Preprocess a benchmark split for RC generation."
+        description="Preprocess a benchmark split for Result Specification (RS) generation."
     )
     parser.add_argument(
         "--dataset",

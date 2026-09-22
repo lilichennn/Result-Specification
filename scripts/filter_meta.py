@@ -1,4 +1,4 @@
-"""Filter preprocessed metadata using RC, Q/Hint, or their combination."""
+"""Filter preprocessed metadata using Result Specifications (RS), Q/Hint, or their combination."""
 
 from __future__ import annotations
 
@@ -239,7 +239,7 @@ def main() -> None:
     parser.add_argument(
         "--mode",
         choices=("rc", "qh"),
-        help="Omit to filter with question, hint, and RC together",
+        help="Omit to filter with question, hint, and RS together",
     )
     parser.add_argument("--llm", required=True, choices=MODEL_ALIASES)
     args = parser.parse_args()

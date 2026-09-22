@@ -404,7 +404,7 @@ def generate_round3_file(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate or gold-correct Result Contracts for a dataset split."
+        description="Generate or gold-correct Result Specifications (RS) for a dataset split."
     )
     parser.add_argument(
         "--dataset_split",
@@ -421,7 +421,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--round3",
         action="store_true",
-        help="Correct existing Round-2 contracts using gold_sql_schema_linking.json.",
+        help="Produce oracle RS by correcting existing Round-2 specifications using gold_sql_schema_linking.json.",
     )
     parser.add_argument(
         "--gold-file", type=Path,
@@ -429,7 +429,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--allow-partial-gold", action="store_true",
-        help="Round3 only: generate for IDs present in the gold file and preserve all other RC records.",
+        help="Round3 only: generate for IDs present in the gold file and preserve all other RS records.",
     )
     args = parser.parse_args()
     if not args.round3 and (args.gold_file is not None or args.allow_partial_gold):

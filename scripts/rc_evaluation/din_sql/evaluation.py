@@ -74,15 +74,15 @@ def summarize_stage(rows):
 
 def summary_markdown(summary):
     number = lambda v: '未知' if v is None else f'{v:.2f}'
-    lines = ['# DIN-SQL 原生与 RC3 对照','',
+    lines = ['# DIN-SQL 原生与 RS 对照','',
              '严格比较列数和列位置，忽略行顺序、保留重复行。质量和 Token 分别使用成对有效题；未结束题不进入主表。', '',
-             '| 测试组 | 阶段 | 总题数 | 已有完整记录 | 质量有效题 | 原生正确率 % | RC3 正确率 % | 变化（百分点） |',
+             '| 测试组 | 阶段 | 总题数 | 已有完整记录 | 质量有效题 | 原生正确率 % | RS 正确率 % | 变化（百分点） |',
              '| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |']
     for group,stages in summary.items():
         for stage,row in stages.items():
             lines.append(f'| {group} | {stage.title()} | {row["total_questions"]} | {row["finished_questions"]} | '
                          f'{row["quality_pairs"]} | {number(row["base_pct"])} | {number(row["rc_pct"])} | {number(row["delta_pp"])} |')
-    lines += ['', '| 测试组 | 阶段 | Token 类别 | 成对有效题 | 原生总量 | RC3 总量 | 节省比例 % |',
+    lines += ['', '| 测试组 | 阶段 | Token 类别 | 成对有效题 | 原生总量 | RS 总量 | 节省比例 % |',
               '| --- | --- | --- | ---: | ---: | ---: | ---: |']
     for group,stages in summary.items():
         for stage,row in stages.items():

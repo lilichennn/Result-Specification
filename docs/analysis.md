@@ -1,13 +1,13 @@
 # Analysis commands
 
-Run commands from the repository root with `uv run python -m`. Analysis consumes saved run records and assessments. Generated reports default to `outputs/analysis/`; figures default to `outputs/plots/`. No prediction results or precomputed performance series are bundled.
+Run commands from the repository root with `uv run python -m`. Analysis consumes saved run records and assessments. Generated reports default to `outputs/analysis/`. No prediction results or precomputed summary tables are bundled.
 
 ## DeepEye preparation and assessment
 
 The [analysis entry point](../scripts/analysis/deepeye/analyze.py) separates record extraction from SQL execution. The five supported groups are `bird_dev`, `spider_dev`, `spider_test`, `bird_interact_lite`, and `bird_interact_full`. These tools validate the complete group membership. The stage metric aggregators require all five groups; extraction, assessment, summarization, verification, and supplementary diagnostics also accept `--group` to process one group at a time.
 
 ```bash
-# Campaign directories must contain campaign.sqlite3 and completed native/RC jobs.
+# Campaign directories must contain campaign.sqlite3 and completed original/RS jobs.
 uv run python -m scripts.analysis.deepeye.analyze extract \
   --campaign-root outputs/deepeye/campaigns \
   --campaign-pattern '{group}' \
@@ -55,7 +55,7 @@ uv run python -m scripts.analysis.deepeye.selection_metrics --analysis-dir outpu
 uv run python -m scripts.analysis.deepeye.selection_active_mixed_metrics --analysis-dir outputs/analysis/deepeye
 ```
 
-Generation counts actual candidate slots, including repeated SQL. Unknown comparisons remain in the denominator without being treated as proven mismatches. Revision's `rc_involved_unique_units` describes normalized unique SQL units that actually participated in the RC revision operation; all-slot diagnostics are also retained. The active mixed-pair Selection report includes active RC cases whose RC shortlist has exactly two candidates and one confirmed match. It verifies those rows against the saved assessment checksums.
+Generation counts actual candidate slots, including repeated SQL. Unknown comparisons remain in the denominator without being treated as proven mismatches. Revision's `rc_involved_unique_units` describes normalized unique SQL units that actually participated in RS-augmented Revision; all-slot diagnostics are also retained. The active mixed-pair Selection report includes cases where RS participated and the RS variant's shortlist has exactly two candidates and one confirmed match. It verifies those rows against the saved assessment checksums.
 
 Token summaries retain successful-sample usage, with separate complete and equal-budget cohorts. Exhaustion counts a fixed sampling slot whose final result remains unsuccessful after all four attempts; success on the fourth attempt does not count. This audit validates the configured Qwen3.8 2.4T model, four-attempt budget, timeout, and complete group membership. It accepts `--output-dir` for a new report directory and optional `--campaign-root`/`--campaign-pattern` overrides for campaign locations.
 
@@ -90,19 +90,3 @@ uv run python -m scripts.analysis.export_dail_facts \
 ```
 
 The batch must contain `manifest.json`, `current.sqlite3`, and `group-<hex>/run.sqlite3` stores. The exporter verifies event checksums and references, then creates a new `record_export/` containing `versions.jsonl`, `modes.jsonl`, `rounds.jsonl`, `candidates.jsonl`, `failed_questions.jsonl`, and `verification.json`. It does not score SQL against references; the verification record states `reference_sql_evaluation_complete: false`.
-
-## Plots
-
-[Schema-size plotting](../scripts/analysis/plot_schema_size.py) reads successful `filter` records from normalized linking details. Each group must have `full_columns` and `filtered_columns` counts.
-
-```bash
-uv run python -m scripts.analysis.plot_schema_size \
-  --input outputs/analysis/din_sql/evaluation/linking_details.jsonl \
-  --output outputs/plots/schema_size
-
-uv run python -m scripts.analysis.plot_rc_effect_by_complexity \
-  --input outputs/analysis/rc_effect_series.json --layout lines-pair \
-  --output outputs/plots/rc_effect
-```
-
-The [RC-effect plotter](../scripts/analysis/plot_rc_effect_by_complexity.py) requires a user-supplied JSON object with five `datasets` labels in display order and `stages.Generation`/`stages.Revision` objects. Each stage has five-element numeric `original`, `rc`, and `gain` percentage arrays. Supply gains explicitly to preserve the upstream rounding and aggregation convention. Arrange the labels in increasing empirical difficulty to match the plot's axis caption. Supported layouts are `side-by-side`, `merged`, `bars`, `lines`, and `lines-pair`; the bars layout requires RC values at least as large as original values. Both plotters write PDF and PNG, and `--help` describes their inputs.

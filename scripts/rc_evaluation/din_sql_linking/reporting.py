@@ -1,4 +1,4 @@
-"""Merge the sealed DIN handoff with its focused RC3 Linking extension.
+"""Merge the sealed DIN handoff with its focused RS Linking extension.
 
 The exporter treats the old handoff as an immutable, independently sealed
 base.  It copies only files authenticated by the old index, preserves the old
@@ -713,9 +713,9 @@ def _number(value: Any) -> str:
 
 
 def _linking_markdown(summary: Mapping[str, Any]) -> str:
-    lines = ["", "## RC3 schema filtering and DIN Linking", "",
+    lines = ["", "## RS schema filtering and DIN Linking", "",
              "Primary metric: per-question column recall averaged over questions with at least one gold column.", "",
-             "| Group | Questions | Eligible gold-column questions | Base column macro recall | RC3 column macro recall | Delta | Base table macro recall | RC3 table macro recall |",
+             "| Group | Questions | Eligible gold-column questions | Base column macro recall | RS column macro recall | Delta | Base table macro recall | RS table macro recall |",
              "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |"]
     rows = [(group, value) for group, value in summary["groups"].items()] + [("Overall", summary["overall"])]
     for group, value in rows:
@@ -729,7 +729,7 @@ def _linking_markdown(summary: Mapping[str, Any]) -> str:
             f"{_number(value['base']['tables']['macro']['recall'])} | "
             f"{_number(value['rc3']['tables']['macro']['recall'])} |"
         )
-    lines += ["", "`table.*` is expanded against the full catalog for Base and against the filtered catalog for RC3. Empty-gold column questions are excluded from column macro recall; failed or empty predictions score zero when gold is non-empty.", ""]
+    lines += ["", "`table.*` is expanded against the full catalog for Base and against the filtered catalog for RS. Empty-gold column questions are excluded from column macro recall; failed or empty predictions score zero when gold is non-empty.", ""]
     return "\n".join(lines)
 
 
@@ -904,13 +904,17 @@ def _update_guide(stage: Path, source: Mapping[str, Any], guide: Path | None) ->
         custom_preamble = ""
     if relative in {Path("index.json"), Path("COMPLETE.json")}:
         raise ValueError("guide path collides with a root handoff seal")
-    text = custom_preamble + """# DIN-SQL × Qwen3.8 2.4T：五组 RC3 统一记录解析指南
+    text = custom_preamble + """# DIN-SQL × Qwen3.8 2.4T：五组 RS 统一记录解析指南
 
 本目录是一个已经封印的统一交付包。导出格式为 `din-handoff-v2`，记录
 格式为 `din-current-records-v2`，评估格式为
-`din-compact-evaluation-v2`。它把原 DIN 流程与后来补跑的 RC3 schema
+`din-compact-evaluation-v2`。它把原 DIN 流程与后来补跑的 RS schema
 filtering + DIN Linking 对照合并成每题一个版本、八个节点；分析时不需要
 把它当成两次实验，也不需要另行连接第二套题目记录。
+
+本文使用论文术语 Result Specification（RS）。实际代码、文件名与记录
+标识符保留历史 RC 命名，例如 `generation_rc3`、`schema_filter_rc3`
+和 `rc3`；解析记录时应使用这些原始名称。
 
 ## 1. 建议读取顺序
 
@@ -928,7 +932,7 @@ filtering + DIN Linking 对照合并成每题一个版本、八个节点；分�
 
 题目主键始终是 `(group, question_id)`，其中 `question_id` 按字符串处理。
 
-## 2. Unified RC3 Linking extension
+## 2. Unified RS Linking extension
 
 ### Eight-node unified view
 
@@ -937,12 +941,12 @@ filtering + DIN Linking 对照合并成每题一个版本、八个节点；分�
 
 - `linking`：原生 DIN Schema Linking；
 - `decomposition`：原生难度/分解节点；
-- `generation_base`、`generation_rc3`：Generation 原生与 RC3 对照；
-- `revision_base`、`revision_rc3`：Revision 原生与 RC3 对照；
-- `schema_filter_rc3`：根据 question、evidence、RC3 和完整公开 metadata
+- `generation_base`、`generation_rc3`：Generation 原生与 RS 对照；
+- `revision_base`、`revision_rc3`：Revision 原生与 RS 对照；
+- `schema_filter_rc3`：根据 question、evidence、RS 和完整公开 metadata
   生成过滤后的 schema；
 - `linking_rc3`：把过滤后的 schema 交给原 DIN Linking prompt 得到的
-  对照结果。RC3 文本不会直接进入该 Linking prompt。
+  对照结果。RS 文本不会直接进入该 Linking prompt。
 
 `records/versions.jsonl` 每题一行。`source_seals.base` 保存原六节点版本的
 封印，`extension_lineage` 保存两个新增节点的独立来源，
@@ -955,7 +959,7 @@ filtering + DIN Linking 对照合并成每题一个版本、八个节点；分�
 
 ## 3. 紧凑记录
 
-- `records/questions.jsonl`：每题身份、问题、evidence、数据库绑定、RC3、
+- `records/questions.jsonl`：每题身份、问题、evidence、数据库绑定、RS、
   schema 引用和当前版本。
 - `records/versions.jsonl`：当前统一版本、基础封印与扩展 lineage。
 - `records/nodes.jsonl`：八节点解析结果、状态、usage 与事件引用。
@@ -979,15 +983,15 @@ Linking 的逐题统一事实位于 `evaluation/linking_details.jsonl`：
 
 - `gold`：gold SQL 辅助标注出的必需表和列；
 - `base`：原生 DIN Linking 解析结果及逐题 recall；
-- `filter`：RC3 schema filtering 保留的表列、recall 与 schema 缩减比例；
+- `filter`：RS schema filtering 保留的表列、recall 与 schema 缩减比例；
 - `rc3`：基于过滤 schema 的 DIN Linking 结果及逐题 recall；
-- `tokens`：原生 Linking、filter、RC3 Linking 和 RC3 两节点合计用量。
+- `tokens`：原生 Linking、filter、RS Linking 和 RS 两节点合计用量。
 
 汇总结果位于 `evaluation/summary.json` 的 `linking` 字段以及
 `evaluation/tables.md`。主指标是 column-level macro
 recall：先计算每题列召回率，再对 gold 至少含一列的题目取平均。
 gold 列为空的题不进入该指标；gold 非空而预测失败或为空时，该题召回率
-记为 0。原生结果中的 `table.*` 在完整 catalog 上展开，RC3 结果中的
+记为 0。原生结果中的 `table.*` 在完整 catalog 上展开，RS 结果中的
 `table.*` 只在该题过滤后的 catalog 上展开。
 
 ## 5. Raw audit material
@@ -995,7 +999,7 @@ gold 列为空的题不进入该指标；gold 非空而预测失败或为空时�
 `raw_records/` 同时保留两类独立、只读的 SQLite 快照：
 
 - `group-*/run.sqlite3`：原 DIN 六节点原始事件；
-- `group-*/linking_extension.sqlite3`：RC3 filtering 与 Linking 的原始
+- `group-*/linking_extension.sqlite3`：RS filtering 与 Linking 的原始
   追加事件。
 
 扩展批次的冻结输入和审计信息平铺为

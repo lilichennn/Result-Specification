@@ -1,7 +1,7 @@
 [project]
 name = "icassp-2027-code"
 version = "0.1.0"
-description = "Result-contract experiments for text-to-SQL evaluation"
+description = "Result Specification experiments for NL-to-SQL evaluation"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "chardet>=5.2.0",

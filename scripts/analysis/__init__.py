@@ -1,1 +1,1 @@
-"""Explicit-input analysis and plotting commands for saved experiment records."""
+"""Explicit-input analysis commands for saved experiment records."""
