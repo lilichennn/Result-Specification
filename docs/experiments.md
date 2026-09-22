@@ -38,6 +38,8 @@ The campaign schedules native execution and separate RS-injected stage jobs. It 
 
 For a small scope, `configure --item` is repeatable and accepts the workload's canonical task keys. For finer budget/resource control, use `scripts.deepeye_run prepare/run/resume` and `scripts.rc_evaluation.deepeye prepare/run`; their `--help` lists individual stage budgets, request limits, and the optional `--continue-downstream` flag. Campaign configuration does not expose every lower-level option.
 
+Unlike `prepare-native`, the lower-level `scripts.rc_evaluation.deepeye prepare` validates existing native records and creates a stage experiment without model or database calls. Each selected question must already have a successfully completed source target stage and its preceding stages. A stage experiment binds one target stage, condition (`none` or `rc`), and repeat; its model, sampling budgets, database execution settings, and input sources must match the frozen native run. RS runs use existing specification records rather than generating missing ones; the supplied workloads select Round 3.
+
 `pause` and `resume` operate on the same campaign directory. Preserve its child run directories: the campaign ledger refers to them and analysis uses those records.
 
 ## DAIL-SQL
