@@ -1,4 +1,4 @@
-"""Read-only diagnostic of non-RC Selection input differences; no pipeline edits."""
+"""Read-only diagnostic of Selection input differences outside RS; no pipeline edits."""
 from collections import Counter
 import json
 

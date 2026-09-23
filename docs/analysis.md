@@ -90,3 +90,17 @@ uv run python -m scripts.analysis.export_dail_facts \
 ```
 
 The batch must contain `manifest.json`, `current.sqlite3`, and `group-<hex>/run.sqlite3` stores. The exporter verifies event checksums and references, then creates a new `record_export/` containing `versions.jsonl`, `modes.jsonl`, `rounds.jsonl`, `candidates.jsonl`, `failed_questions.jsonl`, and `verification.json`. It does not score SQL against references; the verification record states `reference_sql_evaluation_complete: false`.
+
+For a source package accepted by the DAIL Linking comparison, use the completed compact SQL export and the public handoff assembler. This copies the saved SQL evaluation without rerunning benchmark queries; it creates and verifies the current record facts, `inputs_manifest.json`, `evaluation/latest.json`, indexed file hashes, and a completion seal. Both version sets must match the current batch.
+
+```bash
+uv run python -m scripts.rc_evaluation.dail_sql.cli export \
+  --batch outputs/dail_sql/batches/my-run --evaluation-profile deepeye
+
+uv run python -m scripts.rc_evaluation.dail_sql.cli export-handoff \
+  --batch outputs/dail_sql/batches/my-run \
+  --compact outputs/dail_sql/batches/my-run/exports/compact/REPLACE_WITH_RETURNED_DIRECTORY \
+  --output outputs/analysis/dail_source
+```
+
+Use the exact directory printed by `export` for `--compact`; `export-handoff` requires a new `--output` directory. A batch containing a selected subset can be exported when every selected question has a sealed current version and a completed compact evaluation. The standalone facts export above remains useful when SQL evaluation is intentionally absent, but it is not a Linking source package.

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -20,7 +21,48 @@ def identities(rows):
     return set(values)
 
 
-def check_group(group):
+def _digest(value):
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                    separators=(',', ':')).encode()).hexdigest()
+
+
+def check_filtered_metadata(directory, questions, contracts, entry):
+    """Check a reusable filter snapshot without executing filtering or SQL."""
+    path = directory / 'filtered_meta.json'
+    raw = path.read_bytes()
+    if hashlib.sha256(raw).hexdigest() != entry['sha256']:
+        raise ValueError('Filtered metadata file hash differs from its provenance')
+    if _digest(questions) != entry['questions_sha256']:
+        raise ValueError('Filtered metadata question inputs changed')
+    specifications = {str(row['index']): {'db_id': row['db_id'], 'rc_round3': row['rc_round3']}
+                      for row in contracts}
+    if _digest(specifications) != entry['round3_sha256']:
+        raise ValueError('Filtered metadata Round-3 inputs changed')
+    rows = json.loads(raw)
+    if not isinstance(rows, dict) or set(rows) != {str(row['index']) for row in questions}:
+        raise ValueError('Filtered metadata question identities differ')
+    succeeded = failed = 0
+    for row in rows.values():
+        status = row.get('status', {})
+        if type(status.get('success')) is not bool or not isinstance(status.get('reason'), str):
+            raise ValueError('Malformed filtered metadata status')
+        if status['success']:
+            if not isinstance(row.get('result'), list):
+                raise ValueError('Successful filtering requires a metadata list')
+            succeeded += 1
+        else:
+            if row.get('result') is not None:
+                raise ValueError('A failed filter must not provide a schema')
+            failed += 1
+    if (len(rows), succeeded, failed) != (entry['questions'], entry['succeeded'], entry['failed']):
+        raise ValueError('Filtered metadata counts differ from provenance')
+    for relative, expected in entry.get('metadata_sha256', {}).items():
+        if hashlib.sha256((directory / relative).read_bytes()).hexdigest() != expected:
+            raise ValueError(f'Filtered metadata source changed: {relative}')
+    return succeeded, failed
+
+
+def check_group(group, filter_entry=None):
     directory = ROOT / 'data' / group
     questions = json.loads((directory / f'{group}.json').read_text())
     contracts = json.loads((directory / 'rc.json').read_text())
@@ -35,6 +77,8 @@ def check_group(group):
             successful += 1
     if successful != len(questions):
         raise ValueError(f'{group}: missing successful Round-3 specifications')
+    if filter_entry is not None:
+        check_filtered_metadata(directory, questions, contracts, filter_entry)
     return len(questions), successful
 
 
@@ -59,10 +103,20 @@ def main():
         if not (ROOT / relative).is_file():
             errors.append(f'Missing {relative}; for submodules run git submodule update --init --recursive.')
     total = 0
+    try:
+        filters = json.loads((ROOT / 'data/reference/schema_filter_manifest.json').read_text())['groups']
+        if set(filters) != set(GROUPS):
+            raise ValueError('Filtered metadata groups differ from the five evaluation groups')
+    except (OSError, ValueError, KeyError, TypeError) as error:
+        errors.append(f'Filtered metadata manifest: {error}')
+        filters = {}
     for group in GROUPS:
         try:
-            count, ready = check_group(group)
+            count, ready = check_group(group, filters.get(group))
             print(f'{group}: {count} questions, {ready} successful Round-3 specifications')
+            if group in filters:
+                print(f"  Reusable schema filters: {filters[group]['succeeded']} succeeded, "
+                      f"{filters[group]['failed']} failed (preserved source statuses)")
             total += count
         except (OSError, ValueError, KeyError, TypeError) as error:
             errors.append(f'{group}: {error}')

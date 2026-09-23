@@ -111,12 +111,27 @@ def _ignored(path: Path) -> bool:
 
 def _authenticate(source: Path) -> tuple[dict, dict, dict]:
     index = _read(source / 'index.json')
+    seal_path = source / 'COMPLETE.json'
+    if index.get('format') != 'dail-offline-handoff-v2' or seal_path.exists() or seal_path.is_symlink():
+        if not seal_path.is_file() or seal_path.is_symlink():
+            raise ValueError('source handoff completion seal mismatch')
+        seal = _read(seal_path)
+        if not seal.get('complete') or seal.get('index_sha256') != _sha(source / 'index.json'):
+            raise ValueError('source handoff completion seal mismatch')
     verification = _read(source / 'verification.json')
     records = _read(source / 'record_export/verification.json')
     if not index.get('record_export_complete') or not index.get('reference_sql_evaluation_complete'):
         raise ValueError('source Generation/evaluation handoff is incomplete')
     if not records.get('record_export_complete'):
         raise ValueError('source record export is incomplete')
+    indexed = set()
+    for entry in index.get('files', []):
+        relative = _relative(entry['path'])
+        path = source / relative
+        expected = {field: entry[field] for field in ('bytes', 'sha256')}
+        if relative in indexed or path.is_symlink() or not path.is_file() or _info(path) != expected:
+            raise ValueError(f'source index file mismatch: {relative}')
+        indexed.add(relative)
     for report, directory in ((records, source / 'record_export'), (verification, source)):
         for name, expected in report.get('files', {}).items():
             relative = _relative(name)

@@ -15,7 +15,7 @@ import sqlite3
 import tempfile
 
 
-def export(batch, analysis):
+def export(batch, analysis, *, quiet=False):
     batch, analysis = Path(batch), Path(analysis)
     analysis.mkdir(parents=True, exist_ok=True)
     destination = analysis / "record_export"
@@ -105,7 +105,9 @@ def export(batch, analysis):
         'files':hashes, 'not_checked':['all raw request payload checksums', 'full gold result comparisons']}
     (staging / 'verification.json').write_text(json.dumps(verification, ensure_ascii=False, indent=2)+'\n')
     os.replace(staging, destination)
-    print(json.dumps(verification, ensure_ascii=False, indent=2))
+    if not quiet:
+        print(json.dumps(verification, ensure_ascii=False, indent=2))
+    return verification
 
 
 if __name__ == '__main__':

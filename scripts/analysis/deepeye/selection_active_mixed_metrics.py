@@ -1,4 +1,4 @@
-"""Verify the active RC mixed-pair Selection subset against saved assessments.
+"""Verify the active RS mixed-pair Selection subset against saved assessments.
 
 Print one JSON object per group followed by the pooled total. No model calls,
 benchmark SQL execution, or source writes. Requires selection_metrics.json.

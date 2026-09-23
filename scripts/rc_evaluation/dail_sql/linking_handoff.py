@@ -1,4 +1,4 @@
-"""One-time local DAIL Linking comparison using previously generated RC3 filters.
+"""One-time local DAIL Linking comparison using previously generated Round-3 RS filters.
 
 Run with python -m scripts.rc_evaluation.dail_sql.linking_handoff --help.
 --smoke-per-group 2 checks the original linking and writes only a small subset.
@@ -49,6 +49,16 @@ def key(row):
     return str(identity['group']), str(identity['question_id'])
 
 
+def indexed(rows, label):
+    result = {}
+    for row in rows:
+        identity = key(row)
+        if identity in result:
+            raise ValueError(f'Duplicate {label} identity: {identity}')
+        result[identity] = row
+    return result
+
+
 def catalog(schema):
     result = {table.strip(): [] for table in schema['table_names_original']}
     if len(result) != len(schema['table_names_original']):
@@ -81,19 +91,33 @@ def load_inputs(source, batch, filter_source):
                  'raw_records/linking_extension_prepared_inputs.json'):
         if _file_hash(filter_source / name) != expected_files[name]['sha256']:
             raise ValueError(f'Filter source changed: {name}')
-    source_questions = {key(row): row for row in lines(filter_source / 'records/questions.jsonl')}
-    filters = {key(row): row for row in lines(filter_source / 'records/nodes.jsonl')
-               if row['node'] == 'schema_filter_rc3'}
-    annotations = {key(row): row for row in lines(filter_source / 'evaluation/linking_details.jsonl')}
-    versions = {key(row): row for row in lines(source / 'record_export/versions.jsonl')}
+    source_questions = indexed(lines(filter_source / 'records/questions.jsonl'), 'filter question')
+    filters = indexed((row for row in lines(filter_source / 'records/nodes.jsonl')
+                       if row['node'] == 'schema_filter_rc3'), 'schema filter')
+    annotations = indexed(lines(filter_source / 'evaluation/linking_details.jsonl'), 'filter annotation')
+    versions = indexed(lines(source / 'record_export/versions.jsonl'), 'source version')
     prepared_filter = read(filter_source / 'raw_records/linking_extension_prepared_inputs.json')
     tasks, schemas = {}, {}
     group_config = {entry['name']: entry for entry in manifest['config']['groups']}
+    selected = set()
+    for group, binding in manifest['groups'].items():
+        ids = [str(value) for value in binding['ids']]
+        if len(ids) != len(set(ids)):
+            raise ValueError(f'Duplicate DAIL selected question: {group}')
+        selected.update((group, question_id) for question_id in ids)
+    if set(versions) != selected:
+        raise ValueError('Source versions differ from selected DAIL questions')
+    for label, records in (('filter questions', source_questions), ('schema filters', filters),
+                           ('filter annotations', annotations)):
+        if not selected <= set(records):
+            raise ValueError(f'{label} omit selected DAIL questions')
     for group, binding in manifest['groups'].items():
         group_tasks = load_prepared_group(preparation, group)
-        if set(group_tasks) != set(binding['ids']):
+        available = {str(question_id): item for question_id, item in group_tasks.items()}
+        if len(available) != len(group_tasks) or not set(map(str, binding['ids'])) <= set(available):
             raise ValueError(f'DAIL group membership mismatch: {group}')
-        for question_id, item in group_tasks.items():
+        for question_id in map(str, binding['ids']):
+            item = available[question_id]
             identity = group, str(question_id)
             original, other = item['task'], source_questions[identity]
             if (original['question'], original.get('evidence', ''), original['rc3_ref']['content'],
@@ -112,7 +136,7 @@ def load_inputs(source, batch, filter_source):
             tasks[identity] = {**item, 'schema_id': schema_id, 'filter': filters[identity],
                                'annotation': annotations[identity], 'version': versions[identity],
                                'compute_cv_link': group_config[group]['compute_cv_link']}
-    if not (set(tasks) == set(versions) == set(filters) == set(annotations)):
+    if set(tasks) != selected:
         raise ValueError('Question sets differ')
     # Match current SQLite content against the original value-linking input once.
     frozen = read(preparation / 'identity.json')

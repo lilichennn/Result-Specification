@@ -358,7 +358,8 @@ def compact_current_export(batch_root, output_root=None):
     manifest = _read_json(root/'manifest.json')
     with CurrentIndex(root/'current.sqlite3', read_only=True) as index:
         current = _versions(_expected(manifest), index.snapshot())
-    return directory if versions['versions'] == current else None
+    return directory if (versions['versions'] == current
+                         and versions['manifest_sha256'] == _sha((root/'manifest.json').read_bytes())) else None
 
 
 def export_compact_current(batch_root, *, evaluation_profile='deepeye', seed=None, output_root=None):

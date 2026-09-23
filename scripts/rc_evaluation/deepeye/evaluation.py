@@ -62,7 +62,7 @@ def _references(paths, bindings=()):
                 if row.get('category') == 'Query':
                     records.setdefault(f"{split}/{row.get('instance_id')}", []).append(row)
             continue
-        special = selected[0]['benchmark'] in ('bird_interact', 'spider2')
+        special = selected[0]['benchmark'] == 'bird_interact'
         index = {}
         for position, row in enumerate(rows):
             if row.get('category', 'Query') != 'Query':
@@ -90,7 +90,7 @@ def _reference(binding, records):
            or 'cleanup' in key.lower().replace('_', '') or key.lower() in ('pre_sql', 'post_sql')):
         return {**provenance, 'status': 'unsupported_reference_setup'}
     fields = {'bird': ('SQL', 'sql'), 'spider': ('query', 'sql'),
-              'spider2': ('sql', 'SQL', 'query', 'gold_sql'), 'bird_interact': ('sol_sql',)}
+              'bird_interact': ('sol_sql',)}
     sql = next((row[field] for field in fields.get(binding.get('benchmark'), ('sol_sql',))
                 if row.get(field)), None)
     if isinstance(sql, list) and len(sql) == 1:
@@ -470,10 +470,9 @@ def _bound_executor(env_file, manifest):
     config = manifest.get('effective_config', {})
     bindings = {row['task_key']: row for row in manifest['items']}
     types = {row.get('db_type', 'postgresql') for row in bindings.values()}
-    if types.difference({'sqlite', 'bigquery', 'postgresql'}):
+    if types.difference({'sqlite', 'postgresql'}):
         raise ValueError('Unsupported evaluation database backend')
     timeout = config.get('dataset', {}).get('sql_execution_timeout_seconds', 600)
-    credential = config.get('native', {}).get('dataset_config', {}).get('bigquery_credential_path')
     with ExitStack() as stack:
         pg_execute, pg_identity = (stack.enter_context(_executor(env_file, config))
                                    if 'postgresql' in types else (None, None))
@@ -482,7 +481,7 @@ def _bound_executor(env_file, manifest):
             if database_id != binding['database_id']:
                 raise ValueError('Evaluation database differs from frozen task binding')
             db_type = binding.get('db_type', 'postgresql')
-            dialect = {'sqlite': 'sqlite', 'bigquery': 'bigquery', 'postgresql': 'postgres'}[db_type]
+            dialect = {'sqlite': 'sqlite', 'postgresql': 'postgres'}[db_type]
             if not _query_only(sql, dialect):
                 return {'result_type': 'unsupported_evaluation_query'}
             if db_type == 'postgresql':
@@ -490,15 +489,11 @@ def _bound_executor(env_file, manifest):
             path = binding.get('database_path')
             if not path:
                 raise ValueError('Frozen database resource path is missing')
-            if db_type == 'sqlite':
-                from app.db_utils.execution import execute_sql_without_cache
-                return execute_sql_without_cache(path, sql, timeout=timeout).model_dump()
-            from app.db_utils.cloud_execution import execute_cloud_sql
-            return execute_cloud_sql(sql, db_type, path, credential, timeout).model_dump()
+            from app.db_utils.execution import execute_sql_without_cache
+            return execute_sql_without_cache(path, sql, timeout=timeout).model_dump()
         identity = {'backends': sorted(types), 'postgres': pg_identity,
                     'resources': {key: {'db_type': row.get('db_type', 'postgresql'),
                         'database_path': row.get('database_path', row['database_id'])} for key, row in bindings.items()},
-                    'bigquery_credential_path': credential if 'bigquery' in types else None,
                     'timeout_seconds': timeout, 'read_only_query_guard': 'sqlglot-query-only-v1'}
         yield execute, identity
 
@@ -624,7 +619,7 @@ def _evaluate(identity, output_dir, records, attempts, events, source_events, ex
                    'bag_equal': None, 'ordered_equal': None,
                    'generation': generation, 'revision': {'before': generation, 'after': revised},
                    'coverage': schema_coverage(reference.get('sql'), artifacts['schema_linking'].get('final_linked_tables_and_columns'),
-                        {'sqlite': 'sqlite', 'bigquery': 'bigquery'}.get(binding.get('db_type'), 'postgres')),
+                        'sqlite' if binding.get('db_type') == 'sqlite' else 'postgres'),
                    'usage': _usage([a for a in attempts if a['item_key'] == key], events, manifest)}
             slots = []
             for index, before in enumerate(generation['results']):

@@ -1,4 +1,4 @@
-"""CLI for the focused DIN RC3 schema-filtering and Linking campaign."""
+"""CLI for the focused DIN Round-3 RS schema-filtering and Linking campaign."""
 from __future__ import annotations
 
 import argparse
@@ -29,6 +29,13 @@ def _parser() -> argparse.ArgumentParser:
         if command == "rerun":
             child.add_argument("--group", required=True)
             child.add_argument("--ids", nargs="+", required=True)
+    handoff = commands.add_parser("export-handoff", help="Export the completed unified DIN filter handoff")
+    handoff.add_argument("--source-handoff", type=Path, required=True)
+    handoff.add_argument("--batch", type=Path, required=True, help="Completed DIN Linking extension batch")
+    handoff.add_argument("--annotations", type=Path,
+                         default=CODE_ROOT / "data/reference/schema_linking_annotations.jsonl")
+    handoff.add_argument("--output", type=Path, required=True)
+    handoff.add_argument("--guide", type=Path)
     return parser
 
 
@@ -45,6 +52,12 @@ def main(argv=None):
         result = status(args.batch)
     elif args.command == "verify":
         result = verify_batch(args.batch)
+    elif args.command == "export-handoff":
+        if args.output.exists() or args.output.is_symlink():
+            raise FileExistsError(args.output)
+        from .reporting import export_unified_handoff
+        result = {"output": str(export_unified_handoff(args.source_handoff, args.batch,
+                        args.annotations, args.output, guide=args.guide))}
     else:
         targets = (
             [TaskKey(args.group, question_id) for question_id in args.ids]

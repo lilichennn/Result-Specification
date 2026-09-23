@@ -47,7 +47,6 @@ class BirdInteractDatasetConfig(BaseModel):
     max_samples: Optional[int] = Field(default=None, ge=0)
     max_samples_per_db: Optional[int] = Field(default=None, ge=0)
     snowflake_credential_path: Optional[str] = None
-    bigquery_credential_path: Optional[str] = None
     sql_execution_timeout: int = Field(default=600, gt=0)
     max_value_example_length: int = Field(default=100, gt=0)
 

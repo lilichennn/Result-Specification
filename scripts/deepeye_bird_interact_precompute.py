@@ -337,7 +337,7 @@ def main(argv=None):
     tasks, databases = load_inputs()
     if args.stage == 'verify':
         return 0 if verify(args, tasks, databases)['complete'] else 1
-    from scripts.deepeye_bird_interact_smoke import read_environment
+    from scripts.baseline_adapters.deepeye.runtime_config import read_environment
     env = read_environment(args.env_file)
     if args.stage == 'collect':
         collect(args, databases, env)

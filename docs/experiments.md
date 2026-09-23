@@ -103,15 +103,46 @@ DIN's additional linking comparison consumes a completed source batch and applie
 ```bash
 uv run python -m scripts.rc_evaluation.din_sql_linking.cli prepare \
   --source-batch outputs/din_sql/batches/my-run --batch-id my-linking
+
+uv run python -m scripts.rc_evaluation.din_sql_linking.cli run \
+  --batch outputs/din_sql_linking/batches/my-linking --env-file config/.env
+
+uv run python -m scripts.rc_evaluation.din_sql_linking.cli verify \
+  --batch outputs/din_sql_linking/batches/my-linking
+
+uv run python -m scripts.rc_evaluation.din_sql.cli export-handoff \
+  --batch outputs/din_sql/batches/my-run \
+  --output outputs/analysis/din_source_handoff
+
+uv run python -m scripts.rc_evaluation.din_sql_linking.cli export-handoff \
+  --source-handoff outputs/analysis/din_source_handoff \
+  --batch outputs/din_sql_linking/batches/my-linking \
+  --annotations data/reference/schema_linking_annotations.jsonl \
+  --output outputs/analysis/din_filter_handoff
 ```
 
-Use the returned batch path with that entrypoint's `run`, `status`, and `verify` commands. This comparison makes model requests; it is not just a comparison of two saved arrays. DAIL's analogous comparison reuses the filter handoff and performs DAIL's local Linking. Its explicit inputs are listed by:
+Use the exact batch path returned by preparation if it differs from the example. DIN's comparison makes model requests; the native handoff export also performs post-hoc SQL evaluation. The extension export combines the completed source and Linking batch with the reference annotations and creates the sealed filter handoff consumed below. DAIL's analogous comparison reuses that completed DIN filter handoff and performs DAIL's local Linking. First export the current DAIL batch once for post-hoc SQL evaluation, then seal that completed compact directory with the current record facts:
 
 ```bash
-uv run python -m scripts.rc_evaluation.dail_sql.linking_handoff --help
+uv run python -m scripts.rc_evaluation.dail_sql.cli export \
+  --batch outputs/dail_sql/batches/my-run --evaluation-profile deepeye
+
+# Use the exact directory printed by export for --compact.
+uv run python -m scripts.rc_evaluation.dail_sql.cli export-handoff \
+  --batch outputs/dail_sql/batches/my-run \
+  --compact outputs/dail_sql/batches/my-run/exports/compact/REPLACE_WITH_RETURNED_DIRECTORY \
+  --output outputs/analysis/dail_source
+
+uv run python -m scripts.rc_evaluation.dail_sql.linking_handoff \
+  --source outputs/analysis/dail_source \
+  --batch outputs/dail_sql/batches/my-run \
+  --filter-handoff outputs/analysis/din_filter_handoff \
+  --resources config/dail_sql/resources.example.json \
+  --work-dir outputs/dail_sql/linking_work/my-run \
+  --output outputs/analysis/dail_linking
 ```
 
-It requires the source DAIL compact export, source DAIL batch, completed DIN filter handoff, local retrieval resources, a work directory, and a fresh export destination. Neither main DAIL Generation nor main DIN Generation/Revision implicitly produces this extra linking comparison.
+Use the verified local resource manifest used for Linking in `--resources`. DAIL's `export-handoff` performs no SQL or model calls; it requires a completed compact export for the same current versions, copies its scores and evaluation store, verifies the fact and evaluation hashes, and refuses an existing output directory. The Linking command also needs a fresh output directory. Neither main DAIL Generation nor main DIN Generation/Revision implicitly produces this extra linking comparison.
 
 ## Inspecting and exporting
 

@@ -52,9 +52,7 @@ def code_source_hashes() -> dict[str, str]:
     baseline_files = list((BASELINE_ROOT / "app").rglob("*.py"))
     baseline_files.append(BASELINE_ROOT / "runner/create_vector_db_parallel.py")
     adapter_files = list((CODE_ROOT / "scripts/baseline_adapters/deepeye").glob("*.py"))
-    support_files = [CODE_ROOT / "scripts/deepeye_bird_interact_smoke.py",
-                     CODE_ROOT / "scripts/deepeye_bird_interact_precompute.py",
-                     CODE_ROOT / "scripts/deepeye_bird_interact_run.py",
+    support_files = [CODE_ROOT / "scripts/deepeye_bird_interact_precompute.py",
                      Path(__file__).resolve()]
     lock_files = [CODE_ROOT / "pyproject.toml", CODE_ROOT / "uv.lock"]
     for path in baseline_files + adapter_files + support_files + lock_files:
@@ -290,7 +288,7 @@ def _prepare_interact_inputs(precompute_dir: Path, few_shot_source: Path, *, var
         PrecomputedInputReader, question_row, read_record,
     )
     from scripts.deepeye_bird_interact_precompute import load_inputs
-    from scripts.deepeye_bird_interact_smoke import IndependentExampleReader
+    from scripts.baseline_adapters.deepeye.runtime_config import IndependentExampleReader
 
     inventory_loader = inventory_loader or load_inputs
     code_source_hasher = code_source_hasher or code_source_hashes
@@ -425,9 +423,6 @@ def _build_parser() -> argparse.ArgumentParser:
         if name == 'resume':
             command.add_argument('--unfinished-only', action='store_true',
                                  help='Validate full manifest; execute only nonterminal native items')
-        if name != "resume":
-            command.add_argument("--inherit-from", type=Path,
-                                 help="Legacy prefix import; rejected for this sampling implementation")
         source = command.add_mutually_exclusive_group(required=True)
         source.add_argument("--precompute-dir", type=Path)
         source.add_argument("--workload", type=Path)
@@ -516,8 +511,6 @@ def _validate_run_args(parser: argparse.ArgumentParser, args) -> None:
         parser.error('thinking-budget is unsupported in this experimental version')
     if args.workers is not None or args.inner_workers is not None:
         parser.error('Legacy workers/inner-workers are unsupported; use --coordinator-workers and --request-workers')
-    if getattr(args, 'inherit_from', None) is not None:
-        parser.error('Legacy prefix inheritance is read-only in this version; resume the same compatible run')
     if args.probe_per_variant is not None and (args.probe_per_variant < 1 or args.item_keys):
         parser.error("probe-per-variant must be positive and cannot be combined with --item")
     if args.pg_concurrency < 1:
@@ -560,21 +553,11 @@ def _prepare_command(args, *, execute: bool, resume: bool) -> dict:
         args.run_dir.resolve().parent.mkdir(parents=True, exist_ok=True)
         store_context = RunStore.create(args.run_dir.resolve(), manifest)
     with store_context as store:
-        inheritance = None
-        if getattr(args, "inherit_from", None) is not None:
-            if resume:
-                raise ValueError("Checkpoint inheritance is only allowed for a new run")
-            from scripts.baseline_adapters.deepeye.run_inheritance import inherit_checkpoints
-
-            with RunStore.open(args.inherit_from.resolve(), read_only=True) as source_store:
-                inheritance = inherit_checkpoints(source_store, store, tasks)
         if execute:
             result = (_execute_pipeline(store, tasks, environment, args) if tasks else
                       {'succeeded': 0, 'failed': 0, 'executed': False})
         else:
             result = {"prepared": len(tasks), "executed": False}
-        if inheritance is not None:
-            result["inheritance"] = inheritance
         verification = store.verify()
         if not verification["ok"]:
             raise RuntimeError("RunStore verification failed")
@@ -588,7 +571,7 @@ def build_runtime_config(environment, args, run_dir: Path):
 
     if getattr(args, 'workload', None):
         return _native_runtime_config(environment, args, run_dir)
-    from scripts.deepeye_bird_interact_smoke import build_runtime_config as smoke_config
+    from scripts.baseline_adapters.deepeye.runtime_config import build_runtime_config as smoke_config
 
     native_output = Path(run_dir) / ".native_non_authoritative"
     preprocessed = CODE_ROOT / "data/bird_interact_lite"
@@ -676,8 +659,6 @@ def _native_runtime_config(environment, args, run_dir):
                    save_path=str(output / 'input.snapshot'))
     dataset.setdefault('sql_execution_timeout', 30 if workload['benchmark'] == 'bird_interact' else 600)
     dataset.setdefault('max_value_example_length', 100 if workload['benchmark'] == 'bird_interact' else 50)
-    if workload.get('bigquery_credential_path'):
-        dataset['bigquery_credential_path'] = workload['bigquery_credential_path']
     dynamic = workload.get('few_shot_strategy') == 'native_dynamic'
     vector = {**raw.get('embedding', {}), **raw.get('vector_database', {})}
     vector.setdefault('store_root_path', str(output / 'value_index'))
@@ -755,9 +736,8 @@ def _native_runtime_config(environment, args, run_dir):
     config.sql_generation_config.icl_sampling_budget = args.icl_generation_budget
     config.sql_revision_config.checker_sampling_budget = args.revision_checker_budget
     if 'checkers' not in raw.get('sql_revision', {}):
-        config.sql_revision_config.checkers = (['SyntaxChecker', 'ResultChecker'] if workload['benchmark'] == 'spider2'
-            else ['SyntaxChecker', 'JoinChecker', 'OrderByLimitChecker', 'TimeChecker', 'SelectChecker',
-                  'MaxMinChecker', 'OrderByNullChecker', 'ResultChecker'])
+        config.sql_revision_config.checkers = ['SyntaxChecker', 'JoinChecker', 'OrderByLimitChecker',
+            'TimeChecker', 'SelectChecker', 'MaxMinChecker', 'OrderByNullChecker', 'ResultChecker']
     config.sql_selection_config.evaluator_sampling_budget = args.selection_evaluator_budget
     config.sql_selection_config.filter_top_k_sql = 2
     config.sql_selection_config.shortcut_consistency_score_threshold = SELECTION_SHORTCUT_THRESHOLD

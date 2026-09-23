@@ -18,8 +18,7 @@ def file_hash(path):
 
 def campaign_code_hash():
     paths = sorted(Path(__file__).parent.glob('*.py'))
-    paths.extend(native.CODE_ROOT / 'scripts' / name for name in
-                 ('deepeye_campaign.py', 'deepeye_bird_interact_campaign.py'))
+    paths.append(native.CODE_ROOT / 'scripts/deepeye_campaign.py')
     return hashlib.sha256(''.join(str(path.relative_to(native.CODE_ROOT)) + file_hash(path)
                                   for path in paths).encode()).hexdigest()
 

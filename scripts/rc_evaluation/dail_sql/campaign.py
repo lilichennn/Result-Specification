@@ -325,6 +325,7 @@ def rerun_questions(batch_root: Path, targets: list[TaskKey]) -> dict:
 
 
 def status(batch_root: Path) -> dict:
+    from .compact_reporting import compact_current_export
     from .reporting import current_export
     root = Path(batch_root)
     manifest = _read_json(root / 'manifest.json')
@@ -337,7 +338,7 @@ def status(batch_root: Path) -> dict:
                              'ready_for_next': ready_for_next(total, counts['terminal']),
                              'pending': total - sum(counts['states'].values())}
     complete = all(g['states'].get('done', 0) == g['total'] for g in groups.values())
-    export = current_export(root)
+    export = compact_current_export(root) or current_export(root)
     return {'status': 'success' if complete else 'paused' if any(g['states'].get('paused') for g in groups.values()) else 'pending',
             'batch_root': str(root), 'batch_id': manifest['batch_id'], 'model': manifest['model'],
             'expected_questions': sum(g['total'] for g in groups.values()), 'groups': groups,

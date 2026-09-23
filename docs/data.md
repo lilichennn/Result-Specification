@@ -16,11 +16,23 @@ These five groups contain 5,320 questions, each with a successful Round-3 specif
 
 - `<group>.json`: question records with `index`, `db_id`, `question`, and `evidence`.
 - `meta/`: database metadata exposed to the methods and RS generation, organized by database.
+- `filtered_meta.json`: saved RS-filtered metadata, keyed by the string form of the question's `index`. Each record contains `result` (a metadata array) and `status` (`success` and `reason`), matching the output format of `scripts/filter_meta.py`.
 - `rc.json`: question-aligned RS records with `rc_round1`, `rc_round2`, `rc_round3`, and per-round status/error fields. These are the actual field names; see [Terminology](../README.md#terminology).
 - `gold_sql.json`, `gold_sql_schema_linking.json`, and `gold_sql_preparation.json`: reference SQL/dependency information and preparation provenance, where available. The runners' configuration identifies the actual evaluation reference source.
 - `data/reference/schema_linking_annotations.jsonl`: final model-assisted reference labels for the five main groups. It does not include annotation request logs or a run database.
+- `data/reference/schema_filter_manifest.json`: provenance, model, per-group counts, file hashes, and the question/RS/metadata identities associated with `filtered_meta.json`.
 
 Question identifiers are scoped by group. BIRD-Interact preserves `instance_id` as `index`; do not renumber it or join solely on row position.
+
+## Reusable filtered schemas
+
+The bundled `filtered_meta.json` files preserve the outputs of the DIN-SQL schema-filtering extension, using question, evidence, and `rc_round3` as guidance with `qwen3.8-2.4t-a95b`. They contain the selected metadata, not model responses, SQL predictions, accuracy measurements, or token logs. Original column attributes and surviving foreign-key references are retained.
+
+There are 5,318 successful filters across 5,320 question records. BIRD-Interact Full questions `robot_fault_prediction_1` and `robot_fault_prediction_8` exhausted their original retry budgets: their records retain `success: false`, `reason: "retry_budget_exhausted"`, and `result: null`. A failed filter is not an empty successful schema and must not be silently substituted for one.
+
+These are reusable intermediate artifacts, separate from the gold-SQL-based reference labels in `schema_linking_annotations.jsonl`. `meta/` remains the full schema. The default method configurations continue to use full schemas; merely having `filtered_meta.json` in a data directory does not switch a run to filtered inputs. Filter-aware consumers can read each successful record's `result` as a metadata array. To generate new filters, use `scripts/filter_meta.py`; it writes to ignored `outputs/schema_filter/` without overwriting these bundled snapshots.
+
+`uv run python -m scripts.check_setup` checks the bundled filter identities, success/failure counts, file hashes, and associated question/RS/metadata hashes offline. Preserve the manifest when sharing the saved filters.
 
 ## Regenerating inputs
 

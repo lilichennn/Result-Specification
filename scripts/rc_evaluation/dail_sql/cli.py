@@ -97,8 +97,20 @@ def main(argv=None):
                                    help='Compact export parent; defaults to BATCH/exports/compact')
             operation.add_argument('--seed', type=Path,
                                    help='Optional interrupted uncompressed export whose SQL results are imported once')
+    handoff = commands.add_parser('export-handoff',
+                                  help='Seal current record facts and a completed compact SQL export for Linking')
+    handoff.add_argument('--batch', type=Path, required=True)
+    handoff.add_argument('--compact', type=Path, required=True,
+                         help='Completed directory returned by the export command')
+    handoff.add_argument('--output', type=Path, required=True,
+                         help='New source handoff directory; must not exist')
     args = parser.parse_args(argv)
     try:
+        if args.command == 'export-handoff':
+            from .handoff_export import export_handoff
+            result = {'status': 'success', 'directory': str(export_handoff(args.batch, args.compact, args.output))}
+            print(json.dumps(result, ensure_ascii=False))
+            return 0
         if args.command == 'prepare' or args.command == 'status' and args.preparation:
             from scripts.baseline_adapters.dail_sql.preparation import prepare, status_preparation
             if args.command == "prepare":

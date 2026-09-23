@@ -15,9 +15,8 @@ from .workloads import load_workload, load_items, file_sha256, _prepared_items
 
 def _dataset(workload, items, config):
     from app.dataset.dataset import BirdDataset, SpiderDataset
-    from app.dataset.spider2_dataset import Spider2LiteDataset
     from scripts.baseline_adapters.deepeye.dataset import BirdInteractDataset
-    cls = {'bird': BirdDataset, 'spider': SpiderDataset, 'spider2': Spider2LiteDataset,
+    cls = {'bird': BirdDataset, 'spider': SpiderDataset,
            'bird_interact': BirdInteractDataset}[workload['benchmark']]
     dataset = object.__new__(cls)
     dataset._config = config.dataset_config
@@ -68,8 +67,7 @@ Existing successful native VR and few-shot inputs are retained on continuation.
         return {'prepared': len(checked), 'prepared_dataset': str(output), 'sha256': file_sha256(output),
                 'workload': workload['_path'], 'reused': True}
     needs_vr = any(item.database_schema_after_value_retrieval is None for item in items)
-    # The native Spider2 template has no few-shot index; do not invent one.
-    needs_examples = workload['benchmark'] != 'spider2' and any(not item.few_shot_examples for item in items)
+    needs_examples = any(not item.few_shot_examples for item in items)
     few = config.few_shot_index_config
     if needs_vr and workload['benchmark'] == 'bird_interact' and not dynamic:
         raise ValueError('BIRD-Interact requires precompute_dir from deepeye_bird_interact_precompute.py')
@@ -88,7 +86,7 @@ Existing successful native VR and few-shot inputs are retained on continuation.
     preparation = {'format': 'deepeye-native-preparation-v1', 'sources': sources,
                    'effective_config': entry.build_effective_config(environment, args), 'identity': identity}
     resources = _bind_preparation_resources(items, config, needs_vr=needs_vr and workload['benchmark'] != 'bird_interact',
-        needs_examples=needs_examples and workload['benchmark'] != 'spider2',
+        needs_examples=needs_examples,
         database_hashes=sources['database_sha256'])
     if needs_vr:
         _bind_resource_identity(output.with_name(output.name + '.vr.artifacts'),
@@ -172,7 +170,7 @@ Existing successful native VR and few-shot inputs are retained on continuation.
             dataset = _dataset(workload, items, config)
         if needs_examples:
             if workload['benchmark'] == 'bird_interact' and not dynamic:
-                from scripts.deepeye_bird_interact_smoke import IndependentExampleReader
+                from scripts.baseline_adapters.deepeye.runtime_config import IndependentExampleReader
                 reader = IndependentExampleReader(Path(workload['few_shot_source']))
                 for item in items:
                     if not item.few_shot_examples:
@@ -182,8 +180,7 @@ Existing successful native VR and few-shot inputs are retained on continuation.
                 extra = {'embedding_service': embedding_service, 'runtime': runtime, 'audit': audit,
                          'checkpoint_root': preparation_root/'questions', 'workers': workers} if dynamic else {}
                 _prepare_examples(workload, items, config, **extra)
-        if any(not item.is_stage_complete('value_retrieval') or
-               (workload['benchmark'] != 'spider2' and not item.few_shot_examples) for item in items):
+        if any(not item.is_stage_complete('value_retrieval') or not item.few_shot_examples for item in items):
             raise ValueError('Native preparation incomplete; no executable snapshot produced')
         for item in items:
             item.gold_sql = ''
@@ -506,7 +503,7 @@ def prepare_many(paths, output, output_dir, env_file, *, workers=200, embedding_
     results = []
     with ExitStack() as stack:
         service = None
-        relevant = [i for i, w in enumerate(workloads) if w['benchmark'] != 'spider2' and not outputs[i].exists()]
+        relevant = [i for i, w in enumerate(workloads) if not outputs[i].exists()]
         if relevant:
             environment = environments[relevant[0]]
             identity = embedding_namespace(environment, dimension=limits.dimension)

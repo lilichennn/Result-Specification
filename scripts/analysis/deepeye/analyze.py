@@ -1,4 +1,4 @@
-"""Read-only RC3 analysis. No model calls or mutation of experiment RunStores.
+"""Read-only Round-3 RS analysis. No model calls or mutation of experiment RunStores.
 
 Run as python -m scripts.analysis.deepeye.analyze extract --campaign-root PATH.
 The evaluate action executes benchmark SQL; other tools read saved assessments.
