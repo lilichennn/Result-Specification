@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""GM000010962""]",
-qflag,TEXT,,[],
-time,TEXT,,[],
-element,TEXT,,"[""PRCP""]",
-date,DATE,,"[""1800-04-09"", ""1800-06-10"", ""1800-08-05""]",
-sflag,TEXT,,"[""E""]",
-value,FLOAT,,[0.0],
-mflag,TEXT,,[],

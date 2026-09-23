@@ -1,0 +1,15 @@
+{
+  "benchmark": "spider",
+  "split": "test",
+  "questions": "../../data/spider_test/spider_test.json",
+  "meta": "../../data/spider_test/meta",
+  "resource_root": "../../../Spider/data",
+  "rc": "../../data/spider_test/rc.json",
+  "rc_version": 3,
+  "few_shot_strategy": "native_dynamic",
+  "preparation_root": "../../cache/deepeye_shared_preparation",
+  "prepared_dataset": "../../cache/deepeye_shared_preparation/prepared/spider/test.snapshot",
+  "few_shot_dataset": "spider",
+  "few_shot_source": "../../../Spider/data",
+  "reference_questions": "../../../Spider/data/test.json"
+}

@@ -68,12 +68,14 @@ def generate_round1(
     evidence: str,
     model_call: ModelCall | None = None,
     max_attempts: int = DEFAULT_MAX_ATTEMPTS,
+    *,
+    llm: str | None = None,
 ) -> Round1RC:
     """Generate a Round-1 RC from question and evidence."""
     if max_attempts < 1:
         raise ValueError("max_attempts must be positive")
+    invoke = _resolve_model_call(model_call, llm)
     messages = build_round1_messages(question=question, evidence=evidence)
-    invoke = model_call or call_model
     last_error: Exception | None = None
     for attempt in range(1, max_attempts + 1):
         try:
@@ -94,6 +96,14 @@ def generate_round1(
                 time.sleep(attempt)
     assert last_error is not None
     raise RuntimeError(f"Round-1 RC generation failed after {max_attempts} attempts") from last_error
+
+
+def _resolve_model_call(model_call: ModelCall | None, llm: str | None) -> ModelCall:
+    if model_call is not None:
+        return model_call
+    if not isinstance(llm, str) or not llm.strip():
+        raise ValueError("Provide model_call or an explicit llm")
+    return lambda messages: call_model(messages, llm=llm)
 
 
 def call_model(

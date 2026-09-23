@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-color,TEXT,,"[""#000000"", ""#000066"", ""#00205c""]",
-market,TEXT,,"[""Colorado"", ""Northeastern"", ""Georgia Southern""]",
-id,TEXT,,"[""9fccbf28-2858-4263-821c-fdefb3c7efa3"", ""93df9b18-e9fc-42a7-bb45-a736c203b4dc"", ""6b955b96-b736-475e-bffd-e4acf2054169""]",
-code_ncaa,NUMBER,,"[157, 500, 253]",

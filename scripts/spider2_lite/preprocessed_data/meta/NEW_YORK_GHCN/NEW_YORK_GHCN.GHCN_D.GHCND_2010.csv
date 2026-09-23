@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-value,FLOAT,,[0.0],
-element,TEXT,,"[""AWND""]",
-id,TEXT,,"[""USW00024152"", ""USS0015N10S"", ""USS0017D07S""]",
-date,DATE,,"[""2010-12-28"", ""2010-01-09"", ""2010-01-11""]",
-sflag,TEXT,,"[""W"", ""T""]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-qflag,TEXT,,[],

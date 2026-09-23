@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-number,NUMBER,Number of occurrences of the name,"[16, 15]",
-name,TEXT,Given name of a person at birth,"[""Kevin"", ""Nelson"", ""Wilbur""]",
-gender,TEXT,Sex (M=male or F=female),"[""M""]",
-state,TEXT,2-digit state code,"[""MA""]",
-year,NUMBER,4-digit year of birth,[1934],

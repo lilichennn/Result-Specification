@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-modifieddate,TEXT,,"[""2013-04-30 00:00:00""]",
-productdescriptionid,NUMBER,,"[3, 4, 5]",
-rowguid,TEXT,,"[""301eed3a-1a82-4855-99cb-2afe8290d641"", ""dfeba528-da11-4650-9d86-cafda7294eb0"", ""f7178da7-1a7e-4997-8470-06737181305e""]",
-description,TEXT,,"[""Chromoly steel."", ""Aluminum alloy cups; large diameter spindle."", ""Aluminum alloy cups and a hollow axle.""]",

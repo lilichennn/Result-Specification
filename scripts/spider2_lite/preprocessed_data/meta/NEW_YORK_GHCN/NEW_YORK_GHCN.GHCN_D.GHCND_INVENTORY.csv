@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-latitude,FLOAT,,"[17.1167, 17.1333]",
-source_url,TEXT,,"[""ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt""]",
-longitude,FLOAT,,[-61.7833],
-etl_timestamp,NUMBER,,[1729302243944523],
-firstyear,NUMBER,,"[1949, 1961]",
-element,TEXT,,"[""PRCP"", ""SNOW"", ""WDFG""]",
-lastyear,NUMBER,,"[1949, 1961]",
-id,TEXT,,"[""ACW00011604"", ""ACW00011647""]",

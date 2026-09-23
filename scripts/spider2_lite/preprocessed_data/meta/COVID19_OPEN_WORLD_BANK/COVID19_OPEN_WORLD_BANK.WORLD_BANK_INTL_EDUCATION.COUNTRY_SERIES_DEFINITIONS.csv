@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-country_code,TEXT,,"[""TZA""]",
-description,TEXT,,"[""Covers mainland Tanzania only.""]",
-series_code,TEXT,,"[""NY.GDP.PCAP.CD"", ""NY.GDP.PCAP.KD"", ""NY.GDP.PCAP.PP.KD""]",

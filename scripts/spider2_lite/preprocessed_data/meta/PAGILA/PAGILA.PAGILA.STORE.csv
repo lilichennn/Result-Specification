@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-manager_staff_id,NUMBER,,[],
-last_update,TEXT,,[],
-store_id,NUMBER,,[],
-address_id,NUMBER,,[],

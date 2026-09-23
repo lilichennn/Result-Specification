@@ -5,7 +5,17 @@ __pycache__/
 *.py[cod]
 .DS_Store
 
-# 大型实验产物
-baselines_reproduce/CHESS/
-baselines_reproduce/DeepEye-SQL/
+# Generated results, caches and external resources
+baselines_reproduce/
+/cache/
+/outputs/
+/resources/
+/baselines/DeepEye-SQL/results/
 *.log
+/archive/
+
+# Local development and validation material
+.superpowers/
+/tests/
+**/tests/
+.pytest_cache/

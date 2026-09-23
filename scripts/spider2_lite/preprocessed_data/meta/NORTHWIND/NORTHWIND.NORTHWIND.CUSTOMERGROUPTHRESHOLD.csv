@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-groupname,TEXT,,"[""Medium"", ""Very High""]",
-rangetop,FLOAT,,"[4999.9999, 922337203685477.6]",
-rangebottom,NUMBER,,"[1000, 10000]",

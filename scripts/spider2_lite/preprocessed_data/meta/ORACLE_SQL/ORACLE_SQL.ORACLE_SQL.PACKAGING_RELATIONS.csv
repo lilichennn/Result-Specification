@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-qty,NUMBER,,"[72, 36, 10]",
-packaging_id,NUMBER,,"[521, 522, 533]",
-contains_id,NUMBER,,"[502, 501, 522]",

@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-region_id,NUMBER,,"[3, 4, 5]",
-region_name,TEXT,,"[""Africa"", ""Asia"", ""Europe""]",

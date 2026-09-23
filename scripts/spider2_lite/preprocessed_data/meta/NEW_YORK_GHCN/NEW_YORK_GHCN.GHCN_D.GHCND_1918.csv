@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-qflag,TEXT,,[],
-id,TEXT,,"[""AJ000037850""]",
-date,DATE,,"[""1918-02-25"", ""1918-04-17"", ""1918-04-05""]",
-sflag,TEXT,,"[""I""]",
-time,TEXT,,[],
-value,FLOAT,,"[0.0, 107.0]",
-element,TEXT,,"[""PRCP""]",
-mflag,TEXT,,[],

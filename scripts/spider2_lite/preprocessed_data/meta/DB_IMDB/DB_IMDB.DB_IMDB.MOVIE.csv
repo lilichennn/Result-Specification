@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-title,TEXT,,"[""Tumbbad"", ""Captain America: Civil War"", ""Mastizaade""]",
-year,TEXT,,"[""2018"", ""2016"", ""2012""]",
-num_votes,NUMBER,,"[7483, 536641, 2205]",
-MID,TEXT,,"[""tt8239946"", ""tt3498820"", ""tt3726012""]",
-index,NUMBER,,"[4, 6, 13]",
-rating,FLOAT,,"[8.5, 7.8, 2.4]",

@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-dropoff_site,TEXT,,"[""AUSTIN IRON AND METAL""]",
-load_weight,FLOAT,,"[480.0, 490.0, 230.0]",
-report_date,DATE,,"[""2019-05-29"", ""2020-01-29"", ""2019-05-21""]",
-route_number,TEXT,,"[""OCPBU09""]",
-load_id,NUMBER,,"[828282, 859153, 827324]",
-load_time,NUMBER,,"[1559123400000000, 1580314260000000, 1558446000000000]",
-load_type,TEXT,,"[""RECYCLED METAL""]",
-route_type,TEXT,,"[""ON CALL BULK""]",

@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,Date reported,"[""2022-10-06""]",
-county,TEXT,County in the specified state,"[""El Paso"", ""Hinsdale"", ""Jefferson""]",
-state_name,TEXT,State reported,"[""Colorado""]",
-deaths,NUMBER,The total number of confirmed deaths of COVID-19,"[1799, 0, 1447]",
-county_fips_code,TEXT,Standard geographic identifier for the county,"[""08041"", ""08053"", ""08059""]",
-confirmed_cases,NUMBER,The total number of confirmed cases of COVID-19,"[222490, 154, 151859]",

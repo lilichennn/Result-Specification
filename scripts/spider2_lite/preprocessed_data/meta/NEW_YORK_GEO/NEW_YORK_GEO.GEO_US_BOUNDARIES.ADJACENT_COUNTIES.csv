@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-neighbors_fips_code,VARIANT,,"[""[\n  \""19165\"",\n  \""19001\"",\n  \""19077\"",\n  \""19047\"",\n  \""19029\"",\n  \""19027\""\n]"", ""[\n  \""19067\"",\n  \""19037\"",\n  \""19019\"",\n  \""19023\"",\n  \""19065\"",\n  \""19013\""\n]"", ""[\n  \""19069\"",\n  \""19083\"",\n  \""19023\"",\n  \""19127\"",\n  \""19013\"",\n  \""19171\""\n]""]",
-county_fips_code,TEXT,,"[""19009"", ""19017"", ""19075""]",
-neighbors,VARIANT,,"[""[\n  \""Shelby\"",\n  \""Adair\"",\n  \""Guthrie\"",\n  \""Crawford\"",\n  \""Cass\"",\n  \""Carroll\""\n]"", ""[\n  \""Floyd\"",\n  \""Chickasaw\"",\n  \""Buchanan\"",\n  \""Butler\"",\n  \""Fayette\"",\n  \""Black Hawk\""\n]"", ""[\n  \""Franklin\"",\n  \""Hardin\"",\n  \""Butler\"",\n  \""Marshall\"",\n  \""Black Hawk\"",\n  \""Tama\""\n]""]",
-neighbors_state,VARIANT,,"[""[\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\"",\n  \""Iowa\""\n]""]",
-state,TEXT,,"[""Iowa""]",
-county,TEXT,,"[""Audubon County"", ""Bremer County"", ""Grundy County""]",

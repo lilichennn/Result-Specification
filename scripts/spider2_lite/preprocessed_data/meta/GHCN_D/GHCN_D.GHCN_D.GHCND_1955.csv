@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sflag,TEXT,,"[""S""]",
-mflag,TEXT,,"[""H""]",
-qflag,TEXT,,[],
-element,TEXT,,"[""TAVG""]",
-value,FLOAT,,"[332.0, 325.0, 194.0]",
-id,TEXT,,"[""AE000041196""]",
-date,DATE,,"[""1955-08-23"", ""1955-08-07"", ""1955-01-03""]",
-time,TEXT,,[],

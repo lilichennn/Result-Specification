@@ -69,6 +69,7 @@ class ValueRetrievalRunner:
         embedding_batch_size: int,
         progress_log_interval: int,
         checkpoint_interval: int,
+        embedding_function: Any = None,
     ):
         self._stage_config = stage_config
         self._dataset_config = dataset_config
@@ -101,16 +102,18 @@ class ValueRetrievalRunner:
         
         # Initialize the shared embedding function once - ONLY if not Spider2
         if not self._dataset_config.type.startswith("spider2"):
-            self._embedding_function = get_embedding_function(
-                model_name_or_path=self._vector_database_config.embedding_model_name_or_path,
-                api_type=self._vector_database_config.api_type,
-                use_qwen3_embedding=self._vector_database_config.use_qwen3_embedding,
-                local_files_only=self._vector_database_config.local_files_only,
-                normalize_embeddings=self._vector_database_config.normalize_embeddings,
-                base_url=self._vector_database_config.base_url,
-                api_key=self._vector_database_config.api_key,
-                embedding_device=self._vector_database_config.embedding_device,
-            )
+            self._embedding_function = embedding_function
+            if self._embedding_function is None:
+                self._embedding_function = get_embedding_function(
+                    model_name_or_path=self._vector_database_config.embedding_model_name_or_path,
+                    api_type=self._vector_database_config.api_type,
+                    use_qwen3_embedding=self._vector_database_config.use_qwen3_embedding,
+                    local_files_only=self._vector_database_config.local_files_only,
+                    normalize_embeddings=self._vector_database_config.normalize_embeddings,
+                    base_url=self._vector_database_config.base_url,
+                    api_key=self._vector_database_config.api_key,
+                    embedding_device=self._vector_database_config.embedding_device,
+                )
         else:
             logger.info("Skipping embedding function initialization for Spider2 dataset")
             self._embedding_function = None
@@ -131,7 +134,7 @@ class ValueRetrievalRunner:
         self._keyword_extractor = LLMExtractor(max_retry=self._extractor_max_retry)
 
     @classmethod
-    def from_config(cls, app_config=None) -> "ValueRetrievalRunner":
+    def from_config(cls, app_config=None, embedding_function: Any = None) -> "ValueRetrievalRunner":
         if app_config is None:
             from app.config import get_config
 
@@ -145,6 +148,7 @@ class ValueRetrievalRunner:
             embedding_batch_size=app_config.run_config.embedding_batch_size,
             progress_log_interval=app_config.run_config.progress_log_interval,
             checkpoint_interval=app_config.run_config.checkpoint_interval,
+            embedding_function=embedding_function,
         )
     
     def _get_vector_collection(self, db_id: str) -> Collection:

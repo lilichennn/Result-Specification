@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-over_id,NUMBER,,"[18, 20, 3]",
-match_id,NUMBER,,"[501229, 392239, 829816]",
-innings_no,NUMBER,,"[2, 1]",
-ball_id,NUMBER,,"[6, 3, 4]",
-extra_type,TEXT,,"[""legbyes""]",
-extra_runs,NUMBER,,"[4, 1]",

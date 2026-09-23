@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-qflag,TEXT,,[],
-id,TEXT,,"[""ASN00010519"", ""ASN00012013"", ""ASN00016021""]",
-date,DATE,,"[""1944-11-12"", ""1944-07-03"", ""1944-04-10""]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-sflag,TEXT,,"[""a""]",
-value,FLOAT,,[2.0],
-element,TEXT,,"[""DAPR""]",

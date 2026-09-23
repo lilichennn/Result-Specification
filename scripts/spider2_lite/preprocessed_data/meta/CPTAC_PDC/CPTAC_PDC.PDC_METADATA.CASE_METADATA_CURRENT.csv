@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-file_count,NUMBER,,"[168, 144]",
-primary_site,TEXT,,"[""Other and unspecified urinary organs"", ""Colon"", ""Hematopoietic and reticuloendothelial systems""]",
-project_name,TEXT,,"[""CPTAC3 Discovery and Confirmatory"", ""Proteogenomic Translational Research Centers (PTRC)""]",
-case_submitter_id,TEXT,,"[""C224967"", ""C524103"", ""C621273""]",
-program_name,TEXT,,"[""Clinical Proteomic Tumor Analysis Consortium""]",
-case_id,TEXT,,"[""48a488d1-88bf-4eb4-809f-eba13c7b3537"", ""1ac99f68-ba13-4ab7-bc0e-53556cfdba1d"", ""2c4089f4-44ae-40b9-9ede-405a88cc5c51""]",
-project_id,TEXT,,"[""267d6671-0e78-11e9-a064-0a9c39d33490"", ""7231aab6-7603-499b-a48d-3e3411143e18""]",
-disease_type,TEXT,,"[""Complex Epithelial Neoplasms"", ""Skin Cutaneous Melanoma"", ""Epithelial Neoplasms, NOS""]",

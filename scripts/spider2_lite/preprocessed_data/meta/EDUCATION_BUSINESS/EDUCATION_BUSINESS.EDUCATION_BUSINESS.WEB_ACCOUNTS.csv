@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sales_rep_id,NUMBER,,"[321510, 321520, 321550]",
-primary_poc,TEXT,,"[""Sung Shields"", ""Jodee Lupo"", ""Savanna Gayman""]",
-website,TEXT,,"[""www.exxonmobil.com"", ""www.apple.com"", ""www.unitedhealthgroup.com""]",
-id,NUMBER,,"[1011, 1021, 1051]",
-lat,FLOAT,,"[41.1691563, 42.29049481, 40.08792542]",
-name,TEXT,,"[""Exxon Mobil"", ""Apple"", ""UnitedHealth Group""]",
-long,FLOAT,,"[-73.84937379, -76.08400942, -75.57569396]",

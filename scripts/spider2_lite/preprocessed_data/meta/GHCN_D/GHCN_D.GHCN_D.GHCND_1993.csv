@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USW00094746"", ""USW00024127"", ""USW00024021""]",
-time,TEXT,,[],
-element,TEXT,,"[""WDFG""]",
-value,FLOAT,,[360.0],
-date,DATE,,"[""1993-12-29"", ""1993-04-20"", ""1993-06-02""]",
-mflag,TEXT,,"[""W""]",
-qflag,TEXT,,[],
-sflag,TEXT,,"[""X""]",

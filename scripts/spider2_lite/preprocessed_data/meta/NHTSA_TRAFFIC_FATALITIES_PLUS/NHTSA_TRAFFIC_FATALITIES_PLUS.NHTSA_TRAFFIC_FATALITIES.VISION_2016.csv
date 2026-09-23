@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-consecutive_number,NUMBER,,"[190336, 330056, 300065]",
-vehicle_number,NUMBER,,"[5, 1]",
-state_number,NUMBER,,"[19, 33, 30]",
-drivers_vision_obscured_by,NUMBER,,[99],
-drivers_vision_obscured_by_name,TEXT,,"[""Unknown""]",

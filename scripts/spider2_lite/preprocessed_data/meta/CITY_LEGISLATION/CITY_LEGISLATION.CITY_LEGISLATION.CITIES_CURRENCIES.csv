@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-currency_code,TEXT,,"[""afn"", ""usd"", ""aoa""]",
-country_code_2,TEXT,,"[""af"", ""as"", ""ao""]",
-currency_id,NUMBER,,"[1, 4, 6]",
-currency_name,TEXT,,"[""afghani"", ""us dollar"", ""kwanza""]",

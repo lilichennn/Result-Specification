@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USC00301010"", ""USC00331662""]",
-value,FLOAT,,"[-17.0, -22.0, -6.0]",
-element,TEXT,,"[""TMAX"", ""TMIN""]",
-qflag,TEXT,,"[""I""]",
-mflag,TEXT,,[],
-time,TEXT,,[],
-date,DATE,,"[""1873-12-28"", ""1873-02-12"", ""1873-12-27""]",
-sflag,TEXT,,"[""0""]",

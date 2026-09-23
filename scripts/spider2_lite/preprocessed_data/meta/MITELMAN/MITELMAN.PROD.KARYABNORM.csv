@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-CaseNo,TEXT,"case number, most frequently an integer between 1 and 10, but can also be an arbitrary string, eg '11H046'","[""109"", ""105"", ""63""]",
-InvNo,NUMBER,investigation number (between 1 and 9),[1],
-CloneNo,NUMBER,clone number (between 1 and 58),[1],
-OrderNo,NUMBER,order number (between 1 and 198),[1],
-RefNo,NUMBER,"reference number, eg '14620'","[401, 737]",
-Abnormality,TEXT,"eg '46', or 'XY', or 'XX', or '-22', etc","[""??""]",

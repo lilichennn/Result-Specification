@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sflag,TEXT,,"[""0""]",
-id,TEXT,,"[""USC00034251"", ""USC00015555""]",
-qflag,TEXT,,[],
-date,DATE,,"[""1875-05-28"", ""1875-02-28"", ""1875-03-08""]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-value,FLOAT,,"[7.0, 28.0, 0.0]",
-element,TEXT,,"[""DAPR"", ""PRCP""]",

@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-city,TEXT,,"[""A Corua (La Corua)"", ""Acua"", ""Addis Abeba""]",
-city_id,NUMBER,,"[1, 4, 6]",
-country_id,NUMBER,,"[87, 60, 31]",
-last_update,TEXT,,"[""2021-03-06 15:51:49""]",

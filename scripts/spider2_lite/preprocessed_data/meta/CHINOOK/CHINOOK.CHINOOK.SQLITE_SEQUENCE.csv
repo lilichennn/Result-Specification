@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-seq,NUMBER,,"[5, 275, 3503]",
-name,TEXT,,"[""media_types"", ""artists"", ""tracks""]",

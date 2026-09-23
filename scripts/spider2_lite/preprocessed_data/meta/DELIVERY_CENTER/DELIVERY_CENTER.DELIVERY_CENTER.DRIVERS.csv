@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-driver_modal,TEXT,,"[""MOTOBOY"", ""BIKER""]",
-driver_type,TEXT,,"[""LOGISTIC OPERATOR"", ""FREELANCE""]",
-driver_id,NUMBER,,"[133, 138, 140]",

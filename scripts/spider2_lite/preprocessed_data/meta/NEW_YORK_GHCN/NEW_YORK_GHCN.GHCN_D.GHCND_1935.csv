@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-element,TEXT,,"[""DAPR""]",
-sflag,TEXT,,"[""a""]",
-id,TEXT,,"[""ASN00009030"", ""ASN00009055"", ""ASN00009504""]",
-value,FLOAT,,[2.0],
-mflag,TEXT,,[],
-qflag,TEXT,,[],
-date,DATE,,"[""1935-07-29"", ""1935-07-15"", ""1935-07-22""]",
-time,TEXT,,[],

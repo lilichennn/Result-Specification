@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-race_id,NUMBER,,[1],
-lap,NUMBER,,"[1, 3, 4]",
-lap_type,TEXT,,"[""Race""]",
-position,NUMBER,,"[13, 11, 10]",
-driver_id,NUMBER,,[1],

@@ -1,0 +1,11 @@
+{
+  "settings": {},
+  "reuse_legacy": false,
+  "groups": [
+    {"name":"spider_dev","ids":["0"],"dialect":"sqlite","gold":"../Spider/data/dev.json","database_root":"../Spider/data/database"},
+    {"name":"bird_dev","ids":["2"],"dialect":"sqlite","gold":"../BIRD/data/dev/dev.json","database_root":"../BIRD/data/dev/dev_databases"},
+    {"name":"bird_interact_full","ids":["solar_panel_2"],"dialect":"postgresql","gold":"data/bird_interact_full/gold_sql.json"},
+    {"name":"bird_interact_lite","ids":["alien_2"],"dialect":"postgresql","gold":"data/bird_interact_lite/gold_sql.json"},
+    {"name":"spider_test","ids":["32"],"dialect":"sqlite","gold":"../Spider/data/test.json","database_root":"../Spider/data/test_database"}
+  ]
+}

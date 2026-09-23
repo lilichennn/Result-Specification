@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-detail_id,NUMBER,,"[1, 3, 4]",
-favorite_food,TEXT,,"[""White-faced tree rat"", ""Indian red admiral"", ""Bandicoot, southern brown""]",
-feeding_frequency,TEXT,,"[""Weekly"", ""Often"", ""Monthly""]",
-aggressive,NUMBER,,"[1, 0]",

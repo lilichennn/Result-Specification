@@ -1,2 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-num,NUMBER,"Num as INTEGER - [0, 999999]","[76, 178, 309]",

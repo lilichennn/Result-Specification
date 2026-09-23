@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-product_category_name,TEXT,,"[""informatica_acessorios"", ""moveis_decoracao"", ""esporte_lazer""]",
-product_category_name_english,TEXT,,"[""computers_accessories"", ""furniture_decor"", ""sports_leisure""]",

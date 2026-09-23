@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-shape_id,TEXT,Unique identifier for the geospatial shape that describes the vehicle travel for a trip along individual points. Use to JOIN with the shapes available in the shapes table,"[""1..N03R""]",
-trip_headsign,TEXT,Contains the text that appears on signage that identifies the trip's destination to riders. Use this field to distinguish between different patterns of service on the same route.,"[""Van Cortlandt Park - 242 St""]",
-direction_id,TEXT,,"[""0""]",
-route_id,TEXT,Unique identifier for each route. A single route will have multiple trips,"[""1""]",
-service_id,TEXT,,"[""ASP19GEN-1037-Sunday-00""]",
-trip_id,TEXT,Unique identifier for each trip,"[""ASP19GEN-1037-Sunday-00_081250_1..N03R"", ""ASP19GEN-1037-Sunday-00_073250_1..N03R"", ""ASP19GEN-1037-Sunday-00_115650_1..N03R""]",
-block_id,TEXT,"Identifies the block to which the trip belongs. A block consists of a single trip or many sequential trips made with the same vehicle. The trips are grouped into a block by the use of a shared service day andblock_id. A block_id can include trips with different service days, which then makes distinct blocks. For more details, see: https://developers.google.com/transit/gtfs/reference/#example-showing-blocks-and-service-day",[],

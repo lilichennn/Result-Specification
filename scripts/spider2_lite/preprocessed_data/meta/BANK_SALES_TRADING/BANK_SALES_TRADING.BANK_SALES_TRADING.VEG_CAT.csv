@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-category_code,NUMBER,,[1011010101],
-item_code,NUMBER,,"[102900005115168, 102900005115625, 102900005115748]",
-category_name,TEXT,,"[""Flower/Leaf Vegetables""]",
-item_name,TEXT,,"[""Niushou Shengcai"", ""Local Xiaomao Cabbage"", ""White Caitai""]",
-index,NUMBER,,"[0, 2, 3]",

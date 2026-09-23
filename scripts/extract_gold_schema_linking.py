@@ -10,23 +10,30 @@ from typing import Any
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = SCRIPT_DIR.parents[1]
+CODE_ROOT = SCRIPT_DIR.parent
 
 
-def dataset_paths(dataset: str, split: str) -> tuple[Path, Path, Path, Path, str]:
+def dataset_paths(
+    dataset: str, split: str, dataset_root: str | Path | None = None
+) -> tuple[Path, Path, Path, Path, str]:
     dataset_split = f"{dataset}_{split}"
-    instances_path = SCRIPT_DIR / dataset_split / "preprocessed_data" / f"{dataset_split}.json"
-    output_path = SCRIPT_DIR / dataset_split / "gold_sql_schema_linking.json"
+    group_root = CODE_ROOT / "data" / dataset_split
+    instances_path = group_root / f"{dataset_split}.json"
+    output_path = group_root / "gold_sql_schema_linking.json"
 
     if dataset == "spider":
-        gold_path = PROJECT_ROOT / "Spider" / "data" / f"{split}.json"
-        database_root = PROJECT_ROOT / "Spider" / "data" / (
+        if split not in ("dev", "test"):
+            raise ValueError("Available gold data: spider/dev, spider/test, and bird/dev")
+        raw_root = Path(dataset_root) if dataset_root is not None else Path("Spider")
+        gold_path = raw_root / "data" / f"{split}.json"
+        database_root = raw_root / "data" / (
             "database" if split == "dev" else "test_database"
         )
         sql_field = "query"
     elif dataset == "bird" and split == "dev":
-        gold_path = PROJECT_ROOT / "BIRD" / "data" / "dev" / "dev.json"
-        database_root = PROJECT_ROOT / "BIRD" / "data" / "dev" / "dev_databases"
+        raw_root = Path(dataset_root) if dataset_root is not None else Path("BIRD")
+        gold_path = raw_root / "data" / "dev" / "dev.json"
+        database_root = raw_root / "data" / "dev" / "dev_databases"
         sql_field = "SQL"
     else:
         raise ValueError("Available gold data: spider/dev, spider/test, and bird/dev")
@@ -78,9 +85,11 @@ def referenced_schema(database_path: Path, sql: str) -> list[dict[str, Any]]:
     return result
 
 
-def extract(dataset: str, split: str) -> list[dict[str, Any]]:
+def extract(
+    dataset: str, split: str, dataset_root: str | Path | None = None
+) -> list[dict[str, Any]]:
     instances_path, gold_path, database_root, output_path, sql_field = dataset_paths(
-        dataset, split
+        dataset, split, dataset_root
     )
     instances = json.loads(instances_path.read_text(encoding="utf-8"))
     gold_rows = json.loads(gold_path.read_text(encoding="utf-8"))
@@ -126,11 +135,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", required=True, choices=("spider", "bird"))
     parser.add_argument("--split", required=True, choices=("dev", "test"))
+    parser.add_argument(
+        "--dataset-root", type=Path,
+        help="Raw dataset root; defaults to Spider or BIRD relative to the working directory.",
+    )
     args = parser.parse_args()
-    rows = extract(args.dataset, args.split)
+    rows = extract(args.dataset, args.split, args.dataset_root)
+    output_path = dataset_paths(args.dataset, args.split, args.dataset_root)[3]
     print(
-        f"Wrote {len(rows)} instances to "
-        f"{SCRIPT_DIR / f'{args.dataset}_{args.split}' / 'gold_sql_schema_linking.json'}"
+        f"Wrote {len(rows)} instances to {output_path}"
     )
 
 

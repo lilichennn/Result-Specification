@@ -1,0 +1,15 @@
+{
+  "format": "dail-sql-inputs-v1",
+  "settings": {"k_shot": 9, "n": 1, "samples_per_round": 5, "enable_thinking": true, "temperature": 0.6, "max_attempts": 5, "request_timeout_seconds": 910, "max_tokens": null},
+  "training_pools": {
+    "spider": {"sources": ["../Spider/data/train_spider.json", "../Spider/data/train_others.json"], "schema_sources": ["../Spider/data/tables.json"], "database_roots": ["../Spider/data/database"]},
+    "bird": {"sources": ["../BIRD/data/train/train.json"], "schema_sources": ["../BIRD/data/train/train_tables.json", "../BIRD/data/train/train_databases"], "database_roots": ["../BIRD/data/train/train_databases"]}
+  },
+  "groups": [
+    {"name": "spider_dev", "questions": "data/spider_dev/spider_dev.json", "rc": "data/spider_dev/rc.json", "snapshot": "cache/deepeye_shared_preparation/prepared/spider/dev.snapshot", "meta": "data/spider_dev/meta", "evaluation": "../Spider/data/dev.json", "training_pool": "spider", "compute_cv_link": true, "expected_count": 1034},
+    {"name": "bird_dev", "questions": "data/bird_dev/bird_dev.json", "rc": "data/bird_dev/rc.json", "snapshot": "cache/deepeye_shared_preparation/prepared/bird/dev.snapshot", "meta": "data/bird_dev/meta", "evaluation": "../BIRD/data/dev/dev.json", "training_pool": "bird", "compute_cv_link": false, "expected_count": 1534},
+    {"name": "bird_interact_full", "questions": "data/bird_interact_full/bird_interact_full.json", "rc": "data/bird_interact_full/rc.json", "snapshot": "cache/deepeye_shared_preparation/prepared/bird_interact/full.snapshot", "meta": "data/bird_interact_full/meta", "evaluation": "data/bird_interact_full/gold_sql.json", "training_pool": "bird", "compute_cv_link": false, "expected_count": 410},
+    {"name": "bird_interact_lite", "questions": "data/bird_interact_lite/bird_interact_lite.json", "rc": "data/bird_interact_lite/rc.json", "snapshot": "cache/deepeye_shared_preparation/prepared/bird_interact/lite.snapshot", "meta": "data/bird_interact_lite/meta", "evaluation": "data/bird_interact_lite/gold_sql.json", "training_pool": "bird", "compute_cv_link": false, "expected_count": 195},
+    {"name": "spider_test", "questions": "data/spider_test/spider_test.json", "rc": "data/spider_test/rc.json", "snapshot": "cache/deepeye_shared_preparation/prepared/spider/test.snapshot", "meta": "data/spider_test/meta", "evaluation": "../Spider/data/test.json", "training_pool": "spider", "compute_cv_link": true, "expected_count": 2147}
+  ]
+}

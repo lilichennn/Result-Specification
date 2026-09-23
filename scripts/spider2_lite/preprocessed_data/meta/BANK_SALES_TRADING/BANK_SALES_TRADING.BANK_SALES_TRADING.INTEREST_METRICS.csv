@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ranking,NUMBER,,"[2, 3, 4]",
-percentile_ranking,FLOAT,,"[99.73, 99.59, 99.45]",
-month_year,TEXT,,"[""07-2018""]",
-interest_id,FLOAT,,"[6106.0, 18923.0, 6344.0]",
-composition,FLOAT,,"[9.93, 10.85, 10.32]",
-_month,FLOAT,,[7.0],
-index_value,FLOAT,,"[5.31, 5.29, 5.1]",
-_year,FLOAT,,[2018.0],

@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-period_type_concept_id,NUMBER,,[44814722],
-observation_period_end_date,DATE,,"[""2010-08-27"", ""2010-09-02"", ""2010-09-05""]",
-observation_period_start_date,DATE,,"[""2008-07-20""]",
-person_id,NUMBER,,"[634269, 1575503, 1061412]",
-observation_period_id,NUMBER,,"[571934, 1420873, 957140]",

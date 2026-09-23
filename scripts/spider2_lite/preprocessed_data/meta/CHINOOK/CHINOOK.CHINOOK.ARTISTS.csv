@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ArtistId,NUMBER,,"[8, 9, 10]",
-Name,TEXT,,"[""Audioslave"", ""BackBeat"", ""Billy Cobham""]",

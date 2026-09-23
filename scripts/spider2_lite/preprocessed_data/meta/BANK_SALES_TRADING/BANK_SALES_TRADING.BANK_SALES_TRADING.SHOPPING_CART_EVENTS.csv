@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-page_id,NUMBER,,"[9, 10, 12]",
-event_type,NUMBER,,"[1, 2]",
-cookie_id,TEXT,,"[""c4ca42"", ""c81e72""]",
-event_time,TEXT,,"[""2020-02-04 19:16:58.609142"", ""2020-02-04 19:17:51.72942"", ""2020-02-04 19:19:10.570786""]",
-visit_id,TEXT,,"[""ccf365"", ""d58cbd""]",
-sequence_number,NUMBER,,"[4, 5, 7]",

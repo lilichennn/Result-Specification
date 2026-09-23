@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-shape_point_sequence,NUMBER,Associates the latitude and longitude of a shape point with its sequence order along the shape. The values for shape_pt_sequence must increase throughout the trip but don't need to be consecutive.,"[195, 92, 185]",
-shape_point_geom,BINARY,Geographic representation of the points latitude and longitude,"[""bytearray(b'\\x01\\x01\\x00\\x00\\x00K\\x8f\\xa6z2\\x9b^\\xc08\\x87k\\xb5\\x87\\xdbB@')"", ""bytearray(b'\\x01\\x01\\x00\\x00\\x00\\xe7\\xaf\\x90\\xb92\\x9c^\\xc0\\x1bKX\\x1bc\\xe1B@')""]",
-shape_id,TEXT,Uniquely identifies each shape,"[""173976"", ""174271"", ""174272""]",
-shape_point_lat,FLOAT,Associates a shape point's latitude with a shape ID.,"[37.715079, 37.760837]",
-shape_point_lon,FLOAT,Associates a shape point's longitude with a shape ID.,"[-122.424956, -122.440596]",
-shape_distance_traveled,FLOAT,Provides the actual distance traveled along the shape from the first shape point to the point specified in this record. This information allows the trip planner to determine how much of the shape to draw when they show part of a trip on the map. The values used for shape_dist_traveled must increase along with shape_pt_sequence: they can't be used to show reverse travel along a route.,"[14391.0, 5348.0, 6161.0]",

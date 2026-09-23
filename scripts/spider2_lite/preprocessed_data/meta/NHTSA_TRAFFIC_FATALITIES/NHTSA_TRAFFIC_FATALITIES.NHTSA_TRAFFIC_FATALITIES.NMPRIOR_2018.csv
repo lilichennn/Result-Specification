@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_number,NUMBER,,"[4, 13, 18]",
-non_motorist_action_circumstances_name,TEXT,,"[""Going To or From School (K-12)""]",
-non_motorist_action_circumstances,NUMBER,,[1],
-state_name,TEXT,,"[""Arizona"", ""Georgia"", ""Indiana""]",
-person_number,NUMBER,,"[1, 2, 3]",
-vehicle_number,NUMBER,,[0],
-consecutive_number,NUMBER,,"[40643, 131144, 180130]",

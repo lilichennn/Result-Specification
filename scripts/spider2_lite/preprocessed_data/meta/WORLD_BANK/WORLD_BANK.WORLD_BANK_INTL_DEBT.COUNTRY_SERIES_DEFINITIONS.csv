@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-description,TEXT,,"[""Data on Foreign Direct Investment are based on Balance of Payments reported by the International Monetary Fund. Unless otherwise specified in the specific years.""]",
-series_code,TEXT,,"[""BX.KLT.DINV.CD.DT""]",
-country_code,TEXT,,"[""AGO"", ""ARM"", ""BGR""]",

@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-customer_id,NUMBER,,"[429, 155, 398]",
-txn_date,TEXT,,"[""2020-01-21"", ""2020-01-10"", ""2020-01-01""]",
-txn_amount,NUMBER,,"[82, 712, 196]",
-txn_type,TEXT,,"[""deposit""]",

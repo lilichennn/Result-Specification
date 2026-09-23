@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USC00034988""]",
-qflag,TEXT,,"[""I""]",
-date,DATE,,"[""1885-02-28"", ""1885-02-09"", ""1885-12-30""]",
-value,FLOAT,,"[0.0, -22.0, 78.0]",
-mflag,TEXT,,[],
-time,TEXT,,"[""0700""]",
-sflag,TEXT,,"[""6""]",
-element,TEXT,,"[""TMAX""]",

@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-borough_code,TEXT,,"[""5"", ""2"", ""4""]",
-borough_geom,BINARY,,[],
-borough_len,FLOAT,,"[325960.634597, 462958.188213, 904390.137335]",
-borough_area,FLOAT,,"[1623756421.84, 1186612476.77, 3045885240.47]",
-borough_name,TEXT,,"[""Staten Island"", ""Bronx"", ""Queens""]",

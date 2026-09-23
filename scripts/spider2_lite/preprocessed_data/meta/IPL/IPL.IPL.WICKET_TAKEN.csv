@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ball_id,NUMBER,,"[3, 4, 5]",
-over_id,NUMBER,,"[10, 14, 15]",
-match_id,NUMBER,,"[419167, 419168]",
-innings_no,NUMBER,,"[1, 2]",
-kind_out,TEXT,,"[""caught""]",
-player_out,NUMBER,,"[154, 96, 109]",

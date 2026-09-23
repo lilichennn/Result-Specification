@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-driver_maneuvered_to_avoid_name,TEXT,,"[""Driver Did Not Maneuver To Avoid""]",
-state_number,NUMBER,,"[33, 2, 1]",
-vehicle_number,NUMBER,,"[5, 7]",
-driver_maneuvered_to_avoid,NUMBER,,[0],
-consecutive_number,NUMBER,,"[330102, 20012, 10878]",

@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-complex_name,TEXT,,"[""14 St - Union Sq"", ""Franklin Av / Botanic Garden"", ""Grand Central - 42 St""]",
-complex_id,TEXT,,"[""602"", ""626"", ""610""]",

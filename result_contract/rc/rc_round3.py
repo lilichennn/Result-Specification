@@ -9,7 +9,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from .rc_round1 import DEFAULT_MAX_ATTEMPTS, ModelCall, call_model
+from .rc_round1 import DEFAULT_MAX_ATTEMPTS, ModelCall, _resolve_model_call
 from .rc_round2 import ROUND2_FIELDS, Round2RC
 
 
@@ -57,17 +57,19 @@ def generate_round3(
     gold_sql: str,
     model_call: ModelCall | None = None,
     max_attempts: int = DEFAULT_MAX_ATTEMPTS,
+    *,
+    llm: str | None = None,
 ) -> Round3RC:
     """Minimally correct a Round-2 RC using the benchmark gold SQL."""
     if max_attempts < 1:
         raise ValueError("max_attempts must be positive")
+    invoke = _resolve_model_call(model_call, llm)
     messages = build_round3_messages(
         question=question,
         evidence=evidence,
         round2_rc=round2_rc,
         gold_sql=gold_sql,
     )
-    invoke = model_call or call_model
     last_error: Exception | None = None
     for attempt in range(1, max_attempts + 1):
         try:

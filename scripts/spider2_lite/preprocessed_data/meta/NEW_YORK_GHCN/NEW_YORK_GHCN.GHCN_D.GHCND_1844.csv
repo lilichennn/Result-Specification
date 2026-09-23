@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""CA006158350""]",
-sflag,TEXT,,"[""C""]",
-time,TEXT,,[],
-date,DATE,,"[""1844-06-19"", ""1844-04-29"", ""1844-06-02""]",
-qflag,TEXT,,[],
-mflag,TEXT,,[],
-value,FLOAT,,"[262.0, 0.0]",
-element,TEXT,,"[""MDPR"", ""PRCP""]",

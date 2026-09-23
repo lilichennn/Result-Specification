@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-case_submitter_id,TEXT,Associated TCGA case barcode,"[""TCGA-FF-8062""]",
-file_id,TEXT,GDC file identifier. This is a duplicate of file_gdc_id field found in some tables. ,"[""fc5ffbd4-bd87-4400-9b7d-289c85104062"", ""f9d7590c-d02f-4d12-a682-199db214ebf4"", ""f42d0cc9-3fd6-474c-921a-ba2b997b6eee""]",
-file_name,TEXT,Name of file at the GDC,"[""fc5ffbd4-bd87-4400-9b7d-289c85104062.vcf"", ""f9d7590c-d02f-4d12-a682-199db214ebf4.vep.reheader.vcf.gz"", ""f42d0cc9-3fd6-474c-921a-ba2b997b6eee.vep.reheader.vcf.gz""]",

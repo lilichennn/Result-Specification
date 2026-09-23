@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-product,TEXT,,"[""AQ Dracula HDD – 3.5 Inch SATA 6 Gb/s 5400 RPM 256 MB Cache"", ""AQ WereWolf NAS Internal Hard Drive HDD – 8.89 cm"", ""AQ Mforce Gen X""]",
-division,TEXT,,"[""P & A""]",
-category,TEXT,,"[""Internal HDD"", ""Graphic Card""]",
-product_code,TEXT,,"[""A0118150101"", ""A0219150201"", ""A0418150101""]",
-segment,TEXT,,"[""Peripherals""]",
-variant,TEXT,,"[""Standard"", ""Standard 1"", ""Standard 2""]",

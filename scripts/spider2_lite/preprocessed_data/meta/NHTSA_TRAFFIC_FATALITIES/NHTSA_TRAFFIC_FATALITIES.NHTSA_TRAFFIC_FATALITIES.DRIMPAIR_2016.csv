@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-condition_impairment_at_time_of_crash_driver,NUMBER,,[0],
-consecutive_number,NUMBER,,"[330102, 560014, 440044]",
-condition_impairment_at_time_of_crash_driver_name,TEXT,,"[""None/Apparently Normal""]",
-vehicle_number,NUMBER,,"[5, 7]",
-state_number,NUMBER,,"[33, 56, 44]",

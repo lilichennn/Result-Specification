@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1792-04-08"", ""1792-09-13"", ""1792-08-04""]",
-value,FLOAT,,[0.0],
-time,TEXT,,[],
-qflag,TEXT,,[],
-mflag,TEXT,,[],
-sflag,TEXT,,"[""E""]",
-id,TEXT,,"[""GM000010962""]",
-element,TEXT,,"[""PRCP""]",

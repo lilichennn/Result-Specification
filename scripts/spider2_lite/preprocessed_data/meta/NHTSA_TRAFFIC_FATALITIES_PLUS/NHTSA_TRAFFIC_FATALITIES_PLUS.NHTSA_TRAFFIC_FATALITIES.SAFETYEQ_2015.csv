@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-person_number,NUMBER,,[1],
-state_number,NUMBER,,"[1, 4]",
-non_motorist_safety_equipment_use,TEXT,,"[""Helmet""]",
-vehicle_number,NUMBER,,[0],
-consecutive_number,NUMBER,,"[10268, 10476, 40208]",

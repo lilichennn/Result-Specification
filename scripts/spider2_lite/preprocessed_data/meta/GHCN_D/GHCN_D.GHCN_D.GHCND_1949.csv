@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""CA006166416"", ""RSM00036034"", ""USC00042504""]",
-element,TEXT,,"[""TMIN""]",
-qflag,TEXT,,[],
-mflag,TEXT,,[],
-date,DATE,,"[""1949-09-12"", ""1949-06-05"", ""1949-06-19""]",
-time,TEXT,,[],
-value,FLOAT,,[33.0],
-sflag,TEXT,,"[""C"", ""r"", ""0""]",

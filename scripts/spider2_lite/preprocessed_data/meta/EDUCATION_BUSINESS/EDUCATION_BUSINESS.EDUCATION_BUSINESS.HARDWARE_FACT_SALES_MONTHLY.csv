@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,TEXT,,"[""2019-09-01""]",
-customer_code,NUMBER,,"[70002017, 70003182, 70004070]",
-sold_quantity,NUMBER,,"[137, 63, 3]",
-product_code,TEXT,,"[""A0118150101""]",
-fiscal_year,NUMBER,,[2020],

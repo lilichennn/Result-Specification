@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-channel_name,TEXT,,"[""PHONE PLACE"", ""WHATS PLACE"", ""FACE PLACE""]",
-channel_id,NUMBER,,"[2, 3, 4]",
-channel_type,TEXT,,"[""OWN CHANNEL""]",

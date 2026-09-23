@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-product_code,TEXT,,"[""A0118150101"", ""A0118150102"", ""A0118150103""]",
-manufacturing_cost,FLOAT,,"[5.5172, 5.718, 6.59]",
-cost_year,NUMBER,,"[2021, 2020]",

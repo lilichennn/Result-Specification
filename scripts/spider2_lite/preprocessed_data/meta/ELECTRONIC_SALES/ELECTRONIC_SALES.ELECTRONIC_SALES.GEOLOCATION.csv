@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-geolocation_city,TEXT,,"[""presidente castello branco"", ""concórdia"", ""concordia""]",
-geolocation_lat,FLOAT,,"[-27.22083994710839, -27.229079835306987, -27.241979680744656]",
-geolocation_lng,FLOAT,,"[-51.81102224706286, -52.01942400322294, -52.041865129068654]",
-geolocation_zip_code_prefix,NUMBER,,"[89745, 89700, 89707]",
-index,NUMBER,,"[933888, 933895, 933896]",
-geolocation_state,TEXT,,"[""SC""]",

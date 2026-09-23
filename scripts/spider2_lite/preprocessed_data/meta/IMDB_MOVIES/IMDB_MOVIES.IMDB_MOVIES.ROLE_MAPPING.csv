@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-category,TEXT,,"[""actor"", ""actress""]",
-name_id,TEXT,,"[""nm0178509"", ""nm0000991"", ""nm0001379""]",
-movie_id,TEXT,,"[""tt0038733"", ""tt0060908"", ""tt0069049""]",

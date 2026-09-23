@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""CA003060237"", ""CA006136606"", ""USC00125055""]",
-sflag,TEXT,,"[""C"", ""0"", ""a""]",
-date,DATE,,"[""1997-03-02"", ""1997-12-24"", ""1997-03-30""]",
-qflag,TEXT,,[],
-time,TEXT,,"[""0700"", ""0800""]",
-element,TEXT,,"[""PRCP""]",
-mflag,TEXT,,[],
-value,FLOAT,,[86.0],

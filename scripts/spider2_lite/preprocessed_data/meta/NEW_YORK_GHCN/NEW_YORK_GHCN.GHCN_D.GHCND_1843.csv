@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-time,TEXT,,[],
-qflag,TEXT,,[],
-mflag,TEXT,,[],
-date,DATE,,"[""1843-05-14"", ""1843-05-25"", ""1843-06-14""]",
-element,TEXT,,"[""PRCP""]",
-value,FLOAT,,[0.0],
-id,TEXT,,"[""CA006158350""]",
-sflag,TEXT,,"[""C""]",

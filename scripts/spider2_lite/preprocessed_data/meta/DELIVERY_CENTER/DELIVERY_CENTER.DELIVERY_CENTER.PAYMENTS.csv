@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-payment_fee,FLOAT,,"[0.0, 7.9, 1.59]",
-payment_order_id,NUMBER,,"[68410055, 68413340, 68414018]",
-payment_amount,FLOAT,,"[118.44, 394.81, 58.8]",
-payment_status,TEXT,,"[""PAID""]",
-payment_id,NUMBER,,"[4427917, 4427918, 4427948]",
-payment_method,TEXT,,"[""VOUCHER"", ""ONLINE""]",

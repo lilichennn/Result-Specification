@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-non_motorist_action_circumstances_name,TEXT,,"[""Going To or From School (K-12)"", ""Waiting to Cross Roadway""]",
-consecutive_number,NUMBER,,"[550050, 550398, 40038]",
-state_number,NUMBER,,"[55, 4, 6]",
-person_number,NUMBER,,"[2, 1]",
-state_name,TEXT,,"[""Wisconsin"", ""Arizona"", ""California""]",
-non_motorist_action_circumstances,NUMBER,,"[1, 2]",
-vehicle_number,NUMBER,,[0],

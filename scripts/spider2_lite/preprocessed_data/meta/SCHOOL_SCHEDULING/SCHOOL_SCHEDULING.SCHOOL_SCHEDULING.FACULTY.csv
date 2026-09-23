@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Title,TEXT,,"[""Professor"", ""Instructor""]",
-StaffID,NUMBER,,"[98005, 98007, 98010]",
-Status,TEXT,,"[""Full Time"", ""On Leave""]",
-Tenured,NUMBER,,[1],

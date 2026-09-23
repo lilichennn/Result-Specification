@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-element,TEXT,,"[""AWDR""]",
-date,DATE,,"[""2013-05-12"", ""2013-06-28"", ""2013-12-11""]",
-time,TEXT,,[],
-mflag,TEXT,,[],
-sflag,TEXT,,"[""T""]",
-id,TEXT,,"[""USS0005N04S"", ""USS0005N14S""]",
-value,FLOAT,,"[9.0, 136.0, 174.0]",
-qflag,TEXT,,[],

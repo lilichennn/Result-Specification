@@ -13,7 +13,7 @@ from .rc_round1 import (
     DEFAULT_MAX_ATTEMPTS,
     ModelCall,
     Round1RC,
-    call_model,
+    _resolve_model_call,
 )
 
 
@@ -70,10 +70,13 @@ def generate_round2(
     model_call: ModelCall | None = None,
     max_attempts: int = DEFAULT_MAX_ATTEMPTS,
     metadata_complete: bool = True,
+    *,
+    llm: str | None = None,
 ) -> Round2RC:
     """Conservatively refine a Round-1 RC using database metadata."""
     if max_attempts < 1:
         raise ValueError("max_attempts must be positive")
+    invoke = _resolve_model_call(model_call, llm)
     messages = build_round2_messages(
         question=question,
         evidence=evidence,
@@ -81,7 +84,6 @@ def generate_round2(
         metadata=metadata,
         metadata_complete=metadata_complete,
     )
-    invoke = model_call or call_model
     last_error: Exception | None = None
     for attempt in range(1, max_attempts + 1):
         try:

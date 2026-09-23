@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-known_for_movies,TEXT,,"["""", ""tt4555426"", ""tt2671706""]",
-height,FLOAT,,"[174.0, 183.0, 185.0]",
-name,TEXT,,"[""Lauren Bacall"", ""Gary Oldman"", ""Margaux Hemingway""]",
-date_of_birth,TEXT,,"[""1924-09-16"", ""1958-03-21"", ""1954-02-16""]",
-id,TEXT,,"[""nm0000002"", ""nm0000198"", ""nm0000029""]",

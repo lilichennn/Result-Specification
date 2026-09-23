@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date,DATE,,"[""1908-05-17"", ""1908-05-05"", ""1908-09-29""]",
-qflag,TEXT,,[],
-time,TEXT,,[],
-element,TEXT,,"[""PRCP""]",
-id,TEXT,,"[""RQC00660158"", ""RQC00661300"", ""RQC00662634""]",
-sflag,TEXT,,"[""0""]",
-value,FLOAT,,[0.0],
-mflag,TEXT,,[],

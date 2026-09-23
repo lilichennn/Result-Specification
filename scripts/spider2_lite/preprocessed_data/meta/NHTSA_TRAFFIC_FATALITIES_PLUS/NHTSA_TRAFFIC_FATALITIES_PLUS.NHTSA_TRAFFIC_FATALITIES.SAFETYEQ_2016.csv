@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_number,NUMBER,,"[1, 6]",
-person_number,NUMBER,,"[5, 6, 7]",
-consecutive_number,NUMBER,,"[10381, 62896]",
-vehicle_number,NUMBER,,[0],
-non_motorist_safety_equipment_use,TEXT,,"[""None Used""]",

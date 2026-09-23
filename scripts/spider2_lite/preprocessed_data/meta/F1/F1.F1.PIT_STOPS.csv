@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-seconds,FLOAT,,"[26.898, 23.251, 23.842]",
-time,TEXT,,"[""17:05:23"", ""17:22:34"", ""17:24:10""]",
-duration,TEXT,,"[""26.898"", ""23.251"", ""23.842""]",
-race_id,NUMBER,,[841],
-milliseconds,NUMBER,,"[26898, 23251, 23842]",
-driver_id,NUMBER,,"[153, 4, 13]",
-lap,NUMBER,,"[1, 12, 13]",
-stop,NUMBER,,[1],

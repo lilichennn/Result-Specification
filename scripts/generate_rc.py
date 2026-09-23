@@ -404,7 +404,7 @@ def generate_round3_file(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate or gold-correct Result Contracts for a dataset split."
+        description="Generate or gold-correct Result Specifications (RS) for a dataset split."
     )
     parser.add_argument(
         "--dataset_split",
@@ -421,7 +421,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--round3",
         action="store_true",
-        help="Correct existing Round-2 contracts using gold_sql_schema_linking.json.",
+        help="Produce oracle RS by correcting existing Round-2 specifications using gold_sql_schema_linking.json.",
     )
     parser.add_argument(
         "--gold-file", type=Path,
@@ -429,7 +429,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--allow-partial-gold", action="store_true",
-        help="Round3 only: generate for IDs present in the gold file and preserve all other RC records.",
+        help="Round3 only: generate for IDs present in the gold file and preserve all other RS records.",
     )
     args = parser.parse_args()
     if not args.round3 and (args.gold_file is not None or args.allow_partial_gold):
@@ -484,7 +484,9 @@ def main() -> None:
 
 def _dataset_split_paths(dataset_split: str) -> tuple[Path, Path, Path, Path]:
     if (
-        not dataset_split
+        not isinstance(dataset_split, str)
+        or not dataset_split
+        or dataset_split in (".", "..")
         or Path(dataset_split).name != dataset_split
         or "/" in dataset_split
         or "\\" in dataset_split
@@ -493,12 +495,11 @@ def _dataset_split_paths(dataset_split: str) -> tuple[Path, Path, Path, Path]:
             "dataset_split must be a directory name such as bird_dev or spider_test"
         )
 
-    dataset_split_root = SCRIPT_DIR / dataset_split
-    preprocessed_root = dataset_split_root / "preprocessed_data"
-    input_path = preprocessed_root / f"{dataset_split}.json"
-    meta_root = preprocessed_root / "meta"
+    dataset_split_root = CODE_ROOT / "data" / dataset_split
+    input_path = dataset_split_root / f"{dataset_split}.json"
+    meta_root = dataset_split_root / "meta"
     output_path = dataset_split_root / "rc.json"
-    log_path = dataset_split_root / "generate_rc.log"
+    log_path = CODE_ROOT / "outputs" / "rc_generation" / dataset_split / "generate_rc.log"
     return input_path, meta_root, output_path, log_path
 
 

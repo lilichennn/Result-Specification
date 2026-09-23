@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USW00013942"", ""USW00023064"", ""USC00158714""]",
-qflag,TEXT,,[],
-value,FLOAT,,"[-56.0, 72.0]",
-time,TEXT,,"[""2400""]",
-date,DATE,,"[""1948-01-31"", ""1948-12-17"", ""1948-10-22""]",
-mflag,TEXT,,[],
-sflag,TEXT,,"[""0""]",
-element,TEXT,,"[""TMIN""]",

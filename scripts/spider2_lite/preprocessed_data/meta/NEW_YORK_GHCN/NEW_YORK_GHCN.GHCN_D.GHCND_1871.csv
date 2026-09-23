@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sflag,TEXT,,"[""0""]",
-element,TEXT,,"[""PRCP""]",
-date,DATE,,"[""1871-12-26"", ""1871-12-03"", ""1871-12-10""]",
-id,TEXT,,"[""USW00024274""]",
-time,TEXT,,"[""2400""]",
-value,FLOAT,,"[3.0, 10.0, 13.0]",
-mflag,TEXT,,[],
-qflag,TEXT,,[],

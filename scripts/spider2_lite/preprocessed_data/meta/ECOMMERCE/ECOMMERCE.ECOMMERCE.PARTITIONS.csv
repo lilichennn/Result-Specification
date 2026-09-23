@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-date_formatted,DATE,,"[""2017-03-12"", ""2017-05-14"", ""2017-07-09""]",
-total_transactions,NUMBER,,"[57, 63, 96]",

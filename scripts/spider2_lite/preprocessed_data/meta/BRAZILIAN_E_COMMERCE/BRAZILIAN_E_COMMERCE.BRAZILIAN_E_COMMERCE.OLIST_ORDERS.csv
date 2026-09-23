@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-order_id,TEXT,,"[""e481f51cbdc54678b7cc49136f2d6af7"", ""47770eb9100c2d0c44946d9cf07ec65d"", ""a4591c265e18cb1dcee52889e2d8acc3""]",
-order_delivered_carrier_date,TEXT,,"[""2017-10-04 19:55:00"", ""2018-08-08 13:50:00"", ""2017-07-11 14:58:04""]",
-order_purchase_timestamp,TEXT,,"[""2017-10-02 10:56:33"", ""2018-08-08 08:38:49"", ""2017-07-09 21:57:05""]",
-order_approved_at,TEXT,,"[""2017-10-02 11:07:15"", ""2018-08-08 08:55:23"", ""2017-07-09 22:10:13""]",
-order_estimated_delivery_date,TEXT,,"[""2017-10-18 00:00:00"", ""2018-09-04 00:00:00"", ""2017-08-01 00:00:00""]",
-order_status,TEXT,,"[""delivered""]",
-order_delivered_customer_date,TEXT,,"[""2017-10-10 21:25:13"", ""2018-08-17 18:06:29"", ""2017-07-26 10:57:55""]",
-customer_id,TEXT,,"[""9ef432eb6251297304e76186b10a928d"", ""41ce2a54c0b03bf3443c3d931a367089"", ""503740e9ca751ccdda7ba28e9ab8f608""]",

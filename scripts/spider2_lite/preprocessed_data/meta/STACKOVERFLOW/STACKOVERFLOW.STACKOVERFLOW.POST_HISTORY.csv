@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-creation_date,NUMBER,,"[1387754944993000, 1387400631630000, 1387904289427000]",
-post_history_type_id,NUMBER,,"[2, 1, 3]",
-user_id,NUMBER,,"[3128057, 506873, 1031417]",
-comment,TEXT,,"[""added 2 characters in body""]",
-post_id,NUMBER,,"[20735186, 20668336, 20764316]",
-revision_guid,TEXT,,"[""8b6aaedc-d207-4081-97a9-7035207f386d"", ""f61e987f-c4bd-424d-9b1f-b54d4c3a34b5"", ""7f13aafd-4c01-4b0f-9774-b7785dcc257c""]",
-text,TEXT,,"[""alternative to eval() in DOM manipulation"", ""<javascript><jquery>"", ""PHP $_FILES superglobal only containing name""]",
-id,NUMBER,,"[54201121, 54201122, 53944729]",

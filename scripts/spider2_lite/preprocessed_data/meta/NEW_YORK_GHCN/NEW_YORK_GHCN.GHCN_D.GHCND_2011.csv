@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USC00412114"", ""USC00058995"", ""USC00086634""]",
-time,TEXT,,[],
-qflag,TEXT,,[],
-date,DATE,,"[""2011-09-27"", ""2011-07-10"", ""2011-09-13""]",
-mflag,TEXT,,[],
-value,FLOAT,,[0.0],
-sflag,TEXT,,"[""7""]",
-element,TEXT,,"[""AWND""]",

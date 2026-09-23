@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-service_zone,TEXT,This is Pickup service_zone,"[""Boro Zone""]",
-location_id,NUMBER,The TLC taxi zone of the trip pick-up,"[121, 122]",
-dispatching_base_num,TEXT,The TLC Base License Number of the base that dispatched the trip.,"[""B02395""]",
-borough,TEXT,This is Pickup borough,"[""Queens""]",
-pickup_datetime,NUMBER,The date and time of the trip pick-up.,"[1480769016000000, 1475599978000000, 1480595093000000]",
-zone,TEXT,This is Pickup zone,"[""Hillcrest/Pomonok"", ""Hollis""]",

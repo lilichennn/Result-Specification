@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-seat_no,TEXT,,"[""2A"", ""2F"", ""3A""]",
-fare_conditions,TEXT,,"[""Business""]",
-aircraft_code,TEXT,,"[""319""]",

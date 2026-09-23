@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-month_name,TEXT,,"[""January""]",
-day_of_month,NUMBER,,"[1, 5, 6]",
-date,TEXT,,"[""1917-01-01"", ""1917-01-05"", ""1917-01-06""]",

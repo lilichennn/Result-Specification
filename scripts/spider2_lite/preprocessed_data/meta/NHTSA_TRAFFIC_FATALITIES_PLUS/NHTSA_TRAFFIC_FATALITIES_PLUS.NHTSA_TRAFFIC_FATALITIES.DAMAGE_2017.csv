@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-consecutive_number,NUMBER,,"[40715, 60018, 61891]",
-damaged_areas_name,TEXT,,"[""No Damage""]",
-vehicle_number,NUMBER,,"[9, 5, 6]",
-state_number,NUMBER,,"[4, 6, 12]",
-damaged_areas,NUMBER,,[15],
-state_name,TEXT,,"[""Arizona"", ""California"", ""Florida""]",

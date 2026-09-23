@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-order_id,NUMBER,,"[422, 425]",
-qty,FLOAT,,"[80.0, 40.0, 60.0]",
-product_id,NUMBER,,"[4280, 6520, 5310]",
-amount,FLOAT,,"[1750.0, 1275.0, 750.0]",
-id,NUMBER,,"[9233, 9234, 9279]",

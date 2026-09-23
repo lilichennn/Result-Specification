@@ -1,0 +1,15 @@
+{
+  "benchmark": "bird",
+  "split": "dev",
+  "questions": "../../data/bird_dev/bird_dev.json",
+  "meta": "../../data/bird_dev/meta",
+  "resource_root": "../../../BIRD/data",
+  "rc": "../../data/bird_dev/rc.json",
+  "rc_version": 3,
+  "few_shot_strategy": "native_dynamic",
+  "preparation_root": "../../cache/deepeye_shared_preparation",
+  "prepared_dataset": "../../cache/deepeye_shared_preparation/prepared/bird/dev.snapshot",
+  "few_shot_dataset": "bird",
+  "few_shot_source": "../../../BIRD/data",
+  "reference_questions": "../../../BIRD/data/dev/dev.json"
+}

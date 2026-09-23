@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-county,TEXT,,"[""54000"", ""54640"", ""54620""]",
-location_id,NUMBER,,"[26, 148, 358]",
-city,TEXT,,[],
-zip,TEXT,,[],
-address_2,TEXT,,[],
-address_1,TEXT,,[],
-state,TEXT,,"[""54""]",
-location_source_value,TEXT,,"[""54-000"", ""54-640"", ""54-620""]",

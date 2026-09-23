@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-country_name,TEXT,,"[""albania"", ""cyprus"", ""angola""]",
-intermediate_region,TEXT,,"["""", ""middle africa"", ""caribbean""]",
-country_id,NUMBER,,"[2, 7, 8]",
-sub_region,TEXT,,"[""southern europe"", ""western asia"", ""subsaharan africa""]",
-country_code_2,TEXT,,"[""al"", ""cy"", ""ao""]",
-created_on,TEXT,,"[""2024-07-18""]",
-region,TEXT,,"[""europe"", ""asia"", ""africa""]",
-country_code_3,TEXT,,"[""alb"", ""cyp"", ""ago""]",

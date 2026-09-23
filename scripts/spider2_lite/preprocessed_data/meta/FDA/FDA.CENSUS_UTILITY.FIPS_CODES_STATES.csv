@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-state_name,TEXT,,"[""Alabama"", ""California"", ""Connecticut""]",
-state_gnisid,TEXT,,"[""01779775"", ""01779778"", ""01779780""]",
-state_fips_code,TEXT,,"[""01"", ""06"", ""09""]",
-state_postal_abbreviation,TEXT,,"[""AL"", ""CA"", ""CT""]",

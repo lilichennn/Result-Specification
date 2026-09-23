@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-store_id,NUMBER,,"[3, 54, 56]",
-store_segment,TEXT,,"[""FOOD""]",
-store_name,TEXT,,"[""CUMIURI"", ""VUZPI PAZZIS "", ""SUPSIO ""]",
-store_latitude,FLOAT,,[-22.921475],
-store_longitude,FLOAT,,[-43.234822],
-store_plan_price,FLOAT,,"[0.0, 49.0]",
-hub_id,NUMBER,,"[2, 8]",

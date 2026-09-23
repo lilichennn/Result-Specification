@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-InvNo,NUMBER,,[1],
-CaseNo,TEXT,,"[""1""]",
-RefNo,NUMBER,,"[5316, 7214, 2465]",
-Clone,NUMBER,,"[1, 2, 8]",
-Message,TEXT,,"[""Warning in some chromosomes unaccounted for""]",
-Type,TEXT,,"[""Warning""]",

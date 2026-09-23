@@ -1,8 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-non_motorist_contributing_circumstances_name,TEXT,,"[""None Noted""]",
-person_number,NUMBER,,[1],
-non_motorist_contributing_circumstances,NUMBER,,[0],
-state_number,NUMBER,,[1],
-consecutive_number,NUMBER,,"[10044, 10209, 10471]",
-vehicle_number,NUMBER,,[0],
-state_name,TEXT,,"[""Alabama""]",

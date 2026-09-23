@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-cytoband_name,TEXT,,"[""1p35"", ""1p31"", ""1p22""]",
-hg38_stop,NUMBER,,"[34300000, 84400000, 94300000]",
-hg38_start,NUMBER,,"[27600000, 60800000, 84400000]",
-chromosome,TEXT,,"[""chr1""]",

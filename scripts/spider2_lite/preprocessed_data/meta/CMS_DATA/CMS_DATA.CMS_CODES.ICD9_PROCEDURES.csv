@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-SHORT_DESCRIPTION,TEXT,,"[""Hip surface, cermc/cermc"", ""Hemispherectomy"", ""Other chordotomy""]",
-LONG_DESCRIPTION,TEXT,,"[""Hip bearing surface, ceramic-on-ceramic"", ""Hemispherectomy"", ""Other chordotomy""]",
-PROCEDURE_CODE,TEXT,,"[""0076"", ""0152"", ""0329""]",

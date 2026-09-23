@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-industry_title,TEXT,,"[""ACCIDENT & HEALTH INSURANCE"", ""LIFE INSURANCE"", ""INSURANCE AGENTS, BROKERS & SERVICE""]",
-ad_office,TEXT,,"[""1""]",
-sic_code,TEXT,,"[""6321"", ""6311"", ""6411""]",

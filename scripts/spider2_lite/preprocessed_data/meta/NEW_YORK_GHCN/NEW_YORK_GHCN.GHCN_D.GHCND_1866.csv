@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-sflag,TEXT,,"[""6""]",
-mflag,TEXT,,[],
-value,FLOAT,,"[0.0, 8.0, 13.0]",
-time,TEXT,,[],
-element,TEXT,,"[""PRCP""]",
-date,DATE,,"[""1866-01-22"", ""1866-03-27"", ""1866-01-12""]",
-qflag,TEXT,,[],
-id,TEXT,,"[""USC00288878""]",

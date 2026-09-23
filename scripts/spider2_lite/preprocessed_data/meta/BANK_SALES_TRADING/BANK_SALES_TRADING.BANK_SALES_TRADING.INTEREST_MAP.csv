@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-interest_summary,TEXT,,"[""Consumers researching luxury product reviews and gift ideas."", ""Consumers reading reviews of vacation destinations and accommodations."", ""Readers of motorcycle news and reviews.""]",
-id,NUMBER,,"[4, 6, 7]",
-interest_name,TEXT,,"[""Luxury Retail Researchers"", ""Vacation Planners"", ""Motorcycle Enthusiasts""]",
-last_modified,TEXT,,"[""2018-05-23 11:30:12"", ""2018-05-23 11:30:13""]",
-created_at,TEXT,,"[""2016-05-26 14:57:59""]",

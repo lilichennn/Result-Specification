@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Chromosome,TEXT,number between 1 and 48,"[""1""]",
-Topo,TEXT,"topography code, eg '0902' (or blank)",[],
-Abnormality,TEXT,"abnormality description, eg '-22', or '-X', or '+15', etc","[""+1""]",
-ChrOrder,NUMBER,numeric order of the chromosome,[1],
-Morph,TEXT,"morphology code, eg '3111'","[""1202"", ""1501"", ""1505""]",
-TotalCases,TEXT,total number of cases (up to 2211),"[""36"", ""73"", ""97""]",

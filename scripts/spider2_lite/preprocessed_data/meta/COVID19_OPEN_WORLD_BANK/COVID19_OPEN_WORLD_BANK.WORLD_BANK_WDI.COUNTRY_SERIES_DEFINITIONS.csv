@@ -1,4 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-series_code,TEXT,,"[""MS.MIL.XPND.CN"", ""MS.MIL.XPND.CD""]",
-country_code,TEXT,,"[""AUT"", ""JPN"", ""SYR""]",
-description,TEXT,,"[""1957-2001 SIPRI estimates."", ""1960-1964 SIPRI estimates."", ""1960-1969 & 1986-1992 SIPRI estimates.""]",

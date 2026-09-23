@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-value,FLOAT,,"[0.0, 13.0, 40.0]",
-date,DATE,,"[""2014-05-30"", ""2014-02-23"", ""2014-01-21""]",
-element,TEXT,,"[""AWND""]",
-time,TEXT,,[],
-id,TEXT,,"[""USC00058995"", ""USC00311975"", ""USC00319675""]",
-sflag,TEXT,,"[""7""]",
-mflag,TEXT,,[],
-qflag,TEXT,,[],

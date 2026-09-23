@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-mflag,TEXT,,[],
-id,TEXT,,"[""USC00414122""]",
-element,TEXT,,"[""SNWD""]",
-qflag,TEXT,,[],
-date,DATE,,"[""1880-07-15"", ""1880-05-15"", ""1880-07-10""]",
-time,TEXT,,[],
-value,FLOAT,,[0.0],
-sflag,TEXT,,"[""0""]",

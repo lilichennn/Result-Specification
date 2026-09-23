@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""RQC00662634"", ""RQC00662801""]",
-mflag,TEXT,,"[""T""]",
-qflag,TEXT,,[],
-time,TEXT,,[],
-date,DATE,,"[""1899-08-23"", ""1899-07-21"", ""1899-10-27""]",
-sflag,TEXT,,"[""0""]",
-element,TEXT,,"[""PRCP""]",
-value,FLOAT,,[0.0],

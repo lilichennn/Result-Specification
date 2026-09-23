@@ -266,13 +266,19 @@ class FewShotIndex:
 
 
 class FewShotRetriever:
-    def __init__(self, index: FewShotIndex, embedding_config: Any, embedding_batch_size: int = 128) -> None:
+    def __init__(
+        self,
+        index: FewShotIndex,
+        embedding_config: Any,
+        embedding_batch_size: int = 128,
+        embedding_function: Any = None,
+    ) -> None:
         if embedding_batch_size < 1:
             raise ValueError(f"embedding_batch_size must be >= 1, got {embedding_batch_size}")
         self.index = index
         self.embedding_config = embedding_config
         self.embedding_batch_size = embedding_batch_size
-        self._embedding_function = None
+        self._embedding_function = embedding_function
 
     @classmethod
     def from_index_path(
@@ -282,6 +288,7 @@ class FewShotRetriever:
         embedding_batch_size: int = 128,
         mmap_mode: Optional[str] = "r",
         similarity_device: str = "cpu",
+        embedding_function: Any = None,
     ) -> "FewShotRetriever":
         return cls(
             index=FewShotIndex.load(
@@ -291,6 +298,7 @@ class FewShotRetriever:
             ),
             embedding_config=embedding_config,
             embedding_batch_size=embedding_batch_size,
+            embedding_function=embedding_function,
         )
 
     def retrieve_by_texts(

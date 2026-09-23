@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-index,NUMBER,,"[0, 5, 8]",
-whsle_px_rmb-kg,FLOAT,,"[3.88, 4.6, 3.44]",
-whsle_date,TEXT,,"[""2020-07-01 00:00:00""]",
-item_code,NUMBER,,"[102900005115762, 102900005115908, 102900005115984]",

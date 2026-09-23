@@ -1,6 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-ball_id,NUMBER,,"[1, 2, 4]",
-runs_scored,NUMBER,,"[1, 0]",
-over_id,NUMBER,,[1],
-match_id,NUMBER,,[335987],
-innings_no,NUMBER,,"[2, 1]",

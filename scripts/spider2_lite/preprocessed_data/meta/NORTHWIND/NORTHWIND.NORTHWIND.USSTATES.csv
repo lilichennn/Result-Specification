@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-stateregion,TEXT,,"[""west"", ""east"", ""south""]",
-statename,TEXT,,"[""Arizona"", ""Connecticut"", ""Delaware""]",
-stateabbr,TEXT,,"[""AZ"", ""CT"", ""DE""]",
-stateid,NUMBER,,"[3, 7, 8]",

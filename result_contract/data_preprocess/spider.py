@@ -15,7 +15,7 @@ META_FIELDNAMES = ["column_name", "column_type", "sample_value", "ref_key"]
 def preprocess_spider(
     spider_root: str | Path,
     split: str = "dev",
-    output_dir: str | Path = "preprocessed_data",
+    output_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     """Preprocess a Spider 1.0 split and derive table metadata."""
     database_directory_by_split = {
@@ -29,7 +29,10 @@ def preprocess_spider(
         )
 
     spider_root = Path(spider_root).resolve()
-    output_dir = Path(output_dir).resolve()
+    output_dir = Path(
+        output_dir if output_dir is not None
+        else Path(__file__).resolve().parents[2] / "data" / f"spider_{split}"
+    ).resolve()
     data_root = spider_root / "data"
     dataset_path = data_root / f"{split}.json"
     database_root = data_root / database_directory_by_split[split]

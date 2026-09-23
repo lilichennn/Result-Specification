@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-drugID,NUMBER,Unique ID of the Targetome drug,[1],
-synonym,TEXT,Synonym or alias for the Targetome drug,"[""BRAF(V600E) Kinase Inhibitor RO5185426"", ""PLX-4032"", ""1-propanesulfonamide, n-(3-((5-(4-chlorophenyl)-1h-pyrrolo(2,3-b)pyridin-3-yl)carbonyl)-2,4-difluorophenyl)-""]",

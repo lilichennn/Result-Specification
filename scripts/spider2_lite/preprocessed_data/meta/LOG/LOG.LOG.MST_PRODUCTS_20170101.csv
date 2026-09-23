@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-updated_at,TEXT,,"[""2016-11-03 19:00:00"", ""2016-11-03 21:00:00""]",
-price,NUMBER,,"[4000, 3000]",
-name,TEXT,,"[""AAB"", ""BBD""]",
-product_id,TEXT,,"[""A002"", ""B002""]",

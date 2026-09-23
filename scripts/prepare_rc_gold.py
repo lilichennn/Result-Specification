@@ -15,10 +15,8 @@ from typing import Any, Iterable, Mapping
 DATASET_SPLITS = (
     "bird_interact_full",
     "bird_interact_lite",
-    "spider2_lite",
 )
 REPORT_VERSION = 1
-_SAFE_SPIDER_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.-]*\Z")
 _BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
 _LINE_COMMENT = re.compile(r"--[^\r\n]*(?:\r?\n|\Z)")
 
@@ -212,10 +210,6 @@ def _resolve_bird_root(root: Path, variant: str) -> Path:
     return root if root.name == expected else root / expected
 
 
-def _resolve_spider_root(root: Path) -> Path:
-    return root if root.name == "spider2-lite" else root / "spider2-lite"
-
-
 def _source_record(role: str, path: Path, root_name: str, root: Path) -> dict[str, str]:
     return {
         "role": role,
@@ -345,96 +339,6 @@ def _prepare_bird(
     return gold, records, sources
 
 
-def _canonical_spider_db(db_id: str) -> str:
-    return db_id.replace("-", "_").upper()
-
-
-def _prepare_spider(
-    instances: list[dict[str, str]],
-    dataset_root: Path,
-    exclusions: dict[str, str],
-) -> tuple[list[dict[str, str]], list[dict[str, Any]], list[dict[str, str]]]:
-    spider_root = _resolve_spider_root(dataset_root)
-    index_path = spider_root / "spider2-lite.jsonl"
-    source_by_id = _index_rows(
-        _read_jsonl(index_path), "instance_id", "Spider2-Lite"
-    )
-    sources = [_source_record("spider2_index", index_path, "dataset_root", dataset_root)]
-    sql_root = spider_root / "evaluation_suite" / "gold" / "sql"
-    gold: list[dict[str, str]] = []
-    records: list[dict[str, Any]] = []
-    for instance in instances:
-        index = instance["index"]
-        if (
-            _SAFE_SPIDER_ID.fullmatch(index) is None
-            or index in {".", ".."}
-            or Path(index).name != index
-        ):
-            raise ValueError(f"Spider2 instance_id must be a safe filename: {index!r}")
-        source = source_by_id.get(index)
-        if source is None:
-            raise ValueError(f"No Spider2-Lite source row for {index!r}")
-        source_db = _require_nonempty_text(source.get("db"), f"Spider2 db for {index!r}")
-        if _canonical_spider_db(source_db) != instance["db_id"]:
-            raise ValueError(
-                f"Database mismatch for {index!r}: source={source_db!r}, "
-                f"preprocessed={instance['db_id']!r}"
-            )
-        question = _require_nonempty_text(
-            source.get("question"), f"Spider2 question for {index!r}"
-        )
-        if question != instance["question"]:
-            raise ValueError(f"Question mismatch for {index!r}")
-
-        sql_path = sql_root / f"{index}.sql"
-        reference = {
-            "root": "dataset_root",
-            "path": _relative_source(sql_path, dataset_root),
-        }
-        if sql_path.is_file():
-            sql = _validate_query_sql(
-                sql_path.read_text(encoding="utf-8"),
-                f"Spider2 gold SQL for {index!r}",
-            )
-            sql_hash = _sha256(sql_path)
-            reference["sha256"] = sql_hash
-            sources.append(
-                {
-                    "role": "gold_sql",
-                    "root": "dataset_root",
-                    "path": reference["path"],
-                    "sha256": sql_hash,
-                }
-            )
-        else:
-            sql = None
-
-        if index in exclusions:
-            records.append(
-                _record(instance, "excluded", exclusions[index], reference)
-            )
-        elif sql is None:
-            records.append(
-                _record(
-                    instance,
-                    "missing_gold_sql",
-                    "Spider2 gold SQL file is unavailable",
-                    reference,
-                )
-            )
-        else:
-            gold.append(
-                {
-                    "index": index,
-                    "db_id": instance["db_id"],
-                    "question": instance["question"],
-                    "gold_sql": sql,
-                }
-            )
-            records.append(_record(instance, "ready", "Matched reference SQL", reference))
-    return gold, records, sources
-
-
 def _write_outputs_atomic(output_dir: Path, gold: Any, report: Any) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     gold_payload = (
@@ -484,11 +388,7 @@ def prepare_rc_gold(
         raise ValueError(f"Unsupported dataset_split: {dataset_split!r}")
     working_dir = Path.cwd().resolve() if cwd is None else Path(cwd).resolve()
     if dataset_root is None:
-        dataset_root = (
-            "Spider2.0"
-            if dataset_split == "spider2_lite"
-            else "BIRD-Interact/BIRD-Interact-ADK"
-        )
+        dataset_root = "BIRD-Interact/BIRD-Interact-ADK"
     declared_dataset_root = _resolve_from_cwd(dataset_root, working_dir)
     declared_livesqlbench_root = (
         _resolve_from_cwd(livesqlbench_root, working_dir)
@@ -499,19 +399,16 @@ def prepare_rc_gold(
             else None
         )
     )
-    script_dir = Path(__file__).resolve().parent
+    data_dir = Path(__file__).resolve().parent.parent / "data" / dataset_split
     resolved_input = (
         _resolve_from_cwd(input_path, working_dir)
         if input_path is not None
-        else script_dir
-        / dataset_split
-        / "preprocessed_data"
-        / f"{dataset_split}.json"
+        else data_dir / f"{dataset_split}.json"
     ).resolve()
     resolved_output = (
         _resolve_from_cwd(output_dir, working_dir)
         if output_dir is not None
-        else script_dir / dataset_split
+        else data_dir
     ).resolve()
     output_paths = {
         (resolved_output / "gold_sql.json").resolve(),
@@ -524,18 +421,13 @@ def prepare_rc_gold(
     parsed_exclusions = _parse_exclusions(
         exclusions, {instance["index"] for instance in instances}
     )
-    if dataset_split.startswith("bird_interact_"):
-        gold, records, sources = _prepare_bird(
-            dataset_split,
-            instances,
-            declared_dataset_root,
-            declared_livesqlbench_root,
-            parsed_exclusions,
-        )
-    else:
-        gold, records, sources = _prepare_spider(
-            instances, declared_dataset_root, parsed_exclusions
-        )
+    gold, records, sources = _prepare_bird(
+        dataset_split,
+        instances,
+        declared_dataset_root,
+        declared_livesqlbench_root,
+        parsed_exclusions,
+    )
 
     status_counts = {
         status: sum(record["status"] == status for record in records)

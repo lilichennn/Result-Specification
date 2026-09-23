@@ -1,7 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-Salary,TEXT,,"[""₹6,48,573/yr"", ""₹6,69,578/yr"", ""₹9,08,764/yr""]",
-CompanyName,TEXT,,"[""Mu Sigma"", ""Impact Analytics"", ""Infosys""]",
-SalariesReported,FLOAT,,"[105.0, 40.0, 30.0]",
-Location,TEXT,,"[""Bangalore""]",
-index,NUMBER,,"[0, 3, 5]",
-JobTitle,TEXT,,"[""Data Scientist""]",

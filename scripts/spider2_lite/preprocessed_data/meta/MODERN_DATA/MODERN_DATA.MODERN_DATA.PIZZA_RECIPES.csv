@@ -1,3 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-toppings,TEXT,,"[""1, 2, 3, 4, 5, 6, 8, 10"", ""4, 6, 7, 9, 11, 12""]",
-pizza_id,NUMBER,,"[1, 2]",

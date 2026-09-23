@@ -1,5 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-etl_timestamp,NUMBER,Load time for this data row,[1729302237648949],
-code,TEXT,,"[""AK"", ""AR"", ""AS""]",
-name,TEXT,,"[""ALASKA"", ""ARKANSAS"", ""AMERICAN SAMOA""]",
-source_url,TEXT,Source ,"[""ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-states.txt""]",

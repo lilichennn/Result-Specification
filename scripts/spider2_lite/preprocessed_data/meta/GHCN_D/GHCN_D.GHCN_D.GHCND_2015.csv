@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-id,TEXT,,"[""USS0005N04S"", ""USS0005N16S""]",
-qflag,TEXT,,[],
-time,TEXT,,[],
-mflag,TEXT,,[],
-element,TEXT,,"[""AWDR""]",
-date,DATE,,"[""2015-03-30"", ""2015-03-15"", ""2015-06-13""]",
-value,FLOAT,,"[176.0, 143.0, 219.0]",
-sflag,TEXT,,"[""T""]",

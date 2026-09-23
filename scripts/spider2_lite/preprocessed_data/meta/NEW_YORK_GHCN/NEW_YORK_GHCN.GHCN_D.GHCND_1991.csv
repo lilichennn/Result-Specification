@@ -1,9 +1,0 @@
-column_name,column_type,column_description,sample_value,ref_key
-time,TEXT,,[],
-mflag,TEXT,,[],
-qflag,TEXT,,[],
-element,TEXT,,"[""PGTM""]",
-sflag,TEXT,,"[""X""]",
-id,TEXT,,"[""IOW00070701"", ""USW00024156"", ""USW00013962""]",
-value,FLOAT,,"[1410.0, 2308.0, 1220.0]",
-date,DATE,,"[""1991-06-26"", ""1991-09-06"", ""1991-01-29""]",

@@ -1,4 +1,4 @@
-"""Filter preprocessed metadata using RC, Q/Hint, or their combination."""
+"""Filter preprocessed metadata using Result Specifications (RS), Q/Hint, or their combination."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from datetime import datetime
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
+CODE_ROOT = SCRIPT_DIR.parent
 if str(SCRIPT_DIR.parent) not in sys.path:
     sys.path.insert(0, str(SCRIPT_DIR.parent))
 
@@ -112,13 +113,18 @@ def request_filter(messages: list, metadata: list, llm: str) -> dict:
 
 
 def run(dataset: str, split: str, mode: str | None, llm: str) -> None:
-    root = SCRIPT_DIR / f"{dataset}_{split}"
-    preprocessed = root / "preprocessed_data"
-    instances = _load_instances(preprocessed / f"{dataset}_{split}.json")
+    for value in (dataset, split):
+        if not isinstance(value, str) or not value or value in (".", "..") or "/" in value or "\\" in value:
+            raise ValueError("dataset and split must be directory-name components")
+    if mode not in (None, "rc", "qh"):
+        raise ValueError("mode must be rc, qh, or omitted")
+    group = f"{dataset}_{split}"
+    root = CODE_ROOT / "data" / group
+    instances = _load_instances(root / f"{group}.json")
     ids = [str(instance["index"]) for instance in instances]
     if len(set(ids)) != len(ids):
         raise ValueError("Instance indices must remain unique as JSON keys")
-    metadata = _load_metadata(preprocessed / "meta", {row["db_id"] for row in instances})
+    metadata = _load_metadata(root / "meta", {row["db_id"] for row in instances})
     rc_by_index = {}
     if mode != "qh":
         records = json.loads((root / "rc.json").read_text(encoding="utf-8"))
@@ -128,7 +134,10 @@ def run(dataset: str, split: str, mode: str | None, llm: str) -> None:
                 raise ValueError(f"Duplicate RC index: {index}")
             rc_by_index[index] = record
 
-    output = root / (f"filtered_meta_{mode}.json" if mode else "filtered_meta.json")
+    output = CODE_ROOT / "outputs" / "schema_filter" / group / (
+        f"filtered_meta_{mode}.json" if mode else "filtered_meta.json"
+    )
+    output.parent.mkdir(parents=True, exist_ok=True)
     results = json.loads(output.read_text(encoding="utf-8")) if output.exists() else {}
     if not isinstance(results, dict):
         raise ValueError(f"Expected an instance-indexed JSON object: {output}")
@@ -230,7 +239,7 @@ def main() -> None:
     parser.add_argument(
         "--mode",
         choices=("rc", "qh"),
-        help="Omit to filter with question, hint, and RC together",
+        help="Omit to filter with question, hint, and RS together",
     )
     parser.add_argument("--llm", required=True, choices=MODEL_ALIASES)
     args = parser.parse_args()
