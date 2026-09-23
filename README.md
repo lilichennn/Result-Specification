@@ -1,17 +1,32 @@
 # Result Specifications for NL-to-SQL
 
-## Overview
-
 A Result Specification (RS) describes the intended result table through five semantic dimensions: **Population, Row Grain, Column Role, Derivation, and Filter Policy**. It separates what a query should return from how that query is implemented in SQL.
 
 This repository contains RS generation and schema filtering, prepared benchmark inputs, and integrations with **DeepEye-SQL, DAIL-SQL, and DIN-SQL**. The experiment scripts compare original and RS-assisted execution at **Schema Linking, Generation, Revision, and Selection**, where applicable to each method.
 
-The five evaluation sets are **BIRD dev, Spider dev, Spider test, BIRD-Interact Lite, and BIRD-Interact Full**. Reusable inputs and reference annotations are included; database files, downloaded models, vector caches, and experiment results are kept separately.
+<p align="center">
+  <img src="assets/rs_example.png" alt="A school-query example showing how the five RS dimensions describe the intended result table." width="960">
+</p>
+<p align="center"><em>Figure 1. An example of Result Specification (RS).</em></p>
+
+## Overview
+
+RS makes result requirements explicit before SQL generation and provides a shared semantic reference for later reasoning and verification. Its constraints are inferred from the question, supplementary evidence, and database schema. Requirements left undetermined by this information remain unresolved; concrete SQL implementation choices are left to the NL-to-SQL method.
+
+The repository supports three parts of this workflow:
+
+- **RS construction:** infer an initial specification from the question and evidence, refine it using database metadata, and check it against gold SQL to construct the Oracle RS used in the supplied experiments.
+- **Method integration:** use RS for schema filtering and stage-specific model guidance through the method adapters, while retaining each method's own execution workflow.
+- **Evaluation:** compare original and RS-assisted outputs across five evaluation sets, using saved stage records, SQL execution comparisons, and schema-linking reference annotations.
+
+The evaluation sets are **BIRD dev, Spider dev, Spider test, BIRD-Interact Lite, and BIRD-Interact Full**. Reusable inputs and reference annotations are included; database files, downloaded models, vector caches, and experiment results are kept separately.
 
 ## Repository Structure
 
 ```text
 Result-Contract/
+├── assets/
+│   └── rs_example.png
 ├── data/
 │   ├── bird_dev/
 │   ├── spider_dev/
